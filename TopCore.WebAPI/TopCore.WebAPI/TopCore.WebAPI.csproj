@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputType>exe</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <OutputTypeEx>exe</OutputTypeEx>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="assets\js\core.ts" />
+    <Content Include="assets\css\core.scss" />
+    <Content Include="assets\images\favicons\android-chrome-144x144.png" />
+    <Content Include="assets\images\favicons\android-chrome-192x192.png" />
+    <Content Include="assets\images\favicons\android-chrome-36x36.png" />
+    <Content Include="assets\images\favicons\android-chrome-48x48.png" />
+    <Content Include="assets\images\favicons\android-chrome-72x72.png" />
+    <Content Include="assets\images\favicons\android-chrome-96x96.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-114x114.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-120x120.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-144x144.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-152x152.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-180x180.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-57x57.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-60x60.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-72x72.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon-76x76.png" />
+    <Content Include="assets\images\favicons\apple-touch-icon.png" />
+    <Content Include="assets\images\favicons\browserconfig.xml" />
+    <Content Include="assets\images\favicons\favicon-16x16.png" />
+    <Content Include="assets\images\favicons\favicon-32x32.png" />
+    <Content Include="assets\images\favicons\favicon.ico" />
+    <Content Include="assets\images\favicons\mstile-144x144.png" />
+    <Content Include="assets\images\favicons\mstile-150x150.png" />
+    <Content Include="assets\images\favicons\mstile-310x150.png" />
+    <Content Include="assets\images\favicons\mstile-310x310.png" />
+    <Content Include="assets\images\favicons\mstile-70x70.png" />
+    <Content Include="assets\images\favicons\safari-pinned-tab.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\lib\" />
+  </ItemGroup>
+
+</Project>

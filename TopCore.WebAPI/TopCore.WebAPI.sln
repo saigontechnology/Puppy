@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Framework.Web", "To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Framework.Core", "TopCore.Framework.Core\TopCore.Framework.Core.csproj", "{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.DAL", "TopCore.DAL\TopCore.DAL.csproj", "{54131D1D-4721-49B8-8CD5-18B4E194782A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54131D1D-4721-49B8-8CD5-18B4E194782A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54131D1D-4721-49B8-8CD5-18B4E194782A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54131D1D-4721-49B8-8CD5-18B4E194782A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54131D1D-4721-49B8-8CD5-18B4E194782A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,5 +51,6 @@ Global
 		{FDAF49AC-B1D2-492C-A7E7-137EA19BB00C} = {E9E0E23C-8584-46E1-9C51-33C3E699A39C}
 		{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
 		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
+		{54131D1D-4721-49B8-8CD5-18B4E194782A} = {51CABEFC-3C8B-4599-88FB-D3E29734B372}
 	EndGlobalSection
 EndGlobal

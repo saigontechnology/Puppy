@@ -34,11 +34,8 @@ namespace TopCore.Framework.Web
         /// <param name="hostBuilder"></param>
         public static void RunWithBrowser(this IWebHostBuilder hostBuilder)
         {
-            var configFileFullPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties",
-                "launchSettings.json");
-
+            var configFileFullPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "launchSettings.json");
             var sectionQuery = $"profiles:{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}:launchUrl";
-
             var domainUrl = Core.ConfigHelper.GetValue(configFileFullPath, sectionQuery);
             RunWithBrowser(hostBuilder, domainUrl);
         }

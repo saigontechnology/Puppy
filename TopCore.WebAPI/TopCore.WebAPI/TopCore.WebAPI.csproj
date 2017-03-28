@@ -13,7 +13,7 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
-    <Copyright>topnguyen.net</Copyright>
+    <Copyright>http://topnguyen.net</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
@@ -58,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\lib\" />
-    <Folder Include="Models\Common\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />

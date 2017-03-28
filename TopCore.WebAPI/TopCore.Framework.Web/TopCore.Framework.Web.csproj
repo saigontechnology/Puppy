@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
-    <Copyright>topnguyen.net</Copyright>
+    <Copyright>http://topnguyen.net</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

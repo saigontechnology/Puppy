@@ -1,32 +1,44 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI", "TopCore.WebAPI\TopCore.WebAPI.csproj", "{FDAF49AC-B1D2-492C-A7E7-137EA19BB00C}"
-EndProject
+
+# WEB API
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. API", "1. API", "{E9E0E23C-8584-46E1-9C51-33C3E699A39C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI", "TopCore.WebAPI\TopCore.WebAPI.csproj", "{FDAF49AC-B1D2-492C-A7E7-137EA19BB00C}"
+EndProject
+
+# Business Logic Layer
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. BLL", "2. BLL", "{9ABEABAC-0375-4CAA-9166-577A74878433}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. DAL", "3. DAL", "{51CABEFC-3C8B-4599-88FB-D3E29734B372}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. CORE", "4. CORE", "{6126AA32-418B-454E-BB37-4478C308E5AD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. FRAMEWORK", "5. FRAMEWORK", "{1BAE0076-5EFF-432E-AB14-06CC66B6BF90}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Web", "TopCore.Framework.Web\TopCore.Framework.Web.csproj", "{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Core", "TopCore.Framework.Core\TopCore.Framework.Core.csproj", "{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.DAL.EF", "TopCore.DAL.EF\TopCore.DAL.EF.csproj", "{54131D1D-4721-49B8-8CD5-18B4E194782A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.BLL", "TopCore.BLL\TopCore.BLL.csproj", "{BA4FB700-3F62-4054-A53A-B7FCDD2C60C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Core", "TopCore.Core\TopCore.Core.csproj", "{3DAA7A7B-00D3-4441-B7BA-3333A49F3C5F}"
+
+# Data Access Layer
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. DAL", "3. DAL", "{51CABEFC-3C8B-4599-88FB-D3E29734B372}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.DAL", "TopCore.DAL\TopCore.DAL.csproj", "{4C2BA34E-B545-48CC-8C80-E8B1C41605DE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.DAL.EF", "TopCore.DAL.EF\TopCore.DAL.EF.csproj", "{54131D1D-4721-49B8-8CD5-18B4E194782A}"
+EndProject
+
+# Core - Domain
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. CORE", "4. CORE", "{6126AA32-418B-454E-BB37-4478C308E5AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Core", "TopCore.Core\TopCore.Core.csproj", "{3DAA7A7B-00D3-4441-B7BA-3333A49F3C5F}"
+EndProject
+
+# FRAMEWORK
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. FRAMEWORK", "5. FRAMEWORK", "{1BAE0076-5EFF-432E-AB14-06CC66B6BF90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Core", "TopCore.Framework.Core\TopCore.Framework.Core.csproj", "{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Web", "TopCore.Framework.Web\TopCore.Framework.Web.csproj", "{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}"
+EndProject
+
+# Other Config
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

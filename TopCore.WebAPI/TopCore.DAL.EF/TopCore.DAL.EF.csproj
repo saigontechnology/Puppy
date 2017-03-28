@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <Copyright>http://topnguyen.net</Copyright>
+    <AssemblyName>TopCore.DAL.EF</AssemblyName>
+    <RootNamespace>TopCore.DAL.EF</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+
+    <!--
+      SqlServer and Design use 1.0.2 Instead of 1.1.0
+      because it have some Library version difference with current AspCore 1.1
+      (So it make migrate fail)
+    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.0.2" />
+    <!-- Keep install Tools version 1.1.0 but use version 1.0.0 -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TopCore.DAL\TopCore.DAL.csproj" />
+    <ProjectReference Include="..\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+</Project>

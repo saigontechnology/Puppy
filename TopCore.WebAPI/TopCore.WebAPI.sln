@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. FRAMEWORK", "5. FRAMEWOR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Framework.Web", "TopCore.Framework.Web\TopCore.Framework.Web.csproj", "{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Framework", "TopCore.Framework\TopCore.Framework.csproj", "{674B87B5-97E6-4329-9AE5-8043BCCDFE93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Framework.Core", "TopCore.Framework.Core\TopCore.Framework.Core.csproj", "{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,10 @@ Global
 		{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{674B87B5-97E6-4329-9AE5-8043BCCDFE93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{674B87B5-97E6-4329-9AE5-8043BCCDFE93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{674B87B5-97E6-4329-9AE5-8043BCCDFE93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{674B87B5-97E6-4329-9AE5-8043BCCDFE93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +44,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FDAF49AC-B1D2-492C-A7E7-137EA19BB00C} = {E9E0E23C-8584-46E1-9C51-33C3E699A39C}
 		{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
-		{674B87B5-97E6-4329-9AE5-8043BCCDFE93} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
+		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
 	EndGlobalSection
 EndGlobal

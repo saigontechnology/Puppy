@@ -39,7 +39,7 @@ namespace TopCore.Framework.Web
 
             var sectionQuery = $"profiles:{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}:launchUrl";
 
-            var domainUrl = ConfigHelper.GetValue(configFileFullPath, sectionQuery);
+            var domainUrl = Core.ConfigHelper.GetValue(configFileFullPath, sectionQuery);
             RunWithBrowser(hostBuilder, domainUrl);
         }
 

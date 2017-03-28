@@ -13,6 +13,7 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
+    <Copyright>topnguyen.net</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

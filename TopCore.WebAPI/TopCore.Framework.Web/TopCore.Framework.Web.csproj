@@ -2,10 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <Copyright>topnguyen.net</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TopCore.Framework\TopCore.Framework.csproj" />
+    <ProjectReference Include="..\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

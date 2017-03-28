@@ -57,6 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\lib\" />
+    <Folder Include="Models\Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
   </ItemGroup>
 
 </Project>

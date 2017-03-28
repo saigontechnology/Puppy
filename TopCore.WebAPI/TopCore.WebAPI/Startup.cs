@@ -12,8 +12,8 @@ namespace TopCore.WebAPI
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -44,8 +44,8 @@ namespace TopCore.WebAPI
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
@@ -54,8 +54,6 @@ namespace TopCore.WebAPI
         /// <summary>
         ///     This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 
         /// </summary>
-        /// <param name="app">           The application. </param>
-        /// <param name="env">           The environment. </param>
         /// <param name="loggerFactory"> The logger factory. </param>
         private void SetupLogFactory(ILoggerFactory loggerFactory)
         {

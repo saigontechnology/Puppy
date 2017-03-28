@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 
 namespace TopCore.WebAPI
 {
@@ -20,6 +23,8 @@ namespace TopCore.WebAPI
 
         public IConfigurationRoot Configuration { get; }
 
+        public string TopCoreVersion { get; } = PlatformServices.Default.Application.ApplicationVersion;
+
         #region ConfigureServices
 
         /// <summary>
@@ -30,6 +35,20 @@ namespace TopCore.WebAPI
         {
             // Add framework services.
             services.AddMvc();
+
+            AddSwagger(services);
+
+        }
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            var apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TopCore.WebAPI.xml");
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc($"v{TopCoreVersion}", new Info { Title = nameof(TopCore), Version = $"v{TopCoreVersion}" });
+                options.IncludeXmlComments(apiDocumentFilePath);
+                options.DescribeAllEnumsAsStrings();
+            });
         }
 
         #endregion ConfigureServices
@@ -46,6 +65,21 @@ namespace TopCore.WebAPI
                 routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            UseSwagger(app);
+        }
+
+        private void UseSwagger(IApplicationBuilder app)
+        {
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swagger, httpReq) => swagger.Host = httpReq.Host.Value);
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/API/v{TopCoreVersion}/swagger.json", $"{nameof(TopCore)} v{TopCoreVersion}");
             });
         }
 

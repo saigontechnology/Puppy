@@ -12,16 +12,16 @@ namespace TopCore.DAL.EF
             Debug.WriteLine($"{nameof(TopCoreContext)} is Created", nameof(TopCoreContext));
         }
 
-        public DbSet<UserEntity> UserEntities { get; set; }
+        public DbSet<UserEntityMapping> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Debug.WriteLine($"{nameof(TopCoreContext)} is Created", nameof(OnModelCreating));
 
-            // Convention Table Name is Entity Name without Entity Postfix
+            // Convention Table Name is Entity Name without EntityMapping Postfix
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
-                entity.Relational().TableName = entity.DisplayName().Replace("Entity", string.Empty);
+                entity.Relational().TableName = entity.DisplayName().Replace("EntityMapping", string.Empty);
             }
             base.OnModelCreating(modelBuilder);
 

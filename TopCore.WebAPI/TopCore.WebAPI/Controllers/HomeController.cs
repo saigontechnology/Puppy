@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TopCore.WebAPI.Controllers
+namespace TopCore.WebAPI.Controllers.MVC
 {
     public class HomeController : Controller
     {

@@ -5,12 +5,12 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.DAL </Project>
 //     <File> 
-//         <Name> BaseEntity.cs </Name>
+//         <Name> EntityBase.cs </Name>
 //         <Created> 27 03 2017 02:39:27 PM </Created>
 //         <Key> 9BBFB04B-177D-4D87-B047-2F94F957E579 </Key>
 //     </File>
 //     <Summary>
-//         BaseEntity is abstract entity to another entity inherit
+//         EntityBase is abstract entity to another entity inherit
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
@@ -19,18 +19,13 @@
 
 using System;
 
-namespace TopCore.DAL.Entity
+namespace TopCore.DAL.Entity.Base
 {
-    public abstract class BaseEntity
+    public abstract class EntityBase
     {
-        protected BaseEntity()
-        {
-            Key = Guid.NewGuid().ToString("N");
-            CreateOnUtc = DateTime.UtcNow;
-        }
-
         public long Id { get; set; }
         public string Key { get; set; }
-        public DateTime CreateOnUtc { get; set; }
+        public DateTime CreatedOnUtc { get; set; }
+        public DateTime LastUpdatedOnUtc { get; set; }
     }
 }

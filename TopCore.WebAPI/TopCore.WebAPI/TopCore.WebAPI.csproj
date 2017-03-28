@@ -16,6 +16,16 @@
     <Copyright>http://topnguyen.net</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>TopCore.WebAPI.xml</DocumentationFile>
+    <OutputPath>.\bin\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>TopCore.WebAPI.xml</DocumentationFile>
+    <OutputPath>.\bin\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="assets\js\core.ts" />
     <Content Include="assets\css\core.scss" />
@@ -51,8 +61,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc3" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
@@ -60,6 +75,7 @@
   <ItemGroup>
     <Folder Include="assets\lib\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\NewFolder\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />

@@ -17,12 +17,9 @@
 
 #endregion License
 
-using TopCore.DAL.Entity.Base;
-
 namespace TopCore.DAL.Entity
 {
-    public class UserEntity : EntityBase
+    public class UserEntityMapping : UserEntity
     {
-
     }
 }

@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
+using System.Xml.XPath;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace TopCore.WebAPI
 {
@@ -23,79 +25,75 @@ namespace TopCore.WebAPI
 
         public IConfigurationRoot Configuration { get; }
 
-        public string TopCoreVersion { get; } = PlatformServices.Default.Application.ApplicationVersion;
-
-        #region ConfigureServices
-
-        /// <summary>
-        ///     This method gets called by the runtime. Use this method to add services to the container. 
-        /// </summary>
-        /// <param name="services"> The services. </param>
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             services.AddMvc();
+
+            services.AddLogging();
 
             AddSwagger(services);
 
         }
 
-        private void AddSwagger(IServiceCollection services)
-        {
-            var apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TopCore.WebAPI.xml");
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc($"v{TopCoreVersion}", new Info { Title = nameof(TopCore), Version = $"v{TopCoreVersion}" });
-                options.IncludeXmlComments(apiDocumentFilePath);
-                options.DescribeAllEnumsAsStrings();
-            });
-        }
-
-        #endregion ConfigureServices
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            SetupLogFactory(loggerFactory);
-            SetupExceptionPage(app, env);
+            UseLogFactory(loggerFactory);
+
+            UseExceptionPage(app, env);
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvcWithDefaultRoute();
 
             UseSwagger(app);
+        }
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info
+                {
+                    Title = "Top Core API",
+                    Version = "v1",
+                    Contact = new Contact
+                    {
+                        Name = "Top Nguyen",
+                        Email = "TopNguyen92@gmail.com",
+                        Url = "http://topnguyen.net"
+                    },
+                });
+
+                options.DescribeAllEnumsAsStrings();
+
+                string apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TopCore.WebAPI.xml");
+                options.IncludeXmlComments(apiDocumentFilePath);
+
+            });
         }
 
         private void UseSwagger(IApplicationBuilder app)
         {
             app.UseSwagger(c =>
             {
-                c.PreSerializeFilters.Add((swagger, httpReq) => swagger.Host = httpReq.Host.Value);
+                c.RouteTemplate = "api-docs/{documentName}/topcore.json";
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
             });
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/API/v{TopCoreVersion}/swagger.json", $"{nameof(TopCore)} v{TopCoreVersion}");
+                c.RoutePrefix = "api";
+                c.SwaggerEndpoint("/api-docs/v1/topcore.json", "Top Core API");
             });
         }
 
-        #region Configure
-
-        /// <summary>
-        ///     This method gets called by the runtime. Use this method to configure the HTTP request pipeline. 
-        /// </summary>
-        /// <param name="loggerFactory"> The logger factory. </param>
-        private void SetupLogFactory(ILoggerFactory loggerFactory)
+        private void UseLogFactory(ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
         }
 
-        private static void SetupExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
+        private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -107,7 +105,5 @@ namespace TopCore.WebAPI
                 app.UseExceptionHandler("/Home/Error");
             }
         }
-
-        #endregion Configure
     }
 }

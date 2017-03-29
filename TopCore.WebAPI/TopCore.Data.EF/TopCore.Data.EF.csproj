@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Copyright>http://topnguyen.net</Copyright>
-    <AssemblyName>TopCore.DAL.EF</AssemblyName>
-    <RootNamespace>TopCore.DAL.EF</RootNamespace>
+    <AssemblyName>TopCore.Data.EF</AssemblyName>
+    <RootNamespace>TopCore.Data.EF</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,11 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TopCore.DAL\TopCore.DAL.csproj" />
-    <ProjectReference Include="..\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
+    <Folder Include="Mapping\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\TopCore.Data\TopCore.Data.csproj" />
+    <ProjectReference Include="..\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
   </ItemGroup>
 </Project>

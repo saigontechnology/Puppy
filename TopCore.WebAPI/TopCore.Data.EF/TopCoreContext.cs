@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Diagnostics;
-using TopCore.DAL.Entity;
+using TopCore.Data.Entity;
 
-namespace TopCore.DAL.EF
+namespace TopCore.Data.EF
 {
     public class TopCoreContext : DbContext
     {
@@ -12,7 +12,7 @@ namespace TopCore.DAL.EF
             Debug.WriteLine($"{nameof(TopCoreContext)} is Created", nameof(TopCoreContext));
         }
 
-        public DbSet<UserEntityMapping> UserEntities { get; set; }
+        public DbSet<UserEntity> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -6,4 +6,8 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TopCore.Service\TopCore.Service.csproj" />
+  </ItemGroup>
+
 </Project>

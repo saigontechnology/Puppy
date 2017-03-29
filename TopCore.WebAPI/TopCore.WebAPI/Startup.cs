@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
-using System.IO;
-using System.Xml.XPath;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using TopCore.Service;
+using TopCore.Service.Facade;
 
 namespace TopCore.WebAPI
 {
@@ -33,6 +34,7 @@ namespace TopCore.WebAPI
 
             AddSwagger(services);
 
+            AddDependency(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -48,6 +50,44 @@ namespace TopCore.WebAPI
             UseSwagger(app);
         }
 
+        #region Dependency
+
+        private void AddDependency(IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
+        }
+
+        #endregion
+
+        #region Log
+
+        private void UseLogFactory(ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+        }
+
+        #endregion
+
+        #region Exception
+
+        private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+        }
+
+        #endregion
+
+        #region Swagger
+
         private void AddSwagger(IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
@@ -61,14 +101,14 @@ namespace TopCore.WebAPI
                         Name = "Top Nguyen",
                         Email = "TopNguyen92@gmail.com",
                         Url = "http://topnguyen.net"
-                    },
+                    }
                 });
 
                 options.DescribeAllEnumsAsStrings();
 
-                string apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TopCore.WebAPI.xml");
+                var apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath,
+                    "TopCore.WebAPI.xml");
                 options.IncludeXmlComments(apiDocumentFilePath);
-
             });
         }
 
@@ -87,23 +127,6 @@ namespace TopCore.WebAPI
             });
         }
 
-        private void UseLogFactory(ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-        }
-
-        private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-        }
+        #endregion
     }
 }

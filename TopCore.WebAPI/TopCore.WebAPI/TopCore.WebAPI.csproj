@@ -74,10 +74,11 @@
   <ItemGroup>
     <Folder Include="assets\lib\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\NewFolder\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
+    <ProjectReference Include="..\TopCore.Service.Facade\TopCore.Service.Facade.csproj" />
+    <ProjectReference Include="..\TopCore.Service\TopCore.Service.csproj" />
   </ItemGroup>
 
 </Project>

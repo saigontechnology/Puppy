@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using TopCore.Service;
 
 namespace TopCore.WebAPI.Controllers
 {
@@ -7,25 +8,29 @@ namespace TopCore.WebAPI.Controllers
     [Produces("application/json")]
     public class UserAPIController : Controller
     {
+
+
         /// <summary>
         /// GET: api/User
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         /// <summary>
-        ///  GET: api/User/5
+        /// GET: api/User/GetUserName
         /// </summary>
-        /// <param name="id">Id</param>
+        /// <param name="userService"></param>
         /// <returns></returns>
-        [HttpGet("{id}", Name = "Get")]
-        public string Get([FromQuery]int id)
+        [HttpGet]
+        [Route("UserName")]
+        public string GetUserName([FromServices] IUserService userService)
         {
-            return "value";
+            return userService.GetUserName();
         }
 
         /// <summary>

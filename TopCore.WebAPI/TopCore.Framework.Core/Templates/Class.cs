@@ -2,14 +2,14 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> $username$ </Author>
-//     <Project> $projectname$ </Project>
+//     <Project>  $safeprojectname$ </Project>
 //     <File> 
-//         <Name> $itemname$ </Name>
+//         <Name> $safeitemname$ </Name>
 //         <Created> $time$ </Created>
 //         <Key> $guid10$ </Key>
 //     </File>
 //     <Summary>
-//         $itemname$
+//         $safeitemname$
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ $endif$
 
 namespace $rootnamespace$
 {
-	public class $itemname$
+	public class $safeitemname$
 	{
 	}
 }

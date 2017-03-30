@@ -35,10 +35,11 @@ namespace TopCore.Framework.DependencyInjection
         protected override Assembly Load(AssemblyName assemblyName)
         {
             var dependencyContext = DependencyContext.Default;
-            var listCompilationLibrary = dependencyContext.CompileLibraries.Where(compilationLibrary => compilationLibrary.Name.Contains(assemblyName.Name)).ToList();
-            if (listCompilationLibrary.Count > 0)
+            var compileLibrary = dependencyContext.CompileLibraries.FirstOrDefault(x => x.Name.ToLower().Contains(assemblyName.Name.ToLower()));
+            if (compileLibrary != null )
             {
-                return Assembly.Load(new AssemblyName(listCompilationLibrary.First().Name));
+                //return Assembly.Load(new AssemblyName(runtimeLibraries.First().Name));
+                return compileLibrary.GetType().GetTypeInfo().Assembly;
             }
             var applicationFileInfo = new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
 

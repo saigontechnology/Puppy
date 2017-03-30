@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> $username$ </Author>
-//     <Project>  $safeprojectname$ </Project>
+//     <Project>  $rootnamespace$ </Project>
 //     <File> 
 //         <Name> $safeitemname$ </Name>
 //         <Created> $time$ </Created>

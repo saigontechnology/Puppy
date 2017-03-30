@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,43 +6,47 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
-using TopCore.Service;
-using TopCore.Service.Facade;
+using System.IO;
+using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.WebAPI
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+
         public Startup(IHostingEnvironment env)
         {
+            Environment = env;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
-
-        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
                 // Indented for Development only
-                options.SerializerSettings.Formatting = env.IsDevelopment() ? Formatting.Indented : Formatting.None;
+                options.SerializerSettings.Formatting = Environment.IsDevelopment() ? Formatting.Indented : Formatting.None;
 
-                // Serialize Json as Camel case 
+                // Serialize Json as Camel case
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
+
+            services.AddDependencyInjectionScanner().ScanFromAllAssemblies();
 
             services.AddLogging();
 
             AddSwagger(services);
-
-            AddDependency(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -60,26 +62,11 @@ namespace TopCore.WebAPI
             UseSwagger(app);
         }
 
-        #region Dependency
-
-        private void AddDependency(IServiceCollection services)
-        {
-            services.AddScoped<IUserService, UserService>();
-        }
-
-        #endregion
-
-        #region Log
-
         private void UseLogFactory(ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
         }
-
-        #endregion
-
-        #region Exception
 
         private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -93,10 +80,6 @@ namespace TopCore.WebAPI
                 app.UseExceptionHandler("/Home/Error");
             }
         }
-
-        #endregion
-
-        #region Swagger
 
         private void AddSwagger(IServiceCollection services)
         {
@@ -136,7 +119,5 @@ namespace TopCore.WebAPI
                 c.SwaggerEndpoint("/api-docs/v1/topcore.json", "Top Core API");
             });
         }
-
-        #endregion
     }
 }

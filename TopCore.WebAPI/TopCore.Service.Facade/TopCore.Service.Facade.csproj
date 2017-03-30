@@ -6,7 +6,16 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\TopCore.WebAPI\bin\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\TopCore.WebAPI\bin\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
+    <ProjectReference Include="..\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
     <ProjectReference Include="..\TopCore.Service\TopCore.Service.csproj" />
   </ItemGroup>
 

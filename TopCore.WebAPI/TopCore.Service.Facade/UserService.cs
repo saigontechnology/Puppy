@@ -15,8 +15,11 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using TopCore.Framework.DependencyInjection.Attributes;
+
 namespace TopCore.Service.Facade
 {
+    [PerRequestDependency(ServiceType = typeof(IUserService))]
     public class UserService : IUserService
     {
         public string GetUserName()

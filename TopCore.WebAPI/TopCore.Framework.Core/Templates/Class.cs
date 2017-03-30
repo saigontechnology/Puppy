@@ -2,8 +2,8 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> $username$ </Author>
-//     <Project>  $rootnamespace$ </Project>
-//     <File> 
+//     <Project> $rootnamespace$ </Project>
+//     <File>
 //         <Name> $safeitemname$ </Name>
 //         <Created> $time$ </Created>
 //         <Key> $guid10$ </Key>
@@ -29,4 +29,3 @@ namespace $rootnamespace$
 	{
 	}
 }
-

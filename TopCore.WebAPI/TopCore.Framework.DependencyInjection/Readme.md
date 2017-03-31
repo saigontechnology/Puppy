@@ -25,8 +25,8 @@
 
 ## Sample
 
-    [TransientDependency(ServiceType = typeof(IEmailSender))]
-    [TransientDependency(ServiceType = typeof(ISmsSender))]
+    [PerResolveDependency(ServiceType = typeof(IEmailSender))]
+    [PerRequestDependency(ServiceType = typeof(ISmsSender))]
     public class AuthMessageSender : IEmailSender, ISmsSender
     {
         public Task SendEmailAsync(string email, string subject, string message)

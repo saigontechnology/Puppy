@@ -15,15 +15,14 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
+using Microsoft.DotNet.PlatformAbstractions;
+using Microsoft.Extensions.DependencyModel;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.Extensions.DependencyModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using Microsoft.DotNet.PlatformAbstractions;
 
 namespace TopCore.Framework.DependencyInjection
 {
@@ -64,7 +63,7 @@ namespace TopCore.Framework.DependencyInjection
             if (File.Exists(assemblyFileInfo.FullName))
             {
                 var assemblyLoader = new AssemblyLoader(assemblyFileInfo.DirectoryName);
-                assembly = assemblyLoader.LoadFromAssemblyPath(assemblyFileInfo.FullName); 
+                assembly = assemblyLoader.LoadFromAssemblyPath(assemblyFileInfo.FullName);
             }
             else
             {

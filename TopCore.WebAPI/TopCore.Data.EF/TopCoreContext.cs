@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Diagnostics;
 using TopCore.Data.Entity;
 
 namespace TopCore.Data.EF

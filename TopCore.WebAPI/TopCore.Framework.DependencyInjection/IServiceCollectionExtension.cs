@@ -49,9 +49,9 @@ namespace TopCore.Framework.DependencyInjection
         /// <summary>
         ///     Auto Register all assemblies 
         /// </summary>
-        /// <param name="services">     </param>
-        /// <param name="searchPattern"> Search Pattern by Directory.GetFiles </param>
-        /// <param name="folderFullPath">    Default is null = current execute application folder </param>
+        /// <param name="services">      </param>
+        /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
+        /// <param name="folderFullPath"> Default is null = current execute application folder </param>
         public static IServiceCollection ScanFromAllAssemblies(this IServiceCollection services, string searchPattern = "*.dll", string folderFullPath = null)
         {
             var scanner = services.GetScanner();

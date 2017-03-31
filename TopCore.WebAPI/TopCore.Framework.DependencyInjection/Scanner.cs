@@ -16,15 +16,13 @@
 #endregion License
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.DotNet.PlatformAbstractions;
-using Microsoft.Extensions.DependencyModel;
-using Microsoft.Extensions.PlatformAbstractions;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Framework.DependencyInjection
@@ -75,11 +73,11 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///  Auto Register all assemblies
+        ///     Auto Register all assemblies 
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="searchPattern">Search Pattern by Directory.GetFiles</param>
-        /// <param name="folderFullPath">Default is null = current execute application folder</param>
+        /// <param name="services">      </param>
+        /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
+        /// <param name="folderFullPath"> Default is null = current execute application folder </param>
         public void RegisterAllAssemblies(IServiceCollection services, string searchPattern = "*.dll", string folderFullPath = null)
         {
             if (string.IsNullOrWhiteSpace(folderFullPath) || !File.Exists(folderFullPath))

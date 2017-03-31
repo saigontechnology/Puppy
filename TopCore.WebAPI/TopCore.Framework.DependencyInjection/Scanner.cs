@@ -22,6 +22,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.DotNet.PlatformAbstractions;
+using Microsoft.Extensions.DependencyModel;
+using Microsoft.Extensions.PlatformAbstractions;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Framework.DependencyInjection
@@ -29,10 +32,12 @@ namespace TopCore.Framework.DependencyInjection
     public class Scanner
     {
         public readonly AssemblyLoader AssemblyLoader;
+        public readonly AssemblyName ThisAssemblyName;
 
         public Scanner(string folderFullPath = null)
         {
             AssemblyLoader = new AssemblyLoader(folderFullPath);
+            ThisAssemblyName = new AssemblyName(GetType().GetTypeInfo().Assembly.FullName);
         }
 
         public void RegisterAssembly(IServiceCollection services, AssemblyName assemblyName)
@@ -40,38 +45,54 @@ namespace TopCore.Framework.DependencyInjection
             try
             {
                 Assembly assembly = AssemblyLoader.LoadFromAssemblyName(assemblyName);
+
+                if (assembly == null)
+                {
+                    return;
+                }
+
                 foreach (var typeInfo in assembly.DefinedTypes)
                 {
-                    var listDependencyAttribute = typeInfo.GetCustomAttributes<DependencyAttribute>().ToList();
-
-                    // Each dependency can be registered as various types
-                    foreach (var dependencyAttribute in listDependencyAttribute)
+                    foreach (var customAttribute in typeInfo.GetCustomAttributes())
                     {
-                        var serviceDescriptor = dependencyAttribute.BuildServiceDescriptor(typeInfo);
+                        Type customAttributeType = customAttribute.GetType();
+
+                        bool isDependencyAttribute = typeof(DependencyAttribute).IsAssignableFrom(customAttributeType);
+
+                        if (!isDependencyAttribute)
+                        {
+                            continue;
+                        }
+                        var serviceDescriptor = ((DependencyAttribute)customAttribute).BuildServiceDescriptor(typeInfo);
                         services.Add(serviceDescriptor);
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine($"{assemblyName.Name} is exception, skipped", $"{nameof(Scanner)}.{nameof(RegisterAssembly)}");
-                Debug.WriteLine($"{e} is exception, skipped", nameof(assemblyName.Name));
+                Debug.WriteLine($"Register {assemblyName.Name} is exception, skipped. {ex}", $"{nameof(Scanner)}.{nameof(RegisterAssembly)}");
             }
         }
 
-        public void RegisterAllAssemblies(IServiceCollection services)
+        /// <summary>
+        ///  Auto Register all assemblies
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="searchPattern">Search Pattern by Directory.GetFiles</param>
+        /// <param name="folderFullPath">Default is null = current execute application folder</param>
+        public void RegisterAllAssemblies(IServiceCollection services, string searchPattern = "*.dll", string folderFullPath = null)
         {
-            // all assemblies in assemblies resolver folder
-            string folderPath = Path.GetDirectoryName(typeof(Scanner).GetTypeInfo().Assembly.Location);
-
-            // get all dll by TopCore Project
-            ICollection<string> listDllFileFullPath = Directory.GetFiles(folderPath, $"{nameof(TopCore)}.*.dll");
-
-            foreach (string dllFileFullPath in listDllFileFullPath)
+            if (string.IsNullOrWhiteSpace(folderFullPath) || !File.Exists(folderFullPath))
             {
-                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(dllFileFullPath);
-                AssemblyName assemblyName = new AssemblyName(fileNameWithoutExtension);
-                RegisterAssembly(services, assemblyName);
+                folderFullPath = Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath);
+            }
+
+            List<string> listDllFileFullPath = Directory.GetFiles(folderFullPath, searchPattern).ToList();
+
+            foreach (var dllFileFullPath in listDllFileFullPath)
+            {
+                string dllNameWithoutExtension = Path.GetFileNameWithoutExtension(dllFileFullPath);
+                RegisterAssembly(services, new AssemblyName(dllNameWithoutExtension));
             }
         }
     }

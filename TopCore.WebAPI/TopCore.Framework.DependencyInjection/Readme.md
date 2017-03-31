@@ -3,8 +3,15 @@
 - Set all project build output to ".\bin\netcoreapp1.1\" of main project to do the scan.
 - Right Click on Project > Build Tab > All Configuration > Put Build output path "..\TopCore.WebAPI\bin\"
 ## Startup Config
-    
-    services.AddDependencyScanning().ScanFromAllAssemblies();
+     services
+        .AddDependencyInjectionScanner()
+        .ScanFromSelf()
+        .ScanFromAllAssemblies();
+     
+     // or 
+     services
+        .AddDependencyInjectionScanner()
+        .ScanFromAllAssemblies($"{nameof(TopCore)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
 
 ## Class Use
 - Use PerRequestDependencyAttribute for Request Scope

@@ -47,24 +47,24 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        /// Scan and Register from all assemblies same location with Scanner
+        ///     Auto Register all assemblies 
         /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection ScanFromAllAssemblies(this IServiceCollection services)
+        /// <param name="services">     </param>
+        /// <param name="searchPattern"> Search Pattern by Directory.GetFiles </param>
+        /// <param name="folderFullPath">    Default is null = current execute application folder </param>
+        public static IServiceCollection ScanFromAllAssemblies(this IServiceCollection services, string searchPattern = "*.dll", string folderFullPath = null)
         {
             var scanner = services.GetScanner();
-            scanner.RegisterAllAssemblies(services);
+            scanner.RegisterAllAssemblies(services, searchPattern, folderFullPath);
             return services;
         }
 
         private static Scanner GetScanner(this IServiceCollection services)
         {
             var scanner = services.BuildServiceProvider().GetService<Scanner>();
-            if (null == scanner)
+            if (scanner == null)
             {
-                throw new InvalidOperationException(
-                    $"Unable to resolve {nameof(Scanner)}. Did you forget to call {nameof(services)}.{nameof(AddDependencyInjectionScanner)}?");
+                throw new InvalidOperationException($"Unable to resolve {nameof(Scanner)}. Did you forget to call {nameof(services)}.{nameof(AddDependencyInjectionScanner)}?");
             }
             return scanner;
         }

@@ -15,11 +15,15 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Extensions.DependencyModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Microsoft.DotNet.PlatformAbstractions;
 
 namespace TopCore.Framework.DependencyInjection
 {
@@ -27,28 +31,50 @@ namespace TopCore.Framework.DependencyInjection
     {
         public readonly string FolderFullPath;
 
+        public List<AssemblyName> ListLoaddedAssemblyName { get; } = new List<AssemblyName>();
+
         public AssemblyLoader(string folderFullPath = null)
         {
             FolderFullPath = folderFullPath ?? Path.GetDirectoryName(typeof(Scanner).GetTypeInfo().Assembly.Location);
+
+            // Update List Loadded Assembly
+            var runtimeId = RuntimeEnvironment.GetRuntimeIdentifier();
+            var listLoaddedAssemblyName = DependencyContext.Default.GetRuntimeAssemblyNames(runtimeId);
+
+            foreach (var assemblyName in listLoaddedAssemblyName)
+            {
+                ListLoaddedAssemblyName.Add(assemblyName);
+                Debug.WriteLine(assemblyName);
+            }
         }
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            var dependencyContext = DependencyContext.Default;
-            var compileLibrary = dependencyContext.CompileLibraries.FirstOrDefault(x => x.Name.ToLower().Contains(assemblyName.Name.ToLower()));
-            if (compileLibrary != null )
-            {
-                //return Assembly.Load(new AssemblyName(runtimeLibraries.First().Name));
-                return compileLibrary.GetType().GetTypeInfo().Assembly;
-            }
-            var applicationFileInfo = new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
+            Assembly assembly;
 
-            if (!File.Exists(applicationFileInfo.FullName))
+            // Check if assembly already added by Dependency (Reference)
+            if (ListLoaddedAssemblyName.Any(x => x.Name.ToLower() == assemblyName.Name.ToLower()))
             {
-                return Assembly.Load(assemblyName);
+                return null;
             }
-            var assemblyLoader = new AssemblyLoader(applicationFileInfo.DirectoryName);
-            return assemblyLoader.LoadFromAssemblyPath(applicationFileInfo.FullName);
+
+            // Load Assembly not yet load
+            var assemblyFileInfo = new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
+
+            if (File.Exists(assemblyFileInfo.FullName))
+            {
+                var assemblyLoader = new AssemblyLoader(assemblyFileInfo.DirectoryName);
+                assembly = assemblyLoader.LoadFromAssemblyPath(assemblyFileInfo.FullName); 
+            }
+            else
+            {
+                assembly = Assembly.Load(assemblyName);
+            }
+
+            // Add to loadded
+            ListLoaddedAssemblyName.Add(assembly.GetName());
+
+            return assembly;
         }
     }
 }

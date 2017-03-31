@@ -42,7 +42,9 @@ namespace TopCore.WebAPI
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddDependencyInjectionScanner().ScanFromAllAssemblies();
+            services
+                .AddDependencyInjectionScanner()
+                .ScanFromAllAssemblies($"{nameof(TopCore)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
 
             services.AddLogging();
 

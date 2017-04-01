@@ -22,7 +22,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using TopCore.Framework.DependencyInjection.Exceptions;
 
 namespace TopCore.Framework.DependencyInjection
 {
@@ -47,7 +46,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        /// Load an assembly, if the assembly already loaded then return null
+        ///     Load an assembly, if the assembly already loaded then return null 
         /// </summary>
         /// <param name="assemblyName"></param>
         /// <returns></returns>

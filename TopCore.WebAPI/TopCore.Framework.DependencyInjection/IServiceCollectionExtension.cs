@@ -32,6 +32,11 @@ namespace TopCore.Framework.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        ///     Register in self assembly 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection ScanFromSelf(this IServiceCollection services)
         {
             var env = services.BuildServiceProvider().GetService<IHostingEnvironment>();
@@ -39,6 +44,11 @@ namespace TopCore.Framework.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        ///     Register Assembly by Name 
+        /// </summary>
+        /// <param name="services">    </param>
+        /// <param name="assemblyName"></param>
         public static IServiceCollection ScanFromAssembly(this IServiceCollection services, AssemblyName assemblyName)
         {
             var scanner = services.GetScanner();
@@ -47,7 +57,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///     Auto Register all assemblies 
+        ///     Register all assemblies 
         /// </summary>
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
@@ -56,6 +66,18 @@ namespace TopCore.Framework.DependencyInjection
         {
             var scanner = services.GetScanner();
             scanner.RegisterAllAssemblies(services, searchPattern, folderFullPath);
+            return services;
+        }
+
+        /// <summary>
+        ///     Write registered service information to Console 
+        /// </summary>
+        /// <param name="services">             </param>
+        /// <param name="serviceTypeNameFilter"> ServiceType.Name.Contains([filter string]) </param>
+        public static IServiceCollection WriteOut(this IServiceCollection services, string serviceTypeNameFilter = null)
+        {
+            var scanner = services.GetScanner();
+            scanner.WriteOut(services, serviceTypeNameFilter);
             return services;
         }
 

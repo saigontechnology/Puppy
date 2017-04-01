@@ -49,6 +49,9 @@ namespace TopCore.WebAPI
             services.AddLogging();
 
             AddSwagger(services);
+
+            // Write out all dependency injection services
+            services.WriteOut($"{nameof(TopCore)}");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

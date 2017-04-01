@@ -1,7 +1,16 @@
 ﻿# Important Note
-- Set main project (Web.API) build output with all configuration is ".\bin\" (.\bin\TopCore.WebAPI.xml for XML to use swagger)
+> Project Created by **Top Nguyen** (http://topnguyen.net)
+
+- Set main project (Web.API) build output with all configuration is ".\bin\" (.\bin\\\<Main Project>.xml for XML to use swagger)
+
 - Set all project build output to ".\bin\netcoreapp1.1\" of main project to do the scan.
-- Right Click on Project > Build Tab > All Configuration > Put Build output path "..\TopCore.WebAPI\bin\"
+
+- Right Click on Project > Build Tab > All Configuration > Put Build output path "..\\\<Main Project>\bin\"
+
+- 1 Service just have only one Implement, if have more than 1 => throw ConflictRegisterException
+
+- 1 Implement have only register for a Service, if have more than 1 => Just get last one :D (ok, let support for inheric case)
+
 ## Startup Config
      services
         .AddDependencyInjectionScanner()
@@ -14,29 +23,40 @@
         .ScanFromAllAssemblies($"{nameof(TopCore)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
 
 ## Class Use
-- Use PerRequestDependencyAttribute for Request Scope
+- Use PerRequestDependencyAttribute([PerRequestDependency]) for Request Scope
   - ServiceLifetime.Scoped: Shared within a single request (or Service Scope).
 
-- Use PerResolveDependencyAttribute for Resolve Scope
+- Use PerResolveDependencyAttribute ([PerResolveDependency]) for Resolve Scope
   - ServiceLifetime.Transient: Created on every request for the service.
 
-- Use SingletonDependencyAttribute for Application Scope
+- Use SingletonDependencyAttribute ([SingletonDependency]) for Application Scope
   - ServiceLifetime.Singleton: A single shared instance throughout your application’s lifetime. Only created once.
 
 ## Sample
 
     [PerResolveDependency(ServiceType = typeof(IEmailSender))]
     [PerRequestDependency(ServiceType = typeof(ISmsSender))]
-    public class AuthMessageSender : IEmailSender, ISmsSender
+    public class LogService : ITextLogService, IDbLogService
     {
-        public Task SendEmailAsync(string email, string subject, string message)
+        public Task LogTextAsync(string filePath, string message)
         {
-            // TODO to send an email.
+            // TODO insert to file
             return Task.FromResult(0);
         }
-        public Task SendSmsAsync(string number, string message)
+        public Task LogDbAsync(string message, string level)
         {
-            // TODO send a text message.
+            // TODO insert to database
+            return Task.FromResult(0);
+        }
+    }
+
+    // Self Register to inject and control life time cycle
+    [PerRequestDependency]
+    public class LogService : ITextLogService
+    {
+        public Task LogTextAsync(string filePath, string message)
+        {
+            // TODO insert to file
             return Task.FromResult(0);
         }
     }
@@ -49,7 +69,7 @@ The Transient and Singleton scopes are very obvious, but the Scope lifetime is m
         // ...
     }
 
-Then I’m creating a scope around the call to seed the database and use the scope to create the instance of my seeder (so that all the DI inside is inside a scope):
+Then I'm creating a scope around the call to seed the database and use the scope to create the instance of my seeder (so that all the DI inside is inside a scope):
     
     using (var scope = scopeFactory.CreateScope())
     {

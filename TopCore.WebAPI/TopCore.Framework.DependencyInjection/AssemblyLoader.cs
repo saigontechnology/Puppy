@@ -18,11 +18,11 @@
 using Microsoft.DotNet.PlatformAbstractions;
 using Microsoft.Extensions.DependencyModel;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using TopCore.Framework.DependencyInjection.Exceptions;
 
 namespace TopCore.Framework.DependencyInjection
 {
@@ -34,7 +34,7 @@ namespace TopCore.Framework.DependencyInjection
 
         public AssemblyLoader(string folderFullPath = null)
         {
-            FolderFullPath = folderFullPath ?? Path.GetDirectoryName(typeof(Scanner).GetTypeInfo().Assembly.Location);
+            FolderFullPath = folderFullPath;
 
             // Update List Loadded Assembly
             var runtimeId = RuntimeEnvironment.GetRuntimeIdentifier();
@@ -43,10 +43,14 @@ namespace TopCore.Framework.DependencyInjection
             foreach (var assemblyName in listLoaddedAssemblyName)
             {
                 ListLoaddedAssemblyName.Add(assemblyName);
-                Debug.WriteLine(assemblyName);
             }
         }
 
+        /// <summary>
+        /// Load an assembly, if the assembly already loaded then return null
+        /// </summary>
+        /// <param name="assemblyName"></param>
+        /// <returns></returns>
         protected override Assembly Load(AssemblyName assemblyName)
         {
             Assembly assembly;

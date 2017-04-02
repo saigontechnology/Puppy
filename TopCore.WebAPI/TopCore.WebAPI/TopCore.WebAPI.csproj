@@ -65,15 +65,29 @@
     <Content Include="assets\images\favicons\safari-pinned-tab.svg" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="1.4.2" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc3" />
+    <!--
+      SqlServer and Design use 1.0.2 Instead of 1.1.0
+      because it have some Library version difference with current AspCore 1.1
+      (So it make migrate fail)
+    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.0.2" />
+    <!-- Keep install Tools version 1.1.0 but use version 1.0.0 -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
@@ -86,6 +100,17 @@
     <ProjectReference Include="..\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
     <ProjectReference Include="..\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
     <ProjectReference Include="..\TopCore.Service\TopCore.Service.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions">
+      <HintPath>C:\Users\Top\.nuget\packages\microsoft.aspnetcore.hosting.abstractions\1.1.1\lib\netstandard1.3\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>C:\Users\Top\.nuget\packages\microsoft.extensions.configuration\1.1.1\lib\netstandard1.1\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+      <HintPath>C:\Users\Top\.nuget\packages\microsoft.extensions.configuration.abstractions\1.1.1\lib\netstandard1.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

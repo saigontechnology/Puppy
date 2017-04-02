@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Reflection;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.WebAPI
@@ -50,27 +55,58 @@ namespace TopCore.WebAPI
 
             AddSwagger(services);
 
+            AddIdentityServer(services);
+
             // Write out all dependency injection services
             services.WriteOut($"{nameof(TopCore)}");
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        private void AddIdentityServer(IServiceCollection services)
         {
-            UseLogFactory(loggerFactory);
+            string connectionString = Configuration.GetConnectionString("Identity");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            UseExceptionPage(app, env);
+            // Add DB Context for application
+            services.AddDbContext<TopCoreIdentityContext>(options => options.UseSqlServer(connectionString));
 
-            app.UseStaticFiles();
+            // Add Identity store User into Database by Entity Framework
+            services.AddIdentity<TopCoreIdentityUser, IdentityRole>().AddEntityFrameworkStores<TopCoreIdentityContext>();
 
-            app.UseMvcWithDefaultRoute();
-
-            UseSwagger(app);
+            services.AddIdentityServer()
+                .AddTemporarySigningCredential()
+                .AddAspNetIdentity<TopCoreIdentityUser>()
+                .AddOperationalStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)))
+                .AddConfigurationStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)));
         }
 
-        private void UseLogFactory(ILoggerFactory loggerFactory)
+        private static void UseIdentityServer(IApplicationBuilder app)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            //application to use cookie authentication
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies"
+            });
+
+            //use OpenID Connect Provider (IdentityServer)
+
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+            {
+                AuthenticationScheme = "oidc",
+                SignInScheme = "Cookies",
+
+                Authority = "https://localhost:44375/",
+
+                RequireHttpsMetadata = false,
+
+                ClientId = "mvc",
+
+                SaveTokens = true
+            });
+            app.UseIdentity();
+            app.UseIdentityServer();
         }
 
         private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
@@ -84,6 +120,27 @@ namespace TopCore.WebAPI
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+        }
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            UseLogFactory(loggerFactory);
+
+            UseExceptionPage(app, env);
+
+            app.UseStaticFiles();
+
+            app.UseMvcWithDefaultRoute();
+
+            UseSwagger(app);
+
+            UseIdentityServer(app);
+        }
+
+        private void UseLogFactory(ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
         }
 
         private void AddSwagger(IServiceCollection services)
@@ -124,5 +181,20 @@ namespace TopCore.WebAPI
                 c.SwaggerEndpoint("/api-docs/v1/topcore.json", "Top Core API");
             });
         }
+    }
+
+    public class TopCoreIdentityContext : IdentityDbContext
+    {
+        public TopCoreIdentityContext(DbContextOptions<TopCoreIdentityContext> options) : base(options)
+        {
+        }
+    }
+
+    public class TopCoreIdentityUser : IdentityUser
+    {
+        public bool IsAdmin { get; set; }
+        public string DataEventRecordsRole { get; set; }
+        public string SecuredFilesRole { get; set; }
+        public DateTime AccountExpires { get; set; }
     }
 }

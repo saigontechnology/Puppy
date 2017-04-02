@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,10 +9,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using TopCore.Core.Identity;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.WebAPI
@@ -19,7 +20,12 @@ namespace TopCore.WebAPI
     public class Startup
     {
         public IConfigurationRoot Configuration { get; }
+
         public IHostingEnvironment Environment { get; }
+
+        //------------------------------------------------------------
+        // Global
+        //------------------------------------------------------------
 
         public Startup(IHostingEnvironment env)
         {
@@ -36,6 +42,17 @@ namespace TopCore.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var migrationsAssembly = typeof(Setup).GetTypeInfo().Assembly.GetName().Name;
+            Setup.AddIdentityServer(services, Configuration.GetConnectionString("Identity"), migrationsAssembly);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(nameof(TopCore), policy =>
+                {
+                    policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -47,101 +64,34 @@ namespace TopCore.WebAPI
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
 
-            services
-                .AddDependencyInjectionScanner()
-                .ScanFromAllAssemblies($"{nameof(TopCore)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
+            services.AddDependencyInjectionScanner().ScanFromAllAssemblies($"{nameof(TopCore)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
 
             services.AddLogging();
 
             AddSwagger(services);
 
-            AddIdentityServer(services);
-
             // Write out all dependency injection services
             services.WriteOut($"{nameof(TopCore)}");
         }
 
-        private void AddIdentityServer(IServiceCollection services)
-        {
-            string connectionString = Configuration.GetConnectionString("Identity");
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
-            // Add DB Context for application
-            services.AddDbContext<TopCoreIdentityContext>(options => options.UseSqlServer(connectionString));
-
-            // Add Identity store User into Database by Entity Framework
-            services.AddIdentity<TopCoreIdentityUser, IdentityRole>().AddEntityFrameworkStores<TopCoreIdentityContext>();
-
-            services.AddIdentityServer()
-                .AddTemporarySigningCredential()
-                .AddAspNetIdentity<TopCoreIdentityUser>()
-                .AddOperationalStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)))
-                .AddConfigurationStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)));
-        }
-
-        private static void UseIdentityServer(IApplicationBuilder app)
-        {
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            //application to use cookie authentication
-
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = "Cookies"
-            });
-
-            //use OpenID Connect Provider (IdentityServer)
-
-            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
-            {
-                AuthenticationScheme = "oidc",
-                SignInScheme = "Cookies",
-
-                Authority = "https://localhost:44375/",
-
-                RequireHttpsMetadata = false,
-
-                ClientId = "mvc",
-
-                SaveTokens = true
-            });
-            app.UseIdentity();
-            app.UseIdentityServer();
-        }
-
-        private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-        }
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseCors(nameof(TopCore));
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
+
             UseLogFactory(loggerFactory);
 
             UseExceptionPage(app, env);
 
-            app.UseStaticFiles();
-
-            app.UseMvcWithDefaultRoute();
-
             UseSwagger(app);
 
-            UseIdentityServer(app);
+            Setup.UseIdentityServer(app);
         }
 
-        private void UseLogFactory(ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-        }
+        //------------------------------------------------------------
+        // Swagger
+        //------------------------------------------------------------
 
         private void AddSwagger(IServiceCollection services)
         {
@@ -181,20 +131,28 @@ namespace TopCore.WebAPI
                 c.SwaggerEndpoint("/api-docs/v1/topcore.json", "Top Core API");
             });
         }
-    }
 
-    public class TopCoreIdentityContext : IdentityDbContext
-    {
-        public TopCoreIdentityContext(DbContextOptions<TopCoreIdentityContext> options) : base(options)
+        //------------------------------------------------------------
+        // Others
+        //------------------------------------------------------------
+
+        private void UseLogFactory(ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
         }
-    }
 
-    public class TopCoreIdentityUser : IdentityUser
-    {
-        public bool IsAdmin { get; set; }
-        public string DataEventRecordsRole { get; set; }
-        public string SecuredFilesRole { get; set; }
-        public DateTime AccountExpires { get; set; }
+        private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+        }
     }
 }

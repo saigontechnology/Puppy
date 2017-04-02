@@ -23,7 +23,7 @@ namespace TopCore.Data.Entity
 {
     public abstract class EntityBase
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Key { get; set; }
         public DateTime CreatedOnUtc { get; set; }
         public DateTime LastUpdatedOnUtc { get; set; }

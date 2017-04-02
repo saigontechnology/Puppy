@@ -69,15 +69,15 @@
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc3" />
     <!--
       SqlServer and Design use 1.0.2 Instead of 1.1.0
       because it have some Library version difference with current AspCore 1.1
@@ -96,9 +96,15 @@
     <Folder Include="assets\lib\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TopCore.Business.Logic\TopCore.Business.Logic.csproj" />
+    <ProjectReference Include="..\TopCore.Business\TopCore.Business.csproj" />
     <ProjectReference Include="..\TopCore.Core\TopCore.Core.csproj" />
+    <ProjectReference Include="..\TopCore.Data.EF\TopCore.Data.EF.csproj" />
+    <ProjectReference Include="..\TopCore.Data\TopCore.Data.csproj" />
+    <ProjectReference Include="..\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
     <ProjectReference Include="..\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
     <ProjectReference Include="..\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
+    <ProjectReference Include="..\TopCore.Service.Facade\TopCore.Service.Facade.csproj" />
     <ProjectReference Include="..\TopCore.Service\TopCore.Service.csproj" />
   </ItemGroup>
   <ItemGroup>

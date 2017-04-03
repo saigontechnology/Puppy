@@ -5,18 +5,18 @@ using TopCore.Data.Entity;
 
 namespace TopCore.Data.EF
 {
-    public class TopCoreContext : DbContext
+    public class TopCoreDbContext : DbContext
     {
-        public TopCoreContext(DbContextOptions<TopCoreContext> options) : base(options)
+        public TopCoreDbContext(DbContextOptions<TopCoreDbContext> options) : base(options)
         {
-            Debug.WriteLine($"{nameof(TopCoreContext)} is Created", nameof(TopCoreContext));
+            Debug.WriteLine($"{nameof(TopCoreDbContext)} is Created", nameof(TopCoreDbContext));
         }
 
         public DbSet<UserEntity> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Debug.WriteLine($"{nameof(TopCoreContext)} is Created", nameof(OnModelCreating));
+            Debug.WriteLine($"{nameof(TopCoreDbContext)} is Created", nameof(OnModelCreating));
 
             // Convention Table Name is Entity Name without EntityMapping Postfix
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

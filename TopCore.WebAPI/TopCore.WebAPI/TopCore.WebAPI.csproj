@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\lib\" />
+    <Folder Include="Identity\Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TopCore.Core\TopCore.Core.csproj" />

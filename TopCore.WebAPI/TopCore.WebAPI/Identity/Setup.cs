@@ -33,8 +33,12 @@ namespace TopCore.WebAPI.Identity
         public static void AddIdentityServer(IServiceCollection services, string connectionString, string migrationsAssembly)
         {
             // Add Identity store User into Database by Entity Framework
-            services.AddIdentity<TopCoreIdentityUser, IdentityRole>().AddEntityFrameworkStores<TopCoreIdentityContext>();
 
+            // TopCoreIdentityDbContext for Asp Net Core Identity
+            //services.AddDbContext<TopCoreIdentityDbContext>(options => options.UseSqlServer(connectionString));
+
+            // Config and Operation store of Identity Server 4
+            services.AddIdentity<TopCoreIdentityUser, IdentityRole>().AddEntityFrameworkStores<TopCoreIdentityDbContext>();
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
                 .AddAspNetIdentity<TopCoreIdentityUser>()
@@ -78,8 +82,13 @@ namespace TopCore.WebAPI.Identity
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+                // TopCoreIdentityDbContext for Asp Net Core Identity
+                //serviceScope.ServiceProvider.GetRequiredService<TopCoreIdentityDbContext>().Database.Migrate();
+
+                // PersistedGrantDbContext for Persisted Grant of Indeity Server 4
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
+                // ConfigurationDbContext for Configuration of Indeity Server 4
                 var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
                 context.Database.Migrate();
                 if (!context.Clients.Any())

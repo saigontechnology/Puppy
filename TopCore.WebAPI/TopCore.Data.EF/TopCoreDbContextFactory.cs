@@ -23,9 +23,9 @@ using TopCore.Framework.Core;
 
 namespace TopCore.Data.EF
 {
-    public class TopCoreContextFactory : IDbContextFactory<TopCoreContext>
+    public class TopCoreDbContextFactory : IDbContextFactory<TopCoreDbContext>
     {
-        public TopCoreContext Create(DbContextFactoryOptions options)
+        public TopCoreDbContext Create(DbContextFactoryOptions options)
         {
             var connectionString = GetConnectionString(options);
             return CreateCoreContext(connectionString);
@@ -42,11 +42,11 @@ namespace TopCore.Data.EF
             return connectionString;
         }
 
-        private static TopCoreContext CreateCoreContext(string connectionString)
+        private static TopCoreDbContext CreateCoreContext(string connectionString)
         {
-            var builder = new DbContextOptionsBuilder<TopCoreContext>();
+            var builder = new DbContextOptionsBuilder<TopCoreDbContext>();
             builder.UseSqlServer(connectionString);
-            return new TopCoreContext(builder.Options);
+            return new TopCoreDbContext(builder.Options);
         }
     }
 }

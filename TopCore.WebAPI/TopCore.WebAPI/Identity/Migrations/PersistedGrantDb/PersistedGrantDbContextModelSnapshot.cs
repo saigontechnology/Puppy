@@ -1,8 +1,9 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using IdentityServer4.EntityFramework.DbContexts;
 
 namespace TopCore.WebAPI.Identity.Migrations.PersistedGrantDb
 {

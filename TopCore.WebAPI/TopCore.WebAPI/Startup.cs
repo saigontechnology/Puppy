@@ -9,7 +9,6 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 using System.Reflection;
 using TopCore.Framework.DependencyInjection;
-using TopCore.WebAPI.Identity;
 
 namespace TopCore.WebAPI
 {
@@ -38,9 +37,6 @@ namespace TopCore.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var migrationsAssembly = typeof(Setup).GetTypeInfo().Assembly.GetName().Name;
-            Setup.AddIdentityServer(services, Configuration.GetConnectionString("Identity"), migrationsAssembly);
-
             services.AddCors(options =>
             {
                 options.AddPolicy(nameof(TopCore), policy =>
@@ -81,8 +77,6 @@ namespace TopCore.WebAPI
             UseExceptionPage(app, env);
 
             UseSwagger(app);
-
-            Setup.UseIdentityServer(app);
         }
 
         //------------------------------------------------------------

@@ -4,7 +4,7 @@
 ## Identity Setup and Note
 1. Nuget Package Install by csproj
 Edit .csproj file and put this code below to enable Entity Framework with design and tool
-```c#
+```markup
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="1.4.2" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
@@ -43,8 +43,11 @@ services.AddCors(options =>
 ```
 3. Initial Database
 - Setup by Command Windows of current project 
-```c#
-dotnet ef migrations add InitialIdentityTopCore -c TopCoreIdentityDbContext -o Identity/Migrations/TopCoreIdentityDb
+```markup
+<!-- Don't use Asp .Net Identity -->
+<!--
+    dotnet ef migrations add InitialIdentityTopCore -c TopCoreIdentityDbContext -o Identity/Migrations/TopCoreIdentityDb
+-->
 dotnet ef migrations add InitialIdentityServerPersistedGrant -c PersistedGrantDbContext -o Identity/Migrations/PersistedGrantDb
 dotnet ef migrations add InitialIdentityServerConfiguration -c ConfigurationDbContext -o Identity/Migrations/ConfigurationDb
 ```

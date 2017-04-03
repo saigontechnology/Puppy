@@ -18,7 +18,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace TopCore.Core.Identity
+namespace TopCore.WebAPI.Identity
 {
     public class TopCoreIdentityContext : IdentityDbContext
     {

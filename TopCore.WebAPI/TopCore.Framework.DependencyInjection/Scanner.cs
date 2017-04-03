@@ -15,14 +15,14 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using TopCore.Framework.DependencyInjection.Attributes;
 using TopCore.Framework.DependencyInjection.Exceptions;
 

@@ -18,7 +18,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 
-namespace TopCore.Core.Identity.Models
+namespace TopCore.WebAPI.Identity.Models
 {
     public class TopCoreIdentityUser : IdentityUser
     {

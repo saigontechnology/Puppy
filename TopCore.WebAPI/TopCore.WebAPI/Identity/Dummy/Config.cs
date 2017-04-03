@@ -19,7 +19,7 @@ using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 
-namespace TopCore.Core.Identity.Dummy
+namespace TopCore.WebAPI.Identity.Dummy
 {
     public class Config
     {

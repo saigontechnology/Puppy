@@ -23,10 +23,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using TopCore.Core.Identity.Dummy;
-using TopCore.Core.Identity.Models;
+using TopCore.WebAPI.Identity.Dummy;
+using TopCore.WebAPI.Identity.Models;
 
-namespace TopCore.Core.Identity
+namespace TopCore.WebAPI.Identity
 {
     public class Setup
     {

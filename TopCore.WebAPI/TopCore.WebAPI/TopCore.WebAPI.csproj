@@ -96,15 +96,9 @@
     <Folder Include="assets\lib\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TopCore.Business.Logic\TopCore.Business.Logic.csproj" />
-    <ProjectReference Include="..\TopCore.Business\TopCore.Business.csproj" />
     <ProjectReference Include="..\TopCore.Core\TopCore.Core.csproj" />
-    <ProjectReference Include="..\TopCore.Data.EF\TopCore.Data.EF.csproj" />
-    <ProjectReference Include="..\TopCore.Data\TopCore.Data.csproj" />
-    <ProjectReference Include="..\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
     <ProjectReference Include="..\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
     <ProjectReference Include="..\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
-    <ProjectReference Include="..\TopCore.Service.Facade\TopCore.Service.Facade.csproj" />
     <ProjectReference Include="..\TopCore.Service\TopCore.Service.csproj" />
   </ItemGroup>
   <ItemGroup>

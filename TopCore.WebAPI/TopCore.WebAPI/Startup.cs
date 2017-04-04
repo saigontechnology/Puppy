@@ -7,7 +7,6 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
-using System.Reflection;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.WebAPI

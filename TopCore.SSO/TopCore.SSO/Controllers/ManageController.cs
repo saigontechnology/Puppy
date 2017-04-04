@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Linq;
+using System.Threading.Tasks;
 using TopCore.SSO.Models;
 using TopCore.SSO.Models.ManageViewModels;
 using TopCore.SSO.Services;
@@ -39,7 +37,6 @@ namespace TopCore.SSO.Controllers
             _logger = loggerFactory.CreateLogger<ManageController>();
         }
 
-        //
         // GET: /Manage/Index
         [HttpGet]
         public async Task<IActionResult> Index(ManageMessageId? message = null)
@@ -69,7 +66,6 @@ namespace TopCore.SSO.Controllers
             return View(model);
         }
 
-        //
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -89,14 +85,12 @@ namespace TopCore.SSO.Controllers
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
 
-        //
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
         {
             return View();
         }
 
-        //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -117,7 +111,6 @@ namespace TopCore.SSO.Controllers
             return RedirectToAction(nameof(VerifyPhoneNumber), new { PhoneNumber = model.PhoneNumber });
         }
 
-        //
         // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -133,7 +126,6 @@ namespace TopCore.SSO.Controllers
             return RedirectToAction(nameof(Index), "Manage");
         }
 
-        //
         // POST: /Manage/DisableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -149,7 +141,6 @@ namespace TopCore.SSO.Controllers
             return RedirectToAction(nameof(Index), "Manage");
         }
 
-        //
         // GET: /Manage/VerifyPhoneNumber
         [HttpGet]
         public async Task<IActionResult> VerifyPhoneNumber(string phoneNumber)
@@ -164,7 +155,6 @@ namespace TopCore.SSO.Controllers
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
-        //
         // POST: /Manage/VerifyPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -189,7 +179,6 @@ namespace TopCore.SSO.Controllers
             return View(model);
         }
 
-        //
         // POST: /Manage/RemovePhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -208,7 +197,6 @@ namespace TopCore.SSO.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
-        //
         // GET: /Manage/ChangePassword
         [HttpGet]
         public IActionResult ChangePassword()
@@ -216,7 +204,6 @@ namespace TopCore.SSO.Controllers
             return View();
         }
 
-        //
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -242,7 +229,6 @@ namespace TopCore.SSO.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
-        //
         // GET: /Manage/SetPassword
         [HttpGet]
         public IActionResult SetPassword()
@@ -250,7 +236,6 @@ namespace TopCore.SSO.Controllers
             return View();
         }
 
-        //
         // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -300,7 +285,6 @@ namespace TopCore.SSO.Controllers
             });
         }
 
-        //
         // POST: /Manage/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -315,7 +299,6 @@ namespace TopCore.SSO.Controllers
             return Challenge(properties, provider);
         }
 
-        //
         // GET: /Manage/LinkLoginCallback
         [HttpGet]
         public async Task<ActionResult> LinkLoginCallback()
@@ -368,6 +351,6 @@ namespace TopCore.SSO.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
         }
 
-        #endregion
+        #endregion Helpers
     }
 }

@@ -5,12 +5,12 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.SSO.Data.EF </Project>
 //     <File> 
-//         <Name> TopCoreDbContext.SSOContextFactory.cs </Name>
+//         <Name> TopCoreSSODbContext.SSOContextFactory.cs </Name>
 //         <Created> 28 03 2017 05:50:31 PM </Created>
 //         <Key> 0679F181-B40B-49BF-A6A6-1AFA54A83376 </Key>
 //     </File>
 //     <Summary>
-//         TopCoreDbContext.SSOContextFactory
+//         TopCoreSSODbContext.SSOContextFactory
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
@@ -23,9 +23,9 @@ using TopCore.Framework.Core;
 
 namespace TopCore.SSO.Data.EF
 {
-    public class TopCoreDbContextFactory : IDbContextFactory<TopCoreDbContext>
+    public class TopCoreSSODbContextFactory : IDbContextFactory<TopCoreSSODbContext>
     {
-        public TopCoreDbContext Create(DbContextFactoryOptions options)
+        public TopCoreSSODbContext Create(DbContextFactoryOptions options)
         {
             var connectionString = GetConnectionString(options);
             return CreateCoreContext(connectionString);
@@ -42,11 +42,11 @@ namespace TopCore.SSO.Data.EF
             return connectionString;
         }
 
-        private static TopCoreDbContext CreateCoreContext(string connectionString)
+        private static TopCoreSSODbContext CreateCoreContext(string connectionString)
         {
-            var builder = new DbContextOptionsBuilder<TopCoreDbContext>();
+            var builder = new DbContextOptionsBuilder<TopCoreSSODbContext>();
             builder.UseSqlServer(connectionString);
-            return new TopCoreDbContext(builder.Options);
+            return new TopCoreSSODbContext(builder.Options);
         }
     }
 }

@@ -5,18 +5,18 @@ using TopCore.SSO.Data.Entity;
 
 namespace TopCore.SSO.Data.EF
 {
-    public class TopCoreDbContext : DbContext
+    public class TopCoreSSODbContext : DbContext
     {
-        public TopCoreDbContext(DbContextOptions<TopCoreDbContext> options) : base(options)
+        public TopCoreSSODbContext(DbContextOptions<TopCoreSSODbContext> options) : base(options)
         {
-            Debug.WriteLine($"{nameof(TopCoreDbContext)} is Created", nameof(TopCoreDbContext));
+            Debug.WriteLine($"{nameof(TopCoreSSODbContext)} is Created", nameof(TopCoreSSODbContext));
         }
 
         public DbSet<UserEntity> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Debug.WriteLine($"{nameof(TopCoreDbContext)} is Created", nameof(OnModelCreating));
+            Debug.WriteLine($"{nameof(TopCoreSSODbContext)} is Created", nameof(OnModelCreating));
 
             // Convention Table Name is Entity Name without EntityMapping Postfix
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

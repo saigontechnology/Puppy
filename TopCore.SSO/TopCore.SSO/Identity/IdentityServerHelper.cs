@@ -1,0 +1,147 @@
+﻿#region	License
+//------------------------------------------------------------------------------------------------
+// <License>
+//     <Author> Top </Author>
+//     <Project> TopCore.SSO </Project>
+//     <File>
+//         <Name> IdentityServerHelper </Name>
+//         <Created> 02 Apr 17 11:20:26 PM </Created>
+//         <Key> 4a81cf8a-d367-46ba-a3be-9083bfe9bccf </Key>
+//     </File>
+//     <Summary>
+//         IdentityServerHelper
+//     </Summary>
+// <License>
+//------------------------------------------------------------------------------------------------
+#endregion License
+
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+
+namespace TopCore.SSO.Identity
+{
+    public static class IdentityServerHelper
+    {
+        public static void Add(IServiceCollection services, string connectionString, string migrationsAssembly)
+        {
+            services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // TopCore.TopCoreIdentityDbContext for Asp Net Core Identity
+            services.AddDbContext<TopCoreIdentityDbContext>(options => options.UseSqlServer(connectionString));
+
+            // Add Identity store User into Database by Entity Framework
+            services.AddIdentity<TopCoreIdentityUser, IdentityRole>().AddEntityFrameworkStores<TopCoreIdentityDbContext>();
+
+            // Config and Operation store of Identity Server 4
+            services.AddIdentityServer()
+                .AddAspNetIdentity<TopCoreIdentityUser>()
+                .AddTemporarySigningCredential()
+                .AddConfigurationStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)))
+                .AddOperationalStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)));
+        }
+
+        public static void Use(IApplicationBuilder app)
+        {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            //application to use cookie authentication
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
+
+            //use OpenID Connect Provider (IdentityServer)
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+            {
+                AuthenticationScheme = "oidc",
+
+                SignInScheme = "Cookies",
+
+                Authority = "https://localhost:55555/",
+
+                RequireHttpsMetadata = false,
+
+                ClientId = "mvc",
+
+                SaveTokens = true
+            });
+
+            // Use Identity Server
+            app.UseIdentity();
+            app.UseIdentityServer();
+
+            InitData(app);
+        }
+
+        public static void InitData(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                // TopCore.TopCoreIdentityDbContext for Asp Net Core Identity
+                var TopCoreIdentityDbContext = serviceScope.ServiceProvider.GetRequiredService<TopCoreIdentityDbContext>();
+
+                // PersistedGrantDbContext for Persisted Grant of Identity Server 4
+                var persistedGrantDbContext = serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
+
+                // ConfigurationDbContext for Configuration of Identity Server 4
+                var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+
+                // Execute Migrate
+                TopCoreIdentityDbContext.Database.Migrate();
+                persistedGrantDbContext.Database.Migrate();
+                configurationDbContext.Database.Migrate();
+
+                // Initial Data
+                InitData(configurationDbContext, serviceScope);
+            }
+        }
+
+        private static void InitData(ConfigurationDbContext configurationDbContext, IServiceScope serviceScope)
+        {
+            foreach (var client in Dummy.GetClients())
+            {
+                if (configurationDbContext.Clients.FirstOrDefault(c => c.ClientId == client.ClientId) == null)
+                    configurationDbContext.Clients.Add(client.ToEntity());
+            }
+            configurationDbContext.SaveChanges();
+
+            if (!configurationDbContext.IdentityResources.Any())
+            {
+                foreach (var resource in Dummy.GetIdentityResources())
+                {
+                    configurationDbContext.IdentityResources.Add(resource.ToEntity());
+                }
+                configurationDbContext.SaveChanges();
+            }
+
+            if (!configurationDbContext.ApiResources.Any())
+            {
+                foreach (var resource in Dummy.GetApiResources())
+                {
+                    configurationDbContext.ApiResources.Add(resource.ToEntity());
+                }
+                configurationDbContext.SaveChanges();
+            }
+
+            var usermanager = serviceScope.ServiceProvider.GetRequiredService<UserManager<TopCoreIdentityUser>>();
+
+            if (!usermanager.Users.Any())
+            {
+                foreach (var topCoreIdentityUser in Dummy.GetUsers())
+                {
+                    usermanager.CreateAsync(topCoreIdentityUser, topCoreIdentityUser.Password).Wait();
+                }
+            }
+        }
+    }
+}

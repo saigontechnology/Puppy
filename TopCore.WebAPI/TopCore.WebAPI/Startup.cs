@@ -38,7 +38,7 @@ namespace TopCore.WebAPI
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(nameof(TopCore.WebAPI), policy =>
+                options.AddPolicy($"{nameof(TopCore)}.{nameof(WebAPI)}", policy =>
                 {
                     policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
                 });
@@ -55,19 +55,19 @@ namespace TopCore.WebAPI
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddDependencyInjectionScanner().ScanFromAllAssemblies($"{nameof(TopCore.WebAPI)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
+            services.AddDependencyInjectionScanner().ScanFromAllAssemblies($"{nameof(TopCore)}.{nameof(WebAPI)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
 
             services.AddLogging();
 
             AddSwagger(services);
 
             // Write out all dependency injection services
-            services.WriteOut($"{nameof(TopCore.WebAPI)}");
+            services.WriteOut($"{nameof(TopCore)}.{nameof(WebAPI)}");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseCors(nameof(TopCore.WebAPI));
+            app.UseCors($"{nameof(TopCore)}.{nameof(WebAPI)}");
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
@@ -110,14 +110,14 @@ namespace TopCore.WebAPI
         {
             app.UseSwagger(c =>
             {
-                c.RouteTemplate = "api-docs/{documentName}/topcore.json";
+                c.RouteTemplate = "api-docs/{documentName}/topcore-webapi.json";
                 c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
             });
 
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "api";
-                c.SwaggerEndpoint("/api-docs/v1/topcore.json", "Top Core API");
+                c.SwaggerEndpoint("/api-docs/v1/topcore-webapi.json", "Top Core API");
             });
         }
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using System;
 using System.IO;
+using TopCore.Framework.Web;
 
 namespace TopCore.SSO
 {
@@ -8,18 +8,14 @@ namespace TopCore.SSO
     {
         public static void Main(string[] args)
         {
-            Console.Title = "TopCore.SSO";
+            IWebHostBuilder hostBuilder =
+                new WebHostBuilder()
+                    .UseKestrel()
+                    .UseContentRoot(Directory.GetCurrentDirectory())
+                    .UseIISIntegration()
+                    .UseStartup<Startup>();
 
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseUrls("http://localhost:55555")
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .Build();
-
-            host.Run();
+            hostBuilder.RunWithBrowser();
         }
     }
 }

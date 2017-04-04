@@ -9,7 +9,24 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <UserSecretsId>aspnet-TopCore.SSO-77d3f367-0ce6-4f02-9c7a-bbf2c778b9f5</UserSecretsId>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <OutputTypeEx>exe</OutputTypeEx>
+    <StartupObject />
+    <Copyright>http://topnguyen.net</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>.\bin\TopCore.SSO.xml</DocumentationFile>
+    <OutputPath>.\bin\</OutputPath>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>.\bin\TopCore.SSO.xml</DocumentationFile>
+    <OutputPath>.\bin\</OutputPath>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
@@ -21,7 +38,9 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
-
+    
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc3" />
+    
     <PackageReference Include="IdentityServer4" Version="1.4.2" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="1.0.1" />
@@ -44,6 +63,13 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-*" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
+    <ProjectReference Include="..\TopCore.SSO.Core\TopCore.SSO.Core.csproj" />
+    <ProjectReference Include="..\TopCore.SSO.Service\TopCore.SSO.Service.csproj" />
   </ItemGroup>
 
 </Project>

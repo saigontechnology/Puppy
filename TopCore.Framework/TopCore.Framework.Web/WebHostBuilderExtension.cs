@@ -47,6 +47,8 @@ namespace TopCore.Framework.Web
         /// <param name="domainUrl"></param>
         public static void RunWithBrowser(this IWebHostBuilder hostBuilder, string domainUrl)
         {
+            Console.Title = domainUrl;
+
             // Update domain URL for builder
             hostBuilder.UseUrls(domainUrl);
 

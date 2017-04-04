@@ -37,7 +37,7 @@ List Nuget Package
 Setup.AddIdentityServer(services, Configuration.GetConnectionString("Identity"));
 services.AddCors(options =>
     {
-        options.AddPolicy(nameof(TopCore), policy =>
+        options.AddPolicy(nameof(TopCore.SSO), policy =>
         {
             policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
         });
@@ -78,7 +78,7 @@ using System.IO;
 using System.Reflection;
 using TopCore.Framework.DependencyInjection;
 
-namespace TopCore.WebAPI
+namespace TopCore.SSO
 {
     public class Startup
     {
@@ -110,7 +110,7 @@ namespace TopCore.WebAPI
 
             services.AddCors(options =>
             {
-                options.AddPolicy(nameof(TopCore), policy =>
+                options.AddPolicy(nameof(TopCore.SSO), policy =>
                 {
                     policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
                 });
@@ -127,19 +127,19 @@ namespace TopCore.WebAPI
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddDependencyInjectionScanner().ScanFromAllAssemblies($"{nameof(TopCore)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
+            services.AddDependencyInjectionScanner().ScanFromAllAssemblies($"{nameof(TopCore.SSO)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
 
             services.AddLogging();
 
             AddSwagger(services);
 
             // Write out all dependency injection services
-            services.WriteOut($"{nameof(TopCore)}");
+            services.WriteOut($"{nameof(TopCore.SSO)}");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseCors(nameof(TopCore));
+            app.UseCors(nameof(TopCore.SSO));
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
@@ -175,7 +175,7 @@ namespace TopCore.WebAPI
                 options.DescribeAllEnumsAsStrings();
 
                 var apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath,
-                    "TopCore.WebAPI.xml");
+                    "TopCore.SSO.xml");
                 options.IncludeXmlComments(apiDocumentFilePath);
             });
         }
@@ -184,14 +184,14 @@ namespace TopCore.WebAPI
         {
             app.UseSwagger(c =>
             {
-                c.RouteTemplate = "api-docs/{documentName}/topcore.json";
+                c.RouteTemplate = "api-docs/{documentName}/TopCore.SSO.json";
                 c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
             });
 
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "api";
-                c.SwaggerEndpoint("/api-docs/v1/topcore.json", "Top Core API");
+                c.SwaggerEndpoint("/api-docs/v1/TopCore.SSO.json", "Top Core API");
             });
         }
 
@@ -231,7 +231,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace TopCore.WebAPI.Controllers
+namespace TopCore.SSO.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]

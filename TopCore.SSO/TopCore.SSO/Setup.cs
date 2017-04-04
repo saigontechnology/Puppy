@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.Core.Identity </Project>
+//     <Project> TopCore.SSO.Core.Identity </Project>
 //     <File>
 //         <Name> Setup </Name>
 //         <Created> 02 Apr 17 11:20:26 PM </Created>
@@ -15,16 +15,16 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using Microsoft.AspNetCore.Identity;
-using TopCore.SSO.Dummy;
-using IdentityServer4.EntityFramework.Mappers;
-using IdentityServer4.EntityFramework.DbContexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using TopCore.SSO.Models;
 
 namespace TopCore.SSO
@@ -33,7 +33,9 @@ namespace TopCore.SSO
     {
         public static void AddIdentityServer(IServiceCollection services, string connectionString, string migrationsAssembly)
         {
-            // TopCoreIdentityDbContext for Asp Net Core Identity
+            services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // TopCore.TopCoreIdentityDbContext for Asp Net Core Identity
             services.AddDbContext<TopCoreIdentityDbContext>(options => options.UseSqlServer(connectionString));
 
             // Add Identity store User into Database by Entity Framework
@@ -54,7 +56,9 @@ namespace TopCore.SSO
             //application to use cookie authentication
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationScheme = "Cookies"
+                AuthenticationScheme = "Cookies",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
             });
 
             //use OpenID Connect Provider (IdentityServer)
@@ -82,8 +86,8 @@ namespace TopCore.SSO
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                // TopCoreIdentityDbContext for Asp Net Core Identity
-                var topCoreIdentityDbContext = serviceScope.ServiceProvider.GetRequiredService<TopCoreIdentityDbContext>();
+                // TopCore.TopCoreIdentityDbContext for Asp Net Core Identity
+                var TopCoreIdentityDbContext = serviceScope.ServiceProvider.GetRequiredService<TopCoreIdentityDbContext>();
 
                 // PersistedGrantDbContext for Persisted Grant of Identity Server 4
                 var persistedGrantDbContext = serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
@@ -92,12 +96,12 @@ namespace TopCore.SSO
                 var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
 
                 // Execute Migrate
-                topCoreIdentityDbContext.Database.Migrate();
+                TopCoreIdentityDbContext.Database.Migrate();
                 persistedGrantDbContext.Database.Migrate();
                 configurationDbContext.Database.Migrate();
 
                 // Initial Data
-                foreach (var client in Dummy.Dummy.GetClients())
+                foreach (var client in Dummy.GetClients())
                 {
                     if (configurationDbContext.Clients.FirstOrDefault(c => c.ClientId == client.ClientId) == null)
                         configurationDbContext.Clients.Add(client.ToEntity());
@@ -106,7 +110,7 @@ namespace TopCore.SSO
 
                 if (!configurationDbContext.IdentityResources.Any())
                 {
-                    foreach (var resource in Dummy.Dummy.GetIdentityResources())
+                    foreach (var resource in Dummy.GetIdentityResources())
                     {
                         configurationDbContext.IdentityResources.Add(resource.ToEntity());
                     }
@@ -115,7 +119,7 @@ namespace TopCore.SSO
 
                 if (!configurationDbContext.ApiResources.Any())
                 {
-                    foreach (var resource in Dummy.Dummy.GetApiResources())
+                    foreach (var resource in Dummy.GetApiResources())
                     {
                         configurationDbContext.ApiResources.Add(resource.ToEntity());
                     }
@@ -126,7 +130,7 @@ namespace TopCore.SSO
 
                 if (!usermanager.Users.Any())
                 {
-                    foreach (var topCoreIdentityUser in Dummy.Dummy.GetUsers())
+                    foreach (var topCoreIdentityUser in Dummy.GetUsers())
                     {
                         usermanager.CreateAsync(topCoreIdentityUser, topCoreIdentityUser.Password).Wait();
                     }

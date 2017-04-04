@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using TopCore.SSO.Models;
 
-namespace TopCore.SSO.Identity.Migrations.TopCoreIdentityDb
+namespace TopCore.SSO.Migrations.TopCoreIdentityDb
 {
     [DbContext(typeof(TopCoreIdentityDbContext))]
     [Migration("20170403162312_InitialIdentityTopCore")]

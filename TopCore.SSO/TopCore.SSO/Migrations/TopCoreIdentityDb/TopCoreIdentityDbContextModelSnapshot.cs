@@ -2,10 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using TopCore.SSO.Models;
 
-namespace TopCore.SSO.Identity.Migrations.TopCoreIdentityDb
+namespace TopCore.SSO.Migrations.TopCoreIdentityDb
 {
     [DbContext(typeof(TopCoreIdentityDbContext))]
     partial class TopCoreIdentityDbContextModelSnapshot : ModelSnapshot

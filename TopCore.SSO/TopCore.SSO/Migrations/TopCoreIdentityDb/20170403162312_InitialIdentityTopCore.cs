@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System;
 
-namespace TopCore.SSO.Identity.Migrations.TopCoreIdentityDb
+namespace TopCore.SSO.Migrations.TopCoreIdentityDb
 {
     public partial class InitialIdentityTopCore : Migration
     {

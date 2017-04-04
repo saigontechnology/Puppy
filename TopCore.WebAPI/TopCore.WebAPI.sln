@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. API", "1. API", "{E9E0E23C-8584-46E1-9C51-33C3E699A39C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. WEB", "1. WEB", "{E9E0E23C-8584-46E1-9C51-33C3E699A39C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI", "TopCore.WebAPI\TopCore.WebAPI.csproj", "{FDAF49AC-B1D2-492C-A7E7-137EA19BB00C}"
 EndProject
@@ -31,11 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Core", "TopCore.Cor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FRAMEWORK", "FRAMEWORK", "{1BAE0076-5EFF-432E-AB14-06CC66B6BF90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Core", "TopCore.Framework.Core\TopCore.Framework.Core.csproj", "{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Core", "..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj", "{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Web", "TopCore.Framework.Web\TopCore.Framework.Web.csproj", "{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Web", "..\TopCore.Framework\TopCore.Framework.Web\TopCore.Framework.Web.csproj", "{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.DependencyInjection", "TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj", "{6C6898A1-7AEE-4517-9B7C-38CB13FA6C86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.DependencyInjection", "..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj", "{6C6898A1-7AEE-4517-9B7C-38CB13FA6C86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

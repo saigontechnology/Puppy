@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.Core.Identity.Dummy </Project>
+//     <Project> TopCore.SSO.Core.Identity.Dummy </Project>
 //     <File>
 //         <Name> Config </Name>
 //         <Created> 02 Apr 17 11:18:50 PM </Created>
@@ -15,13 +15,11 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Collections.Generic;
-using TopCore.SSO.Models;
 
-namespace TopCore.SSO.Dummy
+namespace TopCore.SSO.Models
 {
     public class Dummy
     {

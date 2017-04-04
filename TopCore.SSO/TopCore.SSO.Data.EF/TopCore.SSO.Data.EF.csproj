@@ -4,16 +4,16 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Copyright>http://topnguyen.net</Copyright>
-    <AssemblyName>TopCore.Data.EF</AssemblyName>
-    <RootNamespace>TopCore.Data.EF</RootNamespace>
+    <AssemblyName>TopCore.SSO.Data.EF</AssemblyName>
+    <RootNamespace>TopCore.SSO.Data.EF</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\TopCore.WebAPI\bin\</OutputPath>
+    <OutputPath>..\TopCore.SSO\bin\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\TopCore.WebAPI\bin\</OutputPath>
+    <OutputPath>..\TopCore.SSO\bin\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TopCore.Data\TopCore.Data.csproj" />
+    <ProjectReference Include="..\TopCore.SSO.Data\TopCore.SSO.Data.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
   </ItemGroup>
 </Project>

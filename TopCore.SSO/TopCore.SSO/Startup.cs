@@ -39,11 +39,12 @@ namespace TopCore.SSO
         public void ConfigureServices(IServiceCollection services)
         {
             var migrationsAssembly = typeof(Setup).GetTypeInfo().Assembly.GetName().Name;
+
             Setup.AddIdentityServer(services, Configuration.GetConnectionString("Identity"), migrationsAssembly);
 
             services.AddCors(options =>
             {
-                options.AddPolicy(nameof(TopCore), policy =>
+                options.AddPolicy(nameof(TopCore.SSO), policy =>
                 {
                     policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
                 });

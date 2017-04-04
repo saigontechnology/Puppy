@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Copyright>http://topnguyen.net</Copyright>
-    <AssemblyName>TopCore.Data.EF</AssemblyName>
-    <RootNamespace>TopCore.Data.EF</RootNamespace>
+    <AssemblyName>TopCore.WebAPI.Data.EF</AssemblyName>
+    <RootNamespace>TopCore.WebAPI.Data.EF</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TopCore.Data\TopCore.Data.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Data\TopCore.WebAPI.Data.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
   </ItemGroup>
 </Project>

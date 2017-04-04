@@ -39,7 +39,7 @@ namespace TopCore.WebAPI
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(nameof(TopCore), policy =>
+                options.AddPolicy(nameof(TopCore.WebAPI), policy =>
                 {
                     policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
                 });
@@ -56,19 +56,19 @@ namespace TopCore.WebAPI
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddDependencyInjectionScanner().ScanFromAllAssemblies($"{nameof(TopCore)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
+            services.AddDependencyInjectionScanner().ScanFromAllAssemblies($"{nameof(TopCore.WebAPI)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
 
             services.AddLogging();
 
             AddSwagger(services);
 
             // Write out all dependency injection services
-            services.WriteOut($"{nameof(TopCore)}");
+            services.WriteOut($"{nameof(TopCore.WebAPI)}");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseCors(nameof(TopCore));
+            app.UseCors(nameof(TopCore.WebAPI));
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 

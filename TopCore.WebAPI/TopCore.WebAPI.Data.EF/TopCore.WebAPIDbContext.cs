@@ -1,22 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
-using TopCore.Data.Entity;
+using TopCore.WebAPI.Data.Entity;
 
-namespace TopCore.Data.EF
+namespace TopCore.WebAPI.Data.EF
 {
-    public class TopCoreDbContext : DbContext
+    public class TopCoreWebAPIDbContext : DbContext
     {
-        public TopCoreDbContext(DbContextOptions<TopCoreDbContext> options) : base(options)
+        public TopCoreWebAPIDbContext(DbContextOptions<TopCoreWebAPIDbContext> options) : base(options)
         {
-            Debug.WriteLine($"{nameof(TopCoreDbContext)} is Created", nameof(TopCoreDbContext));
+            Debug.WriteLine($"{nameof(TopCoreWebAPIDbContext)} is Created", nameof(TopCoreWebAPIDbContext));
         }
 
         public DbSet<UserEntity> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Debug.WriteLine($"{nameof(TopCoreDbContext)} is Created", nameof(OnModelCreating));
+            Debug.WriteLine($"{nameof(TopCoreWebAPIDbContext)} is Created", nameof(OnModelCreating));
 
             // Convention Table Name is Entity Name without EntityMapping Postfix
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

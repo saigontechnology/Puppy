@@ -9,25 +9,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI", "TopCore.W
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. SERVICE", "2. SERVICE", "{61D58289-3E2A-4D42-969D-F71CFC28D462}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Service", "TopCore.Service\TopCore.Service.csproj", "{E88A84C2-6E76-4535-ACB6-59605DE8A80A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Service", "TopCore.WebAPI.Service\TopCore.WebAPI.Service.csproj", "{E88A84C2-6E76-4535-ACB6-59605DE8A80A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Service.Facade", "TopCore.Service.Facade\TopCore.Service.Facade.csproj", "{3EB28BF2-4207-4520-A73E-8D1093665814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Service.Facade", "TopCore.WebAPI.Service.Facade\TopCore.WebAPI.Service.Facade.csproj", "{3EB28BF2-4207-4520-A73E-8D1093665814}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. BLL", "3. BLL", "{9ABEABAC-0375-4CAA-9166-577A74878433}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Business", "TopCore.Business\TopCore.Business.csproj", "{BA4FB700-3F62-4054-A53A-B7FCDD2C60C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Business", "TopCore.WebAPI.Business\TopCore.WebAPI.Business.csproj", "{BA4FB700-3F62-4054-A53A-B7FCDD2C60C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Business.Logic", "TopCore.Business.Logic\TopCore.Business.Logic.csproj", "{8C5FE621-7A92-4942-959C-752BE6D8F074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Business.Logic", "TopCore.WebAPI.Business.Logic\TopCore.WebAPI.Business.Logic.csproj", "{8C5FE621-7A92-4942-959C-752BE6D8F074}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. DAL", "4. DAL", "{51CABEFC-3C8B-4599-88FB-D3E29734B372}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Data", "TopCore.Data\TopCore.Data.csproj", "{4C2BA34E-B545-48CC-8C80-E8B1C41605DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Data", "TopCore.WebAPI.Data\TopCore.WebAPI.Data.csproj", "{4C2BA34E-B545-48CC-8C80-E8B1C41605DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Data.EF", "TopCore.Data.EF\TopCore.Data.EF.csproj", "{54131D1D-4721-49B8-8CD5-18B4E194782A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Data.EF", "TopCore.WebAPI.Data.EF\TopCore.WebAPI.Data.EF.csproj", "{54131D1D-4721-49B8-8CD5-18B4E194782A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. CORE", "5. CORE", "{6126AA32-418B-454E-BB37-4478C308E5AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Core", "TopCore.Core\TopCore.Core.csproj", "{3DAA7A7B-00D3-4441-B7BA-3333A49F3C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Core", "TopCore.WebAPI.Core\TopCore.WebAPI.Core.csproj", "{3DAA7A7B-00D3-4441-B7BA-3333A49F3C5F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FRAMEWORK", "FRAMEWORK", "{1BAE0076-5EFF-432E-AB14-06CC66B6BF90}"
 EndProject

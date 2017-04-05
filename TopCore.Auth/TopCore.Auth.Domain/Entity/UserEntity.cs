@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace TopCore.Auth.Data.Entity
+namespace TopCore.Auth.Domain.Entity
 {
     public class UserEntity : IdentityUser
     {

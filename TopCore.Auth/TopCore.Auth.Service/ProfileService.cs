@@ -15,26 +15,26 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using IdentityModel;
-using IdentityServer4.Extensions;
-using IdentityServer4.Models;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TopCore.Auth.Data.Entity;
+using IdentityModel;
+using IdentityServer4.Extensions;
+using IdentityServer4.Models;
+using Microsoft.AspNetCore.Identity;
+using TopCore.Auth.Domain.Entity;
 using TopCore.Framework.DependencyInjection.Attributes;
 
-namespace TopCore.Auth.Business.Logic
+namespace TopCore.Auth.Service
 {
-    [PerRequestDependency(ServiceType = typeof(IProfileBusiness))]
-    public class ProfileBusiness : IProfileBusiness
+    [PerRequestDependency]
+    public class ProfileService
     {
         private readonly UserManager<UserEntity> _userManager;
 
-        public ProfileBusiness(UserManager<UserEntity> userManager)
+        public ProfileService(UserManager<UserEntity> userManager)
         {
             _userManager = userManager;
         }

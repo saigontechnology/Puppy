@@ -19,12 +19,16 @@
 
 using System;
 
-namespace TopCore.Auth.Data.Entity
+namespace TopCore.Auth.Domain.Entity
 {
     public abstract class EntityBase
     {
         public int Id { get; set; }
-        public string Key { get; set; }
+
+        /// <summary>
+        /// Unique key, deault is Guid string
+        /// </summary>
+        public string Key { get; set; } = Guid.NewGuid().ToString("N");
         public DateTime CreatedOnUtc { get; set; }
         public DateTime LastUpdatedOnUtc { get; set; }
     }

@@ -17,7 +17,7 @@
 
 #endregion License
 
-namespace TopCore.Auth.Data.EF
+namespace TopCore.Auth.Data
 {
     public class Program
     {

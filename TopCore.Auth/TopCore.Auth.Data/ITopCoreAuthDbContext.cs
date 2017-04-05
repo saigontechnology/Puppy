@@ -18,14 +18,12 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
-using TopCore.Auth.Data.Entity;
+using TopCore.Auth.Domain.Entity;
 
 namespace TopCore.Auth.Data
 {
     public interface ITopCoreAuthDbContext
     {
-        DbSet<EntityBase> Users { get; set; }
-
-        void OnModelCreating(ModelBuilder builder);
+        DbSet<UserEntity> UserEntities { get; set; }
     }
 }

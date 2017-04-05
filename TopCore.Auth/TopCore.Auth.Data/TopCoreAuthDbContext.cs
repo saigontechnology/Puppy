@@ -2,17 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
+using TopCore.Auth.Domain.Entity;
+using TopCore.Framework.DependencyInjection.Attributes;
 
-namespace TopCore.Auth.Data.EF
+namespace TopCore.Auth.Data
 {
-    public class TopCoreAuthDbContext : IdentityDbContext<Entity.UserEntity>
+    [PerRequestDependency]
+    public class TopCoreAuthDbContext : IdentityDbContext<UserEntity>
     {
         public TopCoreAuthDbContext(DbContextOptions<TopCoreAuthDbContext> options) : base(options)
         {
             Debug.WriteLine($"{nameof(TopCoreAuthDbContext)} is Created", nameof(TopCoreAuthDbContext));
         }
 
-        public DbSet<Entity.UserEntity> UserEntities { get; set; }
+        public DbSet<UserEntity> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

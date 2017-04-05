@@ -5,24 +5,24 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.Framework.Web </Project>
 //     <File> 
-//         <Name> ProgramHelper.cs </Name>
+//         <Name> WebHostBuilderExtension </Name>
 //         <Created> 28 03 2017 10:08:49 AM </Created>
 //         <Key> 26578273-3F40-4631-A1E7-6C33F72AD452 </Key>
 //     </File>
 //     <Summary>
-//         Program Helper for Web Project
+//         WebHostBuilderExtension
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Microsoft.AspNetCore.Hosting;
 
 namespace TopCore.Framework.Web
 {
@@ -35,19 +35,20 @@ namespace TopCore.Framework.Web
         public static void RunWithBrowser(this IWebHostBuilder hostBuilder)
         {
             var configFileFullPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "launchSettings.json");
-            var sectionQuery = $"profiles:{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}:launchUrl";
+            string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var sectionQuery = $"profiles:{environmentName}:launchUrl";
             var domainUrl = Core.ConfigHelper.GetValue(configFileFullPath, sectionQuery);
-            RunWithBrowser(hostBuilder, domainUrl);
+            RunWithBrowser(hostBuilder, domainUrl, environmentName);
         }
-
+           
         /// <summary>
         ///     Set host listener for domain URL and start it in browser
         /// </summary>
         /// <param name="hostBuilder"></param>
         /// <param name="domainUrl"></param>
-        public static void RunWithBrowser(this IWebHostBuilder hostBuilder, string domainUrl)
+        public static void RunWithBrowser(this IWebHostBuilder hostBuilder, string domainUrl, string environmentName)
         {
-            Console.Title = domainUrl;
+            Console.Title = $"[{environmentName}] {domainUrl}";
 
             // Update domain URL for builder
             hostBuilder.UseUrls(domainUrl);
@@ -77,7 +78,7 @@ namespace TopCore.Framework.Web
                 }
                 catch
                 {
-                    Debug.WriteLine($"{nameof(StartBrowser)} catch!");
+                    Console.WriteLine($"{nameof(StartBrowser)} catch!");
                 }
             }).Start();
         }

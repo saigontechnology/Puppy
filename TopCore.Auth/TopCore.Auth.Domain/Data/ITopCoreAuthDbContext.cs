@@ -1,29 +1,23 @@
 ﻿#region	License
-
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.Auth.Data </Project>
+//     <Project> TopCore.Auth.Data.Interfaces </Project>
 //     <File>
 //         <Name> ITopCoreAuthDbContext </Name>
-//         <Created> 05 Apr 17 12:38:49 AM </Created>
-//         <Key> e78cd1df-82a0-4ec6-bcbc-9b9f16ea8f25 </Key>
+//         <Created> 06 Apr 17 1:04:55 AM </Created>
+//         <Key> a948f47f-ed1a-4272-a845-47dc3490d0d5 </Key>
 //     </File>
 //     <Summary>
 //         ITopCoreAuthDbContext
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
-
 #endregion License
 
-using Microsoft.EntityFrameworkCore;
-using TopCore.Auth.Domain.Entity;
-
-namespace TopCore.Auth.Data
+namespace TopCore.Auth.Domain.Data
 {
-    public interface ITopCoreAuthDbContext
+	public interface ITopCoreAuthDbContext
     {
-        DbSet<UserEntity> UserEntities { get; set; }
-    }
+	}
 }

@@ -168,9 +168,7 @@ namespace TopCore.Framework.DependencyInjection
                 return "Per Resolve";
             }
             return
-                serviceLifetime == ServiceLifetime.Scoped
-                ? "Per Request"
-                : "Singleton";
+                serviceLifetime == ServiceLifetime.Scoped ? "Per Request" : "Singleton";
         }
     }
 }

@@ -5,20 +5,12 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Copyright>http://topnguyen.net</Copyright>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\TopCore.Auth\bin\</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\TopCore.Auth\bin\</OutputPath>
-  </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
-    <ProjectReference Include="..\TopCore.Auth.Data\TopCore.Auth.Data.csproj" />
     <ProjectReference Include="..\TopCore.Auth.Domain\TopCore.Auth.Domain.csproj" />
+    <ProjectReference Include="..\TopCore.Auth.Data\TopCore.Auth.Data.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
   </ItemGroup>
 
 </Project>

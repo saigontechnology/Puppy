@@ -24,13 +24,14 @@ using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
-using TopCore.Auth.Domain.Entity;
+using TopCore.Auth.Domain.Entities;
+using TopCore.Auth.Domain.Services;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Service
 {
-    [PerRequestDependency]
-    public class ProfileService
+    [PerRequestDependency(ServiceType = typeof(IProfileService))]
+    public class ProfileService : IProfileService, IdentityServer4.Services.IProfileService
     {
         private readonly UserManager<UserEntity> _userManager;
 

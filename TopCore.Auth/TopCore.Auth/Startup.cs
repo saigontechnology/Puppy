@@ -14,8 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;
 using TopCore.Auth.Data;
-using TopCore.Auth.Domain.Entity;
-using TopCore.Auth.Domain.Models;
+using TopCore.Auth.Domain.Entities;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.Auth
@@ -33,86 +32,99 @@ namespace TopCore.Auth
                 .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
+            {
                 builder.AddUserSecrets<Startup>();
+            }
 
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
+        private static IConfigurationRoot Configuration { get; set; }
 
-        public IHostingEnvironment Environment { get; }
-
-        //------------------------------------------------------------
-        // Global
-        //------------------------------------------------------------
+        private static IHostingEnvironment Environment { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityServerStartupHelper.Add(services, Configuration.GetConnectionString(Environment.EnvironmentName));
-
-            services.AddCors(
-                options =>
-                {
-                    options.AddPolicy($"{nameof(TopCore)}.{nameof(Auth)}",
-                        policy => { policy.WithOrigins().AllowAnyHeader().AllowAnyMethod(); });
-                });
-
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-                // Indented for Development only
-                options.SerializerSettings.Formatting = Environment.IsDevelopment()
-                    ? Formatting.Indented
-                    : Formatting.None;
-
-                // Serialize Json as Camel case
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
-
-            services.AddDependencyInjectionScanner()
-                .ScanFromAllAssemblies($"{nameof(TopCore)}.{nameof(Auth)}.*.dll",
-                    Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
-
-            services.AddLogging();
-
+            MvcStartupHelper.Add(services);
             SwaggerStartupHelper.Add(services);
-
-            // Write out all dependency injection services
-            services.WriteOut($"{nameof(TopCore)}.{nameof(Auth)}");
+            DependencyInjectionScannerHelper.Add(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseCors($"{nameof(TopCore)}.{nameof(Auth)}");
-            app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
-            UseLogFactory(loggerFactory);
-            UseExceptionPage(app, env);
+            MvcStartupHelper.Use(app);
+            LogStartupHelper.Use(loggerFactory);
             SwaggerStartupHelper.Use(app);
             IdentityServerStartupHelper.Use(app);
         }
 
-        private void UseLogFactory(ILoggerFactory loggerFactory)
+        internal static class DependencyInjectionScannerHelper
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            public static void Add(IServiceCollection services)
+            {
+                services
+                    .AddDependencyInjectionScanner()
+                    .ScanFromAllAssemblies($"{nameof(TopCore)}.{nameof(Auth)}.*.dll", Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));
+
+                // Write out all dependency injection services
+                services.WriteOut($"{nameof(TopCore)}.{nameof(Auth)}");
+            }
         }
 
-        private static void UseExceptionPage(IApplicationBuilder app, IHostingEnvironment env)
+        internal static class MvcStartupHelper
         {
-            if (env.IsDevelopment())
+            public static void Add(IServiceCollection services)
+            {
+                services.AddMvc().AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+                    // Indented for Development only
+                    options.SerializerSettings.Formatting = Environment.IsDevelopment() ? Formatting.Indented : Formatting.None;
+
+                    // Serialize Json as Camel case
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
+            }
+            public static void Use(IApplicationBuilder app)
             {
                 app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStaticFiles();
+                app.UseMvcWithDefaultRoute();
             }
         }
 
-        public static class SwaggerStartupHelper
+        internal static class LogStartupHelper
+        {
+            public static void Add(IServiceCollection services)
+            {
+                services.AddLogging();
+            }
+
+            public static void Use(ILoggerFactory loggerFactory)
+            {
+                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+                loggerFactory.AddDebug();
+            }
+        }
+
+        internal static class ExceptionStartupHelper
+        {
+            public static void Use(IApplicationBuilder app)
+            {
+                if (Environment.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    app.UseExceptionHandler("/Home/Error");
+                }
+            }
+        }
+
+        internal static class SwaggerStartupHelper
         {
             public static void Add(IServiceCollection services)
             {
@@ -132,8 +144,7 @@ namespace TopCore.Auth
 
                     options.DescribeAllEnumsAsStrings();
 
-                    var apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath,
-                        "TopCore.Auth.xml");
+                    var apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TopCore.Auth.xml");
                     options.IncludeXmlComments(apiDocumentFilePath);
                 });
             }
@@ -154,10 +165,19 @@ namespace TopCore.Auth
             }
         }
 
-        public static class IdentityServerStartupHelper
+        internal static class IdentityServerStartupHelper
         {
             public static void Add(IServiceCollection services, string connectionString)
             {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy($"{nameof(TopCore)}.{nameof(Auth)}",
+                        policy =>
+                        {
+                            policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
+                        });
+                });
+
                 services.AddAuthentication(
                     options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -167,7 +187,7 @@ namespace TopCore.Auth
                 // Add Identity store User into Database by Entity Framework
                 services.AddIdentity<UserEntity, IdentityRole>().AddEntityFrameworkStores<TopCoreAuthDbContext>();
 
-                var migrationsAssembly = typeof(DataModule).GetTypeInfo().Assembly.GetName().Name;
+                var migrationsAssembly = typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name;
 
                 // Config and Operation store of Identity Server 4
                 services.AddIdentityServer(options =>
@@ -177,19 +197,15 @@ namespace TopCore.Auth
                     })
                     .AddTemporarySigningCredential()
                     //.AddSigningCredential() // TODO Add Later
-                    .AddConfigurationStore(
-                        builder =>
-                            builder.UseSqlServer(connectionString,
-                                options => options.MigrationsAssembly(migrationsAssembly)))
-                    .AddOperationalStore(
-                        builder =>
-                            builder.UseSqlServer(connectionString,
-                                options => options.MigrationsAssembly(migrationsAssembly)))
+                    .AddConfigurationStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)))
+                    .AddOperationalStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)))
                     .AddAspNetIdentity<UserEntity>();
             }
 
             public static void Use(IApplicationBuilder app)
             {
+                app.UseCors($"{nameof(TopCore)}.{nameof(Auth)}");
+
                 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
                 //application to use cookie authentication

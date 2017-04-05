@@ -5,30 +5,29 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.Auth.Data </Project>
 //     <File> 
-//         <Name> ConfigurationDbContext.SSOContextFactory.cs </Name>
+//         <Name> PersistedGrantDbContextFactory </Name>
 //         <Created> 28 03 2017 05:50:31 PM </Created>
 //         <Key> 0679F181-B40B-49BF-A6A6-1AFA54A83376 </Key>
 //     </File>
 //     <Summary>
-//         ConfigurationDbContext.SSOContextFactory
+//         PersistedGrantDbContextFactory.cs
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Reflection;
-using IdentityServer4.EntityFramework.DbContexts;
-using TopCore.Auth.Domain.Models;
 using TopCore.Framework.Core;
 
-namespace TopCore.Auth.Data
+namespace TopCore.Auth.Data.Factory
 {
-    public class ConfigurationDbContextFactory : IDbContextFactory<ConfigurationDbContext>
+    public class PersistedGrantDbContextFactory : IDbContextFactory<PersistedGrantDbContext>
     {
-        public ConfigurationDbContext Create(DbContextFactoryOptions options)
+        public PersistedGrantDbContext Create(DbContextFactoryOptions options)
         {
             var connectionString = GetConnectionString(options);
             return CreateCoreContext(connectionString);
@@ -45,11 +44,15 @@ namespace TopCore.Auth.Data
             return connectionString;
         }
 
-        private static ConfigurationDbContext CreateCoreContext(string connectionString)
+        private static PersistedGrantDbContext CreateCoreContext(string connectionString)
         {
-            var builder = new DbContextOptionsBuilder<ConfigurationDbContext>();
-            builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(DataModule).GetTypeInfo().Assembly.GetName().Name));
-            return new ConfigurationDbContext(builder.Options, null);
+            var builder = new DbContextOptionsBuilder<PersistedGrantDbContext>();
+            builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+            return new PersistedGrantDbContext(builder.Options,
+                new IdentityServer4.EntityFramework.Options.OperationalStoreOptions
+                {
+                    DefaultSchema = "dbo"
+                });
         }
     }
 }

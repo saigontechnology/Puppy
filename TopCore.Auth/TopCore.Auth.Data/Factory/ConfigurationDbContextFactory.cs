@@ -5,29 +5,29 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.Auth.Data </Project>
 //     <File> 
-//         <Name> TopCoreAuthDbContext.SSOContextFactory.cs </Name>
+//         <Name> ConfigurationDbContextFactory.cs </Name>
 //         <Created> 28 03 2017 05:50:31 PM </Created>
 //         <Key> 0679F181-B40B-49BF-A6A6-1AFA54A83376 </Key>
 //     </File>
 //     <Summary>
-//         TopCoreAuthDbContext.SSOContextFactory
+//         ConfigurationDbContextFactory
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using TopCore.Auth.Domain.Models;
+using System.Reflection;
+using IdentityServer4.EntityFramework.DbContexts;
 using TopCore.Framework.Core;
 
-namespace TopCore.Auth.Data
+namespace TopCore.Auth.Data.Factory
 {
-    public class TopCoreAuthDbContextFactory : IDbContextFactory<TopCoreAuthDbContext>
+    public class ConfigurationDbContextFactory : IDbContextFactory<ConfigurationDbContext>
     {
-        public TopCoreAuthDbContext Create(DbContextFactoryOptions options)
+        public ConfigurationDbContext Create(DbContextFactoryOptions options)
         {
             var connectionString = GetConnectionString(options);
             return CreateCoreContext(connectionString);
@@ -44,11 +44,15 @@ namespace TopCore.Auth.Data
             return connectionString;
         }
 
-        private static TopCoreAuthDbContext CreateCoreContext(string connectionString)
+        private static ConfigurationDbContext CreateCoreContext(string connectionString)
         {
-            var builder = new DbContextOptionsBuilder<TopCoreAuthDbContext>();
-            builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(DataModule).GetTypeInfo().Assembly.GetName().Name));
-            return new TopCoreAuthDbContext(builder.Options);
+            var builder = new DbContextOptionsBuilder<ConfigurationDbContext>();
+            builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+            return new ConfigurationDbContext(builder.Options,
+                new IdentityServer4.EntityFramework.Options.ConfigurationStoreOptions
+                {
+                    DefaultSchema = "dbo"
+                });
         }
     }
 }

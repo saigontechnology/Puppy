@@ -5,30 +5,29 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.Auth.Data </Project>
 //     <File> 
-//         <Name> PersistedGrantDbContext.SSOContextFactory.cs </Name>
+//         <Name> TopCoreAuthDbContext.SSOContextFactory.cs </Name>
 //         <Created> 28 03 2017 05:50:31 PM </Created>
 //         <Key> 0679F181-B40B-49BF-A6A6-1AFA54A83376 </Key>
 //     </File>
 //     <Summary>
-//         PersistedGrantDbContext.SSOContextFactory
+//         TopCoreAuthDbContext.SSOContextFactory
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
-using IdentityServer4.EntityFramework.DbContexts;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using TopCore.Auth.Domain.Models;
-using TopCore.Framework.Core;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace TopCore.Auth.Data
+using TopCore.Framework.Core;
+
+namespace TopCore.Auth.Data.Factory
 {
-    public class PersistedGrantDbContextFactory : IDbContextFactory<PersistedGrantDbContext>
+    public class TopCoreAuthDbContextFactory : IDbContextFactory<TopCoreAuthDbContext>
     {
-        public PersistedGrantDbContext Create(DbContextFactoryOptions options)
+        public TopCoreAuthDbContext Create(DbContextFactoryOptions options)
         {
             var connectionString = GetConnectionString(options);
             return CreateCoreContext(connectionString);
@@ -45,11 +44,11 @@ namespace TopCore.Auth.Data
             return connectionString;
         }
 
-        private static PersistedGrantDbContext CreateCoreContext(string connectionString)
+        private static TopCoreAuthDbContext CreateCoreContext(string connectionString)
         {
-            var builder = new DbContextOptionsBuilder<PersistedGrantDbContext>();
-            builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(DataModule).GetTypeInfo().Assembly.GetName().Name));
-            return new PersistedGrantDbContext(builder.Options, null);
+            var builder = new DbContextOptionsBuilder<TopCoreAuthDbContext>();
+            builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+            return new TopCoreAuthDbContext(builder.Options);
         }
     }
 }

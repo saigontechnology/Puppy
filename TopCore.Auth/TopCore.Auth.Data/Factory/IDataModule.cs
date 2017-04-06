@@ -2,24 +2,22 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.Auth.Domain.Entity </Project>
+//     <Project> TopCore.Auth.Data.Interfaces </Project>
 //     <File>
-//         <Name> UserEntity </Name>
-//         <Created> 06 Apr 17 1:07:54 AM </Created>
-//         <Key> 1bf15074-54a1-4feb-ac8a-13141334a86d </Key>
+//         <Name> IDataModule </Name>
+//         <Created> 06 Apr 17 1:05:08 AM </Created>
+//         <Key> a37ba8f8-de9c-41d3-9092-b452689feeda </Key>
 //     </File>
 //     <Summary>
-//         UserEntity
+//         IDataModule
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using TopCore.Framework.EF;
-
-namespace TopCore.Auth.Domain.Entities
+namespace TopCore.Auth.Data.Factory
 {
-    public class UserEntity : IdentityUserEntityBase
+    public interface IDataModule
     {
     }
 }

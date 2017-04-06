@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace TopCore.Auth.Domain.Services
 {
-	public interface ISeedAuthService
+    public interface ISeedAuthService
     {
         Task SeedAuthDatabase();
     }

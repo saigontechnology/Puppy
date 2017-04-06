@@ -15,11 +15,11 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using TopCore.Framework.EF;
+using IdentityServer4.EntityFramework.Entities;
 
 namespace TopCore.Auth.Domain.Entities
 {
-    public class UserEntity : IdentityUserEntityBase
+    public class ApiResourceEntity : ApiResource
     {
     }
 }

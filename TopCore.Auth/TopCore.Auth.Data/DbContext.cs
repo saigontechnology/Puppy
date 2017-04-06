@@ -20,12 +20,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using TopCore.Auth.Data.EntityMapping;
+using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Framework.Core;
@@ -48,10 +48,17 @@ namespace TopCore.Auth.Data
         }
 
         public DbSet<UserEntity> UserEntities { get; set; }
+        public DbSet<ClientEntity> ClientEntities { get; set; }
+        public DbSet<ApiResourceEntity> ApiResourceEntities { get; set; }
+        public DbSet<IdentityResourceEntity> IdentityResourceEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // TODO need add config here
             modelBuilder.AddConfiguration(new UserEntityMapping());
+            modelBuilder.AddConfiguration(new ClientEntityMapping());
+            modelBuilder.AddConfiguration(new ApiResourceEntityMapping());
+            modelBuilder.AddConfiguration(new IdentityResourceEntityMapping());
 
             // Convention Table Name is Entity Name without EntityMapping Postfix
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

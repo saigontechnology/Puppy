@@ -17,7 +17,7 @@
 
 namespace TopCore.Auth.Domain.Services
 {
-	public interface IProfileService
+    public interface IProfileService
     {
-	}
+    }
 }

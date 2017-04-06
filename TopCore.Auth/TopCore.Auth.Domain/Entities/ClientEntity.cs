@@ -2,22 +2,25 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.Auth.Data.Interfaces </Project>
+//     <Project> TopCore.Auth.Domain.Entity </Project>
 //     <File>
-//         <Name> IDataModule </Name>
-//         <Created> 06 Apr 17 1:05:08 AM </Created>
-//         <Key> a37ba8f8-de9c-41d3-9092-b452689feeda </Key>
+//         <Name> UserEntity </Name>
+//         <Created> 06 Apr 17 1:07:54 AM </Created>
+//         <Key> 1bf15074-54a1-4feb-ac8a-13141334a86d </Key>
 //     </File>
 //     <Summary>
-//         IDataModule
+//         UserEntity
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-namespace TopCore.Auth.Data
+
+using IdentityServer4.EntityFramework.Entities;
+
+namespace TopCore.Auth.Domain.Entities
 {
-	public interface IDataModule
+    public class ClientEntity : Client
     {
-	}
+    }
 }

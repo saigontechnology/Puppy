@@ -15,10 +15,12 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System.Threading.Tasks;
+
 namespace TopCore.Auth.Domain.Services
 {
 	public interface IDataMigrationService
     {
-        void MigrateDatabase();
+        Task MigrateDatabase();
     }
 }

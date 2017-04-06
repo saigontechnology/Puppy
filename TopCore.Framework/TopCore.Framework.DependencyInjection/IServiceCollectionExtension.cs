@@ -90,5 +90,10 @@ namespace TopCore.Framework.DependencyInjection
             }
             return scanner;
         }
+
+        public static T Resolve<T>(this IServiceCollection services) where T : class
+        {
+            return services.BuildServiceProvider().GetService<T>();
+        }
     }
 }

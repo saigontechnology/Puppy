@@ -25,9 +25,9 @@ using TopCore.Framework.Core;
 
 namespace TopCore.Auth.Data.Factory
 {
-    public class TopCoreAuthDbContextFactory : IDbContextFactory<TopCoreAuthDbContext>
+    public class TopCoreAuthDbContextFactory : IDbContextFactory<DbContext>
     {
-        public TopCoreAuthDbContext Create(DbContextFactoryOptions options)
+        public DbContext Create(DbContextFactoryOptions options)
         {
             var connectionString = GetConnectionString(options);
             return CreateCoreContext(connectionString);
@@ -44,11 +44,11 @@ namespace TopCore.Auth.Data.Factory
             return connectionString;
         }
 
-        private static TopCoreAuthDbContext CreateCoreContext(string connectionString)
+        private static DbContext CreateCoreContext(string connectionString)
         {
-            var builder = new DbContextOptionsBuilder<TopCoreAuthDbContext>();
+            var builder = new DbContextOptionsBuilder<DbContext>();
             builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
-            return new TopCoreAuthDbContext(builder.Options);
+            return new DbContext(builder.Options);
         }
     }
 }

@@ -20,17 +20,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TopCore.Auth.Domain.Entities
+namespace TopCore.Framework.EF
 {
     public abstract class EntityBase
     {
-        [Key]
-        public int Id { get; set; }
-
         /// <summary>
-        /// Unique key
+        ///     Unique key
         /// </summary>
-        public Guid Key { get; set; } = Guid.NewGuid();
+        public Guid Key { get; set; }
 
         public bool IsDeleted { get; set; }
 

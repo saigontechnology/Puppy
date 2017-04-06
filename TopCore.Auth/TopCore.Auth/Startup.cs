@@ -15,6 +15,7 @@ using System.IO;
 using System.Reflection;
 using TopCore.Auth.Data;
 using TopCore.Auth.Domain.Entities;
+using TopCore.Auth.Domain.Services;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.Auth
@@ -59,6 +60,8 @@ namespace TopCore.Auth
             IdentityServerStartupHelper.Use(app);
         }
 
+        #region Helper
+
         internal static class DependencyInjectionScannerHelper
         {
             public static void Add(IServiceCollection services)
@@ -87,6 +90,7 @@ namespace TopCore.Auth
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
             }
+
             public static void Use(IApplicationBuilder app)
             {
                 app.UseBrowserLink();
@@ -182,10 +186,10 @@ namespace TopCore.Auth
                     options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
                 // TopCore.TopCoreIdentityDbContext for Asp Net Core Identity
-                services.AddDbContext<TopCoreAuthDbContext>(options => options.UseSqlServer(connectionString));
+                services.AddDbContext<Data.DbContext>(options => options.UseSqlServer(connectionString));
 
                 // Add Identity store User into Database by Entity Framework
-                services.AddIdentity<UserEntity, IdentityRole>().AddEntityFrameworkStores<TopCoreAuthDbContext>();
+                services.AddIdentity<UserEntity, IdentityRole>().AddEntityFrameworkStores<Data.DbContext>();
 
                 var migrationsAssembly = typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name;
 
@@ -232,5 +236,7 @@ namespace TopCore.Auth
                 app.UseIdentityServer();
             }
         }
+
+        #endregion Helper
     }
 }

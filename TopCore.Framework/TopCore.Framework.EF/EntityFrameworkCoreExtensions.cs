@@ -9,7 +9,7 @@
 //         <Key> 256b95f5-6d1d-403d-9502-b55e1560f92d </Key>
 //     </File>
 //     <Summary>
-//         EntityFrameworkCoreExtensions
+//         Keep namespace Microsoft.EntityFrameworkCore for resolve the conflict or don't met it.
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------

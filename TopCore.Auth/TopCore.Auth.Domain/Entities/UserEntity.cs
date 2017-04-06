@@ -15,12 +15,11 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using TopCore.Framework.EF;
 
 namespace TopCore.Auth.Domain.Entities
 {
-    public class UserEntity : IdentityUser
+    public class UserEntity : IdentityUserEntityBase
     {
         public UserEntity()
         {
@@ -29,7 +28,5 @@ namespace TopCore.Auth.Domain.Entities
         public UserEntity(string userName) : base(userName)
         {
         }
-
-        public string Password { get; set; }
     }
 }

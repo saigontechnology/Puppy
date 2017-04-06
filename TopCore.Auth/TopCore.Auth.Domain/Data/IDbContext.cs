@@ -2,22 +2,24 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.Auth.Data.Interfaces </Project>
+//     <Project> TopCore.Auth.Domain.Data </Project>
 //     <File>
-//         <Name> ITopCoreAuthDbContext </Name>
-//         <Created> 06 Apr 17 1:04:55 AM </Created>
-//         <Key> a948f47f-ed1a-4272-a845-47dc3490d0d5 </Key>
+//         <Name> IDbContext </Name>
+//         <Created> 06 Apr 17 1:18:11 PM </Created>
+//         <Key> 87e0de9a-30e5-4263-bb7d-198f651df622 </Key>
 //     </File>
 //     <Summary>
-//         ITopCoreAuthDbContext
+//         IDbContext
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using TopCore.Framework.EF.Interfaces;
+
 namespace TopCore.Auth.Domain.Data
 {
-	public interface ITopCoreAuthDbContext
+    public interface IDbContext : IBaseDbContext
     {
-	}
+    }
 }

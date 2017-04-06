@@ -5,11 +5,10 @@
 Setup by Command Windows of current project 
 
 ```markup
-dotnet ef migrations add InitialTopCoreAuth -c TopCoreAuthDbContext -o Migrations/TopCoreAuthDb
+dotnet ef migrations add InitialTopCoreAuth -c DbContext -o Migrations/TopCoreAuthDb
 dotnet ef migrations add InitialPersistedGrant -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
 dotnet ef migrations add InitialConfiguration -c ConfigurationDbContext -o Migrations/ConfigurationDb
-
-dotnet ef database update -c TopCoreAuthDbContext -v
+dotnet ef database update -c DbContext -v
 dotnet ef database update -c PersistedGrantDbContext -v
 dotnet ef database update -c ConfigurationDbContext -v
 ```

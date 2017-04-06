@@ -7,8 +7,8 @@ using TopCore.Auth.Data;
 
 namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
 {
-    [DbContext(typeof(TopCoreAuthDbContext))]
-    partial class TopCoreAuthDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DbContext))]
+    partial class DbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -123,7 +123,7 @@ namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TopCore.Auth.Domain.Entity.UserEntity", b =>
+            modelBuilder.Entity("TopCore.Auth.Domain.Entities.UserEntity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -133,10 +133,20 @@ namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("CreatedOnUtc");
+
+                    b.Property<DateTime?>("DeletedOnUtc");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<Guid>("Key");
+
+                    b.Property<DateTime?>("LastUpdatedOnUtc");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -147,8 +157,6 @@ namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Password");
 
                     b.Property<string>("PasswordHash");
 
@@ -162,6 +170,10 @@ namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -185,7 +197,7 @@ namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TopCore.Auth.Domain.Entity.UserEntity")
+                    b.HasOne("TopCore.Auth.Domain.Entities.UserEntity")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -193,7 +205,7 @@ namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TopCore.Auth.Domain.Entity.UserEntity")
+                    b.HasOne("TopCore.Auth.Domain.Entities.UserEntity")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -206,7 +218,7 @@ namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TopCore.Auth.Domain.Entity.UserEntity")
+                    b.HasOne("TopCore.Auth.Domain.Entities.UserEntity")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

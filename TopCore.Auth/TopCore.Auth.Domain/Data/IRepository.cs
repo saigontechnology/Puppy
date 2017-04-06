@@ -2,23 +2,25 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.Auth.Data.Interfaces </Project>
+//     <Project> TopCore.Auth.Domain.Data </Project>
 //     <File>
-//         <Name> IDataMigrationRepository </Name>
-//         <Created> 06 Apr 17 2:28:18 AM </Created>
-//         <Key> d5e0adc1-20c8-40c3-9c6a-95bc42778492 </Key>
+//         <Name> IRepository </Name>
+//         <Created> 06 Apr 17 1:10:50 PM </Created>
+//         <Key> 555866df-387c-45fc-9832-32b572d932eb </Key>
 //     </File>
 //     <Summary>
-//         IDataMigrationRepository
+//         IRepository
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using TopCore.Framework.EF;
+using TopCore.Framework.EF.Interfaces;
+
 namespace TopCore.Auth.Domain.Data
 {
-	public interface IDataMigrationRepository
-	{
-	    void MigrateDatabase();
+    public interface IRepository<TEntity> : IBaseRepository<TEntity> where TEntity : EntityBase
+    {
     }
 }

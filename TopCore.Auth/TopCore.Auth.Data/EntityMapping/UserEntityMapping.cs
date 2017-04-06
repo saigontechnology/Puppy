@@ -10,6 +10,10 @@ namespace TopCore.Auth.Data.EntityMapping
         {
             builder.ToTable(nameof(UserEntityMapping));
             builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).IsRequired();
+            builder.Property(x => x.Key).IsRequired();
+            builder.Property(x => x.Version).IsRowVersion();
         }
     }
 }

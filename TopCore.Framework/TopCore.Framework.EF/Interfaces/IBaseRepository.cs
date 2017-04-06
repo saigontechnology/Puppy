@@ -24,7 +24,7 @@ using System.Linq.Expressions;
 
 namespace TopCore.Framework.EF.Interfaces
 {
-    public interface IBaseRepository<TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity>
     {
         bool Any(Expression<Func<TEntity, bool>> predicate);
 

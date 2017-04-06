@@ -5,8 +5,14 @@
 Setup by Command Windows of current project 
 
 ```markup
-dotnet ef migrations add InitialTopCoreAuth -c DbContext -o Migrations
+dotnet ef migrations add InitialTopCoreAuth -c DbContext -o Migrations/TopCoreAuthDb
 dotnet ef database update -c DbContext -v
+
+dotnet ef migrations add InitialPersistedGrant -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
+dotnet ef database update -c PersistedGrantDbContext -v
+
+dotnet ef migrations add InitialConfiguration -c ConfigurationDbContext -o Migrations/ConfigurationDb
+dotnet ef database update -c ConfigurationDbContext -v
 ```
 
 
@@ -14,12 +20,12 @@ dotnet ef database update -c DbContext -v
 
 Like
 ```markup
-add-migration InitialPersistedGrant -c DbContext -o Migrations
+add-migration InitialPersistedGrant -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
 ```
 
 or Try to use
 ```markup
-update-database -v -c DbContext
+update-database -v -c PersistedGrantDbContext
 ```
 **It will hang the Console and never stop without any result.**
 

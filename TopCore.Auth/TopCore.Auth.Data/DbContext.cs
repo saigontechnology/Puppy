@@ -15,6 +15,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using IdentityServer4.EntityFramework.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -48,23 +49,15 @@ namespace TopCore.Auth.Data
         }
 
         public DbSet<UserEntity> UserEntities { get; set; }
-        public DbSet<ClientEntity> ClientEntities { get; set; }
-        public DbSet<ApiResourceEntity> ApiResourceEntities { get; set; }
-        public DbSet<IdentityResourceEntity> IdentityResourceEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // TODO need add config here
             modelBuilder.AddConfiguration(new UserEntityMapping());
-            modelBuilder.AddConfiguration(new ClientEntityMapping());
-            modelBuilder.AddConfiguration(new ApiResourceEntityMapping());
-            modelBuilder.AddConfiguration(new IdentityResourceEntityMapping());
 
-            // Convention Table Name is Entity Name without EntityMapping Postfix
+            // Convention Table Name is Entity name without Postfix
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
-                entity.Relational().TableName = entity.DisplayName().Replace("Entity", string.Empty).Replace("Mapping", string.Empty);
-                Console.WriteLine($"Table {entity.Relational().TableName} is Created", nameof(DbContext));
+                entity.Relational().TableName = entity.ClrType.Name.Replace(nameof(EntityMapping), string.Empty);
             }
 
             base.OnModelCreating(modelBuilder);

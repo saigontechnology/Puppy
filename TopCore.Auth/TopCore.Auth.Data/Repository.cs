@@ -27,7 +27,7 @@ namespace TopCore.Auth.Data
     {
         public Repository(IDbContext dbContext) : base(dbContext)
         {
-            Console.WriteLine($"{nameof(Repository<TEntity>)} is Created", nameof(Repository<TEntity>));
+            Console.WriteLine($"{nameof(TEntity)} is Created", nameof(Repository<TEntity>));
         }
     }
 }

@@ -19,7 +19,7 @@ using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Auth.Domain.Data
 {
-    public interface IRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> : IBaseRepository<TEntity>
     {
     }
 }

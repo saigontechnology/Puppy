@@ -1,4 +1,6 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿using System;
+using System.EnterpriseServices;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +16,10 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;
+using IdentityServer4;
 using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.Models;
+using Microsoft.AspNetCore.Authentication;
 using TopCore.Auth.Data;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
@@ -189,13 +194,18 @@ namespace TopCore.Auth
                     options.AddPolicy($"{nameof(TopCore)}.{nameof(Auth)}",
                         policy =>
                         {
-                            policy.WithOrigins().AllowAnyHeader().AllowAnyMethod();
+                            policy
+                                .WithOrigins()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
                         });
                 });
 
                 services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
-                services.AddDbContext<Data.DbContext>(options => options.UseSqlServer(connectionString));
+                var migrationsAssembly = typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name;
+
+                services.AddDbContext<Data.DbContext>(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)));
 
                 // Add Identity store User into Database by Entity Framework
                 services.AddIdentity<UserEntity, IdentityRole>(o =>
@@ -209,8 +219,6 @@ namespace TopCore.Auth
                 .AddEntityFrameworkStores<Data.DbContext>()
                 .AddDefaultTokenProviders();
 
-                var migrationsAssembly = typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name;
-
                 // Config and Operation store of Identity Server 4
                 services.AddIdentityServer(options =>
                     {
@@ -219,8 +227,10 @@ namespace TopCore.Auth
                     })
                     .AddTemporarySigningCredential()
                     //.AddSigningCredential() // TODO Add Later
-                    .AddConfigurationStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)))
-                    .AddOperationalStore(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)))
+                    .AddConfigurationStore(builder => builder.UseSqlServer(connectionString,
+                        options => options.MigrationsAssembly(migrationsAssembly)))
+                    .AddOperationalStore(builder => builder.UseSqlServer(connectionString,
+                        options => options.MigrationsAssembly(migrationsAssembly)))
                     .AddAspNetIdentity<UserEntity>();
             }
 
@@ -235,18 +245,29 @@ namespace TopCore.Auth
                 {
                     AuthenticationScheme = "Cookies",
                     AutomaticAuthenticate = true,
-                    AutomaticChallenge = true
+                    AutomaticChallenge = true,
                 });
 
                 //use OpenID Connect Provider (IdentityServer)
                 app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
                 {
-                    AuthenticationScheme = "oidc",
+                    AuthenticationScheme = IdentityServerConstants.ProtocolTypes.OpenIdConnect,
+                    GetClaimsFromUserInfoEndpoint = true,
                     SignInScheme = "Cookies",
                     Authority = "https://localhost:55555/",
                     RequireHttpsMetadata = false,
-                    ClientId = "mvc",
-                    SaveTokens = true
+                    ClientId = "topcore_web",
+                    ClientSecret = "topcoreweb".Sha256(),
+                    ResponseType = "code id_token",
+                    DisplayName = "TopCore Web",
+                    SaveTokens = true,
+                    Scope =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "topcore_api",
+                    }
                 });
 
                 // Use Identity Server

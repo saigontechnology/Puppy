@@ -19,8 +19,8 @@ using System.Threading.Tasks;
 
 namespace TopCore.Auth.Domain.Services
 {
-	public interface IDataMigrationService
+	public interface ISeedAuthService
     {
-        Task MigrateDatabase();
+        Task SeedAuthDatabase();
     }
 }

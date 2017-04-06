@@ -8,7 +8,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 namespace TopCore.Auth.Data.Migrations.PersistedGrantDb
 {
     [DbContext(typeof(PersistedGrantDbContext))]
-    [Migration("20170406084426_InitialPersistedGrant")]
+    [Migration("20170406101349_InitialPersistedGrant")]
     partial class InitialPersistedGrant
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

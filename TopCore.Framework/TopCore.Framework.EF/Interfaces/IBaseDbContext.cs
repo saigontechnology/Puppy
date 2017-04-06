@@ -49,19 +49,19 @@ namespace TopCore.Framework.EF.Interfaces
 
         void StandalizeSaveChangeData(ChangeTracker changeTracker);
 
-        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : EntityBase;
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         EntityEntry Entry(object entity);
 
-        EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : EntityBase;
+        EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
 
-        Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : EntityBase;
+        Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class;
 
-        EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : EntityBase;
+        EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class;
 
-        EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : EntityBase;
+        EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class;
 
-        EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : EntityBase;
+        EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class;
 
         EntityEntry Add(object entity);
 
@@ -93,7 +93,7 @@ namespace TopCore.Framework.EF.Interfaces
 
         void RemoveRange(IEnumerable<object> entities);
 
-        DbSet<TEntity> Set<TEntity>() where TEntity : EntityBase;
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
         object Find(Type entityType, params object[] keyValues);
 
@@ -101,10 +101,10 @@ namespace TopCore.Framework.EF.Interfaces
 
         Task<object> FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken);
 
-        TEntity Find<TEntity>(params object[] keyValues) where TEntity : EntityBase;
+        TEntity Find<TEntity>(params object[] keyValues) where TEntity : class;
 
-        Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : EntityBase;
+        Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class;
 
-        Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : EntityBase;
+        Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : class;
     }
 }

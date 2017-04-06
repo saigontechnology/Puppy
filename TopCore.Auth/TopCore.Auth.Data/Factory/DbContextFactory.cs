@@ -5,12 +5,12 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.Auth.Data </Project>
 //     <File> 
-//         <Name> TopCoreAuthDbContext.SSOContextFactory.cs </Name>
+//         <Name> DbContextFactory.cs </Name>
 //         <Created> 28 03 2017 05:50:31 PM </Created>
 //         <Key> 0679F181-B40B-49BF-A6A6-1AFA54A83376 </Key>
 //     </File>
 //     <Summary>
-//         TopCoreAuthDbContext.SSOContextFactory
+//         DbContextFactory
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ using TopCore.Framework.Core;
 
 namespace TopCore.Auth.Data.Factory
 {
-    public class TopCoreAuthDbContextFactory : IDbContextFactory<DbContext>
+    public class DbContextFactory : IDbContextFactory<DbContext>
     {
         public DbContext Create(DbContextFactoryOptions options)
         {

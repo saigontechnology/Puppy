@@ -15,12 +15,11 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using TopCore.Framework.EF;
 using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Auth.Domain.Data
 {
-    public interface IRepository<TEntity> : IBaseRepository<TEntity> where TEntity : EntityBase
+    public interface IRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
     }
 }

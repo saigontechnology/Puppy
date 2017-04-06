@@ -25,7 +25,7 @@ using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Framework.EF
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : EntityBase
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly IBaseDbContext _dbContext;
 
@@ -34,64 +34,61 @@ namespace TopCore.Framework.EF
             _dbContext = dbContext;
         }
 
-        public TEntity Get(Guid key, bool isIncludeDeleted = false)
+        public bool Any(Expression<Func<TEntity, bool>> predicate)
         {
-            Expression<Func<TEntity, bool>> filter = x => x.Key == key && ConditionGetDeleted(x, isIncludeDeleted);
-            return _dbContext.Set<TEntity>().FirstOrDefault(filter);
+            return _dbContext.Set<TEntity>().Any(predicate);
         }
 
-        public TEntity Get(string key, bool isIncludeDeleted = false)
+        public int Count(Expression<Func<TEntity, bool>> predicate)
         {
-            return Get(new Guid(key), isIncludeDeleted);
+            return _dbContext.Set<TEntity>().Count(predicate);
         }
 
-        public IEnumerable<TEntity> GetAll(bool isIncludeDeleted = false)
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dbContext.Set<TEntity>().Where(predicate);
         }
 
-        public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false)
-        {
-            return _dbContext.Set<TEntity>()
-                .Where(x => ConditionGetDeleted(x, isIncludeDeleted))
-                .Where(predicate)
-                .AsEnumerable();
-        }
-
-        public void Add(TEntity entity)
+        public TEntity Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
+            return entity;
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public ICollection<TEntity> AddRange(ICollection<TEntity> entities)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<TEntity>().AddRange(entities);
+            _dbContext.SaveChanges();
+            return entities;
         }
 
-        public void Update(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<TEntity>().Update(entity);
+            _dbContext.SaveChanges();
+            return entity;
         }
 
-        public void UpdateRange(IEnumerable<TEntity> entities)
+        public ICollection<TEntity> UpdateRange(ICollection<TEntity> entities)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<TEntity>().UpdateRange(entities);
+            _dbContext.SaveChanges();
+            return entities;
         }
 
-        public void Delete(TEntity entity, bool isPhysicalDiskDelete = false)
+        public TEntity Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<TEntity>().Remove(entity);
+            _dbContext.SaveChanges();
+            return entity;
         }
 
-        public void DeleteRange(IEnumerable<TEntity> entities, bool isPhysicalDiskDelete = false)
+        public ICollection<TEntity> DeleteRange(ICollection<TEntity> entities)
         {
-            throw new NotImplementedException();
-        }
-
-        private bool ConditionGetDeleted(TEntity entity, bool isIncludeDeleted)
-        {
-            return isIncludeDeleted || entity.IsDeleted == false;
+            _dbContext.Set<TEntity>().RemoveRange(entities);
+            _dbContext.SaveChanges();
+            return entities;
         }
     }
 }

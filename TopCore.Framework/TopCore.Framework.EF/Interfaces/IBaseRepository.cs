@@ -19,42 +19,29 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace TopCore.Framework.EF.Interfaces
 {
-    public interface IBaseRepository<TEntity> where TEntity : EntityBase
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
-        /// <summary>
-        ///     Get by key guid 
-        /// </summary>
-        /// <param name="key">             </param>
-        /// <param name="isIncludeDeleted"></param>
-        /// <returns></returns>
-        TEntity Get(Guid key, bool isIncludeDeleted = false);
+        bool Any(Expression<Func<TEntity, bool>> predicate);
 
-        /// <summary>
-        ///     Get by key guid string 
-        /// </summary>
-        /// <param name="key">             </param>
-        /// <param name="isIncludeDeleted"></param>
-        /// <returns></returns>
-        TEntity Get(string key, bool isIncludeDeleted = false);
+        int Count(Expression<Func<TEntity, bool>> predicate);
 
-        IEnumerable<TEntity> GetAll(bool isIncludeDeleted = false);
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
 
-        IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false);
+        TEntity Add(TEntity entity);
 
-        void Add(TEntity entity);
+        ICollection<TEntity> AddRange(ICollection<TEntity> entities);
 
-        void AddRange(IEnumerable<TEntity> entities);
+        TEntity Update(TEntity entity);
 
-        void Update(TEntity entity);
+        ICollection<TEntity> UpdateRange(ICollection<TEntity> entities);
 
-        void UpdateRange(IEnumerable<TEntity> entities);
+        TEntity Delete(TEntity entity);
 
-        void Delete(TEntity entity, bool isPhysicalDiskDelete = false);
-
-        void DeleteRange(IEnumerable<TEntity> entities, bool isPhysicalDiskDelete = false);
+        ICollection<TEntity> DeleteRange(ICollection<TEntity> entities);
     }
 }

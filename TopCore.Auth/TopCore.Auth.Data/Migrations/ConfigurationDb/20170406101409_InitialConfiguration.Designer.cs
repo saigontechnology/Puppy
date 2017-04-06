@@ -8,7 +8,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 namespace TopCore.Auth.Data.Migrations.ConfigurationDb
 {
     [DbContext(typeof(ConfigurationDbContext))]
-    [Migration("20170406084502_InitialConfiguration")]
+    [Migration("20170406101409_InitialConfiguration")]
     partial class InitialConfiguration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

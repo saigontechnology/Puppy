@@ -15,18 +15,19 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
 using TopCore.Auth.Domain.Data;
 using TopCore.Framework.DependencyInjection.Attributes;
 using TopCore.Framework.EF;
-using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Auth.Data
 {
     [PerRequestDependency(ServiceType = typeof(IRepository<>))]
-    public class Repository<TEntity> : BaseRepository<TEntity>, IRepository<TEntity> where TEntity : EntityBase
+    public class Repository<TEntity> : BaseRepository<TEntity>, IRepository<TEntity> where TEntity : class
     {
-        public Repository(IBaseDbContext dbContext) : base(dbContext)
+        public Repository(IDbContext dbContext) : base(dbContext)
         {
+            Console.WriteLine($"{nameof(Repository<TEntity>)} is Created", nameof(Repository<TEntity>));
         }
     }
 }

@@ -8,7 +8,7 @@ using TopCore.Auth.Data;
 namespace TopCore.Auth.Data.Migrations.TopCoreAuthDb
 {
     [DbContext(typeof(DbContext))]
-    [Migration("20170406084409_InitialTopCoreAuth")]
+    [Migration("20170406101326_InitialTopCoreAuth")]
     partial class InitialTopCoreAuth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

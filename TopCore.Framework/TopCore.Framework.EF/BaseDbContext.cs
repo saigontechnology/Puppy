@@ -59,14 +59,12 @@ namespace TopCore.Framework.EF
 
         public void StandalizeSaveChangeData(ChangeTracker changeTracker)
         {
-            var entities = changeTracker.Entries().Where(x => x.Entity is EntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
+            var entities = changeTracker.Entries().Where(x => (x.Entity is EntityBase || (x.Entity is IdentityUserEntityBase)) && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
 
             DateTime utcNow = DateTime.UtcNow;
 
             foreach (var entity in entities)
             {
-                if (!(entity.Entity is EntityBase) || !(entity.Entity is IdentityUserEntityBase)) continue;
-
                 switch (entity.State)
                 {
                     case EntityState.Added:
@@ -99,37 +97,37 @@ namespace TopCore.Framework.EF
 
         #region Use Base
 
-        public new EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Entry(entity);
         }
 
-        public new EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Add(entity);
         }
 
-        public new Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : EntityBase
+        public new Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class
         {
             return base.AddAsync(entity, cancellationToken);
         }
 
-        public new EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Attach(entity);
         }
 
-        public new EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Update(entity);
         }
 
-        public new EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Remove(entity);
         }
 
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : EntityBase
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
         {
             return base.Set<TEntity>();
         }
@@ -149,17 +147,17 @@ namespace TopCore.Framework.EF
             return base.FindAsync(entityType, keyValues, cancellationToken);
         }
 
-        public new TEntity Find<TEntity>(params object[] keyValues) where TEntity : EntityBase
+        public new TEntity Find<TEntity>(params object[] keyValues) where TEntity : class
         {
             return base.Find<TEntity>(keyValues);
         }
 
-        public new Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : EntityBase
+        public new Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
         {
             return base.FindAsync<TEntity>(keyValues);
         }
 
-        public new Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : EntityBase
+        public new Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : class
         {
             return base.FindAsync<TEntity>(keyValues);
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using IdentityServer4.EntityFramework.DbContexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -46,17 +47,25 @@ namespace TopCore.Auth
 
         public void ConfigureServices(IServiceCollection services)
         {
-            IdentityServerStartupHelper.Add(services, Configuration.GetConnectionString(Environment.EnvironmentName));
             MvcStartupHelper.Add(services);
+
             SwaggerStartupHelper.Add(services);
+
             DependencyInjectionScannerHelper.Add(services);
+
+            IdentityServerStartupHelper.Add(services, Configuration.GetConnectionString(Environment.EnvironmentName));
+
+            IdentityServerStartupHelper.SeedData(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             MvcStartupHelper.Use(app);
+
             LogStartupHelper.Use(loggerFactory);
+
             SwaggerStartupHelper.Use(app);
+
             IdentityServerStartupHelper.Use(app);
         }
 
@@ -182,14 +191,21 @@ namespace TopCore.Auth
                         });
                 });
 
-                services.AddAuthentication(
-                    options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
+                services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
-                // TopCore.TopCoreIdentityDbContext for Asp Net Core Identity
                 services.AddDbContext<Data.DbContext>(options => options.UseSqlServer(connectionString));
 
                 // Add Identity store User into Database by Entity Framework
-                services.AddIdentity<UserEntity, IdentityRole>().AddEntityFrameworkStores<Data.DbContext>();
+                services.AddIdentity<UserEntity, IdentityRole>(o =>
+                {
+                    o.Password.RequireDigit = false;
+                    o.Password.RequireLowercase = false;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequireUppercase = false;
+                    o.Password.RequiredLength = 6;
+                })
+                .AddEntityFrameworkStores<Data.DbContext>()
+                .AddDefaultTokenProviders();
 
                 var migrationsAssembly = typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name;
 
@@ -234,6 +250,21 @@ namespace TopCore.Auth
                 // Use Identity Server
                 app.UseIdentity();
                 app.UseIdentityServer();
+            }
+
+            /// <summary>
+            ///     Initial Seed Data and Database in Startup, Must be synchronus 
+            /// </summary>
+            /// <param name="services"></param>
+            public static void SeedData(IServiceCollection services)
+            {
+                ISeedAuthService seedAuthService = services.Resolve<ISeedAuthService>();
+                PersistedGrantDbContext persistedGrantDbContext = services.Resolve<PersistedGrantDbContext>();
+                ConfigurationDbContext configurationDbContext = services.Resolve<ConfigurationDbContext>();
+
+                seedAuthService.SeedAuthDatabase().Wait();
+                persistedGrantDbContext.Database.Migrate();
+                configurationDbContext.Database.Migrate();
             }
         }
 

@@ -18,14 +18,17 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TopCore.Auth.Data.EntityMapping;
 using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
+using TopCore.Framework.Core;
 using TopCore.Framework.DependencyInjection.Attributes;
 using TopCore.Framework.EF;
 
@@ -34,17 +37,20 @@ namespace TopCore.Auth.Data
     [PerRequestDependency(ServiceType = typeof(IDbContext))]
     public class DbContext : IdentityDbContext<UserEntity>, IDbContext
     {
-        public DbContext(DbContextOptions<DbContext> options) : base(options)
+        public DbContext()
         {
             Console.WriteLine($"{nameof(DbContext)} is Created", nameof(DbContext));
+        }
+
+        public DbContext(DbContextOptions<DbContext> options) : base(options)
+        {
+            Console.WriteLine($"{nameof(DbContext)} is Created with options", nameof(DbContext));
         }
 
         public DbSet<UserEntity> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Console.WriteLine($"{nameof(DbContext)} is Created", nameof(OnModelCreating));
-
             modelBuilder.AddConfiguration(new UserEntityMapping());
 
             // Convention Table Name is Entity Name without EntityMapping Postfix
@@ -55,6 +61,16 @@ namespace TopCore.Auth.Data
             }
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                string connectionString = ConfigHelper.GetValue("appsettings.json", $"ConnectionStrings:{environmentName}");
+                optionsBuilder.UseSqlServer(connectionString, o => o.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+            }
         }
 
         #region Save Changes
@@ -125,37 +141,37 @@ namespace TopCore.Auth.Data
 
         #region Use Base
 
-        public new EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Entry(entity);
         }
 
-        public new EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Add(entity);
         }
 
-        public new Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : EntityBase
+        public new Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class
         {
             return base.AddAsync(entity, cancellationToken);
         }
 
-        public new EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Attach(entity);
         }
 
-        public new EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Update(entity);
         }
 
-        public new EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : EntityBase
+        public new EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class
         {
             return base.Remove(entity);
         }
 
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : EntityBase
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
         {
             return base.Set<TEntity>();
         }
@@ -175,17 +191,17 @@ namespace TopCore.Auth.Data
             return base.FindAsync(entityType, keyValues, cancellationToken);
         }
 
-        public new TEntity Find<TEntity>(params object[] keyValues) where TEntity : EntityBase
+        public new TEntity Find<TEntity>(params object[] keyValues) where TEntity : class
         {
             return base.Find<TEntity>(keyValues);
         }
 
-        public new Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : EntityBase
+        public new Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
         {
             return base.FindAsync<TEntity>(keyValues);
         }
 
-        public new Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : EntityBase
+        public new Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : class
         {
             return base.FindAsync<TEntity>(keyValues);
         }

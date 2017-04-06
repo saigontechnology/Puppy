@@ -24,6 +24,7 @@ using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
+using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Services;
 using TopCore.Framework.DependencyInjection.Attributes;
@@ -34,10 +35,12 @@ namespace TopCore.Auth.Service
     public class ProfileService : IProfileService, IdentityServer4.Services.IProfileService
     {
         private readonly UserManager<UserEntity> _userManager;
+        private readonly IRepository<UserEntity> _useRepository;
 
-        public ProfileService(UserManager<UserEntity> userManager)
+        public ProfileService(UserManager<UserEntity> userManager, IRepository<UserEntity> useRepository)
         {
             _userManager = userManager;
+            _useRepository = useRepository;
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
@@ -92,6 +95,13 @@ namespace TopCore.Auth.Service
 
         private async Task<IEnumerable<Claim>> GetClaimsFromUser(UserEntity userEntity)
         {
+            UserEntity userData = _useRepository.Get(x => x.Id == userEntity.Id).FirstOrDefault();
+
+            if (userData == null)
+            {
+                throw new NullReferenceException($"User with id: {userEntity.Id} not found.");
+            }
+
             var claims = new List<Claim>
             {
                 new Claim(JwtClaimTypes.Subject, userEntity.Id),

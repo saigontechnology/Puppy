@@ -15,14 +15,13 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
 
 namespace TopCore.Framework.EF
 {
-	public abstract class IdentityUserEntityBase : IdentityUser
+    public abstract class IdentityUserEntityBase : IdentityUser
     {
         protected IdentityUserEntityBase()
         {

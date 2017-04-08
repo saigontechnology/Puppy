@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
@@ -14,8 +16,6 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Services;
@@ -285,7 +285,7 @@ namespace TopCore.Auth
             }
 
             /// <summary>
-            ///     Initial Seed Data and Database in Startup, Must be synchronus
+            ///   Initial Seed Data and Database in Startup, Must be synchronus 
             /// </summary>
             /// <param name="services"></param>
             public static void SeedData(IServiceCollection services)

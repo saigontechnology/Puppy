@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using System.IO;
-using Microsoft.AspNetCore.Server.Kestrel;
 using TopCore.Framework.Web;
 
 namespace TopCore.Auth

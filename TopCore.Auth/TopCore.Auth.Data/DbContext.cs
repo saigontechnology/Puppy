@@ -16,19 +16,17 @@
 #endregion License
 
 using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.EntityFramework.Extensions;
+using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using IdentityServer4.EntityFramework.Extensions;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Options;
-using TopCore.Auth.Data.EntityMapping;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;

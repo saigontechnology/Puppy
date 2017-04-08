@@ -46,7 +46,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///     Load an assembly, if the assembly already loaded then return null 
+        ///   Load an assembly, if the assembly already loaded then return null 
         /// </summary>
         /// <param name="assemblyName"></param>
         /// <returns></returns>

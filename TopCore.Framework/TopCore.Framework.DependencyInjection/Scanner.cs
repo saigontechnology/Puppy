@@ -38,7 +38,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///     Register Assembly by Name 
+        ///   Register Assembly by Name 
         /// </summary>
         /// <param name="services">    </param>
         /// <param name="assemblyName"></param>
@@ -96,7 +96,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///     Register all assemblies 
+        ///   Register all assemblies 
         /// </summary>
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
@@ -121,7 +121,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///     Write registered service information to Console 
+        ///   Write registered service information to Console 
         /// </summary>
         /// <param name="services">         </param>
         /// <param name="serviceNameFilter"> null to get all </param>

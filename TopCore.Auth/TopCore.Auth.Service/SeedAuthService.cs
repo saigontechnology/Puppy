@@ -17,16 +17,14 @@
 
 #endregion License
 
-using System.Collections.Generic;
-using System.Security.Claims;
+using IdentityModel;
 using IdentityServer4;
+using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using IdentityModel;
-using IdentityServer4.EntityFramework.Mappers;
-using Microsoft.AspNetCore.Identity;
 using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Services;
@@ -128,7 +126,6 @@ namespace TopCore.Auth.Service
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.OfflineAccess
                 }
-
             }.ToEntity();
 
             var isExist = _clientRepository.Any(x => x.ClientId == webClient.ClientId);

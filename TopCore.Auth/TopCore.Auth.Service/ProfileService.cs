@@ -32,7 +32,7 @@ using TopCore.Framework.DependencyInjection.Attributes;
 namespace TopCore.Auth.Service
 {
     /// <summary>
-    /// Identity Server call flow: Check IsActiveAsync then GetProfileDataAsync
+    ///   Identity Server call flow: Check IsActiveAsync then GetProfileDataAsync 
     /// </summary>
     [PerRequestDependency(ServiceType = typeof(IProfileService))]
     public class ProfileService : IProfileService, IdentityServer4.Services.IProfileService

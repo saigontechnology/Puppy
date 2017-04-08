@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TopCore.Auth</name>
+    </assembly>
+    <members>
+        <member name="M:TopCore.Auth.Startup.IdentityServerStartupHelper.SeedData(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Initial Seed Data and Database in Startup, Must be synchronus
+            </summary>
+            <param name="services"></param>
+        </member>
+    </members>
+</doc>

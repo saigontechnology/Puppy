@@ -11,11 +11,16 @@ namespace TopCore.Auth
             IWebHostBuilder hostBuilder =
                 new WebHostBuilder()
                     .UseKestrel()
+                    .UseWebRoot("assets")
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseIISIntegration()
                     .UseStartup<Startup>();
 
-            hostBuilder.RunWithBrowser();
+#if DEBUG
+            hostBuilder.BuildAndRunWithBrowser();
+#else
+            hostBuilder.BuildAndRun();
+#endif
         }
     }
 }

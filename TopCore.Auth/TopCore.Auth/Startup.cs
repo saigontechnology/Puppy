@@ -1,6 +1,4 @@
-﻿using System;
-using System.EnterpriseServices;
-using IdentityServer4.EntityFramework.DbContexts;
+﻿using IdentityServer4;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,15 +14,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;
-using IdentityServer4;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.Models;
-using Microsoft.AspNetCore.Authentication;
-using TopCore.Auth.Data;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Services;
-using TopCore.Auth.Service;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.Auth
@@ -96,7 +88,6 @@ namespace TopCore.Auth
         {
             public static void Add(IServiceCollection services)
             {
-               
                 services.AddMvc().AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -166,7 +157,7 @@ namespace TopCore.Auth
 
                     options.DescribeAllEnumsAsStrings();
 
-                    var apiDocumentFilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "TopCore.Auth.xml");
+                    var apiDocumentFilePath = Path.Combine(Directory.GetCurrentDirectory(), "TopCore.Auth.xml");
                     options.IncludeXmlComments(apiDocumentFilePath);
                 });
             }
@@ -278,7 +269,7 @@ namespace TopCore.Auth
             }
 
             /// <summary>
-            ///     Initial Seed Data and Database in Startup, Must be synchronus 
+            ///     Initial Seed Data and Database in Startup, Must be synchronus
             /// </summary>
             /// <param name="services"></param>
             public static void SeedData(IServiceCollection services)

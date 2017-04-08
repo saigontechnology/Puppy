@@ -28,28 +28,31 @@ namespace TopCore.Framework.Web
 {
     public static class WebHostBuilderExtension
     {
+        public static void BuildAndRun(this IWebHostBuilder hostBuilder)
+        {
+            hostBuilder.Build().Run();
+        }
+
         /// <summary>
         ///     Set host listener for domain URL and start it in browser
         /// </summary>
         /// <param name="hostBuilder"></param>
-        public static void RunWithBrowser(this IWebHostBuilder hostBuilder)
+        public static void BuildAndRunWithBrowser(this IWebHostBuilder hostBuilder)
         {
             var configFileFullPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", "launchSettings.json");
             string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var sectionQuery = $"profiles:{environmentName}:launchUrl";
             var domainUrl = Core.ConfigHelper.GetValue(configFileFullPath, sectionQuery);
-            RunWithBrowser(hostBuilder, domainUrl, environmentName);
+            BuildAndRunWithBrowser(hostBuilder, domainUrl);
         }
-           
+
         /// <summary>
         ///     Set host listener for domain URL and start it in browser
         /// </summary>
         /// <param name="hostBuilder"></param>
         /// <param name="domainUrl"></param>
-        public static void RunWithBrowser(this IWebHostBuilder hostBuilder, string domainUrl, string environmentName)
+        public static void BuildAndRunWithBrowser(this IWebHostBuilder hostBuilder, string domainUrl)
         {
-            Console.Title = $"[{environmentName}] {domainUrl}";
-
             // Update domain URL for builder
             hostBuilder.UseUrls(domainUrl);
 

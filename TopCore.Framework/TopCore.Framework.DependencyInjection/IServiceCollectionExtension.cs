@@ -33,7 +33,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///   Register in self assembly 
+        ///     Register in self assembly 
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
@@ -45,7 +45,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///   Register Assembly by Name 
+        ///     Register Assembly by Name 
         /// </summary>
         /// <param name="services">    </param>
         /// <param name="assemblyName"></param>
@@ -57,7 +57,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///   Register all assemblies 
+        ///     Register all assemblies 
         /// </summary>
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
@@ -70,7 +70,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///   Write registered service information to Console 
+        ///     Write registered service information to Console 
         /// </summary>
         /// <param name="services">             </param>
         /// <param name="serviceTypeNameFilter"> ServiceType.Name.Contains([filter string]) </param>

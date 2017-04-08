@@ -285,7 +285,7 @@ namespace TopCore.Auth
             }
 
             /// <summary>
-            ///   Initial Seed Data and Database in Startup, Must be synchronus 
+            ///     Initial Seed Data and Database in Startup, Must be synchronus 
             /// </summary>
             /// <param name="services"></param>
             public static void SeedData(IServiceCollection services)

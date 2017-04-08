@@ -17,6 +17,7 @@
 
 #endregion License
 
+using System.Collections.Generic;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.Mappers;
@@ -115,11 +116,14 @@ namespace TopCore.Auth.Service
                 ClientName = "TopCore Web",
                 ClientSecrets = { new Secret("topcoreweb".Sha256()) },
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                RequireClientSecret = true,
                 AllowOfflineAccess = true,
                 AllowRememberConsent = true,
                 EnableLocalLogin = true,
                 UpdateAccessTokenClaimsOnRefresh = true,
                 RefreshTokenUsage = TokenUsage.ReUse,
+                RequireConsent = false,
+                AllowedCorsOrigins = { "http://eatup.vn" },
                 AllowedScopes =
                 {
                     "topcore_api",

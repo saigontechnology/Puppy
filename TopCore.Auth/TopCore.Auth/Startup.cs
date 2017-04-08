@@ -54,6 +54,8 @@ namespace TopCore.Auth
         {
             MvcStartupHelper.Add(services);
 
+            LogStartupHelper.Add(services);
+
             SwaggerStartupHelper.Add(services);
 
             DependencyInjectionScannerHelper.Add(services);
@@ -129,7 +131,6 @@ namespace TopCore.Auth
         {
             public static void Add(IServiceCollection services)
             {
-                services.AddLogging();
             }
 
             public static void Use(ILoggerFactory loggerFactory)

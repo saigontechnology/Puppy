@@ -15,7 +15,6 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
 using TopCore.Auth.Domain.Data;
 using TopCore.Framework.DependencyInjection.Attributes;
 using TopCore.Framework.EF;
@@ -27,7 +26,6 @@ namespace TopCore.Auth.Data
     {
         public Repository(IDbContext dbContext) : base(dbContext)
         {
-            Console.WriteLine($"{nameof(TEntity)} is Created", nameof(Repository<TEntity>));
         }
     }
 }

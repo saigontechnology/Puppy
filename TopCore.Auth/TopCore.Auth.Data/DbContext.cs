@@ -22,6 +22,7 @@ using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -44,14 +45,16 @@ namespace TopCore.Auth.Data
 
         private OperationalStoreOptions _operationalStoreOptions;
 
-        public DbContext()
+        public DbContext(ILogger<DbContext> log)
         {
-            Console.WriteLine($"{nameof(DbContext)} is Created", nameof(DbContext));
+            string logMessage = $"{nameof(DbContext)} is Created";
+            log?.LogInformation(logMessage);
         }
 
-        public DbContext(DbContextOptions<DbContext> options, ConfigurationStoreOptions configurationStoreOptions, OperationalStoreOptions operationalStoreOptions) : base(options)
+        public DbContext(DbContextOptions<DbContext> options, ConfigurationStoreOptions configurationStoreOptions, OperationalStoreOptions operationalStoreOptions, ILogger<DbContext> log) : base(options)
         {
-            Console.WriteLine($"{nameof(DbContext)} is Created with options", nameof(DbContext));
+            string logMessage = $"{nameof(DbContext)} is Created with options have value: {nameof(options)}:{options != null}, {nameof(configurationStoreOptions)} : {configurationStoreOptions != null}, {nameof(operationalStoreOptions)} : {operationalStoreOptions != null}";
+            log?.LogInformation(logMessage);
             _configurationStoreOptions = configurationStoreOptions ?? throw new ArgumentNullException(nameof(configurationStoreOptions));
             _operationalStoreOptions = operationalStoreOptions ?? throw new ArgumentNullException(nameof(operationalStoreOptions));
         }

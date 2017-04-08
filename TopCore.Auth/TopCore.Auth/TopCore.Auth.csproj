@@ -120,5 +120,9 @@
     <Folder Include="log\" />
     <Folder Include="log\" />
     <Folder Include="log\" />
+    <Folder Include="log\" />
+    <Folder Include="log\" />
+    <Folder Include="log\" />
+    <Folder Include="log\" />
   </ItemGroup>
 </Project>

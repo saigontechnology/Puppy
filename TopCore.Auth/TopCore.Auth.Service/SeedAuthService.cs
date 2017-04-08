@@ -18,11 +18,13 @@
 #endregion License
 
 using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
 using TopCore.Auth.Domain.Data;
@@ -82,18 +84,17 @@ namespace TopCore.Auth.Service
                 EmailConfirmed = true,
                 PhoneNumber = "0945188299",
                 PhoneNumberConfirmed = true,
-
                 Claims =
                 {
                     new IdentityUserClaim<string>
                     {
-                        ClaimType = "full_name",
+                        ClaimType =  JwtClaimTypes.Name,
                         ClaimValue = "Top Nguyen",
                     },
                     new IdentityUserClaim<string>
                     {
-                        ClaimType = "age",
-                        ClaimValue = "25"
+                        ClaimType = JwtClaimTypes.BirthDate,
+                        ClaimValue = "20/11/1992"
                     }
                 }
             };
@@ -123,7 +124,6 @@ namespace TopCore.Auth.Service
                 RefreshTokenUsage = TokenUsage.ReUse,
                 AllowedScopes =
                 {
-                   "profile",
                     "topcore_api",
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.OfflineAccess
@@ -153,25 +153,29 @@ namespace TopCore.Auth.Service
 
         private void SeedScope_IdentityResource()
         {
-            var profileResource = new IdentityResource
+            // open id resource is always required
+            var openIdResource = new IdentityResource
             {
+                Name = IdentityServerConstants.StandardScopes.OpenId,
+                Description = $"{IdentityServerConstants.StandardScopes.OpenId} is always required for openid protocol",
+                DisplayName = "Open Identity",
+                Emphasize = true,
                 Enabled = true,
-                DisplayName = "Profile",
-                Emphasize = false,
-                Name = "profile",
-                ShowInDiscoveryDocument = true,
                 Required = true,
-                UserClaims = new List<string> { "name", "full_name", "age" }
+                ShowInDiscoveryDocument = true,
+                UserClaims =
+                {
+                    JwtClaimTypes.Subject,
+                    JwtClaimTypes.PreferredUserName,
+                    JwtClaimTypes.Email,
+                    JwtClaimTypes.EmailVerified,
+                    JwtClaimTypes.PhoneNumber,
+                    JwtClaimTypes.PhoneNumberVerified,
+                    JwtClaimTypes.Name,
+                    JwtClaimTypes.BirthDate
+                }
             }.ToEntity();
 
-            var isExistProfileResource = _identityResourceRepository.Any(x => x.Name == profileResource.Name);
-
-            if (!isExistProfileResource)
-            {
-                _identityResourceRepository.Add(profileResource);
-            }
-
-            var openIdResource = new IdentityResources.OpenId().ToEntity();
             var isExistOpenIdResource = _identityResourceRepository.Any(x => x.Name == openIdResource.Name);
 
             if (!isExistOpenIdResource)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Server.Kestrel;
 using TopCore.Framework.Web;
 
 namespace TopCore.Auth
@@ -11,7 +12,7 @@ namespace TopCore.Auth
             IWebHostBuilder hostBuilder =
                 new WebHostBuilder()
                     .UseKestrel()
-                    .UseWebRoot("assets")
+                    .UseWebRoot(Domain.Constants.Web.WebRoot)
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseIISIntegration()
                     .UseStartup<Startup>();

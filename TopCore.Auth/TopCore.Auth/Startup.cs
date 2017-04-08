@@ -14,9 +14,12 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Services;
+using TopCore.Auth.Service;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.Auth
@@ -102,8 +105,20 @@ namespace TopCore.Auth
 
             public static void Use(IApplicationBuilder app)
             {
-                app.UseBrowserLink();
+                if (Environment.IsDevelopment())
+                {
+                    app.UseBrowserLink();
+                }
                 app.UseStaticFiles();
+
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider =
+                        new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"assets", "images",
+                            "favicons")),
+                    RequestPath = new PathString("/favicons")
+                });
+
                 app.UseMvcWithDefaultRoute();
             }
         }
@@ -200,7 +215,7 @@ namespace TopCore.Auth
 
                 services.AddDbContext<Data.DbContext>(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)));
 
-                // Add Identity store User into Database by Entity Framework
+                // Add Identity store User into Database by Entity Framework (AspNetUser)
                 services.AddIdentity<User, IdentityRole>(o =>
                 {
                     o.Password.RequireDigit = false;
@@ -224,7 +239,8 @@ namespace TopCore.Auth
                         options => options.MigrationsAssembly(migrationsAssembly)))
                     .AddOperationalStore(builder => builder.UseSqlServer(connectionString,
                         options => options.MigrationsAssembly(migrationsAssembly)))
-                    .AddAspNetIdentity<User>();
+                    .AddAspNetIdentity<User>()
+                    .AddProfileService<ProfileService>();
             }
 
             public static void Use(IApplicationBuilder app)

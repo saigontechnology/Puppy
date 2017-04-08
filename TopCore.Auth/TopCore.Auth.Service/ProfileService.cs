@@ -31,6 +31,9 @@ using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Service
 {
+    /// <summary>
+    /// Identity Server call flow: Check IsActiveAsync then GetProfileDataAsync
+    /// </summary>
     [PerRequestDependency(ServiceType = typeof(IProfileService))]
     public class ProfileService : IProfileService, IdentityServer4.Services.IProfileService
     {
@@ -41,6 +44,45 @@ namespace TopCore.Auth.Service
         {
             _userManager = userManager;
             _useRepository = useRepository;
+        }
+
+        public async Task IsActiveAsync(IsActiveContext context)
+        {
+            var subject = context.Subject;
+            if (subject == null) throw new ArgumentNullException(nameof(context.Subject));
+
+            var subjectId = subject.GetSubjectId();
+            var user = await _userManager.FindByIdAsync(subjectId).ConfigureAwait(true);
+
+            context.IsActive = false;
+            if (user != null)
+            {
+                if (_userManager.SupportsUserSecurityStamp)
+                {
+                    var securityStamp = subject.Claims.Where(c => c.Type == "security_stamp").Select(c => c.Value).SingleOrDefault();
+                    if (securityStamp != null)
+                    {
+                        var dbSecurityStamp = await _userManager.GetSecurityStampAsync(user).ConfigureAwait(true);
+                        if (dbSecurityStamp != securityStamp)
+                        {
+                            return;
+                        }
+                    }
+                }
+
+                if (user.IsDeleted)
+                {
+                    return;
+                }
+
+                bool isLockout = !(!user.LockoutEnabled || !user.LockoutEnd.HasValue || user.LockoutEnd <= DateTime.UtcNow);
+                if (isLockout)
+                {
+                    return;
+                }
+
+                context.IsActive = true;
+            }
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
@@ -64,33 +106,6 @@ namespace TopCore.Auth.Service
             var requestedClaimTypes = context.RequestedClaimTypes;
             claims = requestedClaimTypes != null ? claims.Where(c => requestedClaimTypes.Contains(c.Type)) : claims.Take(0);
             context.IssuedClaims = claims.ToList();
-        }
-
-        public async Task IsActiveAsync(IsActiveContext context)
-        {
-            var subject = context.Subject;
-            if (subject == null) throw new ArgumentNullException(nameof(context.Subject));
-
-            var subjectId = subject.GetSubjectId();
-            var user = await _userManager.FindByIdAsync(subjectId).ConfigureAwait(true);
-
-            context.IsActive = false;
-
-            if (user != null)
-            {
-                if (_userManager.SupportsUserSecurityStamp)
-                {
-                    var security_stamp = subject.Claims.Where(c => c.Type == "security_stamp").Select(c => c.Value).SingleOrDefault();
-                    if (security_stamp != null)
-                    {
-                        var db_security_stamp = await _userManager.GetSecurityStampAsync(user).ConfigureAwait(true);
-                        if (db_security_stamp != security_stamp)
-                            return;
-                    }
-                }
-
-                context.IsActive = !user.LockoutEnabled || !user.LockoutEnd.HasValue || user.LockoutEnd <= DateTime.UtcNow;
-            }
         }
 
         private async Task<IEnumerable<Claim>> GetClaimsFromUser(User user)

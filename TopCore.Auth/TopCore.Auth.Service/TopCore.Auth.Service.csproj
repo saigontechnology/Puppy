@@ -20,5 +20,11 @@
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="System.Activities">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.Activities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

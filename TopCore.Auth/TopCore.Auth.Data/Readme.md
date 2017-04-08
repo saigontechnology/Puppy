@@ -5,28 +5,11 @@
 Setup by Command Windows of current project 
 
 ```markup
-dotnet ef migrations add InitialTopCoreAuth -c DbContext -o Migrations/TopCoreAuthDb
-dotnet ef database update -c DbContext -v
-
-dotnet ef migrations add InitialPersistedGrant -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
-dotnet ef database update -c PersistedGrantDbContext -v
-
-dotnet ef migrations add InitialConfiguration -c ConfigurationDbContext -o Migrations/ConfigurationDb
-dotnet ef database update -c ConfigurationDbContext -v
+dotnet ef migrations add Initial
+dotnet ef database update  -v
 ```
-
 
 **Don't use/run Package Manager Console to do the above action**
-
-Like
-```markup
-add-migration InitialPersistedGrant -c PersistedGrantDbContext -o Migrations/PersistedGrantDb
-```
-
-or Try to use
-```markup
-update-database -v -c PersistedGrantDbContext
-```
 **It will hang the Console and never stop without any result.**
 
 # Important Thing about csproj

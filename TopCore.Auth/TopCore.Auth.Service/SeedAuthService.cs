@@ -17,15 +17,14 @@
 
 #endregion License
 
+using System.Collections.Generic;
 using IdentityServer4;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.AspNetCore.Identity;
 using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Services;
@@ -37,20 +36,27 @@ namespace TopCore.Auth.Service
     public class SeedAuthService : ISeedAuthService
     {
         private readonly IDbContext _dbContext;
-        private readonly IRepository<UserEntity> _userRepository;
+        private readonly IRepository<User> _userRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly IRepository<IdentityServer4.EntityFramework.Entities.Client> _clientRepository;
+        private readonly IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> _identityResourceRepository;
+        private readonly IRepository<IdentityServer4.EntityFramework.Entities.ApiResource> _apiResourceRepository;
 
-        //private readonly PersistedGrantDbContext _persistedGrantDbContext;
-        private readonly ConfigurationDbContext _configurationDbContext;
-
-        public SeedAuthService(IDbContext dbContext,
-            IRepository<UserEntity> userRepository,
-            //PersistedGrantDbContext persistedGrantDbContext,
-            ConfigurationDbContext configurationDbContext)
+        public SeedAuthService(
+            IDbContext dbContext,
+            IRepository<User> userRepository,
+            UserManager<User> userManager,
+            IRepository<IdentityServer4.EntityFramework.Entities.Client> clientRepository,
+            IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> identityResourceRepository,
+            IRepository<IdentityServer4.EntityFramework.Entities.ApiResource> apiResourceRepository
+            )
         {
             _dbContext = dbContext;
             _userRepository = userRepository;
-            //_persistedGrantDbContext = persistedGrantDbContext;
-            _configurationDbContext = configurationDbContext;
+            _userManager = userManager;
+            _clientRepository = clientRepository;
+            _identityResourceRepository = identityResourceRepository;
+            _apiResourceRepository = apiResourceRepository;
         }
 
         public Task SeedAuthDatabase()
@@ -58,25 +64,22 @@ namespace TopCore.Auth.Service
             // Run migrate first
             var migrate = _dbContext.Database.MigrateAsync();
             migrate.Wait();
-
-            SeedScope_IdentityResource();
             SeedScope_APIResource();
             SeedClient();
+            SeedScope_IdentityResource();
             SeedUser();
-
             return migrate;
         }
 
         private void SeedUser()
         {
-            var user = new UserEntity
+            var user = new User
             {
                 UserName = "topnguyen",
-                PasswordHash = "123456".Sha512(),
-
+                NormalizedUserName = "topnguyen",
                 Email = "topnguyen92@gmail.com",
+                NormalizedEmail = "topnguyen92@gmail.com",
                 EmailConfirmed = true,
-
                 PhoneNumber = "0945188299",
                 PhoneNumberConfirmed = true,
 
@@ -84,13 +87,13 @@ namespace TopCore.Auth.Service
                 {
                     new IdentityUserClaim<string>
                     {
-                        ClaimType = "name",
-                        ClaimValue = "Top Nguyen"
+                        ClaimType = "full_name",
+                        ClaimValue = "Top Nguyen",
                     },
                     new IdentityUserClaim<string>
                     {
-                        ClaimType = "email",
-                        ClaimValue = "topnguyen92@gmail.com"
+                        ClaimType = "age",
+                        ClaimValue = "25"
                     }
                 }
             };
@@ -98,94 +101,82 @@ namespace TopCore.Auth.Service
             var isExist = _userRepository.Any(x => x.UserName == user.UserName);
 
             if (!isExist)
-                _userRepository.Add(user);
+            {
+                _userManager.CreateAsync(user, "123456").Wait();
+            }
         }
 
         private void SeedClient()
         {
-            var webClient = new IdentityServer4.EntityFramework.Entities.Client
+            var webClient = new Client
             {
                 Enabled = true,
-                ProtocolType = IdentityServerConstants.ProtocolTypes.OpenIdConnect,
-                AccessTokenType = (int)AccessTokenType.Jwt,
+                AccessTokenType = AccessTokenType.Jwt,
                 ClientId = "topcore_web",
                 ClientName = "TopCore Web",
-                ClientSecrets = new List<ClientSecret>
+                ClientSecrets = { new Secret("topcoreweb".Sha256()) },
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                AllowOfflineAccess = true,
+                AllowRememberConsent = true,
+                EnableLocalLogin = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
+                RefreshTokenUsage = TokenUsage.ReUse,
+                AllowedScopes =
                 {
-                    new ClientSecret
-                    {
-                        Value = "topcoreweb".Sha256(),
-                    }
-                },
-                AllowedGrantTypes = new List<ClientGrantType>
-                {
-                    new ClientGrantType
-                    {
-                        GrantType = GrantType.ResourceOwnerPassword
-                    }
-                },
-                AllowedScopes = new List<ClientScope>
-                {
-                    new ClientScope
-                    {
-                        Scope =  IdentityServerConstants.StandardScopes.OpenId,
-                    },
-                    new ClientScope
-                    {
-                        Scope =  IdentityServerConstants.StandardScopes.Profile,
-                    },
-                    new ClientScope
-                    {
-                        Scope =  IdentityServerConstants.StandardScopes.OfflineAccess,
-                    },
-                    new ClientScope
-                    {
-                        Scope =  "topcore_api"
-                    },
+                   "profile",
+                    "topcore_api",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.OfflineAccess
                 }
-            };
 
-            var isExist = _configurationDbContext.Clients.Any(x => x.ClientId == webClient.ClientId);
+            }.ToEntity();
+
+            var isExist = _clientRepository.Any(x => x.ClientId == webClient.ClientId);
 
             if (!isExist)
             {
-                _configurationDbContext.Clients.Add(webClient);
-                _configurationDbContext.SaveChanges();
+                _clientRepository.Add(webClient);
             }
         }
 
         private void SeedScope_APIResource()
         {
-            var apiResource = new IdentityServer4.EntityFramework.Entities.ApiResource
-            {
-                Name = "topcore_api",
-                DisplayName = "TopCore API"
-            };
+            var apiResource = new ApiResource("topcore_api", "Top Core API").ToEntity();
 
-            var isExist = _configurationDbContext.ApiResources.Any(x => x.Name == apiResource.Name);
+            var isExist = _apiResourceRepository.Any(x => x.Name == apiResource.Name);
 
             if (!isExist)
             {
-                _configurationDbContext.ApiResources.Add(apiResource);
-                _configurationDbContext.SaveChanges();
+                _apiResourceRepository.Add(apiResource);
             }
         }
 
         private void SeedScope_IdentityResource()
         {
-            var identityResource = new IdentityServer4.EntityFramework.Entities.IdentityResource
+            var profileResource = new IdentityResource
             {
-                Name = IdentityServerConstants.StandardScopes.Profile,
+                Enabled = true,
                 DisplayName = "Profile",
-            };
+                Emphasize = false,
+                Name = "profile",
+                ShowInDiscoveryDocument = true,
+                Required = true,
+                UserClaims = new List<string> { "name", "full_name", "age" }
+            }.ToEntity();
 
-            var isExist = _configurationDbContext.IdentityResources.Any(x => x.Name == identityResource.Name);
+            var isExistProfileResource = _identityResourceRepository.Any(x => x.Name == profileResource.Name);
 
-            if (!isExist)
+            if (!isExistProfileResource)
             {
-                _configurationDbContext.IdentityResources.Add(identityResource);
+                _identityResourceRepository.Add(profileResource);
+            }
 
-                _configurationDbContext.SaveChanges();
+            var openIdResource = new IdentityResources.OpenId().ToEntity();
+            var isExistOpenIdResource = _identityResourceRepository.Any(x => x.Name == openIdResource.Name);
+
+            if (!isExistOpenIdResource)
+            {
+                _identityResourceRepository.Add(openIdResource);
             }
         }
     }

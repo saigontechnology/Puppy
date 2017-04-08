@@ -34,10 +34,10 @@ namespace TopCore.Auth.Service
     [PerRequestDependency(ServiceType = typeof(IProfileService))]
     public class ProfileService : IProfileService, IdentityServer4.Services.IProfileService
     {
-        private readonly UserManager<UserEntity> _userManager;
-        private readonly IRepository<UserEntity> _useRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly IRepository<User> _useRepository;
 
-        public ProfileService(UserManager<UserEntity> userManager, IRepository<UserEntity> useRepository)
+        public ProfileService(UserManager<User> userManager, IRepository<User> useRepository)
         {
             _userManager = userManager;
             _useRepository = useRepository;
@@ -93,47 +93,47 @@ namespace TopCore.Auth.Service
             }
         }
 
-        private async Task<IEnumerable<Claim>> GetClaimsFromUser(UserEntity userEntity)
+        private async Task<IEnumerable<Claim>> GetClaimsFromUser(User user)
         {
-            UserEntity userData = _useRepository.Get(x => x.Id == userEntity.Id).FirstOrDefault();
+            User userData = _useRepository.Get(x => x.Id == user.Id).FirstOrDefault();
 
             if (userData == null)
             {
-                throw new NullReferenceException($"User with id: {userEntity.Id} not found.");
+                throw new NullReferenceException($"User with id: {user.Id} not found.");
             }
 
             var claims = new List<Claim>
             {
-                new Claim(JwtClaimTypes.Subject, userEntity.Id),
-                new Claim(JwtClaimTypes.PreferredUserName, userEntity.UserName)
+                new Claim(JwtClaimTypes.Subject, user.Id),
+                new Claim(JwtClaimTypes.PreferredUserName, user.UserName)
             };
 
             if (_userManager.SupportsUserEmail)
             {
                 claims.AddRange(new[]
                 {
-                    new Claim(JwtClaimTypes.Email, userEntity.Email),
-                    new Claim(JwtClaimTypes.EmailVerified, userEntity.EmailConfirmed ? "true" : "false", ClaimValueTypes.Boolean)
+                    new Claim(JwtClaimTypes.Email, user.Email),
+                    new Claim(JwtClaimTypes.EmailVerified, user.EmailConfirmed ? "true" : "false", ClaimValueTypes.Boolean)
                 });
             }
 
-            if (_userManager.SupportsUserPhoneNumber && !string.IsNullOrWhiteSpace(userEntity.PhoneNumber))
+            if (_userManager.SupportsUserPhoneNumber && !string.IsNullOrWhiteSpace(user.PhoneNumber))
             {
                 claims.AddRange(new[]
                 {
-                    new Claim(JwtClaimTypes.PhoneNumber, userEntity.PhoneNumber),
-                    new Claim(JwtClaimTypes.PhoneNumberVerified, userEntity.PhoneNumberConfirmed ? "true" : "false", ClaimValueTypes.Boolean)
+                    new Claim(JwtClaimTypes.PhoneNumber, user.PhoneNumber),
+                    new Claim(JwtClaimTypes.PhoneNumberVerified, user.PhoneNumberConfirmed ? "true" : "false", ClaimValueTypes.Boolean)
                 });
             }
 
             if (_userManager.SupportsUserClaim)
             {
-                claims.AddRange(await _userManager.GetClaimsAsync(userEntity).ConfigureAwait(true));
+                claims.AddRange(await _userManager.GetClaimsAsync(user).ConfigureAwait(true));
             }
 
             if (_userManager.SupportsUserRole)
             {
-                var roles = await _userManager.GetRolesAsync(userEntity).ConfigureAwait(true);
+                var roles = await _userManager.GetRolesAsync(user).ConfigureAwait(true);
                 claims.AddRange(roles.Select(role => new Claim(JwtClaimTypes.Role, role)));
             }
 

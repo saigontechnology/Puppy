@@ -18,6 +18,7 @@
 #endregion License
 
 using System.Reflection;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -48,7 +49,7 @@ namespace TopCore.Auth.Data.Factory
         {
             var builder = new DbContextOptionsBuilder<DbContext>();
             builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
-            return new DbContext(builder.Options);
+            return new DbContext(builder.Options, new ConfigurationStoreOptions { DefaultSchema = "dbo" }, new OperationalStoreOptions { DefaultSchema = "dbo" });
         }
     }
 }

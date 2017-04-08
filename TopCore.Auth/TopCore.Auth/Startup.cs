@@ -24,6 +24,7 @@ using TopCore.Auth.Data;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Services;
+using TopCore.Auth.Service;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.Auth
@@ -95,6 +96,7 @@ namespace TopCore.Auth
         {
             public static void Add(IServiceCollection services)
             {
+               
                 services.AddMvc().AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -208,7 +210,7 @@ namespace TopCore.Auth
                 services.AddDbContext<Data.DbContext>(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)));
 
                 // Add Identity store User into Database by Entity Framework
-                services.AddIdentity<UserEntity, IdentityRole>(o =>
+                services.AddIdentity<User, IdentityRole>(o =>
                 {
                     o.Password.RequireDigit = false;
                     o.Password.RequireLowercase = false;
@@ -231,7 +233,7 @@ namespace TopCore.Auth
                         options => options.MigrationsAssembly(migrationsAssembly)))
                     .AddOperationalStore(builder => builder.UseSqlServer(connectionString,
                         options => options.MigrationsAssembly(migrationsAssembly)))
-                    .AddAspNetIdentity<UserEntity>();
+                    .AddAspNetIdentity<User>();
             }
 
             public static void Use(IApplicationBuilder app)
@@ -257,7 +259,7 @@ namespace TopCore.Auth
                     Authority = "https://localhost:55555/",
                     RequireHttpsMetadata = false,
                     ClientId = "topcore_web",
-                    ClientSecret = "topcoreweb".Sha256(),
+                    ClientSecret = "topcoreweb",
                     ResponseType = "code id_token",
                     DisplayName = "TopCore Web",
                     SaveTokens = true,
@@ -282,12 +284,7 @@ namespace TopCore.Auth
             public static void SeedData(IServiceCollection services)
             {
                 ISeedAuthService seedAuthService = services.Resolve<ISeedAuthService>();
-                PersistedGrantDbContext persistedGrantDbContext = services.Resolve<PersistedGrantDbContext>();
-                ConfigurationDbContext configurationDbContext = services.Resolve<ConfigurationDbContext>();
-
                 seedAuthService.SeedAuthDatabase().Wait();
-                persistedGrantDbContext.Database.Migrate();
-                configurationDbContext.Database.Migrate();
             }
         }
 

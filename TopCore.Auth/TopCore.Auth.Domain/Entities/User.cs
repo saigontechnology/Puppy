@@ -4,12 +4,12 @@
 //     <Author> Top </Author>
 //     <Project> TopCore.Auth.Domain.Entity </Project>
 //     <File>
-//         <Name> UserEntity </Name>
+//         <Name> User </Name>
 //         <Created> 06 Apr 17 1:07:54 AM </Created>
 //         <Key> 1bf15074-54a1-4feb-ac8a-13141334a86d </Key>
 //     </File>
 //     <Summary>
-//         UserEntity
+//         User
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ using TopCore.Framework.EF;
 
 namespace TopCore.Auth.Domain.Entities
 {
-    public class UserEntity : IdentityUserEntityBase
+    public class User : IdentityUserEntityBase
     {
     }
 }

@@ -25,6 +25,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.Extensions;
+using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.EntityFramework.Options;
 using TopCore.Auth.Data.EntityMapping;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Data;
@@ -32,36 +35,38 @@ using TopCore.Auth.Domain.Entities;
 using TopCore.Framework.Core;
 using TopCore.Framework.DependencyInjection.Attributes;
 using TopCore.Framework.EF;
+using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace TopCore.Auth.Data
 {
     [PerRequestDependency(ServiceType = typeof(IDbContext))]
-    public class DbContext : IdentityDbContext<UserEntity>, IDbContext
+    public class DbContext : IdentityDbContext<User>, IDbContext, IConfigurationDbContext, IPersistedGrantDbContext
     {
+        private ConfigurationStoreOptions _configurationStoreOptions;
+
+        private OperationalStoreOptions _operationalStoreOptions;
+
         public DbContext()
         {
             Console.WriteLine($"{nameof(DbContext)} is Created", nameof(DbContext));
         }
 
-        public DbContext(DbContextOptions<DbContext> options) : base(options)
+        public DbContext(DbContextOptions<DbContext> options, ConfigurationStoreOptions configurationStoreOptions, OperationalStoreOptions operationalStoreOptions) : base(options)
         {
             Console.WriteLine($"{nameof(DbContext)} is Created with options", nameof(DbContext));
+            _configurationStoreOptions = configurationStoreOptions ?? throw new ArgumentNullException(nameof(configurationStoreOptions));
+            _operationalStoreOptions = operationalStoreOptions ?? throw new ArgumentNullException(nameof(operationalStoreOptions));
         }
 
-        public DbSet<UserEntity> UserEntities { get; set; }
+        public new DbSet<User> Users { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.AddConfiguration(new UserEntityMapping());
+        public DbSet<Client> Clients { get; set; }
 
-            // Convention Table Name is Entity name without Postfix
-            foreach (var entity in modelBuilder.Model.GetEntityTypes())
-            {
-                entity.Relational().TableName = entity.ClrType.Name.Replace(nameof(EntityMapping), string.Empty);
-            }
+        public DbSet<IdentityResource> IdentityResources { get; set; }
 
-            base.OnModelCreating(modelBuilder);
-        }
+        public DbSet<ApiResource> ApiResources { get; set; }
+
+        public DbSet<PersistedGrant> PersistedGrants { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -70,7 +75,25 @@ namespace TopCore.Auth.Data
                 string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                 string connectionString = ConfigHelper.GetValue("appsettings.json", $"ConnectionStrings:{environmentName}");
                 optionsBuilder.UseSqlServer(connectionString, o => o.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+
+                _configurationStoreOptions = new ConfigurationStoreOptions
+                {
+                    DefaultSchema = "dbo"
+                };
+
+                _operationalStoreOptions = new OperationalStoreOptions
+                {
+                    DefaultSchema = "dbo"
+                };
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ConfigureClientContext(_configurationStoreOptions);
+            modelBuilder.ConfigureResourcesContext(_configurationStoreOptions);
+            modelBuilder.ConfigurePersistedGrantContext(_operationalStoreOptions);
+            base.OnModelCreating(modelBuilder);
         }
 
         #region Save Changes
@@ -87,10 +110,10 @@ namespace TopCore.Auth.Data
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public Task<int> SaveChangesAsync()
         {
             StandalizeSaveChangeData(ChangeTracker);
-            return base.SaveChangesAsync(cancellationToken);
+            return SaveChangesAsync(new CancellationToken());
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
@@ -101,14 +124,11 @@ namespace TopCore.Auth.Data
 
         public void StandalizeSaveChangeData(ChangeTracker changeTracker)
         {
-            var entities = changeTracker.Entries().Where(x => x.Entity is EntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
-
+            var entities = changeTracker.Entries().Where(x => (x.Entity is EntityBase || x.Entity is IdentityUserEntityBase) && (x.State == EntityState.Added || x.State == EntityState.Modified));
             DateTime utcNow = DateTime.UtcNow;
 
             foreach (var entity in entities)
             {
-                if (!(entity.Entity is EntityBase) || !(entity.Entity is IdentityUserEntityBase)) continue;
-
                 switch (entity.State)
                 {
                     case EntityState.Added:
@@ -122,15 +142,6 @@ namespace TopCore.Auth.Data
                     case EntityState.Modified:
                         {
                             entity.Property(nameof(EntityBase.LastUpdatedOnUtc)).CurrentValue = utcNow;
-                            break;
-                        }
-                    case EntityState.Deleted:
-                        {
-                            entity.Property(nameof(EntityBase.IsDeleted)).CurrentValue = true;
-                            entity.Property(nameof(EntityBase.DeletedOnUtc)).CurrentValue = utcNow;
-
-                            // Force to update not delete data in physical disk
-                            entity.State = EntityState.Modified;
                             break;
                         }
                 }

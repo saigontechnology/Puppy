@@ -29,19 +29,19 @@ namespace TopCore.Framework.DependencyInjection
     {
         public readonly string FolderFullPath;
 
-        public List<AssemblyName> ListLoaddedAssemblyName { get; } = new List<AssemblyName>();
+        public List<AssemblyName> ListLoadedAssemblyName { get; } = new List<AssemblyName>();
 
         public AssemblyLoader(string folderFullPath = null)
         {
             FolderFullPath = folderFullPath;
 
-            // Update List Loadded Assembly
+            // Update List Loaded Assembly
             var runtimeId = RuntimeEnvironment.GetRuntimeIdentifier();
-            var listLoaddedAssemblyName = DependencyContext.Default.GetRuntimeAssemblyNames(runtimeId);
+            var listLoadedAssemblyName = DependencyContext.Default.GetRuntimeAssemblyNames(runtimeId);
 
-            foreach (var assemblyName in listLoaddedAssemblyName)
+            foreach (var assemblyName in listLoadedAssemblyName)
             {
-                ListLoaddedAssemblyName.Add(assemblyName);
+                ListLoadedAssemblyName.Add(assemblyName);
             }
         }
 
@@ -55,7 +55,7 @@ namespace TopCore.Framework.DependencyInjection
             Assembly assembly;
 
             // Check if assembly already added by Dependency (Reference)
-            if (ListLoaddedAssemblyName.Any(x => x.Name.ToLower() == assemblyName.Name.ToLower()))
+            if (ListLoadedAssemblyName.Any(x => x.Name.ToLower() == assemblyName.Name.ToLower()))
             {
                 return null;
             }
@@ -73,8 +73,8 @@ namespace TopCore.Framework.DependencyInjection
                 assembly = Assembly.Load(assemblyName);
             }
 
-            // Add to loadded
-            ListLoaddedAssemblyName.Add(assembly.GetName());
+            // Add to loaded
+            ListLoadedAssemblyName.Add(assembly.GetName());
 
             return assembly;
         }

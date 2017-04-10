@@ -35,31 +35,31 @@ namespace TopCore.Framework.EF
 
         public override int SaveChanges()
         {
-            StandalizeSaveChangeData(ChangeTracker);
+            StandardizeSaveChangeData(ChangeTracker);
             return base.SaveChanges();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            StandalizeSaveChangeData(ChangeTracker);
+            StandardizeSaveChangeData(ChangeTracker);
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            StandalizeSaveChangeData(ChangeTracker);
+            StandardizeSaveChangeData(ChangeTracker);
             return base.SaveChangesAsync(cancellationToken);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
         {
-            StandalizeSaveChangeData(ChangeTracker);
+            StandardizeSaveChangeData(ChangeTracker);
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        public void StandalizeSaveChangeData(ChangeTracker changeTracker)
+        public void StandardizeSaveChangeData(ChangeTracker changeTracker)
         {
-            var entities = changeTracker.Entries().Where(x => (x.Entity is EntityBase || (x.Entity is IdentityUserEntityBase)) && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
+            var entities = changeTracker.Entries().Where(x => x.Entity is EntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
 
             DateTime utcNow = DateTime.UtcNow;
 
@@ -91,75 +91,6 @@ namespace TopCore.Framework.EF
                         }
                 }
             }
-        }
-
-        #endregion
-
-        #region Use Base
-
-        public new EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Entry(entity);
-        }
-
-        public new EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Add(entity);
-        }
-
-        public new Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class
-        {
-            return base.AddAsync(entity, cancellationToken);
-        }
-
-        public new EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Attach(entity);
-        }
-
-        public new EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Update(entity);
-        }
-
-        public new EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Remove(entity);
-        }
-
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
-        {
-            return base.Set<TEntity>();
-        }
-
-        public new object Find(Type entityType, params object[] keyValues)
-        {
-            return base.Find(entityType, keyValues);
-        }
-
-        public new Task<object> FindAsync(Type entityType, params object[] keyValues)
-        {
-            return base.FindAsync(entityType, keyValues);
-        }
-
-        public new Task<object> FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken)
-        {
-            return base.FindAsync(entityType, keyValues, cancellationToken);
-        }
-
-        public new TEntity Find<TEntity>(params object[] keyValues) where TEntity : class
-        {
-            return base.Find<TEntity>(keyValues);
-        }
-
-        public new Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
-        {
-            return base.FindAsync<TEntity>(keyValues);
-        }
-
-        public new Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : class
-        {
-            return base.FindAsync<TEntity>(keyValues);
         }
 
         #endregion

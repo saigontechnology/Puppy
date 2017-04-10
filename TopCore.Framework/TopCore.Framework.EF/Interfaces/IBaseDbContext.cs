@@ -47,8 +47,6 @@ namespace TopCore.Framework.EF.Interfaces
 
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
 
-        void StandalizeSaveChangeData(ChangeTracker changeTracker);
-
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         EntityEntry Entry(object entity);

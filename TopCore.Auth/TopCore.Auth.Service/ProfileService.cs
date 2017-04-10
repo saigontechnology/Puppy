@@ -70,11 +70,6 @@ namespace TopCore.Auth.Service
                     }
                 }
 
-                if (user.IsDeleted)
-                {
-                    return;
-                }
-
                 bool isLockout = !(!user.LockoutEnabled || !user.LockoutEnd.HasValue || user.LockoutEnd <= DateTime.UtcNow);
                 if (isLockout)
                 {

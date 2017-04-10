@@ -13,7 +13,6 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
-using Serilog.Core;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;

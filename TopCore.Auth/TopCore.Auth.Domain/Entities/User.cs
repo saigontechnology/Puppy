@@ -15,11 +15,19 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using TopCore.Framework.EF;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TopCore.Auth.Domain.Entities
 {
-    public class User : IdentityUserEntityBase
+    public class User : IdentityUser
     {
+        public DateTime CreatedOnUtc { get; set; }
+
+        public DateTime? LastUpdatedOnUtc { get; set; }
+
+        [Timestamp]
+        public byte[] Version { get; set; }
     }
 }

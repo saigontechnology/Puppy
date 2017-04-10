@@ -15,17 +15,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.1" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="IdentityServer4.EntityFramework">
-      <HintPath>C:\Users\Top\.nuget\packages\identityserver4.entityframework\1.0.1\lib\netstandard1.4\IdentityServer4.EntityFramework.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@
     <members>
         <member name="M:TopCore.Auth.Startup.IdentityServerStartupHelper.SeedData(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-                Initial Seed Data and Database in Startup, Must be synchronus 
+                Initial Seed Data and Database in Startup, Must be synchronus
             </summary>
             <param name="services"></param>
         </member>

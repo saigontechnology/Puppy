@@ -21,10 +21,7 @@ using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +30,6 @@ using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Framework.Core;
 using TopCore.Framework.DependencyInjection.Attributes;
-using TopCore.Framework.EF;
 using Client = IdentityServer4.EntityFramework.Entities.Client;
 
 namespace TopCore.Auth.Data
@@ -45,21 +41,15 @@ namespace TopCore.Auth.Data
 
         private OperationalStoreOptions _operationalStoreOptions;
 
-        public DbContext(ILogger<DbContext> log)
+        public DbContext()
         {
-            string logMessage = $"{nameof(DbContext)} is Created";
-            log?.LogInformation(logMessage);
         }
 
-        public DbContext(DbContextOptions<DbContext> options, ConfigurationStoreOptions configurationStoreOptions, OperationalStoreOptions operationalStoreOptions, ILogger<DbContext> log) : base(options)
+        public DbContext(DbContextOptions<DbContext> options, ConfigurationStoreOptions configurationStoreOptions, OperationalStoreOptions operationalStoreOptions) : base(options)
         {
-            string logMessage = $"{nameof(DbContext)} is Created with options have value: {nameof(options)}:{options != null}, {nameof(configurationStoreOptions)} : {configurationStoreOptions != null}, {nameof(operationalStoreOptions)} : {operationalStoreOptions != null}";
-            log?.LogInformation(logMessage);
             _configurationStoreOptions = configurationStoreOptions ?? throw new ArgumentNullException(nameof(configurationStoreOptions));
             _operationalStoreOptions = operationalStoreOptions ?? throw new ArgumentNullException(nameof(operationalStoreOptions));
         }
-
-        public new DbSet<User> Users { get; set; }
 
         public DbSet<Client> Clients { get; set; }
 
@@ -99,123 +89,9 @@ namespace TopCore.Auth.Data
 
         #region Save Changes
 
-        public override int SaveChanges()
-        {
-            StandalizeSaveChangeData(ChangeTracker);
-            return base.SaveChanges();
-        }
-
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-            StandalizeSaveChangeData(ChangeTracker);
-            return base.SaveChanges(acceptAllChangesOnSuccess);
-        }
-
         public Task<int> SaveChangesAsync()
         {
-            StandalizeSaveChangeData(ChangeTracker);
             return SaveChangesAsync(new CancellationToken());
-        }
-
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            StandalizeSaveChangeData(ChangeTracker);
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        public void StandalizeSaveChangeData(ChangeTracker changeTracker)
-        {
-            var entities = changeTracker.Entries().Where(x => (x.Entity is EntityBase || x.Entity is IdentityUserEntityBase) && (x.State == EntityState.Added || x.State == EntityState.Modified));
-            DateTime utcNow = DateTime.UtcNow;
-
-            foreach (var entity in entities)
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        {
-                            entity.Property(nameof(EntityBase.CreatedOnUtc)).CurrentValue = utcNow;
-                            entity.Property(nameof(EntityBase.LastUpdatedOnUtc)).CurrentValue = null;
-                            entity.Property(nameof(EntityBase.IsDeleted)).CurrentValue = false;
-                            entity.Property(nameof(EntityBase.DeletedOnUtc)).CurrentValue = null;
-                            break;
-                        }
-                    case EntityState.Modified:
-                        {
-                            entity.Property(nameof(EntityBase.LastUpdatedOnUtc)).CurrentValue = utcNow;
-                            break;
-                        }
-                }
-            }
-        }
-
-        #endregion
-
-        #region Use Base
-
-        public new EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Entry(entity);
-        }
-
-        public new EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Add(entity);
-        }
-
-        public new Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class
-        {
-            return base.AddAsync(entity, cancellationToken);
-        }
-
-        public new EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Attach(entity);
-        }
-
-        public new EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Update(entity);
-        }
-
-        public new EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class
-        {
-            return base.Remove(entity);
-        }
-
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
-        {
-            return base.Set<TEntity>();
-        }
-
-        public new object Find(Type entityType, params object[] keyValues)
-        {
-            return base.Find(entityType, keyValues);
-        }
-
-        public new Task<object> FindAsync(Type entityType, params object[] keyValues)
-        {
-            return base.FindAsync(entityType, keyValues);
-        }
-
-        public new Task<object> FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken)
-        {
-            return base.FindAsync(entityType, keyValues, cancellationToken);
-        }
-
-        public new TEntity Find<TEntity>(params object[] keyValues) where TEntity : class
-        {
-            return base.Find<TEntity>(keyValues);
-        }
-
-        public new Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
-        {
-            return base.FindAsync<TEntity>(keyValues);
-        }
-
-        public new Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : class
-        {
-            return base.FindAsync<TEntity>(keyValues);
         }
 
         #endregion

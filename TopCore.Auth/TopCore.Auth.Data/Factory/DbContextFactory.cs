@@ -49,7 +49,7 @@ namespace TopCore.Auth.Data.Factory
         {
             var builder = new DbContextOptionsBuilder<DbContext>();
             builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
-            return new DbContext(builder.Options, new ConfigurationStoreOptions { DefaultSchema = "dbo" }, new OperationalStoreOptions { DefaultSchema = "dbo" }, null);
+            return new DbContext(builder.Options, new ConfigurationStoreOptions { DefaultSchema = "dbo" }, new OperationalStoreOptions { DefaultSchema = "dbo" });
         }
     }
 }

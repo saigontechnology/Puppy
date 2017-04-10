@@ -297,7 +297,7 @@ namespace TopCore.Auth
             public static void SeedData(IServiceCollection services)
             {
                 ISeedAuthService seedAuthService = services.Resolve<ISeedAuthService>();
-                seedAuthService.SeedAuthDatabase().Wait();
+                seedAuthService.SeedAuthDatabaseAsync().Wait();
             }
         }
 

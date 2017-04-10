@@ -59,7 +59,7 @@ namespace TopCore.Auth.Service
             _apiResourceRepository = apiResourceRepository;
         }
 
-        public Task SeedAuthDatabase()
+        public Task SeedAuthDatabaseAsync()
         {
             // Run migrate first
             var migrate = _dbContext.Database.MigrateAsync();

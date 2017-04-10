@@ -21,6 +21,6 @@ namespace TopCore.Auth.Domain.Services
 {
     public interface ISeedAuthService
     {
-        Task SeedAuthDatabase();
+        Task SeedAuthDatabaseAsync();
     }
 }

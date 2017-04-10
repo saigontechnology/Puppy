@@ -17,7 +17,6 @@
 
 #endregion License
 
-using System.Collections.Generic;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.Mappers;
@@ -66,13 +65,17 @@ namespace TopCore.Auth.Service
             var migrate = _dbContext.Database.MigrateAsync();
             migrate.Wait();
             SeedScope_APIResource();
-            SeedClient();
+            SeedClientWeb();
+            SeedClientMobileAndroid();
+            SeedClientMobileiOS();
             SeedScope_IdentityResource();
-            SeedUser();
+            SeedUserTopNguyen();
+            SeedUserHungNguyen();
+            SeedUserDungNguyen();
             return migrate;
         }
 
-        private void SeedUser()
+        private void SeedUserTopNguyen()
         {
             var user = new User
             {
@@ -106,7 +109,75 @@ namespace TopCore.Auth.Service
             }
         }
 
-        private void SeedClient()
+        private void SeedUserHungNguyen()
+        {
+            var user = new User
+            {
+                UserName = "hungnguyen",
+                NormalizedUserName = "hungnguyen",
+                Email = "hungnguyen@gmail.com",
+                NormalizedEmail = "hungnguyen@gmail.com",
+                EmailConfirmed = true,
+                PhoneNumber = "123456",
+                PhoneNumberConfirmed = true,
+                Claims =
+                {
+                    new IdentityUserClaim<string>
+                    {
+                        ClaimType =  JwtClaimTypes.Name,
+                        ClaimValue = "Hung Nguyen",
+                    },
+                    new IdentityUserClaim<string>
+                    {
+                        ClaimType = JwtClaimTypes.BirthDate,
+                        ClaimValue = "20/11/1991"
+                    }
+                }
+            };
+
+            var isExist = _userRepository.Any(x => x.UserName == user.UserName);
+
+            if (!isExist)
+            {
+                _userManager.CreateAsync(user, "123456").Wait();
+            }
+        }
+
+        private void SeedUserDungNguyen()
+        {
+            var user = new User
+            {
+                UserName = "dungnguyen",
+                NormalizedUserName = "dungnguyen",
+                Email = "dungnguyen@gmail.com",
+                NormalizedEmail = "dungnguyen@gmail.com",
+                EmailConfirmed = true,
+                PhoneNumber = "123456",
+                PhoneNumberConfirmed = true,
+                Claims =
+                {
+                    new IdentityUserClaim<string>
+                    {
+                        ClaimType =  JwtClaimTypes.Name,
+                        ClaimValue = "Dung Nguyen",
+                    },
+                    new IdentityUserClaim<string>
+                    {
+                        ClaimType = JwtClaimTypes.BirthDate,
+                        ClaimValue = "20/11/1991"
+                    }
+                }
+            };
+
+            var isExist = _userRepository.Any(x => x.UserName == user.UserName);
+
+            if (!isExist)
+            {
+                _userManager.CreateAsync(user, "123456").Wait();
+            }
+        }
+
+        private void SeedClientWeb()
         {
             var webClient = new Client
             {
@@ -137,6 +208,74 @@ namespace TopCore.Auth.Service
             if (!isExist)
             {
                 _clientRepository.Add(webClient);
+            }
+        }
+
+        private void SeedClientMobileAndroid()
+        {
+            var mobileAndroidClient = new Client
+            {
+                Enabled = true,
+                AccessTokenType = AccessTokenType.Jwt,
+                ClientId = "topcore_mobile_android",
+                ClientName = "topcore mobile android",
+                ClientSecrets = { new Secret("topcoremobileandroid".Sha256()) },
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                RequireClientSecret = true,
+                AllowOfflineAccess = true,
+                AllowRememberConsent = true,
+                EnableLocalLogin = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
+                RefreshTokenUsage = TokenUsage.ReUse,
+                RequireConsent = false,
+                AllowedCorsOrigins = { "http://eatup.vn" },
+                AllowedScopes =
+                {
+                    "topcore_api",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.OfflineAccess
+                }
+            }.ToEntity();
+
+            var isExist = _clientRepository.Any(x => x.ClientId == mobileAndroidClient.ClientId);
+
+            if (!isExist)
+            {
+                _clientRepository.Add(mobileAndroidClient);
+            }
+        }
+
+        private void SeedClientMobileiOS()
+        {
+            var mobileiOSClient = new Client
+            {
+                Enabled = true,
+                AccessTokenType = AccessTokenType.Jwt,
+                ClientId = "topcore_mobile_iOS",
+                ClientName = "topcore mobile iOS",
+                ClientSecrets = { new Secret("topcoremobileiOS".Sha256()) },
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                RequireClientSecret = true,
+                AllowOfflineAccess = true,
+                AllowRememberConsent = true,
+                EnableLocalLogin = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
+                RefreshTokenUsage = TokenUsage.ReUse,
+                RequireConsent = false,
+                AllowedCorsOrigins = { "http://eatup.vn" },
+                AllowedScopes =
+                {
+                    "topcore_api",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.OfflineAccess
+                }
+            }.ToEntity();
+
+            var isExist = _clientRepository.Any(x => x.ClientId == mobileiOSClient.ClientId);
+
+            if (!isExist)
+            {
+                _clientRepository.Add(mobileiOSClient);
             }
         }
 

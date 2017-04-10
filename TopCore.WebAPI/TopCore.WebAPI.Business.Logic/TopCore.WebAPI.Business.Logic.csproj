@@ -14,4 +14,11 @@
     <OutputPath>..\TopCore.WebAPI\bin\</OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Business\TopCore.WebAPI.Business.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Domain\TopCore.WebAPI.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

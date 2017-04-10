@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. WEB", "1. WEB", "{E9E0E23C-8584-46E1-9C51-33C3E699A39C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI", "TopCore.WebAPI\TopCore.WebAPI.csproj", "{FDAF49AC-B1D2-492C-A7E7-137EA19BB00C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. SERVICE", "2. SERVICE", "{61D58289-3E2A-4D42-969D-F71CFC28D462}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Service", "2. Service", "{61D58289-3E2A-4D42-969D-F71CFC28D462}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Service", "TopCore.WebAPI.Service\TopCore.WebAPI.Service.csproj", "{E88A84C2-6E76-4535-ACB6-59605DE8A80A}"
 EndProject
@@ -25,17 +25,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Data", "TopC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Data.EF", "TopCore.WebAPI.Data.EF\TopCore.WebAPI.Data.EF.csproj", "{54131D1D-4721-49B8-8CD5-18B4E194782A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. CORE", "5. CORE", "{6126AA32-418B-454E-BB37-4478C308E5AD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Domain", "5. Domain", "{6126AA32-418B-454E-BB37-4478C308E5AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Core", "TopCore.WebAPI.Core\TopCore.WebAPI.Core.csproj", "{3DAA7A7B-00D3-4441-B7BA-3333A49F3C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.WebAPI.Domain", "TopCore.WebAPI.Domain\TopCore.WebAPI.Domain.csproj", "{3DAA7A7B-00D3-4441-B7BA-3333A49F3C5F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FRAMEWORK", "FRAMEWORK", "{1BAE0076-5EFF-432E-AB14-06CC66B6BF90}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{1BAE0076-5EFF-432E-AB14-06CC66B6BF90}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Core", "..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj", "{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Web", "..\TopCore.Framework\TopCore.Framework.Web\TopCore.Framework.Web.csproj", "{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.DependencyInjection", "..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj", "{6C6898A1-7AEE-4517-9B7C-38CB13FA6C86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.EF", "..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj", "{B33616F3-360D-4C83-AB0E-610BBCB264D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{6C6898A1-7AEE-4517-9B7C-38CB13FA6C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C6898A1-7AEE-4517-9B7C-38CB13FA6C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C6898A1-7AEE-4517-9B7C-38CB13FA6C86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33616F3-360D-4C83-AB0E-610BBCB264D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33616F3-360D-4C83-AB0E-610BBCB264D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33616F3-360D-4C83-AB0E-610BBCB264D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33616F3-360D-4C83-AB0E-610BBCB264D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,5 +109,6 @@ Global
 		{1DDD9F0E-76FA-4948-B4DD-C595DAC52A7C} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
 		{ED1C3DAB-DB4B-493C-A00E-C16715C5B32A} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
 		{6C6898A1-7AEE-4517-9B7C-38CB13FA6C86} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
+		{B33616F3-360D-4C83-AB0E-610BBCB264D5} = {1BAE0076-5EFF-432E-AB14-06CC66B6BF90}
 	EndGlobalSection
 EndGlobal

@@ -43,7 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj" />
     <ProjectReference Include="..\TopCore.WebAPI.Data\TopCore.WebAPI.Data.csproj" />
-    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Domain\TopCore.WebAPI.Domain.csproj" />
   </ItemGroup>
 </Project>

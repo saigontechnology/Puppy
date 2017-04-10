@@ -34,7 +34,7 @@ namespace TopCore.WebAPI
                     .UseIISIntegration()
                     .UseStartup<Startup>();
 
-            hostBuilder.RunWithBrowser();
+            hostBuilder.BuildAndRunWithBrowser();;
         }
     }
 }

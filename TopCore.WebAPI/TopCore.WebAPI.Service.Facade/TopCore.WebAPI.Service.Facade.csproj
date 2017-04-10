@@ -15,6 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TopCore.WebAPI.Business\TopCore.WebAPI.Business.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Domain\TopCore.WebAPI.Domain.csproj" />
     <ProjectReference Include="..\TopCore.WebAPI.Service\TopCore.WebAPI.Service.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
   </ItemGroup>

@@ -91,7 +91,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Business.Logic\TopCore.WebAPI.Business.Logic.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Business\TopCore.WebAPI.Business.csproj" />
     <ProjectReference Include="..\TopCore.WebAPI.Core\TopCore.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Data.EF\TopCore.WebAPI.Data.EF.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Data\TopCore.WebAPI.Data.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Domain\TopCore.WebAPI.Domain.csproj" />
+    <ProjectReference Include="..\TopCore.WebAPI.Service.Facade\TopCore.WebAPI.Service.Facade.csproj" />
     <ProjectReference Include="..\TopCore.WebAPI.Service\TopCore.WebAPI.Service.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />

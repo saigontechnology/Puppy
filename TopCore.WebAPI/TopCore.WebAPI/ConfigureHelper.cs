@@ -8,14 +8,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.WebAPI
 {
-    public static class StartupHelper
+    public static class ConfigureHelper
     {
         public static IConfigurationRoot Configuration;
         public static IHostingEnvironment Environment;
@@ -24,7 +24,7 @@ namespace TopCore.WebAPI
 
         internal static class DependencyInjection
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
                 services
                     .AddDependencyInjectionScanner()
@@ -37,7 +37,7 @@ namespace TopCore.WebAPI
 
         internal static class Api
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
                 services.AddCors(options =>
                 {
@@ -52,7 +52,7 @@ namespace TopCore.WebAPI
                 });
             }
 
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
                 app.UseCors($"{nameof(TopCore)}.{nameof(WebAPI)}");
             }
@@ -60,7 +60,7 @@ namespace TopCore.WebAPI
 
         internal static class Mvc
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
                 services.AddMvc()
                     .AddXmlDataContractSerializerFormatters()
@@ -78,7 +78,7 @@ namespace TopCore.WebAPI
                     });
             }
 
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
                 if (Environment.IsDevelopment())
                 {
@@ -98,23 +98,31 @@ namespace TopCore.WebAPI
 
         internal static class Log
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
+                string logPath = Configuration.GetValue<string>("Developers:LogUrl");
+                services.AddElm(options =>
+                {
+                    options.Path = new PathString(logPath);
+                    options.Filter = (name, level) => level >= LogLevel.Error;
+                });
             }
 
-            public static void Use(ILoggerFactory loggerFactory)
+            public static void Middleware(IApplicationBuilder app, ILoggerFactory loggerFactory)
             {
-                //Log.Logger = new LoggerConfiguration()
-                //    .ReadFrom.Configuration(Configuration)
-                //    .CreateLogger();
+                // Write log
+                Serilog.Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
+                loggerFactory.AddSerilog();
 
-                //loggerFactory.AddSerilog();
+                // Log page
+                app.UseElmPage();
+                app.UseElmCapture();
             }
         }
 
         internal static class Exception
         {
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
                 if (Environment.IsDevelopment())
                 {
@@ -129,14 +137,19 @@ namespace TopCore.WebAPI
 
         internal static class Swagger
         {
-            public static void Add(IServiceCollection services)
+            private static readonly string documentApiBaseUrl = Configuration.GetValue<string>("Developers:ApiDocumentUrl");
+            private static readonly string documentTitle = Configuration.GetValue<string>("Developers:ApiDocumentTitle");
+            private static readonly string documentName = Configuration.GetValue<string>("Developers:ApiDocumentName");
+            private static readonly string documentJsonFile = Configuration.GetValue<string>("Developers:ApiDocumentJsonFile");
+
+            public static void Service(IServiceCollection services)
             {
                 services.AddSwaggerGen(options =>
                 {
-                    options.SwaggerDoc("v1", new Info
+                    options.SwaggerDoc(documentName, new Info
                     {
-                        Title = "Top Core SSO",
-                        Version = "v1",
+                        Title = documentTitle,
+                        Version = documentName,
                         Contact = new Contact
                         {
                             Name = "Top Nguyen",
@@ -152,18 +165,19 @@ namespace TopCore.WebAPI
                 });
             }
 
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
+                string documentFileBase = documentApiBaseUrl.Replace(documentName, string.Empty).TrimEnd('/');
                 app.UseSwagger(c =>
                 {
-                    c.RouteTemplate = "api-docs/{documentName}/topcore-sso.json";
+                    c.RouteTemplate = documentFileBase.TrimStart('/') + "/{documentName}/" + documentJsonFile;
                     c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
                 });
 
                 app.UseSwaggerUI(c =>
                 {
-                    c.RoutePrefix = "api";
-                    c.SwaggerEndpoint("/api-docs/v1/topcore-sso.json", "Top Core SSO");
+                    c.RoutePrefix = documentApiBaseUrl.TrimStart('/');
+                    c.SwaggerEndpoint($"{documentFileBase}/{documentName}/{documentJsonFile}", documentTitle);
                 });
             }
         }

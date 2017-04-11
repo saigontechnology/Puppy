@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace TopCore.WebAPI.Controllers
@@ -7,6 +8,13 @@ namespace TopCore.WebAPI.Controllers
     [Route("api/user")]
     public class UserApiController : ApiController
     {
+        private readonly ILogger<UserApiController> _logger;
+
+        public UserApiController(ILogger<UserApiController> logger)
+        {
+            _logger = logger;
+        }
+
         /// <summary>
         ///     Login 
         /// </summary>

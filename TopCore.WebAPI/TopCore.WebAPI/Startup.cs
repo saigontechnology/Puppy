@@ -21,32 +21,34 @@ namespace TopCore.WebAPI
                 builder.AddUserSecrets<Startup>();
             }
 
-            StartupHelper.Configuration = builder.Build();
-            StartupHelper.Environment = env;
+            ConfigureHelper.Configuration = builder.Build();
+            ConfigureHelper.Environment = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            StartupHelper.Mvc.Add(services);
+            ConfigureHelper.Mvc.Service(services);
 
-            StartupHelper.Api.Add(services);
+            ConfigureHelper.Api.Service(services);
 
-            StartupHelper.Log.Add(services);
+            ConfigureHelper.Swagger.Service(services);
 
-            StartupHelper.Swagger.Add(services);
+            ConfigureHelper.Log.Service(services);
 
-            StartupHelper.DependencyInjection.Add(services);
+            ConfigureHelper.DependencyInjection.Service(services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            StartupHelper.Mvc.Use(app);
+            ConfigureHelper.Log.Middleware(app, loggerFactory);
 
-            StartupHelper.Api.Use(app);
+            ConfigureHelper.Exception.Middleware(app);
 
-            StartupHelper.Log.Use(loggerFactory);
+            ConfigureHelper.Mvc.Middleware(app);
 
-            StartupHelper.Swagger.Use(app);
+            ConfigureHelper.Swagger.Middleware(app);
+
+            ConfigureHelper.Api.Middleware(app);
         }
     }
 }

@@ -100,6 +100,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Elm" Version="0.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.1" />
 
+    <!-- Identity Server -->
+    <PackageReference Include="IdentityServer4" Version="1.4.2" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
+    
     <!--Authenticate Setting -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="1.1.1" />
@@ -108,9 +112,8 @@
   <!-- Project -->
   <ItemGroup>
     <!-- Project -->
-    <ProjectReference Include="..\TopCore.Auth.Domain\TopCore.Auth.Domain.csproj" />
-    <ProjectReference Include="..\TopCore.Auth.Service\TopCore.Auth.Service.csproj" />
     <ProjectReference Include="..\TopCore.Auth.Data\TopCore.Auth.Data.csproj" />
+    <ProjectReference Include="..\TopCore.Auth.Domain\TopCore.Auth.Domain.csproj" />
   </ItemGroup>
 
   <!-- Framework -->
@@ -118,5 +121,6 @@
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
+    <ProjectReference Include="..\TopCore.Auth.Service\TopCore.Auth.Service.csproj" />
   </ItemGroup>
 </Project>

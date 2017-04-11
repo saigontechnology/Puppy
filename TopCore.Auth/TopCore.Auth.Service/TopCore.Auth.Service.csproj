@@ -13,13 +13,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
+
+  <!-- Use Identity Server -->
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="1.4.2" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="1.0.1" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\TopCore.Auth.Domain\TopCore.Auth.Domain.csproj" />
-    <ProjectReference Include="..\TopCore.Auth.Data\TopCore.Auth.Data.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
   </ItemGroup>
-  
-
 </Project>

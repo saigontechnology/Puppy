@@ -65,7 +65,7 @@ namespace TopCore.Auth.Service
             var migrate = _dbContext.Database.MigrateAsync();
             migrate.Wait();
             SeedScope_APIResource();
-            SeedClientWeb();
+            SeedClientAuth();
             SeedClientMobileAndroid();
             SeedClientMobileiOS();
             SeedScope_IdentityResource();
@@ -177,15 +177,15 @@ namespace TopCore.Auth.Service
             }
         }
 
-        private void SeedClientWeb()
+        private void SeedClientAuth()
         {
             var webClient = new Client
             {
                 Enabled = true,
                 AccessTokenType = AccessTokenType.Jwt,
-                ClientId = "topcore_web",
-                ClientName = "TopCore Web",
-                ClientSecrets = { new Secret("topcoreweb".Sha256()) },
+                ClientId = "topcore_auth",
+                ClientName = "Top Core Auth",
+                ClientSecrets = { new Secret("topcoreauth".Sha256()) },
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = true,
                 AllowOfflineAccess = true,
@@ -197,7 +197,6 @@ namespace TopCore.Auth.Service
                 AllowedCorsOrigins = { "http://eatup.vn" },
                 AllowedScopes =
                 {
-                    "topcore_api",
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.OfflineAccess
                 }

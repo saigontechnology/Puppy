@@ -22,6 +22,7 @@ namespace TopCore.Auth.Domain
         public static class Web
         {
             public const string WebRoot = "assets";
+            public const string CookieSchemaName = "cookie";
         }
     }
 }

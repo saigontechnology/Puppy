@@ -208,6 +208,7 @@ namespace TopCore.Auth
                         o.Password.RequireNonAlphanumeric = false;
                         o.Password.RequireUppercase = false;
                         o.Password.RequiredLength = 6;
+                        o.Cookies.ApplicationCookie.AuthenticationScheme = Domain.Constants.Web.CookieSchemaName;
                     })
                     .AddEntityFrameworkStores<Data.DbContext>()
                     .AddDefaultTokenProviders();
@@ -217,6 +218,7 @@ namespace TopCore.Auth
                     {
                         options.UserInteraction.LoginUrl = "/login";
                         options.UserInteraction.LogoutUrl = "/logout";
+                        options.Authentication.AuthenticationScheme = Domain.Constants.Web.CookieSchemaName;
                     })
                     .AddTemporarySigningCredential()
                     //.AddSigningCredential() // TODO Service Later
@@ -235,30 +237,35 @@ namespace TopCore.Auth
                 //application to use cookie authentication
                 app.UseCookieAuthentication(new CookieAuthenticationOptions
                 {
-                    AuthenticationScheme = "Cookies",
+                    AuthenticationScheme = Domain.Constants.Web.CookieSchemaName,
                     AutomaticAuthenticate = true,
                     AutomaticChallenge = true,
+                    LoginPath = new PathString("/Account/Login"),
+                    LogoutPath = new PathString("/Account/Login"),
+                    AccessDeniedPath = new PathString("/Account/Forbidden"),
+                    SlidingExpiration = true,
                 });
 
                 //use OpenID Connect Provider (IdentityServer)
                 app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
                 {
+                    RequireHttpsMetadata = false,
                     AuthenticationScheme = IdentityServerConstants.ProtocolTypes.OpenIdConnect,
                     GetClaimsFromUserInfoEndpoint = true,
-                    SignInScheme = "Cookies",
-                    Authority = "https://localhost:55555/",
-                    RequireHttpsMetadata = false,
-                    ClientId = "topcore_web",
-                    ClientSecret = "topcoreweb",
-                    ResponseType = "code id_token",
-                    DisplayName = "TopCore Web",
+                    SignInScheme = Domain.Constants.Web.CookieSchemaName,
+
+                    Authority = Configuration.GetValue<string>($"OpenIdAuthorityUrl:{Environment.EnvironmentName}"),
+                    PostLogoutRedirectUri = "/",
+
+                    ClientId = "topcore_auth",
+                    ClientSecret = "topcoreauth",
+
+                    DisplayName = "Top Core Auth",
                     SaveTokens = true,
                     Scope =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "topcore_api",
                     }
                 });
 

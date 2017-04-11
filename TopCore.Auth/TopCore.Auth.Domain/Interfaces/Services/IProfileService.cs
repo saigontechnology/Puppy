@@ -4,23 +4,20 @@
 //     <Author> Top </Author>
 //     <Project> TopCore.Auth.Service.Interfaces </Project>
 //     <File>
-//         <Name> IInitialData </Name>
-//         <Created> 06 Apr 17 2:26:51 AM </Created>
-//         <Key> 8cf12999-1e5b-4d40-8d0e-90c7b572cf99 </Key>
+//         <Name> IProfileService </Name>
+//         <Created> 06 Apr 17 12:39:10 AM </Created>
+//         <Key> a49c53ec-47db-4f90-96b8-7d2ffeadaa3b </Key>
 //     </File>
 //     <Summary>
-//         IInitialData
+//         IProfileService
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System.Threading.Tasks;
-
-namespace TopCore.Auth.Domain.Services
+namespace TopCore.Auth.Domain.Interfaces.Services
 {
-    public interface ISeedAuthService
+    public interface IProfileService
     {
-        Task SeedAuthDatabaseAsync();
     }
 }

@@ -19,22 +19,20 @@ using System.IO;
 using System.Reflection;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
-using TopCore.Auth.Domain.Services;
+using TopCore.Auth.Domain.Interfaces.Services;
 using TopCore.Auth.Service;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.Auth
 {
-    public static class StartupHelper
+    public static class ConfigureHelper
     {
         internal static IConfigurationRoot Configuration;
         internal static IHostingEnvironment Environment;
 
-        #region Helper
-
         internal static class DependencyInjection
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
                 services
                     .AddDependencyInjectionScanner()
@@ -47,7 +45,7 @@ namespace TopCore.Auth
 
         internal static class Api
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
                 services.AddCors(options =>
                 {
@@ -62,7 +60,7 @@ namespace TopCore.Auth
                 });
             }
 
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
                 app.UseCors($"{nameof(TopCore)}.{nameof(Auth)}");
             }
@@ -70,7 +68,7 @@ namespace TopCore.Auth
 
         internal static class Mvc
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
                 services.AddMvc()
                     .AddXmlDataContractSerializerFormatters()
@@ -88,7 +86,7 @@ namespace TopCore.Auth
                     });
             }
 
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
                 if (Environment.IsDevelopment())
                 {
@@ -108,23 +106,31 @@ namespace TopCore.Auth
 
         internal static class Log
         {
-            public static void Add(IServiceCollection services)
+            public static void Service(IServiceCollection services)
             {
+                string logPath = Configuration.GetValue<string>("Developers:LogUrl");
+                services.AddElm(options =>
+                {
+                    options.Path = new PathString(logPath);
+                    options.Filter = (name, level) => level >= LogLevel.Error;
+                });
             }
 
-            public static void Use(ILoggerFactory loggerFactory)
+            public static void Middleware(IApplicationBuilder app, ILoggerFactory loggerFactory)
             {
-                Serilog.Log.Logger = new LoggerConfiguration()
-                    .ReadFrom.Configuration(Configuration)
-                    .CreateLogger();
-
+                // Write log
+                Serilog.Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
                 loggerFactory.AddSerilog();
+
+                // Log page
+                app.UseElmPage();
+                app.UseElmCapture();
             }
         }
 
         internal static class Exception
         {
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
                 if (Environment.IsDevelopment())
                 {
@@ -139,14 +145,19 @@ namespace TopCore.Auth
 
         internal static class Swagger
         {
-            public static void Add(IServiceCollection services)
+            private static readonly string DocumentApiBaseUrl = Configuration.GetValue<string>("Developers:ApiDocumentUrl");
+            private static readonly string DocumentTitle = Configuration.GetValue<string>("Developers:ApiDocumentTitle");
+            private static readonly string DocumentName = Configuration.GetValue<string>("Developers:ApiDocumentName");
+            private static readonly string DocumentJsonFile = Configuration.GetValue<string>("Developers:ApiDocumentJsonFile");
+
+            public static void Service(IServiceCollection services)
             {
                 services.AddSwaggerGen(options =>
                 {
-                    options.SwaggerDoc("v1", new Info
+                    options.SwaggerDoc(DocumentName, new Info
                     {
-                        Title = "Top Core SSO",
-                        Version = "v1",
+                        Title = DocumentTitle,
+                        Version = DocumentName,
                         Contact = new Contact
                         {
                             Name = "Top Nguyen",
@@ -162,25 +173,26 @@ namespace TopCore.Auth
                 });
             }
 
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
+                string documentFileBase = DocumentApiBaseUrl.Replace(DocumentName, string.Empty).TrimEnd('/');
                 app.UseSwagger(c =>
                 {
-                    c.RouteTemplate = "api-docs/{documentName}/topcore-sso.json";
+                    c.RouteTemplate = documentFileBase.TrimStart('/') + "/{documentName}/" + DocumentJsonFile;
                     c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
                 });
 
                 app.UseSwaggerUI(c =>
                 {
-                    c.RoutePrefix = "api";
-                    c.SwaggerEndpoint("/api-docs/v1/topcore-sso.json", "Top Core SSO");
+                    c.RoutePrefix = DocumentApiBaseUrl.TrimStart('/');
+                    c.SwaggerEndpoint($"{documentFileBase}/{DocumentName}/{DocumentJsonFile}", DocumentTitle);
                 });
             }
         }
 
         internal static class IdentityServer
         {
-            public static void Add(IServiceCollection services, string connectionString)
+            public static void Service(IServiceCollection services, string connectionString)
             {
                 services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -188,7 +200,7 @@ namespace TopCore.Auth
 
                 services.AddDbContext<Data.DbContext>(builder => builder.UseSqlServer(connectionString, options => options.MigrationsAssembly(migrationsAssembly)));
 
-                // Add Identity store User into Database by Entity Framework (AspNetUser)
+                // Service Identity store User into Database by Entity Framework (AspNetUser)
                 services.AddIdentity<User, IdentityRole>(o =>
                     {
                         o.Password.RequireDigit = false;
@@ -207,7 +219,7 @@ namespace TopCore.Auth
                         options.UserInteraction.LogoutUrl = "/logout";
                     })
                     .AddTemporarySigningCredential()
-                    //.AddSigningCredential() // TODO Add Later
+                    //.AddSigningCredential() // TODO Service Later
                     .AddConfigurationStore(builder => builder.UseSqlServer(connectionString,
                         options => options.MigrationsAssembly(migrationsAssembly)))
                     .AddOperationalStore(builder => builder.UseSqlServer(connectionString,
@@ -216,7 +228,7 @@ namespace TopCore.Auth
                     .AddProfileService<ProfileService>();
             }
 
-            public static void Use(IApplicationBuilder app)
+            public static void Middleware(IApplicationBuilder app)
             {
                 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -250,7 +262,7 @@ namespace TopCore.Auth
                     }
                 });
 
-                // Use Identity Server
+                // Middleware Identity Server
                 app.UseIdentity();
                 app.UseIdentityServer();
             }
@@ -265,7 +277,5 @@ namespace TopCore.Auth
                 seedAuthService.SeedAuthDatabaseAsync().Wait();
             }
         }
-
-        #endregion Helper
     }
 }

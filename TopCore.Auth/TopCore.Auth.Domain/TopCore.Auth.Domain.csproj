@@ -21,5 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Interfaces\Business\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
 
 </Project>

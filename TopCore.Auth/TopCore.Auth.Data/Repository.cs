@@ -15,7 +15,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using TopCore.Auth.Domain.Data;
+using TopCore.Auth.Domain.Interfaces.Data;
 using TopCore.Framework.DependencyInjection.Attributes;
 using TopCore.Framework.EF;
 

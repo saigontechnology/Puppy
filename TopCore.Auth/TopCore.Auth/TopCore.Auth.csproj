@@ -64,6 +64,7 @@
   <ItemGroup>
     <Folder Include="log\" />
     <Folder Include="assets\" />
+    <Folder Include="log\" />
   </ItemGroup>
 
   <!-- Library -->
@@ -87,12 +88,17 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.1" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
 
-    <!-- Serilog -->
+    <!-- Write Log - Serilog -->
     <PackageReference Include="Serilog" Version="2.4.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="1.4.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="2.3.1" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+
+    <!-- Log Page -->
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Elm" Version="0.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.1" />
 
     <!--Authenticate Setting -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
@@ -112,12 +118,5 @@
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Core\TopCore.Framework.Core.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.Web\TopCore.Framework.Web.csproj" />
     <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
-  </ItemGroup>
-
-  <!-- Hint Path -->
-  <ItemGroup>
-    <Reference Include="System.ServiceModel">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.ServiceModel.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>

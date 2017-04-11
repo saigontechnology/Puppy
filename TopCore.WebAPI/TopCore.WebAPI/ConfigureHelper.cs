@@ -20,8 +20,6 @@ namespace TopCore.WebAPI
         public static IConfigurationRoot Configuration;
         public static IHostingEnvironment Environment;
 
-        #region Helper
-
         internal static class DependencyInjection
         {
             public static void Service(IServiceCollection services)
@@ -137,19 +135,19 @@ namespace TopCore.WebAPI
 
         internal static class Swagger
         {
-            private static readonly string documentApiBaseUrl = Configuration.GetValue<string>("Developers:ApiDocumentUrl");
-            private static readonly string documentTitle = Configuration.GetValue<string>("Developers:ApiDocumentTitle");
-            private static readonly string documentName = Configuration.GetValue<string>("Developers:ApiDocumentName");
+            private static readonly string DocumentApiBaseUrl = Configuration.GetValue<string>("Developers:ApiDocumentUrl");
+            private static readonly string DocumentTitle = Configuration.GetValue<string>("Developers:ApiDocumentTitle");
+            private static readonly string DocumentName = Configuration.GetValue<string>("Developers:ApiDocumentName");
             private static readonly string documentJsonFile = Configuration.GetValue<string>("Developers:ApiDocumentJsonFile");
 
             public static void Service(IServiceCollection services)
             {
                 services.AddSwaggerGen(options =>
                 {
-                    options.SwaggerDoc(documentName, new Info
+                    options.SwaggerDoc(DocumentName, new Info
                     {
-                        Title = documentTitle,
-                        Version = documentName,
+                        Title = DocumentTitle,
+                        Version = DocumentName,
                         Contact = new Contact
                         {
                             Name = "Top Nguyen",
@@ -167,7 +165,7 @@ namespace TopCore.WebAPI
 
             public static void Middleware(IApplicationBuilder app)
             {
-                string documentFileBase = documentApiBaseUrl.Replace(documentName, string.Empty).TrimEnd('/');
+                string documentFileBase = DocumentApiBaseUrl.Replace(DocumentName, string.Empty).TrimEnd('/');
                 app.UseSwagger(c =>
                 {
                     c.RouteTemplate = documentFileBase.TrimStart('/') + "/{documentName}/" + documentJsonFile;
@@ -176,12 +174,10 @@ namespace TopCore.WebAPI
 
                 app.UseSwaggerUI(c =>
                 {
-                    c.RoutePrefix = documentApiBaseUrl.TrimStart('/');
-                    c.SwaggerEndpoint($"{documentFileBase}/{documentName}/{documentJsonFile}", documentTitle);
+                    c.RoutePrefix = DocumentApiBaseUrl.TrimStart('/');
+                    c.SwaggerEndpoint($"{documentFileBase}/{DocumentName}/{documentJsonFile}", DocumentTitle);
                 });
             }
         }
-
-        #endregion Helper
     }
 }

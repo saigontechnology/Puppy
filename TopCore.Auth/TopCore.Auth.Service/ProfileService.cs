@@ -24,9 +24,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
-using TopCore.Auth.Domain.Services;
+using TopCore.Auth.Domain.Interfaces.Data;
+using TopCore.Auth.Domain.Interfaces.Services;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Service

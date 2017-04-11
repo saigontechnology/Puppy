@@ -4,18 +4,18 @@
         <name>TopCore.Auth</name>
     </assembly>
     <members>
+        <member name="M:TopCore.Auth.ConfigureHelper.IdentityServer.SeedData(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Initial Seed Data and Database in Startup, Must be synchronus 
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="M:TopCore.Auth.Controllers.UserApiController.Post(TopCore.Auth.Controllers.UserApiController.LoginModel)">
             <summary>
                 Login 
             </summary>
             <param name="model"></param>
             <returns></returns>
-        </member>
-        <member name="M:TopCore.Auth.StartupHelper.IdentityServer.SeedData(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-                Initial Seed Data and Database in Startup, Must be synchronus 
-            </summary>
-            <param name="services"></param>
         </member>
     </members>
 </doc>

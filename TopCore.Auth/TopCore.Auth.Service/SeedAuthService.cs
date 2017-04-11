@@ -25,9 +25,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using TopCore.Auth.Domain.Data;
 using TopCore.Auth.Domain.Entities;
-using TopCore.Auth.Domain.Services;
+using TopCore.Auth.Domain.Interfaces.Data;
+using TopCore.Auth.Domain.Interfaces.Services;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Service

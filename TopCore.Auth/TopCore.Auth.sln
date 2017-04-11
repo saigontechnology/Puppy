@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Web", "1. Web", "{F6F7E817-1E05-4327-84B3-60C07CC69AF0}"
 EndProject
@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Service", "2. Service", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Auth.Service", "TopCore.Auth.Service\TopCore.Auth.Service.csproj", "{5A30FBC3-554B-43E3-837E-051176BB0958}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Data", "3. Data", "{37392F80-20B8-4A9D-B741-0F99F8E452DE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Data", "4. Data", "{37392F80-20B8-4A9D-B741-0F99F8E452DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Auth.Data", "TopCore.Auth.Data\TopCore.Auth.Data.csproj", "{6EF082D3-B222-4BBF-90C8-D211DBA3B281}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopCore.Framework.Web", "..\TopCore.Framework\TopCore.Framework.Web\TopCore.Framework.Web.csproj", "{5F1B78CE-4D5A-4788-B22F-6A038F495E1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopCore.Framework.EF", "..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj", "{41CE9B01-13C2-4D80-B0C9-B78CFC65E129}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Business", "3. Business", "{3C3CB545-B9B5-4875-929F-7D6B606390D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

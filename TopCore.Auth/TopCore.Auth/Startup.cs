@@ -21,38 +21,40 @@ namespace TopCore.Auth
                 builder.AddUserSecrets<Startup>();
             }
 
-            StartupHelper.Configuration = builder.Build();
-            StartupHelper.Environment = env;
+            ConfigureHelper.Configuration = builder.Build();
+            ConfigureHelper.Environment = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            StartupHelper.Mvc.Add(services);
+            ConfigureHelper.Mvc.Service(services);
 
-            StartupHelper.Api.Add(services);
+            ConfigureHelper.Api.Service(services);
 
-            StartupHelper.Log.Add(services);
+            ConfigureHelper.Swagger.Service(services);
 
-            StartupHelper.Swagger.Add(services);
+            ConfigureHelper.Log.Service(services);
 
-            StartupHelper.DependencyInjection.Add(services);
+            ConfigureHelper.DependencyInjection.Service(services);
 
-            StartupHelper.IdentityServer.Add(services, StartupHelper.Configuration.GetConnectionString(StartupHelper.Environment.EnvironmentName));
+            ConfigureHelper.IdentityServer.Service(services, ConfigureHelper.Configuration.GetConnectionString(ConfigureHelper.Environment.EnvironmentName));
 
-            StartupHelper.IdentityServer.SeedData(services);
+            ConfigureHelper.IdentityServer.SeedData(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            StartupHelper.Mvc.Use(app);
+            ConfigureHelper.Log.Middleware(app, loggerFactory);
 
-            StartupHelper.Api.Use(app);
+            ConfigureHelper.Exception.Middleware(app);
 
-            StartupHelper.Log.Use(loggerFactory);
+            ConfigureHelper.Mvc.Middleware(app);
 
-            StartupHelper.Swagger.Use(app);
+            ConfigureHelper.Swagger.Middleware(app);
 
-            StartupHelper.IdentityServer.Use(app);
+            ConfigureHelper.Api.Middleware(app);
+
+            ConfigureHelper.IdentityServer.Middleware(app);
         }
     }
 }

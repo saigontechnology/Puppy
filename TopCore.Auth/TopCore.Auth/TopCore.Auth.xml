@@ -4,7 +4,7 @@
         <name>TopCore.Auth</name>
     </assembly>
     <members>
-        <member name="M:TopCore.Auth.Startup.IdentityServerStartupHelper.SeedData(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:TopCore.Auth.StartupHelper.IdentityServer.SeedData(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
                 Initial Seed Data and Database in Startup, Must be synchronus
             </summary>

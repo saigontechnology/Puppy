@@ -2,7 +2,7 @@
 
 namespace TopCore.WebAPI.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : MvcController
     {
         public IActionResult Index()
         {

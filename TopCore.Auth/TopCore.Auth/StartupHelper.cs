@@ -45,41 +45,7 @@ namespace TopCore.Auth
             }
         }
 
-        internal static class Mvc
-        {
-            public static void Add(IServiceCollection services)
-            {
-                services.AddMvc().AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-                    // Indented for Development only
-                    options.SerializerSettings.Formatting = Environment.IsDevelopment() ? Formatting.Indented : Formatting.None;
-
-                    // Serialize Json as Camel case
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
-            }
-
-            public static void Use(IApplicationBuilder app)
-            {
-                if (Environment.IsDevelopment())
-                {
-                    app.UseBrowserLink();
-                }
-                app.UseStaticFiles();
-
-                app.UseStaticFiles(new StaticFileOptions
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"assets", "images", "favicons")),
-                    RequestPath = new PathString("/favicons")
-                });
-
-                app.UseMvcWithDefaultRoute();
-            }
-        }
-
-        internal static class API
+        internal static class Api
         {
             public static void Add(IServiceCollection services)
             {
@@ -99,6 +65,44 @@ namespace TopCore.Auth
             public static void Use(IApplicationBuilder app)
             {
                 app.UseCors($"{nameof(TopCore)}.{nameof(Auth)}");
+            }
+        }
+
+        internal static class Mvc
+        {
+            public static void Add(IServiceCollection services)
+            {
+                services.AddMvc()
+                    .AddXmlDataContractSerializerFormatters()
+                    .AddJsonOptions(options =>
+                    {
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+                        // Indented for Development only
+                        options.SerializerSettings.Formatting = Environment.IsDevelopment()
+                            ? Formatting.Indented
+                            : Formatting.None;
+
+                        // Serialize Json as Camel case
+                        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    });
+            }
+
+            public static void Use(IApplicationBuilder app)
+            {
+                if (Environment.IsDevelopment())
+                {
+                    app.UseBrowserLink();
+                }
+                app.UseStaticFiles();
+
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"assets", "images", "favicons")),
+                    RequestPath = new PathString("/favicons")
+                });
+
+                app.UseMvcWithDefaultRoute();
             }
         }
 

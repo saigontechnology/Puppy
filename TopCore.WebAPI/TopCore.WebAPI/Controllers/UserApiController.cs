@@ -2,7 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace TopCore.Auth.Controllers
+namespace TopCore.WebAPI.Controllers
 {
     [Route("api/user")]
     public class UserApiController : ApiController

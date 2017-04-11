@@ -4,10 +4,11 @@
         <name>TopCore.WebAPI</name>
     </assembly>
     <members>
-        <member name="M:TopCore.WebAPI.Controllers.UserController.Get">
+        <member name="M:TopCore.WebAPI.Controllers.UserApiController.Post(TopCore.WebAPI.Controllers.UserApiController.LoginModel)">
             <summary>
-                GET: api/User 
+                Login 
             </summary>
+            <param name="model"></param>
             <returns></returns>
         </member>
     </members>

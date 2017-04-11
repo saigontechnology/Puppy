@@ -29,7 +29,7 @@ namespace TopCore.WebAPI
         {
             StartupHelper.Mvc.Add(services);
 
-            StartupHelper.API.Add(services);
+            StartupHelper.Api.Add(services);
 
             StartupHelper.Log.Add(services);
 
@@ -42,7 +42,7 @@ namespace TopCore.WebAPI
         {
             StartupHelper.Mvc.Use(app);
 
-            StartupHelper.API.Use(app);
+            StartupHelper.Api.Use(app);
 
             StartupHelper.Log.Use(loggerFactory);
 

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.WebAPI
@@ -34,7 +35,7 @@ namespace TopCore.WebAPI
             }
         }
 
-        internal static class API
+        internal static class Api
         {
             public static void Add(IServiceCollection services)
             {
@@ -61,16 +62,20 @@ namespace TopCore.WebAPI
         {
             public static void Add(IServiceCollection services)
             {
-                services.AddMvc().AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                services.AddMvc()
+                    .AddXmlDataContractSerializerFormatters()
+                    .AddJsonOptions(options =>
+                    {
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
-                    // Indented for Development only
-                    options.SerializerSettings.Formatting = Environment.IsDevelopment() ? Formatting.Indented : Formatting.None;
+                        // Indented for Development only
+                        options.SerializerSettings.Formatting = Environment.IsDevelopment()
+                            ? Formatting.Indented
+                            : Formatting.None;
 
-                    // Serialize Json as Camel case
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
+                        // Serialize Json as Camel case
+                        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    });
             }
 
             public static void Use(IApplicationBuilder app)

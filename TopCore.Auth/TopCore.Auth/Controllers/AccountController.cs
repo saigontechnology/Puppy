@@ -37,7 +37,7 @@ namespace TopCore.Auth.Controllers
                     props = new AuthenticationProperties
                     {
                         IsPersistent = true,
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddMonths(1),
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30),
                     };
                 };
 

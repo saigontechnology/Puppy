@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using System;
+using IdentityServer4;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -244,6 +245,7 @@ namespace TopCore.Auth
                     LogoutPath = new PathString("/Account/Login"),
                     AccessDeniedPath = new PathString("/Account/Forbidden"),
                     SlidingExpiration = true,
+                    ExpireTimeSpan = TimeSpan.FromDays(30)
                 });
 
                 //use OpenID Connect Provider (IdentityServer)

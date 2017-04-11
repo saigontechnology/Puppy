@@ -5,18 +5,18 @@ using TopCore.WebAPI.Data.Entity;
 
 namespace TopCore.WebAPI.Data.EF
 {
-    public class TopCoreWebAPIDbContext : DbContext
+    public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public TopCoreWebAPIDbContext(DbContextOptions<TopCoreWebAPIDbContext> options) : base(options)
+        public DbContext(DbContextOptions<DbContext> options) : base(options)
         {
-            Debug.WriteLine($"{nameof(TopCoreWebAPIDbContext)} is Created", nameof(TopCoreWebAPIDbContext));
+            Debug.WriteLine($"{nameof(DbContext)} is Created", nameof(DbContext));
         }
 
         public DbSet<UserEntity> UserEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Debug.WriteLine($"{nameof(TopCoreWebAPIDbContext)} is Created", nameof(OnModelCreating));
+            Debug.WriteLine($"{nameof(DbContext)} is Created", nameof(OnModelCreating));
 
             // Convention Table Name is Entity Name without EntityMapping Postfix
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TopCore.Auth.ViewModels
+namespace TopCore.Auth.Domain.ViewModels
 {
     public class LoginViewModel
     {

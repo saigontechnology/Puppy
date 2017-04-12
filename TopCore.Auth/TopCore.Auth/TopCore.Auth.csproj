@@ -112,7 +112,6 @@
 
   <!-- Project -->
   <ItemGroup>
-    <!-- Project -->
     <ProjectReference Include="..\TopCore.Auth.Data\TopCore.Auth.Data.csproj" />
     <ProjectReference Include="..\TopCore.Auth.Domain\TopCore.Auth.Domain.csproj" />
   </ItemGroup>

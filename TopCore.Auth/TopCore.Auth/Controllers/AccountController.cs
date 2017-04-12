@@ -28,7 +28,7 @@ namespace TopCore.Auth.Controllers
         {
             var identityUser = await _userManager.FindByNameAsync(userName);
 
-            if (identityUser != null && await _userManager.CheckPasswordAsync(identityUser, password))
+            if (identityUser != null && await _userManager.CheckPasswordAsync(identityUser, password).ConfigureAwait(true))
             {
                 AuthenticationProperties props = null;
 
@@ -41,7 +41,7 @@ namespace TopCore.Auth.Controllers
                     };
                 };
 
-                await HttpContext.Authentication.SignInAsync(identityUser.Id, identityUser.UserName, props);
+                await HttpContext.Authentication.SignInAsync(identityUser.Id, identityUser.UserName, props).ConfigureAwait(true);
 
                 if (_interaction.IsValidReturnUrl(returnUrl))
                 {

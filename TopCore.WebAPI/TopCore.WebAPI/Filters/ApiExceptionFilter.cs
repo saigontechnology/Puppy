@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
-using System;
-using System.Net;
 using TopCore.Auth.Domain.Exceptions;
-using TopCore.Auth.Domain.ViewModels;
+using TopCore.WebAPI.Domain.Exceptions;
+using TopCore.WebAPI.Domain.ViewModels;
 
-namespace TopCore.Auth.Filters
+namespace TopCore.WebAPI.Filters
 {
     public class ApiExceptionFilter : ExceptionFilterAttribute
     {

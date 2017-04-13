@@ -24,9 +24,7 @@
 
   <!-- Folder Include -->
   <ItemGroup>
-    <Folder Include="log\" />
     <Folder Include="assets\" />
-    <Folder Include="log\" />
   </ItemGroup>
 
   <!-- Content Include -->

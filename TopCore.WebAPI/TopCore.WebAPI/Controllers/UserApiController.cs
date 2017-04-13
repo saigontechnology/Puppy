@@ -25,6 +25,7 @@ namespace TopCore.WebAPI.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(LoginModel))]
         public IActionResult Post([FromBody] LoginModel model)
         {
+            int.Parse("aaa");
             return Ok(model);
         }
 

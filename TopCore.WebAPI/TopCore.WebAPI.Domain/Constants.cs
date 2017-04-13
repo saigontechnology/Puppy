@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
-//     <Project> TopCore.WebAPI.Domain </Project>
+//     <Project> TopCore.Auth.Domain </Project>
 //     <File>
 //         <Name> Constants </Name>
 //         <Created> 08/04/2017 11:31:32 PM </Created>
@@ -22,6 +22,7 @@ namespace TopCore.WebAPI.Domain
         public static class Web
         {
             public const string WebRoot = "assets";
+            public const string CookieSchemaName = "cookie";
         }
     }
 }

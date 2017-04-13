@@ -17,7 +17,6 @@ namespace TopCore.Auth.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK, typeof(LoginModel))]
         public IActionResult Post([FromBody] LoginModel model)
         {
-            int a = int.Parse("a");
             return Ok(model);
         }
 

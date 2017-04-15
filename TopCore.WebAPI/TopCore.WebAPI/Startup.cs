@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TopCore.Framework.DependencyInjection;
+using TopCore.WebAPI.Service;
 
 namespace TopCore.WebAPI
 {
@@ -36,18 +38,36 @@ namespace TopCore.WebAPI
             ConfigureHelper.Log.Service(services);
 
             ConfigureHelper.DependencyInjection.Service(services);
+
+            IMigrationService migrationService = services.Resolve<IMigrationService>();
+
+            // migration database, need synchronous
+            migrationService.MigrateDatabase().Wait();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            ConfigureHelper.Log.Middleware(app, loggerFactory);
+            // The order of middleware very important for request and response handle! Don't mad it
 
+            // [First] Authenticate and Authorize Request
+            app.UseMiddleware<ConfigureHelper.Swagger.AccessMiddleware>();
+            app.UseMiddleware<ConfigureHelper.Log.AccessMiddleware>();
+
+            // [2] Logger and Exception handle
+            ConfigureHelper.Log.Middleware(app, loggerFactory);
             ConfigureHelper.Exception.Middleware(app);
 
-            ConfigureHelper.Mvc.Middleware(app);
+            // [3] Track Time Execute
+            app.UseMiddleware<ConfigureHelper.ProcessingTimeMiddleware>();
 
+            // [5] External UI Middleware
             ConfigureHelper.Swagger.Middleware(app);
 
+            // [Final] Response
+            app.UseMiddleware<ConfigureHelper.SystemInfoMiddleware>();
+
+            // [Final] Execute Middleware: MVC and API
+            ConfigureHelper.Mvc.Middleware(app);
             ConfigureHelper.Api.Middleware(app);
         }
     }

@@ -19,6 +19,6 @@ namespace TopCore.WebAPI.Service
 {
     public interface IUserService
     {
-        string GetUserName();
+        void Add(string userName);
     }
 }

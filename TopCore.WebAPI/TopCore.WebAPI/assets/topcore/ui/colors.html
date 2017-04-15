@@ -1,0 +1,1333 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    WebAPI
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Topcore - Material Admin Template</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--  Material Dashboard CSS    -->
+    <link href="../assets/css/topcore.css" rel="stylesheet" />
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="../assets/css/demo.css" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <!--    JQuery UI     -->
+    <link href="../assets/vendors/jquery-ui-1.12.0/jquery-ui.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+		<div class="sidebar">
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    Topcore Admin
+                </a>
+            </div>
+            <div class="logo logo-mini">
+                <a href="#" class="simple-text">
+                    T
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+				<ul class="nav">
+                    <li>
+                        <a href="../index.html">
+                            <i class="material-icons">dashboard</i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+					<li>
+						<a href="../widgets/widgets.html">
+							<i class="material-icons">apps</i>
+							<p>Widgets</p>
+						</a>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#charts" class="collapsed" aria-expanded="false">
+							<i class="material-icons">equalizer</i>
+							<p>Charts
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="charts" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li>
+									<a href="../charts/chart-js-charts.html">ChartJS</a>
+								</li>
+								<li>
+									<a href="../charts/flot-charts.html">Flot</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#ui-elements" class="collapsed" aria-expanded="false">
+							<i class="material-icons">extension</i>
+							<p>UI Elements
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="ui-elements" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="accordions.html">Accordions</a></li>
+								<li><a href="alerts.html">Alerts</a></li>
+								<li><a href="buttons.html">Buttons</a></li>
+								<li><a href="colors.html">Colors</a></li>
+								<li><a href="grid.html">Grid System</a></li>
+								<li><a href="icons.html">Icons</a></li>
+								<li><a href="modals.html">Modals</a></li>
+								<li><a href="notifications.html">Notifications</a></li>
+								<li><a href="tabs.html">Tabs</a></li>
+								<li><a href="typography.html">Typography</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#forms" class="collapsed" aria-expanded="false">
+							<i class="material-icons">border_color</i>
+							<p>Forms
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="forms" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../forms/basic-elements.html">Basic Elements</a></li>
+								<li><a href="../forms/advanced-elements.html">Advanced Elements</a></li>
+								<li><a href="../forms/form-validation.html">Form Validation</a></li>
+								<li><a href="../forms/form-wizard.html">Form Wizard</a></li>
+								<li><a href="../forms/sample-forms.html">Sample Forms</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#tables" class="collapsed" aria-expanded="false">
+							<i class="material-icons">grid_on</i>
+							<p>Tables
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="tables" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../tables/tables.html">Simple Tables</a></li>
+								<li><a href="../tables/data-tables.html">Data Tables</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#pages" class="collapsed" aria-expanded="false">
+							<i class="material-icons">content_copy</i>
+							<p>Pages
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="pages" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../sample-pages/template.html">Template</a></li>
+								<li><a href="../sample-pages/user-profile.html">User Profile</a></li>
+								<li><a href="../sample-pages/login.html">Login</a></li>
+								<li><a href="../sample-pages/signup.html">Sign Up</a></li>
+								<li><a href="../sample-pages/pricing-table.html">Pricing Table</a></li>
+								<li><a href="../sample-pages/invoice.html">Invoice</a></li>
+								<li><a href="../sample-pages/help-faqs.html">Help & FAQs</a></li>
+								<li><a href="../sample-pages/timeline.html">Timeline</a></li>
+								<li><a href="../sample-pages/404.html">404</a></li>
+								<li><a href="../sample-pages/500.html">500</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="../calendar/calendar.html">
+							<i class="material-icons">date_range</i>
+							<p>Calendar
+								<b class="caret"></b>
+							</p>
+						</a>
+					</li>
+					<li>
+						<a href="../docs/documentation.html">
+							<i class="material-icons">library_books</i>
+							<p>Documentation</p>
+						</a>
+					</li>
+				</ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-absolute">
+                <div class="container-fluid">
+                    <div class="navbar-minimize">
+                        <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+							<i class="material-icons visible-on-sidebar-regular f-26">keyboard_arrow_left</i>
+                            <i class="material-icons visible-on-sidebar-mini f-26">keyboard_arrow_right</i>
+                        </button>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"> Colors </a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">notifications</i>
+                                    <span class="notification">6</span>
+                                    <p class="hidden-lg hidden-md">
+                                        Notifications
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">You have 5 new messages</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">You're now friend with Mike</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Wish Mary on her birthday!</a>
+                                    </li>                                    <li>
+                                        <a href="#">5 warnings in Server Console</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Jane completed 'Induction Training'</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">'Prepare Marketing Report' is overdue</a>
+                                    </li>
+                                </ul>
+                            </li>
+							<li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">apps</i>
+                                    <p class="hidden-lg hidden-md">Apps</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">person</i>
+                                    <p class="hidden-lg hidden-md">Profile</p>
+                                </a>
+                            </li>
+							<li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">settings</i>
+                                    <p class="hidden-lg hidden-md">Settings</p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg hidden-md"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="container-fluid">
+					<div class="header text-center">
+						<h3 class="title">Material Design Colors</h3>
+						<p class="category">This color palette comprises primary and accent colors that can be used for illustration or to develop your brand colors. They’ve been designed to work harmoniously with each other.
+						</p>
+					</div>
+                    <div class="card">
+                        <div class="card-header">
+                        </div>
+                        <div class="card-content card-padding color-palette">
+                        	<div class="row">
+                                <div class="col-sm-4">
+                                    <div class="color main-color md-bg-red light">
+                                    	<span class="name">Red</span>
+                                        <span class="class">.md-bg-red</span>
+                                        <span class="hex">#F44336</span>
+                                    </div>
+
+                                    <div class="color md-bg-red-50 ">
+                                    	<span class="class">.md-bg-red-50</span><span class="hex">#FFEBEE</span>
+                                    </div>
+                                    <div class="color md-bg-red-100">
+                                    	<span class="class">.md-bg-red-100</span><span class="hex">#FFCDD2</span>
+                                    </div>
+                                    <div class="color md-bg-red-200">
+                                    	<span class="class">.md-bg-red-200</span><span class="hex">#EF9A9A</span>
+                                    </div>
+                                    <div class="color md-bg-red-300">
+                                    	<span class="class">.md-bg-red-300</span><span class="hex">#E57373</span>
+                                    </div>
+                                    <div class="color md-bg-red-400 light">
+                                    	<span class="class">.md-bg-red-400</span><span class="hex">#EF5350</span>
+                                    </div>
+                                    <div class="color md-bg-red-500 light">
+                                    	<span class="class">.md-bg-red-500</span><span class="hex">#F44336</span>
+                                    </div>
+                                    <div class="color md-bg-red-600 light">
+                                    	<span class="class">.md-bg-red-600</span><span class="hex">#E53935</span>
+                                    </div>
+                                    <div class="color md-bg-red-700 light">
+                                    	<span class="class">.md-bg-red-700</span><span class="hex">#D32F2F</span>
+                                    </div>
+                                    <div class="color md-bg-red-800 light">
+                                    	<span class="class">.md-bg-red-800</span><span class="hex">#C62828</span>
+                                    </div>
+                                    <div class="color md-bg-red-900 light">
+                                    	<span class="class">.md-bg-red-900</span><span class="hex">#B71C1C</span>
+                                    </div>
+
+                                    <div class="color md-bg-red-A100 m-t-5">
+                                    	<span class="class">.md-bg-red-A100</span><span class="hex">#FF8A80</span>
+                                    </div>
+                                    <div class="color md-bg-red-A200 light">
+                                    	<span class="class">.md-bg-red-A200</span><span class="hex">#FF5252</span>
+                                    </div>
+                                    <div class="color md-bg-red-A400 light">
+                                    	<span class="class">.md-bg-red-A400</span><span class="hex">#FF1744</span>
+                                    </div>
+                                    <div class="color md-bg-red-A700 light">
+                                    	<span class="class">.md-bg-red-A700</span><span class="hex">#D50000</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-pink">
+                                    	<span class="name">Pink</span>
+                                        <span class="class">.md-bg-pink</span>
+                                        <span class="hex">#E91E63</span>
+                                    </div>
+
+                                    <div class="color md-bg-pink-50">
+                                    	<span class="class">.md-bg-pink-50 </span><span class="hex">#FCE4EC</span>
+                                    </div>
+                                    <div class="color md-bg-pink-100">
+                                    	<span class="class">.md-bg-pink-100</span><span class="hex">#F8BBD0</span>
+                                    </div>
+                                    <div class="color md-bg-pink-200">
+                                    	<span class="class">.md-bg-pink-200</span><span class="hex">#F48FB1</span>
+                                    </div>
+                                    <div class="color md-bg-pink-300 light">
+                                    	<span class="class">.md-bg-pink-300</span><span class="hex">#F06292</span>
+                                    </div>
+                                    <div class="color md-bg-pink-400 light">
+                                    	<span class="class">.md-bg-pink-400</span><span class="hex">#EC407A</span>
+                                    </div>
+                                    <div class="color md-bg-pink-500 light">
+                                    	<span class="class">.md-bg-pink-500</span><span class="hex">#E91E63</span>
+                                    </div>
+                                    <div class="color md-bg-pink-600 light">
+                                    	<span class="class">.md-bg-pink-600</span><span class="hex">#D81B60</span>
+                                    </div>
+                                    <div class="color md-bg-pink-700 light">
+                                    	<span class="class">.md-bg-pink-700</span><span class="hex">#C2185B</span>
+                                    </div>
+                                    <div class="color md-bg-pink-800 light">
+                                    	<span class="class">.md-bg-pink-800</span><span class="hex">#AD1457</span>
+                                    </div>
+                                    <div class="color md-bg-pink-900 light">
+                                    	<span class="class">.md-bg-pink-900</span><span class="hex">#880E4F</span>
+                                    </div>
+
+                                    <div class="color md-bg-pink-A100 m-t-5">
+                                    	<span class="class">.md-bg-pink-A100</span><span class="hex">#FF80AB</span>
+                                    </div>
+                                    <div class="color md-bg-pink-A200 light">
+                                    	<span class="class">.md-bg-pink-A200</span><span class="hex">#FF4081</span>
+                                    </div>
+                                    <div class="color md-bg-pink-A400 light">
+                                    	<span class="class">.md-bg-pink-A400</span><span class="hex">#F50057</span>
+                                    </div>
+                                    <div class="color md-bg-pink-A700 light">
+                                    	<span class="class">.md-bg-pink-A700</span><span class="hex">#C51162</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-purple">
+                                    	<span class="name">Purple</span>
+                                        <span class="class">.md-bg-purple</span>
+                                        <span class="hex">#9C27B0</span>
+                                    </div>
+
+                                    <div class="color md-bg-purple-50 ">
+                                    	<span class="class">.md-bg-purple-50 </span><span class="hex">#F3E5F5</span>
+                                    </div>
+                                    <div class="color md-bg-purple-100">
+                                    	<span class="class">.md-bg-purple-100</span><span class="hex">#E1BEE7</span>
+                                    </div>
+                                    <div class="color md-bg-purple-200">
+                                    	<span class="class">.md-bg-purple-200</span><span class="hex">#CE93D8</span>
+                                    </div>
+                                    <div class="color md-bg-purple-300 light">
+                                    	<span class="class">.md-bg-purple-300</span><span class="hex">#BA68C8</span>
+                                    </div>
+                                    <div class="color md-bg-purple-400 light">
+                                    	<span class="class">.md-bg-purple-400</span><span class="hex">#AB47BC</span>
+                                    </div>
+                                    <div class="color md-bg-purple-500 light">
+                                    	<span class="class">.md-bg-purple-500</span><span class="hex">#9C27B0</span>
+                                    </div>
+                                    <div class="color md-bg-purple-600 light">
+                                    	<span class="class">.md-bg-purple-600</span><span class="hex">#8E24AA</span>
+                                    </div>
+                                    <div class="color md-bg-purple-700 light">
+                                    	<span class="class">.md-bg-purple-700</span><span class="hex">#7B1FA2</span>
+                                    </div>
+                                    <div class="color md-bg-purple-800 light">
+                                    	<span class="class">.md-bg-purple-800</span><span class="hex">#6A1B9A</span>
+                                    </div>
+                                    <div class="color md-bg-purple-900 light">
+                                    	<span class="class">.md-bg-purple-900</span><span class="hex">#4A148C</span>
+                                    </div>
+
+                                    <div class="color md-bg-purple-A100 m-t-5">
+                                    	<span class="class">.md-bg-purple-A100</span><span class="hex">#EA80FC</span>
+                                    </div>
+                                    <div class="color md-bg-purple-A200 light">
+                                    	<span class="class">.md-bg-purple-A200</span><span class="hex">#E040FB</span>
+                                    </div>
+                                    <div class="color md-bg-purple-A400 light">
+                                    	<span class="class">.md-bg-purple-A400</span><span class="hex">#D500F9</span>
+                                    </div>
+                                    <div class="color md-bg-purple-A700 light">
+                                    	<span class="class">.md-bg-purple-A700</span><span class="hex">#AA00FF</span>
+                                    </div>
+                                </div>
+                           	</div>
+
+                        	<div class="row m-t-25">
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-deep-purple">
+                                    	<span class="name">Deep Purple</span>
+                                        <span class="class">.md-bg-deep-purple</span>
+                                        <span class="hex">#673AB7</span>
+                                    </div>
+
+                                    <div class="color md-bg-deep-purple-50 ">
+                                    	<span class="class">.md-bg-deep-purple-50 </span><span class="hex">#EDE7F6</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-100">
+                                    	<span class="class">.md-bg-deep-purple-100</span><span class="hex">#D1C4E9</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-200">
+                                    	<span class="class">.md-bg-deep-purple-200</span><span class="hex">#B39DDB</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-300 light">
+                                    	<span class="class">.md-bg-deep-purple-300</span><span class="hex">#9575CD</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-400 light">
+                                    	<span class="class">.md-bg-deep-purple-400</span><span class="hex">#7E57C2</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-500 light">
+                                    	<span class="class">.md-bg-deep-purple-500</span><span class="hex">#673AB7</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-600 light">
+                                    	<span class="class">.md-bg-deep-purple-600</span><span class="hex">#5E35B1</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-700 light">
+                                    	<span class="class">.md-bg-deep-purple-700</span><span class="hex">#512DA8</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-800 light">
+                                    	<span class="class">.md-bg-deep-purple-800</span><span class="hex">#4527A0</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-900 light">
+                                    	<span class="class">.md-bg-deep-purple-900</span><span class="hex">#311B92</span>
+                                    </div>
+
+                                    <div class="color md-bg-deep-purple-A100 m-t-5">
+                                    	<span class="class">.md-bg-deep-purple-A100</span><span class="hex">#B388FF</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-A200 light">
+                                    	<span class="class">.md-bg-deep-purple-A200</span><span class="hex">#7C4DFF</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-A400 light">
+                                    	<span class="class">.md-bg-deep-purple-A400</span><span class="hex">#651FFF</span>
+                                    </div>
+                                    <div class="color md-bg-deep-purple-A700 light">
+                                    	<span class="class">.md-bg-deep-purple-A700</span><span class="hex">#6200EA</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-indigo">
+                                    	<span class="name">Indigo</span>
+                                        <span class="class">.md-bg-indigo</span>
+                                        <span class="hex">#3F51B5</span>
+                                    </div>
+
+                                    <div class="color md-bg-indigo-50 ">
+                                    	<span class="class">.md-bg-indigo-50 </span><span class="hex">#E8EAF6</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-100">
+                                    	<span class="class">.md-bg-indigo-100</span><span class="hex">#C5CAE9</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-200">
+                                    	<span class="class">.md-bg-indigo-200</span><span class="hex">#9FA8DA</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-300 light">
+                                    	<span class="class">.md-bg-indigo-300</span><span class="hex">#7986CB</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-400 light">
+                                    	<span class="class">.md-bg-indigo-400</span><span class="hex">#5C6BC0</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-500 light">
+                                    	<span class="class">.md-bg-indigo-500</span><span class="hex">#3F51B5</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-600 light">
+                                    	<span class="class">.md-bg-indigo-600</span><span class="hex">#3949AB</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-700 light">
+                                    	<span class="class">.md-bg-indigo-700</span><span class="hex">#303F9F</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-800 light">
+                                    	<span class="class">.md-bg-indigo-800</span><span class="hex">#283593</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-900 light">
+                                    	<span class="class">.md-bg-indigo-900</span><span class="hex">#1A237E</span>
+                                    </div>
+
+                                    <div class="color md-bg-indigo-A100 m-t-5">
+                                    	<span class="class">.md-bg-indigo-A100</span><span class="hex">#8C9EFF</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-A200 light">
+                                    	<span class="class">.md-bg-indigo-A200</span><span class="hex">#536DFE</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-A400 light">
+                                    	<span class="class">.md-bg-indigo-A400</span><span class="hex">#3D5AFE</span>
+                                    </div>
+                                    <div class="color md-bg-indigo-A700 light">
+                                    	<span class="class">.md-bg-indigo-A700</span><span class="hex">#304FFE</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-blue">
+                                    	<span class="name">Blue</span>
+                                        <span class="class">.md-bg-blue</span>
+                                        <span class="hex">#2196F3</span>
+                                    </div>
+
+                                    <div class="color md-bg-blue-50 ">
+                                    	<span class="class">.md-bg-blue-50 </span><span class="hex">#E3F2FD</span>
+                                    </div>
+                                    <div class="color md-bg-blue-100">
+                                    	<span class="class">.md-bg-blue-100</span><span class="hex">#BBDEFB</span>
+                                    </div>
+                                    <div class="color md-bg-blue-200">
+                                    	<span class="class">.md-bg-blue-200</span><span class="hex">#90CAF9</span>
+                                    </div>
+                                    <div class="color md-bg-blue-300">
+                                    	<span class="class">.md-bg-blue-300</span><span class="hex">#64B5F6</span>
+                                    </div>
+                                    <div class="color md-bg-blue-400">
+                                    	<span class="class">.md-bg-blue-400</span><span class="hex">#42A5F5</span>
+                                    </div>
+                                    <div class="color md-bg-blue-500 light">
+                                    	<span class="class">.md-bg-blue-500</span><span class="hex">#2196F3</span>
+                                    </div>
+                                    <div class="color md-bg-blue-600 light">
+                                    	<span class="class">.md-bg-blue-600</span><span class="hex">#1E88E5</span>
+                                    </div>
+                                    <div class="color md-bg-blue-700 light">
+                                    	<span class="class">.md-bg-blue-700</span><span class="hex">#1976D2</span>
+                                    </div>
+                                    <div class="color md-bg-blue-800 light">
+                                    	<span class="class">.md-bg-blue-800</span><span class="hex">#1565C0</span>
+                                    </div>
+                                    <div class="color md-bg-blue-900 light">
+                                    	<span class="class">.md-bg-blue-900</span><span class="hex">#0D47A1</span>
+                                    </div>
+
+                                    <div class="color md-bg-blue-A100 m-t-5">
+                                    	<span class="class">.md-bg-blue-A100</span><span class="hex">#82B1FF</span>
+                                    </div>
+                                    <div class="color md-bg-blue-A200 light">
+                                    	<span class="class">.md-bg-blue-A200</span><span class="hex">#448AFF</span>
+                                    </div>
+                                    <div class="color md-bg-blue-A400 light">
+                                    	<span class="class">.md-bg-blue-A400</span><span class="hex">#2979FF</span>
+                                    </div>
+                                    <div class="color md-bg-blue-A700 light">
+                                    	<span class="class">.md-bg-blue-A700</span><span class="hex">#2962FF</span>
+                                    </div>
+                                </div>
+                           	</div>
+
+                        	<div class="row m-t-25">
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-light-blue dark">
+                                    	<span class="name">Light Blue</span>
+                                        <span class="class">.md-bg-light-blue</span>
+                                        <span class="hex">#03A9F4</span>
+                                    </div>
+
+                                    <div class="color md-bg-light-blue-50">
+                                    	<span class="class">.md-bg-light-blue-50</span><span class="hex">#E1F5FE</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-100">
+                                    	<span class="class">.md-bg-light-blue-100</span><span class="hex">#B3E5FC</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-200">
+                                    	<span class="class">.md-bg-light-blue-200</span><span class="hex">#81D4FA</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-300">
+                                    	<span class="class">.md-bg-light-blue-300</span><span class="hex">#4FC3F7</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-400">
+                                    	<span class="class">.md-bg-light-blue-400</span><span class="hex">#29B6F6</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-500">
+                                    	<span class="class">.md-bg-light-blue-500</span><span class="hex">#03A9F4</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-600 light">
+                                    	<span class="class">.md-bg-light-blue-600</span><span class="hex">#039BE5</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-700 light">
+                                    	<span class="class">.md-bg-light-blue-700</span><span class="hex">#0288D1</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-800 light">
+                                    	<span class="class">.md-bg-light-blue-800</span><span class="hex">#0277BD</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-900 light">
+                                    	<span class="class">.md-bg-light-blue-900</span><span class="hex">#01579B</span>
+                                    </div>
+
+                                    <div class="color md-bg-light-blue-A100 m-t-5">
+                                    	<span class="class">.md-bg-light-blue-A100</span><span class="hex">#80D8FF</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-A200">
+                                    	<span class="class">.md-bg-light-blue-A200</span><span class="hex">#40C4FF</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-A400">
+                                    	<span class="class">.md-bg-light-blue-A400</span><span class="hex">#00B0FF</span>
+                                    </div>
+                                    <div class="color md-bg-light-blue-A700 light">
+                                    	<span class="class">.md-bg-light-blue-A700</span><span class="hex">#0091EA</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-cyan dark">
+                                    	<span class="name">Cyan</span>
+                                        <span class="class">.md-bg-cyan</span>
+                                        <span class="hex">#00BCD4</span>
+                                    </div>
+
+                                    <div class="color md-bg-cyan-50">
+                                    	<span class="class">.md-bg-cyan-50</span><span class="hex">#E0F7FA</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-100">
+                                    	<span class="class">.md-bg-cyan-100</span><span class="hex">#B2EBF2</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-200">
+                                    	<span class="class">.md-bg-cyan-200</span><span class="hex">#80DEEA</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-300">
+                                    	<span class="class">.md-bg-cyan-300</span><span class="hex">#4DD0E1</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-400">
+                                    	<span class="class">.md-bg-cyan-400</span><span class="hex">#26C6DA</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-500">
+                                    	<span class="class">.md-bg-cyan-500</span><span class="hex">#00BCD4</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-600">
+                                    	<span class="class">.md-bg-cyan-600</span><span class="hex">#00ACC1</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-700 light">
+                                    	<span class="class">.md-bg-cyan-700</span><span class="hex">#0097A7</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-800 light">
+                                    	<span class="class">.md-bg-cyan-800</span><span class="hex">#00838F</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-900 light">
+                                    	<span class="class">.md-bg-cyan-900</span><span class="hex">#006064</span>
+                                    </div>
+
+                                    <div class="color md-bg-cyan-A100 m-t-5">
+                                    	<span class="class">.md-bg-cyan-A100</span><span class="hex">#84FFFF</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-A200">
+                                    	<span class="class">.md-bg-cyan-A200</span><span class="hex">#18FFFF</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-A400">
+                                    	<span class="class">.md-bg-cyan-A400</span><span class="hex">#00E5FF</span>
+                                    </div>
+                                    <div class="color md-bg-cyan-A700">
+                                    	<span class="class">.md-bg-cyan-A700</span><span class="hex">#00B8D4</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-teal">
+                                    	<span class="name">Teal</span>
+                                        <span class="class">.md-bg-teal</span>
+                                        <span class="hex">#009688</span>
+                                    </div>
+
+                                    <div class="color md-bg-teal-50">
+                                    	<span class="class">.md-bg-teal-50 </span><span class="hex">#E0F2F1</span>
+                                    </div>
+                                    <div class="color md-bg-teal-100">
+                                    	<span class="class">.md-bg-teal-100</span><span class="hex">#B2DFDB</span>
+                                    </div>
+                                    <div class="color md-bg-teal-200">
+                                    	<span class="class">.md-bg-teal-200</span><span class="hex">#80CBC4</span>
+                                    </div>
+                                    <div class="color md-bg-teal-300">
+                                    	<span class="class">.md-bg-teal-300</span><span class="hex">#4DB6AC</span>
+                                    </div>
+                                    <div class="color md-bg-teal-400">
+                                    	<span class="class">.md-bg-teal-400</span><span class="hex">#26A69A</span>
+                                    </div>
+                                    <div class="color md-bg-teal-500 light">
+                                    	<span class="class">.md-bg-teal-500</span><span class="hex">#009688</span>
+                                    </div>
+                                    <div class="color md-bg-teal-600 light">
+                                    	<span class="class">.md-bg-teal-600</span><span class="hex">#00897B</span>
+                                    </div>
+                                    <div class="color md-bg-teal-700 light">
+                                    	<span class="class">.md-bg-teal-700</span><span class="hex">#00796B</span>
+                                    </div>
+                                    <div class="color md-bg-teal-800 light">
+                                    	<span class="class">.md-bg-teal-800</span><span class="hex">#00695C</span>
+                                    </div>
+                                    <div class="color md-bg-teal-900 light">
+                                    	<span class="class">.md-bg-teal-900</span><span class="hex">#004D40</span>
+                                    </div>
+
+                                    <div class="color md-bg-teal-A100 m-t-5">
+                                    	<span class="class">.md-bg-teal-A100</span><span class="hex">#A7FFEB</span>
+                                    </div>
+                                    <div class="color md-bg-teal-A200">
+                                    	<span class="class">.md-bg-teal-A200</span><span class="hex">#64FFDA</span>
+                                    </div>
+                                    <div class="color md-bg-teal-A400">
+                                    	<span class="class">.md-bg-teal-A400</span><span class="hex">#1DE9B6</span>
+                                    </div>
+                                    <div class="color md-bg-teal-A700">
+                                    	<span class="class">.md-bg-teal-A700</span><span class="hex">#00BFA5</span>
+                                    </div>
+                                </div>
+                           	</div>
+
+                            <div class="row m-t-25">
+                                <div class="col-sm-4">
+                                    <div class="color main-color md-bg-green dark">
+                                    	<span class="name">Green</span>
+                                        <span class="class">.md-bg-green</span>
+                                        <span class="hex">#4CAF50</span>
+                                    </div>
+
+                                    <div class="color md-bg-green-50 ">
+                                    	<span class="class">.md-bg-green-50 </span><span class="hex">#E8F5E9</span>
+                                    </div>
+                                    <div class="color md-bg-green-100">
+                                    	<span class="class">.md-bg-green-100</span><span class="hex">#C8E6C9</span>
+                                    </div>
+                                    <div class="color md-bg-green-200">
+                                    	<span class="class">.md-bg-green-200</span><span class="hex">#A5D6A7</span>
+                                    </div>
+                                    <div class="color md-bg-green-300">
+                                    	<span class="class">.md-bg-green-300</span><span class="hex">#81C784</span>
+                                    </div>
+                                    <div class="color md-bg-green-400">
+                                    	<span class="class">.md-bg-green-400</span><span class="hex">#66BB6A</span>
+                                    </div>
+                                    <div class="color md-bg-green-500">
+                                    	<span class="class">.md-bg-green-500</span><span class="hex">#4CAF50</span>
+                                    </div>
+                                    <div class="color md-bg-green-600 light">
+                                    	<span class="class">.md-bg-green-600</span><span class="hex">#43A047</span>
+                                    </div>
+                                    <div class="color md-bg-green-700 light">
+                                    	<span class="class">.md-bg-green-700</span><span class="hex">#388E3C</span>
+                                    </div>
+                                    <div class="color md-bg-green-800 light">
+                                    	<span class="class">.md-bg-green-800</span><span class="hex">#2E7D32</span>
+                                    </div>
+                                    <div class="color md-bg-green-900 light">
+                                    	<span class="class">.md-bg-green-900</span><span class="hex">#1B5E20</span>
+                                    </div>
+
+                                    <div class="color md-bg-green-A100 m-t-5">
+                                    	<span class="class">.md-bg-green-A100</span><span class="hex">#B9F6CA</span>
+                                    </div>
+                                    <div class="color md-bg-green-A200">
+                                    	<span class="class">.md-bg-green-A200</span><span class="hex">#69F0AE</span>
+                                    </div>
+                                    <div class="color md-bg-green-A400">
+                                    	<span class="class">.md-bg-green-A400</span><span class="hex">#00E676</span>
+                                    </div>
+                                    <div class="color md-bg-green-A700">
+                                    	<span class="class">.md-bg-green-A700</span><span class="hex">#00C853</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-light-green dark">
+                                    	<span class="name">Light Green</span>
+                                        <span class="class">.md-bg-light-green</span>
+                                        <span class="hex">#8BC34A</span>
+                                    </div>
+
+                                    <div class="color md-bg-light-green-50 ">
+                                    	<span class="class">.md-bg-light-green-50 </span><span class="hex">#F1F8E9</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-100">
+                                    	<span class="class">.md-bg-light-green-100</span><span class="hex">#DCEDC8</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-200">
+                                    	<span class="class">.md-bg-light-green-200</span><span class="hex">#C5E1A5</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-300">
+                                    	<span class="class">.md-bg-light-green-300</span><span class="hex">#AED581</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-400">
+                                    	<span class="class">.md-bg-light-green-400</span><span class="hex">#9CCC65</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-500">
+                                    	<span class="class">.md-bg-light-green-500</span><span class="hex">#8BC34A</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-600">
+                                    	<span class="class">.md-bg-light-green-600</span><span class="hex">#7CB342</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-700 light">
+                                    	<span class="class">.md-bg-light-green-700</span><span class="hex">#689F38</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-800 light">
+                                    	<span class="class">.md-bg-light-green-800</span><span class="hex">#558B2F</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-900 light">
+                                    	<span class="class">.md-bg-light-green-900</span><span class="hex">#33691E</span>
+                                    </div>
+
+                                    <div class="color md-bg-light-green-A100 m-t-5">
+                                    	<span class="class">.md-bg-light-green-A100</span><span class="hex">#CCFF90</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-A200">
+                                    	<span class="class">.md-bg-light-green-A200</span><span class="hex">#B2FF59</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-A400">
+                                    	<span class="class">.md-bg-light-green-A400</span><span class="hex">#76FF03</span>
+                                    </div>
+                                    <div class="color md-bg-light-green-A700">
+                                    	<span class="class">.md-bg-light-green-A700</span><span class="hex">#64DD17</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-lime dark">
+                                    	<span class="name">Lime</span>
+                                        <span class="class">.md-bg-lime</span>
+                                        <span class="hex">#CDDC39</span>
+                                    </div>
+
+                                    <div class="color md-bg-lime-50">
+                                    	<span class="class">.md-bg-lime-50 </span><span class="hex">#F9FBE7</span>
+                                    </div>
+                                    <div class="color md-bg-lime-100">
+                                   	 <span class="class">.md-bg-lime-100</span><span class="hex">#F0F4C3</span>
+                                    </div>
+                                    <div class="color md-bg-lime-200">
+                                    	<span class="class">.md-bg-lime-200</span><span class="hex">#E6EE9C</span>
+                                    </div>
+                                    <div class="color md-bg-lime-300">
+                                    	<span class="class">.md-bg-lime-300</span><span class="hex">#DCE775</span>
+                                    </div>
+                                    <div class="color md-bg-lime-400">
+                                   	 	<span class="class">.md-bg-lime-400</span><span class="hex">#D4E157</span>
+                                    </div>
+                                    <div class="color md-bg-lime-500">
+                                    	<span class="class">.md-bg-lime-500</span><span class="hex">#CDDC39</span>
+                                    </div>
+                                    <div class="color md-bg-lime-600">
+                                    	<span class="class">.md-bg-lime-600</span><span class="hex">#C0CA33</span>
+                                    </div>
+                                    <div class="color md-bg-lime-700">
+                                    	<span class="class">.md-bg-lime-700</span><span class="hex">#AFB42B</span>
+                                    </div>
+                                    <div class="color md-bg-lime-800">
+                                    	<span class="class">.md-bg-lime-800</span><span class="hex">#9E9D24</span>
+                                    </div>
+                                    <div class="color md-bg-lime-900 light">
+                                    	<span class="class">.md-bg-lime-900</span><span class="hex">#827717</span>
+                                    </div>
+
+                                    <div class="color md-bg-lime-A100 m-t-5">
+                                    	<span class="class">.md-bg-lime-A100</span><span class="hex">#F4FF81</span>
+                                    </div>
+                                    <div class="color md-bg-lime-A200">
+                                    	<span class="class">.md-bg-lime-A200</span><span class="hex">#EEFF41</span>
+                                    </div>
+                                    <div class="color md-bg-lime-A400">
+                                    	<span class="class">.md-bg-lime-A400</span><span class="hex">#C6FF00</span>
+                                    </div>
+                                    <div class="color md-bg-lime-A700">
+                                    	<span class="class">.md-bg-lime-A700</span><span class="hex">#AEEA00</span>
+                                    </div>
+                                </div>
+                           	</div>
+
+                            <div class="row m-t-25">
+                                <div class="col-sm-4">
+                                    <div class="color main-color md-bg-yellow dark">
+                                    	<span class="name">Yellow</span>
+                                        <span class="class">.md-bg-yellow</span>
+                                        <span class="hex">#FFEB3B</span>
+                                    </div>
+
+                                    <div class="color md-bg-yellow-50 ">
+                                    	<span class="class">.md-bg-yellow-50</span><span class="hex">#FFFDE7</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-100">
+                                    	<span class="class">.md-bg-yellow-100</span><span class="hex">#FFF9C4</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-200">
+                                    	<span class="class">.md-bg-yellow-200</span><span class="hex">#FFF59D</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-300">
+                                    	<span class="class">.md-bg-yellow-300</span><span class="hex">#FFF176</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-400">
+                                    	<span class="class">.md-bg-yellow-400</span><span class="hex">#FFEE58</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-500">
+                                    	<span class="class">.md-bg-yellow-500</span><span class="hex">#FFEB3B</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-600">
+                                    	<span class="class">.md-bg-yellow-600</span><span class="hex">#FDD835</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-700">
+                                    	<span class="class">.md-bg-yellow-700</span><span class="hex">#FBC02D</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-800">
+                                    	<span class="class">.md-bg-yellow-800</span><span class="hex">#F9A825</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-900">
+                                    	<span class="class">.md-bg-yellow-900</span><span class="hex">#F57F17</span>
+                                    </div>
+
+                                    <div class="color md-bg-yellow-A100 m-t-5">
+                                    	<span class="class">.md-bg-yellow-A100</span><span class="hex">#FFFF8D</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-A200">
+                                    	<span class="class">.md-bg-yellow-A200</span><span class="hex">#FFFF00</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-A400">
+                                    	<span class="class">.md-bg-yellow-A400</span><span class="hex">#FFEA00</span>
+                                    </div>
+                                    <div class="color md-bg-yellow-A700">
+                                    	<span class="class">.md-bg-yellow-A700</span><span class="hex">#FFD600</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-amber dark">
+                                    	<span class="name">Amber</span>
+                                        <span class="class">.md-bg-amber</span>
+                                        <span class="hex">#FFC107</span>
+                                    </div>
+
+                                    <div class="color md-bg-amber-50">
+                                    	<span class="class">.md-bg-amber-50 </span><span class="hex">#FFF8E1</span>
+                                    </div>
+                                    <div class="color md-bg-amber-100">
+                                    	<span class="class">.md-bg-amber-100</span><span class="hex">#FFECB3</span>
+                                    </div>
+                                    <div class="color md-bg-amber-200">
+                                    	<span class="class">.md-bg-amber-200</span><span class="hex">#FFE082</span>
+                                    </div>
+                                    <div class="color md-bg-amber-300">
+                                    	<span class="class">.md-bg-amber-300</span><span class="hex">#FFD54F</span>
+                                    </div>
+                                    <div class="color md-bg-amber-400">
+                                    	<span class="class">.md-bg-amber-400</span><span class="hex">#FFCA28</span>
+                                    </div>
+                                    <div class="color md-bg-amber-500">
+                                    	<span class="class">.md-bg-amber-500</span><span class="hex">#FFC107</span>
+                                    </div>
+                                    <div class="color md-bg-amber-600">
+                                    	<span class="class">.md-bg-amber-600</span><span class="hex">#FFB300</span>
+                                    </div>
+                                    <div class="color md-bg-amber-700">
+                                    	<span class="class">.md-bg-amber-700</span><span class="hex">#FFA000</span>
+                                    </div>
+                                    <div class="color md-bg-amber-800">
+                                    	<span class="class">.md-bg-amber-800</span><span class="hex">#FF8F00</span>
+                                    </div>
+                                    <div class="color md-bg-amber-900">
+                                    	<span class="class">.md-bg-amber-900</span><span class="hex">#FF6F00</span>
+                                    </div>
+
+                                    <div class="color md-bg-amber-A100 m-t-5">
+                                    	<span class="class">.md-bg-amber-A100</span><span class="hex">#FFE57F</span>
+                                    </div>
+                                    <div class="color md-bg-amber-A200">
+                                    	<span class="class">.md-bg-amber-A200</span><span class="hex">#FFD740</span>
+                                    </div>
+                                    <div class="color md-bg-amber-A400">
+                                    	<span class="class">.md-bg-amber-A400</span><span class="hex">#FFC400</span>
+                                    </div>
+                                    <div class="color md-bg-amber-A700">
+                                    	<span class="class">.md-bg-amber-A700</span><span class="hex">#FFAB00</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-orange dark">
+                                    	<span class="name">Orange</span>
+                                        <span class="class">.md-bg-orange</span>
+                                        <span class="hex">#FF9800</span>
+                                    </div>
+
+                                    <div class="color md-bg-orange-50 ">
+                                    	<span class="class">.md-bg-orange-50 </span><span class="hex">#FFF3E0</span>
+                                    </div>
+                                    <div class="color md-bg-orange-100">
+                                    	<span class="class">.md-bg-orange-100</span><span class="hex">#FFE0B2</span>
+                                    </div>
+                                    <div class="color md-bg-orange-200">
+                                    	<span class="class">.md-bg-orange-200</span><span class="hex">#FFCC80</span>
+                                    </div>
+                                    <div class="color md-bg-orange-300">
+                                    	<span class="class">.md-bg-orange-300</span><span class="hex">#FFB74D</span>
+                                    </div>
+                                    <div class="color md-bg-orange-400">
+                                    	<span class="class">.md-bg-orange-400</span><span class="hex">#FFA726</span>
+                                    </div>
+                                    <div class="color md-bg-orange-500">
+                                    	<span class="class">.md-bg-orange-500</span><span class="hex">#FF9800</span>
+                                    </div>
+                                    <div class="color md-bg-orange-600">
+                                    	<span class="class">.md-bg-orange-600</span><span class="hex">#FB8C00</span>
+                                    </div>
+                                    <div class="color md-bg-orange-700">
+                                    	<span class="class">.md-bg-orange-700</span><span class="hex">#F57C00</span>
+                                    </div>
+                                    <div class="color md-bg-orange-800 light">
+                                    	<span class="class">.md-bg-orange-800</span><span class="hex">#EF6C00</span>
+                                    </div>
+                                    <div class="color md-bg-orange-900 light">
+                                    	<span class="class">.md-bg-orange-900</span><span class="hex">#E65100</span>
+                                    </div>
+
+                                    <div class="color md-bg-orange-A100 m-t-5">
+                                    	<span class="class">.md-bg-orange-A100</span><span class="hex">#FFD180</span>
+                                    </div>
+                                    <div class="color md-bg-orange-A200">
+                                    	<span class="class">.md-bg-orange-A200</span><span class="hex">#FFAB40</span>
+                                    </div>
+                                    <div class="color md-bg-orange-A400">
+                                    	<span class="class">.md-bg-orange-A400</span><span class="hex">#FF9100</span>
+                                    </div>
+                                    <div class="color md-bg-orange-A700">
+                                    	<span class="class">.md-bg-orange-A700</span><span class="hex">#FF6D00</span>
+                                    </div>
+                                </div>
+                           	</div>
+
+                            <div class="row m-t-25">
+                                <div class="col-sm-4">
+                                    <div class="color main-color md-bg-deep-orange light">
+                                    	<span class="name">Deep Orange</span>
+                                        <span class="class">.md-bg-deep-orange</span>
+                                        <span class="hex">#FF5722</span>
+                                    </div>
+
+                                    <div class="color md-bg-deep-orange-50 ">
+                                    	<span class="class">.md-bg-deep-orange-50</span><span class="hex">#FBE9E7</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-100">
+                                    	<span class="class">.md-bg-deep-orange-100</span><span class="hex">#FFCCBC</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-200">
+                                    	<span class="class">.md-bg-deep-orange-200</span><span class="hex">#FFAB91</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-300">
+                                    	<span class="class">.md-bg-deep-orange-300</span><span class="hex">#FF8A65</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-400">
+                                    	<span class="class">.md-bg-deep-orange-400</span><span class="hex">#FF7043</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-500 light">
+                                    	<span class="class">.md-bg-deep-orange-500</span><span class="hex">#FF5722</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-600 light">
+                                    	<span class="class">.md-bg-deep-orange-600</span><span class="hex">#F4511E</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-700 light">
+                                    	<span class="class">.md-bg-deep-orange-700</span><span class="hex">#E64A19</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-800 light">
+                                    	<span class="class">.md-bg-deep-orange-800</span><span class="hex">#D84315</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-900 light">
+                                    	<span class="class">.md-bg-deep-orange-900</span><span class="hex">#BF360C</span>
+                                    </div>
+
+                                    <div class="color md-bg-deep-orange-A100 m-t-5">
+                                    	<span class="class">.md-bg-deep-orange-A100</span><span class="hex">#FF9E80</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-A200">
+                                    	<span class="class">.md-bg-deep-orange-A200</span><span class="hex">#FF6E40</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-A400 light">
+                                    	<span class="class">.md-bg-deep-orange-A400</span><span class="hex">#FF3D00</span>
+                                    </div>
+                                    <div class="color md-bg-deep-orange-A700 light">
+                                    	<span class="class">.md-bg-Deep Orange-A700</span><span class="hex">#DD2C00</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-brown light">
+                                    	<span class="name">Brown</span>
+                                        <span class="class">.md-bg-brown</span>
+                                        <span class="hex">#795548</span>
+                                    </div>
+
+                                    <div class="color md-bg-brown-50">
+                                    	<span class="class">.md-bg-brown-50 </span><span class="hex">#EFEBE9</span>
+                                    </div>
+                                    <div class="color md-bg-brown-100">
+                                    	<span class="class">.md-bg-brown-100</span><span class="hex">#D7CCC8</span>
+                                    </div>
+                                    <div class="color md-bg-brown-200">
+                                    	<span class="class">.md-bg-brown-200</span><span class="hex">#BCAAA4</span>
+                                    </div>
+                                    <div class="color md-bg-brown-300 light">
+                                    	<span class="class">.md-bg-brown-300</span><span class="hex">#A1887F</span>
+                                    </div>
+                                    <div class="color md-bg-brown-400 light">
+                                    	<span class="class">.md-bg-brown-400</span><span class="hex">#8D6E63</span>
+                                    </div>
+                                    <div class="color md-bg-brown-500 light">
+                                    	<span class="class">.md-bg-brown-500</span><span class="hex">#795548</span>
+                                    </div>
+                                    <div class="color md-bg-brown-600 light">
+                                    	<span class="class">.md-bg-brown-600</span><span class="hex">#6D4C41</span>
+                                    </div>
+                                    <div class="color md-bg-brown-700 light">
+                                    	<span class="class">.md-bg-brown-700</span><span class="hex">#5D4037</span>
+                                    </div>
+                                    <div class="color md-bg-brown-800 light">
+                                    	<span class="class">.md-bg-brown-800</span><span class="hex">#4E342E</span>
+                                    </div>
+                                    <div class="color md-bg-brown-900 light">
+                                    	<span class="class">.md-bg-brown-900</span><span class="hex">#3E2723</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-grey dark">
+                                    	<span class="name">Grey</span>
+                                        <span class="class">.md-bg-grey</span>
+                                        <span class="hex">#9E9E9E</span>
+                                    </div>
+
+                                    <div class="color md-bg-grey-50 ">
+                                    	<span class="class">.md-bg-grey-50 </span><span class="hex">#FAFAFA</span>
+                                    </div>
+                                    <div class="color md-bg-grey-100">
+                                    	<span class="class">.md-bg-grey-100</span><span class="hex">#F5F5F5</span>
+                                    </div>
+                                    <div class="color md-bg-grey-200">
+                                    	<span class="class">.md-bg-grey-200</span><span class="hex">#EEEEEE</span>
+                                    </div>
+                                    <div class="color md-bg-grey-300">
+                                    	<span class="class">.md-bg-grey-300</span><span class="hex">#E0E0E0</span>
+                                    </div>
+                                    <div class="color md-bg-grey-400">
+                                    	<span class="class">.md-bg-grey-400</span><span class="hex">#BDBDBD</span>
+                                    </div>
+                                    <div class="color md-bg-grey-500">
+                                    	<span class="class">.md-bg-grey-500</span><span class="hex">#9E9E9E</span>
+                                    </div>
+                                    <div class="color md-bg-grey-600 light">
+                                    	<span class="class">.md-bg-grey-600</span><span class="hex">#757575</span>
+                                    </div>
+                                    <div class="color md-bg-grey-700 light">
+                                    	<span class="class">.md-bg-grey-700</span><span class="hex">#616161</span>
+                                    </div>
+                                    <div class="color md-bg-grey-800 light">
+                                    	<span class="class">.md-bg-grey-800</span><span class="hex">#424242</span>
+                                    </div>
+                                    <div class="color md-bg-grey-900 light">
+                                    	<span class="class">.md-bg-grey-900</span><span class="hex">#212121</span>
+                                    </div>
+                                </div>
+                           	</div>
+
+                            <div class="row m-t-25">
+                                <div class="col-sm-4">
+                                    <div class="color main-color md-bg-blue-grey light">
+                                    	<span class="name">Blue Grey</span>
+                                        <span class="class">.md-bg-blue-grey</span>
+                                        <span class="hex">#607D8B</span>
+                                    </div>
+
+                                    <div class="color md-bg-blue-grey-50 ">
+                                    	<span class="class">.md-bg-blue-grey-50</span><span class="hex">#ECEFF1</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-100">
+                                    	<span class="class">.md-bg-blue-grey-100</span><span class="hex">#CFD8DC</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-200">
+                                    	<span class="class">.md-bg-blue-grey-200</span><span class="hex">#B0BEC5</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-300">
+                                    	<span class="class">.md-bg-blue-grey-300</span><span class="hex">#90A4AE</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-400 light">
+                                    	<span class="class">.md-bg-blue-grey-400</span><span class="hex">#78909C</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-500 light">
+                                    	<span class="class">.md-bg-blue-grey-500</span><span class="hex">#607D8B</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-600 light">
+                                    	<span class="class">.md-bg-blue-grey-600</span><span class="hex">#546E7A</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-700 light">
+                                    	<span class="class">.md-bg-blue-grey-700</span><span class="hex">#455A64</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-800 light">
+                                    	<span class="class">.md-bg-blue-grey-800</span><span class="hex">#37474F</span>
+                                    </div>
+                                    <div class="color md-bg-blue-grey-900 light">
+                                    	<span class="class">.md-bg-blue-grey-900</span><span class="hex">#263238</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                	<div class="color main-color md-bg-black">
+                                    	<span class="name">Black</span>
+                                        <span class="class">.md-bg-black</span>
+                                        <span class="hex">#000000</span>
+                                    </div>
+                                	<div class="color main-color md-bg-white dark" style="border: 1px solid #BDBDBD">
+                                    	<span class="name">White</span>
+                                        <span class="class">.md-bg-white</span>
+                                        <span class="hex">#FFFFFF</span>
+                                    </div>
+                                </div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Documentation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Support
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="copyright pull-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="#">Topcore Admin</a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+<!--   Core JS Files   -->
+<script src="../assets/vendors/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/jquery-ui-1.12.0/jquery-ui.js"></script>
+<script src="../assets/vendors/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/material.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<!-- Forms Validations Plugin -->
+<script src="../assets/vendors/jquery.validate.min.js"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="../assets/vendors/moment.min.js"></script>
+<!--  Charts Plugin -->
+<script src="../assets/vendors/chartist.min.js"></script>
+<!--  Plugin for the Wizard -->
+<script src="../assets/vendors/jquery.bootstrap-wizard.js"></script>
+<!--  Notifications Plugin    -->
+<script src="../assets/vendors/bootstrap-notify.js"></script>
+<!-- DateTimePicker Plugin -->
+<script src="../assets/vendors/bootstrap-datetimepicker.js"></script>
+<!-- Vector Map plugin -->
+<script src="../assets/vendors/jquery-jvectormap.js"></script>
+<!-- Sliders Plugin -->
+<script src="../assets/vendors/nouislider.min.js"></script>
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- Select Plugin -->
+<script src="../assets/vendors/jquery.select-bootstrap.js"></script>
+<!--  DataTables.net Plugin    -->
+<script src="../assets/vendors/jquery.datatables.js"></script>
+<!-- Sweet Alert 2 plugin -->
+<script src="../assets/vendors/sweetalert2.js"></script>
+<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+<script src="../assets/vendors/jasny-bootstrap.min.js"></script>
+<!--  Full Calendar Plugin    -->
+<script src="../assets/vendors/fullcalendar.min.js"></script>
+<!-- TagsInput Plugin -->
+<script src="../assets/vendors/jquery.tagsinput.js"></script>
+<!-- Material Dashboard javascript methods -->
+<script src="../assets/js/topcore.js"></script>
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="../assets/js/demo.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#simple-accordion").accordion({
+			collapsible: true,
+			animate: 200
+		});
+
+		$("#simple-accordion-colored").accordion({
+			collapsible: true,
+			animate: 200
+		});
+
+		$("#simple-accordion-alt").accordion({
+			collapsible: true,
+			active: false,
+			animate: 200
+		});
+
+		$("#simple-accordion-alt-2, #simple-accordion-alt-3").accordion({
+			collapsible: true,
+			active: false,
+			animate: 200
+		});
+
+		$('body').on('click', '#btn-color-targets > .btn', function(){
+			var color = $(this).data('target-color');
+			$('#modalColor').attr('data-modal-color', color);
+		});
+	});
+</script>
+</html>

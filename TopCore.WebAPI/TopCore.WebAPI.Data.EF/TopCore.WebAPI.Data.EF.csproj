@@ -6,6 +6,8 @@
     <Copyright>http://topnguyen.net</Copyright>
     <AssemblyName>TopCore.WebAPI.Data.EF</AssemblyName>
     <RootNamespace>TopCore.WebAPI.Data.EF</RootNamespace>
+    <!-- Enable runtime config and runtime version, Need for entity framework DonetClioTool -->
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -26,28 +28,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
-    <!--
-      SqlServer and Design use 1.1.1
-      because it have some Library version difference with current AspCore 1.1
-      (So it make migrate fail)
-    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" />
-    <!-- Keep install Tools version 1.1.0 but use version 1.0.0 -->
+    <!-- START Keep Runtime version is 1.0.0-* -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-*" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapping\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
-    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj" />
     <ProjectReference Include="..\TopCore.WebAPI.Data\TopCore.WebAPI.Data.csproj" />
-    <ProjectReference Include="..\TopCore.WebAPI.Domain\TopCore.WebAPI.Domain.csproj" />
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj" />
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.DependencyInjection\TopCore.Framework.DependencyInjection.csproj" />
   </ItemGroup>
 </Project>

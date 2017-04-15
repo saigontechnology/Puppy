@@ -27,7 +27,11 @@ namespace TopCore.Framework.EF
 {
     public class BaseDbContext : DbContext, IBaseDbContext
     {
-        public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
+        protected BaseDbContext()
+        {
+        }
+
+        public BaseDbContext(DbContextOptions options) : base(options)
         {
         }
 

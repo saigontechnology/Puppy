@@ -4,11 +4,12 @@
         <name>TopCore.WebAPI</name>
     </assembly>
     <members>
-        <member name="M:TopCore.WebAPI.Controllers.UserApiController.Post(TopCore.WebAPI.Controllers.UserApiController.LoginModel)">
+        <member name="M:TopCore.WebAPI.Controllers.UserApiController.Post(TopCore.WebAPI.Service.IUserService,TopCore.WebAPI.Controllers.UserName)">
             <summary>
-                Login 
+                Create 
             </summary>
-            <param name="model"></param>
+            <param name="userService"></param>
+            <param name="userName">   </param>
             <returns></returns>
         </member>
     </members>

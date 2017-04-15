@@ -1,49 +1,37 @@
 ﻿# Important Note
 > Project Created by **Top Nguyen** (http://topnguyen.net)
 
-```c#
-public DbSet<UserEntity> UserEntities { get; set; }
+## Initial Database
+Setup by Command Windows of current project 
 
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    Console.WriteLine($"{nameof(DbContext)} is Created", nameof(OnModelCreating));
+```markup
+dotnet ef migrations add Initial
+dotnet ef database update  -v
+```
 
-    modelBuilder.AddConfiguration(new UserEntityMapping());
+**Don't use/run Package Manager Console to do the above action**
+**It will hang the Console and never stop without any result.**
 
-    // Convention Table Name is Entity Name without EntityMapping Postfix
-    foreach (var entity in modelBuilder.Model.GetEntityTypes())
-    {
-        entity.Relational().TableName = entity.DisplayName().Replace(nameof(EntityMapping), string.Empty);
-        Console.WriteLine($"Table {entity.Relational().TableName} is Created", nameof(DbContext));
-    }
+# Important Thing about csproj
 
-    base.OnModelCreating(modelBuilder);
-}
+```markup
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <Copyright>http://topnguyen.net</Copyright>
+    
+    <!-- Enable runtime config and runtime version, Need for entity framework DonetClioTool -->
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
 
-// In userEntity.cs
-public class UserEntity : IdentityUserEntityBase
-{
-    public UserEntity()
-    {
-    }
-
-    public UserEntity(string userName) : base(userName)
-    {
-    }
-}
-
-// In UserEntityMapping.cs
-
-public class UserEntityMapping : EntityTypeConfiguration<UserEntity>
-{
-    public override void Map(EntityTypeBuilder<UserEntity> builder)
-    {
-        builder.ToTable(nameof(UserEntityMapping));
-        builder.HasKey(x => x.Id);
-
-        builder.Property(x => x.Id).IsRequired();
-        builder.Property(x => x.Key).IsRequired();
-        builder.Property(x => x.Version).IsRowVersion();
-    }
-
+  <!-- Entity Framework -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" />
+    <!-- START Keep Runtime version is 1.0.0-* -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-*" />
+    <!-- END -->
+  </ItemGroup>
 ```

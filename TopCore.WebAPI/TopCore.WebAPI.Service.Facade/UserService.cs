@@ -15,6 +15,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using TopCore.WebAPI.Business;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.WebAPI.Service.Facade
@@ -22,9 +23,16 @@ namespace TopCore.WebAPI.Service.Facade
     [PerRequestDependency(ServiceType = typeof(IUserService))]
     public class UserService : IUserService
     {
-        public string GetUserName()
+        private readonly IUserBusiness _userBusiness;
+
+        public UserService(IUserBusiness userBusiness)
         {
-            return "Top Nguyen Hard-code";
+            _userBusiness = userBusiness;
+        }
+
+        public void Add(string userName)
+        {
+            _userBusiness.Add(userName);
         }
     }
 }

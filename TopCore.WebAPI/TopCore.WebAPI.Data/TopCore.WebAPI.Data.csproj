@@ -16,4 +16,8 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\TopCore.Framework\TopCore.Framework.EF\TopCore.Framework.EF.csproj" />
+  </ItemGroup>
+
 </Project>

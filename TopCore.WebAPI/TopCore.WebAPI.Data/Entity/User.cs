@@ -5,12 +5,12 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.WebAPI.Data </Project>
 //     <File> 
-//         <Name> EntityBase.cs </Name>
-//         <Created> 27 03 2017 02:39:27 PM </Created>
-//         <Key> 9BBFB04B-177D-4D87-B047-2F94F957E579 </Key>
+//         <Name> UserEntity.cs </Name>
+//         <Created> 27 03 2017 02:38:26 PM </Created>
+//         <Key> F38D22F5-AEB6-4A7E-A057-29DDD8FC24BD </Key>
 //     </File>
 //     <Summary>
-//         EntityBase is abstract entity to another entity inherit
+//         UserEntity
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
@@ -18,14 +18,16 @@
 #endregion License
 
 using System;
+using TopCore.Framework.EF;
 
 namespace TopCore.WebAPI.Data.Entity
 {
-    public abstract class EntityBase
+    public class User : EntityBase
     {
-        public int Id { get; set; }
-        public string Key { get; set; }
-        public DateTime CreatedOnUtc { get; set; }
-        public DateTime LastUpdatedOnUtc { get; set; }
+        public User(int createdBy) : base(createdBy)
+        {
+        }
+
+        public string UserName { get; set; }
     }
 }

@@ -1,0 +1,436 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    WebAPI
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Topcore - Material Admin Template</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--  Material Dashboard CSS    -->
+    <link href="../assets/css/topcore.css" rel="stylesheet" />
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="../assets/css/demo.css" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <!--    JQuery UI     -->
+    <link href="../assets/vendors/jquery-ui-1.12.0/jquery-ui.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+		<div class="sidebar">
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    Topcore Admin
+                </a>
+            </div>
+            <div class="logo logo-mini">
+                <a href="#" class="simple-text">
+                    T
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+				<ul class="nav">
+                    <li>
+                        <a href="../index.html">
+                            <i class="material-icons">dashboard</i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+					<li>
+						<a href="../widgets/widgets.html">
+							<i class="material-icons">apps</i>
+							<p>Widgets</p>
+						</a>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#charts" class="collapsed" aria-expanded="false">
+							<i class="material-icons">equalizer</i>
+							<p>Charts
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="charts" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li>
+									<a href="../charts/chart-js-charts.html">ChartJS</a>
+								</li>
+								<li>
+									<a href="../charts/flot-charts.html">Flot</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#ui-elements" class="collapsed" aria-expanded="false">
+							<i class="material-icons">extension</i>
+							<p>UI Elements
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="ui-elements" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="accordions.html">Accordions</a></li>
+								<li><a href="alerts.html">Alerts</a></li>
+								<li><a href="buttons.html">Buttons</a></li>
+								<li><a href="colors.html">Colors</a></li>
+								<li><a href="grid.html">Grid System</a></li>
+								<li><a href="icons.html">Icons</a></li>
+								<li><a href="modals.html">Modals</a></li>
+								<li><a href="notifications.html">Notifications</a></li>
+								<li><a href="tabs.html">Tabs</a></li>
+								<li><a href="typography.html">Typography</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#forms" class="collapsed" aria-expanded="false">
+							<i class="material-icons">border_color</i>
+							<p>Forms
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="forms" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../forms/basic-elements.html">Basic Elements</a></li>
+								<li><a href="../forms/advanced-elements.html">Advanced Elements</a></li>
+								<li><a href="../forms/form-validation.html">Form Validation</a></li>
+								<li><a href="../forms/form-wizard.html">Form Wizard</a></li>
+								<li><a href="../forms/sample-forms.html">Sample Forms</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#tables" class="collapsed" aria-expanded="false">
+							<i class="material-icons">grid_on</i>
+							<p>Tables
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="tables" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../tables/tables.html">Simple Tables</a></li>
+								<li><a href="../tables/data-tables.html">Data Tables</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#pages" class="collapsed" aria-expanded="false">
+							<i class="material-icons">content_copy</i>
+							<p>Pages
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="pages" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../sample-pages/template.html">Template</a></li>
+								<li><a href="../sample-pages/user-profile.html">User Profile</a></li>
+								<li><a href="../sample-pages/login.html">Login</a></li>
+								<li><a href="../sample-pages/signup.html">Sign Up</a></li>
+								<li><a href="../sample-pages/pricing-table.html">Pricing Table</a></li>
+								<li><a href="../sample-pages/invoice.html">Invoice</a></li>
+								<li><a href="../sample-pages/help-faqs.html">Help & FAQs</a></li>
+								<li><a href="../sample-pages/timeline.html">Timeline</a></li>
+								<li><a href="../sample-pages/404.html">404</a></li>
+								<li><a href="../sample-pages/500.html">500</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="../calendar/calendar.html">
+							<i class="material-icons">date_range</i>
+							<p>Calendar
+								<b class="caret"></b>
+							</p>
+						</a>
+					</li>
+					<li>
+						<a href="../docs/documentation.html">
+							<i class="material-icons">library_books</i>
+							<p>Documentation</p>
+						</a>
+					</li>
+				</ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-absolute">
+                <div class="container-fluid">
+                    <div class="navbar-minimize">
+                        <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+							<i class="material-icons visible-on-sidebar-regular f-26">keyboard_arrow_left</i>
+                            <i class="material-icons visible-on-sidebar-mini f-26">keyboard_arrow_right</i>
+                        </button>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"> Notifications </a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">notifications</i>
+                                    <span class="notification">6</span>
+                                    <p class="hidden-lg hidden-md">
+                                        Notifications
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">You have 5 new messages</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">You're now friend with Mike</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Wish Mary on her birthday!</a>
+                                    </li>                                    <li>
+                                        <a href="#">5 warnings in Server Console</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Jane completed 'Induction Training'</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">'Prepare Marketing Report' is overdue</a>
+                                    </li>
+                                </ul>
+                            </li>
+							<li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">apps</i>
+                                    <p class="hidden-lg hidden-md">Apps</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">person</i>
+                                    <p class="hidden-lg hidden-md">Profile</p>
+                                </a>
+                            </li>
+							<li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">settings</i>
+                                    <p class="hidden-lg hidden-md">Settings</p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg hidden-md"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="header text-center">
+                        <h3 class="title">Notifications</h3>
+                        <p class="category">Handcrafted by
+                            <a target="_blank" href="https://github.com/mouse0270">Robert McIntosh</a>. Please checkout the
+                            <a href="http://bootstrap-notify.remabledesigns.com/" target="_blank">full documentation.</a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Notifications Style</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="alert alert-info">
+                                        <span>This is a plain notification</span>
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <button type="button" aria-hidden="true" class="close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>This is a notification with close button.</span>
+                                    </div>
+                                    <div class="alert alert-info alert-with-icon" data-notify="container">
+                                        <i class="material-icons" data-notify="icon">notifications</i>
+                                        <button type="button" aria-hidden="true" class="close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span data-notify="message">This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Notification states</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="alert alert-info">
+                                        <button type="button" aria-hidden="true" class="close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Info - </b> This is a regular notification made with ".alert-info"</span>
+                                    </div>
+                                    <div class="alert alert-success">
+                                        <button type="button" aria-hidden="true" class="close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Success - </b> This is a regular notification made with ".alert-success"</span>
+                                    </div>
+                                    <div class="alert alert-warning">
+                                        <button type="button" aria-hidden="true" class="close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Warning - </b> This is a regular notification made with ".alert-warning"</span>
+                                    </div>
+                                    <div class="alert alert-danger">
+                                        <button type="button" aria-hidden="true" class="close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Danger - </b> This is a regular notification made with ".alert-danger"</span>
+                                    </div>
+                                    <div class="alert alert-primary">
+                                        <button type="button" aria-hidden="true" class="close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Primary - </b> This is a regular notification made with ".alert-primary"</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="places-buttons">
+                                        <div class="row">
+                                            <div class="col-md-6 col-md-offset-3 text-center">
+                                                <h4 class="card-title">
+                                                    Notifications Places
+                                                    <p class="category">Click to view notifications</p>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-primary btn-block" onclick="demo.showNotification('top','left')">Top Left</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-primary btn-block" onclick="demo.showNotification('top','center')">Top Center</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-primary btn-block" onclick="demo.showNotification('top','right')">Top Right</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','left')">Bottom Left</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','center')">Bottom Center</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','right')">Bottom Right</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Documentation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Support
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="copyright pull-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="#">Topcore Admin</a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+<!--   Core JS Files   -->
+<script src="../assets/vendors/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/jquery-ui-1.12.0/jquery-ui.js"></script>
+<script src="../assets/vendors/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/material.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<!-- Forms Validations Plugin -->
+<script src="../assets/vendors/jquery.validate.min.js"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="../assets/vendors/moment.min.js"></script>
+<!--  Charts Plugin -->
+<script src="../assets/vendors/chartist.min.js"></script>
+<!--  Plugin for the Wizard -->
+<script src="../assets/vendors/jquery.bootstrap-wizard.js"></script>
+<!--  Notifications Plugin    -->
+<script src="../assets/vendors/bootstrap-notify.js"></script>
+<!-- DateTimePicker Plugin -->
+<script src="../assets/vendors/bootstrap-datetimepicker.js"></script>
+<!-- Vector Map plugin -->
+<script src="../assets/vendors/jquery-jvectormap.js"></script>
+<!-- Sliders Plugin -->
+<script src="../assets/vendors/nouislider.min.js"></script>
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- Select Plugin -->
+<script src="../assets/vendors/jquery.select-bootstrap.js"></script>
+<!--  DataTables.net Plugin    -->
+<script src="../assets/vendors/jquery.datatables.js"></script>
+<!-- Sweet Alert 2 plugin -->
+<script src="../assets/vendors/sweetalert2.js"></script>
+<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+<script src="../assets/vendors/jasny-bootstrap.min.js"></script>
+<!--  Full Calendar Plugin    -->
+<script src="../assets/vendors/fullcalendar.min.js"></script>
+<!-- TagsInput Plugin -->
+<script src="../assets/vendors/jquery.tagsinput.js"></script>
+<!-- Material Dashboard javascript methods -->
+<script src="../assets/js/topcore.js"></script>
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="../assets/js/demo.js"></script>
+</html>

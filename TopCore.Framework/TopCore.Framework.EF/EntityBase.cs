@@ -24,18 +24,40 @@ namespace TopCore.Framework.EF
 {
     public abstract class EntityBase
     {
+        protected EntityBase(int createdBy)
+        {
+            CreatedBy = createdBy;
+        }
+
+        public int Id { get; set; }
+
         /// <summary>
         ///     Unique key
         /// </summary>
-        public Guid Key { get; set; }
+        public Guid Key { get; set; } = Guid.NewGuid();
 
-        public bool IsDeleted { get; set; }
+        public DateTime CreatedOnUtc { get; set; } = DateTime.UtcNow;
 
-        public DateTime CreatedOnUtc { get; set; }
+        /// <summary>
+        /// For tracking
+        /// </summary>
+        public int? CreatedBy { get; set; }
 
         public DateTime? LastUpdatedOnUtc { get; set; }
 
+        /// <summary>
+        /// For tracking
+        /// </summary>
+        public int? UpdatedBy { get; set; }
+
+        public bool IsDeleted { get; set; }
+
         public DateTime? DeletedOnUtc { get; set; }
+
+        /// <summary>
+        /// For tracking
+        /// </summary>
+        public int? DeletedBy { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }

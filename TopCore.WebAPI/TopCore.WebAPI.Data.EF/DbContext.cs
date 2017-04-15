@@ -1,31 +1,55 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Diagnostics;
+﻿using TopCore.WebAPI.Data.EF.Factory;
+using TopCore.WebAPI.Data.EF.Mapping;
 using TopCore.WebAPI.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using TopCore.Framework.Core;
+using TopCore.Framework.DependencyInjection.Attributes;
+using TopCore.Framework.EF;
 
 namespace TopCore.WebAPI.Data.EF
 {
-    public class DbContext : Microsoft.EntityFrameworkCore.DbContext
+    [PerRequestDependency(ServiceType = typeof(IDbContext))]
+    public class DbContext : BaseDbContext, IDbContext
     {
+        public DbContext()
+        {
+        }
+
         public DbContext(DbContextOptions<DbContext> options) : base(options)
         {
-            Debug.WriteLine($"{nameof(DbContext)} is Created", nameof(DbContext));
         }
 
-        public DbSet<UserEntity> UserEntities { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            Debug.WriteLine($"{nameof(DbContext)} is Created", nameof(OnModelCreating));
-
-            // Convention Table Name is Entity Name without EntityMapping Postfix
-            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            if (!optionsBuilder.IsConfigured)
             {
-                entity.Relational().TableName = entity.DisplayName().Replace("EntityMapping", string.Empty);
+                string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                string connectionString = ConfigHelper.GetValue("appsettings.json", $"ConnectionStrings:{environmentName}");
+                optionsBuilder.UseSqlServer(connectionString, o => o.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
             }
-            base.OnModelCreating(modelBuilder);
-
-            Database.Migrate();
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Keep under base for override and make end result
+            builder.AddConfigFromAssembly(typeof(IDataModule).GetTypeInfo().Assembly);
+        }
+
+        #region Save Changes
+
+        public Task<int> SaveChangesAsync()
+        {
+            return SaveChangesAsync(new CancellationToken());
+        }
+
+        #endregion Save Changes
     }
 }

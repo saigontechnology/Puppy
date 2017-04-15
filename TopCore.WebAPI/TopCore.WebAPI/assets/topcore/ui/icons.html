@@ -1,0 +1,1964 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    WebAPI
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Topcore - Material Admin Template</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--  Material Dashboard CSS    -->
+    <link href="../assets/css/topcore.css" rel="stylesheet" />
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="../assets/css/demo.css" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <link href="../assets/vendors/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <!--    JQuery UI     -->
+    <link href="../assets/vendors/jquery-ui-1.12.0/jquery-ui.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+		<div class="sidebar">
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    Topcore Admin
+                </a>
+            </div>
+            <div class="logo logo-mini">
+                <a href="#" class="simple-text">
+                    T
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+				<ul class="nav">
+                    <li>
+                        <a href="../index.html">
+                            <i class="material-icons">dashboard</i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+					<li>
+						<a href="../widgets/widgets.html">
+							<i class="material-icons">apps</i>
+							<p>Widgets</p>
+						</a>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#charts" class="collapsed" aria-expanded="false">
+							<i class="material-icons">equalizer</i>
+							<p>Charts
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="charts" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li>
+									<a href="../charts/chart-js-charts.html">ChartJS</a>
+								</li>
+								<li>
+									<a href="../charts/flot-charts.html">Flot</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#ui-elements" class="collapsed" aria-expanded="false">
+							<i class="material-icons">extension</i>
+							<p>UI Elements
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="ui-elements" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="accordions.html">Accordions</a></li>
+								<li><a href="alerts.html">Alerts</a></li>
+								<li><a href="buttons.html">Buttons</a></li>
+								<li><a href="colors.html">Colors</a></li>
+								<li><a href="grid.html">Grid System</a></li>
+								<li><a href="icons.html">Icons</a></li>
+								<li><a href="modals.html">Modals</a></li>
+								<li><a href="notifications.html">Notifications</a></li>
+								<li><a href="tabs.html">Tabs</a></li>
+								<li><a href="typography.html">Typography</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#forms" class="collapsed" aria-expanded="false">
+							<i class="material-icons">border_color</i>
+							<p>Forms
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="forms" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../forms/basic-elements.html">Basic Elements</a></li>
+								<li><a href="../forms/advanced-elements.html">Advanced Elements</a></li>
+								<li><a href="../forms/form-validation.html">Form Validation</a></li>
+								<li><a href="../forms/form-wizard.html">Form Wizard</a></li>
+								<li><a href="../forms/sample-forms.html">Sample Forms</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#tables" class="collapsed" aria-expanded="false">
+							<i class="material-icons">grid_on</i>
+							<p>Tables
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="tables" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../tables/tables.html">Simple Tables</a></li>
+								<li><a href="../tables/data-tables.html">Data Tables</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a data-toggle="collapse" href="#pages" class="collapsed" aria-expanded="false">
+							<i class="material-icons">content_copy</i>
+							<p>Pages
+								<b class="caret"></b>
+							</p>
+						</a>
+						<div class="collapse" id="pages" aria-expanded="false" style="height: 0px;">
+							<ul class="nav">
+								<li><a href="../sample-pages/template.html">Template</a></li>
+								<li><a href="../sample-pages/user-profile.html">User Profile</a></li>
+								<li><a href="../sample-pages/login.html">Login</a></li>
+								<li><a href="../sample-pages/signup.html">Sign Up</a></li>
+								<li><a href="../sample-pages/pricing-table.html">Pricing Table</a></li>
+								<li><a href="../sample-pages/invoice.html">Invoice</a></li>
+								<li><a href="../sample-pages/help-faqs.html">Help & FAQs</a></li>
+								<li><a href="../sample-pages/timeline.html">Timeline</a></li>
+								<li><a href="../sample-pages/404.html">404</a></li>
+								<li><a href="../sample-pages/500.html">500</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="../calendar/calendar.html">
+							<i class="material-icons">date_range</i>
+							<p>Calendar
+								<b class="caret"></b>
+							</p>
+						</a>
+					</li>
+					<li>
+						<a href="../docs/documentation.html">
+							<i class="material-icons">library_books</i>
+							<p>Documentation</p>
+						</a>
+					</li>
+				</ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-absolute">
+                <div class="container-fluid">
+                    <div class="navbar-minimize">
+                        <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+							<i class="material-icons visible-on-sidebar-regular f-26">keyboard_arrow_left</i>
+                            <i class="material-icons visible-on-sidebar-mini f-26">keyboard_arrow_right</i>
+                        </button>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"> Icons </a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">notifications</i>
+                                    <span class="notification">6</span>
+                                    <p class="hidden-lg hidden-md">
+                                        Notifications
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">You have 5 new messages</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">You're now friend with Mike</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Wish Mary on her birthday!</a>
+                                    </li>                                    <li>
+                                        <a href="#">5 warnings in Server Console</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Jane completed 'Induction Training'</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">'Prepare Marketing Report' is overdue</a>
+                                    </li>
+                                </ul>
+                            </li>
+							<li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">apps</i>
+                                    <p class="hidden-lg hidden-md">Apps</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">person</i>
+                                    <p class="hidden-lg hidden-md">Profile</p>
+                                </a>
+                            </li>
+							<li>
+                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons">settings</i>
+                                    <p class="hidden-lg hidden-md">Settings</p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg hidden-md"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="container-fluid">
+					<div class="header text-center">
+						<h3 class="title">Material Design Iconic Font</h3>
+						</p>
+					</div>
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Web Application</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                        	<ul>
+                            	<li data-name="3d-rotation" data-code="f101"><i class="zmdi zmdi-3d-rotation"></i> <span>3d-rotation</span></li>
+                                <li data-name="airplane-off" data-code="f102"><i class="zmdi zmdi-airplane-off"></i> <span>airplane-off</span></li>
+                                <li data-name="airplane" data-code="f103"><i class="zmdi zmdi-airplane"></i> <span>airplane</span></li>
+
+                                <li data-name="album" data-code="f104"><i class="zmdi zmdi-album"></i> <span>album</span></li>
+                                <li data-name="archive" data-code="f105"><i class="zmdi zmdi-archive"></i> <span>archive</span></li>
+                                <li data-name="assignment-account" data-code="f106"><i class="zmdi zmdi-assignment-account"></i> <span>assignment-account</span></li>
+
+                                <li data-name="assignment-alert" data-code="f107"><i class="zmdi zmdi-assignment-alert"></i> <span>assignment-alert</span></li>
+                                <li data-name="assignment-check" data-code="f108"><i class="zmdi zmdi-assignment-check"></i> <span>assignment-check</span></li>
+                                <li data-name="assignment-o" data-code="f109"><i class="zmdi zmdi-assignment-o"></i> <span>assignment-o</span></li>
+
+                                <li data-name="assignment-return" data-code="f10a"><i class="zmdi zmdi-assignment-return"></i> <span>assignment-return</span></li>
+                                <li data-name="assignment-returned" data-code="f10b"><i class="zmdi zmdi-assignment-returned"></i> <span>assignment-returned</span></li>
+                                <li data-name="assignment" data-code="f10c"><i class="zmdi zmdi-assignment"></i> <span>assignment</span></li>
+                                <li data-name="attachment-alt" data-code="f10d"><i class="zmdi zmdi-attachment-alt"></i> <span>attachment-alt</span></li>
+                                <li data-name="attachment" data-code="f10e"><i class="zmdi zmdi-attachment"></i> <span>attachment</span></li>
+                                <li data-name="audio" data-code="f10f"><i class="zmdi zmdi-audio"></i> <span>audio</span></li>
+                                <li data-name="badge-check" data-code="f110"><i class="zmdi zmdi-badge-check"></i> <span>badge-check</span></li>
+                                <li data-name="balance-wallet" data-code="f111"><i class="zmdi zmdi-balance-wallet"></i> <span>balance-wallet</span></li>
+                                <li data-name="balance" data-code="f112"><i class="zmdi zmdi-balance"></i> <span>balance</span></li>
+                                <li data-name="battery-alert" data-code="f113"><i class="zmdi zmdi-battery-alert"></i> <span>battery-alert</span></li>
+                                <li data-name="battery-flash" data-code="f114"><i class="zmdi zmdi-battery-flash"></i> <span>battery-flash</span></li>
+                                <li data-name="battery-unknown" data-code="f115"><i class="zmdi zmdi-battery-unknown"></i> <span>battery-unknown</span></li>
+                                <li data-name="battery" data-code="f116"><i class="zmdi zmdi-battery"></i> <span>battery</span></li>
+                                <li data-name="bike" data-code="f117"><i class="zmdi zmdi-bike"></i> <span>bike</span></li>
+                                <li data-name="block-alt" data-code="f118"><i class="zmdi zmdi-block-alt"></i> <span>block-alt</span></li>
+                                <li data-name="block" data-code="f119"><i class="zmdi zmdi-block"></i> <span>block</span></li>
+                                <li data-name="boat" data-code="f11a"><i class="zmdi zmdi-boat"></i> <span>boat</span></li>
+                                <li data-name="book-image" data-code="f11b"><i class="zmdi zmdi-book-image"></i> <span>book-image</span></li>
+                                <li data-name="book" data-code="f11c"><i class="zmdi zmdi-book"></i> <span>book</span></li>
+                                <li data-name="bookmark-outline" data-code="f11d"><i class="zmdi zmdi-bookmark-outline"></i> <span>bookmark-outline</span></li>
+                                <li data-name="bookmark" data-code="f11e"><i class="zmdi zmdi-bookmark"></i> <span>bookmark</span></li>
+                                <li data-name="brush" data-code="f11f"><i class="zmdi zmdi-brush"></i> <span>brush</span></li>
+                                <li data-name="bug" data-code="f120"><i class="zmdi zmdi-bug"></i> <span>bug</span></li>
+                                <li data-name="bus" data-code="f121"><i class="zmdi zmdi-bus"></i> <span>bus</span></li>
+                                <li data-name="cake" data-code="f122"><i class="zmdi zmdi-cake"></i> <span>cake</span></li>
+                                <li data-name="car-taxi" data-code="f123"><i class="zmdi zmdi-car-taxi"></i> <span>car-taxi</span></li>
+                                <li data-name="car-wash" data-code="f124"><i class="zmdi zmdi-car-wash"></i> <span>car-wash</span></li>
+                                <li data-name="car" data-code="f125"><i class="zmdi zmdi-car"></i> <span>car</span></li>
+                                <li data-name="card-giftcard" data-code="f126"><i class="zmdi zmdi-card-giftcard"></i> <span>card-giftcard</span></li>
+                                <li data-name="card-membership" data-code="f127"><i class="zmdi zmdi-card-membership"></i> <span>card-membership</span></li>
+                                <li data-name="card-travel" data-code="f128"><i class="zmdi zmdi-card-travel"></i> <span>card-travel</span></li>
+                                <li data-name="card" data-code="f129"><i class="zmdi zmdi-card"></i> <span>card</span></li>
+                                <li data-name="case-check" data-code="f12a"><i class="zmdi zmdi-case-check"></i> <span>case-check</span></li>
+                                <li data-name="case-download" data-code="f12b"><i class="zmdi zmdi-case-download"></i> <span>case-download</span></li>
+                                <li data-name="case-play" data-code="f12c"><i class="zmdi zmdi-case-play"></i> <span>case-play</span></li>
+                                <li data-name="case" data-code="f12d"><i class="zmdi zmdi-case"></i> <span>case</span></li>
+                                <li data-name="cast-connected" data-code="f12e"><i class="zmdi zmdi-cast-connected"></i> <span>cast-connected</span></li>
+                                <li data-name="cast" data-code="f12f"><i class="zmdi zmdi-cast"></i> <span>cast</span></li>
+                                <li data-name="chart-donut" data-code="f130"><i class="zmdi zmdi-chart-donut"></i> <span>chart-donut</span></li>
+                                <li data-name="chart" data-code="f131"><i class="zmdi zmdi-chart"></i> <span>chart</span></li>
+                                <li data-name="city-alt" data-code="f132"><i class="zmdi zmdi-city-alt"></i> <span>city-alt</span></li>
+                                <li data-name="city" data-code="f133"><i class="zmdi zmdi-city"></i> <span>city</span></li>
+                                <li data-name="close-circle-o" data-code="f134"><i class="zmdi zmdi-close-circle-o"></i> <span>close-circle-o</span></li>
+                                <li data-name="close-circle" data-code="f135"><i class="zmdi zmdi-close-circle"></i> <span>close-circle</span></li>
+                                <li data-name="close" data-code="f136"><i class="zmdi zmdi-close"></i> <span>close</span></li>
+                                <li data-name="cocktail" data-code="f137"><i class="zmdi zmdi-cocktail"></i> <span>cocktail</span></li>
+                                <li data-name="code-setting" data-code="f138"><i class="zmdi zmdi-code-setting"></i> <span>code-setting</span></li>
+                                <li data-name="code-smartphone" data-code="f139"><i class="zmdi zmdi-code-smartphone"></i> <span>code-smartphone</span></li>
+
+                                <li data-name="code" data-code="f13a"><i class="zmdi zmdi-code"></i> <span>code</span></li>
+                                <li data-name="coffee" data-code="f13b"><i class="zmdi zmdi-coffee"></i> <span>coffee</span></li>
+                                <li data-name="collection-bookmark" data-code="f13c"><i class="zmdi zmdi-collection-bookmark"></i> <span>collection-bookmark</span></li>
+                                <li data-name="collection-case-play" data-code="f13d"><i class="zmdi zmdi-collection-case-play"></i> <span>collection-case-play</span></li>
+                                <li data-name="collection-folder-image" data-code="f13e"><i class="zmdi zmdi-collection-folder-image"></i><span>collection-folder-image</span></li>
+                                <li data-name="collection-image-o" data-code="f13f"><i class="zmdi zmdi-collection-image-o"></i> <span>collection-image-o</span></li>
+                                <li data-name="collection-image" data-code="f140"><i class="zmdi zmdi-collection-image"></i> <span>collection-image</span></li>
+                                <li data-name="collection-item-1" data-code="f141"><i class="zmdi zmdi-collection-item-1"></i> <span>collection-item-1</span></li>
+                                <li data-name="collection-item-2" data-code="f142"><i class="zmdi zmdi-collection-item-2"></i> <span>collection-item-2</span></li>
+                                <li data-name="collection-item-3" data-code="f143"><i class="zmdi zmdi-collection-item-3"></i> <span>collection-item-3</span></li>
+                                <li data-name="collection-item-4" data-code="f144"><i class="zmdi zmdi-collection-item-4"></i> <span>collection-item-4</span></li>
+                                <li data-name="collection-item-5" data-code="f145"><i class="zmdi zmdi-collection-item-5"></i> <span>collection-item-5</span></li>
+                                <li data-name="collection-item-6" data-code="f146"><i class="zmdi zmdi-collection-item-6"></i> <span>collection-item-6</span></li>
+                                <li data-name="collection-item-7" data-code="f147"><i class="zmdi zmdi-collection-item-7"></i> <span>collection-item-7</span></li>
+                                <li data-name="collection-item-8" data-code="f148"><i class="zmdi zmdi-collection-item-8"></i> <span>collection-item-8</span></li>
+                                <li data-name="collection-item-9-plus" data-code="f149"><i class="zmdi zmdi-collection-item-9-plus"></i> <span>collection-item-9-plus</span></li>
+                                <li data-name="collection-item-9" data-code="f14a"><i class="zmdi zmdi-collection-item-9"></i> <span>collection-item-9</span></li>
+                                <li data-name="collection-item" data-code="f14b"><i class="zmdi zmdi-collection-item"></i> <span>collection-item</span></li>
+                                <li data-name="collection-music" data-code="f14c"><i class="zmdi zmdi-collection-music"></i> <span>collection-music</span></li>
+                                <li data-name="collection-pdf" data-code="f14d"><i class="zmdi zmdi-collection-pdf"></i> <span>collection-pdf</span></li>
+                                <li data-name="collection-plus" data-code="f14e"><i class="zmdi zmdi-collection-plus"></i> <span>collection-plus</span></li>
+                                <li data-name="collection-speaker" data-code="f14f"><i class="zmdi zmdi-collection-speaker"></i> <span>collection-speaker</span></li>
+                                <li data-name="collection-text" data-code="f150"><i class="zmdi zmdi-collection-text"></i> <span>collection-text</span></li>
+                                <li data-name="collection-video" data-code="f151"><i class="zmdi zmdi-collection-video"></i> <span>collection-video</span></li>
+                                <li data-name="compass" data-code="f152"><i class="zmdi zmdi-compass"></i> <span>compass</span></li>
+
+                                <li data-name="cutlery" data-code="f153"><i class="zmdi zmdi-cutlery"></i> <span>cutlery</span></li>
+                                <li data-name="delete" data-code="f154"><i class="zmdi zmdi-delete"></i> <span>delete</span></li>
+                                <li data-name="dialpad" data-code="f155"><i class="zmdi zmdi-dialpad"></i> <span>dialpad</span></li>
+                                <li data-name="dns" data-code="f156"><i class="zmdi zmdi-dns"></i> <span>dns</span></li>
+                                <li data-name="drink" data-code="f157"><i class="zmdi zmdi-drink"></i> <span>drink</span></li>
+                                <li data-name="edit" data-code="f158"><i class="zmdi zmdi-edit"></i> <span>edit</span></li>
+                                <li data-name="email-open" data-code="f159"><i class="zmdi zmdi-email-open"></i> <span>email-open</span></li>
+                                <li data-name="email" data-code="f15a"><i class="zmdi zmdi-email"></i> <span>email</span></li>
+                                <li data-name="eye-off" data-code="f15b"><i class="zmdi zmdi-eye-off"></i> <span>eye-off</span></li>
+                                <li data-name="eye" data-code="f15c"><i class="zmdi zmdi-eye"></i> <span>eye</span></li>
+                                <li data-name="eyedropper" data-code="f15d"><i class="zmdi zmdi-eyedropper"></i> <span>eyedropper</span></li>
+
+                                <li data-name="favorite-outline" data-code="f15e"><i class="zmdi zmdi-favorite-outline"></i> <span>favorite-outline</span></li>
+                                <li data-name="favorite" data-code="f15f"><i class="zmdi zmdi-favorite"></i> <span>favorite</span></li>
+                                <li data-name="filter-list" data-code="f160"><i class="zmdi zmdi-filter-list"></i> <span>filter-list</span></li>
+                                <li data-name="fire" data-code="f161"><i class="zmdi zmdi-fire"></i> <span>fire</span></li>
+                                <li data-name="flag" data-code="f162"><i class="zmdi zmdi-flag"></i> <span>flag</span></li>
+                                <li data-name="flare" data-code="f163"><i class="zmdi zmdi-flare"></i> <span>flare</span></li>
+                                <li data-name="flash-auto" data-code="f164"><i class="zmdi zmdi-flash-auto"></i> <span>flash-auto</span></li>
+                                <li data-name="flash-off" data-code="f165"><i class="zmdi zmdi-flash-off"></i> <span>flash-off</span></li>
+                                <li data-name="flash" data-code="f166"><i class="zmdi zmdi-flash"></i> <span>flash</span></li>
+                                <li data-name="flip" data-code="f167"><i class="zmdi zmdi-flip"></i> <span>flip</span></li>
+                                <li data-name="flower-alt" data-code="f168"><i class="zmdi zmdi-flower-alt"></i> <span>flower-alt</span></li>
+                                <li data-name="flower" data-code="f169"><i class="zmdi zmdi-flower"></i> <span>flower</span></li>
+                                <li data-name="font" data-code="f16a"><i class="zmdi zmdi-font"></i> <span>font</span></li>
+                                <li data-name="fullscreen-alt" data-code="f16b"><i class="zmdi zmdi-fullscreen-alt"></i> <span>fullscreen-alt</span></li>
+                                <li data-name="fullscreen-exit" data-code="f16c"><i class="zmdi zmdi-fullscreen-exit"></i> <span>fullscreen-exit</span></li>
+                                <li data-name="fullscreen" data-code="f16d"><i class="zmdi zmdi-fullscreen"></i> <span>fullscreen</span></li>
+                                <li data-name="functions" data-code="f16e"><i class="zmdi zmdi-functions"></i> <span>functions</span></li>
+                                <li data-name="gas-station" data-code="f16f"><i class="zmdi zmdi-gas-station"></i> <span>gas-station</span></li>
+                                <li data-name="gesture" data-code="f170"><i class="zmdi zmdi-gesture"></i> <span>gesture</span></li>
+                                <li data-name="globe-alt" data-code="f171"><i class="zmdi zmdi-globe-alt"></i> <span>globe-alt</span></li>
+                                <li data-name="globe-lock" data-code="f172"><i class="zmdi zmdi-globe-lock"></i> <span>globe-lock</span></li>
+                                <li data-name="globe" data-code="f173"><i class="zmdi zmdi-globe"></i> <span>globe</span></li>
+                                <li data-name="graduation-cap" data-code="f174"><i class="zmdi zmdi-graduation-cap"></i> <span>graduation-cap</span></li>
+                                <li data-name="group" data-code="f3e9"><i class="zmdi zmdi-group"></i> <span>group</span></li>
+                                <li data-name="home" data-code="f175"><i class="zmdi zmdi-home"></i> <span>home</span></li>
+                                <li data-name="hospital-alt" data-code="f176"><i class="zmdi zmdi-hospital-alt"></i> <span>hospital-alt</span></li>
+                                <li data-name="hospital" data-code="f177"><i class="zmdi zmdi-hospital"></i> <span>hospital</span></li>
+                                <li data-name="hotel" data-code="f178"><i class="zmdi zmdi-hotel"></i> <span>hotel</span></li>
+                                <li data-name="hourglass-alt" data-code="f179"><i class="zmdi zmdi-hourglass-alt"></i> <span>hourglass-alt</span></li>
+                                <li data-name="hourglass-outline" data-code="f17a"><i class="zmdi zmdi-hourglass-outline"></i> <span>hourglass-outline</span></li>
+                                <li data-name="hourglass" data-code="f17b"><i class="zmdi zmdi-hourglass"></i> <span>hourglass</span></li>
+                                <li data-name="http" data-code="f17c"><i class="zmdi zmdi-http"></i> <span>http</span></li>
+                                <li data-name="image-alt" data-code="f17d"><i class="zmdi zmdi-image-alt"></i> <span>image-alt</span></li>
+                                <li data-name="image-o" data-code="f17e"><i class="zmdi zmdi-image-o"></i> <span>image-o</span></li>
+                                <li data-name="image" data-code="f17f"><i class="zmdi zmdi-image"></i> <span>image</span></li>
+                                <li data-name="inbox" data-code="f180"><i class="zmdi zmdi-inbox"></i> <span>inbox</span></li>
+                                <li data-name="invert-colors-off" data-code="f181"><i class="zmdi zmdi-invert-colors-off"></i> <span>invert-colors-off</span></li>
+                                <li data-name="invert-colors" data-code="f182"><i class="zmdi zmdi-invert-colors"></i> <span>invert-colors</span></li>
+                                <li data-name="key" data-code="f183"><i class="zmdi zmdi-key"></i> <span>key</span></li>
+                                <li data-name="label-alt-outline" data-code="f184"><i class="zmdi zmdi-label-alt-outline"></i> <span>label-alt-outline</span></li>
+                                <li data-name="label-alt" data-code="f185"><i class="zmdi zmdi-label-alt"></i> <span>label-alt</span></li>
+                                <li data-name="label-heart" data-code="f186"><i class="zmdi zmdi-label-heart"></i> <span>label-heart</span></li>
+                                <li data-name="label" data-code="f187"><i class="zmdi zmdi-label"></i> <span>label</span></li>
+                                <li data-name="labels" data-code="f188"><i class="zmdi zmdi-labels"></i> <span>labels</span></li>
+                                <li data-name="lamp" data-code="f189"><i class="zmdi zmdi-lamp"></i> <span>lamp</span></li>
+                                <li data-name="landscape" data-code="f18a"><i class="zmdi zmdi-landscape"></i> <span>landscape</span></li>
+                                <li data-name="layers-off" data-code="f18b"><i class="zmdi zmdi-layers-off"></i> <span>layers-off</span></li>
+                                <li data-name="layers" data-code="f18c"><i class="zmdi zmdi-layers"></i> <span>layers</span></li>
+                                <li data-name="library" data-code="f18d"><i class="zmdi zmdi-library"></i> <span>library</span></li>
+                                <li data-name="link" data-code="f18e"><i class="zmdi zmdi-link"></i> <span>link</span></li>
+                                <li data-name="lock-open" data-code="f18f"><i class="zmdi zmdi-lock-open"></i> <span>lock-open</span></li>
+                                <li data-name="lock-outline" data-code="f190"><i class="zmdi zmdi-lock-outline"></i> <span>lock-outline</span></li>
+                                <li data-name="lock" data-code="f191"><i class="zmdi zmdi-lock"></i> <span>lock</span></li>
+                                <li data-name="mail-reply-all" data-code="f192"><i class="zmdi zmdi-mail-reply-all"></i> <span>mail-reply-all</span></li>
+                                <li data-name="mail-reply" data-code="f193"><i class="zmdi zmdi-mail-reply"></i> <span>mail-reply</span></li>
+                                <li data-name="mail-send" data-code="f194"><i class="zmdi zmdi-mail-send"></i> <span>mail-send</span></li>
+                                <li data-name="mall" data-code="f195"><i class="zmdi zmdi-mall"></i> <span>mall</span></li>
+                                <li data-name="map" data-code="f196"><i class="zmdi zmdi-map"></i> <span>map</span></li>
+                                <li data-name="menu" data-code="f197"><i class="zmdi zmdi-menu"></i> <span>menu</span></li>
+                                <li data-name="money-box" data-code="f198"><i class="zmdi zmdi-money-box"></i> <span>money-box</span></li>
+                                <li data-name="money-off" data-code="f199"><i class="zmdi zmdi-money-off"></i> <span>money-off</span></li>
+                                <li data-name="money" data-code="f19a"><i class="zmdi zmdi-money"></i> <span>money</span></li>
+                                <li data-name="more-vert" data-code="f19b"><i class="zmdi zmdi-more-vert"></i> <span>more-vert</span></li>
+                                <li data-name="more" data-code="f19c"><i class="zmdi zmdi-more"></i> <span>more</span></li>
+                                <li data-name="movie-alt" data-code="f19d"><i class="zmdi zmdi-movie-alt"></i> <span>movie-alt</span></li>
+                                <li data-name="movie" data-code="f19e"><i class="zmdi zmdi-movie"></i> <span>movie</span></li>
+                                <li data-name="nature-people" data-code="f19f"><i class="zmdi zmdi-nature-people"></i> <span>nature-people</span></li>
+                                <li data-name="nature" data-code="f1a0"><i class="zmdi zmdi-nature"></i> <span>nature</span></li>
+                                <li data-name="navigation" data-code="f1a1"><i class="zmdi zmdi-navigation"></i> <span>navigation</span></li>
+                                <li data-name="open-in-browser" data-code="f1a2"><i class="zmdi zmdi-open-in-browser"></i> <span>open-in-browser</span></li>
+                                <li data-name="open-in-new" data-code="f1a3"><i class="zmdi zmdi-open-in-new"></i> <span>open-in-new</span></li>
+                                <li data-name="palette" data-code="f1a4"><i class="zmdi zmdi-palette"></i> <span>palette</span></li>
+                                <li data-name="parking" data-code="f1a5"><i class="zmdi zmdi-parking"></i> <span>parking</span></li>
+                                <li data-name="pin-account" data-code="f1a6"><i class="zmdi zmdi-pin-account"></i> <span>pin-account</span></li>
+                                <li data-name="pin-assistant" data-code="f1a7"><i class="zmdi zmdi-pin-assistant"></i> <span>pin-assistant</span></li>
+                                <li data-name="pin-drop" data-code="f1a8"><i class="zmdi zmdi-pin-drop"></i> <span>pin-drop</span></li>
+                                <li data-name="pin-help" data-code="f1a9"><i class="zmdi zmdi-pin-help"></i> <span>pin-help</span></li>
+
+                                <li data-name="pin-off" data-code="f1aa"><i class="zmdi zmdi-pin-off"></i> <span>pin-off</span></li>
+                                <li data-name="pin" data-code="f1ab"><i class="zmdi zmdi-pin"></i> <span>pin</span></li>
+                                <li data-name="pizza" data-code="f1ac"><i class="zmdi zmdi-pizza"></i> <span>pizza</span></li>
+                                <li data-name="plaster" data-code="f1ad"><i class="zmdi zmdi-plaster"></i> <span>plaster</span></li>
+                                <li data-name="power-setting" data-code="f1ae"><i class="zmdi zmdi-power-setting"></i> <span>power-setting</span></li>
+                                <li data-name="power" data-code="f1af"><i class="zmdi zmdi-power"></i> <span>power</span></li>
+                                <li data-name="print" data-code="f1b0"><i class="zmdi zmdi-print"></i> <span>print</span></li>
+                                <li data-name="puzzle-piece" data-code="f1b1"><i class="zmdi zmdi-puzzle-piece"></i> <span>puzzle-piece</span></li>
+                                <li data-name="quote" data-code="f1b2"><i class="zmdi zmdi-quote"></i> <span>quote</span></li>
+                                <li data-name="railway" data-code="f1b3"><i class="zmdi zmdi-railway"></i> <span>railway</span></li>
+                                <li data-name="receipt" data-code="f1b4"><i class="zmdi zmdi-receipt"></i> <span>receipt</span></li>
+                                <li data-name="refresh-alt" data-code="f1b5"><i class="zmdi zmdi-refresh-alt"></i> <span>refresh-alt</span></li>
+                                <li data-name="refresh-sync-alert" data-code="f1b6"><i class="zmdi zmdi-refresh-sync-alert"></i> <span>refresh-sync-alert</span></li>
+                                <li data-name="refresh-sync-off" data-code="f1b7"><i class="zmdi zmdi-refresh-sync-off"></i> <span>refresh-sync-off</span></li>
+                                <li data-name="refresh-sync" data-code="f1b8"><i class="zmdi zmdi-refresh-sync"></i> <span>refresh-sync</span></li>
+                                <li data-name="refresh" data-code="f1b9"><i class="zmdi zmdi-refresh"></i> <span>refresh</span></li>
+                                <li data-name="roller" data-code="f1ba"><i class="zmdi zmdi-roller"></i> <span>roller</span></li>
+                                <li data-name="ruler" data-code="f1bb"><i class="zmdi zmdi-ruler"></i> <span>ruler</span></li>
+                                <li data-name="scissors" data-code="f1bc"><i class="zmdi zmdi-scissors"></i> <span>scissors</span></li>
+                                <li data-name="screen-rotation-lock" data-code="f1bd"><i class="zmdi zmdi-screen-rotation-lock"></i> <span>screen-rotation-lock</span></li>
+                                <li data-name="screen-rotation" data-code="f1be"><i class="zmdi zmdi-screen-rotation"></i> <span>screen-rotationxxxx</span></li>
+                                <li data-name="search-for" data-code="f1bf"><i class="zmdi zmdi-search-for"></i> <span>search-for</span></li>
+                                <li data-name="search-in-file" data-code="f1c0"><i class="zmdi zmdi-search-in-file"></i> <span>search-in-file</span></li>
+                                <li data-name="search-in-page" data-code="f1c1"><i class="zmdi zmdi-search-in-page"></i> <span>search-in-page</span></li>
+                                <li data-name="search-replace" data-code="f1c2"><i class="zmdi zmdi-search-replace"></i> <span>search-replace</span></li>
+                                <li data-name="search" data-code="f1c3"><i class="zmdi zmdi-search"></i> <span>search</span></li>
+                                <li data-name="seat" data-code="f1c4"><i class="zmdi zmdi-seat"></i> <span>seat</span></li>
+                                <li data-name="settings-square" data-code="f1c5"><i class="zmdi zmdi-settings-square"></i> <span>settings-square</span></li>
+                                <li data-name="settings" data-code="f1c6"><i class="zmdi zmdi-settings"></i> <span>settings</span></li>
+                                <li data-name="shape" data-code="f3eb"><i class="zmdi zmdi-shape"></i> <span>shape</span></li>
+                                <li data-name="shield-check" data-code="f1c7"><i class="zmdi zmdi-shield-check"></i> <span>shield-check</span></li>
+                                <li data-name="shield-security" data-code="f1c8"><i class="zmdi zmdi-shield-security"></i> <span>shield-security</span></li>
+                                <li data-name="shopping-basket" data-code="f1c9"><i class="zmdi zmdi-shopping-basket"></i> <span>shopping-basket</span></li>
+                                <li data-name="shopping-cart-plus" data-code="f1ca"><i class="zmdi zmdi-shopping-cart-plus"></i> <span>shopping-cart-plus</span></li>
+                                <li data-name="shopping-cart" data-code="f1cb"><i class="zmdi zmdi-shopping-cart"></i> <span>shopping-cart</span></li>
+                                <li data-name="sign-in" data-code="f1cc"><i class="zmdi zmdi-sign-in"></i> <span>sign-in</span></li>
+                                <li data-name="sort-amount-asc" data-code="f1cd"><i class="zmdi zmdi-sort-amount-asc"></i> <span>sort-amount-asc</span></li>
+                                <li data-name="sort-amount-desc" data-code="f1ce"><i class="zmdi zmdi-sort-amount-desc"></i> <span>sort-amount-desc</span></li>
+                                <li data-name="sort-asc" data-code="f1cf"><i class="zmdi zmdi-sort-asc"></i> <span>sort-asc</span></li>
+                                <li data-name="sort-desc" data-code="f1d0"><i class="zmdi zmdi-sort-desc"></i> <span>sort-desc</span></li>
+                                <li data-name="spellcheck" data-code="f1d1"><i class="zmdi zmdi-spellcheck"></i> <span>spellcheck</span></li>
+                                <li data-name="spinner" data-code="f3ec"><i class="zmdi zmdi-spinner"></i> <span>spinner</span></li>
+                                <li data-name="storage" data-code="f1d2"><i class="zmdi zmdi-storage"></i> <span>storage</span></li>
+                                <li data-name="store-24" data-code="f1d3"><i class="zmdi zmdi-store-24"></i> <span>store-24</span></li>
+                                <li data-name="store" data-code="f1d4"><i class="zmdi zmdi-store"></i> <span>store</span></li>
+                                <li data-name="subway" data-code="f1d5"><i class="zmdi zmdi-subway"></i> <span>subway</span></li>
+                                <li data-name="sun" data-code="f1d6"><i class="zmdi zmdi-sun"></i> <span>sun</span></li>
+                                <li data-name="tab-unselected" data-code="f1d7"><i class="zmdi zmdi-tab-unselected"></i> <span>tab-unselected</span></li>
+                                <li data-name="tab" data-code="f1d8"><i class="zmdi zmdi-tab"></i> <span>tab</span></li>
+                                <li data-name="tag-close" data-code="f1d9"><i class="zmdi zmdi-tag-close"></i> <span>tag-close</span></li>
+                                <li data-name="tag-more" data-code="f1da"><i class="zmdi zmdi-tag-more"></i> <span>tag-more</span></li>
+                                <li data-name="tag" data-code="f1db"><i class="zmdi zmdi-tag"></i> <span>tag</span></li>
+                                <li data-name="thumb-down" data-code="f1dc"><i class="zmdi zmdi-thumb-down"></i> <span>thumb-down</span></li>
+                                <li data-name="thumb-up-down" data-code="f1dd"><i class="zmdi zmdi-thumb-up-down"></i> <span>thumb-up-down</span></li>
+                                <li data-name="thumb-up" data-code="f1de"><i class="zmdi zmdi-thumb-up"></i> <span>thumb-up</span></li>
+                                <li data-name="ticket-star" data-code="f1df"><i class="zmdi zmdi-ticket-star"></i> <span>ticket-star</span></li>
+                                <li data-name="toll" data-code="f1e0"><i class="zmdi zmdi-toll"></i> <span>toll</span></li>
+                                <li data-name="toys" data-code="f1e1"><i class="zmdi zmdi-toys"></i> <span>toys</span></li>
+                                <li data-name="traffic" data-code="f1e2"><i class="zmdi zmdi-traffic"></i> <span>traffic</span></li>
+                                <li data-name="translate" data-code="f1e3"><i class="zmdi zmdi-translate"></i> <span>translate</span></li>
+                                <li data-name="triangle-down" data-code="f1e4"><i class="zmdi zmdi-triangle-down"></i> <span>triangle-down</span></li>
+                                <li data-name="triangle-up" data-code="f1e5"><i class="zmdi zmdi-triangle-up"></i> <span>triangle-up</span></li>
+                                <li data-name="truck" data-code="f1e6"><i class="zmdi zmdi-truck"></i> <span>truck</span></li>
+                                <li data-name="turning-sign" data-code="f1e7"><i class="zmdi zmdi-turning-sign"></i> <span>turning-sign</span></li>
+                                <li data-name="ungroup" data-code="f3ed"><i class="zmdi zmdi-ungroup"></i> <span>ungroup</span></li>
+                                <li data-name="wallpaper" data-code="f1e8"><i class="zmdi zmdi-wallpaper"></i> <span>wallpaper</span></li>
+                                <li data-name="washing-machine" data-code="f1e9"><i class="zmdi zmdi-washing-machine"></i> <span>washing-machine</span></li>
+                                <li data-name="window-maximize" data-code="f1ea"><i class="zmdi zmdi-window-maximize"></i> <span>window-maximize</span></li>
+                                <li data-name="window-minimize" data-code="f1eb"><i class="zmdi zmdi-window-minimize"></i> <span>window-minimize</span></li>
+                                <li data-name="window-restore" data-code="f1ec"><i class="zmdi zmdi-window-restore"></i> <span>window-restore</span></li>
+                                <li data-name="wrench" data-code="f1ed"><i class="zmdi zmdi-wrench"></i> <span>wrench</span></li>
+                                <li data-name="zoom-in" data-code="f1ee"><i class="zmdi zmdi-zoom-in"></i> <span>zoom-in</span></li>
+                                <li data-name="zoom-out" data-code="f1ef"><i class="zmdi zmdi-zoom-out"></i> <span>zoom-out</span></li>
+                            </ul>
+                    	</div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Notifications</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+                                    <li data-name="alert-circle-o" data-code="f1f0"><i class="zmdi zmdi-alert-circle-o"></i> <span>alert-circle-o</span></li>
+
+                                    <li data-name="alert-circle" data-code="f1f1"><i class="zmdi zmdi-alert-circle"></i> <span>alert-circle</span></li>
+
+                                    <li data-name="alert-octagon" data-code="f1f2"><i class="zmdi zmdi-alert-octagon"></i> <span>alert-octagon</span></li>
+
+                                    <li data-name="alert-polygon" data-code="f1f3"><i class="zmdi zmdi-alert-polygon"></i> <span>alert-polygon</span></li>
+
+                                    <li data-name="alert-triangle" data-code="f1f4"><i class="zmdi zmdi-alert-triangle"></i> <span>alert-triangle</span></li>
+
+                                    <li data-name="help-outline" data-code="f1f5"><i class="zmdi zmdi-help-outline"></i> <span>help-outline</span></li>
+
+                                    <li data-name="help" data-code="f1f6"><i class="zmdi zmdi-help"></i> <span>help</span></li>
+
+                                    <li data-name="info-outline" data-code="f1f7"><i class="zmdi zmdi-info-outline"></i> <span>info-outline</span></li>
+
+                                    <li data-name="info" data-code="f1f8"><i class="zmdi zmdi-info"></i> <span>info</span></li>
+
+                                    <li data-name="notifications-active" data-code="f1f9"><i class="zmdi zmdi-notifications-active"></i> <span>notifications-active</span></li>
+
+                                    <li data-name="notifications-add" data-code="f1fa"><i class="zmdi zmdi-notifications-add"></i> <span>notifications-add</span></li>
+
+                                    <li data-name="notifications-none" data-code="f1fb"><i class="zmdi zmdi-notifications-none"></i> <span>notifications-none</span></li>
+
+                                    <li data-name="notifications-off" data-code="f1fc"><i class="zmdi zmdi-notifications-off"></i> <span>notifications-off</span></li>
+
+                                    <li data-name="notifications-paused" data-code="f1fd"><i class="zmdi zmdi-notifications-paused"></i> <span>notifications-paused</span></li>
+
+                                    <li data-name="notifications" data-code="f1fe"><i class="zmdi zmdi-notifications"></i> <span>notifications</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Person</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                            <ul>
+
+                                <li data-name="account-add" data-code="f1ff"><i class="zmdi zmdi-account-add"></i> <span>account-add</span></li>
+
+                                <li data-name="account-box-mail" data-code="f200"><i class="zmdi zmdi-account-box-mail"></i> <span>account-box-mail</span></li>
+
+                                <li data-name="account-box-o" data-code="f201"><i class="zmdi zmdi-account-box-o"></i> <span>account-box-o</span></li>
+
+                                <li data-name="account-box-phone" data-code="f202"><i class="zmdi zmdi-account-box-phone"></i> <span>account-box-phone</span></li>
+
+                                <li data-name="account-box" data-code="f203"><i class="zmdi zmdi-account-box"></i> <span>account-box</span></li>
+
+                                <li data-name="account-calendar" data-code="f204"><i class="zmdi zmdi-account-calendar"></i> <span>account-calendar</span></li>
+
+                                <li data-name="account-circle" data-code="f205"><i class="zmdi zmdi-account-circle"></i> <span>account-circle</span></li>
+
+                                <li data-name="account-o" data-code="f206"><i class="zmdi zmdi-account-o"></i> <span>account-o</span></li>
+
+                                <li data-name="account" data-code="f207"><i class="zmdi zmdi-account"></i> <span>account</span></li>
+
+                                <li data-name="accounts-add" data-code="f208"><i class="zmdi zmdi-accounts-add"></i> <span>accounts-add</span></li>
+
+                                <li data-name="accounts-alt" data-code="f209"><i class="zmdi zmdi-accounts-alt"></i> <span>accounts-alt</span></li>
+
+                                <li data-name="accounts-list-alt" data-code="f20a"><i class="zmdi zmdi-accounts-list-alt"></i> <span>accounts-list-alt</span></li>
+
+                                <li data-name="accounts-list" data-code="f20b"><i class="zmdi zmdi-accounts-list"></i> <span>accounts-list</span></li>
+
+                                <li data-name="accounts-outline" data-code="f20c"><i class="zmdi zmdi-accounts-outline"></i> <span>accounts-outline</span></li>
+
+                                <li data-name="accounts" data-code="f20d"><i class="zmdi zmdi-accounts"></i> <span>accounts</span></li>
+
+                                <li data-name="face" data-code="f20e"><i class="zmdi zmdi-face"></i> <span>face</span></li>
+
+                                <li data-name="female" data-code="f20f"><i class="zmdi zmdi-female"></i> <span>female</span></li>
+
+                                <li data-name="male-alt" data-code="f210"><i class="zmdi zmdi-male-alt"></i> <span>male-alt</span></li>
+
+                                <li data-name="male-female" data-code="f211"><i class="zmdi zmdi-male-female"></i> <span>male-female</span></li>
+
+                                <li data-name="male" data-code="f212"><i class="zmdi zmdi-male"></i> <span>male</span></li>
+
+                                <li data-name="mood-bad" data-code="f213"><i class="zmdi zmdi-mood-bad"></i> <span>mood-bad</span></li>
+
+                                <li data-name="mood" data-code="f214"><i class="zmdi zmdi-mood"></i> <span>mood</span></li>
+
+                                <li data-name="run" data-code="f215"><i class="zmdi zmdi-run"></i> <span>run</span></li>
+
+                                <li data-name="walk" data-code="f216"><i class="zmdi zmdi-walk"></i> <span>walk</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>File</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="cloud-box" data-code="f217"><i class="zmdi zmdi-cloud-box"></i> <span>cloud-box</span></li>
+
+                                <li data-name="cloud-circle" data-code="f218"><i class="zmdi zmdi-cloud-circle"></i> <span>cloud-circle</span></li>
+
+                                <li data-name="cloud-done" data-code="f219"><i class="zmdi zmdi-cloud-done"></i> <span>cloud-done</span></li>
+
+                                <li data-name="cloud-download" data-code="f21a"><i class="zmdi zmdi-cloud-download"></i> <span>cloud-download</span></li>
+
+                                <li data-name="cloud-off" data-code="f21b"><i class="zmdi zmdi-cloud-off"></i> <span>cloud-off</span></li>
+
+                                <li data-name="cloud-outline-alt" data-code="f21c"><i class="zmdi zmdi-cloud-outline-alt"></i> <span>cloud-outline-alt</span></li>
+
+                                <li data-name="cloud-outline" data-code="f21d"><i class="zmdi zmdi-cloud-outline"></i> <span>cloud-outline</span></li>
+
+                                <li data-name="cloud-upload" data-code="f21e"><i class="zmdi zmdi-cloud-upload"></i> <span>cloud-upload</span></li>
+
+                                <li data-name="cloud" data-code="f21f"><i class="zmdi zmdi-cloud"></i> <span>cloud</span></li>
+
+                                <li data-name="download" data-code="f220"><i class="zmdi zmdi-download"></i> <span>download</span></li>
+
+                                <li data-name="file-plus" data-code="f221"><i class="zmdi zmdi-file-plus"></i> <span>file-plus</span></li>
+
+                                <li data-name="file-text" data-code="f222"><i class="zmdi zmdi-file-text"></i> <span>file-text</span></li>
+
+                                <li data-name="file" data-code="f223"><i class="zmdi zmdi-file"></i> <span>file</span></li>
+
+                                <li data-name="folder-outline" data-code="f224"><i class="zmdi zmdi-folder-outline"></i> <span>folder-outline</span></li>
+
+                                <li data-name="folder-person" data-code="f225"><i class="zmdi zmdi-folder-person"></i> <span>folder-person</span></li>
+
+                                <li data-name="folder-star-alt" data-code="f226"><i class="zmdi zmdi-folder-star-alt"></i> <span>folder-star-alt</span></li>
+
+                                <li data-name="folder-star" data-code="f227"><i class="zmdi zmdi-folder-star"></i> <span>folder-star</span></li>
+
+                                <li data-name="folder" data-code="f228"><i class="zmdi zmdi-folder"></i> <span>folder</span></li>
+
+                                <li data-name="gif" data-code="f229"><i class="zmdi zmdi-gif"></i> <span>gif</span></li>
+
+                                <li data-name="upload" data-code="f22a"><i class="zmdi zmdi-upload"></i> <span>upload</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Editor</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="border-all" data-code="f22b"><i class="zmdi zmdi-border-all"></i> <span>border-all</span></li>
+
+                                <li data-name="border-bottom" data-code="f22c"><i class="zmdi zmdi-border-bottom"></i> <span>border-bottom</span></li>
+
+                                <li data-name="border-clear" data-code="f22d"><i class="zmdi zmdi-border-clear"></i> <span>border-clear</span></li>
+
+                                <li data-name="border-color" data-code="f22e"><i class="zmdi zmdi-border-color"></i> <span>border-color</span></li>
+
+                                <li data-name="border-horizontal" data-code="f22f"><i class="zmdi zmdi-border-horizontal"></i> <span>border-horizontal</span></li>
+
+                                <li data-name="border-inner" data-code="f230"><i class="zmdi zmdi-border-inner"></i> <span>border-inner</span></li>
+
+                                <li data-name="border-left" data-code="f231"><i class="zmdi zmdi-border-left"></i> <span>border-left</span></li>
+
+                                <li data-name="border-outer" data-code="f232"><i class="zmdi zmdi-border-outer"></i> <span>border-outer</span></li>
+
+                                <li data-name="border-right" data-code="f233"><i class="zmdi zmdi-border-right"></i> <span>border-right</span></li>
+
+                                <li data-name="border-style" data-code="f234"><i class="zmdi zmdi-border-style"></i> <span>border-style</span></li>
+
+                                <li data-name="border-top" data-code="f235"><i class="zmdi zmdi-border-top"></i> <span>border-top</span></li>
+
+                                <li data-name="border-vertical" data-code="f236"><i class="zmdi zmdi-border-vertical"></i> <span>border-vertical</span></li>
+
+                                <li data-name="copy" data-code="f237"><i class="zmdi zmdi-copy"></i> <span>copy</span></li>
+
+                                <li data-name="crop" data-code="f238"><i class="zmdi zmdi-crop"></i> <span>crop</span></li>
+
+                                <li data-name="format-align-center" data-code="f239"><i class="zmdi zmdi-format-align-center"></i> <span>format-align-center</span></li>
+
+                                <li data-name="format-align-justify" data-code="f23a"><i class="zmdi zmdi-format-align-justify"></i> <span>format-align-justify</span></li>
+
+                                <li data-name="format-align-left" data-code="f23b"><i class="zmdi zmdi-format-align-left"></i> <span>format-align-left</span></li>
+
+                                <li data-name="format-align-right" data-code="f23c"><i class="zmdi zmdi-format-align-right"></i> <span>format-align-right</span></li>
+
+                                <li data-name="format-bold" data-code="f23d"><i class="zmdi zmdi-format-bold"></i> <span>format-bold</span></li>
+
+                                <li data-name="format-clear-all" data-code="f23e"><i class="zmdi zmdi-format-clear-all"></i> <span>format-clear-all</span></li>
+
+                                <li data-name="format-clear" data-code="f23f"><i class="zmdi zmdi-format-clear"></i> <span>format-clear</span></li>
+
+                                <li data-name="format-color-fill" data-code="f240"><i class="zmdi zmdi-format-color-fill"></i> <span>format-color-fill</span></li>
+
+                                <li data-name="format-color-reset" data-code="f241"><i class="zmdi zmdi-format-color-reset"></i> <span>format-color-reset</span></li>
+
+                                <li data-name="format-color-text" data-code="f242"><i class="zmdi zmdi-format-color-text"></i> <span>format-color-text</span></li>
+
+                                <li data-name="format-indent-decrease" data-code="f243"><i class="zmdi zmdi-format-indent-decrease"></i> <span>format-indent-decrease</span></li>
+
+                                <li data-name="format-indent-increase" data-code="f244"><i class="zmdi zmdi-format-indent-increase"></i> <span>format-indent-increase</span></li>
+
+                                <li data-name="format-italic" data-code="f245"><i class="zmdi zmdi-format-italic"></i> <span>format-italic</span></li>
+
+                                <li data-name="format-line-spacing" data-code="f246"><i class="zmdi zmdi-format-line-spacing"></i> <span>format-line-spacing</span></li>
+
+                                <li data-name="format-list-bulleted" data-code="f247"><i class="zmdi zmdi-format-list-bulleted"></i> <span>format-list-bulleted</span></li>
+
+                                <li data-name="format-list-numbered" data-code="f248"><i class="zmdi zmdi-format-list-numbered"></i> <span>format-list-numbered</span></li>
+
+                                <li data-name="format-ltr" data-code="f249"><i class="zmdi zmdi-format-ltr"></i> <span>format-ltr</span></li>
+
+                                <li data-name="format-rtl" data-code="f24a"><i class="zmdi zmdi-format-rtl"></i> <span>format-rtl</span></li>
+
+                                <li data-name="format-size" data-code="f24b"><i class="zmdi zmdi-format-size"></i> <span>format-size</span></li>
+
+                                <li data-name="format-strikethrough-s" data-code="f24c"><i class="zmdi zmdi-format-strikethrough-s"></i> <span>format-strikethrough-s</span></li>
+
+                                <li data-name="format-strikethrough" data-code="f24d"><i class="zmdi zmdi-format-strikethrough"></i> <span>format-strikethrough</span></li>
+
+                                <li data-name="format-subject" data-code="f24e"><i class="zmdi zmdi-format-subject"></i> <span>format-subject</span></li>
+
+                                <li data-name="format-underlined" data-code="f24f"><i class="zmdi zmdi-format-underlined"></i> <span>format-underlined</span></li>
+
+                                <li data-name="format-valign-bottom" data-code="f250"><i class="zmdi zmdi-format-valign-bottom"></i> <span>format-valign-bottom</span></li>
+
+                                <li data-name="format-valign-center" data-code="f251"><i class="zmdi zmdi-format-valign-center"></i> <span>format-valign-center</span></li>
+
+                                <li data-name="format-valign-top" data-code="f252"><i class="zmdi zmdi-format-valign-top"></i> <span>format-valign-top</span></li>
+
+                                <li data-name="redo" data-code="f253"><i class="zmdi zmdi-redo"></i> <span>redo</span></li>
+
+                                <li data-name="select-all" data-code="f254"><i class="zmdi zmdi-select-all"></i> <span>select-all</span></li>
+
+                                <li data-name="space-bar" data-code="f255"><i class="zmdi zmdi-space-bar"></i> <span>space-bar</span></li>
+
+                                <li data-name="text-format" data-code="f256"><i class="zmdi zmdi-text-format"></i> <span>text-format</span></li>
+
+                                <li data-name="transform" data-code="f257"><i class="zmdi zmdi-transform"></i> <span>transform</span></li>
+
+                                <li data-name="undo" data-code="f258"><i class="zmdi zmdi-undo"></i> <span>undo</span></li>
+
+                                <li data-name="wrap-text" data-code="f259"><i class="zmdi zmdi-wrap-text"></i> <span>wrap-text</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Comment</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="comment-alert" data-code="f25a"><i class="zmdi zmdi-comment-alert"></i> <span>comment-alert</span></li>
+
+                                <li data-name="comment-alt-text" data-code="f25b"><i class="zmdi zmdi-comment-alt-text"></i> <span>comment-alt-text</span></li>
+
+                                <li data-name="comment-alt" data-code="f25c"><i class="zmdi zmdi-comment-alt"></i> <span>comment-alt</span></li>
+
+                                <li data-name="comment-edit" data-code="f25d"><i class="zmdi zmdi-comment-edit"></i> <span>comment-edit</span></li>
+
+                                <li data-name="comment-image" data-code="f25e"><i class="zmdi zmdi-comment-image"></i> <span>comment-image</span></li>
+
+                                <li data-name="comment-list" data-code="f25f"><i class="zmdi zmdi-comment-list"></i> <span>comment-list</span></li>
+
+                                <li data-name="comment-more" data-code="f260"><i class="zmdi zmdi-comment-more"></i> <span>comment-more</span></li>
+
+                                <li data-name="comment-outline" data-code="f261"><i class="zmdi zmdi-comment-outline"></i> <span>comment-outline</span></li>
+
+                                <li data-name="comment-text-alt" data-code="f262"><i class="zmdi zmdi-comment-text-alt"></i> <span>comment-text-alt</span></li>
+
+                                <li data-name="comment-text" data-code="f263"><i class="zmdi zmdi-comment-text"></i> <span>comment-text</span></li>
+
+                                <li data-name="comment-video" data-code="f264"><i class="zmdi zmdi-comment-video"></i> <span>comment-video</span></li>
+
+                                <li data-name="comment" data-code="f265"><i class="zmdi zmdi-comment"></i> <span>comment</span></li>
+
+                                <li data-name="comments" data-code="f266"><i class="zmdi zmdi-comments"></i> <span>comments</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Form</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="check-all" data-code="f267"><i class="zmdi zmdi-check-all"></i> <span>check-all</span></li>
+
+                                <li data-name="check-circle-u" data-code="f268"><i class="zmdi zmdi-check-circle-u"></i> <span>check-circle-u</span></li>
+
+                                <li data-name="check-circle" data-code="f269"><i class="zmdi zmdi-check-circle"></i> <span>check-circle</span></li>
+
+                                <li data-name="check-square" data-code="f26a"><i class="zmdi zmdi-check-square"></i> <span>check-square</span></li>
+
+                                <li data-name="check" data-code="f26b"><i class="zmdi zmdi-check"></i> <span>check</span></li>
+
+                                <li data-name="circle-o" data-code="f26c"><i class="zmdi zmdi-circle-o"></i> <span>circle-o</span></li>
+
+                                <li data-name="circle" data-code="f26d"><i class="zmdi zmdi-circle"></i> <span>circle</span></li>
+
+                                <li data-name="dot-circle-alt" data-code="f26e"><i class="zmdi zmdi-dot-circle-alt"></i> <span>dot-circle-alt</span></li>
+
+                                <li data-name="dot-circle" data-code="f26f"><i class="zmdi zmdi-dot-circle"></i> <span>dot-circle</span></li>
+
+                                <li data-name="minus-circle-outline" data-code="f270"><i class="zmdi zmdi-minus-circle-outline"></i> <span>minus-circle-outline</span></li>
+
+                                <li data-name="minus-circle" data-code="f271"><i class="zmdi zmdi-minus-circle"></i> <span>minus-circle</span></li>
+
+                                <li data-name="minus-square" data-code="f272"><i class="zmdi zmdi-minus-square"></i> <span>minus-square</span></li>
+
+                                <li data-name="minus" data-code="f273"><i class="zmdi zmdi-minus"></i> <span>minus</span></li>
+
+                                <li data-name="plus-circle-o-duplicate" data-code="f274"><i class="zmdi zmdi-plus-circle-o-duplicate"></i> <span>plus-circle-o-duplicate</span></li>
+
+                                <li data-name="plus-circle-o" data-code="f275"><i class="zmdi zmdi-plus-circle-o"></i> <span>plus-circle-o</span></li>
+
+                                <li data-name="plus-circle" data-code="f276"><i class="zmdi zmdi-plus-circle"></i> <span>plus-circle</span></li>
+
+                                <li data-name="plus-square" data-code="f277"><i class="zmdi zmdi-plus-square"></i> <span>plus-square</span></li>
+
+                                <li data-name="plus" data-code="f278"><i class="zmdi zmdi-plus"></i> <span>plus</span></li>
+
+                                <li data-name="square-o" data-code="f279"><i class="zmdi zmdi-square-o"></i> <span>square-o</span></li>
+
+                                <li data-name="star-circle" data-code="f27a"><i class="zmdi zmdi-star-circle"></i> <span>star-circle</span></li>
+
+                                <li data-name="star-half" data-code="f27b"><i class="zmdi zmdi-star-half"></i> <span>star-half</span></li>
+
+                                <li data-name="star-outline" data-code="f27c"><i class="zmdi zmdi-star-outline"></i> <span>star-outline</span></li>
+
+                                <li data-name="star" data-code="f27d"><i class="zmdi zmdi-star"></i> <span>star</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Hardware</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="bluetooth-connected" data-code="f27e"><i class="zmdi zmdi-bluetooth-connected"></i> <span>bluetooth-connected</span></li>
+
+                                <li data-name="bluetooth-off" data-code="f27f"><i class="zmdi zmdi-bluetooth-off"></i> <span>bluetooth-off</span></li>
+
+                                <li data-name="bluetooth-search" data-code="f280"><i class="zmdi zmdi-bluetooth-search"></i> <span>bluetooth-search</span></li>
+
+                                <li data-name="bluetooth-setting" data-code="f281"><i class="zmdi zmdi-bluetooth-setting"></i> <span>bluetooth-setting</span></li>
+
+                                <li data-name="bluetooth" data-code="f282"><i class="zmdi zmdi-bluetooth"></i> <span>bluetooth</span></li>
+
+                                <li data-name="camera-add" data-code="f283"><i class="zmdi zmdi-camera-add"></i> <span>camera-add</span></li>
+
+                                <li data-name="camera-alt" data-code="f284"><i class="zmdi zmdi-camera-alt"></i> <span>camera-alt</span></li>
+
+                                <li data-name="camera-bw" data-code="f285"><i class="zmdi zmdi-camera-bw"></i> <span>camera-bw</span></li>
+
+                                <li data-name="camera-front" data-code="f286"><i class="zmdi zmdi-camera-front"></i> <span>camera-front</span></li>
+
+                                <li data-name="camera-mic" data-code="f287"><i class="zmdi zmdi-camera-mic"></i> <span>camera-mic</span></li>
+
+                                <li data-name="camera-party-mode" data-code="f288"><i class="zmdi zmdi-camera-party-mode"></i> <span>camera-party-mode</span></li>
+
+                                <li data-name="camera-rear" data-code="f289"><i class="zmdi zmdi-camera-rear"></i> <span>camera-rear</span></li>
+
+                                <li data-name="camera-roll" data-code="f28a"><i class="zmdi zmdi-camera-roll"></i> <span>camera-roll</span></li>
+
+                                <li data-name="camera-switch" data-code="f28b"><i class="zmdi zmdi-camera-switch"></i> <span>camera-switch</span></li>
+
+                                <li data-name="camera" data-code="f28c"><i class="zmdi zmdi-camera"></i> <span>camera</span></li>
+
+                                <li data-name="card-alert" data-code="f28d"><i class="zmdi zmdi-card-alert"></i> <span>card-alert</span></li>
+
+                                <li data-name="card-off" data-code="f28e"><i class="zmdi zmdi-card-off"></i> <span>card-off</span></li>
+
+                                <li data-name="card-sd" data-code="f28f"><i class="zmdi zmdi-card-sd"></i> <span>card-sd</span></li>
+
+                                <li data-name="card-sim" data-code="f290"><i class="zmdi zmdi-card-sim"></i> <span>card-sim</span></li>
+
+                                <li data-name="desktop-mac" data-code="f291"><i class="zmdi zmdi-desktop-mac"></i> <span>desktop-mac</span></li>
+
+                                <li data-name="desktop-windows" data-code="f292"><i class="zmdi zmdi-desktop-windows"></i> <span>desktop-windows</span></li>
+
+                                <li data-name="device-hub" data-code="f293"><i class="zmdi zmdi-device-hub"></i> <span>device-hub</span></li>
+
+                                <li data-name="devices-off" data-code="f294"><i class="zmdi zmdi-devices-off"></i> <span>devices-off</span></li>
+
+                                <li data-name="devices" data-code="f295"><i class="zmdi zmdi-devices"></i> <span>devices</span></li>
+
+                                <li data-name="dock" data-code="f296"><i class="zmdi zmdi-dock"></i> <span>dock</span></li>
+
+                                <li data-name="floppy" data-code="f297"><i class="zmdi zmdi-floppy"></i> <span>floppy</span></li>
+
+                                <li data-name="gamepad" data-code="f298"><i class="zmdi zmdi-gamepad"></i> <span>gamepad</span></li>
+
+                                <li data-name="gps-dot" data-code="f299"><i class="zmdi zmdi-gps-dot"></i> <span>gps-dot</span></li>
+
+                                <li data-name="gps-off" data-code="f29a"><i class="zmdi zmdi-gps-off"></i> <span>gps-off</span></li>
+
+                                <li data-name="gps" data-code="f29b"><i class="zmdi zmdi-gps"></i> <span>gps</span></li>
+
+                                <li data-name="headset-mic" data-code="f29c"><i class="zmdi zmdi-headset-mic"></i> <span>headset-mic</span></li>
+
+                                <li data-name="headset" data-code="f29d"><i class="zmdi zmdi-headset"></i> <span>headset</span></li>
+
+                                <li data-name="input-antenna" data-code="f29e"><i class="zmdi zmdi-input-antenna"></i> <span>input-antenna</span></li>
+
+                                <li data-name="input-composite" data-code="f29f"><i class="zmdi zmdi-input-composite"></i> <span>input-composite</span></li>
+
+                                <li data-name="input-hdmi" data-code="f2a0"><i class="zmdi zmdi-input-hdmi"></i> <span>input-hdmi</span></li>
+
+                                <li data-name="input-power" data-code="f2a1"><i class="zmdi zmdi-input-power"></i> <span>input-power</span></li>
+
+                                <li data-name="input-svideo" data-code="f2a2"><i class="zmdi zmdi-input-svideo"></i> <span>input-svideo</span></li>
+
+                                <li data-name="keyboard-hide" data-code="f2a3"><i class="zmdi zmdi-keyboard-hide"></i> <span>keyboard-hide</span></li>
+
+                                <li data-name="keyboard" data-code="f2a4"><i class="zmdi zmdi-keyboard"></i> <span>keyboard</span></li>
+
+                                <li data-name="laptop-chromebook" data-code="f2a5"><i class="zmdi zmdi-laptop-chromebook"></i> <span>laptop-chromebook</span></li>
+
+                                <li data-name="laptop-mac" data-code="f2a6"><i class="zmdi zmdi-laptop-mac"></i> <span>laptop-mac</span></li>
+
+                                <li data-name="laptop" data-code="f2a7"><i class="zmdi zmdi-laptop"></i> <span>laptop</span></li>
+
+                                <li data-name="mic-off" data-code="f2a8"><i class="zmdi zmdi-mic-off"></i> <span>mic-off</span></li>
+
+                                <li data-name="mic-outline" data-code="f2a9"><i class="zmdi zmdi-mic-outline"></i> <span>mic-outline</span></li>
+
+                                <li data-name="mic-setting" data-code="f2aa"><i class="zmdi zmdi-mic-setting"></i> <span>mic-setting</span></li>
+
+                                <li data-name="mic" data-code="f2ab"><i class="zmdi zmdi-mic"></i> <span>mic</span></li>
+
+                                <li data-name="mouse" data-code="f2ac"><i class="zmdi zmdi-mouse"></i> <span>mouse</span></li>
+
+                                <li data-name="network-alert" data-code="f2ad"><i class="zmdi zmdi-network-alert"></i> <span>network-alert</span></li>
+
+                                <li data-name="network-locked" data-code="f2ae"><i class="zmdi zmdi-network-locked"></i> <span>network-locked</span></li>
+
+                                <li data-name="network-off" data-code="f2af"><i class="zmdi zmdi-network-off"></i> <span>network-off</span></li>
+
+                                <li data-name="network-outline" data-code="f2b0"><i class="zmdi zmdi-network-outline"></i> <span>network-outline</span></li>
+
+                                <li data-name="network-setting" data-code="f2b1"><i class="zmdi zmdi-network-setting"></i> <span>network-setting</span></li>
+
+                                <li data-name="network" data-code="f2b2"><i class="zmdi zmdi-network"></i> <span>network</span></li>
+
+                                <li data-name="phone-bluetooth" data-code="f2b3"><i class="zmdi zmdi-phone-bluetooth"></i> <span>phone-bluetooth</span></li>
+
+                                <li data-name="phone-end" data-code="f2b4"><i class="zmdi zmdi-phone-end"></i> <span>phone-end</span></li>
+
+                                <li data-name="phone-forwarded" data-code="f2b5"><i class="zmdi zmdi-phone-forwarded"></i> <span>phone-forwarded</span></li>
+
+                                <li data-name="phone-in-talk" data-code="f2b6"><i class="zmdi zmdi-phone-in-talk"></i> <span>phone-in-talk</span></li>
+
+                                <li data-name="phone-locked" data-code="f2b7"><i class="zmdi zmdi-phone-locked"></i> <span>phone-locked</span></li>
+
+                                <li data-name="phone-missed" data-code="f2b8"><i class="zmdi zmdi-phone-missed"></i> <span>phone-missed</span></li>
+
+                                <li data-name="phone-msg" data-code="f2b9"><i class="zmdi zmdi-phone-msg"></i> <span>phone-msg</span></li>
+
+                                <li data-name="phone-paused" data-code="f2ba"><i class="zmdi zmdi-phone-paused"></i> <span>phone-paused</span></li>
+
+                                <li data-name="phone-ring" data-code="f2bb"><i class="zmdi zmdi-phone-ring"></i> <span>phone-ring</span></li>
+
+                                <li data-name="phone-setting" data-code="f2bc"><i class="zmdi zmdi-phone-setting"></i> <span>phone-setting</span></li>
+
+                                <li data-name="phone-sip" data-code="f2bd"><i class="zmdi zmdi-phone-sip"></i> <span>phone-sip</span></li>
+
+                                <li data-name="phone" data-code="f2be"><i class="zmdi zmdi-phone"></i> <span>phone</span></li>
+
+                                <li data-name="portable-wifi-changes" data-code="f2bf"><i class="zmdi zmdi-portable-wifi-changes"></i> <span>portable-wifi-changes</span></li>
+
+                                <li data-name="portable-wifi-off" data-code="f2c0"><i class="zmdi zmdi-portable-wifi-off"></i> <span>portable-wifi-off</span></li>
+
+                                <li data-name="portable-wifi" data-code="f2c1"><i class="zmdi zmdi-portable-wifi"></i> <span>portable-wifi</span></li>
+
+                                <li data-name="radio" data-code="f2c2"><i class="zmdi zmdi-radio"></i> <span>radio</span></li>
+
+                                <li data-name="reader" data-code="f2c3"><i class="zmdi zmdi-reader"></i> <span>reader</span></li>
+
+                                <li data-name="remote-control-alt" data-code="f2c4"><i class="zmdi zmdi-remote-control-alt"></i> <span>remote-control-alt</span></li>
+
+                                <li data-name="remote-control" data-code="f2c5"><i class="zmdi zmdi-remote-control"></i> <span>remote-control</span></li>
+
+                                <li data-name="router" data-code="f2c6"><i class="zmdi zmdi-router"></i> <span>router</span></li>
+
+                                <li data-name="scanner" data-code="f2c7"><i class="zmdi zmdi-scanner"></i> <span>scanner</span></li>
+
+                                <li data-name="smartphone-android" data-code="f2c8"><i class="zmdi zmdi-smartphone-android"></i> <span>smartphone-android</span></li>
+
+                                <li data-name="smartphone-download" data-code="f2c9"><i class="zmdi zmdi-smartphone-download"></i> <span>smartphone-download</span></li>
+
+                                <li data-name="smartphone-erase" data-code="f2ca"><i class="zmdi zmdi-smartphone-erase"></i> <span>smartphone-erase</span></li>
+
+                                <li data-name="smartphone-info" data-code="f2cb"><i class="zmdi zmdi-smartphone-info"></i> <span>smartphone-info</span></li>
+
+                                <li data-name="smartphone-iphone" data-code="f2cc"><i class="zmdi zmdi-smartphone-iphone"></i> <span>smartphone-iphone</span></li>
+
+                                <li data-name="smartphone-landscape-lock" data-code="f2cd"><i class="zmdi zmdi-smartphone-landscape-lock"></i> <span>smartphone-landscape-lock</span></li>
+
+                                <li data-name="smartphone-landscape" data-code="f2ce"><i class="zmdi zmdi-smartphone-landscape"></i> <span>smartphone-landscape</span></li>
+
+                                <li data-name="smartphone-lock" data-code="f2cf"><i class="zmdi zmdi-smartphone-lock"></i> <span>smartphone-lock</span></li>
+
+                                <li data-name="smartphone-portrait-lock" data-code="f2d0"><i class="zmdi zmdi-smartphone-portrait-lock"></i> <span>smartphone-portrait-lock</span></li>
+
+                                <li data-name="smartphone-ring" data-code="f2d1"><i class="zmdi zmdi-smartphone-ring"></i> <span>smartphone-ring</span></li>
+
+                                <li data-name="smartphone-setting" data-code="f2d2"><i class="zmdi zmdi-smartphone-setting"></i> <span>smartphone-setting</span></li>
+
+                                <li data-name="smartphone-setup" data-code="f2d3"><i class="zmdi zmdi-smartphone-setup"></i> <span>smartphone-setup</span></li>
+
+                                <li data-name="smartphone" data-code="f2d4"><i class="zmdi zmdi-smartphone"></i> <span>smartphone</span></li>
+
+                                <li data-name="speaker" data-code="f2d5"><i class="zmdi zmdi-speaker"></i> <span>speaker</span></li>
+
+                                <li data-name="tablet-android" data-code="f2d6"><i class="zmdi zmdi-tablet-android"></i> <span>tablet-android</span></li>
+
+                                <li data-name="tablet-mac" data-code="f2d7"><i class="zmdi zmdi-tablet-mac"></i> <span>tablet-mac</span></li>
+
+                                <li data-name="tablet" data-code="f2d8"><i class="zmdi zmdi-tablet"></i> <span>tablet</span></li>
+
+                                <li data-name="tv-alt-play" data-code="f2d9"><i class="zmdi zmdi-tv-alt-play"></i> <span>tv-alt-play</span></li>
+
+                                <li data-name="tv-list" data-code="f2da"><i class="zmdi zmdi-tv-list"></i> <span>tv-list</span></li>
+
+                                <li data-name="tv-play" data-code="f2db"><i class="zmdi zmdi-tv-play"></i> <span>tv-play</span></li>
+
+                                <li data-name="tv" data-code="f2dc"><i class="zmdi zmdi-tv"></i> <span>tv</span></li>
+
+                                <li data-name="usb" data-code="f2dd"><i class="zmdi zmdi-usb"></i> <span>usb</span></li>
+
+                                <li data-name="videocam-off" data-code="f2de"><i class="zmdi zmdi-videocam-off"></i> <span>videocam-off</span></li>
+
+                                <li data-name="videocam-switch" data-code="f2df"><i class="zmdi zmdi-videocam-switch"></i> <span>videocam-switch</span></li>
+
+                                <li data-name="videocam" data-code="f2e0"><i class="zmdi zmdi-videocam"></i> <span>videocam</span></li>
+
+                                <li data-name="watch" data-code="f2e1"><i class="zmdi zmdi-watch"></i> <span>watch</span></li>
+
+                                <li data-name="wifi-alt-2" data-code="f2e2"><i class="zmdi zmdi-wifi-alt-2"></i> <span>wifi-alt-2</span></li>
+
+                                <li data-name="wifi-alt" data-code="f2e3"><i class="zmdi zmdi-wifi-alt"></i> <span>wifi-alt</span></li>
+
+                                <li data-name="wifi-info" data-code="f2e4"><i class="zmdi zmdi-wifi-info"></i> <span>wifi-info</span></li>
+
+                                <li data-name="wifi-lock" data-code="f2e5"><i class="zmdi zmdi-wifi-lock"></i> <span>wifi-lock</span></li>
+
+                                <li data-name="wifi-off" data-code="f2e6"><i class="zmdi zmdi-wifi-off"></i> <span>wifi-off</span></li>
+
+                                <li data-name="wifi-outline" data-code="f2e7"><i class="zmdi zmdi-wifi-outline"></i> <span>wifi-outline</span></li>
+
+                                <li data-name="wifi" data-code="f2e8"><i class="zmdi zmdi-wifi"></i> <span>wifi</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Directional</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="arrow-left-bottom" data-code="f2e9"><i class="zmdi zmdi-arrow-left-bottom"></i> <span>arrow-left-bottom</span></li>
+
+                                <li data-name="arrow-left" data-code="f2ea"><i class="zmdi zmdi-arrow-left"></i> <span>arrow-left</span></li>
+
+                                <li data-name="arrow-merge" data-code="f2eb"><i class="zmdi zmdi-arrow-merge"></i> <span>arrow-merge</span></li>
+
+                                <li data-name="arrow-missed" data-code="f2ec"><i class="zmdi zmdi-arrow-missed"></i> <span>arrow-missed</span></li>
+
+                                <li data-name="arrow-right-top" data-code="f2ed"><i class="zmdi zmdi-arrow-right-top"></i> <span>arrow-right-top</span></li>
+
+                                <li data-name="arrow-right" data-code="f2ee"><i class="zmdi zmdi-arrow-right"></i> <span>arrow-right</span></li>
+
+                                <li data-name="arrow-split" data-code="f2ef"><i class="zmdi zmdi-arrow-split"></i> <span>arrow-split</span></li>
+
+                                <li data-name="arrows" data-code="f2f0"><i class="zmdi zmdi-arrows"></i> <span>arrows</span></li>
+
+                                <li data-name="caret-down-circle" data-code="f2f1"><i class="zmdi zmdi-caret-down-circle"></i> <span>caret-down-circle</span></li>
+
+                                <li data-name="caret-down" data-code="f2f2"><i class="zmdi zmdi-caret-down"></i> <span>caret-down</span></li>
+
+                                <li data-name="caret-left-circle" data-code="f2f3"><i class="zmdi zmdi-caret-left-circle"></i> <span>caret-left-circle</span></li>
+
+                                <li data-name="caret-left" data-code="f2f4"><i class="zmdi zmdi-caret-left"></i> <span>caret-left</span></li>
+
+                                <li data-name="caret-right-circle" data-code="f2f5"><i class="zmdi zmdi-caret-right-circle"></i> <span>caret-right-circle</span></li>
+
+                                <li data-name="caret-right" data-code="f2f6"><i class="zmdi zmdi-caret-right"></i> <span>caret-right</span></li>
+
+                                <li data-name="caret-up-circle" data-code="f2f7"><i class="zmdi zmdi-caret-up-circle"></i> <span>caret-up-circle</span></li>
+
+                                <li data-name="caret-up" data-code="f2f8"><i class="zmdi zmdi-caret-up"></i> <span>caret-up</span></li>
+
+                                <li data-name="chevron-down" data-code="f2f9"><i class="zmdi zmdi-chevron-down"></i> <span>chevron-down</span></li>
+
+                                <li data-name="chevron-left" data-code="f2fa"><i class="zmdi zmdi-chevron-left"></i> <span>chevron-left</span></li>
+
+                                <li data-name="chevron-right" data-code="f2fb"><i class="zmdi zmdi-chevron-right"></i> <span>chevron-right</span></li>
+
+                                <li data-name="chevron-up" data-code="f2fc"><i class="zmdi zmdi-chevron-up"></i> <span>chevron-up</span></li>
+
+                                <li data-name="forward" data-code="f2fd"><i class="zmdi zmdi-forward"></i> <span>forward</span></li>
+
+                                <li data-name="long-arrow-down" data-code="f2fe"><i class="zmdi zmdi-long-arrow-down"></i> <span>long-arrow-down</span></li>
+
+                                <li data-name="long-arrow-left" data-code="f2ff"><i class="zmdi zmdi-long-arrow-left"></i> <span>long-arrow-left</span></li>
+
+                                <li data-name="long-arrow-return" data-code="f300"><i class="zmdi zmdi-long-arrow-return"></i> <span>long-arrow-return</span></li>
+
+                                <li data-name="long-arrow-right" data-code="f301"><i class="zmdi zmdi-long-arrow-right"></i> <span>long-arrow-right</span></li>
+
+                                <li data-name="long-arrow-tab" data-code="f302"><i class="zmdi zmdi-long-arrow-tab"></i> <span>long-arrow-tab</span></li>
+
+                                <li data-name="long-arrow-up" data-code="f303"><i class="zmdi zmdi-long-arrow-up"></i> <span>long-arrow-up</span></li>
+
+                                <li data-name="rotate-ccw" data-code="f304"><i class="zmdi zmdi-rotate-ccw"></i> <span>rotate-ccw</span></li>
+
+                                <li data-name="rotate-cw" data-code="f305"><i class="zmdi zmdi-rotate-cw"></i> <span>rotate-cw</span></li>
+
+                                <li data-name="rotate-left" data-code="f306"><i class="zmdi zmdi-rotate-left"></i> <span>rotate-left</span></li>
+
+                                <li data-name="rotate-right" data-code="f307"><i class="zmdi zmdi-rotate-right"></i> <span>rotate-right</span></li>
+
+                                <li data-name="square-down" data-code="f308"><i class="zmdi zmdi-square-down"></i> <span>square-down</span></li>
+
+                                <li data-name="square-right" data-code="f309"><i class="zmdi zmdi-square-right"></i> <span>square-right</span></li>
+
+                                <li data-name="swap-alt" data-code="f30a"><i class="zmdi zmdi-swap-alt"></i> <span>swap-alt</span></li>
+
+                                <li data-name="swap-vertical-circle" data-code="f30b"><i class="zmdi zmdi-swap-vertical-circle"></i> <span>swap-vertical-circle</span></li>
+
+                                <li data-name="swap-vertical" data-code="f30c"><i class="zmdi zmdi-swap-vertical"></i> <span>swap-vertical</span></li>
+
+                                <li data-name="swap" data-code="f30d"><i class="zmdi zmdi-swap"></i> <span>swap</span></li>
+
+                                <li data-name="trending-down" data-code="f30e"><i class="zmdi zmdi-trending-down"></i> <span>trending-down</span></li>
+
+                                <li data-name="trending-flat" data-code="f30f"><i class="zmdi zmdi-trending-flat"></i> <span>trending-flat</span></li>
+
+                                <li data-name="trending-up" data-code="f310"><i class="zmdi zmdi-trending-up"></i> <span>trending-up</span></li>
+
+                                <li data-name="unfold-less" data-code="f311"><i class="zmdi zmdi-unfold-less"></i> <span>unfold-less</span></li>
+
+                                <li data-name="unfold-more" data-code="f312"><i class="zmdi zmdi-unfold-more"></i> <span>unfold-more</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Map (aliases)</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="bike" data-code="f117"><i class="zmdi zmdi-directions-bike"></i> <span> zmdi-directions-bike</span></li>
+
+                                <li data-name="boat" data-code="f11a"><i class="zmdi zmdi-directions-boat"></i> <span>zmdi-directions-boat</span></li>
+
+                                <li data-name="bus" data-code="f121"><i class="zmdi zmdi-directions-bus"></i> <span>zmdi-directions-bus</span></li>
+
+                                <li data-name="car" data-code="f125"><i class="zmdi zmdi-directions-car"></i> <span>zmdi-directions-car</span></li>
+
+                                <li data-name="railway" data-code="f1b3"><i class="zmdi zmdi-directions-railway"></i> <span>zmdi-directions-railway</span></li>
+
+                                <li data-name="run" data-code="f215"><i class="zmdi zmdi-directions-run"></i> <span>zmdi-directions-run</span></li>
+
+                                <li data-name="subway" data-code="f1d5"><i class="zmdi zmdi-directions-subway"></i> <span>zmdi-directions-subway</span></li>
+
+                                <li data-name="walk" data-code="f216"><i class="zmdi zmdi-directions-walk"></i> <span>zmdi-directions-walk</span></li>
+
+                                <li data-name="turning-sign" data-code="f1e7"><i class="zmdi zmdi-directions"></i> <span>zmdi-directions</span></li>
+
+                                <li data-name="layers-off" data-code="f18b"><i class="zmdi zmdi-layers-off"></i> <span>zmdi-layers-off</span></li>
+
+                                <li data-name="layers" data-code="f18c"><i class="zmdi zmdi-layers"></i> <span>zmdi-layers</span></li>
+
+                                <li data-name="ticket-star" data-code="f1df"><i class="zmdi zmdi-local-activity"></i> <span>zmdi-local-activity</span></li>
+
+                                <li data-name="airplane" data-code="f103"><i class="zmdi zmdi-local-airport"></i> <span>zmdi-local-airport</span></li>
+
+                                <li data-name="money-box" data-code="f198"><i class="zmdi zmdi-local-atm"></i> <span>zmdi-local-atm</span></li>
+
+                                <li data-name="cocktail" data-code="f137"><i class="zmdi zmdi-local-bar"></i> <span>zmdi-local-bar</span></li>
+
+                                <li data-name="coffee" data-code="f13b"><i class="zmdi zmdi-local-cafe"></i> <span>zmdi-local-cafe</span></li>
+
+                                <li data-name="car-wash" data-code="f124"><i class="zmdi zmdi-local-car-wash"></i> <span>zmdi-local-car-wash</span></li>
+
+                                <li data-name="store-24" data-code="f1d3"><i class="zmdi zmdi-local-convenience-store"></i> <span>zmdi-local-convenience-store</span></li>
+
+                                <li data-name="cutlery" data-code="f153"><i class="zmdi zmdi-local-dining"></i> <span>zmdi-local-dining</span></li>
+
+                                <li data-name="drink" data-code="f157"><i class="zmdi zmdi-local-drink"></i> <span>zmdi-local-drink</span></li>
+
+                                <li data-name="flower-alt" data-code="f168"><i class="zmdi zmdi-local-florist"></i> <span>zmdi-local-florist</span></li>
+
+                                <li data-name="gas-station" data-code="f16f"><i class="zmdi zmdi-local-gas-station"></i> <span>zmdi-local-gas-station</span></li>
+
+                                <li data-name="shopping-cart" data-code="f1cb"><i class="zmdi zmdi-local-grocery-store"></i> <span>zmdi-local-grocery-store</span></li>
+
+                                <li data-name="hospital" data-code="f177"><i class="zmdi zmdi-local-hospital"></i> <span>zmdi-local-hospital</span></li>
+
+                                <li data-name="hotel" data-code="f178"><i class="zmdi zmdi-local-hotel"></i> <span>zmdi-local-hotel</span></li>
+
+                                <li data-name="washing-machine" data-code="f1e9"><i class="zmdi zmdi-local-laundry-service"></i> <span>zmdi-local-laundry-service</span></li>
+
+                                <li data-name="library" data-code="f18d"><i class="zmdi zmdi-local-library"></i> <span>zmdi-local-library</span></li>
+
+                                <li data-name="mall" data-code="f195"><i class="zmdi zmdi-local-mall"></i> <span>zmdi-local-mall</span></li>
+
+                                <li data-name="movie-alt" data-code="f19d"><i class="zmdi zmdi-local-movies"></i> <span>zmdi-local-movies</span></li>
+
+                                <li data-name="label" data-code="f187"><i class="zmdi zmdi-local-offer"></i> <span>zmdi-local-offer</span></li>
+
+                                <li data-name="parking" data-code="f1a5"><i class="zmdi zmdi-local-parking"></i> <span>zmdi-local-parking</span></li>
+
+                                <li data-name="hospital-alt" data-code="f176"><i class="zmdi zmdi-local-pharmacy"></i> <span>zmdi-local-pharmacy</span></li>
+
+                                <li data-name="phone" data-code="f2be"><i class="zmdi zmdi-local-phone"></i> <span>zmdi-local-phone</span></li>
+
+                                <li data-name="pizza" data-code="f1ac"><i class="zmdi zmdi-local-pizza"></i> <span>zmdi-local-pizza</span></li>
+
+                                <li data-name="ticket-star" data-code="f1df"><i class="zmdi zmdi-local-activity"></i> <span>zmdi-local-activity</span></li>
+
+                                <li data-name="email" data-code="f15a"><i class="zmdi zmdi-local-post-office"></i> <span>zmdi-local-post-office</span></li>
+
+                                <li data-name="print" data-code="f1b0"><i class="zmdi zmdi-local-printshop"></i> <span>zmdi-local-printshop</span></li>
+
+                                <li data-name="camera" data-code="f28c"><i class="zmdi zmdi-local-see"></i> <span>zmdi-local-see</span></li>
+
+                                <li data-name="truck" data-code="f1e6"><i class="zmdi zmdi-local-shipping"></i> <span>zmdi-local-shipping</span></li>
+
+                                <li data-name="store" data-code="f1d4"><i class="zmdi zmdi-local-store"></i> <span>zmdi-local-store</span></li>
+
+                                <li data-name="car-taxi" data-code="f123"><i class="zmdi zmdi-local-taxi"></i> <span>zmdi-local-taxi</span></li>
+
+                                <li data-name="male-female" data-code="f211"><i class="zmdi zmdi-local-wc"></i> <span>zmdi-local-wc</span></li>
+
+                                <li data-name="map" data-code="f196"><i class="zmdi zmdi-map"></i> <span>zmdi-map</span></li>
+
+                                <li data-name="gps-dot" data-code="f299"><i class="zmdi zmdi-my-location"></i> <span>zmdi-my-location</span></li>
+
+                                <li data-name="nature-people" data-code="f19f"><i class="zmdi zmdi-nature-people"></i> <span>zmdi-nature-people</span></li>
+
+                                <li data-name="nature" data-code="f1a0"><i class="zmdi zmdi-nature"></i> <span>zmdi-nature</span></li>
+
+                                <li data-name="navigation" data-code="f1a1"><i class="zmdi zmdi-navigation"></i> <span>zmdi-navigation</span></li>
+
+                                <li data-name="pin-account" data-code="f1a6"><i class="zmdi zmdi-pin-account"></i> <span>zmdi-pin-account</span></li>
+
+                                <li data-name="pin-assistant" data-code="f1a7"><i class="zmdi zmdi-pin-assistant"></i> <span>zmdi-pin-assistant</span></li>
+
+                                <li data-name="pin-drop" data-code="f1a8"><i class="zmdi zmdi-pin-drop"></i> <span>zmdi-pin-drop</span></li>
+
+                                <li data-name="pin-help" data-code="f1a9"><i class="zmdi zmdi-pin-help"></i> <span>zmdi-pin-help</span></li>
+
+                                <li data-name="pin-off" data-code="f1aa"><i class="zmdi zmdi-pin-off"></i> <span>zmdi-pin-off</span></li>
+
+                                <li data-name="pin" data-code="f1ab"><i class="zmdi zmdi-pin"></i> <span>zmdi-pin</span></li>
+
+                                <li data-name="traffic" data-code="f1e2"><i class="zmdi zmdi-traffic"></i> <span>zmdi-traffic</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>View</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="apps" data-code="f313"><i class="zmdi zmdi-apps"></i> <span>apps</span></li>
+
+                                <li data-name="grid-off" data-code="f314"><i class="zmdi zmdi-grid-off"></i> <span>grid-off</span></li>
+
+                                <li data-name="grid" data-code="f315"><i class="zmdi zmdi-grid"></i> <span>grid</span></li>
+
+                                <li data-name="view-agenda" data-code="f316"><i class="zmdi zmdi-view-agenda"></i> <span>view-agenda</span></li>
+
+                                <li data-name="view-array" data-code="f317"><i class="zmdi zmdi-view-array"></i> <span>view-array</span></li>
+
+                                <li data-name="view-carousel" data-code="f318"><i class="zmdi zmdi-view-carousel"></i> <span>view-carousel</span></li>
+
+                                <li data-name="view-column" data-code="f319"><i class="zmdi zmdi-view-column"></i> <span>view-column</span></li>
+
+                                <li data-name="view-comfy" data-code="f31a"><i class="zmdi zmdi-view-comfy"></i> <span>view-comfy</span></li>
+
+                                <li data-name="view-compact" data-code="f31b"><i class="zmdi zmdi-view-compact"></i> <span>view-compact</span></li>
+
+                                <li data-name="view-dashboard" data-code="f31c"><i class="zmdi zmdi-view-dashboard"></i> <span>view-dashboard</span></li>
+
+                                <li data-name="view-day" data-code="f31d"><i class="zmdi zmdi-view-day"></i> <span>view-day</span></li>
+
+                                <li data-name="view-headline" data-code="f31e"><i class="zmdi zmdi-view-headline"></i> <span>view-headline</span></li>
+
+                                <li data-name="view-list-alt" data-code="f31f"><i class="zmdi zmdi-view-list-alt"></i> <span>view-list-alt</span></li>
+
+                                <li data-name="view-list" data-code="f320"><i class="zmdi zmdi-view-list"></i> <span>view-list</span></li>
+
+                                <li data-name="view-module" data-code="f321"><i class="zmdi zmdi-view-module"></i> <span>view-module</span></li>
+
+                                <li data-name="view-quilt" data-code="f322"><i class="zmdi zmdi-view-quilt"></i> <span>view-quilt</span></li>
+
+                                <li data-name="view-stream" data-code="f323"><i class="zmdi zmdi-view-stream"></i> <span>view-stream</span></li>
+
+                                <li data-name="view-subtitles" data-code="f324"><i class="zmdi zmdi-view-subtitles"></i> <span>view-subtitles</span></li>
+
+                                <li data-name="view-toc" data-code="f325"><i class="zmdi zmdi-view-toc"></i> <span>view-toc</span></li>
+
+                                <li data-name="view-web" data-code="f326"><i class="zmdi zmdi-view-web"></i> <span>view-web</span></li>
+
+                                <li data-name="view-week" data-code="f327"><i class="zmdi zmdi-view-week"></i> <span>view-week</span></li>
+
+                                <li data-name="widgets" data-code="f328"><i class="zmdi zmdi-widgets"></i> <span>widgets</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Date / Time</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="alarm-check" data-code="f329"><i class="zmdi zmdi-alarm-check"></i> <span>alarm-check</span></li>
+
+                                <li data-name="alarm-off" data-code="f32a"><i class="zmdi zmdi-alarm-off"></i> <span>alarm-off</span></li>
+
+                                <li data-name="alarm-plus" data-code="f32b"><i class="zmdi zmdi-alarm-plus"></i> <span>alarm-plus</span></li>
+
+                                <li data-name="alarm-snooze" data-code="f32c"><i class="zmdi zmdi-alarm-snooze"></i> <span>alarm-snooze</span></li>
+
+                                <li data-name="alarm" data-code="f32d"><i class="zmdi zmdi-alarm"></i> <span>alarm</span></li>
+
+                                <li data-name="calendar-alt" data-code="f32e"><i class="zmdi zmdi-calendar-alt"></i> <span>calendar-alt</span></li>
+
+                                <li data-name="calendar-check" data-code="f32f"><i class="zmdi zmdi-calendar-check"></i> <span>calendar-check</span></li>
+
+                                <li data-name="calendar-close" data-code="f330"><i class="zmdi zmdi-calendar-close"></i> <span>calendar-close</span></li>
+
+                                <li data-name="calendar-note" data-code="f331"><i class="zmdi zmdi-calendar-note"></i> <span>calendar-note</span></li>
+
+                                <li data-name="calendar" data-code="f332"><i class="zmdi zmdi-calendar"></i> <span>calendar</span></li>
+
+                                <li data-name="time-countdown" data-code="f333"><i class="zmdi zmdi-time-countdown"></i> <span>time-countdown</span></li>
+
+                                <li data-name="time-interval" data-code="f334"><i class="zmdi zmdi-time-interval"></i> <span>time-interval</span></li>
+
+                                <li data-name="time-restore-setting" data-code="f335"><i class="zmdi zmdi-time-restore-setting"></i> <span>time-restore-setting</span></li>
+
+                                <li data-name="time-restore" data-code="f336"><i class="zmdi zmdi-time-restore"></i> <span>time-restore</span></li>
+
+                                <li data-name="time" data-code="f337"><i class="zmdi zmdi-time"></i> <span>time</span></li>
+
+                                <li data-name="timer-off" data-code="f338"><i class="zmdi zmdi-timer-off"></i> <span>timer-off</span></li>
+
+                                <li data-name="timer" data-code="f339"><i class="zmdi zmdi-timer"></i> <span>timer</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Social</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="android-alt" data-code="f33a"><i class="zmdi zmdi-android-alt"></i> <span>android-alt</span></li>
+
+                                <li data-name="android" data-code="f33b"><i class="zmdi zmdi-android"></i> <span>android</span></li>
+
+                                <li data-name="apple" data-code="f33c"><i class="zmdi zmdi-apple"></i> <span>apple</span></li>
+
+                                <li data-name="behance" data-code="f33d"><i class="zmdi zmdi-behance"></i> <span>behance</span></li>
+
+                                <li data-name="codepen" data-code="f33e"><i class="zmdi zmdi-codepen"></i> <span>codepen</span></li>
+
+                                <li data-name="dribbble" data-code="f33f"><i class="zmdi zmdi-dribbble"></i> <span>dribbble</span></li>
+
+                                <li data-name="dropbox" data-code="f340"><i class="zmdi zmdi-dropbox"></i> <span>dropbox</span></li>
+
+                                <li data-name="evernote" data-code="f341"><i class="zmdi zmdi-evernote"></i> <span>evernote</span></li>
+
+                                <li data-name="facebook-box" data-code="f342"><i class="zmdi zmdi-facebook-box"></i> <span>facebook-box</span></li>
+
+                                <li data-name="facebook" data-code="f343"><i class="zmdi zmdi-facebook"></i> <span>facebook</span></li>
+
+                                <li data-name="github-box" data-code="f344"><i class="zmdi zmdi-github-box"></i> <span>github-box</span></li>
+
+                                <li data-name="github" data-code="f345"><i class="zmdi zmdi-github"></i> <span>github</span></li>
+
+                                <li data-name="google-drive" data-code="f346"><i class="zmdi zmdi-google-drive"></i> <span>google-drive</span></li>
+
+                                <li data-name="google-earth" data-code="f347"><i class="zmdi zmdi-google-earth"></i> <span>google-earth</span></li>
+
+                                <li data-name="google-glass" data-code="f348"><i class="zmdi zmdi-google-glass"></i> <span>google-glass</span></li>
+
+                                <li data-name="google-maps" data-code="f349"><i class="zmdi zmdi-google-maps"></i> <span>google-maps</span></li>
+
+                                <li data-name="google-pages" data-code="f34a"><i class="zmdi zmdi-google-pages"></i> <span>google-pages</span></li>
+
+                                <li data-name="google-play" data-code="f34b"><i class="zmdi zmdi-google-play"></i> <span>google-play</span></li>
+
+                                <li data-name="google-plus-box" data-code="f34c"><i class="zmdi zmdi-google-plus-box"></i> <span>google-plus-box</span></li>
+
+                                <li data-name="google-plus" data-code="f34d"><i class="zmdi zmdi-google-plus"></i> <span>google-plus</span></li>
+
+                                <li data-name="google" data-code="f34e"><i class="zmdi zmdi-google"></i> <span>google</span></li>
+
+                                <li data-name="instagram" data-code="f34f"><i class="zmdi zmdi-instagram"></i> <span>instagram</span></li>
+
+                                <li data-name="language-css3" data-code="f350"><i class="zmdi zmdi-language-css3"></i> <span>language-css3</span></li>
+
+                                <li data-name="language-html5" data-code="f351"><i class="zmdi zmdi-language-html5"></i> <span>language-html5</span></li>
+
+                                <li data-name="language-javascript" data-code="f352"><i class="zmdi zmdi-language-javascript"></i> <span>language-javascript</span></li>
+
+                                <li data-name="language-python-alt" data-code="f353"><i class="zmdi zmdi-language-python-alt"></i> <span>language-python-alt</span></li>
+
+                                <li data-name="language-python" data-code="f354"><i class="zmdi zmdi-language-python"></i> <span>language-python</span></li>
+
+                                <li data-name="lastfm" data-code="f355"><i class="zmdi zmdi-lastfm"></i> <span>lastfm</span></li>
+
+                                <li data-name="linkedin-box" data-code="f356"><i class="zmdi zmdi-linkedin-box"></i> <span>linkedin-box</span></li>
+
+                                <li data-name="paypal" data-code="f357"><i class="zmdi zmdi-paypal"></i> <span>paypal</span></li>
+
+                                <li data-name="pinterest-box" data-code="f358"><i class="zmdi zmdi-pinterest-box"></i> <span>pinterest-box</span></li>
+
+                                <li data-name="pocket" data-code="f359"><i class="zmdi zmdi-pocket"></i> <span>pocket</span></li>
+
+                                <li data-name="polymer" data-code="f35a"><i class="zmdi zmdi-polymer"></i> <span>polymer</span></li>
+
+                                <li data-name="rss" data-code="f3ea"><i class="zmdi zmdi-rss"></i> <span>rss</span></li>
+
+                                <li data-name="share" data-code="f35b"><i class="zmdi zmdi-share"></i> <span>share</span></li>
+
+                                <li data-name="stackoverflow" data-code="f35c"><i class="zmdi zmdi-stackoverflow"></i> <span>stackoverflow</span></li>
+
+                                <li data-name="steam-square" data-code="f35d"><i class="zmdi zmdi-steam-square"></i> <span>steam-square</span></li>
+
+                                <li data-name="steam" data-code="f35e"><i class="zmdi zmdi-steam"></i> <span>steam</span></li>
+
+                                <li data-name="twitter-box" data-code="f35f"><i class="zmdi zmdi-twitter-box"></i> <span>twitter-box</span></li>
+
+                                <li data-name="twitter" data-code="f360"><i class="zmdi zmdi-twitter"></i> <span>twitter</span></li>
+
+                                <li data-name="vk" data-code="f361"><i class="zmdi zmdi-vk"></i> <span>vk</span></li>
+
+                                <li data-name="wikipedia" data-code="f362"><i class="zmdi zmdi-wikipedia"></i> <span>wikipedia</span></li>
+
+                                <li data-name="windows" data-code="f363"><i class="zmdi zmdi-windows"></i> <span>windows</span></li>
+
+                                <li data-name="500px" data-code="f3ee"><i class="zmdi zmdi-500px"></i> <span>500px</span></li>
+
+                                <li data-name="8tracks" data-code="f3ef"><i class="zmdi zmdi-8tracks"></i> <span>8tracks</span></li>
+
+                                <li data-name="amazon" data-code="f3f0"><i class="zmdi zmdi-amazon"></i> <span>amazon</span></li>
+
+                                <li data-name="blogger" data-code="f3f1"><i class="zmdi zmdi-blogger"></i> <span>blogger</span></li>
+
+                                <li data-name="delicious" data-code="f3f2"><i class="zmdi zmdi-delicious"></i> <span>delicious</span></li>
+
+                                <li data-name="disqus" data-code="f3f3"><i class="zmdi zmdi-disqus"></i> <span>disqus</span></li>
+
+                                <li data-name="flattr" data-code="f3f4"><i class="zmdi zmdi-flattr"></i> <span>flattr</span></li>
+
+                                <li data-name="flickr" data-code="f3f5"><i class="zmdi zmdi-flickr"></i> <span>flickr</span></li>
+
+                                <li data-name="github-alt" data-code="f3f6"><i class="zmdi zmdi-github-alt"></i> <span>github-alt</span></li>
+
+                                <li data-name="google-old" data-code="f3f7"><i class="zmdi zmdi-google-old"></i> <span>google-old</span></li>
+
+                                <li data-name="linkedin" data-code="f3f8"><i class="zmdi zmdi-linkedin"></i> <span>linkedin</span></li>
+
+                                <li data-name="odnoklassniki" data-code="f3f9"><i class="zmdi zmdi-odnoklassniki"></i> <span>odnoklassniki</span></li>
+
+                                <li data-name="outlook" data-code="f3fa"><i class="zmdi zmdi-outlook"></i> <span>outlook</span></li>
+
+                                <li data-name="paypal-alt" data-code="f3fb"><i class="zmdi zmdi-paypal-alt"></i> <span>paypal-alt</span></li>
+
+                                <li data-name="pinterest" data-code="f3fc"><i class="zmdi zmdi-pinterest"></i> <span>pinterest</span></li>
+
+                                <li data-name="playstation" data-code="f3fd"><i class="zmdi zmdi-playstation"></i> <span>playstation</span></li>
+
+                                <li data-name="reddit" data-code="f3fe"><i class="zmdi zmdi-reddit"></i> <span>reddit</span></li>
+
+                                <li data-name="skype" data-code="f3ff"><i class="zmdi zmdi-skype"></i> <span>skype</span></li>
+
+                                <li data-name="slideshare" data-code="f400"><i class="zmdi zmdi-slideshare"></i> <span>slideshare</span></li>
+
+                                <li data-name="soundcloud" data-code="f401"><i class="zmdi zmdi-soundcloud"></i> <span>soundcloud</span></li>
+
+                                <li data-name="tumblr" data-code="f402"><i class="zmdi zmdi-tumblr"></i> <span>tumblr</span></li>
+
+                                <li data-name="twitch" data-code="f403"><i class="zmdi zmdi-twitch"></i> <span>twitch</span></li>
+
+                                <li data-name="vimeo" data-code="f404"><i class="zmdi zmdi-vimeo"></i> <span>vimeo</span></li>
+
+                                <li data-name="whatsapp" data-code="f405"><i class="zmdi zmdi-whatsapp"></i> <span>whatsapp</span></li>
+
+                                <li data-name="xbox" data-code="f406"><i class="zmdi zmdi-xbox"></i> <span>xbox</span></li>
+
+                                <li data-name="yahoo" data-code="f407"><i class="zmdi zmdi-yahoo"></i> <span>yahoo</span></li>
+
+                                <li data-name="youtube-play" data-code="f408"><i class="zmdi zmdi-youtube-play"></i> <span>youtube-play</span></li>
+
+                                <li data-name="youtube" data-code="f409"><i class="zmdi zmdi-youtube"></i> <span>youtube</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Image</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="aspect-ratio-alt" data-code="f364"><i class="zmdi zmdi-aspect-ratio-alt"></i> <span>aspect-ratio-alt</span></li>
+
+                                <li data-name="aspect-ratio" data-code="f365"><i class="zmdi zmdi-aspect-ratio"></i> <span>aspect-ratio</span></li>
+
+                                <li data-name="blur-circular" data-code="f366"><i class="zmdi zmdi-blur-circular"></i> <span>blur-circular</span></li>
+
+                                <li data-name="blur-linear" data-code="f367"><i class="zmdi zmdi-blur-linear"></i> <span>blur-linear</span></li>
+
+                                <li data-name="blur-off" data-code="f368"><i class="zmdi zmdi-blur-off"></i> <span>blur-off</span></li>
+
+                                <li data-name="blur" data-code="f369"><i class="zmdi zmdi-blur"></i> <span>blur</span></li>
+
+                                <li data-name="brightness-2" data-code="f36a"><i class="zmdi zmdi-brightness-2"></i> <span>brightness-2</span></li>
+
+                                <li data-name="brightness-3" data-code="f36b"><i class="zmdi zmdi-brightness-3"></i> <span>brightness-3</span></li>
+
+                                <li data-name="brightness-4" data-code="f36c"><i class="zmdi zmdi-brightness-4"></i> <span>brightness-4</span></li>
+
+                                <li data-name="brightness-5" data-code="f36d"><i class="zmdi zmdi-brightness-5"></i> <span>brightness-5</span></li>
+
+                                <li data-name="brightness-6" data-code="f36e"><i class="zmdi zmdi-brightness-6"></i> <span>brightness-6</span></li>
+
+                                <li data-name="brightness-7" data-code="f36f"><i class="zmdi zmdi-brightness-7"></i> <span>brightness-7</span></li>
+
+                                <li data-name="brightness-auto" data-code="f370"><i class="zmdi zmdi-brightness-auto"></i> <span>brightness-auto</span></li>
+
+                                <li data-name="brightness-setting" data-code="f371"><i class="zmdi zmdi-brightness-setting"></i> <span>brightness-setting</span></li>
+
+                                <li data-name="broken-image" data-code="f372"><i class="zmdi zmdi-broken-image"></i> <span>broken-image</span></li>
+
+                                <li data-name="center-focus-strong" data-code="f373"><i class="zmdi zmdi-center-focus-strong"></i> <span>center-focus-strong</span></li>
+
+                                <li data-name="center-focus-weak" data-code="f374"><i class="zmdi zmdi-center-focus-weak"></i> <span>center-focus-weak</span></li>
+
+                                <li data-name="compare" data-code="f375"><i class="zmdi zmdi-compare"></i> <span>compare</span></li>
+
+                                <li data-name="crop-16-9" data-code="f376"><i class="zmdi zmdi-crop-16-9"></i> <span>crop-16-9</span></li>
+
+                                <li data-name="crop-3-2" data-code="f377"><i class="zmdi zmdi-crop-3-2"></i> <span>crop-3-2</span></li>
+
+                                <li data-name="crop-5-4" data-code="f378"><i class="zmdi zmdi-crop-5-4"></i> <span>crop-5-4</span></li>
+
+                                <li data-name="crop-7-5" data-code="f379"><i class="zmdi zmdi-crop-7-5"></i> <span>crop-7-5</span></li>
+
+                                <li data-name="crop-din" data-code="f37a"><i class="zmdi zmdi-crop-din"></i> <span>crop-din</span></li>
+
+                                <li data-name="crop-free" data-code="f37b"><i class="zmdi zmdi-crop-free"></i> <span>crop-free</span></li>
+
+                                <li data-name="crop-landscape" data-code="f37c"><i class="zmdi zmdi-crop-landscape"></i> <span>crop-landscape</span></li>
+
+                                <li data-name="crop-portrait" data-code="f37d"><i class="zmdi zmdi-crop-portrait"></i> <span>crop-portrait</span></li>
+
+                                <li data-name="crop-square" data-code="f37e"><i class="zmdi zmdi-crop-square"></i> <span>crop-square</span></li>
+
+                                <li data-name="exposure-alt" data-code="f37f"><i class="zmdi zmdi-exposure-alt"></i> <span>exposure-alt</span></li>
+
+                                <li data-name="exposure" data-code="f380"><i class="zmdi zmdi-exposure"></i> <span>exposure</span></li>
+
+                                <li data-name="filter-b-and-w" data-code="f381"><i class="zmdi zmdi-filter-b-and-w"></i> <span>filter-b-and-w</span></li>
+
+                                <li data-name="filter-center-focus" data-code="f382"><i class="zmdi zmdi-filter-center-focus"></i> <span>filter-center-focus</span></li>
+
+                                <li data-name="filter-frames" data-code="f383"><i class="zmdi zmdi-filter-frames"></i> <span>filter-frames</span></li>
+
+                                <li data-name="filter-tilt-shift" data-code="f384"><i class="zmdi zmdi-filter-tilt-shift"></i> <span>filter-tilt-shift</span></li>
+
+                                <li data-name="gradient" data-code="f385"><i class="zmdi zmdi-gradient"></i> <span>gradient</span></li>
+
+                                <li data-name="grain" data-code="f386"><i class="zmdi zmdi-grain"></i> <span>grain</span></li>
+
+                                <li data-name="graphic-eq" data-code="f387"><i class="zmdi zmdi-graphic-eq"></i> <span>graphic-eq</span></li>
+
+                                <li data-name="hdr-off" data-code="f388"><i class="zmdi zmdi-hdr-off"></i> <span>hdr-off</span></li>
+
+                                <li data-name="hdr-strong" data-code="f389"><i class="zmdi zmdi-hdr-strong"></i> <span>hdr-strong</span></li>
+
+                                <li data-name="hdr-weak" data-code="f38a"><i class="zmdi zmdi-hdr-weak"></i> <span>hdr-weak</span></li>
+
+                                <li data-name="hdr" data-code="f38b"><i class="zmdi zmdi-hdr"></i> <span>hdr</span></li>
+
+                                <li data-name="iridescent" data-code="f38c"><i class="zmdi zmdi-iridescent"></i> <span>iridescent</span></li>
+
+                                <li data-name="leak-off" data-code="f38d"><i class="zmdi zmdi-leak-off"></i> <span>leak-off</span></li>
+
+                                <li data-name="leak" data-code="f38e"><i class="zmdi zmdi-leak"></i> <span>leak</span></li>
+
+                                <li data-name="looks" data-code="f38f"><i class="zmdi zmdi-looks"></i> <span>looks</span></li>
+
+                                <li data-name="loupe" data-code="f390"><i class="zmdi zmdi-loupe"></i> <span>loupe</span></li>
+
+                                <li data-name="panorama-horizontal" data-code="f391"><i class="zmdi zmdi-panorama-horizontal"></i> <span>panorama-horizontal</span></li>
+
+                                <li data-name="panorama-vertical" data-code="f392"><i class="zmdi zmdi-panorama-vertical"></i> <span>panorama-vertical</span></li>
+
+                                <li data-name="panorama-wide-angle" data-code="f393"><i class="zmdi zmdi-panorama-wide-angle"></i> <span>panorama-wide-angle</span></li>
+
+                                <li data-name="photo-size-select-large" data-code="f394"><i class="zmdi zmdi-photo-size-select-large"></i> <span>photo-size-select-large</span></li>
+
+                                <li data-name="photo-size-select-small" data-code="f395"><i class="zmdi zmdi-photo-size-select-small"></i> <span>photo-size-select-small</span></li>
+
+                                <li data-name="picture-in-picture" data-code="f396"><i class="zmdi zmdi-picture-in-picture"></i> <span>picture-in-picture</span></li>
+
+                                <li data-name="slideshow" data-code="f397"><i class="zmdi zmdi-slideshow"></i> <span>slideshow</span></li>
+
+                                <li data-name="texture" data-code="f398"><i class="zmdi zmdi-texture"></i> <span>texture</span></li>
+
+                                <li data-name="tonality" data-code="f399"><i class="zmdi zmdi-tonality"></i> <span>tonality</span></li>
+
+                                <li data-name="vignette" data-code="f39a"><i class="zmdi zmdi-vignette"></i> <span>vignette</span></li>
+
+                                <li data-name="wb-auto" data-code="f39b"><i class="zmdi zmdi-wb-auto"></i> <span>wb-auto</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Audio / Video</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="eject-alt" data-code="f39c"><i class="zmdi zmdi-eject-alt"></i> <span>eject-alt</span></li>
+
+                                <li data-name="eject" data-code="f39d"><i class="zmdi zmdi-eject"></i> <span>eject</span></li>
+
+                                <li data-name="equalizer" data-code="f39e"><i class="zmdi zmdi-equalizer"></i> <span>equalizer</span></li>
+
+                                <li data-name="fast-forward" data-code="f39f"><i class="zmdi zmdi-fast-forward"></i> <span>fast-forward</span></li>
+
+                                <li data-name="fast-rewind" data-code="f3a0"><i class="zmdi zmdi-fast-rewind"></i> <span>fast-rewind</span></li>
+
+                                <li data-name="forward-10" data-code="f3a1"><i class="zmdi zmdi-forward-10"></i> <span>forward-10</span></li>
+
+                                <li data-name="forward-30" data-code="f3a2"><i class="zmdi zmdi-forward-30"></i> <span>forward-30</span></li>
+
+                                <li data-name="forward-5" data-code="f3a3"><i class="zmdi zmdi-forward-5"></i> <span>forward-5</span></li>
+
+                                <li data-name="hearing" data-code="f3a4"><i class="zmdi zmdi-hearing"></i> <span>hearing</span></li>
+
+                                <li data-name="pause-circle-outline" data-code="f3a5"><i class="zmdi zmdi-pause-circle-outline"></i> <span>pause-circle-outline</span></li>
+
+                                <li data-name="pause-circle" data-code="f3a6"><i class="zmdi zmdi-pause-circle"></i> <span>pause-circle</span></li>
+
+                                <li data-name="pause" data-code="f3a7"><i class="zmdi zmdi-pause"></i> <span>pause</span></li>
+
+                                <li data-name="play-circle-outline" data-code="f3a8"><i class="zmdi zmdi-play-circle-outline"></i> <span>play-circle-outline</span></li>
+
+                                <li data-name="play-circle" data-code="f3a9"><i class="zmdi zmdi-play-circle"></i> <span>play-circle</span></li>
+
+                                <li data-name="play" data-code="f3aa"><i class="zmdi zmdi-play"></i> <span>play</span></li>
+
+                                <li data-name="playlist-audio" data-code="f3ab"><i class="zmdi zmdi-playlist-audio"></i> <span>playlist-audio</span></li>
+
+                                <li data-name="playlist-plus" data-code="f3ac"><i class="zmdi zmdi-playlist-plus"></i> <span>playlist-plus</span></li>
+
+                                <li data-name="repeat-one" data-code="f3ad"><i class="zmdi zmdi-repeat-one"></i> <span>repeat-one</span></li>
+
+                                <li data-name="repeat" data-code="f3ae"><i class="zmdi zmdi-repeat"></i> <span>repeat</span></li>
+
+                                <li data-name="replay-10" data-code="f3af"><i class="zmdi zmdi-replay-10"></i> <span>replay-10</span></li>
+
+                                <li data-name="replay-30" data-code="f3b0"><i class="zmdi zmdi-replay-30"></i> <span>replay-30</span></li>
+
+                                <li data-name="replay-5" data-code="f3b1"><i class="zmdi zmdi-replay-5"></i> <span>replay-5</span></li>
+
+                                <li data-name="replay" data-code="f3b2"><i class="zmdi zmdi-replay"></i> <span>replay</span></li>
+
+                                <li data-name="shuffle" data-code="f3b3"><i class="zmdi zmdi-shuffle"></i> <span>shuffle</span></li>
+
+                                <li data-name="skip-next" data-code="f3b4"><i class="zmdi zmdi-skip-next"></i> <span>skip-next</span></li>
+
+                                <li data-name="skip-previous" data-code="f3b5"><i class="zmdi zmdi-skip-previous"></i> <span>skip-previous</span></li>
+
+                                <li data-name="stop" data-code="f3b6"><i class="zmdi zmdi-stop"></i> <span>stop</span></li>
+
+                                <li data-name="surround-sound" data-code="f3b7"><i class="zmdi zmdi-surround-sound"></i> <span>surround-sound</span></li>
+
+                                <li data-name="tune" data-code="f3b8"><i class="zmdi zmdi-tune"></i> <span>tune</span></li>
+
+                                <li data-name="volume-down" data-code="f3b9"><i class="zmdi zmdi-volume-down"></i> <span>volume-down</span></li>
+
+                                <li data-name="volume-mute" data-code="f3ba"><i class="zmdi zmdi-volume-mute"></i> <span>volume-mute</span></li>
+
+                                <li data-name="volume-off" data-code="f3bb"><i class="zmdi zmdi-volume-off"></i> <span>volume-off</span></li>
+
+                                <li data-name="volume-up" data-code="f3bc"><i class="zmdi zmdi-volume-up"></i> <span>volume-up</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Numbers</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="n-1-square" data-code="f3bd"><i class="zmdi zmdi-n-1-square"></i> <span>n-1-square</span></li>
+
+                                <li data-name="n-2-square" data-code="f3be"><i class="zmdi zmdi-n-2-square"></i> <span>n-2-square</span></li>
+
+                                <li data-name="n-3-square" data-code="f3bf"><i class="zmdi zmdi-n-3-square"></i> <span>n-3-square</span></li>
+
+                                <li data-name="n-4-square" data-code="f3c0"><i class="zmdi zmdi-n-4-square"></i> <span>n-4-square</span></li>
+
+                                <li data-name="n-5-square" data-code="f3c1"><i class="zmdi zmdi-n-5-square"></i> <span>n-5-square</span></li>
+
+                                <li data-name="n-6-square" data-code="f3c2"><i class="zmdi zmdi-n-6-square"></i> <span>n-6-square</span></li>
+
+                                <li data-name="neg-1" data-code="f3c3"><i class="zmdi zmdi-neg-1"></i> <span>neg-1</span></li>
+
+                                <li data-name="neg-2" data-code="f3c4"><i class="zmdi zmdi-neg-2"></i> <span>neg-2</span></li>
+
+                                <li data-name="plus-1" data-code="f3c5"><i class="zmdi zmdi-plus-1"></i> <span>plus-1</span></li>
+
+                                <li data-name="plus-2" data-code="f3c6"><i class="zmdi zmdi-plus-2"></i> <span>plus-2</span></li>
+
+                                <li data-name="sec-10" data-code="f3c7"><i class="zmdi zmdi-sec-10"></i> <span>sec-10</span></li>
+
+                                <li data-name="sec-3" data-code="f3c8"><i class="zmdi zmdi-sec-3"></i> <span>sec-3</span></li>
+
+                                <li data-name="zero" data-code="f3c9"><i class="zmdi zmdi-zero"></i> <span>zero</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card icons-card">
+                        <div class="card-header">
+                            <h3>Other</h3>
+                        </div>
+
+                        <div class="card-content card-padding">
+                            <div class="row">
+                                <ul>
+
+                                <li data-name="airline-seat-flat-angled" data-code="f3ca"><i class="zmdi zmdi-airline-seat-flat-angled"></i> <span>airline-seat-flat-angled</span></li>
+
+                                <li data-name="airline-seat-flat" data-code="f3cb"><i class="zmdi zmdi-airline-seat-flat"></i> <span>airline-seat-flat</span></li>
+
+                                <li data-name="airline-seat-individual-suite" data-code="f3cc"><i class="zmdi zmdi-airline-seat-individual-suite"></i> <span>airline-seat-individual-suite</span></li>
+
+                                <li data-name="airline-seat-legroom-extra" data-code="f3cd"><i class="zmdi zmdi-airline-seat-legroom-extra"></i> <span>airline-seat-legroom-extra</span></li>
+
+                                <li data-name="airline-seat-legroom-normal" data-code="f3ce"><i class="zmdi zmdi-airline-seat-legroom-normal"></i> <span>airline-seat-legroom-normal</span></li>
+
+                                <li data-name="airline-seat-legroom-reduced" data-code="f3cf"><i class="zmdi zmdi-airline-seat-legroom-reduced"></i> <span>airline-seat-legroom-reduced</span></li>
+
+                                <li data-name="airline-seat-recline-extra" data-code="f3d0"><i class="zmdi zmdi-airline-seat-recline-extra"></i> <span>airline-seat-recline-extra</span></li>
+
+                                <li data-name="airline-seat-recline-normal" data-code="f3d1"><i class="zmdi zmdi-airline-seat-recline-normal"></i> <span>airline-seat-recline-normal</span></li>
+
+                                <li data-name="airplay" data-code="f3d2"><i class="zmdi zmdi-airplay"></i> <span>airplay</span></li>
+
+                                <li data-name="closed-caption" data-code="f3d3"><i class="zmdi zmdi-closed-caption"></i> <span>closed-caption</span></li>
+
+                                <li data-name="confirmation-number" data-code="f3d4"><i class="zmdi zmdi-confirmation-number"></i> <span>confirmation-number</span></li>
+
+                                <li data-name="developer-board" data-code="f3d5"><i class="zmdi zmdi-developer-board"></i> <span>developer-board</span></li>
+
+                                <li data-name="disc-full" data-code="f3d6"><i class="zmdi zmdi-disc-full"></i> <span>disc-full</span></li>
+
+                                <li data-name="explicit" data-code="f3d7"><i class="zmdi zmdi-explicit"></i> <span>explicit</span></li>
+
+                                <li data-name="flight-land" data-code="f3d8"><i class="zmdi zmdi-flight-land"></i> <span>flight-land</span></li>
+
+                                <li data-name="flight-takeoff" data-code="f3d9"><i class="zmdi zmdi-flight-takeoff"></i> <span>flight-takeoff</span></li>
+
+                                <li data-name="flip-to-back" data-code="f3da"><i class="zmdi zmdi-flip-to-back"></i> <span>flip-to-back</span></li>
+
+                                <li data-name="flip-to-front" data-code="f3db"><i class="zmdi zmdi-flip-to-front"></i> <span>flip-to-front</span></li>
+
+                                <li data-name="group-work" data-code="f3dc"><i class="zmdi zmdi-group-work"></i> <span>group-work</span></li>
+
+                                <li data-name="hd" data-code="f3dd"><i class="zmdi zmdi-hd"></i> <span>hd</span></li>
+
+                                <li data-name="hq" data-code="f3de"><i class="zmdi zmdi-hq"></i> <span>hq</span></li>
+
+                                <li data-name="markunread-mailbox" data-code="f3df"><i class="zmdi zmdi-markunread-mailbox"></i> <span>markunread-mailbox</span></li>
+
+                                <li data-name="memory" data-code="f3e0"><i class="zmdi zmdi-memory"></i> <span>memory</span></li>
+
+                                <li data-name="nfc" data-code="f3e1"><i class="zmdi zmdi-nfc"></i> <span>nfc</span></li>
+
+                                <li data-name="play-for-work" data-code="f3e2"><i class="zmdi zmdi-play-for-work"></i> <span>play-for-work</span></li>
+
+                                <li data-name="power-input" data-code="f3e3"><i class="zmdi zmdi-power-input"></i> <span>power-input</span></li>
+
+                                <li data-name="present-to-all" data-code="f3e4"><i class="zmdi zmdi-present-to-all"></i> <span>present-to-all</span></li>
+
+                                <li data-name="satellite" data-code="f3e5"><i class="zmdi zmdi-satellite"></i> <span>satellite</span></li>
+
+                                <li data-name="tap-and-play" data-code="f3e6"><i class="zmdi zmdi-tap-and-play"></i> <span>tap-and-play</span></li>
+
+                                <li data-name="vibration" data-code="f3e7"><i class="zmdi zmdi-vibration"></i> <span>vibration</span></li>
+
+                                <li data-name="voicemail" data-code="f3e8"><i class="zmdi zmdi-voicemail"></i> <span>voicemail</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Documentation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Support
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="copyright pull-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="#">Topcore Admin</a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+<!--   Core JS Files   -->
+<script src="../assets/vendors/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/jquery-ui-1.12.0/jquery-ui.js"></script>
+<script src="../assets/vendors/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/material.min.js" type="text/javascript"></script>
+<script src="../assets/vendors/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<!-- Forms Validations Plugin -->
+<script src="../assets/vendors/jquery.validate.min.js"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="../assets/vendors/moment.min.js"></script>
+<!--  Charts Plugin -->
+<script src="../assets/vendors/chartist.min.js"></script>
+<!--  Plugin for the Wizard -->
+<script src="../assets/vendors/jquery.bootstrap-wizard.js"></script>
+<!--  Notifications Plugin    -->
+<script src="../assets/vendors/bootstrap-notify.js"></script>
+<!-- DateTimePicker Plugin -->
+<script src="../assets/vendors/bootstrap-datetimepicker.js"></script>
+<!-- Vector Map plugin -->
+<script src="../assets/vendors/jquery-jvectormap.js"></script>
+<!-- Sliders Plugin -->
+<script src="../assets/vendors/nouislider.min.js"></script>
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- Select Plugin -->
+<script src="../assets/vendors/jquery.select-bootstrap.js"></script>
+<!--  DataTables.net Plugin    -->
+<script src="../assets/vendors/jquery.datatables.js"></script>
+<!-- Sweet Alert 2 plugin -->
+<script src="../assets/vendors/sweetalert2.js"></script>
+<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+<script src="../assets/vendors/jasny-bootstrap.min.js"></script>
+<!--  Full Calendar Plugin    -->
+<script src="../assets/vendors/fullcalendar.min.js"></script>
+<!-- TagsInput Plugin -->
+<script src="../assets/vendors/jquery.tagsinput.js"></script>
+<!-- Material Dashboard javascript methods -->
+<script src="../assets/js/topcore.js"></script>
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="../assets/js/demo.js"></script>
+</html>

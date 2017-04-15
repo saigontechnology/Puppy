@@ -29,7 +29,10 @@ namespace TopCore.WebAPI
         {
             IWebHostBuilder hostBuilder =
                 new WebHostBuilder()
-                    .UseKestrel()
+                    .UseKestrel(options =>
+                    {
+                        options.AddServerHeader = false;
+                    })
                     .UseWebRoot(Domain.Constants.Web.WebRoot)
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseIISIntegration()

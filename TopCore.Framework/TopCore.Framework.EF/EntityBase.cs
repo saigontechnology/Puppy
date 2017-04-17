@@ -22,14 +22,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TopCore.Framework.EF
 {
-    public abstract class EntityBase
+    public interface IEntityBase
     {
-        protected EntityBase(int createdBy)
+        
+    }
+
+    /// <summary>
+    /// Entity Base for Entity Framework
+    /// </summary>
+    /// <typeparam name="TId">Id type of this entity</typeparam>
+    /// <typeparam name="TOwnerId">Id type of who do the action of entity (for tracking)</typeparam>
+    public abstract class EntityBase<TId, TOwnerId> : IEntityBase
+    {
+        protected EntityBase(TOwnerId createdBy)
         {
             CreatedBy = createdBy;
         }
 
-        public int Id { get; set; }
+        public TId Id { get; set; }
 
         /// <summary>
         ///     Unique key
@@ -41,14 +51,14 @@ namespace TopCore.Framework.EF
         /// <summary>
         /// For tracking
         /// </summary>
-        public int? CreatedBy { get; set; }
+        public TOwnerId CreatedBy { get; set; }
 
         public DateTime? LastUpdatedOnUtc { get; set; }
 
         /// <summary>
         /// For tracking
         /// </summary>
-        public int? UpdatedBy { get; set; }
+        public TOwnerId UpdatedBy { get; set; }
 
         public bool IsDeleted { get; set; }
 
@@ -57,9 +67,16 @@ namespace TopCore.Framework.EF
         /// <summary>
         /// For tracking
         /// </summary>
-        public int? DeletedBy { get; set; }
+        public TOwnerId DeletedBy { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }
+    }
+
+    public abstract class EntityBase : EntityBase<int, int>
+    {
+        protected EntityBase(int createdBy) : base(createdBy)
+        {
+        }
     }
 }

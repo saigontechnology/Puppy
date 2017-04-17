@@ -39,6 +39,14 @@ namespace TopCore.WebAPI
 
             ConfigureHelper.DependencyInjection.Service(services);
 
+            // Use Entity Framework
+            services.AddDbContext<Data.EF.DbContext>(builder =>
+                builder.UseSqlServer(
+                    ConfigureHelper.Configuration.GetConnectionString(ConfigureHelper.Environment.EnvironmentName),
+                    options => options.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name)));
+
+            IMigrationService migrationService = services.Resolve<IMigrationService>();
+
             IMigrationService migrationService = services.Resolve<IMigrationService>();
 
             // migration database, need synchronous

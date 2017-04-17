@@ -63,7 +63,7 @@ namespace TopCore.Framework.EF
 
         public void StandardizeSaveChangeData(ChangeTracker changeTracker)
         {
-            var entities = changeTracker.Entries().Where(x => x.Entity is EntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
+            var entities = changeTracker.Entries().Where(x => x.Entity is IEntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
 
             DateTime utcNow = DateTime.UtcNow;
 

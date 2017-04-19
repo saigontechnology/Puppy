@@ -23,7 +23,6 @@ using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Interfaces.Data;
@@ -36,38 +35,26 @@ namespace TopCore.Auth.Service
     public class SeedAuthService : ISeedAuthService
     {
         private readonly IDbContext _dbContext;
-        private readonly IRepository<User> _userRepository;
         private readonly UserManager<User> _userManager;
-        private readonly IRepository<IdentityServer4.EntityFramework.Entities.Client> _clientRepository;
-        private readonly IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> _identityResourceRepository;
-        private readonly IRepository<IdentityServer4.EntityFramework.Entities.ApiResource> _apiResourceRepository;
 
         public SeedAuthService(
             IDbContext dbContext,
-            IRepository<User> userRepository,
-            UserManager<User> userManager,
-            IRepository<IdentityServer4.EntityFramework.Entities.Client> clientRepository,
-            IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> identityResourceRepository,
-            IRepository<IdentityServer4.EntityFramework.Entities.ApiResource> apiResourceRepository
+            UserManager<User> userManager
             )
         {
             _dbContext = dbContext;
-            _userRepository = userRepository;
             _userManager = userManager;
-            _clientRepository = clientRepository;
-            _identityResourceRepository = identityResourceRepository;
-            _apiResourceRepository = apiResourceRepository;
         }
 
         public Task SeedAuthDatabaseAsync()
         {
             // Run migrate first
-            var migrate = _dbContext.Database.MigrateAsync();
+            var migrate = _dbContext.MigrateDatabaseAsync();
             migrate.Wait();
             SeedScope_APIResource();
             SeedClientAuth();
             SeedClientMobileAndroid();
-            SeedClientMobileiOS();
+            SeedClientMobileiOs();
             SeedScope_IdentityResource();
             SeedUserTopNguyen();
             SeedUserHungNguyen();
@@ -101,7 +88,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _userRepository.Any(x => x.UserName == user.UserName);
+            var isExist = _dbContext.Any<User>(x => x.UserName == user.UserName);
 
             if (!isExist)
             {
@@ -135,7 +122,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _userRepository.Any(x => x.UserName == user.UserName);
+            var isExist = _dbContext.Any<User>(x => x.UserName == user.UserName);
 
             if (!isExist)
             {
@@ -169,7 +156,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _userRepository.Any(x => x.UserName == user.UserName);
+            var isExist = _dbContext.Any<User>(x => x.UserName == user.UserName);
 
             if (!isExist)
             {
@@ -202,11 +189,11 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExist = _clientRepository.Any(x => x.ClientId == webClient.ClientId);
+            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.Client>(x => x.ClientId == webClient.ClientId);
 
             if (!isExist)
             {
-                _clientRepository.Add(webClient);
+                _dbContext.Add(webClient);
             }
         }
 
@@ -236,17 +223,17 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExist = _clientRepository.Any(x => x.ClientId == mobileAndroidClient.ClientId);
+            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.Client>(x => x.ClientId == mobileAndroidClient.ClientId);
 
             if (!isExist)
             {
-                _clientRepository.Add(mobileAndroidClient);
+                _dbContext.Add(mobileAndroidClient);
             }
         }
 
-        private void SeedClientMobileiOS()
+        private void SeedClientMobileiOs()
         {
-            var mobileiOSClient = new Client
+            var mobileiOsClient = new Client
             {
                 Enabled = true,
                 AccessTokenType = AccessTokenType.Jwt,
@@ -270,11 +257,11 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExist = _clientRepository.Any(x => x.ClientId == mobileiOSClient.ClientId);
+            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.Client>(x => x.ClientId == mobileiOsClient.ClientId);
 
             if (!isExist)
             {
-                _clientRepository.Add(mobileiOSClient);
+                _dbContext.Add(mobileiOsClient);
             }
         }
 
@@ -282,11 +269,11 @@ namespace TopCore.Auth.Service
         {
             var apiResource = new ApiResource("topcore_api", "Top Core API").ToEntity();
 
-            var isExist = _apiResourceRepository.Any(x => x.Name == apiResource.Name);
+            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.ApiResource>(x => x.Name == apiResource.Name);
 
             if (!isExist)
             {
-                _apiResourceRepository.Add(apiResource);
+                _dbContext.Add(apiResource);
             }
         }
 
@@ -315,11 +302,11 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExistOpenIdResource = _identityResourceRepository.Any(x => x.Name == openIdResource.Name);
+            var isExistOpenIdResource = _dbContext.Any<IdentityResource>(x => x.Name == openIdResource.Name);
 
             if (!isExistOpenIdResource)
             {
-                _identityResourceRepository.Add(openIdResource);
+                _dbContext.Add(openIdResource);
             }
         }
     }

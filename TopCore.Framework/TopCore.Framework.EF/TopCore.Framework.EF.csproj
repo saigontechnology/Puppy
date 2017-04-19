@@ -15,10 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Templates\EntityClass.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" />
   </ItemGroup>
 
@@ -27,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Templates\EntityClass.cs" />
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational">
+      <HintPath>C:\Users\Top\.nuget\packages\microsoft.entityframeworkcore.relational\1.1.1\lib\netstandard1.3\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
 </Project>

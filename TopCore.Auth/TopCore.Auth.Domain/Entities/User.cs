@@ -18,14 +18,19 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
+using TopCore.Framework.EF;
 
 namespace TopCore.Auth.Domain.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser, IEntityBase
     {
         public DateTime CreatedOnUtc { get; set; }
 
         public DateTime? LastUpdatedOnUtc { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOnUtc { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }

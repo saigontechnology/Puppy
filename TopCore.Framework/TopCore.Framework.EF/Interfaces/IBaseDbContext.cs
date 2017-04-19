@@ -17,13 +17,11 @@
 
 #endregion License
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,11 +29,45 @@ namespace TopCore.Framework.EF.Interfaces
 {
     public interface IBaseDbContext : IDisposable
     {
-        DatabaseFacade Database { get; }
+        #region Database
 
-        ChangeTracker ChangeTracker { get; }
+        /// <summary>
+        ///     <para> Ensures that the database for the context exists. If it exists, no action is taken. If it does not exist then the database and all its schema are created. If the database exists, then no effort is made to ensure it is compatible with the model for this context. </para>
+        ///     <para> Note that this API does not use migrations to create the database. In addition, the database that is created cannot be later updated using migrations. If you are targeting a relational database and using migrations, you can use the DbContext.Database.Migrate() method to ensure the database is created and all migrations are applied. </para>
+        /// </summary>
+        /// <returns> True if the database is created, false if it already existed. </returns>
+        bool EnsureDatabaseCreated();
 
-        IModel Model { get; }
+        /// <summary>
+        ///     <para> Asynchronously ensures that the database for the context exists. If it exists, no action is taken. If it does not exist then the database and all its schema are created. If the database exists, then no effort is made to ensure it is compatible with the model for this context. </para>
+        ///     <para> Note that this API does not use migrations to create the database. In addition, the database that is created cannot be later updated using migrations. If you are targeting a relational database and using migrations, you can use the DbContext.Database.Migrate() method to ensure the database is created and all migrations are applied. </para>
+        /// </summary>
+        /// <param name="cancellationToken"> A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete. </param>
+        /// <returns> A task that represents the asynchronous save operation. The task result contains true if the database is created, false if it already existed. </returns>
+        Task<bool> EnsureDatabaseCreatedAsync(CancellationToken cancellationToken = new CancellationToken());
+
+        /// <summary>
+        ///     <para> Ensures that the database for the context does not exist. If it does not exist, no action is taken. If it does exist then the database is deleted. </para>
+        ///     <para> Warning: The entire database is deleted an no effort is made to remove just the database objects that are used by the model for this context. </para>
+        /// </summary>
+        /// <returns> True if the database is deleted, false if it did not exist. </returns>
+        bool EnsureDatabaseDeleted();
+
+        /// <summary>
+        ///     <para> Asynchronously ensures that the database for the context does not exist. If it does not exist, no action is taken. If it does exist then the database is deleted. </para>
+        ///     <para> Warning: The entire database is deleted an no effort is made to remove just the database objects that are used by the model for this context. </para>
+        /// </summary>
+        /// <param name="cancellationToken"> A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete. </param>
+        /// <returns> A task that represents the asynchronous save operation. The task result contains true if the database is deleted, false if it did not exist. </returns>
+        Task<bool> EnsureDatabaseDeletedAsync(CancellationToken cancellationToken = new CancellationToken());
+
+        void MigrateDatabase();
+
+        Task MigrateDatabaseAsync(CancellationToken cancellationToken = new CancellationToken());
+
+        #endregion
+
+        #region Save Change
 
         [DebuggerStepThrough]
         int SaveChanges();
@@ -43,66 +75,78 @@ namespace TopCore.Framework.EF.Interfaces
         [DebuggerStepThrough]
         int SaveChanges(bool acceptAllChangesOnSuccess);
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
 
-        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken());
 
-        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+        #endregion
 
-        EntityEntry Entry(object entity);
+        #region Count and Any
 
-        EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
+        bool Any<TEntity>() where TEntity : class;
 
-        Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class;
+        bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
 
-        EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class;
+        int Count<TEntity>() where TEntity : class;
 
-        EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class;
+        int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
 
-        EntityEntry<TEntity> Remove<TEntity>(TEntity entity) where TEntity : class;
+        #endregion
 
-        EntityEntry Add(object entity);
+        #region Get
 
-        Task<EntityEntry> AddAsync(object entity, CancellationToken cancellationToken = default(CancellationToken));
+        IQueryable<TEntity> AllIncluding<TEntity>(params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class;
 
-        EntityEntry Attach(object entity);
+        IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IEntityBase;
 
-        EntityEntry Update(object entity);
+        IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntityBase;
 
-        EntityEntry Remove(object entity);
+        TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IEntityBase;
 
-        void AddRange(params object[] entities);
+        TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntityBase;
 
-        Task AddRangeAsync(params object[] entities);
+        #endregion
 
-        void AttachRange(params object[] entities);
+        #region Add
 
-        void UpdateRange(params object[] entities);
+        TEntity Add<TEntity>(TEntity entity) where TEntity : class;
 
-        void RemoveRange(params object[] entities);
+        Task AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class;
 
-        void AddRange(IEnumerable<object> entities);
+        void AddRange<TEntity>(params TEntity[] entities) where TEntity : class;
 
-        Task AddRangeAsync(IEnumerable<object> entities, CancellationToken cancellationToken = new CancellationToken());
+        void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
 
-        void AttachRange(IEnumerable<object> entities);
+        Task AddRangeAsync<TEntity>(params TEntity[] entities) where TEntity : class;
 
-        void UpdateRange(IEnumerable<object> entities);
+        Task AddRangeAsync<TEntity>(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class;
 
-        void RemoveRange(IEnumerable<object> entities);
+        #endregion
 
-        DbSet<TEntity> Set<TEntity>() where TEntity : class;
+        #region Update
 
-        object Find(Type entityType, params object[] keyValues);
+        TEntity Update<TEntity>(TEntity entity) where TEntity : class;
 
-        Task<object> FindAsync(Type entityType, params object[] keyValues);
+        void UpdateRange<TEntity>(params TEntity[] entities) where TEntity : class;
 
-        Task<object> FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken);
+        void UpdateRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
 
-        TEntity Find<TEntity>(params object[] keyValues) where TEntity : class;
+        #endregion
 
-        Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class;
+        #region Remove
 
-        Task<TEntity> FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken) where TEntity : class;
+        void RemoveWhere<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false) where TEntity : class, IEntityBase;
+
+        TEntity Remove<TEntity>(TEntity entity, bool isPhysicalDelete = false) where TEntity : class, IEntityBase;
+
+        void RemoveRange<TEntity>(ICollection<TEntity> entities, bool isPhysicalDelete = false) where TEntity : class, IEntityBase;
+
+        void RemoveRange<TEntity>(bool isPhysicalDelete = false, params TEntity[] entities) where TEntity : class, IEntityBase;
+
+        void RemoveRange<TEntity>(params TEntity[] entities) where TEntity : class;
+
+        void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
+
+        #endregion
     }
 }

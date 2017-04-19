@@ -24,7 +24,16 @@ namespace TopCore.Framework.EF
 {
     public interface IEntityBase
     {
-        
+        DateTime CreatedOnUtc { get; set; }
+
+        DateTime? LastUpdatedOnUtc { get; set; }
+
+        bool IsDeleted { get; set; }
+
+        DateTime? DeletedOnUtc { get; set; }
+
+        [Timestamp]
+        byte[] Version { get; set; }
     }
 
     /// <summary>

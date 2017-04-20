@@ -1,11 +1,10 @@
-using System;
-using System.Threading.Tasks;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 using TopCore.Auth.Domain.Entities;
 
 namespace TopCore.Auth.Controllers

@@ -44,7 +44,6 @@ namespace TopCore.Auth
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-
             ConfigureHelper.Log.Middleware(app, loggerFactory);
 
             ConfigureHelper.Exception.Middleware(app);

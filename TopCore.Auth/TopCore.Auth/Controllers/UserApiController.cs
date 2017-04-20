@@ -1,6 +1,6 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Net;
 
 namespace TopCore.Auth.Controllers
 {

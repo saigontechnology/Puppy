@@ -134,6 +134,7 @@ namespace TopCore.Framework.EF.Interfaces
         #endregion
 
         #region Remove
+
         void Remove<T>(T entity) where T : class;
 
         void RemoveRange<T>(IEnumerable<T> entities) where T : class;

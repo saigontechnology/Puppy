@@ -1,5 +1,4 @@
-﻿using System;
-using IdentityServer4;
+﻿using IdentityServer4;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +14,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;

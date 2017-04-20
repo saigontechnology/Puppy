@@ -167,18 +167,18 @@ namespace TopCore.Auth.Data
                 switch (entity.State)
                 {
                     case EntityState.Added:
-                    {
-                        entity.Property(nameof(IBaseEntity.CreatedOnUtc)).CurrentValue = utcNow;
-                        entity.Property(nameof(IBaseEntity.LastUpdatedOnUtc)).CurrentValue = null;
-                        entity.Property(nameof(IBaseEntity.IsDeleted)).CurrentValue = false;
-                        entity.Property(nameof(IBaseEntity.DeletedOnUtc)).CurrentValue = null;
-                        break;
-                    }
+                        {
+                            entity.Property(nameof(IBaseEntity.CreatedOnUtc)).CurrentValue = utcNow;
+                            entity.Property(nameof(IBaseEntity.LastUpdatedOnUtc)).CurrentValue = null;
+                            entity.Property(nameof(IBaseEntity.IsDeleted)).CurrentValue = false;
+                            entity.Property(nameof(IBaseEntity.DeletedOnUtc)).CurrentValue = null;
+                            break;
+                        }
                     case EntityState.Modified:
-                    {
-                        entity.Property(nameof(IBaseEntity.LastUpdatedOnUtc)).CurrentValue = utcNow;
-                        break;
-                    }
+                        {
+                            entity.Property(nameof(IBaseEntity.LastUpdatedOnUtc)).CurrentValue = utcNow;
+                            break;
+                        }
                 }
             }
         }

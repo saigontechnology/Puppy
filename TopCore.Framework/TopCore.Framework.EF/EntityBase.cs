@@ -41,9 +41,9 @@ namespace TopCore.Framework.EF
     /// </summary>
     /// <typeparam name="TId">Id type of this entity</typeparam>
     /// <typeparam name="TOwnerId">Id type of who do the action of entity (for tracking)</typeparam>
-    public abstract class BaseEntity<TId, TOwnerId> : IBaseEntity
+    public abstract class EntityBase<TId, TOwnerId> : IBaseEntity
     {
-        protected BaseEntity(TOwnerId createdBy)
+        protected EntityBase(TOwnerId createdBy)
         {
             CreatedBy = createdBy;
         }
@@ -82,9 +82,9 @@ namespace TopCore.Framework.EF
         public byte[] Version { get; set; }
     }
 
-    public abstract class BaseEntity : BaseEntity<int, int>
+    public abstract class EntityBase : EntityBase<int, int>
     {
-        protected BaseEntity(int createdBy) : base(createdBy)
+        protected EntityBase(int createdBy) : base(createdBy)
         {
         }
     }

@@ -63,6 +63,7 @@
   <!-- Folder Include -->
   <ItemGroup>
     <Folder Include="assets\" />
+    <Folder Include="log\" />
   </ItemGroup>
 
   <!-- Library -->

@@ -57,3 +57,79 @@ dotnet ef database update  -v
 
 - Then Restart Visual Studio, try to use Add New Item.
 - Done
+
+# DbContext
+
+```csharp
+[PerRequestDependency(ServiceType = typeof(IDbContext))]
+public partial class DbContext : BaseDbContext, IDbContext
+{
+    public DbContext()
+    {
+    }
+
+    public DbContext(DbContextOptions<DbContext> options) : base(options)
+    {
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            string connectionString = ConfigHelper.GetValue("appsettings.json", $"ConnectionStrings:{environmentName}");
+            optionsBuilder.UseSqlServer(connectionString, o => o.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+        }
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+        {
+            relationship.DeleteBehavior = DeleteBehavior.Restrict;
+        }
+
+        // Keep under base for override and make end result
+        builder.AddConfigFromAssembly(typeof(IDataModule).GetTypeInfo().Assembly);
+    }
+}
+```
+
+# DbFactory
+```csharp
+public class DbContextFactory : IDbContextFactory<DbContext>
+{
+    public DbContext Create(DbContextFactoryOptions options)
+    {
+        var connectionString = GetConnectionString(options);
+        return CreateCoreContext(connectionString);
+    }
+
+    /// <summary>
+    /// Get connection from DbContextFactoryOptions Environment
+    /// </summary>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    private string GetConnectionString(DbContextFactoryOptions options)
+    {
+        var connectionString = ConfigHelper.GetValue("appsettings.json", $"ConnectionStrings:{options.EnvironmentName}");
+        return connectionString;
+    }
+
+    private static DbContext CreateCoreContext(string connectionString)
+    {
+        var builder = new DbContextOptionsBuilder<DbContext>();
+        builder.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+        return new DbContext(builder.Options);
+    }
+}
+```
+
+# IDbModule
+```csharp
+public interface IDataModule
+{
+}
+```

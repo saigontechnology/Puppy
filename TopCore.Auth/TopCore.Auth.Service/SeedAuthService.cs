@@ -302,7 +302,7 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExistOpenIdResource = _dbContext.Any<IdentityResource>(x => x.Name == openIdResource.Name);
+            var isExistOpenIdResource = _dbContext.Any<IdentityServer4.EntityFramework.Entities.IdentityResource>(x => x.Name == openIdResource.Name);
 
             if (!isExistOpenIdResource)
             {

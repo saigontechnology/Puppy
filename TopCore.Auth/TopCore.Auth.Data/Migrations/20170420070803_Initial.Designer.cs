@@ -8,7 +8,7 @@ using TopCore.Auth.Data;
 namespace TopCore.Auth.Data.Migrations
 {
     [DbContext(typeof(DbContext))]
-    [Migration("20170408054055_Initial")]
+    [Migration("20170420070803_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -590,8 +590,6 @@ namespace TopCore.Auth.Data.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<bool>("IsDeleted");
-
-                    b.Property<Guid>("Key");
 
                     b.Property<DateTime?>("LastUpdatedOnUtc");
 

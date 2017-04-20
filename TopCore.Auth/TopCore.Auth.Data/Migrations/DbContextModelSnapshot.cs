@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using TopCore.Auth.Data;
 
 namespace TopCore.Auth.Data.Migrations
 {
@@ -587,8 +589,6 @@ namespace TopCore.Auth.Data.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<bool>("IsDeleted");
-
-                    b.Property<Guid>("Key");
 
                     b.Property<DateTime?>("LastUpdatedOnUtc");
 

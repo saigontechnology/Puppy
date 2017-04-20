@@ -27,7 +27,7 @@ using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Framework.EF
 {
-    public class BaseDbContext : DbContext, IBaseDbContext
+    public class BaseDbContext : DbContext, IBaseDbContext, IBaseDbEntityContext
     {
         protected BaseDbContext()
         {
@@ -99,7 +99,7 @@ namespace TopCore.Framework.EF
 
         public void StandardizeSaveChangeData(ChangeTracker changeTracker)
         {
-            var entities = changeTracker.Entries().Where(x => x.Entity is IEntityBase && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
+            var entities = changeTracker.Entries().Where(x => x.Entity is IBaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
 
             DateTime utcNow = DateTime.UtcNow;
 
@@ -109,15 +109,15 @@ namespace TopCore.Framework.EF
                 {
                     case EntityState.Added:
                         {
-                            entity.Property(nameof(IEntityBase.CreatedOnUtc)).CurrentValue = utcNow;
-                            entity.Property(nameof(IEntityBase.LastUpdatedOnUtc)).CurrentValue = null;
-                            entity.Property(nameof(IEntityBase.IsDeleted)).CurrentValue = false;
-                            entity.Property(nameof(IEntityBase.DeletedOnUtc)).CurrentValue = null;
+                            entity.Property(nameof(IBaseEntity.CreatedOnUtc)).CurrentValue = utcNow;
+                            entity.Property(nameof(IBaseEntity.LastUpdatedOnUtc)).CurrentValue = null;
+                            entity.Property(nameof(IBaseEntity.IsDeleted)).CurrentValue = false;
+                            entity.Property(nameof(IBaseEntity.DeletedOnUtc)).CurrentValue = null;
                             break;
                         }
                     case EntityState.Modified:
                         {
-                            entity.Property(nameof(IEntityBase.LastUpdatedOnUtc)).CurrentValue = utcNow;
+                            entity.Property(nameof(IBaseEntity.LastUpdatedOnUtc)).CurrentValue = utcNow;
                             break;
                         }
                 }
@@ -128,33 +128,33 @@ namespace TopCore.Framework.EF
 
         #region Count and Any
 
-        public bool Any<TEntity>() where TEntity : class
+        public bool Any<T>() where T : class
         {
-            return Set<TEntity>().Any();
+            return Set<T>().Any();
         }
 
-        public bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public bool Any<T>(Expression<Func<T, bool>> predicate) where T : class
         {
-            return Set<TEntity>().Any(predicate);
+            return Set<T>().Any(predicate);
         }
 
-        public int Count<TEntity>() where TEntity : class
+        public int Count<T>() where T : class
         {
-            return Set<TEntity>().Count();
+            return Set<T>().Count();
         }
 
-        public int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public int Count<T>(Expression<Func<T, bool>> predicate) where T : class
         {
-            return Set<TEntity>().Count(predicate);
+            return Set<T>().Count(predicate);
         }
 
         #endregion
 
-        #region Get
+        #region Where
 
-        public IQueryable<TEntity> AllIncluding<TEntity>(params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class
+        public IQueryable<T> AllIncluding<T>(params Expression<Func<T, object>>[] includeProperties) where T : class
         {
-            IQueryable<TEntity> query = Set<TEntity>();
+            IQueryable<T> query = Set<T>();
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
@@ -162,13 +162,37 @@ namespace TopCore.Framework.EF
             return query;
         }
 
-        public IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IEntityBase
+        public IQueryable<T> Where<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return Set<T>().Where(predicate);
+        }
+
+        public IQueryable<T> Where<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class
+        {
+            return AllIncluding(includeProperties).Where(predicate);
+        }
+
+        public T Single<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return Where(predicate).FirstOrDefault();
+        }
+
+        public T Single<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class
+        {
+            return Where(predicate, includeProperties).FirstOrDefault();
+        }
+
+        #endregion
+
+        #region Get
+
+        public IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity
         {
             IQueryable<TEntity> query = Set<TEntity>().Where(predicate);
             return isIncludeDeleted ? query : query.Where(x => !x.IsDeleted);
         }
 
-        public IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntityBase
+        public IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IBaseEntity
         {
             IQueryable<TEntity> query = Get(predicate, isIncludeDeleted);
             foreach (var includeProperty in includeProperties)
@@ -178,12 +202,12 @@ namespace TopCore.Framework.EF
             return query;
         }
 
-        public TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IEntityBase
+        public TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity
         {
             return Get(predicate, isIncludeDeleted).FirstOrDefault();
         }
 
-        public TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntityBase
+        public TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IBaseEntity
         {
             return Get(predicate, isIncludeDeleted, includeProperties).FirstOrDefault();
         }
@@ -192,80 +216,67 @@ namespace TopCore.Framework.EF
 
         #region Add
 
-        public new TEntity Add<TEntity>(TEntity entity) where TEntity : class
+        public new T Add<T>(T entity) where T : class
         {
-            entity = Set<TEntity>().Add(entity).Entity;
+            entity = Set<T>().Add(entity).Entity;
             return entity;
         }
 
-        public new Task AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class
+        public new Task AddAsync<T>(T entity, CancellationToken cancellationToken = new CancellationToken()) where T : class
         {
-            return Set<TEntity>().AddAsync(entity, cancellationToken);
+            return Set<T>().AddAsync(entity, cancellationToken);
         }
 
-        public void AddRange<TEntity>(params TEntity[] entities) where TEntity : class
+        public void AddRange<T>(params T[] entities) where T : class
         {
-            Set<TEntity>().AddRange(entities);
+            Set<T>().AddRange(entities);
         }
 
-        public void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
+        public void AddRange<T>(IEnumerable<T> entities) where T : class
         {
-            Set<TEntity>().AddRange(entities);
+            Set<T>().AddRange(entities);
         }
 
-        public Task AddRangeAsync<TEntity>(params TEntity[] entities) where TEntity : class
+        public Task AddRangeAsync<T>(params T[] entities) where T : class
         {
-            return Set<TEntity>().AddRangeAsync(entities);
+            return Set<T>().AddRangeAsync(entities);
         }
 
-        public Task AddRangeAsync<TEntity>(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class
+        public Task AddRangeAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = new CancellationToken()) where T : class
         {
-            return Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+            return Set<T>().AddRangeAsync(entities, cancellationToken);
         }
 
         #endregion
 
         #region Update
 
-        public new TEntity Update<TEntity>(TEntity entity) where TEntity : class
+        public new T Update<T>(T entity) where T : class
         {
-            entity = Set<TEntity>().Update(entity).Entity;
+            entity = Set<T>().Update(entity).Entity;
             return entity;
         }
 
-        public void UpdateRange<TEntity>(params TEntity[] entities) where TEntity : class
+        public void UpdateRange<T>(params T[] entities) where T : class
         {
-            Set<TEntity>().UpdateRange(entities);
+            Set<T>().UpdateRange(entities);
         }
 
-        public void UpdateRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
+        public void UpdateRange<T>(IEnumerable<T> entities) where T : class
         {
-            Set<TEntity>().UpdateRange(entities);
+            Set<T>().UpdateRange(entities);
         }
 
         #endregion
 
         #region Remove
 
-        public void RemoveWhere<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false) where TEntity : class, IEntityBase
+        public new void Remove<T>(T entity) where T : class
         {
-            var query = Get(predicate);
-            RemoveRange(query, isPhysicalDelete);
+            Set<T>().RemoveRange(entity);
         }
 
-        public TEntity Remove<TEntity>(TEntity entity, bool isPhysicalDelete = false) where TEntity : class, IEntityBase
-        {
-            if (!isPhysicalDelete)
-            {
-                entity.IsDeleted = true;
-                entity.DeletedOnUtc = DateTime.UtcNow;
-                return Update(entity);
-            }
-            entity = Set<TEntity>().Remove(entity).Entity;
-            return entity;
-        }
-
-        public void RemoveRange<TEntity>(ICollection<TEntity> entities, bool isPhysicalDelete = false) where TEntity : class, IEntityBase
+        public void RemoveRange<T>(ICollection<T> entities, bool isPhysicalDelete = false) where T : class, IBaseEntity
         {
             if (!isPhysicalDelete)
             {
@@ -273,7 +284,58 @@ namespace TopCore.Framework.EF
                 {
                     entity.IsDeleted = true;
                     entity.DeletedOnUtc = DateTime.UtcNow;
-                    Set<TEntity>().Update(entity);
+                    Set<T>().Update(entity);
+                }
+            }
+            else
+            {
+                Set<T>().RemoveRange(entities);
+            }
+        }
+
+        public void RemoveRange<T>(bool isPhysicalDelete = false, params T[] entities) where T : class, IBaseEntity
+        {
+            RemoveRange(entities, isPhysicalDelete);
+        }
+
+        public void RemoveRange<T>(params T[] entities) where T : class
+        {
+            Set<T>().RemoveRange(entities);
+        }
+
+        public void RemoveRange<T>(IEnumerable<T> entities) where T : class
+        {
+            Set<T>().RemoveRange(entities);
+        }
+
+        public void RemoveWhere<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            var query = Where(predicate).AsEnumerable();
+            RemoveRange(query);
+        }
+
+        #endregion
+
+        #region Delete
+
+        public void Delete<TEntity>(TEntity entity, bool isPhysicalDelete = false) where TEntity : class, IBaseEntity
+        {
+            if (!isPhysicalDelete)
+            {
+                entity.IsDeleted = true;
+                entity.DeletedOnUtc = DateTime.UtcNow;
+                Update(entity);
+            }
+            Set<TEntity>().Remove(entity);
+        }
+
+        public void DeleteRange<TEntity>(IEnumerable<TEntity> entities, bool isPhysicalDelete = false) where TEntity : class, IBaseEntity
+        {
+            if (!isPhysicalDelete)
+            {
+                foreach (var entity in entities)
+                {
+                    Delete(entity);
                 }
             }
             else
@@ -282,19 +344,15 @@ namespace TopCore.Framework.EF
             }
         }
 
-        public void RemoveRange<TEntity>(bool isPhysicalDelete = false, params TEntity[] entities) where TEntity : class, IEntityBase
+        public void DeleteRange<TEntity>(bool isPhysicalDelete = false, params TEntity[] entities) where TEntity : class, IBaseEntity
         {
-            RemoveRange(entities, isPhysicalDelete);
+            DeleteRange(entities, isPhysicalDelete);
         }
 
-        public void RemoveRange<TEntity>(params TEntity[] entities) where TEntity : class
+        public void DeleteWhere<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false) where TEntity : class, IBaseEntity
         {
-            Set<TEntity>().RemoveRange(entities);
-        }
-
-        public void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
-        {
-            Set<TEntity>().RemoveRange(entities);
+            var query = Get(predicate, isPhysicalDelete).AsEnumerable();
+            DeleteRange(query, isPhysicalDelete);
         }
 
         #endregion

@@ -19,7 +19,7 @@ using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Auth.Domain.Interfaces.Data
 {
-    public interface IDbContext : IBaseDbContext
+    public interface IDbContext : IBaseDbContext, IBaseDbEntityContext
     {
     }
 }

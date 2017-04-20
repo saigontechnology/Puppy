@@ -83,69 +83,64 @@ namespace TopCore.Framework.EF.Interfaces
 
         #region Count and Any
 
-        bool Any<TEntity>() where TEntity : class;
+        bool Any<T>() where T : class;
 
-        bool Any<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
+        bool Any<T>(Expression<Func<T, bool>> predicate) where T : class;
 
-        int Count<TEntity>() where TEntity : class;
+        int Count<T>() where T : class;
 
-        int Count<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
+        int Count<T>(Expression<Func<T, bool>> predicate) where T : class;
 
         #endregion
 
-        #region Get
+        #region Where
 
-        IQueryable<TEntity> AllIncluding<TEntity>(params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class;
+        IQueryable<T> AllIncluding<T>(params Expression<Func<T, object>>[] includeProperties) where T : class;
 
-        IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IEntityBase;
+        IQueryable<T> Where<T>(Expression<Func<T, bool>> predicate) where T : class;
 
-        IQueryable<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntityBase;
+        IQueryable<T> Where<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
 
-        TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IEntityBase;
+        T Single<T>(Expression<Func<T, bool>> predicate) where T : class;
 
-        TEntity GetSingle<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IEntityBase;
+        T Single<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
 
         #endregion
 
         #region Add
 
-        TEntity Add<TEntity>(TEntity entity) where TEntity : class;
+        T Add<T>(T entity) where T : class;
 
-        Task AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class;
+        Task AddAsync<T>(T entity, CancellationToken cancellationToken = new CancellationToken()) where T : class;
 
-        void AddRange<TEntity>(params TEntity[] entities) where TEntity : class;
+        void AddRange<T>(params T[] entities) where T : class;
 
-        void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
+        void AddRange<T>(IEnumerable<T> entities) where T : class;
 
-        Task AddRangeAsync<TEntity>(params TEntity[] entities) where TEntity : class;
+        Task AddRangeAsync<T>(params T[] entities) where T : class;
 
-        Task AddRangeAsync<TEntity>(IEnumerable<TEntity> entities, CancellationToken cancellationToken = new CancellationToken()) where TEntity : class;
+        Task AddRangeAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = new CancellationToken()) where T : class;
 
         #endregion
 
         #region Update
 
-        TEntity Update<TEntity>(TEntity entity) where TEntity : class;
+        T Update<T>(T entity) where T : class;
 
-        void UpdateRange<TEntity>(params TEntity[] entities) where TEntity : class;
+        void UpdateRange<T>(params T[] entities) where T : class;
 
-        void UpdateRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
+        void UpdateRange<T>(IEnumerable<T> entities) where T : class;
 
         #endregion
 
         #region Remove
+        void Remove<T>(T entity) where T : class;
 
-        void RemoveWhere<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false) where TEntity : class, IEntityBase;
+        void RemoveRange<T>(IEnumerable<T> entities) where T : class;
 
-        TEntity Remove<TEntity>(TEntity entity, bool isPhysicalDelete = false) where TEntity : class, IEntityBase;
+        void RemoveRange<T>(params T[] entities) where T : class;
 
-        void RemoveRange<TEntity>(ICollection<TEntity> entities, bool isPhysicalDelete = false) where TEntity : class, IEntityBase;
-
-        void RemoveRange<TEntity>(bool isPhysicalDelete = false, params TEntity[] entities) where TEntity : class, IEntityBase;
-
-        void RemoveRange<TEntity>(params TEntity[] entities) where TEntity : class;
-
-        void RemoveRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
+        void RemoveWhere<T>(Expression<Func<T, bool>> predicate) where T : class;
 
         #endregion
     }

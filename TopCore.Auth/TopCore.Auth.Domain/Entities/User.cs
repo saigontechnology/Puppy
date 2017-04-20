@@ -22,7 +22,7 @@ using TopCore.Framework.EF;
 
 namespace TopCore.Auth.Domain.Entities
 {
-    public class User : IdentityUser, IEntityBase
+    public class User : IdentityUser, IBaseEntity
     {
         public DateTime CreatedOnUtc { get; set; }
 

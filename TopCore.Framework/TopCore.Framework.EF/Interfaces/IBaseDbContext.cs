@@ -81,29 +81,57 @@ namespace TopCore.Framework.EF.Interfaces
 
         #endregion
 
-        #region Count and Any
+        #region Any
 
         bool Any<T>() where T : class;
 
+        Task<bool> AnyAsync<T>() where T : class;
+
         bool Any<T>(Expression<Func<T, bool>> predicate) where T : class;
 
-        int Count<T>() where T : class;
-
-        int Count<T>(Expression<Func<T, bool>> predicate) where T : class;
+        Task<bool> AnyAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
 
         #endregion
 
-        #region Where
+        #region Count
+
+        int Count<T>() where T : class;
+
+        Task<int> CountAsync<T>() where T : class;
+
+        int Count<T>(Expression<Func<T, bool>> predicate) where T : class;
+
+        Task<int> CountAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
+
+        #endregion
+
+        #region Long Count
+
+        long LongCount<T>() where T : class;
+
+        Task<long> LongCountAsync<T>() where T : class;
+
+        long LongCount<T>(Expression<Func<T, bool>> predicate) where T : class;
+
+        Task<long> LongCountAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
+
+        #endregion
+
+        #region Get
 
         IQueryable<T> AllIncluding<T>(params Expression<Func<T, object>>[] includeProperties) where T : class;
 
-        IQueryable<T> Where<T>(Expression<Func<T, bool>> predicate) where T : class;
+        IQueryable<T> Get<T>(Expression<Func<T, bool>> predicate) where T : class;
 
-        IQueryable<T> Where<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
+        IQueryable<T> Get<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
 
-        T Single<T>(Expression<Func<T, bool>> predicate) where T : class;
+        T GetSingle<T>(Expression<Func<T, bool>> predicate) where T : class;
 
-        T Single<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
+        Task<T> GetSingleAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
+
+        T GetSingle<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
+
+        Task<T> GetSingleAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
 
         #endregion
 
@@ -133,15 +161,15 @@ namespace TopCore.Framework.EF.Interfaces
 
         #endregion
 
-        #region Remove
+        #region Delete
 
-        void Remove<T>(T entity) where T : class;
+        void Delete<T>(T entity) where T : class;
 
-        void RemoveRange<T>(IEnumerable<T> entities) where T : class;
+        void DeleteRange<T>(IEnumerable<T> entities) where T : class;
 
-        void RemoveRange<T>(params T[] entities) where T : class;
+        void DeleteRange<T>(params T[] entities) where T : class;
 
-        void RemoveWhere<T>(Expression<Func<T, bool>> predicate) where T : class;
+        void DeleteWhere<T>(Expression<Func<T, bool>> predicate) where T : class;
 
         #endregion
     }

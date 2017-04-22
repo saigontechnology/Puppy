@@ -27,43 +27,6 @@ namespace TopCore.Framework.EF.Interfaces
 {
     public interface IBaseDbEntityContext
     {
-
-        #region Any
-
-        bool AnyEntity<TEntity>(bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        Task<bool> AnyEntityAsync<TEntity>(bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        bool AnyEntity<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        Task<bool> AnyEntityAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        #endregion
-
-        #region Count
-
-        int CountEntity<TEntity>(bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        Task<int> CountEntityAsync<TEntity>(bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        int CountEntity<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        Task<int> CountEntityAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        #endregion
-
-        #region Long Count
-
-        long LongCountEntity<TEntity>(bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        Task<long> LongCountEntityAsync<TEntity>(bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        long LongCountEntity<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        Task<long> LongCountEntityAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
-
-        #endregion
-
         #region Get
 
         IQueryable<TEntity> GetEntity<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;

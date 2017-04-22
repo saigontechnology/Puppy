@@ -81,42 +81,6 @@ namespace TopCore.Framework.EF.Interfaces
 
         #endregion
 
-        #region Any
-
-        bool Any<T>() where T : class;
-
-        Task<bool> AnyAsync<T>() where T : class;
-
-        bool Any<T>(Expression<Func<T, bool>> predicate) where T : class;
-
-        Task<bool> AnyAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
-
-        #endregion
-
-        #region Count
-
-        int Count<T>() where T : class;
-
-        Task<int> CountAsync<T>() where T : class;
-
-        int Count<T>(Expression<Func<T, bool>> predicate) where T : class;
-
-        Task<int> CountAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
-
-        #endregion
-
-        #region Long Count
-
-        long LongCount<T>() where T : class;
-
-        Task<long> LongCountAsync<T>() where T : class;
-
-        long LongCount<T>(Expression<Func<T, bool>> predicate) where T : class;
-
-        Task<long> LongCountAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
-
-        #endregion
-
         #region Get
 
         IQueryable<T> AllIncluding<T>(params Expression<Func<T, object>>[] includeProperties) where T : class;

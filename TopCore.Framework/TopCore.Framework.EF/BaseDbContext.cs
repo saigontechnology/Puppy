@@ -273,7 +273,7 @@ namespace TopCore.Framework.EF
 
         public new void Remove<T>(T entity) where T : class
         {
-            Set<T>().RemoveRange(entity);
+            Set<T>().Remove(entity);
         }
 
         public void RemoveRange<T>(ICollection<T> entities, bool isPhysicalDelete = false) where T : class, IBaseEntity

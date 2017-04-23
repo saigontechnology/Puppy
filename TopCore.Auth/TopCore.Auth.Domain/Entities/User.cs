@@ -15,9 +15,9 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using TopCore.Framework.EF;
 
 namespace TopCore.Auth.Domain.Entities

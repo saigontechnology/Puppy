@@ -17,13 +17,15 @@
 
 #endregion License
 
+using System.Linq;
+using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Interfaces.Data;
 using TopCore.Auth.Domain.Interfaces.Services;
@@ -36,20 +38,29 @@ namespace TopCore.Auth.Service
     {
         private readonly IDbContext _dbContext;
         private readonly UserManager<User> _userManager;
+        private readonly IRepository<User> _userRepository;
+        private readonly IRepository<IdentityServer4.EntityFramework.Entities.Client> _clientRepository;
+        private readonly IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> _identityResourceRepository;
 
         public SeedAuthService(
             IDbContext dbContext,
-            UserManager<User> userManager
+            UserManager<User> userManager,
+            IRepository<User> userRepository,
+            IRepository<IdentityServer4.EntityFramework.Entities.Client> clientRepository,
+            IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> identityResourceRepository
             )
         {
             _dbContext = dbContext;
             _userManager = userManager;
+            _userRepository = userRepository;
+            _clientRepository = clientRepository;
+            _identityResourceRepository = identityResourceRepository;
         }
 
         public Task SeedAuthDatabaseAsync()
         {
             // Run migrate first
-            var migrate = _dbContext.MigrateDatabaseAsync();
+            var migrate = _dbContext.Database.MigrateAsync();
             migrate.Wait();
             SeedScope_APIResource();
             SeedClientAuth();
@@ -88,7 +99,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _dbContext.Any<User>(x => x.UserName == user.UserName);
+            var isExist = _userRepository.Get(x => x.UserName == user.UserName).Any();
 
             if (!isExist)
             {
@@ -122,7 +133,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _dbContext.Any<User>(x => x.UserName == user.UserName);
+            var isExist = _userRepository.Get(x => x.UserName == user.UserName).Any();
 
             if (!isExist)
             {
@@ -156,7 +167,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _dbContext.Any<User>(x => x.UserName == user.UserName);
+            var isExist = _userRepository.Get(x => x.UserName == user.UserName).Any();
 
             if (!isExist)
             {
@@ -189,7 +200,7 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.Client>(x => x.ClientId == webClient.ClientId);
+            var isExist = _clientRepository.Get(x => x.ClientId == webClient.ClientId).Any();
 
             if (!isExist)
             {
@@ -223,7 +234,7 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.Client>(x => x.ClientId == mobileAndroidClient.ClientId);
+            var isExist = _clientRepository.Get(x => x.ClientId == mobileAndroidClient.ClientId).Any();
 
             if (!isExist)
             {
@@ -257,7 +268,7 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.Client>(x => x.ClientId == mobileiOsClient.ClientId);
+            var isExist = _clientRepository.Get(x => x.ClientId == mobileiOsClient.ClientId).Any();
 
             if (!isExist)
             {
@@ -269,7 +280,7 @@ namespace TopCore.Auth.Service
         {
             var apiResource = new ApiResource("topcore_api", "Top Core API").ToEntity();
 
-            var isExist = _dbContext.Any<IdentityServer4.EntityFramework.Entities.ApiResource>(x => x.Name == apiResource.Name);
+            var isExist = _identityResourceRepository.Get(x => x.Name == apiResource.Name).Any();
 
             if (!isExist)
             {
@@ -302,7 +313,7 @@ namespace TopCore.Auth.Service
                 }
             }.ToEntity();
 
-            var isExistOpenIdResource = _dbContext.Any<IdentityServer4.EntityFramework.Entities.IdentityResource>(x => x.Name == openIdResource.Name);
+            var isExistOpenIdResource = _identityResourceRepository.Get(x => x.Name == openIdResource.Name).Any();
 
             if (!isExistOpenIdResource)
             {

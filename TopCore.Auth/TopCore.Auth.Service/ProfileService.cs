@@ -38,12 +38,12 @@ namespace TopCore.Auth.Service
     public class ProfileService : IProfileService, IdentityServer4.Services.IProfileService
     {
         private readonly UserManager<User> _userManager;
-        private readonly IDbContext _dbContext;
+        private readonly IRepository<User> _userRepository;
 
-        public ProfileService(UserManager<User> userManager, IDbContext dbContext)
+        public ProfileService(UserManager<User> userManager, IRepository<User> userRepository)
         {
             _userManager = userManager;
-            _dbContext = dbContext;
+            _userRepository = userRepository;
         }
 
         public async Task IsActiveAsync(IsActiveContext context)
@@ -105,7 +105,7 @@ namespace TopCore.Auth.Service
 
         private async Task<IEnumerable<Claim>> GetClaimsFromUser(User user)
         {
-            User userData = _dbContext.Get<User>(x => x.Id == user.Id).FirstOrDefault();
+            User userData = _userRepository.Get(x => x.Id == user.Id).FirstOrDefault();
 
             if (userData == null)
             {

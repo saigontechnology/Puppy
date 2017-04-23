@@ -47,8 +47,6 @@ namespace TopCore.Framework.EF.Interfaces
 
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
 
-        void StandardizeSaveChangeData(ChangeTracker changeTracker);
-
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         EntityEntry Entry(object entity);
@@ -94,7 +92,7 @@ namespace TopCore.Framework.EF.Interfaces
 
         void RemoveRange(IEnumerable<object> entities);
 
-        DbSet<TEntity> DbSet<TEntity>() where TEntity : class;
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
         object Find(Type entityType, params object[] keyValues);
 

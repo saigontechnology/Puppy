@@ -1,15 +1,17 @@
 ﻿#region	License
 //------------------------------------------------------------------------------------------------
 // <License>
+//     <Copyright> 2017 © Top Nguyen → AspNetCore → Topcore </Copyright>
+//     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> TopCore.Auth.Domain.Data </Project>
+//     <Project> Topcore → Interface </Project>
 //     <File>
-//         <Name> IDbContext </Name>
-//         <Created> 06 Apr 17 1:18:11 PM </Created>
-//         <Key> 87e0de9a-30e5-4263-bb7d-198f651df622 </Key>
+//         <Name> IRepository.cs </Name>
+//         <Created> 23 Apr 17 11:06:31 PM </Created>
+//         <Key> ec5b64d7-7c48-4f24-be4f-1ce91574429a </Key>
 //     </File>
 //     <Summary>
-//         IDbContext
+//         IRepository.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -19,7 +21,7 @@ using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Auth.Domain.Interfaces.Data
 {
-    public interface IDbContext : IBaseDbContext
+    public interface IRepository<T> : IBaseRepository<T>, IBaseEntityRepository where T : class
     {
     }
 }

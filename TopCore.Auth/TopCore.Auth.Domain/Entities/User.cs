@@ -24,13 +24,13 @@ namespace TopCore.Auth.Domain.Entities
 {
     public class User : IdentityUser, IBaseEntity
     {
-        public DateTime CreatedOnUtc { get; set; }
+        public DateTimeOffset CreatedOnUtc { get; set; }
 
-        public DateTime? LastUpdatedOnUtc { get; set; }
+        public DateTimeOffset? LastUpdatedOnUtc { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public DateTime? DeletedOnUtc { get; set; }
+        public DateTimeOffset? DeletedOnUtc { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }

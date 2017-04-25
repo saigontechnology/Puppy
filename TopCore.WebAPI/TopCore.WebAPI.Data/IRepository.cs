@@ -15,11 +15,12 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using TopCore.Framework.EF;
 using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.WebAPI.Data
 {
-    public interface IRepository<TEntity> : IBaseRepository<TEntity>
+    public interface IRepository<TEntity> : IBaseEntityRepository<TEntity> where TEntity : class, IBaseEntity
     {
     }
 }

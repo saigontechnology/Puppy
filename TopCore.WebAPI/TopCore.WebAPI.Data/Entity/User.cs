@@ -24,10 +24,6 @@ namespace TopCore.WebAPI.Data.Entity
 {
     public class User : EntityBase
     {
-        public User(int createdBy) : base(createdBy)
-        {
-        }
-
         public string UserName { get; set; }
     }
 }

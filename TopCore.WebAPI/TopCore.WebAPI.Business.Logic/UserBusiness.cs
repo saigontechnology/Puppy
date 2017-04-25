@@ -33,7 +33,7 @@ namespace TopCore.WebAPI.Business.Logic
 
         public void Add(string userName)
         {
-            User user = new User(0)
+            User user = new User
             {
                 UserName = userName
             };

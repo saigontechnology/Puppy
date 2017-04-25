@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TopCore.Framework.DependencyInjection;
+using TopCore.WebAPI.Data.EF.Factory;
 using TopCore.WebAPI.Service;
 
 namespace TopCore.WebAPI
@@ -44,8 +47,6 @@ namespace TopCore.WebAPI
                 builder.UseSqlServer(
                     ConfigureHelper.Configuration.GetConnectionString(ConfigureHelper.Environment.EnvironmentName),
                     options => options.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name)));
-
-            IMigrationService migrationService = services.Resolve<IMigrationService>();
 
             IMigrationService migrationService = services.Resolve<IMigrationService>();
 

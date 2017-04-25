@@ -21,7 +21,7 @@ using TopCore.Framework.EF;
 namespace TopCore.WebAPI.Data.EF
 {
     [PerRequestDependency(ServiceType = typeof(IRepository<>))]
-    public class Repository<TEntity> : BaseRepository<TEntity>, IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : BaseEntityRepository<TEntity>, IRepository<TEntity> where TEntity : class, IBaseEntity
     {
         public Repository(IDbContext dbContext) : base(dbContext)
         {

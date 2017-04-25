@@ -17,22 +17,15 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System.Linq;
 using AutoMapper;
 
 namespace TopCore.Framework.AutoMapper
 {
     public static class AutoMapperExtensions
     {
-        public static IMappingExpression<TSource, TDestination> IgnoreAllNonExisting<TSource, TDestination>(this IMappingExpression<TSource, TDestination> expression)
+        public static IMappingExpression<TSource, TDestination> IgnoreAll<TSource, TDestination>(this IMappingExpression<TSource, TDestination> expression)
         {
-            var sourceType = typeof(TSource);
-            var destinationType = typeof(TDestination);
-            var existingMaps = Mapper.Configuration.GetAllTypeMaps().First(x => x.SourceType == sourceType && x.DestinationType == destinationType);
-            foreach (var property in existingMaps.GetUnmappedPropertyNames())
-            {
-                expression.ForMember(property, opt => opt.Ignore());
-            }
+            expression.ForAllMembers(opt => opt.Ignore());
             return expression;
         }
     }

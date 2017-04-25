@@ -19,6 +19,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using TopCore.Framework.Core.DateTimeUtils;
 
 namespace TopCore.Framework.EF
 {
@@ -43,11 +44,6 @@ namespace TopCore.Framework.EF
     /// <typeparam name="TOwnerId">Id type of who do the action of entity (for tracking)</typeparam>
     public abstract class EntityBase<TId, TOwnerId> : IBaseEntity
     {
-        protected EntityBase(TOwnerId createdBy)
-        {
-            CreatedBy = createdBy;
-        }
-
         public TId Id { get; set; }
 
         /// <summary>
@@ -82,10 +78,10 @@ namespace TopCore.Framework.EF
         public byte[] Version { get; set; }
     }
 
-    public abstract class EntityBase : EntityBase<int, int>
+    public abstract class EntityBase : EntityBase<int, int?>
     {
-        protected EntityBase(int createdBy) : base(createdBy)
-        {
-        }
+        public new int? CreatedBy { get; set; } = null;
+        public new int? UpdatedBy { get; set; } = null;
+        public new int? DeletedBy { get; set; } = null;
     }
 }

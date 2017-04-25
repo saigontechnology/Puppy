@@ -17,27 +17,27 @@
     },
     "Development": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "http://localhost:7001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:7001/"
     },
     "Staging": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "http://localhost:7002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Staging"
-      }
+      },
+      "applicationUrl": "http://localhost:7002/"
     },
     "Production": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "http://localhost:7003",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
-      }
+      },
+      "applicationUrl": "http://localhost:7003/"
     }
   }
 }

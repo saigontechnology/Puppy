@@ -25,11 +25,11 @@ namespace TopCore.Framework.EF.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {
-        IQueryable<T> AllInclude(params Expression<Func<T, object>>[] includeProperties);
+        IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties);
 
-        IQueryable<T> Get(Expression<Func<T, bool>> predicate = null);
+        IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
 
-        T GetSingle(Expression<Func<T, bool>> predicate);
+        T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
 
         T Add(T entity);
 

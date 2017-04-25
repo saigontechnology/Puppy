@@ -23,20 +23,20 @@ using System.Linq.Expressions;
 
 namespace TopCore.Framework.EF.Interfaces
 {
-    public interface IBaseEntityRepository
+    public interface IBaseEntityRepository<TEntity> where TEntity : class, IBaseEntity
     {
-        IQueryable<TEntity> AllInclude<TEntity>(params Expression<Func<TEntity, object>>[] includeProperties) where TEntity : class, IBaseEntity;
+        IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
 
-        IQueryable<TEntity> GetEntity<TEntity>(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
 
-        TEntity GetSingleEntity<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false) where TEntity : class, IBaseEntity;
+        TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
 
-        TEntity AddEntity<TEntity>(TEntity entity) where TEntity : class, IBaseEntity;
+        TEntity Add(TEntity entity);
 
-        TEntity UpdateEntity<TEntity>(TEntity entity) where TEntity : class, IBaseEntity;
+        TEntity Update(TEntity entity);
 
-        void DeleteEntity<TEntity>(TEntity entity, bool isPhysicalDelete = false) where TEntity : class, IBaseEntity;
+        void Delete(TEntity entity, bool isPhysicalDelete = false);
 
-        void DeleteEntityWhere<TEntity>(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false) where TEntity : class, IBaseEntity;
+        void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
     }
 }

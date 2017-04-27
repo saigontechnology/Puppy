@@ -24,6 +24,7 @@ using System.Reflection;
 
 namespace TopCore.Framework.DependencyInjection
 {
+    // ReSharper disable once InconsistentNaming
     public static class IServiceCollectionExtension
     {
         public static IServiceCollection AddDependencyInjectionScanner(this IServiceCollection services)

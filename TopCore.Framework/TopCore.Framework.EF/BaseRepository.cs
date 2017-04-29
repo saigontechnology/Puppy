@@ -40,7 +40,7 @@ namespace TopCore.Framework.EF
 
         public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
         {
-            IQueryable<T> query = _baseDbContext.Set<T>();
+            IQueryable<T> query = _baseDbContext.Set<T>().AsNoTracking();
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
@@ -50,7 +50,7 @@ namespace TopCore.Framework.EF
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties)
         {
-            IQueryable<T> query = _baseDbContext.Set<T>();
+            IQueryable<T> query = _baseDbContext.Set<T>().AsNoTracking();
             foreach (Expression<Func<T, object>> includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
@@ -74,7 +74,6 @@ namespace TopCore.Framework.EF
         {
             EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
             dbEntityEntry.State = EntityState.Modified;
-
             _baseDbContext.SaveChanges();
 
             return entity;

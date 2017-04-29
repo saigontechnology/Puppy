@@ -38,7 +38,7 @@ namespace TopCore.Framework.EF
 
         public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _baseDbContext.Set<TEntity>();
+            IQueryable<TEntity> query = _baseDbContext.Set<TEntity>().AsNoTracking();
             foreach (Expression<Func<TEntity, object>> includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
@@ -48,7 +48,7 @@ namespace TopCore.Framework.EF
 
         public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _baseDbContext.Set<TEntity>();
+            IQueryable<TEntity> query = _baseDbContext.Set<TEntity>().AsNoTracking();
 
             if (predicate != null)
             {
@@ -72,7 +72,7 @@ namespace TopCore.Framework.EF
         {
             entity.IsDeleted = false;
             entity.LastUpdatedOnUtc = null;
-            entity.CreatedOnUtc = DateTime.UtcNow;
+            entity.CreatedOnUtc = entity.CreatedOnUtc == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.CreatedOnUtc;
 
             entity = _baseDbContext.Set<TEntity>().Add(entity).Entity;
             _baseDbContext.SaveChanges();
@@ -81,7 +81,7 @@ namespace TopCore.Framework.EF
 
         public TEntity Update(TEntity entity)
         {
-            entity.LastUpdatedOnUtc = DateTime.UtcNow;
+            entity.LastUpdatedOnUtc = entity.LastUpdatedOnUtc == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.LastUpdatedOnUtc;
 
             EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
             dbEntityEntry.State = EntityState.Modified;
@@ -96,7 +96,7 @@ namespace TopCore.Framework.EF
             if (!isPhysicalDelete)
             {
                 entity.IsDeleted = true;
-                entity.DeletedOnUtc = DateTime.UtcNow;
+                entity.DeletedOnUtc = entity.DeletedOnUtc == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.DeletedOnUtc;
                 Update(entity);
             }
             _baseDbContext.Entry(entity).State = EntityState.Deleted;

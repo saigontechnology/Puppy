@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Topcore </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
@@ -23,20 +25,22 @@ using System.Linq.Expressions;
 
 namespace TopCore.Framework.EF.Interfaces
 {
-    public interface IBaseEntityRepository<TEntity> where TEntity : class, IBaseEntity
-    {
-        IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
+	public interface IBaseEntityRepository<TEntity> where TEntity : class, IBaseEntity
+	{
+		IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
 
-        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
+		IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
+			params Expression<Func<TEntity, object>>[] includeProperties);
 
-        TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
+		TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
+			params Expression<Func<TEntity, object>>[] includeProperties);
 
-        TEntity Add(TEntity entity);
+		TEntity Add(TEntity entity);
 
-        TEntity Update(TEntity entity);
+		TEntity Update(TEntity entity);
 
-        void Delete(TEntity entity, bool isPhysicalDelete = false);
+		void Delete(TEntity entity, bool isPhysicalDelete = false);
 
-        void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
-    }
+		void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
+	}
 }

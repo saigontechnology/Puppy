@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
@@ -13,70 +14,67 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
-using Microsoft.DotNet.PlatformAbstractions;
-using Microsoft.Extensions.DependencyModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Microsoft.DotNet.PlatformAbstractions;
+using Microsoft.Extensions.DependencyModel;
 
 namespace TopCore.Framework.DependencyInjection
 {
-    public class AssemblyLoader : AssemblyLoadContext
-    {
-        public readonly string FolderFullPath;
+	public class AssemblyLoader : AssemblyLoadContext
+	{
+		public readonly string FolderFullPath;
 
-        public List<AssemblyName> ListLoadedAssemblyName { get; } = new List<AssemblyName>();
+		public AssemblyLoader(string folderFullPath = null)
+		{
+			FolderFullPath = folderFullPath;
 
-        public AssemblyLoader(string folderFullPath = null)
-        {
-            FolderFullPath = folderFullPath;
+			// Update List Loaded Assembly
+			var runtimeId = RuntimeEnvironment.GetRuntimeIdentifier();
+			var listLoadedAssemblyName = DependencyContext.Default.GetRuntimeAssemblyNames(runtimeId);
 
-            // Update List Loaded Assembly
-            var runtimeId = RuntimeEnvironment.GetRuntimeIdentifier();
-            var listLoadedAssemblyName = DependencyContext.Default.GetRuntimeAssemblyNames(runtimeId);
+			foreach (var assemblyName in listLoadedAssemblyName)
+				ListLoadedAssemblyName.Add(assemblyName);
+		}
 
-            foreach (var assemblyName in listLoadedAssemblyName)
-            {
-                ListLoadedAssemblyName.Add(assemblyName);
-            }
-        }
+		public List<AssemblyName> ListLoadedAssemblyName { get; } = new List<AssemblyName>();
 
-        /// <summary>
-        ///     Load an assembly, if the assembly already loaded then return null 
-        /// </summary>
-        /// <param name="assemblyName"></param>
-        /// <returns></returns>
-        protected override Assembly Load(AssemblyName assemblyName)
-        {
-            Assembly assembly;
+		/// <summary>
+		///     Load an assembly, if the assembly already loaded then return null 
+		/// </summary>
+		/// <param name="assemblyName"></param>
+		/// <returns></returns>
+		protected override Assembly Load(AssemblyName assemblyName)
+		{
+			Assembly assembly;
 
-            // Check if assembly already added by Dependency (Reference)
-            if (ListLoadedAssemblyName.Any(x => x.Name.ToLower() == assemblyName.Name.ToLower()))
-            {
-                return null;
-            }
+			// Check if assembly already added by Dependency (Reference)
+			if (ListLoadedAssemblyName.Any(x => x.Name.ToLower() == assemblyName.Name.ToLower()))
+				return null;
 
-            // Load Assembly not yet load
-            var assemblyFileInfo = new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
+			// Load Assembly not yet load
+			var assemblyFileInfo = new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
 
-            if (File.Exists(assemblyFileInfo.FullName))
-            {
-                var assemblyLoader = new AssemblyLoader(assemblyFileInfo.DirectoryName);
-                assembly = assemblyLoader.LoadFromAssemblyPath(assemblyFileInfo.FullName);
-            }
-            else
-            {
-                assembly = Assembly.Load(assemblyName);
-            }
+			if (File.Exists(assemblyFileInfo.FullName))
+			{
+				var assemblyLoader = new AssemblyLoader(assemblyFileInfo.DirectoryName);
+				assembly = assemblyLoader.LoadFromAssemblyPath(assemblyFileInfo.FullName);
+			}
+			else
+			{
+				assembly = Assembly.Load(assemblyName);
+			}
 
-            // Add to loaded
-            ListLoadedAssemblyName.Add(assembly.GetName());
+			// Add to loaded
+			ListLoadedAssemblyName.Add(assembly.GetName());
 
-            return assembly;
-        }
-    }
+			return assembly;
+		}
+	}
 }

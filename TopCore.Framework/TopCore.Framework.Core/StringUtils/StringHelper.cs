@@ -26,67 +26,65 @@ using System.Text.RegularExpressions;
 
 namespace TopCore.Framework.Core.StringUtils
 {
-    public static class StringHelper
-    {
-        public const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        public static Random Random = new Random();
+	public static class StringHelper
+	{
+		public const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		public static Random Random = new Random();
 
-        /// <summary>
-        ///     Generate Random String
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public static string GetRandomString(int length)
-        {
-            var stringChars = new char[length];
+		/// <summary>
+		///     Generate Random String 
+		/// </summary>
+		/// <param name="length"></param>
+		/// <returns></returns>
+		public static string GetRandomString(int length)
+		{
+			var stringChars = new char[length];
 
-            for (var i = 0; i < stringChars.Length; i++)
-                stringChars[i] = Chars[Random.Next(Chars.Length)];
+			for (var i = 0; i < stringChars.Length; i++)
+				stringChars[i] = Chars[Random.Next(Chars.Length)];
 
-            return new string(stringChars);
-        }
+			return new string(stringChars);
+		}
 
-        /// <summary>
-        ///     Remove all diacritics (accents) in string
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string RemoveAccents(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return value;
-            }
+		/// <summary>
+		///     Remove all diacritics (accents) in string 
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string RemoveAccents(string value)
+		{
+			if (string.IsNullOrWhiteSpace(value))
+				return value;
 
-            var normalizedString = value.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder();
+			var normalizedString = value.Normalize(NormalizationForm.FormD);
+			var stringBuilder = new StringBuilder();
 
-            foreach (var c in normalizedString)
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                    stringBuilder.Append(c);
-            }
+			foreach (var c in normalizedString)
+			{
+				var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+				if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+					stringBuilder.Append(c);
+			}
 
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
-        }
+			return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+		}
 
-        /// <summary>
-        ///     Remove all tag html
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static string RemoveHtmlTag(string input)
-        {
-            return Regex.Replace(input, "<.*?>", string.Empty);
-        }
+		/// <summary>
+		///     Remove all tag html 
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
+		public static string RemoveHtmlTag(string input)
+		{
+			return Regex.Replace(input, "<.*?>", string.Empty);
+		}
 
-        public static bool IsGuid(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value)) return false;
-            Guid guid;
-            var isValid = Guid.TryParse(value, out guid);
-            return isValid;
-        }
-    }
+		public static bool IsGuid(string value)
+		{
+			if (string.IsNullOrWhiteSpace(value)) return false;
+			Guid guid;
+			var isValid = Guid.TryParse(value, out guid);
+			return isValid;
+		}
+	}
 }

@@ -20,7 +20,6 @@
 #endregion License
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
@@ -29,73 +28,68 @@ using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Framework.EF
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
-    {
-        private readonly IBaseDbContext _baseDbContext;
+	public class BaseRepository<T> : IBaseRepository<T> where T : class
+	{
+		private readonly IBaseDbContext _baseDbContext;
 
-        public BaseRepository(IBaseDbContext baseDbContext)
-        {
-            _baseDbContext = baseDbContext;
-        }
+		public BaseRepository(IBaseDbContext baseDbContext)
+		{
+			_baseDbContext = baseDbContext;
+		}
 
-        public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
-        {
-            IQueryable<T> query = _baseDbContext.Set<T>().AsNoTracking();
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
-            return query;
-        }
+		public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
+		{
+			var query = _baseDbContext.Set<T>().AsNoTracking();
+			foreach (var includeProperty in includeProperties)
+				query = query.Include(includeProperty);
+			return query;
+		}
 
-        public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties)
-        {
-            IQueryable<T> query = _baseDbContext.Set<T>().AsNoTracking();
-            foreach (Expression<Func<T, object>> includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
-            return predicate == null ? query : query.Where(predicate);
-        }
+		public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
+			params Expression<Func<T, object>>[] includeProperties)
+		{
+			var query = _baseDbContext.Set<T>().AsNoTracking();
+			foreach (var includeProperty in includeProperties)
+				query = query.Include(includeProperty);
+			return predicate == null ? query : query.Where(predicate);
+		}
 
-        public T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
-        {
-            return Get(predicate, includeProperties).FirstOrDefault();
-        }
+		public T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+		{
+			return Get(predicate, includeProperties).FirstOrDefault();
+		}
 
-        public T Add(T entity)
-        {
-            entity = _baseDbContext.Set<T>().Add(entity).Entity;
-            _baseDbContext.SaveChanges();
-            return entity;
-        }
+		public T Add(T entity)
+		{
+			entity = _baseDbContext.Set<T>().Add(entity).Entity;
+			_baseDbContext.SaveChanges();
+			return entity;
+		}
 
-        public T Update(T entity)
-        {
-            EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
-            dbEntityEntry.State = EntityState.Modified;
-            _baseDbContext.SaveChanges();
+		public T Update(T entity)
+		{
+			EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
+			dbEntityEntry.State = EntityState.Modified;
+			_baseDbContext.SaveChanges();
 
-            return entity;
-        }
+			return entity;
+		}
 
-        public void Delete(T entity)
-        {
-            EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
-            dbEntityEntry.State = EntityState.Deleted;
-            _baseDbContext.SaveChanges();
-        }
+		public void Delete(T entity)
+		{
+			EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
+			dbEntityEntry.State = EntityState.Deleted;
+			_baseDbContext.SaveChanges();
+		}
 
-        public void DeleteWhere(Expression<Func<T, bool>> predicate)
-        {
-            IEnumerable<T> entities = Get(predicate).AsEnumerable();
+		public void DeleteWhere(Expression<Func<T, bool>> predicate)
+		{
+			var entities = Get(predicate).AsEnumerable();
 
-            foreach (T entity in entities)
-            {
-                _baseDbContext.Entry(entity).State = EntityState.Deleted;
-            }
+			foreach (var entity in entities)
+				_baseDbContext.Entry(entity).State = EntityState.Deleted;
 
-            _baseDbContext.SaveChanges();
-        }
-    }
+			_baseDbContext.SaveChanges();
+		}
+	}
 }

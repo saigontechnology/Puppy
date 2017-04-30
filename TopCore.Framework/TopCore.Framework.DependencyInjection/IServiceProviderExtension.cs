@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Eatup </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
@@ -22,12 +24,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TopCore.Framework.DependencyInjection
 {
-    // ReSharper disable once InconsistentNaming
-    public static class IServiceProviderExtension
-    {
-        public static T Resolve<T>(this IServiceProvider services) where T : class
-        {
-            return services.GetService<T>();
-        }
-    }
+	// ReSharper disable once InconsistentNaming
+	public static class IServiceProviderExtension
+	{
+		public static T Resolve<T>(this IServiceProvider services) where T : class
+		{
+			return services.GetService<T>();
+		}
+	}
 }

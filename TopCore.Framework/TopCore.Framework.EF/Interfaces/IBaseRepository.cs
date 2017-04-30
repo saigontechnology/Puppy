@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Topcore </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
@@ -23,20 +25,20 @@ using System.Linq.Expressions;
 
 namespace TopCore.Framework.EF.Interfaces
 {
-    public interface IBaseRepository<T> where T : class
-    {
-        IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties);
+	public interface IBaseRepository<T> where T : class
+	{
+		IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties);
 
-        IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
+		IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
 
-        T GetSingle(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
+		T GetSingle(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
 
-        T Add(T entity);
+		T Add(T entity);
 
-        T Update(T entity);
+		T Update(T entity);
 
-        void Delete(T entity);
+		void Delete(T entity);
 
-        void DeleteWhere(Expression<Func<T, bool>> predicate);
-    }
+		void DeleteWhere(Expression<Func<T, bool>> predicate);
+	}
 }

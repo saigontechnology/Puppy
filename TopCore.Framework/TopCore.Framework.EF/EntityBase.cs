@@ -46,11 +46,6 @@ namespace TopCore.Framework.EF
     {
         public TId Id { get; set; }
 
-        /// <summary>
-        ///     Unique key
-        /// </summary>
-        public Guid Key { get; set; } = Guid.NewGuid();
-
         public DateTimeOffset CreatedOnUtc { get; set; } = DateTime.UtcNow;
 
         /// <summary>

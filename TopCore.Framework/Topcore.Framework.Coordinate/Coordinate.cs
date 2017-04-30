@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
@@ -15,19 +16,20 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 namespace Topcore.Framework.Coordinate
 {
-    public class Coordinate
-    {
-        public double Latitude { get; }
-        public double Longitude { get; }
+	public class Coordinate
+	{
+		public Coordinate(double latitude, double longitude)
+		{
+			Latitude = latitude;
+			Longitude = longitude;
+		}
 
-        public Coordinate(double latitude, double longitude)
-        {
-            Latitude = latitude;
-            Longitude = longitude;
-        }
-    }
+		public double Latitude { get; }
+		public double Longitude { get; }
+	}
 }

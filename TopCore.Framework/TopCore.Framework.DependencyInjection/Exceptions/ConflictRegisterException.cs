@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
@@ -13,16 +14,17 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
 
 namespace TopCore.Framework.DependencyInjection.Exceptions
 {
-    public class ConflictRegisterException : Exception
-    {
-        public ConflictRegisterException(string message) : base(message)
-        {
-        }
-    }
+	public class ConflictRegisterException : Exception
+	{
+		public ConflictRegisterException(string message) : base(message)
+		{
+		}
+	}
 }

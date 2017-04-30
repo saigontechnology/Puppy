@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
@@ -15,11 +16,12 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 namespace TopCore.Framework.Core.DateTimeUtils
 {
-    public class DateTimeExtensions
-    {
-    }
+	public class DateTimeExtensions
+	{
+	}
 }

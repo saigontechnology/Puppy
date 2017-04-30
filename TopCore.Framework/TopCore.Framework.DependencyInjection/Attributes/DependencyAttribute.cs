@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
@@ -13,30 +14,31 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TopCore.Framework.DependencyInjection.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public abstract class DependencyAttribute : Attribute
-    {
-        public ServiceLifetime DependencyType { get; }
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+	public abstract class DependencyAttribute : Attribute
+	{
+		protected DependencyAttribute(ServiceLifetime dependencyType)
+		{
+			DependencyType = dependencyType;
+		}
 
-        public Type ServiceType { get; set; }
+		public ServiceLifetime DependencyType { get; }
 
-        protected DependencyAttribute(ServiceLifetime dependencyType)
-        {
-            DependencyType = dependencyType;
-        }
+		public Type ServiceType { get; set; }
 
-        public ServiceDescriptor BuildServiceDescriptor(TypeInfo type)
-        {
-            var serviceType = ServiceType ?? type.AsType();
-            return new ServiceDescriptor(serviceType, type.AsType(), DependencyType);
-        }
-    }
+		public ServiceDescriptor BuildServiceDescriptor(TypeInfo type)
+		{
+			var serviceType = ServiceType ?? type.AsType();
+			return new ServiceDescriptor(serviceType, type.AsType(), DependencyType);
+		}
+	}
 }

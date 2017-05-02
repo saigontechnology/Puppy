@@ -26,18 +26,17 @@ namespace Topcore.Framework.Coordinate
 	public static class CoordinatePositionExtension
 	{
 		/// <summary>
-		///     Calculates the end-point from a given source at a given range (meters) and bearing (degrees). This methods uses simple geometry equations to calculate the end-point. 
+		///     Calculates the end-point from a given source at a given range (kilometers) and bearing (degrees). This methods uses simple geometry equations to calculate the end-point. 
 		/// </summary>
-		/// <param name="src">         Point of origin </param>
-		/// <param name="radiusMiles"> Radius/Range in meters </param>
-		/// <param name="bearing">     Bearing in degrees from 0 to 360 </param>
+		/// <param name="src">      Point of origin </param>
+		/// <param name="radiusKm"> Radius/Range in Kilometers </param>
+		/// <param name="bearing">  Bearing in degrees from 0 to 360 </param>
 		/// <returns> End-point from the source given the desired range and bearing. </returns>
-		public static Coordinate GetDerivedPosition(this Coordinate src, double radiusMiles, double bearing)
+		public static Coordinate GetDerivedPosition(this Coordinate src, double radiusKm, double bearing)
 		{
 			var latSrc = src.Latitude * CoordinateConst.DegreesToRadians;
 			var lngSrc = src.Longitude * CoordinateConst.DegreesToRadians;
-
-			var angularDistance = radiusMiles / CoordinateConst.EarthRadiusMiles;
+			var angularDistance = radiusKm / CoordinateConst.EarthRadiusKilometer;
 			var trueCourse = bearing * CoordinateConst.DegreesToRadians;
 
 			var lat = Math.Asin(
@@ -57,29 +56,37 @@ namespace Topcore.Framework.Coordinate
 		/// <summary>
 		///     Get Top Left Coordinate of square (out bound of circle) corner 
 		/// </summary>
-		/// <param name="src">        </param>
-		/// <param name="radiusMiles"></param>
+		/// <param name="src">            </param>
+		/// <param name="radiusKilometer"></param>
 		/// <returns></returns>
-		public static Coordinate GetTopLeftOfSquare(this Coordinate src, double radiusMiles)
+		public static Coordinate GetTopLeftOfSquare(this Coordinate src, double radiusKilometer)
 		{
-			var top = GetDerivedPosition(src, radiusMiles, 0);
-			var left = GetDerivedPosition(src, radiusMiles, 270);
-			var topLeft = new Coordinate(left.Latitude, top.Longitude);
+			double hypotenuseLength = GetHypotenuseLength(radiusKilometer);
+			var topLeft = GetDerivedPosition(src, hypotenuseLength, 315);
 			return topLeft;
 		}
 
 		/// <summary>
 		///     Get Bot Right Coordinate of square (out bound of circle) corner 
 		/// </summary>
-		/// <param name="src">        </param>
-		/// <param name="radiusMiles"></param>
+		/// <param name="src">            </param>
+		/// <param name="radiusKilometer"></param>
 		/// <returns></returns>
-		public static Coordinate GetBotRightOfSquare(this Coordinate src, double radiusMiles)
+		public static Coordinate GetBotRightOfSquare(this Coordinate src, double radiusKilometer)
 		{
-			var bot = GetDerivedPosition(src, radiusMiles, 180);
-			var right = GetDerivedPosition(src, radiusMiles, 90);
-			var botRight = new Coordinate(right.Latitude, bot.Longitude);
+			double hypotenuseLength = GetHypotenuseLength(radiusKilometer);
+			var botRight = GetDerivedPosition(src, hypotenuseLength, 135);
 			return botRight;
+		}
+
+		/// <summary>
+		/// Get Hypotenuse Edge of the right isosceles triangle
+		/// </summary>
+		/// <param name="length"></param>
+		/// <returns></returns>
+		private static double GetHypotenuseLength(double length)
+		{
+			return Math.Sqrt(length * length  * 2);
 		}
 	}
 }

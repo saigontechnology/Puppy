@@ -4,8 +4,6 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Copyright>http://topnguyen.net</Copyright>
-    <AssemblyName>TopCore.Framework.DependencyInjection</AssemblyName>
-    <RootNamespace>TopCore.Framework.DependencyInjection</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

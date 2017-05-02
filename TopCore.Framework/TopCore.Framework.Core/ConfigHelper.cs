@@ -5,12 +5,12 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.Framework.Core </Project>
 //     <File> 
-//         <Name> ConfigurationHelper.cs </Name>
+//         <Name> ConfigHelper.cs </Name>
 //         <Created> 28 03 2017 10:49:18 AM </Created>
 //         <Key> FA2C1290-B6C6-4535-A050-E7E67AFDA713 </Key>
 //     </File>
 //     <Summary>
-//         ConfigurationHelper
+//         ConfigHelper
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------

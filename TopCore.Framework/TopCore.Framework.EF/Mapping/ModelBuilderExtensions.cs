@@ -32,13 +32,13 @@ namespace TopCore.Framework.EF.Mapping
 			var mappingTypes = assembly.GetTypes()
 				.Where(x => x.GetInterfaces()
 					.Any(y => y.GetTypeInfo().IsGenericType
-					          && y.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
+							  && y.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
 
 			// Get the generic Entity method of the ModelBuilder type
 			var entityMethod = typeof(ModelBuilder).GetMethods()
 				.Single(x => x.Name == "Entity" &&
-				             x.IsGenericMethod &&
-				             x.ReturnType.Name == "EntityTypeBuilder`1");
+							 x.IsGenericMethod &&
+							 x.ReturnType.Name == "EntityTypeBuilder`1");
 
 			foreach (var mappingType in mappingTypes)
 			{
@@ -53,7 +53,7 @@ namespace TopCore.Framework.EF.Mapping
 
 				// Create the mapping type and do the mapping
 				var mapper = Activator.CreateInstance(mappingType);
-				mapper.GetType().GetMethod("Map").Invoke(mapper, new[] {entityBuilder});
+				mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
 			}
 		}
 	}

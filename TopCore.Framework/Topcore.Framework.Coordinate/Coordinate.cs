@@ -23,13 +23,13 @@ namespace Topcore.Framework.Coordinate
 {
 	public class Coordinate
 	{
-		public Coordinate(double latitude, double longitude)
+		public Coordinate(double longitude, double latitude)
 		{
-			Latitude = latitude;
 			Longitude = longitude;
+			Latitude = latitude;
 		}
 
-		public double Latitude { get; }
 		public double Longitude { get; }
+		public double Latitude { get; }
 	}
 }

@@ -19,6 +19,7 @@
 
 #endregion License
 
+using System.Linq;
 using System.Reflection;
 using AutoMapper;
 
@@ -34,8 +35,11 @@ namespace TopCore.Framework.AutoMapper
 			var destinationProperties = typeof(TDestination).GetProperties(flags);
 
 			foreach (var property in destinationProperties)
-				if (sourceType.GetProperty(property.Name, flags) == null)
+			{
+				PropertyInfo propInfoSrc = sourceType.GetProperties().FirstOrDefault(p => p.Name == property.Name);
+				if (propInfoSrc == null)
 					expression.ForMember(property.Name, opt => opt.Ignore());
+			}
 			return expression;
 		}
 	}

@@ -10,8 +10,8 @@ namespace Topcore.Framework.Coordinate.Testing
         [TestMethod]
         public void TestDistance()
         {
-            Coordinate home = new Coordinate(10.768984, 106.630116);
-            Coordinate damSenPark = new Coordinate(10.768420, 106.637482);
+            Coordinate home = new Coordinate(106.630116, 10.768984);
+            Coordinate damSenPark = new Coordinate(106.637482, 10.768420);
 
             double distanceInMeter = home.DistanceTo(damSenPark, CoordinateDistanceExtension.UnitOfLength.Meter);
 

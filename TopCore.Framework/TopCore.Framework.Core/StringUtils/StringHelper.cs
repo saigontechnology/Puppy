@@ -86,6 +86,13 @@ namespace TopCore.Framework.Core.StringUtils
 			return normalizedString.ToUpperInvariant();
 		}
 
+		public static string ReplaceNullOrWhiteSpaceToEmpty(string value)
+		{
+			if (string.IsNullOrWhiteSpace(value))
+				return string.Empty;
+			return value;
+		}
+
 		/// <summary>
 		///     Remove all tag html 
 		/// </summary>

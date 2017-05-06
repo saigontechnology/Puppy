@@ -70,6 +70,23 @@ namespace TopCore.Framework.Core.StringUtils
 		}
 
 		/// <summary>
+		///     Normalize: <code>UPPER CASE</code> with <code>remove all diacritic (accents)</code> in string 
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		/// <remarks>if value is is Null Or WhiteSpace will return <code>string.Empty</code></remarks>
+		public static string Normalize(string value)
+		{
+			if (string.IsNullOrWhiteSpace(value))
+				return string.Empty;
+
+			value = value.Trim();
+
+			var normalizedString = RemoveAccents(value);
+			return normalizedString.ToUpperInvariant();
+		}
+
+		/// <summary>
 		///     Remove all tag html 
 		/// </summary>
 		/// <param name="input"></param>

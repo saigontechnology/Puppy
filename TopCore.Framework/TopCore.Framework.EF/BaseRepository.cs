@@ -22,6 +22,8 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TopCore.Framework.EF.Interfaces;
@@ -32,6 +34,21 @@ namespace TopCore.Framework.EF
 	{
 		private readonly IBaseDbContext _baseDbContext;
 
+		private DbSet<T> _dbSet;
+
+		private DbSet<T> DbSet
+		{
+			get
+			{
+				if (_dbSet != null)
+				{
+					return _dbSet;
+				}
+				_dbSet = _baseDbContext.Set<T>();
+				return _dbSet;
+			}
+		}
+
 		public BaseRepository(IBaseDbContext baseDbContext)
 		{
 			_baseDbContext = baseDbContext;
@@ -39,7 +56,7 @@ namespace TopCore.Framework.EF
 
 		public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
 		{
-			var query = _baseDbContext.Set<T>().AsNoTracking();
+			var query = DbSet.AsNoTracking();
 			foreach (var includeProperty in includeProperties)
 				query = query.Include(includeProperty);
 			return query;
@@ -48,7 +65,7 @@ namespace TopCore.Framework.EF
 		public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
 			params Expression<Func<T, object>>[] includeProperties)
 		{
-			var query = _baseDbContext.Set<T>().AsNoTracking();
+			var query = DbSet.AsNoTracking();
 			foreach (var includeProperty in includeProperties)
 				query = query.Include(includeProperty);
 			return predicate == null ? query : query.Where(predicate);
@@ -61,25 +78,46 @@ namespace TopCore.Framework.EF
 
 		public T Add(T entity)
 		{
-			entity = _baseDbContext.Set<T>().Add(entity).Entity;
-			_baseDbContext.SaveChanges();
+			entity = DbSet.Add(entity).Entity;
 			return entity;
 		}
 
-		public T Update(T entity)
+		public void Update(T entity, params Expression<Func<T, object>>[] changedProperties)
 		{
-			EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
-			dbEntityEntry.State = EntityState.Modified;
-			_baseDbContext.SaveChanges();
+			DbSet.Attach(entity);
 
-			return entity;
+			if (changedProperties != null && changedProperties.Any())
+			{
+				//Only change some properties
+				foreach (var property in changedProperties)
+				{
+					var expression = (MemberExpression)property.Body;
+					string name = expression.Member.Name;
+
+					_baseDbContext.Entry(entity).Property(property).IsModified = true;
+				}
+			}
+			else
+			{
+				_baseDbContext.Entry(entity).State = EntityState.Modified;
+			}
 		}
 
 		public void Delete(T entity)
 		{
-			EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
-			dbEntityEntry.State = EntityState.Deleted;
-			_baseDbContext.SaveChanges();
+			try
+			{
+				if (_baseDbContext.Entry(entity).State == EntityState.Detached)
+				{
+					DbSet.Attach(entity);
+				}
+				DbSet.Remove(entity);
+			}
+			catch (Exception)
+			{
+				RefreshEntity(entity);
+				throw;
+			}
 		}
 
 		public void DeleteWhere(Expression<Func<T, bool>> predicate)
@@ -87,9 +125,32 @@ namespace TopCore.Framework.EF
 			var entities = Get(predicate).AsEnumerable();
 
 			foreach (var entity in entities)
-				_baseDbContext.Entry(entity).State = EntityState.Deleted;
+				Delete(entity);
+		}
 
-			_baseDbContext.SaveChanges();
+		public virtual void RefreshEntity(T entityToReload)
+		{
+			_baseDbContext.Entry(entityToReload).Reload();
+		}
+
+		public int SaveChanges()
+		{
+			return _baseDbContext.SaveChanges();
+		}
+
+		public int SaveChanges(bool acceptAllChangesOnSuccess)
+		{
+			return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
+		}
+
+		public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+		{
+			return _baseDbContext.SaveChangesAsync(cancellationToken);
+		}
+
+		public Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+		{
+			return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 	}
 }

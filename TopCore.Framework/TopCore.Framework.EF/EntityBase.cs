@@ -25,13 +25,13 @@ namespace TopCore.Framework.EF
 {
     public interface IBaseEntity
     {
-        DateTimeOffset CreatedOnUtc { get; set; }
+        DateTimeOffset CreatedTime { get; set; }
 
-        DateTimeOffset? LastUpdatedOnUtc { get; set; }
+        DateTimeOffset? LastUpdatedTime { get; set; }
 
         bool IsDeleted { get; set; }
 
-        DateTimeOffset? DeletedOnUtc { get; set; }
+        DateTimeOffset? DeletedTime { get; set; }
 
         [Timestamp]
         byte[] Version { get; set; }
@@ -46,14 +46,14 @@ namespace TopCore.Framework.EF
     {
         public TId Id { get; set; }
 
-        public DateTimeOffset CreatedOnUtc { get; set; } = DateTime.UtcNow;
+        public DateTimeOffset CreatedTime { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// For tracking
         /// </summary>
         public TOwnerId CreatedBy { get; set; }
 
-        public DateTimeOffset? LastUpdatedOnUtc { get; set; }
+        public DateTimeOffset? LastUpdatedTime { get; set; }
 
         /// <summary>
         /// For tracking
@@ -62,7 +62,7 @@ namespace TopCore.Framework.EF
 
         public bool IsDeleted { get; set; }
 
-        public DateTimeOffset? DeletedOnUtc { get; set; }
+        public DateTimeOffset? DeletedTime { get; set; }
 
         /// <summary>
         /// For tracking

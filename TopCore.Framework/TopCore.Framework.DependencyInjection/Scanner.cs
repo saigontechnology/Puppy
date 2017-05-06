@@ -71,7 +71,7 @@ namespace TopCore.Framework.DependencyInjection
 						var implementationRegister =
 							services.Single(x => x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName).ImplementationType;
 
-						throw new ConflictRegisterException(
+						throw new ConflictRegistrationException(
 							$"Conflict register, ${serviceDescriptor.ImplementationType} try to register for {serviceDescriptor.ServiceType.FullName}. It already register by {implementationRegister.FullName} before.");
 					}
 
@@ -128,8 +128,7 @@ namespace TopCore.Framework.DependencyInjection
 			Console.WriteLine($"{Environment.NewLine}{new string('-', 50)}");
 
 			Console.ForegroundColor = ConsoleColor.DarkCyan;
-			Console.WriteLine($"[Total {nameof(DependencyInjection)} {listServiceDescriptors.Count}]",
-				$"{nameof(DependencyInjection)}");
+			Console.WriteLine($"[Total Dependency Injection {listServiceDescriptors.Count}]");
 			for (var index = 0; index < listServiceDescriptors.Count; index++)
 			{
 				var service = listServiceDescriptors[index];
@@ -143,12 +142,27 @@ namespace TopCore.Framework.DependencyInjection
 						GetLifeTime(service.Lifetime).Length
 					}.Max();
 
+				Console.ResetColor();
 				Console.WriteLine($"{no}.");
-				Console.WriteLine(
-					$"    Service         |  {service.ServiceType?.Name?.PadRight(maximumCharacter)}  |  {service.ServiceType?.FullName}");
-				Console.WriteLine(
-					$"    Implementation  |  {service.ImplementationType?.Name?.PadRight(maximumCharacter)}  |  {service.ImplementationType?.FullName}");
-				Console.WriteLine($"    Lifetime        |  {GetLifeTime(service.Lifetime).PadRight(maximumCharacter)}");
+
+				Console.ForegroundColor = ConsoleColor.DarkCyan;
+				Console.Write($"    Service         |  ");
+				Console.ResetColor();
+				Console.Write($"{service.ServiceType?.Name?.PadRight(maximumCharacter)}");
+				Console.ForegroundColor = ConsoleColor.DarkCyan;
+				Console.WriteLine($"  |  {service.ServiceType?.FullName}");
+
+				Console.Write($"    Implementation  |  ");
+				Console.ForegroundColor = ConsoleColor.DarkGray;
+				Console.Write($"{service.ImplementationType?.Name?.PadRight(maximumCharacter)}");
+				Console.ForegroundColor = ConsoleColor.DarkCyan;
+				Console.WriteLine($"  |  {service.ImplementationType?.FullName}");
+
+				Console.ForegroundColor = ConsoleColor.DarkCyan;
+				Console.Write($"    Lifetime        |  ");
+				Console.ForegroundColor = ConsoleColor.DarkGray;
+				Console.WriteLine($"[{GetLifeTime(service.Lifetime)}]");
+				Console.WriteLine();
 			}
 			Console.ResetColor();
 

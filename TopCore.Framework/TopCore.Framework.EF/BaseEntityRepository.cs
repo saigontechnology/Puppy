@@ -22,6 +22,9 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TopCore.Framework.EF.Interfaces;
@@ -32,6 +35,21 @@ namespace TopCore.Framework.EF
 	{
 		private readonly IBaseDbContext _baseDbContext;
 
+		private DbSet<TEntity> _dbSet;
+
+		private DbSet<TEntity> DbSet
+		{
+			get
+			{
+				if (_dbSet != null)
+				{
+					return _dbSet;
+				}
+				_dbSet = _baseDbContext.Set<TEntity>();
+				return _dbSet;
+			}
+		}
+
 		public BaseEntityRepository(IBaseDbContext baseDbContext)
 		{
 			_baseDbContext = baseDbContext;
@@ -39,7 +57,7 @@ namespace TopCore.Framework.EF
 
 		public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
 		{
-			var query = _baseDbContext.Set<TEntity>().AsNoTracking();
+			var query = DbSet.AsNoTracking();
 			foreach (var includeProperty in includeProperties)
 				query = query.Include(includeProperty);
 			return query;
@@ -48,7 +66,7 @@ namespace TopCore.Framework.EF
 		public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
 			params Expression<Func<TEntity, object>>[] includeProperties)
 		{
-			var query = _baseDbContext.Set<TEntity>().AsNoTracking();
+			var query = DbSet.AsNoTracking();
 
 			if (predicate != null)
 				query = query.Where(predicate);
@@ -68,45 +86,90 @@ namespace TopCore.Framework.EF
 		public TEntity Add(TEntity entity)
 		{
 			entity.IsDeleted = false;
-			entity.LastUpdatedOnUtc = null;
-			entity.CreatedOnUtc = entity.CreatedOnUtc == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.CreatedOnUtc;
-
-			entity = _baseDbContext.Set<TEntity>().Add(entity).Entity;
-			_baseDbContext.SaveChanges();
+			entity.LastUpdatedTime = null;
+			entity.CreatedTime = entity.CreatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.CreatedTime;
+			entity = DbSet.Add(entity).Entity;
 			return entity;
 		}
 
-		public TEntity Update(TEntity entity)
+		public void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
 		{
-			entity.LastUpdatedOnUtc = entity.LastUpdatedOnUtc == default(DateTimeOffset)
-				? DateTimeOffset.UtcNow
-				: entity.LastUpdatedOnUtc;
+			entity.LastUpdatedTime = entity.LastUpdatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.LastUpdatedTime;
+			DbSet.Attach(entity);
 
-			EntityEntry dbEntityEntry = _baseDbContext.Entry(entity);
-			dbEntityEntry.State = EntityState.Modified;
-
-			_baseDbContext.SaveChanges();
-
-			return entity;
+			if (changedProperties != null && changedProperties.Any())
+			{
+				//Only change some properties
+				foreach (var property in changedProperties)
+				{
+					var expression = (MemberExpression)property.Body;
+					string name = expression.Member.Name;
+					_baseDbContext.Entry(entity).Property(name).IsModified = true;
+				}
+			}
+			else
+			{
+				_baseDbContext.Entry(entity).State = EntityState.Modified;
+			}
 		}
 
 		public void Delete(TEntity entity, bool isPhysicalDelete = false)
 		{
-			if (!isPhysicalDelete)
+			try
 			{
-				entity.IsDeleted = true;
-				entity.DeletedOnUtc = entity.DeletedOnUtc == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.DeletedOnUtc;
-				Update(entity);
+				if (_baseDbContext.Entry(entity).State == EntityState.Detached)
+				{
+					DbSet.Attach(entity);
+				}
+
+				if (!isPhysicalDelete)
+				{
+					entity.IsDeleted = true;
+					entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.DeletedTime;
+					Update(entity, x=> x.IsDeleted, x => x.DeletedTime);
+				}
+				else
+				{
+					DbSet.Remove(entity);
+				}
 			}
-			_baseDbContext.Entry(entity).State = EntityState.Deleted;
+			catch (Exception)
+			{
+				RefreshEntity(entity);
+				throw;
+			}
 		}
 
 		public void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
 		{
-			var entities = Get(predicate, isPhysicalDelete).AsEnumerable();
+			var entities = Get(predicate).AsEnumerable();
 			foreach (var entity in entities)
-				_baseDbContext.Entry(entity).State = EntityState.Deleted;
-			_baseDbContext.SaveChanges();
+				Delete(entity, isPhysicalDelete);
+		}
+
+		public virtual void RefreshEntity(TEntity entityToReload)
+		{
+			_baseDbContext.Entry(entityToReload).Reload();
+		}
+
+		public int SaveChanges()
+		{
+			return _baseDbContext.SaveChanges();
+		}
+
+		public int SaveChanges(bool acceptAllChangesOnSuccess)
+		{
+			return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
+		}
+
+		public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+		{
+			return _baseDbContext.SaveChangesAsync(cancellationToken);
+		}
+
+		public Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+		{
+			return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 	}
 }

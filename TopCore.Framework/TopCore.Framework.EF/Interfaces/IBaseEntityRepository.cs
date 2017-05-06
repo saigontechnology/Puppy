@@ -20,8 +20,11 @@
 #endregion License
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TopCore.Framework.EF.Interfaces
 {
@@ -37,10 +40,20 @@ namespace TopCore.Framework.EF.Interfaces
 
 		TEntity Add(TEntity entity);
 
-		TEntity Update(TEntity entity);
+		void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties);
 
 		void Delete(TEntity entity, bool isPhysicalDelete = false);
 
 		void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
+
+		[DebuggerStepThrough]
+		int SaveChanges();
+
+		[DebuggerStepThrough]
+		int SaveChanges(bool acceptAllChangesOnSuccess);
+
+		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
 	}
 }

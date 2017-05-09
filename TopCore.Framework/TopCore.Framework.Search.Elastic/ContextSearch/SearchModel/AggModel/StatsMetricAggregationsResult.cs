@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class StatsMetricAggregationsResult : AggregationResult<StatsMetricAggregationsResult>
+    public class StatsMetricAggregationsResult : AggregationResult<StatsMetricAggregationsResult>
     {
         public double Count { get; set; }
         public double Min { get; set; }

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.Model
 {
-	public class GetResult
+    public class GetResult
     {
         [JsonExtensionData]
         public Dictionary<string, JToken> Fields { get; set; }

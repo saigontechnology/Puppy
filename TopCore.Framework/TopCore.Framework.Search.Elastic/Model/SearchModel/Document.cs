@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 {
-	public class Document
+    public class Document
     {
         private object _id;
         private bool _idSet;

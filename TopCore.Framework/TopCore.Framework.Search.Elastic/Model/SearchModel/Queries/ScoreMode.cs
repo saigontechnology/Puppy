@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public enum ScoreMode
+    public enum ScoreMode
     {
         avg,
         sum,

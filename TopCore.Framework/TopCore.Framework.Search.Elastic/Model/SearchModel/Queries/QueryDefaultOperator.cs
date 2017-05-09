@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public enum QueryDefaultOperator
+    public enum QueryDefaultOperator
     {
         AND,
         OR

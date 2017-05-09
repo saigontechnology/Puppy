@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     Matches spans containing a term. The span term query maps to Lucene SpanTermQuery. 
-	/// </summary>
-	public class SpanTermQuery : ISpanQuery
+    /// <summary>
+    ///     Matches spans containing a term. The span term query maps to Lucene SpanTermQuery. 
+    /// </summary>
+    public class SpanTermQuery : ISpanQuery
     {
         private readonly string _field;
         private readonly string _fieldValue;

@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class GeohashCellFilter : IFilter
+    public class GeohashCellFilter : IFilter
     {
         private readonly string _field;
         private readonly GeoPoint _location;

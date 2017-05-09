@@ -28,30 +28,32 @@ using System.Threading.Tasks;
 
 namespace TopCore.Framework.EF.Interfaces
 {
-	public interface IBaseRepository<T> where T : class
-	{
-		IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties);
+    public interface IBaseRepository<T> where T : class
+    {
+        IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties);
 
-		IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
+        IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
+            params Expression<Func<T, object>>[] includeProperties);
 
-		T GetSingle(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
+        T GetSingle(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
 
-		T Add(T entity);
+        T Add(T entity);
 
-		void Update(T entity, params Expression<Func<T, object>>[] changedProperties);
+        void Update(T entity, params Expression<Func<T, object>>[] changedProperties);
 
-		void Delete(T entity);
+        void Delete(T entity);
 
-		void DeleteWhere(Expression<Func<T, bool>> predicate);
+        void DeleteWhere(Expression<Func<T, bool>> predicate);
 
-		[DebuggerStepThrough]
-		int SaveChanges();
+        [DebuggerStepThrough]
+        int SaveChanges();
 
-		[DebuggerStepThrough]
-		int SaveChanges(bool acceptAllChangesOnSuccess);
+        [DebuggerStepThrough]
+        int SaveChanges(bool acceptAllChangesOnSuccess);
 
-		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-		Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
-	}
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default(CancellationToken));
+    }
 }

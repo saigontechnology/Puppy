@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	public class IndexWarmer
+    public class IndexWarmer
     {
         private readonly string _name;
         private List<IAggs> _aggs;
@@ -39,10 +39,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     aggregations request 
-	    /// </summary>
-	    public List<IAggs> Aggs
+        /// <summary>
+        ///     aggregations request 
+        /// </summary>
+        public List<IAggs> Aggs
         {
             get => _aggs;
             set

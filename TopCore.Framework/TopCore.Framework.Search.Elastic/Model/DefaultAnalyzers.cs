@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model
 {
-	public static class DefaultAnalyzers
+    public static class DefaultAnalyzers
     {
         public const string Standard = "standard";
         public const string Simple = "simple";

@@ -1,6 +1,6 @@
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public enum DistanceUnitEnum
+    public enum DistanceUnitEnum
     {
         miles,
         yards,

@@ -3,13 +3,13 @@ using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Setting
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	//"char_filter" : {
-	//	   "my_mapping" : {
-	//		   "type" : "mapping",
-	//		   "mappings" : ["ph=>f", "qu=>k"]
-	//	   }
-	//},
-	public class AnalysisCharFilter
+    //"char_filter" : {
+    //	   "my_mapping" : {
+    //		   "type" : "mapping",
+    //		   "mappings" : ["ph=>f", "qu=>k"]
+    //	   }
+    //},
+    public class AnalysisCharFilter
     {
         private List<AnalysisCharFilterBase> _customCharFilters;
         private bool _customCharFiltersSet;

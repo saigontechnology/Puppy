@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Bucket
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class HistogramBucketAggregationsResult : AggregationResult<HistogramBucketAggregationsResult>
+    public class HistogramBucketAggregationsResult : AggregationResult<HistogramBucketAggregationsResult>
     {
         public List<Bucket> Buckets { get; set; }
 

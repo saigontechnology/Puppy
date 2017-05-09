@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel
 {
-	public class RoutingDefinition
+    public class RoutingDefinition
     {
         public object RoutingId { get; set; }
         public object ParentId { get; set; }

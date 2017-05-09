@@ -3,10 +3,10 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 {
-	/// <summary>
-	///     Allows to highlight search results on one or more fields. The implementation uses either the lucene highlighter, fast-vector-highlighter or postings-highlighter. 
-	/// </summary>
-	public class Highlight
+    /// <summary>
+    ///     Allows to highlight search results on one or more fields. The implementation uses either the lucene highlighter, fast-vector-highlighter or postings-highlighter. 
+    /// </summary>
+    public class Highlight
     {
         private readonly List<HighlightField> _fields;
         private string _boundaryChars;
@@ -29,10 +29,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             _fields = fields;
         }
 
-	    /// <summary>
-	    ///     pre_tags 
-	    /// </summary>
-	    public List<string> PreTags
+        /// <summary>
+        ///     pre_tags 
+        /// </summary>
+        public List<string> PreTags
         {
             get => _preTags;
             set
@@ -42,10 +42,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     post_tags 
-	    /// </summary>
-	    public List<string> PostTags
+        /// <summary>
+        ///     post_tags 
+        /// </summary>
+        public List<string> PostTags
         {
             get => _postTags;
             set
@@ -55,10 +55,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     tags_schema : styled 
-	    /// </summary>
-	    public bool TagsSchemaStyled
+        /// <summary>
+        ///     tags_schema : styled 
+        /// </summary>
+        public bool TagsSchemaStyled
         {
             get => _tagsSchemaStyled;
             set
@@ -68,10 +68,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     require_field_match can be set to true which will cause a field to be highlighted only if a query matched that field. false means that terms are highlighted on all requested fields regardless if the query matches specifically on them. 
-	    /// </summary>
-	    public bool RequireFieldMatch
+        /// <summary>
+        ///     require_field_match can be set to true which will cause a field to be highlighted only if a query matched that field. false means that terms are highlighted on all requested fields regardless if the query matches specifically on them. 
+        /// </summary>
+        public bool RequireFieldMatch
         {
             get => _requireFieldMatch;
             set
@@ -81,10 +81,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     boundary_chars When highlighting a field using the fast vector highlighter, boundary_chars can be configured to define what constitutes a boundary for highlighting. It’s a single string with each boundary character defined in it. It defaults to .,!? \t\n. 
-	    /// </summary>
-	    public string BoundaryChars
+        /// <summary>
+        ///     boundary_chars When highlighting a field using the fast vector highlighter, boundary_chars can be configured to define what constitutes a boundary for highlighting. It’s a single string with each boundary character defined in it. It defaults to .,!? \t\n. 
+        /// </summary>
+        public string BoundaryChars
         {
             get => _boundaryChars;
             set
@@ -94,10 +94,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     boundary_max_scan The boundary_max_scan allows to control how far to look for boundary characters, and defaults to 20. 
-	    /// </summary>
-	    public uint BoundaryMaxScan
+        /// <summary>
+        ///     boundary_max_scan The boundary_max_scan allows to control how far to look for boundary characters, and defaults to 20. 
+        /// </summary>
+        public uint BoundaryMaxScan
         {
             get => _boundaryMaxScan;
             set
@@ -107,11 +107,11 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     phrase_limit The fast-vector-highlighter has a phrase_limit parameter that prevents it from analyzing too many phrases and eating tons of memory. It defaults to 256 so only the first 256 matching phrases in the document scored considered. You can raise the limit with the phrase_limit
-	    ///     parameter but keep in mind that scoring more phrases consumes more time and memory. If using matched_fields keep in mind that phrase_limit phrases per matched field are considered
-	    /// </summary>
-	    public uint PhraseLimit
+        /// <summary>
+        ///     phrase_limit The fast-vector-highlighter has a phrase_limit parameter that prevents it from analyzing too many phrases and eating tons of memory. It defaults to 256 so only the first 256 matching phrases in the document scored considered. You can raise the limit with the phrase_limit
+        ///     parameter but keep in mind that scoring more phrases consumes more time and memory. If using matched_fields keep in mind that phrase_limit phrases per matched field are considered
+        /// </summary>
+        public uint PhraseLimit
         {
             get => _phraseLimit;
             set

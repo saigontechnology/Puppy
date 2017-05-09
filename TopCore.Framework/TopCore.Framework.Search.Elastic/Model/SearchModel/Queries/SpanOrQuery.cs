@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     Matches the union of its span clauses. The span or query maps to Lucene SpanOrQuery. 
-	/// </summary>
-	public class SpanOrQuery : ISpanQuery
+    /// <summary>
+    ///     Matches the union of its span clauses. The span or query maps to Lucene SpanOrQuery. 
+    /// </summary>
+    public class SpanOrQuery : ISpanQuery
     {
         private readonly List<ISpanQuery> _queries;
 

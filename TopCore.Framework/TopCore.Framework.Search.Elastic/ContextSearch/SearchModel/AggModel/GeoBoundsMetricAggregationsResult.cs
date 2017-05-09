@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Model.GeoModel;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class GeoBoundsMetricAggregationsResult : AggregationResult<GeoBoundsMetricAggregationsResult>
+    public class GeoBoundsMetricAggregationsResult : AggregationResult<GeoBoundsMetricAggregationsResult>
     {
         public GeoPoint BoundsTopLeft { get; set; }
         public GeoPoint BoundsBottomRight { get; set; }

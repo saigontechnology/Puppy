@@ -21,10 +21,10 @@ using System;
 
 namespace TopCore.Framework.DependencyInjection.Exceptions
 {
-	public class ConflictRegistrationException : Exception
-	{
-		public ConflictRegistrationException(string message) : base(message)
-		{
-		}
-	}
+    public class ConflictRegistrationException : Exception
+    {
+        public ConflictRegistrationException(string message) : base(message)
+        {
+        }
+    }
 }

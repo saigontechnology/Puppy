@@ -1,6 +1,6 @@
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.MappingModel
 {
-	public class MappingDefinition
+    public class MappingDefinition
     {
         public MappingDefinition()
         {

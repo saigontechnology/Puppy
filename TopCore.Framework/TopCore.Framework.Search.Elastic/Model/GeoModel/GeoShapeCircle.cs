@@ -2,14 +2,14 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public class GeoShapeCircle : IGeoType
+    public class GeoShapeCircle : IGeoType
     {
         public GeoPoint Coordinates { get; set; }
 
-	    /// <summary>
-	    ///     The inner radius field is required. If not specified, then the units of the radius will default to METERS. 
-	    /// </summary>
-	    public string Radius { get; set; }
+        /// <summary>
+        ///     The inner radius field is required. If not specified, then the units of the radius will default to METERS. 
+        /// </summary>
+        public string Radius { get; set; }
 
         public string Type { get; set; }
 

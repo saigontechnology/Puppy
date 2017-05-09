@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextWarmers
 {
-	public class Warmer
+    public class Warmer
     {
         private List<IAggs> _aggs;
         private bool _aggsSet;
@@ -30,10 +30,10 @@ namespace TopCore.Framework.Search.Elastic.ContextWarmers
             }
         }
 
-	    /// <summary>
-	    ///     query_cache 
-	    /// </summary>
-	    public bool QueryCache
+        /// <summary>
+        ///     query_cache 
+        /// </summary>
+        public bool QueryCache
         {
             get => _queryCache;
             set
@@ -43,10 +43,10 @@ namespace TopCore.Framework.Search.Elastic.ContextWarmers
             }
         }
 
-	    /// <summary>
-	    ///     aggregations request 
-	    /// </summary>
-	    public List<IAggs> Aggs
+        /// <summary>
+        ///     aggregations request 
+        /// </summary>
+        public List<IAggs> Aggs
         {
             get => _aggs;
             set

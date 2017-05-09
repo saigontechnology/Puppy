@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.SimilarityCustom
 {
-	public abstract class SimilarityBase
+    public abstract class SimilarityBase
     {
         protected bool AnalyzerSet;
         protected string Name;

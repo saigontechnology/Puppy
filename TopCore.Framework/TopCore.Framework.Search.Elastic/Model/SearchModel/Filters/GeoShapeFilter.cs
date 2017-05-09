@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class GeoShapeFilter : IFilter
+    public class GeoShapeFilter : IFilter
     {
         private readonly string _field;
         private readonly IGeoType _geoType;

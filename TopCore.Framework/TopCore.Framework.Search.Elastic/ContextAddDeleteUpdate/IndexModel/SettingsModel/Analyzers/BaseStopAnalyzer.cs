@@ -3,17 +3,17 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Analyzers
 {
-	public abstract class BaseStopAnalyzer : AnalyzerBase
+    public abstract class BaseStopAnalyzer : AnalyzerBase
     {
         private string _stopwords;
         private List<string> _stopwordsList;
         private bool _stopwordsListSet;
         private bool _stopwordsSet;
 
-	    /// <summary>
-	    ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_ to explicitly specify an empty stopword list. 
-	    /// </summary>
-	    public string Stopwords
+        /// <summary>
+        ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_ to explicitly specify an empty stopword list. 
+        /// </summary>
+        public string Stopwords
         {
             get => _stopwords;
             set

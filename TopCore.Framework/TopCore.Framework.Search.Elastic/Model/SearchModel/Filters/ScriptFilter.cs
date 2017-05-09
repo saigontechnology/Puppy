@@ -3,10 +3,10 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	/// <summary>
-	///     Scripts are compiled and cached for faster execution. If the same script can be used, just with different parameters provider, it is preferable to use the ability to pass parameters to the script itself 
-	/// </summary>
-	public class ScriptFilter : IFilter
+    /// <summary>
+    ///     Scripts are compiled and cached for faster execution. If the same script can be used, just with different parameters provider, it is preferable to use the ability to pass parameters to the script itself 
+    /// </summary>
+    public class ScriptFilter : IFilter
     {
         private readonly string _script;
         private List<ScriptParameter> _params;

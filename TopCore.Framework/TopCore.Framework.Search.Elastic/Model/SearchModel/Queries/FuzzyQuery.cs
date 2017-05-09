@@ -2,12 +2,12 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     The fuzzy query uses similarity based on Levenshtein edit distance for string fields, and a +/- margin on numeric and date fields. String fields The fuzzy query generates all possible matching terms that are within the maximum edit distance specified in fuzziness and then checks the term
-	///     dictionary to find out which of those generated terms actually exist in the index.
-	///     Warning: this query can be very heavy if prefix_length and max_expansions are both set to 0. This could cause every term in the index to be examined!
-	/// </summary>
-	public class FuzzyQuery : IQuery
+    /// <summary>
+    ///     The fuzzy query uses similarity based on Levenshtein edit distance for string fields, and a +/- margin on numeric and date fields. String fields The fuzzy query generates all possible matching terms that are within the maximum edit distance specified in fuzziness and then checks the term
+    ///     dictionary to find out which of those generated terms actually exist in the index.
+    ///     Warning: this query can be very heavy if prefix_length and max_expansions are both set to 0. This could cause every term in the index to be examined!
+    /// </summary>
+    public class FuzzyQuery : IQuery
     {
         private readonly string _fieldName;
         private readonly string _fuzzyValue;
@@ -26,10 +26,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             _fuzzyValue = fuzzyValue;
         }
 
-	    /// <summary>
-	    ///     max_expansions The maximum number of terms that the fuzzy query will expand to. Defaults to 50. 
-	    /// </summary>
-	    public uint MaxExpansions
+        /// <summary>
+        ///     max_expansions The maximum number of terms that the fuzzy query will expand to. Defaults to 50. 
+        /// </summary>
+        public uint MaxExpansions
         {
             get => _maxExpansions;
             set
@@ -49,10 +49,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     fuzziness The minimum similarity of the term variants. Defaults to 0.5. See the section called Fuzziness 
-	    /// </summary>
-	    public double Fuzziness
+        /// <summary>
+        ///     fuzziness The minimum similarity of the term variants. Defaults to 0.5. See the section called Fuzziness 
+        /// </summary>
+        public double Fuzziness
         {
             get => _fuzziness;
             set
@@ -62,10 +62,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     prefix_length Length of required common prefix on variant terms. Defaults to 0. 
-	    /// </summary>
-	    public int PrefixLength
+        /// <summary>
+        ///     prefix_length Length of required common prefix on variant terms. Defaults to 0. 
+        /// </summary>
+        public int PrefixLength
         {
             get => _prefixLength;
             set

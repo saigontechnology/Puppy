@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public class WildcardQuery : IQuery
+    public class WildcardQuery : IQuery
     {
         private readonly string _field;
         private readonly object _wildcard;

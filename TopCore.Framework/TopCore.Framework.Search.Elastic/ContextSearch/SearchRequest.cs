@@ -15,7 +15,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch
 {
-	public class SearchRequest
+    public class SearchRequest
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly HttpClient _client;
@@ -154,7 +154,7 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
 
                 var source = responseObject["exists"];
 
-                resultDetails.PayloadResult = (bool) source;
+                resultDetails.PayloadResult = (bool)source;
                 return resultDetails;
             }
             catch (OperationCanceledException oex)

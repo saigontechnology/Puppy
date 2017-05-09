@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model
 {
-	/// <summary>
-	///     "_shards":{"total":5,"successful":5,"failed":0} 
-	/// </summary>
-	public class Shards
+    /// <summary>
+    ///     "_shards":{"total":5,"successful":5,"failed":0} 
+    /// </summary>
+    public class Shards
     {
         [JsonProperty(PropertyName = "total")]
         public int Total { get; set; }

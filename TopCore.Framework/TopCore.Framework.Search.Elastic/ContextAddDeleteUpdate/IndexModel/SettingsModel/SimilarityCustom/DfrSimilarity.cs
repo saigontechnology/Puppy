@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.SimilarityCustom
 {
-	public class DfrSimilarity : SimilarityBase
+    public class DfrSimilarity : SimilarityBase
     {
         private DfrAfterEffect _afterEffect;
         private bool _afterEffectSet;
@@ -12,21 +12,21 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private DfrIbNormalization _normalization;
         private bool _normalizationSet;
 
-	    /// <summary>
-	    ///     Similarity that implements the divergence from randomness framework. http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/DFRSimilarity.html 
-	    /// </summary>
-	    /// <param name="name"></param>
-	    public DfrSimilarity(string name)
+        /// <summary>
+        ///     Similarity that implements the divergence from randomness framework. http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/DFRSimilarity.html 
+        /// </summary>
+        /// <param name="name"></param>
+        public DfrSimilarity(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultSimilarities.Dfr;
         }
 
-	    /// <summary>
-	    ///     basic_model Possible values: be, d, g, if, in, ine and p 
-	    /// </summary>
-	    public DfrBasicModel BasicModel
+        /// <summary>
+        ///     basic_model Possible values: be, d, g, if, in, ine and p 
+        /// </summary>
+        public DfrBasicModel BasicModel
         {
             get => _basicModel;
             set
@@ -36,10 +36,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     after_effect Possible values: no, b and l. 
-	    /// </summary>
-	    public DfrAfterEffect AfterEffect
+        /// <summary>
+        ///     after_effect Possible values: no, b and l. 
+        /// </summary>
+        public DfrAfterEffect AfterEffect
         {
             get => _afterEffect;
             set
@@ -49,10 +49,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     normalization Possible values: no, h1, h2, h3 and z. 
-	    /// </summary>
-	    public DfrIbNormalization Normalization
+        /// <summary>
+        ///     normalization Possible values: no, h1, h2, h3 and z. 
+        /// </summary>
+        public DfrIbNormalization Normalization
         {
             get => _normalization;
             set

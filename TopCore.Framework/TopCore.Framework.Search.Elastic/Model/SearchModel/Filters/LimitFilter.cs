@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	/// <summary>
-	///     A limit filter limits the number of documents (per shard) to execute on 
-	/// </summary>
-	public class LimitFilter : IFilter
+    /// <summary>
+    ///     A limit filter limits the number of documents (per shard) to execute on 
+    /// </summary>
+    public class LimitFilter : IFilter
     {
         private readonly int _limit;
 

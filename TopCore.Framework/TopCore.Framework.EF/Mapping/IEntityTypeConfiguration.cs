@@ -21,8 +21,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace TopCore.Framework.EF.Mapping
 {
-	public interface IEntityTypeConfiguration<TEntity> where TEntity : class
-	{
-		void Map(EntityTypeBuilder<TEntity> builder);
-	}
+    public interface IEntityTypeConfiguration<TEntity> where TEntity : class
+    {
+        void Map(EntityTypeBuilder<TEntity> builder);
+    }
 }

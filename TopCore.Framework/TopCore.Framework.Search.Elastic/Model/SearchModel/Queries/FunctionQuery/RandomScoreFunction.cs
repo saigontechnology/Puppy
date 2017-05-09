@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQuery
 {
-	public class RandomScoreFunction<T> : BaseScoreFunction
+    public class RandomScoreFunction<T> : BaseScoreFunction
     {
         private readonly T _seed;
 

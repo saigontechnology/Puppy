@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public class GeoShapeGeometryCollection : IGeoType
+    public class GeoShapeGeometryCollection : IGeoType
     {
         [JsonConverter(typeof(GeoShapeGeometryCollectionGeometriesConverter))]
         public List<object> Geometries { get; set; }

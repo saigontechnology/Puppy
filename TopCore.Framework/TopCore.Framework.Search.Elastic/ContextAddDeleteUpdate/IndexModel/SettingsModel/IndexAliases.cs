@@ -2,11 +2,11 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	//"aliases" : {
-	//  "april_2014" : {},
-	//  "year_2014" : {}
-	//},
-	public class IndexAliases
+    //"aliases" : {
+    //  "april_2014" : {},
+    //  "year_2014" : {}
+    //},
+    public class IndexAliases
     {
         public IndexAliases()
         {

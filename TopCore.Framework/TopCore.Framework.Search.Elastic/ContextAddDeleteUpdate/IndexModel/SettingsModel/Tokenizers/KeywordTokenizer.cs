@@ -3,28 +3,28 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Tokenizers
 {
-	public class KeywordTokenizer : AnalysisTokenizerBase
+    public class KeywordTokenizer : AnalysisTokenizerBase
     {
         // buffer_size
         private int _bufferSize;
 
         private bool _bufferSizeSet;
 
-	    /// <summary>
-	    ///     A tokenizer of type keyword that emits the entire input as a single output. 
-	    /// </summary>
-	    /// <param name="name"> Name for the custom tokenizer </param>
-	    public KeywordTokenizer(string name)
+        /// <summary>
+        ///     A tokenizer of type keyword that emits the entire input as a single output. 
+        /// </summary>
+        /// <param name="name"> Name for the custom tokenizer </param>
+        public KeywordTokenizer(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultTokenizers.Keyword;
         }
 
-	    /// <summary>
-	    ///     The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to 255. 
-	    /// </summary>
-	    public int BufferSize
+        /// <summary>
+        ///     The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to 255. 
+        /// </summary>
+        public int BufferSize
         {
             get => _bufferSize;
             set

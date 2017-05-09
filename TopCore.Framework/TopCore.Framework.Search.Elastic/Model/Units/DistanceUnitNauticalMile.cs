@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.Units
 {
-	public class DistanceUnitNauticalMile : DistanceUnit
+    public class DistanceUnitNauticalMile : DistanceUnit
     {
         public DistanceUnitNauticalMile(uint nauticalMiles)
         {

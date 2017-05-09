@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class TermFilter : IFilter
+    public class TermFilter : IFilter
     {
         private readonly string _term;
         private readonly string _termValue;

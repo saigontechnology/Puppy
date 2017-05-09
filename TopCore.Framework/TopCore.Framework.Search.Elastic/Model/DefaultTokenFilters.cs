@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model
 {
-	public static class DefaultTokenFilters
+    public static class DefaultTokenFilters
     {
         public const string Standard = "standard";
         public const string Asciifolding = "asciifolding";

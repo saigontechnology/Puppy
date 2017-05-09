@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.Units
 {
-	public class TimeUnitSecond : TimeUnit
+    public class TimeUnitSecond : TimeUnit
     {
         public TimeUnitSecond(uint seconds)
         {

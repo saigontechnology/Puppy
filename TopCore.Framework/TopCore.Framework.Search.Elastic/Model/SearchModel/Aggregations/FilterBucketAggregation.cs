@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class FilterBucketAggregation : BaseBucketAggregation
+    public class FilterBucketAggregation : BaseBucketAggregation
     {
         private readonly IFilter _filter;
 

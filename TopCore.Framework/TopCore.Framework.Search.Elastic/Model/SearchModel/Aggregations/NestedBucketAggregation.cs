@@ -2,10 +2,10 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	/// <summary>
-	///     A special single bucket aggregation that enables aggregating nested documents. 
-	/// </summary>
-	public class NestedBucketAggregation : BaseBucketAggregation
+    /// <summary>
+    ///     A special single bucket aggregation that enables aggregating nested documents. 
+    /// </summary>
+    public class NestedBucketAggregation : BaseBucketAggregation
     {
         private readonly string _path;
 

@@ -2,14 +2,14 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 {
-	/// <summary>
-	///     A rescore request is executed on each shard before it returns its results to be sorted by the node handling the overall search request. Currently the rescore API has only one implementation: the query rescorer, which uses a query to tweak the scoring. In the future, alternative rescorers
-	///     may be made available, for example, a pair-wise rescorer.
-	///     Note: the rescore phase is not executed when search_type is set to scan or count. The query rescorer executes a second query only on the Top-K results returned by the query and post_filter phases. The number of docs which will be examined on each shard can be controlled by the window_size
-	///           parameter, which defaults to from and size. By default the scores from the original query and the rescore query are combined linearly to produce the final _score for each document. The relative importance of the original query and of the rescore query can be controlled with the
-	///           query_weight and rescore_query_weight respectively. Both default to 1.
-	/// </summary>
-	public class Rescore
+    /// <summary>
+    ///     A rescore request is executed on each shard before it returns its results to be sorted by the node handling the overall search request. Currently the rescore API has only one implementation: the query rescorer, which uses a query to tweak the scoring. In the future, alternative rescorers
+    ///     may be made available, for example, a pair-wise rescorer.
+    ///     Note: the rescore phase is not executed when search_type is set to scan or count. The query rescorer executes a second query only on the Top-K results returned by the query and post_filter phases. The number of docs which will be examined on each shard can be controlled by the window_size
+    ///           parameter, which defaults to from and size. By default the scores from the original query and the rescore query are combined linearly to produce the final _score for each document. The relative importance of the original query and of the rescore query can be controlled with the
+    ///           query_weight and rescore_query_weight respectively. Both default to 1.
+    /// </summary>
+    public class Rescore
     {
         private readonly IQuery _query;
         private readonly uint _windowSize;
@@ -36,10 +36,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     rescore_query_weight 
-	    /// </summary>
-	    public double RescoreQueryWeight
+        /// <summary>
+        ///     rescore_query_weight 
+        /// </summary>
+        public double RescoreQueryWeight
         {
             get => _rescoreQueryWeight;
             set
@@ -49,10 +49,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
             }
         }
 
-	    /// <summary>
-	    ///     score_mode 
-	    /// </summary>
-	    public ScoreModeRescore ScoreMode
+        /// <summary>
+        ///     score_mode 
+        /// </summary>
+        public ScoreModeRescore ScoreMode
         {
             get => _scoreMode;
             set
@@ -89,29 +89,29 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 
     public enum ScoreModeRescore
     {
-	    /// <summary>
-	    ///     Average the original score and the rescore query score. 
-	    /// </summary>
-	    avg,
+        /// <summary>
+        ///     Average the original score and the rescore query score. 
+        /// </summary>
+        avg,
 
-	    /// <summary>
-	    ///     Take the max of original score and the rescore query score. 
-	    /// </summary>
-	    max,
+        /// <summary>
+        ///     Take the max of original score and the rescore query score. 
+        /// </summary>
+        max,
 
-	    /// <summary>
-	    ///     Take the min of the original score and the rescore query score. 
-	    /// </summary>
-	    min,
+        /// <summary>
+        ///     Take the min of the original score and the rescore query score. 
+        /// </summary>
+        min,
 
-	    /// <summary>
-	    ///     Add the original score and the rescore query score. The default. 
-	    /// </summary>
-	    total,
+        /// <summary>
+        ///     Add the original score and the rescore query score. The default. 
+        /// </summary>
+        total,
 
-	    /// <summary>
-	    ///     Multiply the original score by the rescore query score. Useful for function query rescores. 
-	    /// </summary>
-	    multiply
+        /// <summary>
+        ///     Multiply the original score by the rescore query score. Useful for function query rescores. 
+        /// </summary>
+        multiply
     }
 }

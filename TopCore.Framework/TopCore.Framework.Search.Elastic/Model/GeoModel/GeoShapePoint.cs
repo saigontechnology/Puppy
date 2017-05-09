@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public class GeoShapePoint : IGeoType
+    public class GeoShapePoint : IGeoType
     {
         public GeoPoint Coordinates { get; set; }
 

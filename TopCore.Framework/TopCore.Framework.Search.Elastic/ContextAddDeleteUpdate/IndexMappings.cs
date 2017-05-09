@@ -14,7 +14,7 @@ using TopCore.Framework.Search.Elastic.Tracing;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
 {
-	public class IndexMappings
+    public class IndexMappings
     {
         private const bool CreatePropertyMappings = true;
         private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
@@ -34,7 +34,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         public async Task<ResultDetails<string>> Execute(HttpClient client, string baseUrl,
             ITraceProvider traceProvider, CancellationTokenSource cancellationTokenSource)
         {
-            var resultDetails = new ResultDetails<string> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<string> { Status = HttpStatusCode.InternalServerError };
             foreach (var command in Commands)
             {
                 var content = new StringContent(command.Content + "\n");
@@ -192,13 +192,13 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             elasticSearchMapping.ChildIndexEntities.Clear();
         }
 
-	    /// <summary>
-	    ///     Create a new index for the parent document 
-	    /// </summary>
-	    /// <param name="entityInfo">       </param>
-	    /// <param name="elasticMapping">   </param>
-	    /// <param name="mappingDefinition"> mapping definitions for the index type </param>
-	    private void IndexCreateCreatePropertyMappingForEntityForParentDocument(EntityContextInfo entityInfo,
+        /// <summary>
+        ///     Create a new index for the parent document 
+        /// </summary>
+        /// <param name="entityInfo">       </param>
+        /// <param name="elasticMapping">   </param>
+        /// <param name="mappingDefinition"> mapping definitions for the index type </param>
+        private void IndexCreateCreatePropertyMappingForEntityForParentDocument(EntityContextInfo entityInfo,
             ElasticMapping elasticMapping, MappingDefinition mappingDefinition, ElasticJsonWriter elasticCrudJsonWriter)
         {
             var itemType = elasticMapping.GetDocumentType(entityInfo.EntityType);
@@ -243,14 +243,14 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             //CreateMappingCommandForTypeWithExistingIndex(elasticCrudJsonWriter.GetJsonString(), mappingDefinition.Index, itemType);
         }
 
-	    /// <summary>
-	    ///     Create a new mapping for the child type in the parent document index 
-	    /// </summary>
-	    /// <param name="entityInfo">       </param>
-	    /// <param name="elasticMapping">   </param>
-	    /// <param name="item">             </param>
-	    /// <param name="mappingDefinition"> definition for the type mappings </param>
-	    private void IndexCreateCreatePropertyMappingForChildDocument(ElasticJsonWriter elasticCrudJsonWriter,
+        /// <summary>
+        ///     Create a new mapping for the child type in the parent document index 
+        /// </summary>
+        /// <param name="entityInfo">       </param>
+        /// <param name="elasticMapping">   </param>
+        /// <param name="item">             </param>
+        /// <param name="mappingDefinition"> definition for the type mappings </param>
+        private void IndexCreateCreatePropertyMappingForChildDocument(ElasticJsonWriter elasticCrudJsonWriter,
             EntityContextInfo entityInfo, ElasticMapping elasticMapping, EntityContextInfo item,
             MappingDefinition mappingDefinition)
         {
@@ -293,13 +293,13 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             // CreateMappingCommandForTypeWithExistingIndex(elasticCrudJsonWriter.GetJsonString(), elasticMapping.GetIndexForType(entityInfo.EntityType), childMapping.GetDocumentType(item.EntityType));
         }
 
-	    /// <summary>
-	    ///     Create a new index for the parent document 
-	    /// </summary>
-	    /// <param name="entityInfo">       </param>
-	    /// <param name="elasticMapping">   </param>
-	    /// <param name="mappingDefinition"> mapping definitions for the index type </param>
-	    private void CreatePropertyMappingForEntityForParentDocument(EntityContextInfo entityInfo,
+        /// <summary>
+        ///     Create a new index for the parent document 
+        /// </summary>
+        /// <param name="entityInfo">       </param>
+        /// <param name="elasticMapping">   </param>
+        /// <param name="mappingDefinition"> mapping definitions for the index type </param>
+        private void CreatePropertyMappingForEntityForParentDocument(EntityContextInfo entityInfo,
             ElasticMapping elasticMapping, MappingDefinition mappingDefinition)
         {
             var itemType = elasticMapping.GetDocumentType(entityInfo.EntityType);
@@ -332,14 +332,14 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
                 itemType);
         }
 
-	    /// <summary>
-	    ///     Create a new mapping for the child type in the parent document index 
-	    /// </summary>
-	    /// <param name="entityInfo">       </param>
-	    /// <param name="elasticMapping">   </param>
-	    /// <param name="item">             </param>
-	    /// <param name="mappingDefinition"> definition for the type mappings </param>
-	    private void CreatePropertyMappingForChildDocument(EntityContextInfo entityInfo, ElasticMapping elasticMapping,
+        /// <summary>
+        ///     Create a new mapping for the child type in the parent document index 
+        /// </summary>
+        /// <param name="entityInfo">       </param>
+        /// <param name="elasticMapping">   </param>
+        /// <param name="item">             </param>
+        /// <param name="mappingDefinition"> definition for the type mappings </param>
+        private void CreatePropertyMappingForChildDocument(EntityContextInfo entityInfo, ElasticMapping elasticMapping,
             EntityContextInfo item, MappingDefinition mappingDefinition)
         {
             var childMapping =
@@ -441,11 +441,11 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             elasticCrudJsonWriter.JsonWriter.WriteEndObject();
         }
 
-	    /// <summary>
-	    ///     "_routing": { "required": true }, 
-	    /// </summary>
-	    /// <param name="elasticCrudJsonWriter"></param>
-	    private void CreateForceRoutingMappingForDocument(ElasticJsonWriter elasticCrudJsonWriter)
+        /// <summary>
+        ///     "_routing": { "required": true }, 
+        /// </summary>
+        /// <param name="elasticCrudJsonWriter"></param>
+        private void CreateForceRoutingMappingForDocument(ElasticJsonWriter elasticCrudJsonWriter)
         {
             elasticCrudJsonWriter.JsonWriter.WritePropertyName("_routing");
             elasticCrudJsonWriter.JsonWriter.WriteStartObject();

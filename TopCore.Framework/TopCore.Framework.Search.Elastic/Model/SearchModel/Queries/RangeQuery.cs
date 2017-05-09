@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the field type, for string fields, the TermRangeQuery, while for number/date fields, the query is a NumericRangeQuery. The 
-	/// </summary>
-	public class RangeQuery : IQuery
+    /// <summary>
+    ///     Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the field type, for string fields, the TermRangeQuery, while for number/date fields, the query is a NumericRangeQuery. The 
+    /// </summary>
+    public class RangeQuery : IQuery
     {
         private readonly string _field;
         private double _boost;
@@ -40,10 +40,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     gte Greater-than or equal to 
-	    /// </summary>
-	    public object GreaterThanOrEqualTo
+        /// <summary>
+        ///     gte Greater-than or equal to 
+        /// </summary>
+        public object GreaterThanOrEqualTo
         {
             get => _greaterThanOrEqualTo;
             set
@@ -53,10 +53,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     gt Greater-than 
-	    /// </summary>
-	    public object GreaterThan
+        /// <summary>
+        ///     gt Greater-than 
+        /// </summary>
+        public object GreaterThan
         {
             get => _greaterThan;
             set
@@ -66,10 +66,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     lte Less-than or equal to 
-	    /// </summary>
-	    public object LessThanOrEqualTo
+        /// <summary>
+        ///     lte Less-than or equal to 
+        /// </summary>
+        public object LessThanOrEqualTo
         {
             get => _lessThanOrEqualTo;
             set
@@ -79,10 +79,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     lt Less-than 
-	    /// </summary>
-	    public object LessThan
+        /// <summary>
+        ///     lt Less-than 
+        /// </summary>
+        public object LessThan
         {
             get => _lessThan;
             set
@@ -92,10 +92,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     include_lower 
-	    /// </summary>
-	    public bool IncludeLower
+        /// <summary>
+        ///     include_lower 
+        /// </summary>
+        public bool IncludeLower
         {
             get => _includeLower;
             set
@@ -105,10 +105,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     include_upper 
-	    /// </summary>
-	    public bool IncludeUpper
+        /// <summary>
+        ///     include_upper 
+        /// </summary>
+        public bool IncludeUpper
         {
             get => _includeUpper;
             set
@@ -118,11 +118,11 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     time_zone When applied on date fields the range filter accepts also a time_zone parameter. The time_zone parameter will be applied to your input lower and upper bounds and will move them to UTC time based date if you give a date with a timezone explicitly defined and use the time_zone
-	    ///     parameter, time_zone will be ignored. For example, setting gte to 2012-01-01T00:00:00+01:00 with "time_zone":"+10:00" will still use +01:00 time zone.
-	    /// </summary>
-	    public string TimeZone
+        /// <summary>
+        ///     time_zone When applied on date fields the range filter accepts also a time_zone parameter. The time_zone parameter will be applied to your input lower and upper bounds and will move them to UTC time based date if you give a date with a timezone explicitly defined and use the time_zone
+        ///     parameter, time_zone will be ignored. For example, setting gte to 2012-01-01T00:00:00+01:00 with "time_zone":"+10:00" will still use +01:00 time zone.
+        /// </summary>
+        public string TimeZone
         {
             get => _timeZone;
             set

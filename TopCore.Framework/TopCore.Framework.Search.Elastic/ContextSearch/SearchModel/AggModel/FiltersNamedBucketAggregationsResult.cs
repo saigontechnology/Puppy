@@ -5,7 +5,7 @@ using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Bucket
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class FiltersNamedBucketAggregationsResult : AggregationResult<FiltersNamedBucketAggregationsResult>
+    public class FiltersNamedBucketAggregationsResult : AggregationResult<FiltersNamedBucketAggregationsResult>
     {
         [JsonProperty("buckets")]
         public NamedBucket Buckets { get; set; }

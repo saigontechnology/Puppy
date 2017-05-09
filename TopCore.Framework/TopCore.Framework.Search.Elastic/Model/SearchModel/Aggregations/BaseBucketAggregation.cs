@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public abstract class BaseBucketAggregation : IAggs
+    public abstract class BaseBucketAggregation : IAggs
     {
         private readonly string _name;
         private readonly string _type;

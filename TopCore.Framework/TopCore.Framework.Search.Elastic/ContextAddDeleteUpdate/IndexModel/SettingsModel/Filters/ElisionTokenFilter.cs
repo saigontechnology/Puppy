@@ -4,26 +4,26 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class ElisionTokenFilter : AnalysisFilterBase
+    public class ElisionTokenFilter : AnalysisFilterBase
     {
         private List<string> _articles;
         private bool _articlesSet;
 
-	    /// <summary>
-	    ///     A token filter which removes elisions. For example, "l’avion" (the plane) will tokenized as "avion" (plane). Accepts articles setting which is a set of stop words articles. 
-	    /// </summary>
-	    /// <param name="name"> name for the custom filter </param>
-	    public ElisionTokenFilter(string name)
+        /// <summary>
+        ///     A token filter which removes elisions. For example, "l’avion" (the plane) will tokenized as "avion" (plane). Accepts articles setting which is a set of stop words articles. 
+        /// </summary>
+        /// <param name="name"> name for the custom filter </param>
+        public ElisionTokenFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultTokenFilters.Elision;
         }
 
-	    /// <summary>
-	    ///     articles Accepts articles setting which is a set of stop words articles. 
-	    /// </summary>
-	    public List<string> Articles
+        /// <summary>
+        ///     articles Accepts articles setting which is a set of stop words articles. 
+        /// </summary>
+        public List<string> Articles
         {
             get => _articles;
             set

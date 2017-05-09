@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Model;
 
 namespace TopCore.Framework.Search.Elastic.Utils
 {
-	public static class MappingUtils
+    public static class MappingUtils
     {
         public static ElasticMapping GetElasticMapping<T>(IndexTypeDescription indexTypeDescription)
         {

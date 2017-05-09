@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.Units
 {
-	public class DistanceUnitKilometer : DistanceUnit
+    public class DistanceUnitKilometer : DistanceUnit
     {
         public DistanceUnitKilometer(uint kilometers)
         {

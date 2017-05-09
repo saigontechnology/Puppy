@@ -1,6 +1,6 @@
 namespace TopCore.Framework.Search.Elastic.Model
 {
-	public static class LanguageAnalyzers
+    public static class LanguageAnalyzers
     {
         public const string Arabic = "arabic";
         public const string Armenian = "armenian";

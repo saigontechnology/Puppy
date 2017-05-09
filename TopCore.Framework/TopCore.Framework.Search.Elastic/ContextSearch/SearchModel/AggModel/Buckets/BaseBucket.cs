@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Buckets
 {
-	public class BaseBucket
+    public class BaseBucket
     {
         [JsonProperty("doc_count")]
         public int DocCount { get; set; }

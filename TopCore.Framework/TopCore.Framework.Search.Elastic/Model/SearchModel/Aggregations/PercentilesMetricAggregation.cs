@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class PercentilesMetricAggregation : BaseMetricAggregation
+    public class PercentilesMetricAggregation : BaseMetricAggregation
     {
         private uint _compression;
         private bool _compressionSet;

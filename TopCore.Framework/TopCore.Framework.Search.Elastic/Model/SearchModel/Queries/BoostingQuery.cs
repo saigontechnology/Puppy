@@ -2,11 +2,11 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     The boosting query can be used to effectively demote results that match a given query. Unlike the "NOT" clause in bool query, this still selects documents that contain undesirable terms, but reduces their overall score. { "boosting" : { "positive" : { "term" : { "field1" : "value1" } },
-	///     "negative" : { "term" : { "field2" : "value2" } }, "negative_boost" : 0.2 } }
-	/// </summary>
-	public class BoostingQuery : IQuery
+    /// <summary>
+    ///     The boosting query can be used to effectively demote results that match a given query. Unlike the "NOT" clause in bool query, this still selects documents that contain undesirable terms, but reduces their overall score. { "boosting" : { "positive" : { "term" : { "field1" : "value1" } },
+    ///     "negative" : { "term" : { "field2" : "value2" } }, "negative_boost" : 0.2 } }
+    /// </summary>
+    public class BoostingQuery : IQuery
     {
         private IQuery _negative;
         private double _negativeBoost;
@@ -22,10 +22,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             NegativeBoost = negativeBoost;
         }
 
-	    /// <summary>
-	    ///     positive 
-	    /// </summary>
-	    public IQuery Positive
+        /// <summary>
+        ///     positive 
+        /// </summary>
+        public IQuery Positive
         {
             get => _positive;
             set
@@ -45,10 +45,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     negative_boost 
-	    /// </summary>
-	    public double NegativeBoost
+        /// <summary>
+        ///     negative_boost 
+        /// </summary>
+        public double NegativeBoost
         {
             get => _negativeBoost;
             set

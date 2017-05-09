@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class MatchAllFilter : IFilter
+    public class MatchAllFilter : IFilter
     {
         private double _boost;
         private bool _boostSet;

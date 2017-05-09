@@ -3,26 +3,26 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class StemmerTokenFilter : AnalysisFilterBase
+    public class StemmerTokenFilter : AnalysisFilterBase
     {
         private Stemmer _stemmerName;
         private bool _stemmerNameSet;
 
-	    /// <summary>
-	    ///     A filter that provides access to (almost) all of the available stemming token filters through a single unified interface 
-	    /// </summary>
-	    /// <param name="name"></param>
-	    public StemmerTokenFilter(string name)
+        /// <summary>
+        ///     A filter that provides access to (almost) all of the available stemming token filters through a single unified interface 
+        /// </summary>
+        /// <param name="name"></param>
+        public StemmerTokenFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultTokenFilters.Stemmer;
         }
 
-	    /// <summary>
-	    ///     Either front or back. Defaults to front. 
-	    /// </summary>
-	    public Stemmer StemmerName
+        /// <summary>
+        ///     Either front or back. Defaults to front. 
+        /// </summary>
+        public Stemmer StemmerName
         {
             get => _stemmerName;
             set

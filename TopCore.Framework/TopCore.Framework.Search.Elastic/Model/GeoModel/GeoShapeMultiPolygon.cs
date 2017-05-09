@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public class GeoShapeMultiPolygon : IGeoType
+    public class GeoShapeMultiPolygon : IGeoType
     {
         // TODO validate that first and the last items in each polygon are the same
         public List<List<List<GeoPoint>>> Coordinates { get; set; }

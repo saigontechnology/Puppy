@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class Aggregations
+    public class Aggregations
     {
         [JsonExtensionData]
         public Dictionary<string, JToken> Fields { get; set; }

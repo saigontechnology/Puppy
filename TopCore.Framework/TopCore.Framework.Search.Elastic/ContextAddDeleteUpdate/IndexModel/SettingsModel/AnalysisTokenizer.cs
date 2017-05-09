@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Setting
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	public class AnalysisTokenizer
+    public class AnalysisTokenizer
     {
         private bool _customFiltersSet;
         private List<AnalysisTokenizerBase> _customTokenizers;

@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class DictionaryDecompounderTokenFilter : CompoundWordTokenFilter
+    public class DictionaryDecompounderTokenFilter : CompoundWordTokenFilter
     {
         public DictionaryDecompounderTokenFilter(string name) : base(name, DefaultTokenFilters.DictionaryDecompounder)
         {
@@ -43,10 +43,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             Type = type;
         }
 
-	    /// <summary>
-	    ///     word_list A list of words to use. 
-	    /// </summary>
-	    public List<string> WordList
+        /// <summary>
+        ///     word_list A list of words to use. 
+        /// </summary>
+        public List<string> WordList
         {
             get => _wordList;
             set
@@ -56,10 +56,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     word_list_path A path (either relative to config location, or absolute) to a list of words. 
-	    /// </summary>
-	    public string WordListPath
+        /// <summary>
+        ///     word_list_path A path (either relative to config location, or absolute) to a list of words. 
+        /// </summary>
+        public string WordListPath
         {
             get => _wordListPath;
             set
@@ -69,10 +69,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     hyphenation_patterns_path A path (either relative to config location, or absolute) to a FOP XML hyphenation pattern file. (See http://offo.sourceforge.net/hyphenation/) Required for hyphenation_decompounder. 
-	    /// </summary>
-	    public string HyphenationPatternsPath
+        /// <summary>
+        ///     hyphenation_patterns_path A path (either relative to config location, or absolute) to a FOP XML hyphenation pattern file. (See http://offo.sourceforge.net/hyphenation/) Required for hyphenation_decompounder. 
+        /// </summary>
+        public string HyphenationPatternsPath
         {
             get => _hyphenationPatternsPath;
             set
@@ -82,10 +82,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     min_word_size Minimum word size(Integer). Defaults to 5. 
-	    /// </summary>
-	    public int MinWordSize
+        /// <summary>
+        ///     min_word_size Minimum word size(Integer). Defaults to 5. 
+        /// </summary>
+        public int MinWordSize
         {
             get => _minWordSize;
             set
@@ -95,10 +95,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     min_subword_size Minimum subword size(Integer). Defaults to 2. 
-	    /// </summary>
-	    public int MinSubwordSize
+        /// <summary>
+        ///     min_subword_size Minimum subword size(Integer). Defaults to 2. 
+        /// </summary>
+        public int MinSubwordSize
         {
             get => _minSubwordSize;
             set
@@ -108,10 +108,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     max_subword_size Maximum subword size(Integer). Defaults to 15. 
-	    /// </summary>
-	    public int MaxSubwordSize
+        /// <summary>
+        ///     max_subword_size Maximum subword size(Integer). Defaults to 15. 
+        /// </summary>
+        public int MaxSubwordSize
         {
             get => _maxSubwordSize;
             set
@@ -121,10 +121,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     only_longest_match Only matching the longest(Boolean). Defaults to false 
-	    /// </summary>
-	    public bool OnlyLongestMatch
+        /// <summary>
+        ///     only_longest_match Only matching the longest(Boolean). Defaults to false 
+        /// </summary>
+        public bool OnlyLongestMatch
         {
             get => _onlyLongestMatch;
             set

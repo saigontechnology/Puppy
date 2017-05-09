@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Bucket
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class GeoDistanceBucketAggregationsResult : AggregationResult<GeoDistanceBucketAggregationsResult>
+    public class GeoDistanceBucketAggregationsResult : AggregationResult<GeoDistanceBucketAggregationsResult>
     {
         public List<GeoDistanceRangeBucket> Buckets { get; set; }
 

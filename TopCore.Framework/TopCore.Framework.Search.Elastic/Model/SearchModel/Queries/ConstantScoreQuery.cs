@@ -2,11 +2,11 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     A query that wraps a filter or another query and simply returns a constant score equal to the query boost for every document in the filter. Maps to Lucene ConstantScoreQuery. The filter object can hold only filter elements, not queries. Filters can be much faster compared to queries since
-	///     they don’t perform any scoring, especially when they are cached.
-	/// </summary>
-	public class ConstantScoreQuery : IQuery
+    /// <summary>
+    ///     A query that wraps a filter or another query and simply returns a constant score equal to the query boost for every document in the filter. Maps to Lucene ConstantScoreQuery. The filter object can hold only filter elements, not queries. Filters can be much faster compared to queries since
+    ///     they don’t perform any scoring, especially when they are cached.
+    /// </summary>
+    public class ConstantScoreQuery : IQuery
     {
         private double _boost;
         private bool _boostSet;
@@ -25,10 +25,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             Filter = filter;
         }
 
-	    /// <summary>
-	    ///     positive 
-	    /// </summary>
-	    public IQuery Query
+        /// <summary>
+        ///     positive 
+        /// </summary>
+        public IQuery Query
         {
             get => _query;
             set

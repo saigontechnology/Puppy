@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.Units
 {
-	public class TimeUnitMonth : TimeUnit
+    public class TimeUnitMonth : TimeUnit
     {
         public TimeUnitMonth(int months)
         {

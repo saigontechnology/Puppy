@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public enum IncludeExcludeExpressionFlags
+    public enum IncludeExcludeExpressionFlags
     {
         CANON_EQ,
         CASE_INSENSITIVE,

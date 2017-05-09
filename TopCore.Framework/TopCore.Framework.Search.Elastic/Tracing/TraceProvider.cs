@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TopCore.Framework.Search.Elastic.Tracing
 {
-	public class TraceProvider : ITraceProvider
+    public class TraceProvider : ITraceProvider
     {
         private readonly TraceSource _ts;
 

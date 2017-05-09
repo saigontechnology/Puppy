@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public class TermsQuery : IQuery
+    public class TermsQuery : IQuery
     {
         private readonly string _term;
         private readonly List<object> _termValues;

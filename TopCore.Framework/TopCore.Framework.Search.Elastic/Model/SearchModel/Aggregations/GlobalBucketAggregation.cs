@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class GlobalBucketAggregation : BaseBucketAggregation
+    public class GlobalBucketAggregation : BaseBucketAggregation
     {
         private readonly string _name;
 

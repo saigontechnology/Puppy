@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     Nested query allows to query nested objects / docs (see nested mapping). The query is executed against the nested objects / docs as if they were indexed as separate docs (they are, internally) and resulting in the root parent doc (or parent nested mapping). 
-	/// </summary>
-	public class NestedQuery : IQuery
+    /// <summary>
+    ///     Nested query allows to query nested objects / docs (see nested mapping). The query is executed against the nested objects / docs as if they were indexed as separate docs (they are, internally) and resulting in the root parent doc (or parent nested mapping). 
+    /// </summary>
+    public class NestedQuery : IQuery
     {
         private readonly string _path;
         private readonly IQuery _query;
@@ -20,10 +20,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             _path = path;
         }
 
-	    /// <summary>
-	    ///     score_mode The score_mode allows to set how inner children matching affects scoring of parent. It defaults to avg, but can be sum, max and none. 
-	    /// </summary>
-	    public ScoreMode ScoreMode
+        /// <summary>
+        ///     score_mode The score_mode allows to set how inner children matching affects scoring of parent. It defaults to avg, but can be sum, max and none. 
+        /// </summary>
+        public ScoreMode ScoreMode
         {
             get => _scoreMode;
             set

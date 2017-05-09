@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.SimilarityCustom
 {
-	public class IbSimilarity : SimilarityBase
+    public class IbSimilarity : SimilarityBase
     {
         private IbDistribution _distribution;
         private bool _distributionSet;
@@ -13,21 +13,21 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private DfrIbNormalization _normalization;
         private bool _normalizationSet;
 
-	    /// <summary>
-	    ///     nformation based model http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/IBSimilarity.html 
-	    /// </summary>
-	    /// <param name="name"></param>
-	    public IbSimilarity(string name)
+        /// <summary>
+        ///     nformation based model http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/IBSimilarity.html 
+        /// </summary>
+        /// <param name="name"></param>
+        public IbSimilarity(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultSimilarities.Ib;
         }
 
-	    /// <summary>
-	    ///     distribution Possible values: ll and spl. 
-	    /// </summary>
-	    public IbDistribution Distribution
+        /// <summary>
+        ///     distribution Possible values: ll and spl. 
+        /// </summary>
+        public IbDistribution Distribution
         {
             get => _distribution;
             set
@@ -37,10 +37,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     lambda Possible values: df and ttf. 
-	    /// </summary>
-	    public IbLambda Lambda
+        /// <summary>
+        ///     lambda Possible values: df and ttf. 
+        /// </summary>
+        public IbLambda Lambda
         {
             get => _lambda;
             set
@@ -50,10 +50,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     normalization Possible values: no, h1, h2, h3 and z. 
-	    /// </summary>
-	    public DfrIbNormalization Normalization
+        /// <summary>
+        ///     normalization Possible values: no, h1, h2, h3 and z. 
+        /// </summary>
+        public DfrIbNormalization Normalization
         {
             get => _normalization;
             set

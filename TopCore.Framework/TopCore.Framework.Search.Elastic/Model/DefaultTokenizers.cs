@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model
 {
-	public static class DefaultTokenizers
+    public static class DefaultTokenizers
     {
         public const string Standard = "standard";
         public const string EdgeNGram = "edge_ngram";

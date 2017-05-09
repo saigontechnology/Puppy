@@ -1,6 +1,6 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations.RangeParam
 {
-	public abstract class RangeAggregationParameter<T>
+    public abstract class RangeAggregationParameter<T>
     {
         protected bool KeySet;
         protected string KeyValue;

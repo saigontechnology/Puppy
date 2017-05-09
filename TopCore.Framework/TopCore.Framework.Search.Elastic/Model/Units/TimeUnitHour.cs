@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.Units
 {
-	public class TimeUnitHour : TimeUnit
+    public class TimeUnitHour : TimeUnit
     {
         public TimeUnitHour(uint hours)
         {

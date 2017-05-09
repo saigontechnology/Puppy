@@ -18,13 +18,17 @@
 #endregion License
 
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using TopCore.Framework.Core.DateTimeUtils;
 
 namespace TopCore.Framework.EF
 {
     public interface IBaseEntity
     {
+        string GlobalId { get; set; }
+
         DateTimeOffset CreatedTime { get; set; }
 
         DateTimeOffset? LastUpdatedTime { get; set; }
@@ -44,7 +48,10 @@ namespace TopCore.Framework.EF
     /// <typeparam name="TOwnerId">Id type of who do the action of entity (for tracking)</typeparam>
     public abstract class EntityBase<TId, TOwnerId> : IBaseEntity
     {
+        [Key]
         public TId Id { get; set; }
+
+        public string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
         public DateTimeOffset CreatedTime { get; set; } = DateTime.UtcNow;
 

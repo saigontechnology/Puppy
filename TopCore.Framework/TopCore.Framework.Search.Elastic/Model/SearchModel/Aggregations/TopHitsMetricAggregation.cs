@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class TopHitsMetricAggregation : IAggs
+    public class TopHitsMetricAggregation : IAggs
     {
         private readonly string _name;
         private int _from;
@@ -18,10 +18,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             _name = name;
         }
 
-	    /// <summary>
-	    ///     from The starting from index of the hits to return. Defaults to 0. 
-	    /// </summary>
-	    public int From
+        /// <summary>
+        ///     from The starting from index of the hits to return. Defaults to 0. 
+        /// </summary>
+        public int From
         {
             get => _from;
             set
@@ -31,10 +31,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             }
         }
 
-	    /// <summary>
-	    ///     size The number of hits to return. Defaults to 10. 
-	    /// </summary>
-	    public int Size
+        /// <summary>
+        ///     size The number of hits to return. Defaults to 10. 
+        /// </summary>
+        public int Size
         {
             get => _size;
             set

@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
@@ -36,21 +38,23 @@ namespace TopCore.Framework.Web
         public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
         {
             foreach (var apiDescriptionGroup in context.ApiDescriptionsGroups.Items)
-            {
                 foreach (var apiDescription in apiDescriptionGroup.Items)
                 {
                     var controllerActionDescriptor = apiDescription.ActionDescriptor as ControllerActionDescriptor;
                     if (controllerActionDescriptor != null)
                     {
-                        var isHideInDocAttributeInType = controllerActionDescriptor.ControllerTypeInfo.GetCustomAttributes<HideInDocsAttribute>(inherit: true).Any();
-                        var isHideInDocAttributeInMethod = controllerActionDescriptor.MethodInfo.GetCustomAttributes<HideInDocsAttribute>(inherit: true).Any();
+                        var isHideInDocAttributeInType = controllerActionDescriptor.ControllerTypeInfo
+                            .GetCustomAttributes<HideInDocsAttribute>(true)
+                            .Any();
+                        var isHideInDocAttributeInMethod = controllerActionDescriptor.MethodInfo
+                            .GetCustomAttributes<HideInDocsAttribute>(true)
+                            .Any();
 
                         if (!isHideInDocAttributeInType && !isHideInDocAttributeInMethod) continue;
                         var route = "/" + controllerActionDescriptor.AttributeRouteInfo.Template.TrimEnd('/');
                         swaggerDoc.Paths.Remove(route);
                     }
                 }
-            }
         }
     }
 }

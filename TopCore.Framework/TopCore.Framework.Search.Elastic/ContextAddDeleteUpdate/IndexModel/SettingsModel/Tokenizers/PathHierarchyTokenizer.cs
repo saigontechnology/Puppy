@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Tokenizers
 {
-	public class PathHierarchyTokenizer : AnalysisTokenizerBase
+    public class PathHierarchyTokenizer : AnalysisTokenizerBase
     {
         private int _bufferSize;
         private bool _bufferSizeSet;
@@ -16,21 +16,21 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private int _skip;
         private bool _skipSet;
 
-	    /// <summary>
-	    ///     The path_hierarchy tokenizer takes something like this: something/something/else And produces tokens: something something/something something/something/else 
-	    /// </summary>
-	    /// <param name="name"> custom name </param>
-	    public PathHierarchyTokenizer(string name)
+        /// <summary>
+        ///     The path_hierarchy tokenizer takes something like this: something/something/else And produces tokens: something something/something something/something/else 
+        /// </summary>
+        /// <param name="name"> custom name </param>
+        public PathHierarchyTokenizer(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultTokenizers.Pattern;
         }
 
-	    /// <summary>
-	    ///     delimiter The character delimiter to use, defaults to /. 
-	    /// </summary>
-	    public string Delimiter
+        /// <summary>
+        ///     delimiter The character delimiter to use, defaults to /. 
+        /// </summary>
+        public string Delimiter
         {
             get => _delimiter;
             set
@@ -40,10 +40,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     replacement An optional replacement character to use. Defaults to the delimiter. 
-	    /// </summary>
-	    public string Replacement
+        /// <summary>
+        ///     replacement An optional replacement character to use. Defaults to the delimiter. 
+        /// </summary>
+        public string Replacement
         {
             get => _replacement;
             set
@@ -53,10 +53,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     buffer_size The buffer size to use, defaults to 1024. 
-	    /// </summary>
-	    public int BufferSize
+        /// <summary>
+        ///     buffer_size The buffer size to use, defaults to 1024. 
+        /// </summary>
+        public int BufferSize
         {
             get => _bufferSize;
             set
@@ -66,10 +66,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     reverse Generates tokens in reverse order, defaults to false. 
-	    /// </summary>
-	    public bool Reverse
+        /// <summary>
+        ///     reverse Generates tokens in reverse order, defaults to false. 
+        /// </summary>
+        public bool Reverse
         {
             get => _reverse;
             set
@@ -79,10 +79,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     skip Controls initial tokens to skip, defaults to 0. 
-	    /// </summary>
-	    public int skip
+        /// <summary>
+        ///     skip Controls initial tokens to skip, defaults to 0. 
+        /// </summary>
+        public int skip
         {
             get => _skip;
             set

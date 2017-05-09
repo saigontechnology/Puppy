@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes
 {
-	public class Fields
+    public class Fields
     {
-	    /// <summary>
-	    ///     You can define all the Elastic properties here 
-	    /// </summary>
-	    public Type FieldClass { get; set; }
+        /// <summary>
+        ///     You can define all the Elastic properties here 
+        /// </summary>
+        public Type FieldClass { get; set; }
 
         public void AddFieldData(ElasticJsonWriter elasticCrudJsonWriter)
         {

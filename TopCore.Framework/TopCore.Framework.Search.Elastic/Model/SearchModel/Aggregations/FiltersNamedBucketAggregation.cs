@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class FiltersNamedBucketAggregation : BaseBucketAggregation
+    public class FiltersNamedBucketAggregation : BaseBucketAggregation
     {
         private readonly List<NamedFilter> _namedFilters;
 

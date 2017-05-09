@@ -3,11 +3,11 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	/// <summary>
-	///     A query that matches documents matching boolean combinations of other queries. The bool query maps to Lucene BooleanQuery. It is built using one or more boolean clauses, each clause with a typed occurrence. { "query":{ "bool" : { "must" : [ { "term" : { "details" : "different" } }, {
-	///     "term" : { "details" : "data" } } ], "must_not" : [ { "range" : { "id" : { "from" : 7, "to" : 20 } } } ], "should" : [ { "term" : { "details" : "data" } }, { "term" : { "details" : "alone" } } ] } } }
-	/// </summary>
-	public class BoolFilter : IFilter
+    /// <summary>
+    ///     A query that matches documents matching boolean combinations of other queries. The bool query maps to Lucene BooleanQuery. It is built using one or more boolean clauses, each clause with a typed occurrence. { "query":{ "bool" : { "must" : [ { "term" : { "details" : "different" } }, {
+    ///     "term" : { "details" : "data" } } ], "must_not" : [ { "range" : { "id" : { "from" : 7, "to" : 20 } } } ], "should" : [ { "term" : { "details" : "data" } }, { "term" : { "details" : "alone" } } ] } } }
+    /// </summary>
+    public class BoolFilter : IFilter
     {
         private bool _cache;
         private bool _cacheSet;
@@ -24,10 +24,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 
         public BoolFilter(IFilter must, IFilter mustNot = null)
         {
-            Must = new List<IFilter> {must};
+            Must = new List<IFilter> { must };
 
             if (mustNot != null)
-                MustNot = new List<IFilter> {mustNot};
+                MustNot = new List<IFilter> { mustNot };
         }
 
         public List<IFilter> Must

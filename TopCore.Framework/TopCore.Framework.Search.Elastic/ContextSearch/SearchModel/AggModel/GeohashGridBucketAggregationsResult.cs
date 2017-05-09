@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Bucket
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class GeohashGridBucketAggregationsResult : AggregationResult<GeohashGridBucketAggregationsResult>
+    public class GeohashGridBucketAggregationsResult : AggregationResult<GeohashGridBucketAggregationsResult>
     {
         public List<Bucket> Buckets { get; set; }
 

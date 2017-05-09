@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class KeepTokenFilter : AnalysisFilterBase
+    public class KeepTokenFilter : AnalysisFilterBase
     {
         private List<string> _keepWords;
         private bool _keepWordsCase;
@@ -13,21 +13,21 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _keepWordsPathSet;
         private bool _keepWordsSet;
 
-	    /// <summary>
-	    ///     A token filter of type keep that only keeps tokens with text contained in a predefined set of words. The set of words can be defined in the settings or loaded from a text file containing one word per line. 
-	    /// </summary>
-	    /// <param name="name"> name for the custom filter </param>
-	    public KeepTokenFilter(string name)
+        /// <summary>
+        ///     A token filter of type keep that only keeps tokens with text contained in a predefined set of words. The set of words can be defined in the settings or loaded from a text file containing one word per line. 
+        /// </summary>
+        /// <param name="name"> name for the custom filter </param>
+        public KeepTokenFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultTokenFilters.Keep;
         }
 
-	    /// <summary>
-	    ///     keep_words a list of words to keep 
-	    /// </summary>
-	    public List<string> KeepWords
+        /// <summary>
+        ///     keep_words a list of words to keep 
+        /// </summary>
+        public List<string> KeepWords
         {
             get => _keepWords;
             set
@@ -37,10 +37,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     keep_words_path a path to a words file 
-	    /// </summary>
-	    public string KeepWordsPath
+        /// <summary>
+        ///     keep_words_path a path to a words file 
+        /// </summary>
+        public string KeepWordsPath
         {
             get => _keepWordsPath;
             set
@@ -50,10 +50,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     keep_words_case a boolean indicating whether to lower case the words (defaults to false) 
-	    /// </summary>
-	    public bool KeepWordsCase
+        /// <summary>
+        ///     keep_words_case a boolean indicating whether to lower case the words (defaults to false) 
+        /// </summary>
+        public bool KeepWordsCase
         {
             get => _keepWordsCase;
             set

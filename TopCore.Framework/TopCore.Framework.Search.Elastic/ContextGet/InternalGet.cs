@@ -12,7 +12,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextGet
 {
-	public class InternalGet
+    public class InternalGet
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly HttpClient _client;

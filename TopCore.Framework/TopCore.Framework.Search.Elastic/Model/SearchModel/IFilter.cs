@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 {
-	public interface IFilter
+    public interface IFilter
     {
         void WriteJson(ElasticJsonWriter elasticCrudJsonWriter);
     }

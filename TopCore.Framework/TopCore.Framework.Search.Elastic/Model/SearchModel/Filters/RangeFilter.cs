@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class RangeFilter : IFilter
+    public class RangeFilter : IFilter
     {
         private readonly string _field;
         private object _greaterThan;
@@ -25,10 +25,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             _field = field;
         }
 
-	    /// <summary>
-	    ///     gte Greater-than or equal to 
-	    /// </summary>
-	    public object GreaterThanOrEqualTo
+        /// <summary>
+        ///     gte Greater-than or equal to 
+        /// </summary>
+        public object GreaterThanOrEqualTo
         {
             get => _greaterThanOrEqualTo;
             set
@@ -38,10 +38,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     gt Greater-than 
-	    /// </summary>
-	    public object GreaterThan
+        /// <summary>
+        ///     gt Greater-than 
+        /// </summary>
+        public object GreaterThan
         {
             get => _greaterThan;
             set
@@ -51,10 +51,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     lte Less-than or equal to 
-	    /// </summary>
-	    public object LessThanOrEqualTo
+        /// <summary>
+        ///     lte Less-than or equal to 
+        /// </summary>
+        public object LessThanOrEqualTo
         {
             get => _lessThanOrEqualTo;
             set
@@ -64,10 +64,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     lt Less-than 
-	    /// </summary>
-	    public object LessThan
+        /// <summary>
+        ///     lt Less-than 
+        /// </summary>
+        public object LessThan
         {
             get => _lessThan;
             set
@@ -77,10 +77,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     include_lower 
-	    /// </summary>
-	    public bool IncludeLower
+        /// <summary>
+        ///     include_lower 
+        /// </summary>
+        public bool IncludeLower
         {
             get => _includeLower;
             set
@@ -90,10 +90,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     include_upper 
-	    /// </summary>
-	    public bool IncludeUpper
+        /// <summary>
+        ///     include_upper 
+        /// </summary>
+        public bool IncludeUpper
         {
             get => _includeUpper;
             set
@@ -103,11 +103,11 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     time_zone When applied on date fields the range filter accepts also a time_zone parameter. The time_zone parameter will be applied to your input lower and upper bounds and will move them to UTC time based date if you give a date with a timezone explicitly defined and use the time_zone
-	    ///     parameter, time_zone will be ignored. For example, setting gte to 2012-01-01T00:00:00+01:00 with "time_zone":"+10:00" will still use +01:00 time zone.
-	    /// </summary>
-	    public string TimeZone
+        /// <summary>
+        ///     time_zone When applied on date fields the range filter accepts also a time_zone parameter. The time_zone parameter will be applied to your input lower and upper bounds and will move them to UTC time based date if you give a date with a timezone explicitly defined and use the time_zone
+        ///     parameter, time_zone will be ignored. For example, setting gte to 2012-01-01T00:00:00+01:00 with "time_zone":"+10:00" will still use +01:00 time zone.
+        /// </summary>
+        public string TimeZone
         {
             get => _timeZone;
             set

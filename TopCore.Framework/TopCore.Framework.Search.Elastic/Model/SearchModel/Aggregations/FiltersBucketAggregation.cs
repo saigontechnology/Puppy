@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	/// <summary>
-	///     A multi-bucket value source based aggregation where buckets are dynamically built - one per unique value. 
-	/// </summary>
-	public class FiltersBucketAggregation : BaseBucketAggregation
+    /// <summary>
+    ///     A multi-bucket value source based aggregation where buckets are dynamically built - one per unique value. 
+    /// </summary>
+    public class FiltersBucketAggregation : BaseBucketAggregation
     {
         private readonly List<IFilter> _filters;
 

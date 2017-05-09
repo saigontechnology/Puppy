@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Setting
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	public class Similarities
+    public class Similarities
     {
         private List<SimilarityBase> _customSimilarities;
         private bool _customSimilaritiesSet;

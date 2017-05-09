@@ -3,11 +3,11 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     Matches spans which are near one another. One can specify slop, the maximum number of intervening unmatched positions, as well as whether matches are required to be in-order. The span near query maps to Lucene SpanNearQuery. The clauses element is a list of one or more other span type
-	///     queries and the slop controls the maximum number of intervening unmatched positions permitted.
-	/// </summary>
-	public class SpanNearQuery : ISpanQuery
+    /// <summary>
+    ///     Matches spans which are near one another. One can specify slop, the maximum number of intervening unmatched positions, as well as whether matches are required to be in-order. The span near query maps to Lucene SpanNearQuery. The clauses element is a list of one or more other span type
+    ///     queries and the slop controls the maximum number of intervening unmatched positions permitted.
+    /// </summary>
+    public class SpanNearQuery : ISpanQuery
     {
         private readonly List<SpanTermQuery> _queries;
         private readonly uint _slop;
@@ -26,10 +26,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             _slop = slop;
         }
 
-	    /// <summary>
-	    ///     in_order 
-	    /// </summary>
-	    public bool InOrder
+        /// <summary>
+        ///     in_order 
+        /// </summary>
+        public bool InOrder
         {
             get => _inOrder;
             set
@@ -39,10 +39,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     collect_payloads 
-	    /// </summary>
-	    public bool CollectPayloads
+        /// <summary>
+        ///     collect_payloads 
+        /// </summary>
+        public bool CollectPayloads
         {
             get => _collectPayloads;
             set

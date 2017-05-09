@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class NGramTokenFilter : AnalysisFilterBase
+    public class NGramTokenFilter : AnalysisFilterBase
     {
         private int _maxGram;
         private bool _maxGramSet;
@@ -17,10 +17,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             Type = DefaultTokenFilters.NGram;
         }
 
-	    /// <summary>
-	    ///     min_gram Minimum size in codepoints of a single n-gram 
-	    /// </summary>
-	    public int MinGram
+        /// <summary>
+        ///     min_gram Minimum size in codepoints of a single n-gram 
+        /// </summary>
+        public int MinGram
         {
             get => _minGram;
             set
@@ -30,10 +30,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     max_gram Maximum size in codepoints of a single n-gram 
-	    /// </summary>
-	    public int MaxGram
+        /// <summary>
+        ///     max_gram Maximum size in codepoints of a single n-gram 
+        /// </summary>
+        public int MaxGram
         {
             get => _maxGram;
             set

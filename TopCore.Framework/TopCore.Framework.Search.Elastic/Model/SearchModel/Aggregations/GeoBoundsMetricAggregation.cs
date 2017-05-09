@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	/// <summary>
-	///     A metric aggregation that computes the bounding box containing all geo_point values for a field. 
-	/// </summary>
-	public class GeoBoundsMetricAggregation : BaseMetricAggregation
+    /// <summary>
+    ///     A metric aggregation that computes the bounding box containing all geo_point values for a field. 
+    /// </summary>
+    public class GeoBoundsMetricAggregation : BaseMetricAggregation
     {
         private bool _wrapLongitude;
         private bool _wrapLongitudeSet;

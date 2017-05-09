@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class SynonymTokenFilter : AnalysisFilterBase
+    public class SynonymTokenFilter : AnalysisFilterBase
     {
         private bool _expand;
         private bool _expandSet;
@@ -15,22 +15,22 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _synonymsPathSet;
         private bool _synonymsSet;
 
-	    /// <summary>
-	    ///     The synonym token filter allows to easily handle synonyms during the analysis process. Synonyms are configured using a configuration file. Additional settings are: ignore_case (defaults to false), and expand (defaults to true). The tokenizer parameter controls the tokenizers that will
-	    ///     be used to tokenize the synonym, and defaults to the whitespace tokenizer.
-	    /// </summary>
-	    /// <param name="name"> name for the custom filter </param>
-	    public SynonymTokenFilter(string name)
+        /// <summary>
+        ///     The synonym token filter allows to easily handle synonyms during the analysis process. Synonyms are configured using a configuration file. Additional settings are: ignore_case (defaults to false), and expand (defaults to true). The tokenizer parameter controls the tokenizers that will
+        ///     be used to tokenize the synonym, and defaults to the whitespace tokenizer.
+        /// </summary>
+        /// <param name="name"> name for the custom filter </param>
+        public SynonymTokenFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultTokenFilters.Synonym;
         }
 
-	    /// <summary>
-	    ///     synonyms_path 
-	    /// </summary>
-	    public string SynonymsPath
+        /// <summary>
+        ///     synonyms_path 
+        /// </summary>
+        public string SynonymsPath
         {
             get => _synonymsPath;
             set
@@ -60,10 +60,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     Two synonym formats are supported: Solr, WordNet. These can be defined directly with this parameter. 
-	    /// </summary>
-	    public List<string> Synonyms
+        /// <summary>
+        ///     Two synonym formats are supported: Solr, WordNet. These can be defined directly with this parameter. 
+        /// </summary>
+        public List<string> Synonyms
         {
             get => _synonyms;
             set

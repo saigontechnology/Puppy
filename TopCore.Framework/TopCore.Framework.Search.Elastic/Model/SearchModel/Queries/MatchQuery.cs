@@ -1,9 +1,9 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     A family of match queries that accept text/numerics/dates, analyzes it, and constructs a query out of it. For example: 
-	/// </summary>
-	public class MatchQuery : MatchBase, IQuery
+    /// <summary>
+    ///     A family of match queries that accept text/numerics/dates, analyzes it, and constructs a query out of it. For example: 
+    /// </summary>
+    public class MatchQuery : MatchBase, IQuery
     {
         private readonly string _field;
 

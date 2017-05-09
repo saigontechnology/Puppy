@@ -4,10 +4,10 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	/// <summary>
-	///     Filters documents that include only hits that exists within a specific distance from a geo point. 
-	/// </summary>
-	public class GeoDistanceRangeFilter : IFilter
+    /// <summary>
+    ///     Filters documents that include only hits that exists within a specific distance from a geo point. 
+    /// </summary>
+    public class GeoDistanceRangeFilter : IFilter
     {
         private readonly string _field;
         private readonly DistanceUnit _from;
@@ -26,14 +26,14 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         private bool _lessThanOrEqualToSet;
         private bool _lessThanSet;
 
-	    /// <summary>
-	    ///     Filters documents that include only hits that exists within a specific distance from a geo point. 
-	    /// </summary>
-	    /// <param name="field">    name of the field used for the geo point </param>
-	    /// <param name="location"> GeoPoint location </param>
-	    /// <param name="from">     from in distance units </param>
-	    /// <param name="to">       to in distance units </param>
-	    public GeoDistanceRangeFilter(string field, GeoPoint location, DistanceUnit from, DistanceUnit to)
+        /// <summary>
+        ///     Filters documents that include only hits that exists within a specific distance from a geo point. 
+        /// </summary>
+        /// <param name="field">    name of the field used for the geo point </param>
+        /// <param name="location"> GeoPoint location </param>
+        /// <param name="from">     from in distance units </param>
+        /// <param name="to">       to in distance units </param>
+        public GeoDistanceRangeFilter(string field, GeoPoint location, DistanceUnit from, DistanceUnit to)
         {
             _field = field;
             _location = location;
@@ -41,10 +41,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             _to = to;
         }
 
-	    /// <summary>
-	    ///     gte Greater-than or equal to 
-	    /// </summary>
-	    public string GreaterThanOrEqualTo
+        /// <summary>
+        ///     gte Greater-than or equal to 
+        /// </summary>
+        public string GreaterThanOrEqualTo
         {
             get => _greaterThanOrEqualTo;
             set
@@ -54,10 +54,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     gt Greater-than 
-	    /// </summary>
-	    public string GreaterThan
+        /// <summary>
+        ///     gt Greater-than 
+        /// </summary>
+        public string GreaterThan
         {
             get => _greaterThan;
             set
@@ -67,10 +67,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     lte Less-than or equal to 
-	    /// </summary>
-	    public string LessThanOrEqualTo
+        /// <summary>
+        ///     lte Less-than or equal to 
+        /// </summary>
+        public string LessThanOrEqualTo
         {
             get => _lessThanOrEqualTo;
             set
@@ -80,10 +80,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     lt Less-than 
-	    /// </summary>
-	    public string LessThan
+        /// <summary>
+        ///     lt Less-than 
+        /// </summary>
+        public string LessThan
         {
             get => _lessThan;
             set
@@ -93,10 +93,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     include_lower 
-	    /// </summary>
-	    public bool IncludeLower
+        /// <summary>
+        ///     include_lower 
+        /// </summary>
+        public bool IncludeLower
         {
             get => _includeLower;
             set
@@ -106,10 +106,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     include_upper 
-	    /// </summary>
-	    public bool IncludeUpper
+        /// <summary>
+        ///     include_upper 
+        /// </summary>
+        public bool IncludeUpper
         {
             get => _includeUpper;
             set

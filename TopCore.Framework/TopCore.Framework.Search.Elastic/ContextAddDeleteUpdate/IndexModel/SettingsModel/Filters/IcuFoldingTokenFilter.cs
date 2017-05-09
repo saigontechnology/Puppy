@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class IcuFoldingTokenFilter : AnalysisFilterBase
+    public class IcuFoldingTokenFilter : AnalysisFilterBase
     {
         private string _unicodeSetFilter;
         private bool _unicodeSetFilterSet;
@@ -15,10 +15,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             Type = DefaultTokenFilters.IcuFolding;
         }
 
-	    /// <summary>
-	    ///     unicodeSetFilter 
-	    /// </summary>
-	    public string UnicodeSetFilter
+        /// <summary>
+        ///     unicodeSetFilter 
+        /// </summary>
+        public string UnicodeSetFilter
         {
             get => _unicodeSetFilter;
             set

@@ -4,28 +4,28 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class StemmerOverrideTokenFilter : AnalysisFilterBase
+    public class StemmerOverrideTokenFilter : AnalysisFilterBase
     {
         private List<string> _rules;
         private string _rulesPath;
         private bool _rulesPathSet;
         private bool _rulesSet;
 
-	    /// <summary>
-	    ///     Overrides stemming algorithms, by applying a custom mapping, then protecting these terms from being modified by stemmers. Must be placed before any stemming filters. Rules are separated by =&gt; 
-	    /// </summary>
-	    /// <param name="name"> name for the custom filter </param>
-	    public StemmerOverrideTokenFilter(string name)
+        /// <summary>
+        ///     Overrides stemming algorithms, by applying a custom mapping, then protecting these terms from being modified by stemmers. Must be placed before any stemming filters. Rules are separated by =&gt; 
+        /// </summary>
+        /// <param name="name"> name for the custom filter </param>
+        public StemmerOverrideTokenFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultTokenFilters.StemmerOverride;
         }
 
-	    /// <summary>
-	    ///     rules A list of mapping rules to use. 
-	    /// </summary>
-	    public List<string> Rules
+        /// <summary>
+        ///     rules A list of mapping rules to use. 
+        /// </summary>
+        public List<string> Rules
         {
             get => _rules;
             set
@@ -35,10 +35,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     rules_path A path (either relative to config location, or absolute) to a list of mappings. 
-	    /// </summary>
-	    public string RulesPath
+        /// <summary>
+        ///     rules_path A path (either relative to config location, or absolute) to a list of mappings. 
+        /// </summary>
+        public string RulesPath
         {
             get => _rulesPath;
             set

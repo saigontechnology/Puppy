@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class EdgeNGramTokenFilter : AnalysisFilterBase
+    public class EdgeNGramTokenFilter : AnalysisFilterBase
     {
         private int _maxGram;
         private bool _maxGramSet;
@@ -19,10 +19,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             Type = DefaultTokenFilters.EdgeNGram;
         }
 
-	    /// <summary>
-	    ///     min_gram Minimum size in codepoints of a single n-gram 
-	    /// </summary>
-	    public int MinGram
+        /// <summary>
+        ///     min_gram Minimum size in codepoints of a single n-gram 
+        /// </summary>
+        public int MinGram
         {
             get => _minGram;
             set
@@ -32,10 +32,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     max_gram Maximum size in codepoints of a single n-gram 
-	    /// </summary>
-	    public int MaxGram
+        /// <summary>
+        ///     max_gram Maximum size in codepoints of a single n-gram 
+        /// </summary>
+        public int MaxGram
         {
             get => _maxGram;
             set
@@ -45,10 +45,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     Either front or back. Defaults to front. 
-	    /// </summary>
-	    public Side Side
+        /// <summary>
+        ///     Either front or back. Defaults to front. 
+        /// </summary>
+        public Side Side
         {
             get => _side;
             set

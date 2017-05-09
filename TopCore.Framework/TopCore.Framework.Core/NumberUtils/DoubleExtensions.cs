@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
@@ -25,25 +27,18 @@ namespace TopCore.Framework.Core.NumberUtils
     {
         public static double Ceiling(this double value, double significance)
         {
-            if (Math.Abs((value % significance)) > 0)
-            {
-                return ((int)(value / significance) * significance) + significance;
-            }
+            if (Math.Abs(value % significance) > 0)
+                return (int)(value / significance) * significance + significance;
 
             return Convert.ToDouble(value);
         }
-
-
 
         public static double Floor(this double value, double significance)
         {
-            if (Math.Abs((value % significance)) > 0)
-            {
-                return ((int)(value / significance) * significance);
-            }
+            if (Math.Abs(value % significance) > 0)
+                return (int)(value / significance) * significance;
 
             return Convert.ToDouble(value);
         }
-
     }
 }

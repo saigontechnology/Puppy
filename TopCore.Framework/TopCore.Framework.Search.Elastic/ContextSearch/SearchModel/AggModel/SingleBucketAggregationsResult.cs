@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class FilterBucketAggregationsResult : AggregationResult<FilterBucketAggregationsResult>
+    public class FilterBucketAggregationsResult : AggregationResult<FilterBucketAggregationsResult>
     {
         [JsonProperty("doc_count")]
         public int DocCount { get; set; }

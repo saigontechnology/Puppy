@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.Units
 {
-	public class TimeUnitYear : TimeUnit
+    public class TimeUnitYear : TimeUnit
     {
         public TimeUnitYear(uint years)
         {

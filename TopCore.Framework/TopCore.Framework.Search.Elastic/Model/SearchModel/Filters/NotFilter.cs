@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class NotFilter : IFilter
+    public class NotFilter : IFilter
     {
         private IFilter _not;
         private bool _notSet;

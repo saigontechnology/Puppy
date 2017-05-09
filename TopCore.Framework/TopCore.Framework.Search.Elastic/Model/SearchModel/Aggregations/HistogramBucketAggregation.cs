@@ -3,12 +3,12 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	/// <summary>
-	///     A multi-bucket values source based aggregation that can be applied on numeric values extracted from the documents. It dynamically builds fixed size (a.k.a. interval) buckets over the values. For example, if the documents have a field that holds a price (numeric), we can configure this
-	///     aggregation to dynamically build buckets with interval 5 (in case of price it may represent $5). When the aggregation executes, the price field of every document will be evaluated and will be rounded down to its closest bucket - for example, if the price is 32 and the bucket size is 5
-	///     then the rounding will yield 30 and thus the document will "fall" into the bucket that is associated withe the key 30
-	/// </summary>
-	public class HistogramBucketAggregation : BaseBucketAggregation
+    /// <summary>
+    ///     A multi-bucket values source based aggregation that can be applied on numeric values extracted from the documents. It dynamically builds fixed size (a.k.a. interval) buckets over the values. For example, if the documents have a field that holds a price (numeric), we can configure this
+    ///     aggregation to dynamically build buckets with interval 5 (in case of price it may represent $5). When the aggregation executes, the price field of every document will be evaluated and will be rounded down to its closest bucket - for example, if the price is 32 and the bucket size is 5
+    ///     then the rounding will yield 30 and thus the document will "fall" into the bucket that is associated withe the key 30
+    /// </summary>
+    public class HistogramBucketAggregation : BaseBucketAggregation
     {
         private readonly string _field;
         private readonly uint _interval;
@@ -42,13 +42,13 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             }
         }
 
-	    /// <summary>
-	    ///     min_doc_count Terms are collected and ordered on a shard level and merged with the terms collected from other shards in a second step. However, the shard does not have the information about the global document count available. The decision if a term is added to a candidate list
-	    ///     depends only on the order computed on the shard using local shard frequencies. The min_doc_count criterion is only applied after merging local terms statistics of all shards. In a way the decision to add the term as a candidate is made without being very certain about if the term will
-	    ///     actually reach the required min_doc_count. This might cause many (globally) high frequent terms to be missing in the final result if low frequent terms populated the candidate lists. To avoid this, the shard_size parameter can be increased to allow more candidate terms on the shards.
-	    ///     However, this increases memory consumption and network traffic.
-	    /// </summary>
-	    public uint MinDocCount
+        /// <summary>
+        ///     min_doc_count Terms are collected and ordered on a shard level and merged with the terms collected from other shards in a second step. However, the shard does not have the information about the global document count available. The decision if a term is added to a candidate list
+        ///     depends only on the order computed on the shard using local shard frequencies. The min_doc_count criterion is only applied after merging local terms statistics of all shards. In a way the decision to add the term as a candidate is made without being very certain about if the term will
+        ///     actually reach the required min_doc_count. This might cause many (globally) high frequent terms to be missing in the final result if low frequent terms populated the candidate lists. To avoid this, the shard_size parameter can be increased to allow more candidate terms on the shards.
+        ///     However, this increases memory consumption and network traffic.
+        /// </summary>
+        public uint MinDocCount
         {
             get => _minDocCount;
             set
@@ -68,10 +68,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             }
         }
 
-	    /// <summary>
-	    ///     If this value is set, the buckets are returned with id classes. 
-	    /// </summary>
-	    public bool Keyed
+        /// <summary>
+        ///     If this value is set, the buckets are returned with id classes. 
+        /// </summary>
+        public bool Keyed
         {
             get => _keyed;
             set

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public class GeoShapeGeometryCollectionGeometriesConverter : JsonConverter
+    public class GeoShapeGeometryCollectionGeometriesConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -22,7 +22,7 @@ namespace TopCore.Framework.Search.Elastic.Model.GeoModel
             {
                 var list = new List<object>();
                 // It is a collection
-                var ienumerable = (JArray) serializer.Deserialize(reader);
+                var ienumerable = (JArray)serializer.Deserialize(reader);
                 foreach (var item in ienumerable)
                 {
                     var itemVal = item.ToString().Replace(Environment.NewLine, "").Replace(" ", "");

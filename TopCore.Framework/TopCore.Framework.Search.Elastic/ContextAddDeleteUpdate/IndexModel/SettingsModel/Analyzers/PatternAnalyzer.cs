@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Analyzers
 {
-	public class PatternAnalyzer : BaseStopAnalyzer
+    public class PatternAnalyzer : BaseStopAnalyzer
     {
         private string _flags;
         private bool _flagsSet;
@@ -19,10 +19,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             Type = DefaultAnalyzers.Pattern;
         }
 
-	    /// <summary>
-	    ///     lowercase Should terms be lowercased or not. Defaults to true. 
-	    /// </summary>
-	    public bool Lowercase
+        /// <summary>
+        ///     lowercase Should terms be lowercased or not. Defaults to true. 
+        /// </summary>
+        public bool Lowercase
         {
             get => _lowercase;
             set
@@ -32,10 +32,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     pattern The regular expression pattern, defaults to \W+. 
-	    /// </summary>
-	    public string Pattern
+        /// <summary>
+        ///     pattern The regular expression pattern, defaults to \W+. 
+        /// </summary>
+        public string Pattern
         {
             get => _pattern;
             set
@@ -45,11 +45,11 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     flags The regular expression flags.
-	    ///     IMPORTANT: The regular expression should match the token separators, not the tokens themselves. Flags should be pipe-separated, eg "CASE_INSENSITIVE|COMMENTS". Check Java Pattern API for more details about flags options.
-	    /// </summary>
-	    public string Flags
+        /// <summary>
+        ///     flags The regular expression flags.
+        ///     IMPORTANT: The regular expression should match the token separators, not the tokens themselves. Flags should be pipe-separated, eg "CASE_INSENSITIVE|COMMENTS". Check Java Pattern API for more details about flags options.
+        /// </summary>
+        public string Flags
         {
             get => _flags;
             set

@@ -25,132 +25,123 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Framework.EF
 {
-	public class BaseRepository<T> : IBaseRepository<T> where T : class
-	{
-		private readonly IBaseDbContext _baseDbContext;
+    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    {
+        private readonly IBaseDbContext _baseDbContext;
 
-		private DbSet<T> _dbSet;
+        private DbSet<T> _dbSet;
 
-		private DbSet<T> DbSet
-		{
-			get
-			{
-				if (_dbSet != null)
-				{
-					return _dbSet;
-				}
-				_dbSet = _baseDbContext.Set<T>();
-				return _dbSet;
-			}
-		}
+        public BaseRepository(IBaseDbContext baseDbContext)
+        {
+            _baseDbContext = baseDbContext;
+        }
 
-		public BaseRepository(IBaseDbContext baseDbContext)
-		{
-			_baseDbContext = baseDbContext;
-		}
+        private DbSet<T> DbSet
+        {
+            get
+            {
+                if (_dbSet != null)
+                    return _dbSet;
+                _dbSet = _baseDbContext.Set<T>();
+                return _dbSet;
+            }
+        }
 
-		public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
-		{
-			var query = DbSet.AsNoTracking();
-			foreach (var includeProperty in includeProperties)
-				query = query.Include(includeProperty);
-			return query;
-		}
+        public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
+        {
+            var query = DbSet.AsNoTracking();
+            foreach (var includeProperty in includeProperties)
+                query = query.Include(includeProperty);
+            return query;
+        }
 
-		public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
-			params Expression<Func<T, object>>[] includeProperties)
-		{
-			var query = DbSet.AsNoTracking();
-			foreach (var includeProperty in includeProperties)
-				query = query.Include(includeProperty);
-			return predicate == null ? query : query.Where(predicate);
-		}
+        public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
+            params Expression<Func<T, object>>[] includeProperties)
+        {
+            var query = DbSet.AsNoTracking();
+            foreach (var includeProperty in includeProperties)
+                query = query.Include(includeProperty);
+            return predicate == null ? query : query.Where(predicate);
+        }
 
-		public T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
-		{
-			return Get(predicate, includeProperties).FirstOrDefault();
-		}
+        public T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+        {
+            return Get(predicate, includeProperties).FirstOrDefault();
+        }
 
-		public T Add(T entity)
-		{
-			entity = DbSet.Add(entity).Entity;
-			return entity;
-		}
+        public T Add(T entity)
+        {
+            entity = DbSet.Add(entity).Entity;
+            return entity;
+        }
 
-		public void Update(T entity, params Expression<Func<T, object>>[] changedProperties)
-		{
-			DbSet.Attach(entity);
+        public void Update(T entity, params Expression<Func<T, object>>[] changedProperties)
+        {
+            DbSet.Attach(entity);
 
-			if (changedProperties != null && changedProperties.Any())
-			{
-				//Only change some properties
-				foreach (var property in changedProperties)
-				{
-					var expression = (MemberExpression)property.Body;
-					string name = expression.Member.Name;
+            if (changedProperties != null && changedProperties.Any())
+                foreach (var property in changedProperties)
+                {
+                    var expression = (MemberExpression)property.Body;
+                    var name = expression.Member.Name;
 
-					_baseDbContext.Entry(entity).Property(property).IsModified = true;
-				}
-			}
-			else
-			{
-				_baseDbContext.Entry(entity).State = EntityState.Modified;
-			}
-		}
+                    _baseDbContext.Entry(entity).Property(property).IsModified = true;
+                }
+            else
+                _baseDbContext.Entry(entity).State = EntityState.Modified;
+        }
 
-		public void Delete(T entity)
-		{
-			try
-			{
-				if (_baseDbContext.Entry(entity).State == EntityState.Detached)
-				{
-					DbSet.Attach(entity);
-				}
-				DbSet.Remove(entity);
-			}
-			catch (Exception)
-			{
-				RefreshEntity(entity);
-				throw;
-			}
-		}
+        public void Delete(T entity)
+        {
+            try
+            {
+                if (_baseDbContext.Entry(entity).State == EntityState.Detached)
+                    DbSet.Attach(entity);
+                DbSet.Remove(entity);
+            }
+            catch (Exception)
+            {
+                RefreshEntity(entity);
+                throw;
+            }
+        }
 
-		public void DeleteWhere(Expression<Func<T, bool>> predicate)
-		{
-			var entities = Get(predicate).AsEnumerable();
+        public void DeleteWhere(Expression<Func<T, bool>> predicate)
+        {
+            var entities = Get(predicate).AsEnumerable();
 
-			foreach (var entity in entities)
-				Delete(entity);
-		}
+            foreach (var entity in entities)
+                Delete(entity);
+        }
 
-		public virtual void RefreshEntity(T entityToReload)
-		{
-			_baseDbContext.Entry(entityToReload).Reload();
-		}
+        public int SaveChanges()
+        {
+            return _baseDbContext.SaveChanges();
+        }
 
-		public int SaveChanges()
-		{
-			return _baseDbContext.SaveChanges();
-		}
+        public int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
+        }
 
-		public int SaveChanges(bool acceptAllChangesOnSuccess)
-		{
-			return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
-		}
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            return _baseDbContext.SaveChangesAsync(cancellationToken);
+        }
 
-		public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-		{
-			return _baseDbContext.SaveChangesAsync(cancellationToken);
-		}
+        public Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = new CancellationToken())
+        {
+            return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
 
-		public Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
-		{
-			return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-		}
-	}
+        public virtual void RefreshEntity(T entityToReload)
+        {
+            _baseDbContext.Entry(entityToReload).Reload();
+        }
+    }
 }

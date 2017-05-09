@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQuery
 {
-	public class ScriptScoreFunction : BaseScoreFunction
+    public class ScriptScoreFunction : BaseScoreFunction
     {
         private readonly string _script;
         private string _lang;

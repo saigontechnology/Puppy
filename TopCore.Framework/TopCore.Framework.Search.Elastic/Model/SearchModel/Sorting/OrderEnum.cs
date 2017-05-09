@@ -1,6 +1,6 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
 {
-	public enum OrderEnum
+    public enum OrderEnum
     {
         asc,
         desc

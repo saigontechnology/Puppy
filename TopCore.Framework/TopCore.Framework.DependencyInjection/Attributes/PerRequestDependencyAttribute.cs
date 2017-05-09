@@ -21,10 +21,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TopCore.Framework.DependencyInjection.Attributes
 {
-	public class PerRequestDependencyAttribute : DependencyAttribute
-	{
-		public PerRequestDependencyAttribute() : base(ServiceLifetime.Scoped)
-		{
-		}
-	}
+    public class PerRequestDependencyAttribute : DependencyAttribute
+    {
+        public PerRequestDependencyAttribute() : base(ServiceLifetime.Scoped)
+        {
+        }
+    }
 }

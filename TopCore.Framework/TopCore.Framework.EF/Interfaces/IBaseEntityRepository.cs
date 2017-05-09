@@ -28,32 +28,33 @@ using System.Threading.Tasks;
 
 namespace TopCore.Framework.EF.Interfaces
 {
-	public interface IBaseEntityRepository<TEntity> where TEntity : class, IBaseEntity
-	{
-		IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
+    public interface IBaseEntityRepository<TEntity> where TEntity : class, IBaseEntity
+    {
+        IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
 
-		IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
-			params Expression<Func<TEntity, object>>[] includeProperties);
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
+            params Expression<Func<TEntity, object>>[] includeProperties);
 
-		TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
-			params Expression<Func<TEntity, object>>[] includeProperties);
+        TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
+            params Expression<Func<TEntity, object>>[] includeProperties);
 
-		TEntity Add(TEntity entity);
+        TEntity Add(TEntity entity);
 
-		void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties);
+        void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties);
 
-		void Delete(TEntity entity, bool isPhysicalDelete = false);
+        void Delete(TEntity entity, bool isPhysicalDelete = false);
 
-		void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
+        void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
 
-		[DebuggerStepThrough]
-		int SaveChanges();
+        [DebuggerStepThrough]
+        int SaveChanges();
 
-		[DebuggerStepThrough]
-		int SaveChanges(bool acceptAllChangesOnSuccess);
+        [DebuggerStepThrough]
+        int SaveChanges(bool acceptAllChangesOnSuccess);
 
-		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-		Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
-	}
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default(CancellationToken));
+    }
 }

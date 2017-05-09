@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public abstract class IncludeExcludeBaseExpression
+    public abstract class IncludeExcludeBaseExpression
     {
         private readonly string _expressionProperty;
         private readonly string _pattern;

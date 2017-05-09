@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAlias.AliasModel
 {
-	public abstract class AliasBaseParameters
+    public abstract class AliasBaseParameters
     {
         private readonly string _alias;
         private readonly string _index;

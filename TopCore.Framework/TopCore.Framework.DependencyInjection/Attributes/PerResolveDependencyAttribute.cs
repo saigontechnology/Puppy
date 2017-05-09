@@ -21,10 +21,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TopCore.Framework.DependencyInjection.Attributes
 {
-	public class PerResolveDependencyAttribute : DependencyAttribute
-	{
-		public PerResolveDependencyAttribute() : base(ServiceLifetime.Transient)
-		{
-		}
-	}
+    public class PerResolveDependencyAttribute : DependencyAttribute
+    {
+        public PerResolveDependencyAttribute() : base(ServiceLifetime.Transient)
+        {
+        }
+    }
 }

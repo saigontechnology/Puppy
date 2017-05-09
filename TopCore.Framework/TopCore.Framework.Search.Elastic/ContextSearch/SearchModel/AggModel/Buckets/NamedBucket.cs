@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Buckets
 {
-	public class NamedBucket
+    public class NamedBucket
     {
         [JsonExtensionData]
         public Dictionary<string, JToken> SubAggregations { get; set; }

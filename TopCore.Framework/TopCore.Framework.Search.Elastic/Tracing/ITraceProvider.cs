@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace TopCore.Framework.Search.Elastic.Tracing
 {
-	public interface ITraceProvider
+    public interface ITraceProvider
     {
         void Trace(TraceEventType level, string message, params object[] args);
 

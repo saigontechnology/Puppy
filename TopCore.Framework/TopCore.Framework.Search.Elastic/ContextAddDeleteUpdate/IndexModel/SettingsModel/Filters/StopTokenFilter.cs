@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class StopTokenFilter : AnalysisFilterBase
+    public class StopTokenFilter : AnalysisFilterBase
     {
         private bool _ignoreCase;
         private bool _ignoreCaseSet;
@@ -24,10 +24,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             Type = DefaultTokenFilters.Stop;
         }
 
-	    /// <summary>
-	    ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_ to explicitly specify an empty stopword list. 
-	    /// </summary>
-	    public string Stopwords
+        /// <summary>
+        ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_ to explicitly specify an empty stopword list. 
+        /// </summary>
+        public string Stopwords
         {
             get => _stopwords;
             set
@@ -47,10 +47,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     stopwords_path A path (either relative to config location, or absolute) to a stopwords file configuration. 
-	    /// </summary>
-	    public string StopwordsPath
+        /// <summary>
+        ///     stopwords_path A path (either relative to config location, or absolute) to a stopwords file configuration. 
+        /// </summary>
+        public string StopwordsPath
         {
             get => _stopwordsPath;
             set
@@ -60,10 +60,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     ignore_case Set to true to lower case all words first. Defaults to false. 
-	    /// </summary>
-	    public bool IgnoreCase
+        /// <summary>
+        ///     ignore_case Set to true to lower case all words first. Defaults to false. 
+        /// </summary>
+        public bool IgnoreCase
         {
             get => _ignoreCase;
             set
@@ -73,10 +73,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     remove_trailing Set to false in order to not ignore the last term of a search if it is a stop word. This is very useful for the completion suggester as a query like green a can be extended to green apple even though you remove stop words in general. Defaults to true. 
-	    /// </summary>
-	    public bool RemoveTrailing
+        /// <summary>
+        ///     remove_trailing Set to false in order to not ignore the last term of a search if it is a stop word. This is very useful for the completion suggester as a query like green a can be extended to green apple even though you remove stop words in general. Defaults to true. 
+        /// </summary>
+        public bool RemoveTrailing
         {
             get => _removeTrailing;
             set

@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Setting
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	public class AnalysisAnalyzer
+    public class AnalysisAnalyzer
     {
         private List<AnalyzerBase> _analyzers;
         private bool _analyzersSet;

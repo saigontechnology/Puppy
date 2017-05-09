@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class MaxMetricAggregation : BaseMetricAggregation
+    public class MaxMetricAggregation : BaseMetricAggregation
     {
         public MaxMetricAggregation(string name, string field) : base("max", name, field)
         {

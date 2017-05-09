@@ -4,11 +4,11 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	/// <summary>
-	///     A range aggregation that is dedicated for date values. The main difference between this aggregation and the normal range aggregation is that the from and to values can be expressed in Date Math expressions, and it is also possible to specify a date format by which the from and to response
-	///     fields will be returned. Note that this aggregration includes the from value and excludes the to value for each range. http://www.elastic.org/guide/en/elastic/reference/current/search-aggregations-bucket-daterange-aggregation.html
-	/// </summary>
-	public class DateRangeBucketAggregation : BaseBucketAggregation
+    /// <summary>
+    ///     A range aggregation that is dedicated for date values. The main difference between this aggregation and the normal range aggregation is that the from and to values can be expressed in Date Math expressions, and it is also possible to specify a date format by which the from and to response
+    ///     fields will be returned. Note that this aggregration includes the from value and excludes the to value for each range. http://www.elastic.org/guide/en/elastic/reference/current/search-aggregations-bucket-daterange-aggregation.html
+    /// </summary>
+    public class DateRangeBucketAggregation : BaseBucketAggregation
     {
         private readonly string _field;
         private readonly string _format;
@@ -30,10 +30,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             _ranges = ranges;
         }
 
-	    /// <summary>
-	    ///     If this value is set, the buckets are returned with id classes. 
-	    /// </summary>
-	    public bool Keyed
+        /// <summary>
+        ///     If this value is set, the buckets are returned with id classes. 
+        /// </summary>
+        public bool Keyed
         {
             get => _keyed;
             set

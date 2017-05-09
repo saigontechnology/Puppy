@@ -5,7 +5,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class GeoDistanceBucketAggregation : BaseBucketAggregation
+    public class GeoDistanceBucketAggregation : BaseBucketAggregation
     {
         private readonly string _field;
         private readonly GeoPoint _origin;
@@ -31,10 +31,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             _ranges = ranges;
         }
 
-	    /// <summary>
-	    ///     If this value is set, the buckets are returned with id classes. 
-	    /// </summary>
-	    public bool Keyed
+        /// <summary>
+        ///     If this value is set, the buckets are returned with id classes. 
+        /// </summary>
+        public bool Keyed
         {
             get => _keyed;
             set
@@ -54,11 +54,11 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             }
         }
 
-	    /// <summary>
-	    ///     distance_type How to compute the distance. Can either be sloppy_arc (default), arc (slighly more precise but significantly
-	    ///     slower) or plane (faster, but inaccurate on long distances and close to the poles).
-	    /// </summary>
-	    public DistanceType DistanceType
+        /// <summary>
+        ///     distance_type How to compute the distance. Can either be sloppy_arc (default), arc (slighly more precise but significantly
+        ///     slower) or plane (faster, but inaccurate on long distances and close to the poles).
+        /// </summary>
+        public DistanceType DistanceType
         {
             get => _distanceType;
             set

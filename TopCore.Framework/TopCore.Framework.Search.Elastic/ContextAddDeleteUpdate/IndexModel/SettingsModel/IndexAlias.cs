@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	/// <summary>
-	///     This model is only used when creating an index. If it is required that an index is added later, use the alias api. 
-	/// </summary>
-	public class IndexAlias
+    /// <summary>
+    ///     This model is only used when creating an index. If it is required that an index is added later, use the alias api. 
+    /// </summary>
+    public class IndexAlias
     {
         private readonly string _alias;
         private string _filter;
@@ -20,10 +20,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             _alias = alias;
         }
 
-	    /// <summary>
-	    ///     It is possible to associate routing values with aliases. This feature can be used together with filtering aliases in order to avoid unnecessary shard operations. 
-	    /// </summary>
-	    public string Routing
+        /// <summary>
+        ///     It is possible to associate routing values with aliases. This feature can be used together with filtering aliases in order to avoid unnecessary shard operations. 
+        /// </summary>
+        public string Routing
         {
             get => _routing;
             set
@@ -33,10 +33,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     An optional filter that can be associated with an alias. TODO replace this raw json string with a filter object once the filter class has been created. 
-	    /// </summary>
-	    public string Filter
+        /// <summary>
+        ///     An optional filter that can be associated with an alias. TODO replace this raw json string with a filter object once the filter class has been created. 
+        /// </summary>
+        public string Filter
         {
             get => _filter;
             set

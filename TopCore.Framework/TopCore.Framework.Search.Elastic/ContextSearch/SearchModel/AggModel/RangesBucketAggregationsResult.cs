@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Bucket
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class RangesBucketAggregationsResult : AggregationResult<RangesBucketAggregationsResult>
+    public class RangesBucketAggregationsResult : AggregationResult<RangesBucketAggregationsResult>
     {
         public List<RangeBucket> Buckets { get; set; }
 

@@ -2,11 +2,11 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	/// <summary>
-	///     The has_child filter accepts a query and the child type to run against, and results in parent documents that have child docs matching the query. The type is the child type to query against. The parent type to return is automatically detected based on the mappings. The way that the filter
-	///     is implemented is by first running the child query, doing the matching up to the parent doc for each document matched. The has_child filter allows you to specify that a minimum and/or maximum number of children are required to match for the parent doc to be considered a match:
-	/// </summary>
-	public class HasChildFilter : IFilter
+    /// <summary>
+    ///     The has_child filter accepts a query and the child type to run against, and results in parent documents that have child docs matching the query. The type is the child type to query against. The parent type to return is automatically detected based on the mappings. The way that the filter
+    ///     is implemented is by first running the child query, doing the matching up to the parent doc for each document matched. The has_child filter allows you to specify that a minimum and/or maximum number of children are required to match for the parent doc to be considered a match:
+    /// </summary>
+    public class HasChildFilter : IFilter
     {
         private readonly IFilter _filter;
         private readonly string _type;
@@ -23,10 +23,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             _filter = filter;
         }
 
-	    /// <summary>
-	    ///     min_children 
-	    /// </summary>
-	    public uint MinChildren
+        /// <summary>
+        ///     min_children 
+        /// </summary>
+        public uint MinChildren
         {
             get => _minChildren;
             set
@@ -36,10 +36,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     max_children 
-	    /// </summary>
-	    public uint MaxChildren
+        /// <summary>
+        ///     max_children 
+        /// </summary>
+        public uint MaxChildren
         {
             get => _maxChildren;
             set

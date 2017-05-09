@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class OrderAgg
+    public class OrderAgg
     {
         private readonly string _field;
         private readonly OrderEnum _order;

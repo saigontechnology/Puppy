@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public class GeoShapeLineString : IGeoType
+    public class GeoShapeLineString : IGeoType
     {
         // TODO validate that at least two items exist
         public List<GeoPoint> Coordinates { get; set; }

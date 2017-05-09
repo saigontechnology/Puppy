@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model
 {
-	public class ResultDetails<T>
+    public class ResultDetails<T>
     {
         public HttpStatusCode Status { get; set; }
         public string RequestBody { get; set; }

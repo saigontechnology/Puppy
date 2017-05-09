@@ -3,13 +3,13 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     The regexp query allows you to use regular expression term queries. See Regular expression syntax for details of the supported regular expression language. The "term queries" in that first sentence means that Elastic will apply the regexp to the terms produced by the tokenizer for that
-	///     field, and not to the original text of the field.
-	///     Note: The performance of a regexp query heavily depends on the regular expression chosen. Matching everything like .* is very slow as well as using lookaround regular expressions. If possible, you should try to use a long prefix before your regular expression starts. Wildcard matchers
-	///           like .*?+ will mostly lower performance. http://www.elastic.org/guide/en/elastic/reference/current/query-dsl-regexp-query.html
-	/// </summary>
-	public class RegExpQuery : IQuery
+    /// <summary>
+    ///     The regexp query allows you to use regular expression term queries. See Regular expression syntax for details of the supported regular expression language. The "term queries" in that first sentence means that Elastic will apply the regexp to the terms produced by the tokenizer for that
+    ///     field, and not to the original text of the field.
+    ///     Note: The performance of a regexp query heavily depends on the regular expression chosen. Matching everything like .* is very slow as well as using lookaround regular expressions. If possible, you should try to use a long prefix before your regular expression starts. Wildcard matchers
+    ///           like .*?+ will mostly lower performance. http://www.elastic.org/guide/en/elastic/reference/current/query-dsl-regexp-query.html
+    /// </summary>
+    public class RegExpQuery : IQuery
     {
         private readonly string _field;
         private readonly string _regularExpression;
@@ -46,10 +46,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             }
         }
 
-	    /// <summary>
-	    ///     max_determinized_states 
-	    /// </summary>
-	    public uint MaxDeterminizedStates
+        /// <summary>
+        ///     max_determinized_states 
+        /// </summary>
+        public uint MaxDeterminizedStates
         {
             get => _maxDeterminizedStates;
             set

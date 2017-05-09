@@ -22,14 +22,14 @@ using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Framework.EF
 {
-	public class BaseDbContext : DbContext, IBaseDbContext
-	{
-		protected BaseDbContext()
-		{
-		}
+    public class BaseDbContext : DbContext, IBaseDbContext
+    {
+        protected BaseDbContext()
+        {
+        }
 
-		public BaseDbContext(DbContextOptions options) : base(options)
-		{
-		}
-	}
+        public BaseDbContext(DbContextOptions options) : base(options)
+        {
+        }
+    }
 }

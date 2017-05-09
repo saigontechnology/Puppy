@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 
 namespace TopCore.Framework.Search.Elastic.Model
 {
-	public class EntityContextInfo
+    public class EntityContextInfo
     {
         public EntityContextInfo()
         {

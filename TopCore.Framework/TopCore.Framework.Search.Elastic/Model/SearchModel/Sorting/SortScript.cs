@@ -3,10 +3,10 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
 {
-	/// <summary>
-	///     Allow to sort based on custom scripts "sort" : { "_script" : { "script" : "doc['field_name'].value * factor", "type" : "number", "params" : { "factor" : 1.1 }, "order" : "asc" } } 
-	/// </summary>
-	public class SortScript : ISortHolder
+    /// <summary>
+    ///     Allow to sort based on custom scripts "sort" : { "_script" : { "script" : "doc['field_name'].value * factor", "type" : "number", "params" : { "factor" : 1.1 }, "order" : "asc" } } 
+    /// </summary>
+    public class SortScript : ISortHolder
     {
         private readonly string _script;
         private List<ScriptParameter> _params;

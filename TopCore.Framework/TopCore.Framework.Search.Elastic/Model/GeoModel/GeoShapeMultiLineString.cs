@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public class GeoShapeMultiLineString : IGeoType
+    public class GeoShapeMultiLineString : IGeoType
     {
         public List<List<GeoPoint>> Coordinates { get; set; }
 

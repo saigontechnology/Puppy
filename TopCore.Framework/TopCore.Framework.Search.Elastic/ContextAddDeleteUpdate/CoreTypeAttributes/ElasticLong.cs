@@ -2,12 +2,12 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes
 {
-	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-	public class ElasticLong : ElasticNumber
-	{
-		public override string JsonString()
-		{
-			return JsonStringInternal("long");
-		}
-	}
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ElasticLong : ElasticNumber
+    {
+        public override string JsonString()
+        {
+            return JsonStringInternal("long");
+        }
+    }
 }

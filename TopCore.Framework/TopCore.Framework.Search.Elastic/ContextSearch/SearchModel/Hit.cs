@@ -4,8 +4,8 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
 {
-	// "hits":[{ "_index":"parentdocuments", "_type":"childdocumentleveltwo", "_id":"35", "_score":1.0, "_source":{"id":35,"d3":"p8.p25.p35"} }]
-	public class Hit<T>
+    // "hits":[{ "_index":"parentdocuments", "_type":"childdocumentleveltwo", "_id":"35", "_score":1.0, "_source":{"id":35,"d3":"p8.p25.p35"} }]
+    public class Hit<T>
     {
         [JsonProperty(PropertyName = "_index")]
         public string Index { get; set; }
@@ -25,10 +25,10 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
         [JsonProperty(PropertyName = "highlight", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, IEnumerable<string>> Highlights { get; set; }
 
-	    /// <summary>
-	    ///     This can be used for inner_hits or nested data which is added to the hit result 
-	    /// </summary>
-	    [JsonExtensionData]
+        /// <summary>
+        ///     This can be used for inner_hits or nested data which is added to the hit result 
+        /// </summary>
+        [JsonExtensionData]
         public Dictionary<string, JToken> ExtensionData { get; set; }
 
         public T1 GetSourceFromJToken<T1>()

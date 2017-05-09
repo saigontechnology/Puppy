@@ -2,12 +2,12 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	public class IndexDefinition
+    public class IndexDefinition
     {
         public IndexDefinition()
         {
             // settings the default values
-            IndexSettings = new IndexSettings {NumberOfReplicas = 1, NumberOfShards = 5};
+            IndexSettings = new IndexSettings { NumberOfReplicas = 1, NumberOfShards = 5 };
             IndexAliases = new IndexAliases();
             IndexWarmers = new IndexWarmers();
             Mapping = new MappingDefinition();
@@ -19,9 +19,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
 
         public IndexWarmers IndexWarmers { get; set; }
 
-	    /// <summary>
-	    ///     TODO change this to a list so n mappings can be defined 
-	    /// </summary>
-	    public MappingDefinition Mapping { get; set; }
+        /// <summary>
+        ///     TODO change this to a list so n mappings can be defined 
+        /// </summary>
+        public MappingDefinition Mapping { get; set; }
     }
 }

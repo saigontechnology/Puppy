@@ -21,7 +21,7 @@
 
 namespace TopCore.Framework.Core.StringUtils
 {
-	public class StringExtensions
-	{
-	}
+    public class StringExtensions
+    {
+    }
 }

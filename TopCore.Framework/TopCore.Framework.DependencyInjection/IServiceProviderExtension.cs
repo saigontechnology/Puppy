@@ -24,12 +24,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TopCore.Framework.DependencyInjection
 {
-	// ReSharper disable once InconsistentNaming
-	public static class IServiceProviderExtension
-	{
-		public static T Resolve<T>(this IServiceProvider services) where T : class
-		{
-			return services.GetService<T>();
-		}
-	}
+    // ReSharper disable once InconsistentNaming
+    public static class IServiceProviderExtension
+    {
+        public static T Resolve<T>(this IServiceProvider services) where T : class
+        {
+            return services.GetService<T>();
+        }
+    }
 }

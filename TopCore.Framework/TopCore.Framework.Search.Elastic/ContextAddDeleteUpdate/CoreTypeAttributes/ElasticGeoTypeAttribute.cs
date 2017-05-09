@@ -2,8 +2,8 @@ using System;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes
 {
-	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-	public class ElasticGeoTypeAttribute : ElasticCoreTypes
-	{
-	}
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ElasticGeoTypeAttribute : ElasticCoreTypes
+    {
+    }
 }

@@ -2,13 +2,13 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.CharFilters
 {
-	//"char_filter" : {
-	//	   "my_mapping" : {
-	//		   "type" : "mapping",
-	//		   "mappings" : ["ph=>f", "qu=>k"]
-	//	   }
-	//},
-	public abstract class AnalysisCharFilterBase
+    //"char_filter" : {
+    //	   "my_mapping" : {
+    //		   "type" : "mapping",
+    //		   "mappings" : ["ph=>f", "qu=>k"]
+    //	   }
+    //},
+    public abstract class AnalysisCharFilterBase
     {
         protected bool AnalyzerSet;
         protected string Name;

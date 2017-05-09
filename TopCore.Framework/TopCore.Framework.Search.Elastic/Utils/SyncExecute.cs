@@ -8,7 +8,7 @@ using TopCore.Framework.Search.Elastic.Tracing;
 
 namespace TopCore.Framework.Search.Elastic.Utils
 {
-	public class SyncExecute
+    public class SyncExecute
     {
         private readonly ITraceProvider _traceProvider;
 

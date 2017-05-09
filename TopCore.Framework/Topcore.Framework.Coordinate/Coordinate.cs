@@ -21,15 +21,15 @@
 
 namespace Topcore.Framework.Coordinate
 {
-	public class Coordinate
-	{
-		public Coordinate(double longitude, double latitude)
-		{
-			Longitude = longitude;
-			Latitude = latitude;
-		}
+    public class Coordinate
+    {
+        public Coordinate(double longitude, double latitude)
+        {
+            Longitude = longitude;
+            Latitude = latitude;
+        }
 
-		public double Longitude { get; }
-		public double Latitude { get; }
-	}
+        public double Longitude { get; }
+        public double Latitude { get; }
+    }
 }

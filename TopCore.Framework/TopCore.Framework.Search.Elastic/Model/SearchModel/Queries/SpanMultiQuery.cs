@@ -1,9 +1,9 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	/// <summary>
-	///     The span_multi query allows you to wrap a multi term query (one of fuzzy, prefix, term range or regexp query) as a span query, so it can be nested. Example: 
-	/// </summary>
-	public class SpanMultiQuery : ISpanQuery
+    /// <summary>
+    ///     The span_multi query allows you to wrap a multi term query (one of fuzzy, prefix, term range or regexp query) as a span query, so it can be nested. Example: 
+    /// </summary>
+    public class SpanMultiQuery : ISpanQuery
     {
         private readonly IQuery _query;
 

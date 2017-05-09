@@ -4,28 +4,28 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.CharFilters
 {
-	public class MappingCharFilter : AnalysisCharFilterBase
+    public class MappingCharFilter : AnalysisCharFilterBase
     {
         private List<string> _mappings;
         private string _mappingsPath;
         private bool _mappingsPathSet;
         private bool _mappingsSet;
 
-	    /// <summary>
-	    ///     A char filter of type mapping replacing characters of an analyzed text with given mapping. "char_filter" : { "my_mapping" : { "type" : "mapping", "mappings" : ["ph=&gt;f", "qu=&gt;k"] } }, 
-	    /// </summary>
-	    /// <param name="name"> name for the custom mapping char filter </param>
-	    public MappingCharFilter(string name)
+        /// <summary>
+        ///     A char filter of type mapping replacing characters of an analyzed text with given mapping. "char_filter" : { "my_mapping" : { "type" : "mapping", "mappings" : ["ph=&gt;f", "qu=&gt;k"] } }, 
+        /// </summary>
+        /// <param name="name"> name for the custom mapping char filter </param>
+        public MappingCharFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultCharFilters.Mapping;
         }
 
-	    /// <summary>
-	    ///     mappings 
-	    /// </summary>
-	    public List<string> Mappings
+        /// <summary>
+        ///     mappings 
+        /// </summary>
+        public List<string> Mappings
         {
             get => _mappings;
             set
@@ -35,10 +35,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     mappings_path 
-	    /// </summary>
-	    public string MappingsPath
+        /// <summary>
+        ///     mappings_path 
+        /// </summary>
+        public string MappingsPath
         {
             get => _mappingsPath;
             set

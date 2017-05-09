@@ -1,6 +1,6 @@
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel
 {
-	public class MappingCommand
+    public class MappingCommand
     {
         public string RequestType { get; set; }
         public string Url { get; set; }

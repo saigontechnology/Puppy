@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
 {
-	public class SortGeoDistance : ISort
+    public class SortGeoDistance : ISort
     {
         private readonly string _field;
         private GeoPoint _geoPoint;
@@ -32,10 +32,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
 
         public OrderEnum Order { get; set; }
 
-	    /// <summary>
-	    ///     mode Elastic supports sorting by array or multi-valued fields. The mode option controls what array value is picked for sorting the document it belongs to. The mode option can have the following values: SortMode enum: min, max, avg 
-	    /// </summary>
-	    public SortModeGeo Mode
+        /// <summary>
+        ///     mode Elastic supports sorting by array or multi-valued fields. The mode option controls what array value is picked for sorting the document it belongs to. The mode option can have the following values: SortMode enum: min, max, avg 
+        /// </summary>
+        public SortModeGeo Mode
         {
             get => _mode;
             set
@@ -97,19 +97,19 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
 
     public enum SortModeGeo
     {
-	    /// <summary>
-	    ///     Pick the lowest value. 
-	    /// </summary>
-	    min,
+        /// <summary>
+        ///     Pick the lowest value. 
+        /// </summary>
+        min,
 
-	    /// <summary>
-	    ///     Pick the highest value. 
-	    /// </summary>
-	    max,
+        /// <summary>
+        ///     Pick the highest value. 
+        /// </summary>
+        max,
 
-	    /// <summary>
-	    ///     Use the average of all values as sort value. Only applicable for number based array fields. 
-	    /// </summary>
-	    avg
+        /// <summary>
+        ///     Use the average of all values as sort value. Only applicable for number based array fields. 
+        /// </summary>
+        avg
     }
 }

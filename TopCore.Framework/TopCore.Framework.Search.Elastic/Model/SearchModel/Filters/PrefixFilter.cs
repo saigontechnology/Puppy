@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class PrefixFilter : IFilter
+    public class PrefixFilter : IFilter
     {
         private readonly string _field;
         private readonly object _prefix;

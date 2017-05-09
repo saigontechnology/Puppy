@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Model.Units;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQuery
 {
-	public class ExpGeoPointFunction : GeoDecayBaseScoreFunction
+    public class ExpGeoPointFunction : GeoDecayBaseScoreFunction
     {
         public ExpGeoPointFunction(string field, GeoPoint origin, DistanceUnit scale) : base(field, origin, scale,
             "exp")

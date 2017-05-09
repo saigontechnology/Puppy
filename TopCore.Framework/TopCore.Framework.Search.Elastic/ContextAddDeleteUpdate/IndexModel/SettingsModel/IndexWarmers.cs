@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel
 {
-	public class IndexWarmers
+    public class IndexWarmers
     {
         public IndexWarmers()
         {

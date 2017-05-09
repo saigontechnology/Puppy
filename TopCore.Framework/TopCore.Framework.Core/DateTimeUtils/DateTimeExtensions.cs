@@ -21,7 +21,7 @@
 
 namespace TopCore.Framework.Core.DateTimeUtils
 {
-	public class DateTimeExtensions
-	{
-	}
+    public class DateTimeExtensions
+    {
+    }
 }

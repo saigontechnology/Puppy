@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public class GeoShapeQuery : IQuery
+    public class GeoShapeQuery : IQuery
     {
         private readonly string _field;
         private readonly IGeoType _geoType;

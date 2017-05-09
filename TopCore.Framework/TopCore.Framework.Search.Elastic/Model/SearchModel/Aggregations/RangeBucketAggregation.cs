@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
-	public class RangeBucketAggregation<T> : BaseBucketAggregation
+    public class RangeBucketAggregation<T> : BaseBucketAggregation
     {
         private readonly string _field;
         private readonly List<RangeAggregationParameter<T>> _ranges;
@@ -23,10 +23,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
             _ranges = ranges;
         }
 
-	    /// <summary>
-	    ///     If this value is set, the buckets are returned with id classes. 
-	    /// </summary>
-	    public bool Keyed
+        /// <summary>
+        ///     If this value is set, the buckets are returned with id classes. 
+        /// </summary>
+        public bool Keyed
         {
             get => _keyed;
             set

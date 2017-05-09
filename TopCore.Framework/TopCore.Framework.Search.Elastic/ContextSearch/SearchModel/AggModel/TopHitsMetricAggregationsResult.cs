@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class TopHitsMetricAggregationsResult<T> : AggregationResult<TopHitsMetricAggregationsResult<T>>
+    public class TopHitsMetricAggregationsResult<T> : AggregationResult<TopHitsMetricAggregationsResult<T>>
     {
         [JsonProperty(PropertyName = "hits")]
         public Hits<T> Hits { get; set; }

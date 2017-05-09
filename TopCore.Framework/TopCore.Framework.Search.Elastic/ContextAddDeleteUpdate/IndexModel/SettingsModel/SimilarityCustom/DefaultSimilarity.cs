@@ -3,26 +3,26 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.SimilarityCustom
 {
-	public class DefaultSimilarity : SimilarityBase
+    public class DefaultSimilarity : SimilarityBase
     {
         private bool _discountOverlaps;
         private bool _discountOverlapsSet;
 
-	    /// <summary>
-	    ///     The default similarity that is based on the TF/IDF model. 
-	    /// </summary>
-	    /// <param name="name"></param>
-	    public DefaultSimilarity(string name)
+        /// <summary>
+        ///     The default similarity that is based on the TF/IDF model. 
+        /// </summary>
+        /// <param name="name"></param>
+        public DefaultSimilarity(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
             Type = DefaultSimilarities.Default;
         }
 
-	    /// <summary>
-	    ///     discount_overlaps Determines whether overlap tokens (Tokens with 0 position increment) are ignored when computing norm. By default this is true, meaning overlap tokens do not count when computing norms. 
-	    /// </summary>
-	    public bool DiscountOverlaps
+        /// <summary>
+        ///     discount_overlaps Determines whether overlap tokens (Tokens with 0 position increment) are ignored when computing norm. By default this is true, meaning overlap tokens do not count when computing norms. 
+        /// </summary>
+        public bool DiscountOverlaps
         {
             get => _discountOverlaps;
             set

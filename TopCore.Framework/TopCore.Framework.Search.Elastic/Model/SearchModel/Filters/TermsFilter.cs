@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class TermsFilter : IFilter
+    public class TermsFilter : IFilter
     {
         private readonly string _term;
         private readonly List<object> _termValues;

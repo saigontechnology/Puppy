@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
-	public interface IGeoType
+    public interface IGeoType
     {
         string Type { get; set; }
 

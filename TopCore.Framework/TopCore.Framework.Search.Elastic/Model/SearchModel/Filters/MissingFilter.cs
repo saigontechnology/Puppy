@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class MissingFilter : IFilter
+    public class MissingFilter : IFilter
     {
         private readonly string _field;
         private bool _existence;
@@ -15,10 +15,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             _field = field;
         }
 
-	    /// <summary>
-	    ///     existence When the existence parameter is set to true (the default), the missing filter will include documents where the field has no values 
-	    /// </summary>
-	    public bool Existence
+        /// <summary>
+        ///     existence When the existence parameter is set to true (the default), the missing filter will include documents where the field has no values 
+        /// </summary>
+        public bool Existence
         {
             get => _existence;
             set
@@ -28,10 +28,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
             }
         }
 
-	    /// <summary>
-	    ///     null_value When the null_value parameter is set to true, the missing filter will include documents where the field contains a null value 
-	    /// </summary>
-	    public bool NullValue
+        /// <summary>
+        ///     null_value When the null_value parameter is set to true, the missing filter will include documents where the field contains a null value 
+        /// </summary>
+        public bool NullValue
         {
             get => _nullValue;
             set

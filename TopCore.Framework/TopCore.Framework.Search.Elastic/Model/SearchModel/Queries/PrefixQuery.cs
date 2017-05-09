@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public class PrefixQuery : IQuery
+    public class PrefixQuery : IQuery
     {
         private readonly string _field;
         private readonly object _prefix;

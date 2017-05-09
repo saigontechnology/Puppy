@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 {
-	public interface IAggs
+    public interface IAggs
     {
         void WriteJson(ElasticJsonWriter elasticCrudJsonWriter);
     }

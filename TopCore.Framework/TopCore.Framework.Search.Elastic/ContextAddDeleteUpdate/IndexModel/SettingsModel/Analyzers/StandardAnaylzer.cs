@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Analyzers
 {
-	public class StandardAnaylzer : BaseStopAnalyzer
+    public class StandardAnaylzer : BaseStopAnalyzer
     {
         private int _maxTokenLength;
         private bool _maxTokenLengthSet;
@@ -15,10 +15,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             Type = DefaultAnalyzers.Standard;
         }
 
-	    /// <summary>
-	    ///     max_token_length The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to 255. 
-	    /// </summary>
-	    public int MaxTokenLength
+        /// <summary>
+        ///     max_token_length The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to 255. 
+        /// </summary>
+        public int MaxTokenLength
         {
             get => _maxTokenLength;
             set

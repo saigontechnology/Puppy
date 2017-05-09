@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Utils
 {
-	public static class JsonHelper
+    public static class JsonHelper
     {
         public static void WriteValue(string key, object valueObj, ElasticJsonWriter elasticCrudJsonWriter,
             bool writeValue = true)

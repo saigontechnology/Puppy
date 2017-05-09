@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model
 {
-	public class IndexTypeDescription
+    public class IndexTypeDescription
     {
         public IndexTypeDescription(string index, string indexType)
         {

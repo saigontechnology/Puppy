@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TopCore.Framework.Search.Elastic.Utils
 {
-	public class ParameterCollection
+    public class ParameterCollection
     {
         private readonly Dictionary<string, string> _parms = new Dictionary<string, string>();
 

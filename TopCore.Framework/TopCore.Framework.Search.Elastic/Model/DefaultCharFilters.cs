@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model
 {
-	public static class DefaultCharFilters
+    public static class DefaultCharFilters
     {
         public const string Mapping = "mapping";
         public const string HtmlStrip = "html_strip";

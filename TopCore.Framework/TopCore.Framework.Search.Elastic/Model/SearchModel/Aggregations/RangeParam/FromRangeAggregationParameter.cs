@@ -2,7 +2,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations.RangeParam
 {
-	public class FromRangeAggregationParameter<T> : RangeAggregationParameter<T>
+    public class FromRangeAggregationParameter<T> : RangeAggregationParameter<T>
     {
         private readonly T _value;
 

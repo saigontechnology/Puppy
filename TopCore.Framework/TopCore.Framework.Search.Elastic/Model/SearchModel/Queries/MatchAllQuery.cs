@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public class MatchAllQuery : IQuery
+    public class MatchAllQuery : IQuery
     {
         private double _boost;
         private bool _boostSet;

@@ -4,18 +4,18 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class PatternCaptureTokenFilter : AnalysisFilterBase
+    public class PatternCaptureTokenFilter : AnalysisFilterBase
     {
         private List<string> _patterns;
         private bool _patternsSet;
         private bool _preserveOriginal;
         private bool _preserveOriginalSet;
 
-	    /// <summary>
-	    ///     The pattern_capture token filter, unlike the pattern tokenizer, emits a token for every capture group in the regular expression. Patterns are not anchored to the beginning and end of the string, so each pattern can match multiple times, and matches are allowed to overlap. 
-	    /// </summary>
-	    /// <param name="name"> name for the custom filter </param>
-	    public PatternCaptureTokenFilter(string name)
+        /// <summary>
+        ///     The pattern_capture token filter, unlike the pattern tokenizer, emits a token for every capture group in the regular expression. Patterns are not anchored to the beginning and end of the string, so each pattern can match multiple times, and matches are allowed to overlap. 
+        /// </summary>
+        /// <param name="name"> name for the custom filter </param>
+        public PatternCaptureTokenFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();
@@ -32,10 +32,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
             }
         }
 
-	    /// <summary>
-	    ///     preserve_original 
-	    /// </summary>
-	    public bool PreserveOriginal
+        /// <summary>
+        ///     preserve_original 
+        /// </summary>
+        public bool PreserveOriginal
         {
             get => _preserveOriginal;
             set

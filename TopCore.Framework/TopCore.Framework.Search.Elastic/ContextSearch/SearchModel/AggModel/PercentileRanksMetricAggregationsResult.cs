@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
 {
-	public class PercentileRanksMetricAggregationsResult : AggregationResult<PercentileRanksMetricAggregationsResult>
+    public class PercentileRanksMetricAggregationsResult : AggregationResult<PercentileRanksMetricAggregationsResult>
     {
         public Dictionary<string, double> Values { get; set; }
 

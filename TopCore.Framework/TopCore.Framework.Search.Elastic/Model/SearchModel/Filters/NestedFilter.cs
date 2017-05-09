@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class NestedFilter : IFilter
+    public class NestedFilter : IFilter
     {
         private readonly IFilter _filter;
         private readonly string _path;

@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQuery
 {
-	public abstract class BaseScoreFunction
+    public abstract class BaseScoreFunction
     {
         private IFilter _filter;
         private bool _filterSet;

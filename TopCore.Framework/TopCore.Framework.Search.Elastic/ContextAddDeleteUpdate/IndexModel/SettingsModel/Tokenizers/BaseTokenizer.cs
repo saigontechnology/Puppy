@@ -2,7 +2,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Tokenizers
 {
-	public abstract class BaseTokenizer : AnalysisTokenizerBase
+    public abstract class BaseTokenizer : AnalysisTokenizerBase
     {
         private int _maxTokenLength;
         private bool _maxTokenLengthSet;

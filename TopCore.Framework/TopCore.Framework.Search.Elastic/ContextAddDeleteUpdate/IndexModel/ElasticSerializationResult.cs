@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel
 {
-	public class ElasticSerializationResult
+    public class ElasticSerializationResult
     {
         public IndexMappings IndexMappings { get; set; }
 

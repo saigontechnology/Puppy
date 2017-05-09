@@ -21,10 +21,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TopCore.Framework.DependencyInjection.Attributes
 {
-	public class SingletonDependencyAttribute : DependencyAttribute
-	{
-		public SingletonDependencyAttribute() : base(ServiceLifetime.Singleton)
-		{
-		}
-	}
+    public class SingletonDependencyAttribute : DependencyAttribute
+    {
+        public SingletonDependencyAttribute() : base(ServiceLifetime.Singleton)
+        {
+        }
+    }
 }

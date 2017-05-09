@@ -2,7 +2,7 @@
 
 namespace TopCore.Framework.Search.Elastic.Model
 {
-	public class IndexMapping : ElasticMapping
+    public class IndexMapping : ElasticMapping
     {
         private readonly string _index;
 

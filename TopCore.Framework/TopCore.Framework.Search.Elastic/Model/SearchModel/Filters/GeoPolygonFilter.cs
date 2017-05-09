@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Model.GeoModel;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
-	public class GeoPolygonFilter : IFilter
+    public class GeoPolygonFilter : IFilter
     {
         private readonly string _field;
         private readonly List<GeoPoint> _locations;

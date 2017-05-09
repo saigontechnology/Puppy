@@ -3,18 +3,18 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Filters
 {
-	public class LengthTokenFilter : AnalysisFilterBase
+    public class LengthTokenFilter : AnalysisFilterBase
     {
         private int _max;
         private bool _maxSet;
         private int _min;
         private bool _minSet;
 
-	    /// <summary>
-	    ///     A token filter of type length that removes words that are too long or too short for the stream. 
-	    /// </summary>
-	    /// <param name="name"> name for the custom filter </param>
-	    public LengthTokenFilter(string name)
+        /// <summary>
+        ///     A token filter of type length that removes words that are too long or too short for the stream. 
+        /// </summary>
+        /// <param name="name"> name for the custom filter </param>
+        public LengthTokenFilter(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();

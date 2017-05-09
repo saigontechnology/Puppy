@@ -3,7 +3,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public class IndicesQuery : IQuery
+    public class IndicesQuery : IQuery
     {
         private readonly List<string> _indices;
         private readonly IQuery _query;
@@ -18,10 +18,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
             _query = query;
         }
 
-	    /// <summary>
-	    ///     no_match_query 
-	    /// </summary>
-	    public IQuery NoMatchQuery
+        /// <summary>
+        ///     no_match_query 
+        /// </summary>
+        public IQuery NoMatchQuery
         {
             get => _noMatchQuery;
             set

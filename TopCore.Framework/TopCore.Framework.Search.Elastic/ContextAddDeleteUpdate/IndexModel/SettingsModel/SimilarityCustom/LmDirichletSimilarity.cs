@@ -3,16 +3,16 @@ using TopCore.Framework.Search.Elastic.Utils;
 
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.SimilarityCustom
 {
-	public class LmDirichletSimilarity : SimilarityBase
+    public class LmDirichletSimilarity : SimilarityBase
     {
         private int _mu;
         private bool _muSet;
 
-	    /// <summary>
-	    ///     LM Jelinek Mercer similarity http://lucene.apache.org/core/4_7_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html 
-	    /// </summary>
-	    /// <param name="name"></param>
-	    public LmDirichletSimilarity(string name)
+        /// <summary>
+        ///     LM Jelinek Mercer similarity http://lucene.apache.org/core/4_7_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html 
+        /// </summary>
+        /// <param name="name"></param>
+        public LmDirichletSimilarity(string name)
         {
             AnalyzerSet = true;
             Name = name.ToLower();

@@ -1,6 +1,6 @@
 ﻿namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
-	public interface ISpanQuery : IQuery
+    public interface ISpanQuery : IQuery
     {
     }
 }

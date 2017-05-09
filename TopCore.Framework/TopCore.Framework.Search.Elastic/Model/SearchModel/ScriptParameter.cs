@@ -1,6 +1,6 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 {
-	public class ScriptParameter
+    public class ScriptParameter
     {
         public ScriptParameter(string parameterName, object parameterValue)
         {

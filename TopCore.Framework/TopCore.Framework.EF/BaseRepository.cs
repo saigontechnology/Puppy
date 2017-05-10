@@ -51,7 +51,7 @@ namespace TopCore.Framework.EF
             }
         }
 
-        public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
+        public virtual IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
             foreach (var includeProperty in includeProperties)
@@ -59,7 +59,7 @@ namespace TopCore.Framework.EF
             return query;
         }
 
-        public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
+        public virtual IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
             params Expression<Func<T, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
@@ -68,18 +68,18 @@ namespace TopCore.Framework.EF
             return predicate == null ? query : query.Where(predicate);
         }
 
-        public T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+        public virtual T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
             return Get(predicate, includeProperties).FirstOrDefault();
         }
 
-        public T Add(T entity)
+        public virtual T Add(T entity)
         {
             entity = DbSet.Add(entity).Entity;
             return entity;
         }
 
-        public void Update(T entity, params Expression<Func<T, object>>[] changedProperties)
+        public virtual void Update(T entity, params Expression<Func<T, object>>[] changedProperties)
         {
             DbSet.Attach(entity);
 
@@ -95,7 +95,7 @@ namespace TopCore.Framework.EF
                 _baseDbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace TopCore.Framework.EF
             }
         }
 
-        public void DeleteWhere(Expression<Func<T, bool>> predicate)
+        public virtual void DeleteWhere(Expression<Func<T, bool>> predicate)
         {
             var entities = Get(predicate).AsEnumerable();
 
@@ -118,22 +118,22 @@ namespace TopCore.Framework.EF
                 Delete(entity);
         }
 
-        public int SaveChanges()
+        public virtual int SaveChanges()
         {
             return _baseDbContext.SaveChanges();
         }
 
-        public int SaveChanges(bool acceptAllChangesOnSuccess)
+        public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             return _baseDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+        public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = new CancellationToken())
         {
             return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

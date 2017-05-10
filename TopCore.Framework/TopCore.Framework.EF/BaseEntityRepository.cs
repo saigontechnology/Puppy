@@ -51,7 +51,7 @@ namespace TopCore.Framework.EF
             }
         }
 
-        public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
+        public virtual IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
             foreach (var includeProperty in includeProperties)
@@ -59,7 +59,7 @@ namespace TopCore.Framework.EF
             return query;
         }
 
-        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
@@ -73,13 +73,13 @@ namespace TopCore.Framework.EF
             return isIncludeDeleted ? query : query.Where(x => !x.IsDeleted);
         }
 
-        public TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false,
+        public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false,
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             return Get(predicate, isIncludeDeleted, includeProperties).FirstOrDefault();
         }
 
-        public TEntity Add(TEntity entity)
+        public virtual TEntity Add(TEntity entity)
         {
             entity.IsDeleted = false;
             entity.LastUpdatedTime = null;
@@ -90,7 +90,7 @@ namespace TopCore.Framework.EF
             return entity;
         }
 
-        public void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
+        public virtual void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
             entity.LastUpdatedTime = entity.LastUpdatedTime == default(DateTimeOffset)
                 ? DateTimeOffset.UtcNow
@@ -108,7 +108,7 @@ namespace TopCore.Framework.EF
                 _baseDbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(TEntity entity, bool isPhysicalDelete = false)
+        public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
         {
             try
             {
@@ -135,29 +135,29 @@ namespace TopCore.Framework.EF
             }
         }
 
-        public void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
+        public virtual void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
         {
             var entities = Get(predicate).AsEnumerable();
             foreach (var entity in entities)
                 Delete(entity, isPhysicalDelete);
         }
 
-        public int SaveChanges()
+        public virtual int SaveChanges()
         {
             return _baseDbContext.SaveChanges();
         }
 
-        public int SaveChanges(bool acceptAllChangesOnSuccess)
+        public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             return _baseDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+        public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = new CancellationToken())
         {
             return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

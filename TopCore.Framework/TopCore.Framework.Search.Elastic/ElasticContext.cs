@@ -129,7 +129,7 @@ namespace TopCore.Framework.Search.Elastic
         public void AddUpdateDocument(object document, object id, RoutingDefinition routingDefinition = null)
         {
             TraceProvider.Trace(TraceEventType.Verbose, "{2}: Adding document: {0}, {1} to pending list", document.GetType().Name, id, "ElasticContext");
-            var data = new EntityContextInfo { Id = id, EntityType = document.GetType(), Document = document};
+            var data = new EntityContextInfo { Id = id, EntityType = document.GetType(), Document = document };
             if (routingDefinition != null)
             {
                 data.RoutingDefinition = routingDefinition;

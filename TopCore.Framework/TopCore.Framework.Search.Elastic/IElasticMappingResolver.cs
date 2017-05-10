@@ -2,10 +2,10 @@
 
 namespace TopCore.Framework.Search.Elastic
 {
-	public interface IElasticMappingResolver
-	{
-		ElasticMapping GetElasticSearchMapping(Type type);
+    public interface IElasticMappingResolver
+    {
+        ElasticMapping GetElasticSearchMapping(Type type);
 
-		void AddElasticSearchMappingForEntityType(Type type, ElasticMapping mapping);
-	}
+        void AddElasticSearchMappingForEntityType(Type type, ElasticMapping mapping);
+    }
 }

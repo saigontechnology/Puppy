@@ -28,7 +28,7 @@ namespace TopCore.Framework.Core.NumberUtils
         public static double Ceiling(this double value, double significance)
         {
             if (Math.Abs(value % significance) > 0)
-                return (int)(value / significance) * significance + significance;
+                return (int) (value / significance) * significance + significance;
 
             return Convert.ToDouble(value);
         }
@@ -36,7 +36,7 @@ namespace TopCore.Framework.Core.NumberUtils
         public static double Floor(this double value, double significance)
         {
             if (Math.Abs(value % significance) > 0)
-                return (int)(value / significance) * significance;
+                return (int) (value / significance) * significance;
 
             return Convert.ToDouble(value);
         }

@@ -16,7 +16,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///     existence When the existence parameter is set to true (the default), the missing filter will include documents where the field has no values 
+        ///     existence When the existence parameter is set to true (the default), the missing filter will include documents
+        ///     where the field has no values
         /// </summary>
         public bool Existence
         {
@@ -29,7 +30,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///     null_value When the null_value parameter is set to true, the missing filter will include documents where the field contains a null value 
+        ///     null_value When the null_value parameter is set to true, the missing filter will include documents where the field
+        ///     contains a null value
         /// </summary>
         public bool NullValue
         {

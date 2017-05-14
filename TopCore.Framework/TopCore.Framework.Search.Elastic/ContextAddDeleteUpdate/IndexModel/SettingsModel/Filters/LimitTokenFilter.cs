@@ -11,7 +11,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _maxTokenCountSet;
 
         /// <summary>
-        ///     Limits the number of tokens that are indexed per document and field. 
+        ///     Limits the number of tokens that are indexed per document and field.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public LimitTokenFilter(string name)
@@ -22,7 +22,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     max_token_count The maximum number of tokens that should be indexed per document and field. The default is 1 
+        ///     max_token_count The maximum number of tokens that should be indexed per document and field. The default is 1
         /// </summary>
         public int MaxTokenCount
         {
@@ -35,7 +35,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     consume_all_tokens If set to true the filter exhaust the stream even if max_token_count tokens have been consumed already. The default is false. 
+        ///     consume_all_tokens If set to true the filter exhaust the stream even if max_token_count tokens have been consumed
+        ///     already. The default is false.
         /// </summary>
         public bool ConsumeAllTokens
         {

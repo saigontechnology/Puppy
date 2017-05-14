@@ -13,13 +13,15 @@ namespace TopCore.Framework.Search.Elastic.ContextDeleteByQuery
 {
     public class ElasticContextDeleteByQuery
     {
-        private readonly ITraceProvider _traceProvider;
         private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
         private readonly HttpClient _client;
         private readonly string _connectionString;
+        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
+        private readonly ITraceProvider _traceProvider;
 
-        public ElasticContextDeleteByQuery(ITraceProvider traceProvider, CancellationTokenSource cancellationTokenSource, ElasticSerializerConfiguration elasticSerializerConfiguration, HttpClient client, string connectionString)
+        public ElasticContextDeleteByQuery(ITraceProvider traceProvider,
+            CancellationTokenSource cancellationTokenSource,
+            ElasticSerializerConfiguration elasticSerializerConfiguration, HttpClient client, string connectionString)
         {
             _traceProvider = traceProvider;
             _cancellationTokenSource = cancellationTokenSource;
@@ -30,7 +32,9 @@ namespace TopCore.Framework.Search.Elastic.ContextDeleteByQuery
 
         public async Task<ResultDetails<bool>> DeleteByQueryAsync<T>(string jsonContent)
         {
-            _traceProvider.Trace(TraceEventType.Verbose, "{2}: Request for ElasticContextDeleteByQuery: {0}, content: {1}", typeof(T), jsonContent, "ElasticContextDeleteByQuery");
+            _traceProvider.Trace(TraceEventType.Verbose,
+                "{2}: Request for ElasticContextDeleteByQuery: {0}, content: {1}", typeof(T), jsonContent,
+                "ElasticContextDeleteByQuery");
             var resultDetails = new ResultDetails<bool>
             {
                 Status = HttpStatusCode.InternalServerError,
@@ -39,12 +43,15 @@ namespace TopCore.Framework.Search.Elastic.ContextDeleteByQuery
 
             try
             {
-                var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(typeof(T));
-                var elasticUrlForEntityGet = string.Format("{0}/{1}/{2}/_query", _connectionString, elasticSearchMapping.GetIndexForType(typeof(T)), elasticSearchMapping.GetDocumentType(typeof(T)));
+                var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver
+                    .GetElasticSearchMapping(typeof(T));
+                var elasticUrlForEntityGet = string.Format("{0}/{1}/{2}/_query", _connectionString,
+                    elasticSearchMapping.GetIndexForType(typeof(T)), elasticSearchMapping.GetDocumentType(typeof(T)));
 
                 var content = new StringContent(jsonContent);
                 var uri = new Uri(elasticUrlForEntityGet);
-                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP DELETE uri: {0}", uri.AbsoluteUri, "Search");
+                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP DELETE uri: {0}", uri.AbsoluteUri,
+                    "Search");
 
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
@@ -59,28 +66,30 @@ namespace TopCore.Framework.Search.Elastic.ContextDeleteByQuery
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    _traceProvider.Trace(TraceEventType.Warning, "{2}: GetSearchAsync response status code: {0}, {1}", response.StatusCode, response.ReasonPhrase, "Search");
+                    _traceProvider.Trace(TraceEventType.Warning, "{2}: GetSearchAsync response status code: {0}, {1}",
+                        response.StatusCode, response.ReasonPhrase, "Search");
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
                         var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         if (errorInfo.Contains("RoutingMissingException"))
-                        {
-                            throw new ElasticException("HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");
-                        }
+                            throw new ElasticException(
+                                "HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");
 
                         return resultDetails;
                     }
                 }
 
                 var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Delete Request response: {0}", responseString, "Search");
+                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Delete Request response: {0}", responseString,
+                    "Search");
 
                 return resultDetails;
             }
             catch (OperationCanceledException oex)
             {
-                _traceProvider.Trace(TraceEventType.Verbose, oex, "{1}: Delete Request OperationCanceledException: {0}", oex.Message, "Search");
+                _traceProvider.Trace(TraceEventType.Verbose, oex, "{1}: Delete Request OperationCanceledException: {0}",
+                    oex.Message, "Search");
                 return resultDetails;
             }
         }
@@ -98,7 +107,8 @@ namespace TopCore.Framework.Search.Elastic.ContextDeleteByQuery
             if (result.Status == HttpStatusCode.BadRequest)
             {
                 _traceProvider.Trace(TraceEventType.Warning, "ElasticContextDeleteByQuery: HttpStatusCode.BadRequest");
-                throw new ElasticException("ElasticContextDeleteByQuery: HttpStatusCode.BadRequest" + result.Description);
+                throw new ElasticException(
+                    "ElasticContextDeleteByQuery: HttpStatusCode.BadRequest" + result.Description);
             }
 
             return result;

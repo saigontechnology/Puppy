@@ -19,9 +19,9 @@
 
 #endregion License
 
+using AutoMapper;
 using System.Linq;
 using System.Reflection;
-using AutoMapper;
 
 namespace TopCore.Framework.AutoMapper
 {

@@ -32,7 +32,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     If this value is set, the buckets are returned with id classes. 
+        ///     If this value is set, the buckets are returned with id classes.
         /// </summary>
         public bool Keyed
         {
@@ -55,7 +55,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     distance_type How to compute the distance. Can either be sloppy_arc (default), arc (slighly more precise but significantly
+        ///     distance_type How to compute the distance. Can either be sloppy_arc (default), arc (slighly more precise but
+        ///     significantly
         ///     slower) or plane (faster, but inaccurate on long distances and close to the poles).
         /// </summary>
         public DistanceType DistanceType

@@ -25,7 +25,7 @@ namespace TopCore.Framework.Search.Elastic.ContentExists
         public async Task<ResultDetails<bool>> ExistsAsync(Uri uri)
         {
             _traceProvider.Trace(TraceEventType.Verbose, "ExistsAsync: Request HEAD with url: {0}", uri.ToString());
-            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Head, uri);

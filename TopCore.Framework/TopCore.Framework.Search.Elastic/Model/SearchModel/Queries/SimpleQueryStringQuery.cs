@@ -4,10 +4,13 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///     A query that uses the SimpleQueryParser to parse its context. Unlike the regular query_string query, the simple_query_string query will never throw an exception, and discards invalid parts of the query The simple_query_string supports the following special characters:
+    ///     A query that uses the SimpleQueryParser to parse its context. Unlike the regular query_string query, the
+    ///     simple_query_string query will never throw an exception, and discards invalid parts of the query The
+    ///     simple_query_string supports the following special characters:
     ///     + signifies AND operation | signifies OR operation
     ///     - negates a single token " wraps a number of tokens to signify a phrase for searching
-    ///     * at the end of a term signifies a prefix query ( and ) signify precedence ~N after a word signifies edit distance (fuzziness) ~N after a phrase signifies slop amount
+    ///     * at the end of a term signifies a prefix query ( and ) signify precedence ~N after a word signifies edit distance
+    ///     (fuzziness) ~N after a phrase signifies slop amount
     /// </summary>
     public class SimpleQueryStringQuery : IQuery
     {
@@ -34,7 +37,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     default_operator The default operator used if no explicit operator is specified. For example, with a default operator of OR, the query capital of Hungary is translated to capital OR of OR Hungary, and with default operator of AND, the same query is translated to capital AND of AND
+        ///     default_operator The default operator used if no explicit operator is specified. For example, with a default
+        ///     operator of OR, the query capital of Hungary is translated to capital OR of OR Hungary, and with default operator
+        ///     of AND, the same query is translated to capital AND of AND
         ///     Hungary. The default value is OR.
         /// </summary>
         public QueryDefaultOperator DefaultOperator
@@ -48,7 +53,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     analyzer The analyzer can be set to control which analyzer will perform the analysis process on the text. It default to the field explicit mapping definition, or the default search analyzer, for example: 
+        ///     analyzer The analyzer can be set to control which analyzer will perform the analysis process on the text. It
+        ///     default to the field explicit mapping definition, or the default search analyzer, for example:
         /// </summary>
         public string Analyzer
         {
@@ -61,7 +67,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     lowercase_expanded_terms Whether terms of wildcard, prefix, fuzzy, and range queries are to be automatically lower-cased or not (since they are not analyzed). Default it true. 
+        ///     lowercase_expanded_terms Whether terms of wildcard, prefix, fuzzy, and range queries are to be automatically
+        ///     lower-cased or not (since they are not analyzed). Default it true.
         /// </summary>
         public bool LowercaseExpandedTerms
         {
@@ -87,7 +94,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         //Flags specifying which features of the simple_query_string to enable. Defaults to ALL.
 
         /// <summary>
-        ///     lenient If set to true will cause format based failures (like providing text to a numeric field) to be ignored. 
+        ///     lenient If set to true will cause format based failures (like providing text to a numeric field) to be ignored.
         /// </summary>
         public bool Lenient
         {
@@ -100,7 +107,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     _locale Locale that should be used for string conversions. Defaults to ROOT. 
+        ///     _locale Locale that should be used for string conversions. Defaults to ROOT.
         /// </summary>
         public string Locale
         {
@@ -113,7 +120,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     fields The fields to perform the parsed query against. Defaults to the index.query.default_field index settings, which in turn defaults to _all. 
+        ///     fields The fields to perform the parsed query against. Defaults to the index.query.default_field index settings,
+        ///     which in turn defaults to _all.
         /// </summary>
         public List<string> Fields
         {

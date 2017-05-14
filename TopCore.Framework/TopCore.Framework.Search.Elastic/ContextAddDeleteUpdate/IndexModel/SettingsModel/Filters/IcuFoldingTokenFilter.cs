@@ -16,7 +16,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     unicodeSetFilter 
+        ///     unicodeSetFilter
         /// </summary>
         public string UnicodeSetFilter
         {

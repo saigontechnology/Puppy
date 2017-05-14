@@ -19,7 +19,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     no_match_query 
+        ///     no_match_query
         /// </summary>
         public IQuery NoMatchQuery
         {

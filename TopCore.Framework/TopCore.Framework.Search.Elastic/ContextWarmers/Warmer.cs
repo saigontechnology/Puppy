@@ -31,7 +31,7 @@ namespace TopCore.Framework.Search.Elastic.ContextWarmers
         }
 
         /// <summary>
-        ///     query_cache 
+        ///     query_cache
         /// </summary>
         public bool QueryCache
         {
@@ -44,7 +44,7 @@ namespace TopCore.Framework.Search.Elastic.ContextWarmers
         }
 
         /// <summary>
-        ///     aggregations request 
+        ///     aggregations request
         /// </summary>
         public List<IAggs> Aggs
         {

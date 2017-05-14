@@ -24,7 +24,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     If this value is set, the buckets are returned with id classes. 
+        ///     If this value is set, the buckets are returned with id classes.
         /// </summary>
         public bool Keyed
         {

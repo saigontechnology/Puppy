@@ -14,7 +14,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _keywordsSet;
 
         /// <summary>
-        ///     Protects words from being modified by stemmers. Must be placed before any stemming filters. 
+        ///     Protects words from being modified by stemmers. Must be placed before any stemming filters.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public KeywordMarkerTokenFilter(string name)
@@ -25,7 +25,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     keywords A list of mapping rules to use. 
+        ///     keywords A list of mapping rules to use.
         /// </summary>
         public List<string> Keywords
         {
@@ -38,7 +38,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     rules_path A path (either relative to config location, or absolute) to a list of words. 
+        ///     rules_path A path (either relative to config location, or absolute) to a list of words.
         /// </summary>
         public string KeywordsPath
         {
@@ -51,7 +51,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     ignore_case Set to true to lower case all words first. Defaults to false. 
+        ///     ignore_case Set to true to lower case all words first. Defaults to false.
         /// </summary>
         public bool IgnoreCase
         {

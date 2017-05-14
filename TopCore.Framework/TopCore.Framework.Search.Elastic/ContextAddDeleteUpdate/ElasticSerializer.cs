@@ -11,14 +11,16 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
 {
     public class ElasticSerializer : IDisposable
     {
+        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
+        private readonly IndexMappings _indexMappings;
+        private readonly bool _saveChangesAndInitMappingsForChildDocuments;
         private readonly ITraceProvider _traceProvider;
         private ElasticJsonWriter _elasticCrudJsonWriter;
-        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
-        private readonly bool _saveChangesAndInitMappingsForChildDocuments;
         private ElasticSerializationResult _elasticSerializationResult = new ElasticSerializationResult();
-        private readonly IndexMappings _indexMappings;
 
-        public ElasticSerializer(ITraceProvider traceProvider, ElasticSerializerConfiguration elasticSerializerConfiguration, bool saveChangesAndInitMappingsForChildDocuments)
+        public ElasticSerializer(ITraceProvider traceProvider,
+            ElasticSerializerConfiguration elasticSerializerConfiguration,
+            bool saveChangesAndInitMappingsForChildDocuments)
         {
             _elasticSerializerConfiguration = elasticSerializerConfiguration;
             _saveChangesAndInitMappingsForChildDocuments = saveChangesAndInitMappingsForChildDocuments;
@@ -27,39 +29,37 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             _elasticSerializationResult.IndexMappings = _indexMappings;
         }
 
+        public void Dispose()
+        {
+            _elasticCrudJsonWriter.Dispose();
+        }
+
         public ElasticSerializationResult Serialize(IEnumerable<EntityContextInfo> entities)
         {
             if (entities == null)
-            {
                 return null;
-            }
 
             _elasticSerializationResult = new ElasticSerializationResult();
             _elasticCrudJsonWriter = new ElasticJsonWriter();
 
             foreach (var entity in entities)
             {
-                string index = _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(entity.EntityType).GetIndexForType(entity.EntityType);
+                var index = _elasticSerializerConfiguration.ElasticMappingResolver
+                    .GetElasticSearchMapping(entity.EntityType).GetIndexForType(entity.EntityType);
                 MappingUtils.GuardAgainstBadIndexName(index);
 
                 if (_saveChangesAndInitMappingsForChildDocuments)
-                {
                     _indexMappings.CreateIndexSettingsAndMappingsForDocument(
                         index,
-                        new IndexSettings { NumberOfShards = 5, NumberOfReplicas = 1 },
+                        new IndexSettings {NumberOfShards = 5, NumberOfReplicas = 1},
                         new IndexAliases(),
                         new IndexWarmers(),
-                        entity, new MappingDefinition { Index = index });
-                }
+                        entity, new MappingDefinition {Index = index});
 
                 if (entity.DeleteDocument)
-                {
                     DeleteEntity(entity);
-                }
                 else
-                {
                     AddUpdateEntity(entity);
-                }
             }
 
             _elasticCrudJsonWriter.Dispose();
@@ -70,10 +70,13 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
 
         private void DeleteEntity(EntityContextInfo entityInfo)
         {
-            var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(entityInfo.EntityType);
+            var elasticSearchMapping =
+                _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(entityInfo.EntityType);
             elasticSearchMapping.TraceProvider = _traceProvider;
-            elasticSearchMapping.SaveChildObjectsAsWellAsParent = _elasticSerializerConfiguration.SaveChildObjectsAsWellAsParent;
-            elasticSearchMapping.ProcessChildDocumentsAsSeparateChildIndex = _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex;
+            elasticSearchMapping.SaveChildObjectsAsWellAsParent =
+                _elasticSerializerConfiguration.SaveChildObjectsAsWellAsParent;
+            elasticSearchMapping.ProcessChildDocumentsAsSeparateChildIndex = _elasticSerializerConfiguration
+                .ProcessChildDocumentsAsSeparateChildIndex;
             _elasticCrudJsonWriter.JsonWriter.WriteStartObject();
 
             _elasticCrudJsonWriter.JsonWriter.WritePropertyName("delete");
@@ -83,17 +86,13 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             WriteValue("_index", elasticSearchMapping.GetIndexForType(entityInfo.EntityType));
             WriteValue("_type", elasticSearchMapping.GetDocumentType(entityInfo.EntityType));
             WriteValue("_id", entityInfo.Id);
-            if (entityInfo.RoutingDefinition.ParentId != null && _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex)
-            {
-                // It's a document which belongs to a parent
+            if (entityInfo.RoutingDefinition.ParentId != null &&
+                _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex)
                 WriteValue("_parent", entityInfo.RoutingDefinition.ParentId);
-            }
-            if (entityInfo.RoutingDefinition.RoutingId != null && _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex &&
+            if (entityInfo.RoutingDefinition.RoutingId != null &&
+                _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex &&
                 _elasticSerializerConfiguration.UserDefinedRouting)
-            {
-                // It's a document which has a specific route
                 WriteValue("_routing", entityInfo.RoutingDefinition.RoutingId);
-            }
             _elasticCrudJsonWriter.JsonWriter.WriteEndObject();
             _elasticCrudJsonWriter.JsonWriter.WriteEndObject();
             _elasticCrudJsonWriter.JsonWriter.WriteRaw("\n");
@@ -101,25 +100,24 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
 
         private void AddUpdateEntity(EntityContextInfo entityInfo)
         {
-            var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(entityInfo.EntityType);
+            var elasticSearchMapping =
+                _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(entityInfo.EntityType);
             elasticSearchMapping.TraceProvider = _traceProvider;
-            elasticSearchMapping.SaveChildObjectsAsWellAsParent = _elasticSerializerConfiguration.SaveChildObjectsAsWellAsParent;
-            elasticSearchMapping.ProcessChildDocumentsAsSeparateChildIndex = _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex;
+            elasticSearchMapping.SaveChildObjectsAsWellAsParent =
+                _elasticSerializerConfiguration.SaveChildObjectsAsWellAsParent;
+            elasticSearchMapping.ProcessChildDocumentsAsSeparateChildIndex = _elasticSerializerConfiguration
+                .ProcessChildDocumentsAsSeparateChildIndex;
 
             CreateBulkContentForParentDocument(entityInfo, elasticSearchMapping);
 
             if (_elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex)
-            {
                 if (elasticSearchMapping.ChildIndexEntities.Count > 0)
                 {
                     // Only save the top level items now
                     elasticSearchMapping.SaveChildObjectsAsWellAsParent = false;
                     foreach (var item in elasticSearchMapping.ChildIndexEntities)
-                    {
                         CreateBulkContentForChildDocument(entityInfo, elasticSearchMapping, item);
-                    }
                 }
-            }
             elasticSearchMapping.ChildIndexEntities.Clear();
         }
 
@@ -132,17 +130,12 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             WriteValue("_index", elasticMapping.GetIndexForType(entityInfo.EntityType));
             WriteValue("_type", elasticMapping.GetDocumentType(entityInfo.EntityType));
             WriteValue("_id", entityInfo.Id);
-            if (entityInfo.RoutingDefinition.ParentId != null && _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex)
-            {
-                // It's a document which belongs to a parent
+            if (entityInfo.RoutingDefinition.ParentId != null &&
+                _elasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex)
                 WriteValue("_parent", entityInfo.RoutingDefinition.ParentId);
-            }
             if (entityInfo.RoutingDefinition.RoutingId != null &&
                 _elasticSerializerConfiguration.UserDefinedRouting)
-            {
-                // It's a document which has a specific route
                 WriteValue("_routing", entityInfo.RoutingDefinition.RoutingId);
-            }
             _elasticCrudJsonWriter.JsonWriter.WriteEndObject();
             _elasticCrudJsonWriter.JsonWriter.WriteEndObject();
             _elasticCrudJsonWriter.JsonWriter.WriteRaw("\n"); //ES requires this \n separator
@@ -171,10 +164,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             WriteValue("_id", item.Id);
             WriteValue("_parent", item.RoutingDefinition.ParentId);
             if (item.RoutingDefinition.RoutingId != null && _elasticSerializerConfiguration.UserDefinedRouting)
-            {
-                // It's a document which has a specific route
                 WriteValue("_routing", item.RoutingDefinition.RoutingId);
-            }
             _elasticCrudJsonWriter.JsonWriter.WriteEndObject();
             _elasticCrudJsonWriter.JsonWriter.WriteEndObject();
             _elasticCrudJsonWriter.JsonWriter.WriteRaw("\n"); //ES requires this \n separator
@@ -190,11 +180,6 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         {
             _elasticCrudJsonWriter.JsonWriter.WritePropertyName(key);
             _elasticCrudJsonWriter.JsonWriter.WriteValue(valueObj);
-        }
-
-        public void Dispose()
-        {
-            _elasticCrudJsonWriter.Dispose();
         }
     }
 }

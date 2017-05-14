@@ -15,7 +15,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         private bool _sortHolderSet;
 
         /// <summary>
-        ///     name The name to be used for the particular inner hit definition in the response. Useful when multiple inner hits have been defined in a single search request. The default depends in which query the inner hit is defined. For has_child query and filter this is the child type,
+        ///     name The name to be used for the particular inner hit definition in the response. Useful when multiple inner hits
+        ///     have been defined in a single search request. The default depends in which query the inner hit is defined. For
+        ///     has_child query and filter this is the child type,
         ///     has_parent query and filter this is the parent type and the nested query and filter this is the nested path.
         /// </summary>
         public string Name
@@ -29,7 +31,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         }
 
         /// <summary>
-        ///     How the inner hits should be sorted per inner_hits. By default the hits are sorted by the score. 
+        ///     How the inner hits should be sorted per inner_hits. By default the hits are sorted by the score.
         /// </summary>
         public ISortHolder Sort
         {
@@ -42,7 +44,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         }
 
         /// <summary>
-        ///     from The offset from where the first hit to fetch for each inner_hits in the returned regular search hits. 
+        ///     from The offset from where the first hit to fetch for each inner_hits in the returned regular search hits.
         /// </summary>
         public int From
         {
@@ -55,7 +57,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         }
 
         /// <summary>
-        ///     size The maximum number of hits to return per inner_hits. By default the top three matching hits are returned. 
+        ///     size The maximum number of hits to return per inner_hits. By default the top three matching hits are returned.
         /// </summary>
         public int Size
         {

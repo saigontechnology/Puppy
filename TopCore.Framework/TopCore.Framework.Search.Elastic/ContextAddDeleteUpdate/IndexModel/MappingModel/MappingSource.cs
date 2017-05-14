@@ -13,8 +13,11 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Map
         private bool _includesSet;
 
         /// <summary>
-        ///     The _source field is an automatically generated field that stores the actual JSON that was used as the indexed document. It is not indexed (searchable), just stored. When executing "fetch" requests, like get or search, the _source field is returned by default. Though very handy to
-        ///     have around, the source field does incur storage overhead within the index. For this reason, it can be disabled. { "tweet" : { "_source" : {"enabled" : false} } }
+        ///     The _source field is an automatically generated field that stores the actual JSON that was used as the indexed
+        ///     document. It is not indexed (searchable), just stored. When executing "fetch" requests, like get or search, the
+        ///     _source field is returned by default. Though very handy to
+        ///     have around, the source field does incur storage overhead within the index. For this reason, it can be disabled. {
+        ///     "tweet" : { "_source" : {"enabled" : false} } }
         /// </summary>
 
         public bool Enabled
@@ -28,7 +31,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Map
         }
 
         /// <summary>
-        ///     { "my_type" : { "_source" : { "includes" : ["path1.*", "path2.*"], "excludes" : ["path3.*"] } } } 
+        ///     { "my_type" : { "_source" : { "includes" : ["path1.*", "path2.*"], "excludes" : ["path3.*"] } } }
         /// </summary>
         public List<string> Includes
         {

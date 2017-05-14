@@ -16,7 +16,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _synonymsSet;
 
         /// <summary>
-        ///     The synonym token filter allows to easily handle synonyms during the analysis process. Synonyms are configured using a configuration file. Additional settings are: ignore_case (defaults to false), and expand (defaults to true). The tokenizer parameter controls the tokenizers that will
+        ///     The synonym token filter allows to easily handle synonyms during the analysis process. Synonyms are configured
+        ///     using a configuration file. Additional settings are: ignore_case (defaults to false), and expand (defaults to
+        ///     true). The tokenizer parameter controls the tokenizers that will
         ///     be used to tokenize the synonym, and defaults to the whitespace tokenizer.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
@@ -28,7 +30,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     synonyms_path 
+        ///     synonyms_path
         /// </summary>
         public string SynonymsPath
         {
@@ -61,7 +63,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     Two synonym formats are supported: Solr, WordNet. These can be defined directly with this parameter. 
+        ///     Two synonym formats are supported: Solr, WordNet. These can be defined directly with this parameter.
         /// </summary>
         public List<string> Synonyms
         {

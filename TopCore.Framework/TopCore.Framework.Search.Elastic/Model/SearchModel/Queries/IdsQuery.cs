@@ -10,7 +10,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         private bool _typeSet;
 
         /// <summary>
-        ///     Filters documents that only have the provided ids. Note, this filter does not require the _id field to be indexed since it works using the _uid field. 
+        ///     Filters documents that only have the provided ids. Note, this filter does not require the _id field to be indexed
+        ///     since it works using the _uid field.
         /// </summary>
         /// <param name="ids"></param>
         public IdsQuery(List<object> ids)

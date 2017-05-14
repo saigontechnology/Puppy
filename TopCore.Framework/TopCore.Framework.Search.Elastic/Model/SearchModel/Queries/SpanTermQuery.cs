@@ -3,7 +3,7 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///     Matches spans containing a term. The span term query maps to Lucene SpanTermQuery. 
+    ///     Matches spans containing a term. The span term query maps to Lucene SpanTermQuery.
     /// </summary>
     public class SpanTermQuery : ISpanQuery
     {

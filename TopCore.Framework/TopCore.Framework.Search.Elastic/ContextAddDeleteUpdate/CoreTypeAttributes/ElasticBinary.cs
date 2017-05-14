@@ -19,7 +19,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         private bool _storeSet;
 
         /// <summary>
-        ///     index_name The name of the field that will be stored in the index. Defaults to the property/field name. 
+        ///     index_name The name of the field that will be stored in the index. Defaults to the property/field name.
         /// </summary>
         public virtual string IndexName
         {
@@ -32,7 +32,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     compress Set to true to compress the stored binary value. 
+        ///     compress Set to true to compress the stored binary value.
         /// </summary>
         public virtual bool Compress
         {
@@ -45,7 +45,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     store Set to true to actually store the field in the index, false to not store it. Defaults to false (note, the JSON document itself is stored, and it can be retrieved from it). 
+        ///     store Set to true to actually store the field in the index, false to not store it. Defaults to false (note, the
+        ///     JSON document itself is stored, and it can be retrieved from it).
         /// </summary>
         public virtual bool Store
         {
@@ -58,7 +59,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     doc_values Set to true to store field values in a column-stride fashion. Automatically set to true when the fielddata format is doc_values. 
+        ///     doc_values Set to true to store field values in a column-stride fashion. Automatically set to true when the
+        ///     fielddata format is doc_values.
         /// </summary>
         public virtual bool DocValues
         {
@@ -71,7 +73,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     //compress_threshold Compression will only be applied to stored binary fields that are greater than this size. Defaults to -1 
+        ///     //compress_threshold Compression will only be applied to stored binary fields that are greater than this size.
+        ///     Defaults to -1
         /// </summary>
         public virtual int CompressThreshold
         {

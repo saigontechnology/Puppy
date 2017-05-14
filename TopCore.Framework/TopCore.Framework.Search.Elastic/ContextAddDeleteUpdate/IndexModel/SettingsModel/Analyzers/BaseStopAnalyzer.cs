@@ -11,7 +11,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _stopwordsSet;
 
         /// <summary>
-        ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_ to explicitly specify an empty stopword list. 
+        ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_
+        ///     to explicitly specify an empty stopword list.
         /// </summary>
         public string Stopwords
         {

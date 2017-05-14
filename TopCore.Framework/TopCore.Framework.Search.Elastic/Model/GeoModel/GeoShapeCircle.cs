@@ -7,7 +7,7 @@ namespace TopCore.Framework.Search.Elastic.Model.GeoModel
         public GeoPoint Coordinates { get; set; }
 
         /// <summary>
-        ///     The inner radius field is required. If not specified, then the units of the radius will default to METERS. 
+        ///     The inner radius field is required. If not specified, then the units of the radius will default to METERS.
         /// </summary>
         public string Radius { get; set; }
 

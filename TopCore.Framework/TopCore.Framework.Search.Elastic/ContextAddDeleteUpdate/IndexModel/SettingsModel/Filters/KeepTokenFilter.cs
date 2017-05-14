@@ -14,7 +14,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _keepWordsSet;
 
         /// <summary>
-        ///     A token filter of type keep that only keeps tokens with text contained in a predefined set of words. The set of words can be defined in the settings or loaded from a text file containing one word per line. 
+        ///     A token filter of type keep that only keeps tokens with text contained in a predefined set of words. The set of
+        ///     words can be defined in the settings or loaded from a text file containing one word per line.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public KeepTokenFilter(string name)
@@ -25,7 +26,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     keep_words a list of words to keep 
+        ///     keep_words a list of words to keep
         /// </summary>
         public List<string> KeepWords
         {
@@ -38,7 +39,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     keep_words_path a path to a words file 
+        ///     keep_words_path a path to a words file
         /// </summary>
         public string KeepWordsPath
         {
@@ -51,7 +52,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     keep_words_case a boolean indicating whether to lower case the words (defaults to false) 
+        ///     keep_words_case a boolean indicating whether to lower case the words (defaults to false)
         /// </summary>
         public bool KeepWordsCase
         {

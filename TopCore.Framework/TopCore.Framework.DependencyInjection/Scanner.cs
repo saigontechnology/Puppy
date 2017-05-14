@@ -17,14 +17,14 @@
 
 #endregion License
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.PlatformAbstractions;
 using TopCore.Framework.DependencyInjection.Attributes;
 using TopCore.Framework.DependencyInjection.Exceptions;
 
@@ -40,7 +40,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///     Register Assembly by Name 
+        ///     Register Assembly by Name
         /// </summary>
         /// <param name="services">    </param>
         /// <param name="assemblyName"></param>
@@ -50,47 +50,47 @@ namespace TopCore.Framework.DependencyInjection
             var assembly = AssemblyLoader.LoadFromAssemblyName(assemblyName);
 
             foreach (var typeInfo in assembly.DefinedTypes)
-                foreach (var customAttribute in typeInfo.GetCustomAttributes())
+            foreach (var customAttribute in typeInfo.GetCustomAttributes())
+            {
+                var customAttributeType = customAttribute.GetType();
+
+                var isDependencyAttribute = typeof(DependencyAttribute).IsAssignableFrom(customAttributeType);
+
+                if (!isDependencyAttribute)
+                    continue;
+                var serviceDescriptor = ((DependencyAttribute) customAttribute).BuildServiceDescriptor(typeInfo);
+
+                // Check is service already register from difference implementation => throw exception
+                var isAlreadyDifferenceImplementation = services.Any(
+                    x =>
+                        x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName &&
+                        x.ImplementationType != serviceDescriptor.ImplementationType);
+
+                if (isAlreadyDifferenceImplementation)
                 {
-                    var customAttributeType = customAttribute.GetType();
+                    var implementationRegister =
+                        services.Single(x => x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName)
+                            .ImplementationType;
 
-                    var isDependencyAttribute = typeof(DependencyAttribute).IsAssignableFrom(customAttributeType);
-
-                    if (!isDependencyAttribute)
-                        continue;
-                    var serviceDescriptor = ((DependencyAttribute)customAttribute).BuildServiceDescriptor(typeInfo);
-
-                    // Check is service already register from difference implementation => throw exception
-                    var isAlreadyDifferenceImplementation = services.Any(
-                        x =>
-                            x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName &&
-                            x.ImplementationType != serviceDescriptor.ImplementationType);
-
-                    if (isAlreadyDifferenceImplementation)
-                    {
-                        var implementationRegister =
-                            services.Single(x => x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName)
-                                .ImplementationType;
-
-                        throw new ConflictRegistrationException(
-                            $"Conflict register, ${serviceDescriptor.ImplementationType} try to register for {serviceDescriptor.ServiceType.FullName}. It already register by {implementationRegister.FullName} before.");
-                    }
-
-                    // Check is service already register from same implementation => remove existing, replace by new one life time cycle
-                    var isAlreadySameImplementation = services.Any(
-                        x =>
-                            x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName &&
-                            x.ImplementationType == serviceDescriptor.ImplementationType);
-
-                    if (isAlreadySameImplementation)
-                        services = services.Replace(serviceDescriptor);
-                    else
-                        services.Add(serviceDescriptor);
+                    throw new ConflictRegistrationException(
+                        $"Conflict register, ${serviceDescriptor.ImplementationType} try to register for {serviceDescriptor.ServiceType.FullName}. It already register by {implementationRegister.FullName} before.");
                 }
+
+                // Check is service already register from same implementation => remove existing, replace by new one life time cycle
+                var isAlreadySameImplementation = services.Any(
+                    x =>
+                        x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName &&
+                        x.ImplementationType == serviceDescriptor.ImplementationType);
+
+                if (isAlreadySameImplementation)
+                    services = services.Replace(serviceDescriptor);
+                else
+                    services.Add(serviceDescriptor);
+            }
         }
 
         /// <summary>
-        ///     Register all assemblies 
+        ///     Register all assemblies
         /// </summary>
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
@@ -114,7 +114,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///     Write registered service information to Console 
+        ///     Write registered service information to Console
         /// </summary>
         /// <param name="services">         </param>
         /// <param name="serviceNameFilter"> null to get all </param>

@@ -19,12 +19,12 @@
 
 #endregion License
 
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Framework.EF
@@ -59,7 +59,8 @@ namespace TopCore.Framework.EF
             return query;
         }
 
-        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null,
+            bool isIncludeDeleted = false,
             params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
@@ -100,7 +101,7 @@ namespace TopCore.Framework.EF
             if (changedProperties != null && changedProperties.Any())
                 foreach (var property in changedProperties)
                 {
-                    var expression = (MemberExpression)property.Body;
+                    var expression = (MemberExpression) property.Body;
                     var name = expression.Member.Name;
                     _baseDbContext.Entry(entity).Property(name).IsModified = true;
                 }

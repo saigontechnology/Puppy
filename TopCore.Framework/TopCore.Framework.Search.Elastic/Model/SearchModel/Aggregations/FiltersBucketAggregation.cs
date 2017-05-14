@@ -3,7 +3,7 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
     /// <summary>
-    ///     A multi-bucket value source based aggregation where buckets are dynamically built - one per unique value. 
+    ///     A multi-bucket value source based aggregation where buckets are dynamically built - one per unique value.
     /// </summary>
     public class FiltersBucketAggregation : BaseBucketAggregation
     {

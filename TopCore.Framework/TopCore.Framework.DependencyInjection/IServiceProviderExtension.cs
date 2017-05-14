@@ -19,8 +19,8 @@
 
 #endregion License
 
-using System;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace TopCore.Framework.DependencyInjection
 {

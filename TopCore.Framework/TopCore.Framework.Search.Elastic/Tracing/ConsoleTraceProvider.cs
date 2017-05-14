@@ -40,30 +40,30 @@ namespace TopCore.Framework.Search.Elastic.Tracing
             switch (level)
             {
                 case TraceEventType.Critical:
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        break;
-                    }
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                }
                 case TraceEventType.Error:
-                    {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        break;
-                    }
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    break;
+                }
                 case TraceEventType.Warning:
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        break;
-                    }
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                }
                 case TraceEventType.Verbose:
-                    {
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        break;
-                    }
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    break;
+                }
                 default:
-                    {
-                        Console.ForegroundColor = ConsoleColor.White;
-                        break;
-                    }
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Buckets;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel

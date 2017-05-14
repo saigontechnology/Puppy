@@ -32,7 +32,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         private bool _validateSet;
 
         /// <summary>
-        ///     lat_lon Set to true to also index the .lat and .lon as fields. Defaults to false. 
+        ///     lat_lon Set to true to also index the .lat and .lon as fields. Defaults to false.
         /// </summary>
         public virtual bool LatLon
         {
@@ -45,7 +45,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     geohash Set to true to also index the .geohash as a field. Defaults to false. 
+        ///     geohash Set to true to also index the .geohash as a field. Defaults to false.
         /// </summary>
         public virtual bool Geohash
         {
@@ -58,7 +58,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     geohash_precision Sets the geohash precision. It can be set to an absolute geohash length or a distance value (eg 1km, 1m, 1ml) defining the size of the smallest cell. Defaults to an absolute length of 12. 
+        ///     geohash_precision Sets the geohash precision. It can be set to an absolute geohash length or a distance value (eg
+        ///     1km, 1m, 1ml) defining the size of the smallest cell. Defaults to an absolute length of 12.
         /// </summary>
         public virtual string GeohashPrecision
         {
@@ -71,7 +72,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     geohash_prefix If this option is set to true, not only the geohash but also all its parent cells (true prefixes) will be indexed as well. The number of terms that will be indexed depends on the geohash_precision. Defaults to false. Note: This option implicitly enables geohash. 
+        ///     geohash_prefix If this option is set to true, not only the geohash but also all its parent cells (true prefixes)
+        ///     will be indexed as well. The number of terms that will be indexed depends on the geohash_precision. Defaults to
+        ///     false. Note: This option implicitly enables geohash.
         /// </summary>
         public virtual bool GeohashPrefix
         {
@@ -98,7 +101,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     validate_lat Set to true to reject geo points with an invalid latitude. 
+        ///     validate_lat Set to true to reject geo points with an invalid latitude.
         /// </summary>
         public virtual bool ValidateLat
         {
@@ -111,7 +114,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     validate_lon Set to true to reject geo points with an invalid longitude. 
+        ///     validate_lon Set to true to reject geo points with an invalid longitude.
         /// </summary>
         public virtual bool ValidateLon
         {
@@ -124,7 +127,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     normalize Set to true to normalize latitude and longitude (default is true). 
+        ///     normalize Set to true to normalize latitude and longitude (default is true).
         /// </summary>
         public virtual bool Normalize
         {
@@ -137,7 +140,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     normalize_lat Set to true to normalize latitude. 
+        ///     normalize_lat Set to true to normalize latitude.
         /// </summary>
         public virtual bool NormalizeLat
         {
@@ -150,7 +153,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     normalize_lon Set to true to normalize longitude. 
+        ///     normalize_lon Set to true to normalize longitude.
         /// </summary>
         public virtual bool NormalizeLon
         {
@@ -163,7 +166,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     precision_step The precision step (influences the number of terms generated for each number value) for .lat and .lon fields if lat_lon is set to true. Defaults to 16. 
+        ///     precision_step The precision step (influences the number of terms generated for each number value) for .lat and
+        ///     .lon fields if lat_lon is set to true. Defaults to 16.
         /// </summary>
         public virtual int PrecisionStep
         {
@@ -176,9 +180,14 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     "fielddata" : { "format" : "compressed", "precision" : "1cm" } By default, geo points use the array format which loads geo points into two parallel double arrays, making sure there is no precision loss. However, this can require a non-negligible amount of memory (16 bytes per
-        ///     document) which is why Elastic also provides a field data implementation with lossy compression called compressed. This field data format comes with a precision option which allows to configure how much precision can be traded for memory. The default value is 1cm. The following table
-        ///               presents values of the memory savings given various precisions: Precision Bytes per point Size reduction 1km 4 75% 3m 6 62.5% 1cm 8 50% 1mm 10 37.5%
+        ///     "fielddata" : { "format" : "compressed", "precision" : "1cm" } By default, geo points use the array format which
+        ///     loads geo points into two parallel double arrays, making sure there is no precision loss. However, this can require
+        ///     a non-negligible amount of memory (16 bytes per
+        ///     document) which is why Elastic also provides a field data implementation with lossy compression called compressed.
+        ///     This field data format comes with a precision option which allows to configure how much precision can be traded for
+        ///     memory. The default value is 1cm. The following table
+        ///     presents values of the memory savings given various precisions: Precision Bytes per point Size reduction 1km 4 75%
+        ///     3m 6 62.5% 1cm 8 50% 1mm 10 37.5%
         /// </summary>
         public virtual string FieldDataPrecision
         {

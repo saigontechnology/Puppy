@@ -11,8 +11,11 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _replaceSet;
 
         /// <summary>
-        ///     https://github.com/elastic/elastic-analysis-phonetic A phonetic token filter that can be configured with different encoder types: metaphone, doublemetaphone, soundex, refinedsoundex, caverphone1, caverphone2, cologne, nysiis, koelnerphonetik, haasephonetik, beidermorse The replace
-        ///     parameter (defaults to true) controls if the token processed should be replaced with the encoded one (set it to true), or added (set it to false).
+        ///     https://github.com/elastic/elastic-analysis-phonetic A phonetic token filter that can be configured with different
+        ///     encoder types: metaphone, doublemetaphone, soundex, refinedsoundex, caverphone1, caverphone2, cologne, nysiis,
+        ///     koelnerphonetik, haasephonetik, beidermorse The replace
+        ///     parameter (defaults to true) controls if the token processed should be replaced with the encoded one (set it to
+        ///     true), or added (set it to false).
         /// </summary>
         /// <param name="name"></param>
         public PhoneticTokenFilter(string name)
@@ -23,7 +26,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     A phonetic token filter that can be configured with different encoder types: metaphone, doublemetaphone, soundex, refinedsoundex, caverphone1, caverphone2, cologne, nysiis, koelnerphonetik, haasephonetik, beidermorse 
+        ///     A phonetic token filter that can be configured with different encoder types: metaphone, doublemetaphone, soundex,
+        ///     refinedsoundex, caverphone1, caverphone2, cologne, nysiis, koelnerphonetik, haasephonetik, beidermorse
         /// </summary>
         public PhoneticEncoder Encoder
         {
@@ -36,7 +40,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     The replace parameter (defaults to true) controls if the token processed should be replaced with the encoded one (set it to true), or added (set it to false). 
+        ///     The replace parameter (defaults to true) controls if the token processed should be replaced with the encoded one
+        ///     (set it to true), or added (set it to false).
         /// </summary>
         public bool Replace
         {

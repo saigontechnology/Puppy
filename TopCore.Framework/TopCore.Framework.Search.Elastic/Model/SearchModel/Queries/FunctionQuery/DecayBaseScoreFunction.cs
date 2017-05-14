@@ -8,12 +8,16 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         private readonly string _field;
 
         /// <summary>
-        ///     origin The point of origin used for calculating distance. Must be given as a number for numeric field, date for date fields and geo point for geo fields. Required for geo and numeric field. For date fields the default is now. Date math (for example now-1h) is supported for origin. 
+        ///     origin The point of origin used for calculating distance. Must be given as a number for numeric field, date for
+        ///     date fields and geo point for geo fields. Required for geo and numeric field. For date fields the default is now.
+        ///     Date math (for example now-1h) is supported for origin.
         /// </summary>
         private readonly T _origin;
 
         /// <summary>
-        ///     scale Required for all types. Defines the distance from origin at which the computed score will equal decay parameter. For geo fields: Can be defined as number+unit (1km, 12m,…). Default unit is meters. For date fields: Can to be defined as a number+unit ("1h", "10d",…). Default unit
+        ///     scale Required for all types. Defines the distance from origin at which the computed score will equal decay
+        ///     parameter. For geo fields: Can be defined as number+unit (1km, 12m,…). Default unit is meters. For date fields: Can
+        ///     to be defined as a number+unit ("1h", "10d",…). Default unit
         ///     is milliseconds. For numeric field: Any number.
         /// </summary>
         private readonly T _scale;
@@ -33,7 +37,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         }
 
         /// <summary>
-        ///     offset If an offset is defined, the decay function will only compute the decay function for documents with a distance greater that the defined offset. The default is 0. 
+        ///     offset If an offset is defined, the decay function will only compute the decay function for documents with a
+        ///     distance greater that the defined offset. The default is 0.
         /// </summary>
         public uint Offset
         {
@@ -46,7 +51,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         }
 
         /// <summary>
-        ///     decay The decay parameter defines how documents are scored at the distance given at scale. If no decay is defined, documents at the distance scale will be scored 0.5. 
+        ///     decay The decay parameter defines how documents are scored at the distance given at scale. If no decay is defined,
+        ///     documents at the distance scale will be scored 0.5.
         /// </summary>
         public double Decay
         {

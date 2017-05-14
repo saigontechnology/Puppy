@@ -14,13 +14,14 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
 {
     public class ElasticContextSearch
     {
-        private readonly ITraceProvider _traceProvider;
         private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
         private readonly HttpClient _client;
         private readonly string _connectionString;
+        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
+        private readonly ITraceProvider _traceProvider;
 
-        public ElasticContextSearch(ITraceProvider traceProvider, CancellationTokenSource cancellationTokenSource, ElasticSerializerConfiguration elasticSerializerConfiguration, HttpClient client, string connectionString)
+        public ElasticContextSearch(ITraceProvider traceProvider, CancellationTokenSource cancellationTokenSource,
+            ElasticSerializerConfiguration elasticSerializerConfiguration, HttpClient client, string connectionString)
         {
             _traceProvider = traceProvider;
             _cancellationTokenSource = cancellationTokenSource;
@@ -50,14 +51,18 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
 
         public async Task<ResultDetails<T>> SearchByIdAsync<T>(object entityId, SearchUrlParameters searchUrlParameters)
         {
-            var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(typeof(T));
+            var elasticSearchMapping =
+                _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(typeof(T));
             var index = elasticSearchMapping.GetIndexForType(typeof(T));
             var type = elasticSearchMapping.GetDocumentType(typeof(T));
-            _traceProvider.Trace(TraceEventType.Verbose, string.Format("ElasticContextSearch: Searching for document id: {0}, index {1}, type {2}", entityId, index, type));
+            _traceProvider.Trace(TraceEventType.Verbose,
+                string.Format("ElasticContextSearch: Searching for document id: {0}, index {1}, type {2}", entityId,
+                    index, type));
 
-            var resultDetails = new ResultDetails<T> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<T> {Status = HttpStatusCode.InternalServerError};
 
-            var search = new SearchRequest(_traceProvider, _cancellationTokenSource, _elasticSerializerConfiguration, _client, _connectionString);
+            var search = new SearchRequest(_traceProvider, _cancellationTokenSource, _elasticSerializerConfiguration,
+                _client, _connectionString);
 
             var result = await search.PostSearchAsync<T>(BuildSearchById(entityId), null, null, searchUrlParameters);
             resultDetails.RequestBody = result.RequestBody;
@@ -72,14 +77,19 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
             if (result.Status == HttpStatusCode.OK && result.PayloadResult.Hits.Total == 0)
             {
                 resultDetails.Status = HttpStatusCode.NotFound;
-                resultDetails.Description = string.Format("No document found id: {0}, index {1}, type {2}", entityId, index, type);
-                _traceProvider.Trace(TraceEventType.Information, string.Format("ElasticContextSearch: No document found id: {0},, index {1}, type {2}", entityId, index, type));
+                resultDetails.Description = string.Format("No document found id: {0}, index {1}, type {2}", entityId,
+                    index, type);
+                _traceProvider.Trace(TraceEventType.Information,
+                    string.Format("ElasticContextSearch: No document found id: {0},, index {1}, type {2}", entityId,
+                        index, type));
                 return resultDetails;
             }
 
             resultDetails.Status = result.Status;
             resultDetails.Description = result.Description;
-            _traceProvider.Trace(TraceEventType.Error, string.Format("ElasticContextSearch: No document found id: {0},  index {1}, type {2}", entityId, index, type));
+            _traceProvider.Trace(TraceEventType.Error,
+                string.Format("ElasticContextSearch: No document found id: {0},  index {1}, type {2}", entityId, index,
+                    type));
             return resultDetails;
         }
 

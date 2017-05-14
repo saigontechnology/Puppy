@@ -26,7 +26,8 @@ namespace Topcore.Framework.Coordinate
     public static class CoordinatePositionExtension
     {
         /// <summary>
-        ///     Calculates the end-point from a given source at a given range (kilometers) and bearing (degrees). This methods uses simple geometry equations to calculate the end-point. 
+        ///     Calculates the end-point from a given source at a given range (kilometers) and bearing (degrees). This methods uses
+        ///     simple geometry equations to calculate the end-point.
         /// </summary>
         /// <param name="src">      Point of origin </param>
         /// <param name="radiusKm"> Radius/Range in Kilometers </param>
@@ -54,7 +55,7 @@ namespace Topcore.Framework.Coordinate
         }
 
         /// <summary>
-        ///     Get Top Left Coordinate of square (out bound of circle) corner 
+        ///     Get Top Left Coordinate of square (out bound of circle) corner
         /// </summary>
         /// <param name="src">            </param>
         /// <param name="radiusKilometer"></param>
@@ -67,7 +68,7 @@ namespace Topcore.Framework.Coordinate
         }
 
         /// <summary>
-        ///     Get Bot Right Coordinate of square (out bound of circle) corner 
+        ///     Get Bot Right Coordinate of square (out bound of circle) corner
         /// </summary>
         /// <param name="src">            </param>
         /// <param name="radiusKilometer"></param>
@@ -80,7 +81,7 @@ namespace Topcore.Framework.Coordinate
         }
 
         /// <summary>
-        ///     Get Hypotenuse Edge of the right isosceles triangle 
+        ///     Get Hypotenuse Edge of the right isosceles triangle
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>

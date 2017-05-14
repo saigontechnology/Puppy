@@ -10,7 +10,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _languageSet;
 
         /// <summary>
-        ///     An analyzer of type snowball that uses the standard tokenizer, with standard filter, lowercase filter, stop filter, and snowball filter. The Snowball Analyzer is a stemming analyzer from Lucene that is originally based on the snowball project from snowball.tartarus.org. 
+        ///     An analyzer of type snowball that uses the standard tokenizer, with standard filter, lowercase filter, stop filter,
+        ///     and snowball filter. The Snowball Analyzer is a stemming analyzer from Lucene that is originally based on the
+        ///     snowball project from snowball.tartarus.org.
         /// </summary>
         /// <param name="name"></param>
         public SnowballAnalyzer(string name)

@@ -17,7 +17,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _skipSet;
 
         /// <summary>
-        ///     The path_hierarchy tokenizer takes something like this: something/something/else And produces tokens: something something/something something/something/else 
+        ///     The path_hierarchy tokenizer takes something like this: something/something/else And produces tokens: something
+        ///     something/something something/something/else
         /// </summary>
         /// <param name="name"> custom name </param>
         public PathHierarchyTokenizer(string name)
@@ -28,7 +29,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     delimiter The character delimiter to use, defaults to /. 
+        ///     delimiter The character delimiter to use, defaults to /.
         /// </summary>
         public string Delimiter
         {
@@ -41,7 +42,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     replacement An optional replacement character to use. Defaults to the delimiter. 
+        ///     replacement An optional replacement character to use. Defaults to the delimiter.
         /// </summary>
         public string Replacement
         {
@@ -54,7 +55,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     buffer_size The buffer size to use, defaults to 1024. 
+        ///     buffer_size The buffer size to use, defaults to 1024.
         /// </summary>
         public int BufferSize
         {
@@ -67,7 +68,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     reverse Generates tokens in reverse order, defaults to false. 
+        ///     reverse Generates tokens in reverse order, defaults to false.
         /// </summary>
         public bool Reverse
         {
@@ -80,7 +81,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     skip Controls initial tokens to skip, defaults to 0. 
+        ///     skip Controls initial tokens to skip, defaults to 0.
         /// </summary>
         public int skip
         {

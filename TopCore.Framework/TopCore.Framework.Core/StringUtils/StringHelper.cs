@@ -32,7 +32,7 @@ namespace TopCore.Framework.Core.StringUtils
         public static Random Random = new Random();
 
         /// <summary>
-        ///     Generate Random String 
+        ///     Generate Random String
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
@@ -47,7 +47,7 @@ namespace TopCore.Framework.Core.StringUtils
         }
 
         /// <summary>
-        ///     Remove all diacritics (accents) in string 
+        ///     Remove all diacritics (accents) in string
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -70,24 +70,24 @@ namespace TopCore.Framework.Core.StringUtils
         }
 
         /// <summary>
-        ///     Normalize: 
+        ///     Normalize:
         ///     <code>
         ///   UPPER CASE
         ///     </code>
-        ///     with 
+        ///     with
         ///     <code>
         ///   remove all diacritic (accents)
         ///     </code>
-        ///     in string 
+        ///     in string
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         /// <remarks>
-        ///     Replace 
+        ///     Replace
         ///     <code>
         /// đ, Đ to D
         ///     </code>
-        ///     . if value is is Null Or WhiteSpace will return 
+        ///     . if value is is Null Or WhiteSpace will return
         ///     <code>
         /// string.Empty
         ///     </code>
@@ -114,7 +114,7 @@ namespace TopCore.Framework.Core.StringUtils
         }
 
         /// <summary>
-        ///     Remove all tag html 
+        ///     Remove all tag html
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

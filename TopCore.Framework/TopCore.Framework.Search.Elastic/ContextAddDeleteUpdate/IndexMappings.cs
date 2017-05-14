@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.MappingModel;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel;
@@ -34,7 +34,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         public async Task<ResultDetails<string>> Execute(HttpClient client, string baseUrl,
             ITraceProvider traceProvider, CancellationTokenSource cancellationTokenSource)
         {
-            var resultDetails = new ResultDetails<string> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<string> {Status = HttpStatusCode.InternalServerError};
             foreach (var command in Commands)
             {
                 var content = new StringContent(command.Content + "\n");
@@ -193,7 +193,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///     Create a new index for the parent document 
+        ///     Create a new index for the parent document
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -244,7 +244,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///     Create a new mapping for the child type in the parent document index 
+        ///     Create a new mapping for the child type in the parent document index
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -294,7 +294,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///     Create a new index for the parent document 
+        ///     Create a new index for the parent document
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -333,7 +333,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///     Create a new mapping for the child type in the parent document index 
+        ///     Create a new mapping for the child type in the parent document index
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -442,7 +442,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///     "_routing": { "required": true }, 
+        ///     "_routing": { "required": true },
         /// </summary>
         /// <param name="elasticCrudJsonWriter"></param>
         private void CreateForceRoutingMappingForDocument(ElasticJsonWriter elasticCrudJsonWriter)

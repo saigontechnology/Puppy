@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace TopCore.Framework.Search.Elastic.Model.GeoModel
 {
@@ -22,7 +22,7 @@ namespace TopCore.Framework.Search.Elastic.Model.GeoModel
             {
                 var list = new List<object>();
                 // It is a collection
-                var ienumerable = (JArray)serializer.Deserialize(reader);
+                var ienumerable = (JArray) serializer.Deserialize(reader);
                 foreach (var item in ienumerable)
                 {
                     var itemVal = item.ToString().Replace(Environment.NewLine, "").Replace(" ", "");

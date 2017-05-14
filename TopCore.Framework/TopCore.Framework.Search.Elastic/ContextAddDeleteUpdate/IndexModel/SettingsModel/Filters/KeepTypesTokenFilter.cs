@@ -10,7 +10,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _typesSet;
 
         /// <summary>
-        ///     A token filter of type keep_types that only keeps tokens with a token type contained in a predefined set. 
+        ///     A token filter of type keep_types that only keeps tokens with a token type contained in a predefined set.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public KeepTypesTokenFilter(string name)
@@ -21,7 +21,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     A list of types to keep 
+        ///     A list of types to keep
         /// </summary>
         public List<string> Types
         {

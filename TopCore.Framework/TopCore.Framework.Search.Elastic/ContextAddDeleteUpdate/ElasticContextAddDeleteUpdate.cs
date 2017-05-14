@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -6,7 +7,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using TopCore.Framework.Search.Elastic.Model;
 using TopCore.Framework.Search.Elastic.Tracing;
 using TopCore.Framework.Search.Elastic.Utils;
@@ -48,11 +48,11 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         {
             _traceProvider.Trace(TraceEventType.Verbose, "{0}: Save changes to Elastic started",
                 "ElasticContextAddDeleteUpdate");
-            var resultDetails = new ResultDetails<string> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<string> {Status = HttpStatusCode.InternalServerError};
 
             if (entityPendingChanges.Count == 0)
             {
-                resultDetails = new ResultDetails<string> { Status = HttpStatusCode.OK, Description = "Nothing to save" };
+                resultDetails = new ResultDetails<string> {Status = HttpStatusCode.OK, Description = "Nothing to save"};
                 return resultDetails;
             }
 
@@ -166,7 +166,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request to delete complete index for Type: {0}", uri,
                 "ElasticContextAddDeleteUpdate");
 
-            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
             try
             {
                 _traceProvider.Trace(TraceEventType.Warning, "{1}: Request HTTP Delete uri: {0}", uri.AbsoluteUri,

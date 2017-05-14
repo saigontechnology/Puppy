@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel;
 using TopCore.Framework.Search.Elastic.Model;
 using TopCore.Framework.Search.Elastic.Model.GeoModel;
@@ -154,7 +154,7 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
 
                 var source = responseObject["exists"];
 
-                resultDetails.PayloadResult = (bool)source;
+                resultDetails.PayloadResult = (bool) source;
                 return resultDetails;
             }
             catch (OperationCanceledException oex)

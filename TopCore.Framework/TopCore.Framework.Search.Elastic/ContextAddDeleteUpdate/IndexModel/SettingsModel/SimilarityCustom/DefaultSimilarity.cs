@@ -9,7 +9,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _discountOverlapsSet;
 
         /// <summary>
-        ///     The default similarity that is based on the TF/IDF model. 
+        ///     The default similarity that is based on the TF/IDF model.
         /// </summary>
         /// <param name="name"></param>
         public DefaultSimilarity(string name)
@@ -20,7 +20,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     discount_overlaps Determines whether overlap tokens (Tokens with 0 position increment) are ignored when computing norm. By default this is true, meaning overlap tokens do not count when computing norms. 
+        ///     discount_overlaps Determines whether overlap tokens (Tokens with 0 position increment) are ignored when computing
+        ///     norm. By default this is true, meaning overlap tokens do not count when computing norms.
         /// </summary>
         public bool DiscountOverlaps
         {

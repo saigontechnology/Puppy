@@ -25,7 +25,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_ to explicitly specify an empty stopword list. 
+        ///     A list of stopwords to initialize the stop filter with. Defaults to the english stop words. Use stopwords: _none_
+        ///     to explicitly specify an empty stopword list.
         /// </summary>
         public string Stopwords
         {
@@ -48,7 +49,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     stopwords_path A path (either relative to config location, or absolute) to a stopwords file configuration. 
+        ///     stopwords_path A path (either relative to config location, or absolute) to a stopwords file configuration.
         /// </summary>
         public string StopwordsPath
         {
@@ -61,7 +62,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     ignore_case Set to true to lower case all words first. Defaults to false. 
+        ///     ignore_case Set to true to lower case all words first. Defaults to false.
         /// </summary>
         public bool IgnoreCase
         {
@@ -74,7 +75,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     remove_trailing Set to false in order to not ignore the last term of a search if it is a stop word. This is very useful for the completion suggester as a query like green a can be extended to green apple even though you remove stop words in general. Defaults to true. 
+        ///     remove_trailing Set to false in order to not ignore the last term of a search if it is a stop word. This is very
+        ///     useful for the completion suggester as a query like green a can be extended to green apple even though you remove
+        ///     stop words in general. Defaults to true.
         /// </summary>
         public bool RemoveTrailing
         {

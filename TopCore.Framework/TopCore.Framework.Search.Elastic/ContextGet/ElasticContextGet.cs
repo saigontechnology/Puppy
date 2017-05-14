@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 using TopCore.Framework.Search.Elastic.Model;
 using TopCore.Framework.Search.Elastic.Tracing;
@@ -15,13 +15,14 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
 {
     public class ElasticContextGet
     {
-        private readonly ITraceProvider _traceProvider;
         private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
         private readonly HttpClient _client;
         private readonly string _connectionString;
+        private readonly ElasticSerializerConfiguration _elasticSerializerConfiguration;
+        private readonly ITraceProvider _traceProvider;
 
-        public ElasticContextGet(ITraceProvider traceProvider, CancellationTokenSource cancellationTokenSource, ElasticSerializerConfiguration elasticSerializerConfiguration, HttpClient client, string connectionString)
+        public ElasticContextGet(ITraceProvider traceProvider, CancellationTokenSource cancellationTokenSource,
+            ElasticSerializerConfiguration elasticSerializerConfiguration, HttpClient client, string connectionString)
         {
             _traceProvider = traceProvider;
             _cancellationTokenSource = cancellationTokenSource;
@@ -51,51 +52,59 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
 
         public async Task<ResultDetails<T>> GetDocumentAsync<T>(object entityId, RoutingDefinition routingDefinition)
         {
-            _traceProvider.Trace(TraceEventType.Verbose, "{2}: Request for select document with id: {0}, Type: {1}", entityId, typeof(T), "ElasticSearchContextGet");
-            var resultDetails = new ResultDetails<T> { Status = HttpStatusCode.InternalServerError };
+            _traceProvider.Trace(TraceEventType.Verbose, "{2}: Request for select document with id: {0}, Type: {1}",
+                entityId, typeof(T), "ElasticSearchContextGet");
+            var resultDetails = new ResultDetails<T> {Status = HttpStatusCode.InternalServerError};
             try
             {
-                var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(typeof(T));
-                var elasticUrlForEntityGet = string.Format("{0}/{1}/{2}/", _connectionString, elasticSearchMapping.GetIndexForType(typeof(T)), elasticSearchMapping.GetDocumentType(typeof(T)));
+                var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver
+                    .GetElasticSearchMapping(typeof(T));
+                var elasticUrlForEntityGet = string.Format("{0}/{1}/{2}/", _connectionString,
+                    elasticSearchMapping.GetIndexForType(typeof(T)), elasticSearchMapping.GetDocumentType(typeof(T)));
 
-                var uri = new Uri(elasticUrlForEntityGet + entityId + RoutingDefinition.GetRoutingUrl(routingDefinition));
-                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP GET uri: {0}", uri.AbsoluteUri, "ElasticSearchContextGet");
+                var uri = new Uri(
+                    elasticUrlForEntityGet + entityId + RoutingDefinition.GetRoutingUrl(routingDefinition));
+                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP GET uri: {0}", uri.AbsoluteUri,
+                    "ElasticSearchContextGet");
                 var response = await _client.GetAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(false);
                 resultDetails.RequestUrl = uri.OriginalString;
 
                 resultDetails.Status = response.StatusCode;
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    _traceProvider.Trace(TraceEventType.Warning, "{2}: GetDocumentAsync response status code: {0}, {1}", response.StatusCode, response.ReasonPhrase, "ElasticSearchContextGet");
+                    _traceProvider.Trace(TraceEventType.Warning, "{2}: GetDocumentAsync response status code: {0}, {1}",
+                        response.StatusCode, response.ReasonPhrase, "ElasticSearchContextGet");
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
                         var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                         resultDetails.Description = errorInfo;
                         if (errorInfo.Contains("RoutingMissingException"))
-                        {
-                            throw new ElasticException("HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");
-                        }
+                            throw new ElasticException(
+                                "HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");
 
                         return resultDetails;
                     }
                 }
 
                 var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Get Request response: {0}", responseString, "ElasticSearchContextGet");
+                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Get Request response: {0}", responseString,
+                    "ElasticSearchContextGet");
                 var responseObject = JObject.Parse(responseString);
 
                 var source = responseObject["_source"];
                 if (source != null)
                 {
-                    var result = _elasticSerializerConfiguration.ElasticMappingResolver.GetElasticSearchMapping(typeof(T)).ParseEntity(source, typeof(T));
-                    resultDetails.PayloadResult = (T)result;
+                    var result = _elasticSerializerConfiguration.ElasticMappingResolver
+                        .GetElasticSearchMapping(typeof(T)).ParseEntity(source, typeof(T));
+                    resultDetails.PayloadResult = (T) result;
                 }
 
                 return resultDetails;
             }
             catch (OperationCanceledException oex)
             {
-                _traceProvider.Trace(TraceEventType.Verbose, oex, "{1}: Get Request OperationCanceledException: {0}", oex.Message, "ElasticSearchContextGet");
+                _traceProvider.Trace(TraceEventType.Verbose, oex, "{1}: Get Request OperationCanceledException: {0}",
+                    oex.Message, "ElasticSearchContextGet");
                 return resultDetails;
             }
         }
@@ -129,7 +138,8 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
 
             try
             {
-                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP GET uri: {0}", uri.AbsoluteUri, "get an object");
+                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP GET uri: {0}", uri.AbsoluteUri,
+                    "get an object");
 
                 resultDetails.RequestUrl = uri.ToString();
                 var response = await _client.GetAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(true);
@@ -137,15 +147,15 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
                 resultDetails.Status = response.StatusCode;
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    _traceProvider.Trace(TraceEventType.Warning, "{2}: GetAsync response status code: {0}, {1}", response.StatusCode, response.ReasonPhrase, "GetAsync");
+                    _traceProvider.Trace(TraceEventType.Warning, "{2}: GetAsync response status code: {0}, {1}",
+                        response.StatusCode, response.ReasonPhrase, "GetAsync");
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
                         var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         if (errorInfo.Contains("RoutingMissingException"))
-                        {
-                            throw new ElasticException("HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");
-                        }
+                            throw new ElasticException(
+                                "HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");
 
                         return resultDetails;
                     }
@@ -159,7 +169,8 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
                 }
 
                 var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Get Request response: {0}", responseString, "Search");
+                _traceProvider.Trace(TraceEventType.Verbose, "{1}: Get Request response: {0}", responseString,
+                    "Search");
                 var responseObject = JObject.Parse(responseString);
                 var ser = new JsonSerializer();
 
@@ -168,7 +179,8 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
             }
             catch (OperationCanceledException oex)
             {
-                _traceProvider.Trace(TraceEventType.Verbose, oex, "{1}: Get Request OperationCanceledException: {0}", oex.Message, "Search");
+                _traceProvider.Trace(TraceEventType.Verbose, oex, "{1}: Get Request OperationCanceledException: {0}",
+                    oex.Message, "Search");
                 return resultDetails;
             }
         }

@@ -32,7 +32,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     language 
+        ///     language
         /// </summary>
         public string Language
         {
@@ -45,7 +45,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     strength The strength property determines the minimum level of difference considered significant during comparison. The default strength for the Collator is tertiary, unless specified otherwise by the locale used to create the Collator. Possible values: primary, secondary, tertiary,
+        ///     strength The strength property determines the minimum level of difference considered significant during comparison.
+        ///     The default strength for the Collator is tertiary, unless specified otherwise by the locale used to create the
+        ///     Collator. Possible values: primary, secondary, tertiary,
         ///     quaternary or identical. See ICU Collation documentation for a more detailed explanation for the specific values.
         /// </summary>
         public IcuCollationStrength Strength
@@ -59,8 +61,12 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     decomposition Possible values: no or canonical. Defaults to no. Setting this decomposition property with canonical allows the Collator to handle un-normalized text properly, producing the same results as if the text were normalized. If no is set, it is the user’s responsibility to
-        ///     insure that all text is already in the appropriate form before a comparison or before getting a CollationKey. Adjusting decomposition mode allows the user to select between faster and more complete collation behavior. Since a great many of the world’s languages do not require text
+        ///     decomposition Possible values: no or canonical. Defaults to no. Setting this decomposition property with canonical
+        ///     allows the Collator to handle un-normalized text properly, producing the same results as if the text were
+        ///     normalized. If no is set, it is the user’s responsibility to
+        ///     insure that all text is already in the appropriate form before a comparison or before getting a CollationKey.
+        ///     Adjusting decomposition mode allows the user to select between faster and more complete collation behavior. Since a
+        ///     great many of the world’s languages do not require text
         ///     normalization, most locales set no as the default decomposition mode.
         /// </summary>
         public IcuCollationDecomposition Decomposition
@@ -74,7 +80,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     alternate Possible values: shifted or non-ignorable. Sets the alternate handling for strength quaternary to be either shifted or non-ignorable. What boils down to ignoring punctuation and whitespace. 
+        ///     alternate Possible values: shifted or non-ignorable. Sets the alternate handling for strength quaternary to be
+        ///     either shifted or non-ignorable. What boils down to ignoring punctuation and whitespace.
         /// </summary>
         public string Alternate
         {
@@ -87,7 +94,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     caseLevel Possible values: true or false. Default is false. Whether case level sorting is required. When strength is set to primary this will ignore accent differences. 
+        ///     caseLevel Possible values: true or false. Default is false. Whether case level sorting is required. When strength
+        ///     is set to primary this will ignore accent differences.
         /// </summary>
         public bool CaseLevel
         {
@@ -100,7 +108,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     caseFirst Possible values: lower or upper. Useful to control which case is sorted first when case is not ignored for strength tertiary. 
+        ///     caseFirst Possible values: lower or upper. Useful to control which case is sorted first when case is not ignored
+        ///     for strength tertiary.
         /// </summary>
         public IcuCollationCaseLevel CaseFirst
         {
@@ -113,7 +122,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     numeric Possible values: true or false. Whether digits are sorted according to numeric representation. For example the value egg-9 is sorted before the value egg-21. Defaults to false. 
+        ///     numeric Possible values: true or false. Whether digits are sorted according to numeric representation. For example
+        ///     the value egg-9 is sorted before the value egg-21. Defaults to false.
         /// </summary>
         public bool Numeric
         {
@@ -126,7 +136,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     variableTop Single character or contraction. Controls what is variable for alternate. 
+        ///     variableTop Single character or contraction. Controls what is variable for alternate.
         /// </summary>
         public string VariableTop
         {
@@ -139,7 +149,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     hiraganaQuaternaryMode Possible values: true or false. Defaults to false. Distinguishing between Katakana and Hiragana characters in quaternary strength . 
+        ///     hiraganaQuaternaryMode Possible values: true or false. Defaults to false. Distinguishing between Katakana and
+        ///     Hiragana characters in quaternary strength .
         /// </summary>
         public bool HiraganaQuaternaryMode
         {

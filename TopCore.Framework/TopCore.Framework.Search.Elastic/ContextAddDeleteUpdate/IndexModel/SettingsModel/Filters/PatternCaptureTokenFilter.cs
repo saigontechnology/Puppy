@@ -12,7 +12,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _preserveOriginalSet;
 
         /// <summary>
-        ///     The pattern_capture token filter, unlike the pattern tokenizer, emits a token for every capture group in the regular expression. Patterns are not anchored to the beginning and end of the string, so each pattern can match multiple times, and matches are allowed to overlap. 
+        ///     The pattern_capture token filter, unlike the pattern tokenizer, emits a token for every capture group in the
+        ///     regular expression. Patterns are not anchored to the beginning and end of the string, so each pattern can match
+        ///     multiple times, and matches are allowed to overlap.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public PatternCaptureTokenFilter(string name)
@@ -33,7 +35,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     preserve_original 
+        ///     preserve_original
         /// </summary>
         public bool PreserveOriginal
         {

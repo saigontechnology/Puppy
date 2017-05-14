@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,8 +8,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 using TopCore.Framework.Search.Elastic.Model;
@@ -17,36 +17,40 @@ using TopCore.Framework.Search.Elastic.Tracing;
 namespace TopCore.Framework.Search.Elastic
 {
     /// <summary>
-    ///     Default mapping for your Entity. You can implement this clas to implement your specific mapping if required Everything is lowercase and the index is pluralized 
+    ///     Default mapping for your Entity. You can implement this clas to implement your specific mapping if required
+    ///     Everything is lowercase and the index is pluralized
     /// </summary>
     public class ElasticMapping
     {
+        public List<EntityContextInfo> ChildIndexEntities = new List<EntityContextInfo>();
         protected HashSet<string> SerializedTypes = new HashSet<string>();
         public ITraceProvider TraceProvider = new NullTraceProvider();
         public bool SaveChildObjectsAsWellAsParent { get; set; }
         public bool ProcessChildDocumentsAsSeparateChildIndex { get; set; }
 
-        public List<EntityContextInfo> ChildIndexEntities = new List<EntityContextInfo>();
-
         /// <summary>
-        ///     Ovveride this if your default mapping needs to be changed. default type is lowercase for properties, indes pluralized and type to lower 
+        ///     Ovveride this if your default mapping needs to be changed. default type is lowercase for properties, indes
+        ///     pluralized and type to lower
         /// </summary>
         /// <param name="entityInfo">             Information about the entity </param>
         /// <param name="elasticCrudJsonWriter">  Serializer with added tracing </param>
         /// <param name="beginMappingTree">       begin new mapping tree </param>
-        /// <param name="createPropertyMappings"> This tells the serializer to create a Json property mapping from the entity and not the document itself </param>
-        public virtual void MapEntityValues(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, bool beginMappingTree = false, bool createPropertyMappings = false)
+        /// <param name="createPropertyMappings">
+        ///     This tells the serializer to create a Json property mapping from the entity and
+        ///     not the document itself
+        /// </param>
+        public virtual void MapEntityValues(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter,
+            bool beginMappingTree = false, bool createPropertyMappings = false)
         {
             try
             {
                 BeginNewEntityToDocumentMapping(entityInfo, beginMappingTree);
 
-                TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: SerializedTypes new Type added: {0}", GetDocumentType(entityInfo.Document.GetType()));
+                TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: SerializedTypes new Type added: {0}",
+                    GetDocumentType(entityInfo.Document.GetType()));
                 var propertyInfo = entityInfo.Document.GetType().GetProperties();
                 foreach (var prop in propertyInfo)
-                {
                     if (prop.GetCustomAttribute(typeof(JsonIgnoreAttribute)) == null)
-                    {
                         if (prop.GetCustomAttribute(typeof(ElasticGeoTypeAttribute)) != null)
                         {
                             var obj = prop.Name.ToLower();
@@ -62,12 +66,13 @@ namespace TopCore.Framework.Search.Elastic
                                 //                                    elasticCrudJsonWriter.JsonWriter.WriteRawValue((attrs.FirstOrDefault() as ElasticCoreTypes).JsonString());
                                 //                                }
                                 //#else
-                                IEnumerable<Attribute> attrs = prop.GetCustomAttributes(typeof(ElasticCoreTypes), true);
+                                var attrs = prop.GetCustomAttributes(typeof(ElasticCoreTypes), true);
 
-                                if ((attrs.FirstOrDefault() as ElasticCoreTypes) != null)
+                                if (attrs.FirstOrDefault() as ElasticCoreTypes != null)
                                 {
                                     elasticCrudJsonWriter.JsonWriter.WritePropertyName(obj);
-                                    elasticCrudJsonWriter.JsonWriter.WriteRawValue((attrs.FirstOrDefault() as ElasticCoreTypes).JsonString());
+                                    elasticCrudJsonWriter.JsonWriter.WriteRawValue(
+                                        (attrs.FirstOrDefault() as ElasticCoreTypes).JsonString());
                                 }
                                 //#endif
                             }
@@ -85,15 +90,20 @@ namespace TopCore.Framework.Search.Elastic
                         }
                         else
                         {
-                            if (prop.PropertyType.GetTypeInfo().IsClass && prop.PropertyType.FullName != "System.String" && prop.PropertyType.FullName != "System.Decimal")
+                            if (prop.PropertyType.GetTypeInfo().IsClass &&
+                                prop.PropertyType.FullName != "System.String" &&
+                                prop.PropertyType.FullName != "System.Decimal")
                             {
                                 ProcessSingleObject(entityInfo, elasticCrudJsonWriter, prop, createPropertyMappings);
                             }
                             else
                             {
-                                if (!ProcessChildDocumentsAsSeparateChildIndex || ProcessChildDocumentsAsSeparateChildIndex && beginMappingTree)
+                                if (!ProcessChildDocumentsAsSeparateChildIndex ||
+                                    ProcessChildDocumentsAsSeparateChildIndex && beginMappingTree)
                                 {
-                                    TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: Property is a simple Type: {0}, {1}", prop.Name.ToLower(), prop.PropertyType.FullName);
+                                    TraceProvider.Trace(TraceEventType.Verbose,
+                                        "ElasticMapping: Property is a simple Type: {0}, {1}", prop.Name.ToLower(),
+                                        prop.PropertyType.FullName);
 
                                     if (createPropertyMappings)
                                     {
@@ -109,12 +119,13 @@ namespace TopCore.Framework.Search.Elastic
                                             //                                                elasticCrudJsonWriter.JsonWriter.WriteRawValue((attrs.FirstOrDefault() as ElasticCoreTypes).JsonString());
                                             //                                            }
                                             //#else
-                                            IEnumerable<Attribute> attrs = prop.GetCustomAttributes(typeof(ElasticCoreTypes), true);
+                                            var attrs = prop.GetCustomAttributes(typeof(ElasticCoreTypes), true);
 
-                                            if ((attrs.FirstOrDefault() as ElasticCoreTypes) != null)
+                                            if (attrs.FirstOrDefault() as ElasticCoreTypes != null)
                                             {
                                                 elasticCrudJsonWriter.JsonWriter.WritePropertyName(obj);
-                                                elasticCrudJsonWriter.JsonWriter.WriteRawValue((attrs.FirstOrDefault() as ElasticCoreTypes).JsonString());
+                                                elasticCrudJsonWriter.JsonWriter.WriteRawValue(
+                                                    (attrs.FirstOrDefault() as ElasticCoreTypes).JsonString());
                                             }
                                             //#endif
                                         }
@@ -122,29 +133,28 @@ namespace TopCore.Framework.Search.Elastic
                                         {
                                             // no elastic property defined
                                             elasticCrudJsonWriter.JsonWriter.WritePropertyName(obj);
-                                            if (prop.PropertyType.FullName == "System.DateTime" || prop.PropertyType.FullName == "System.DateTimeOffset")
-                                            {
-                                                elasticCrudJsonWriter.JsonWriter.WriteRawValue("{ \"type\" : \"date\", \"format\": \"dateOptionalTime\"}");
-                                            }
+                                            if (prop.PropertyType.FullName == "System.DateTime" ||
+                                                prop.PropertyType.FullName == "System.DateTimeOffset")
+                                                elasticCrudJsonWriter.JsonWriter.WriteRawValue(
+                                                    "{ \"type\" : \"date\", \"format\": \"dateOptionalTime\"}");
                                             else
-                                            {
-                                                elasticCrudJsonWriter.JsonWriter.WriteRawValue("{ \"type\" : \"" + GetElasticType(prop.PropertyType) + "\" }");
-                                            }
+                                                elasticCrudJsonWriter.JsonWriter.WriteRawValue(
+                                                    "{ \"type\" : \"" + GetElasticType(prop.PropertyType) + "\" }");
                                         }
                                     }
                                     else
                                     {
-                                        MapValue(prop.Name.ToLower(), prop.GetValue(entityInfo.Document), elasticCrudJsonWriter.JsonWriter);
+                                        MapValue(prop.Name.ToLower(), prop.GetValue(entityInfo.Document),
+                                            elasticCrudJsonWriter.JsonWriter);
                                     }
                                 }
                             }
                         }
-                    }
-                }
             }
             catch (Exception ex)
             {
-                TraceProvider.Trace(TraceEventType.Critical, ex, "ElasticMapping: Property is a simple Type: {0}", elasticCrudJsonWriter.GetJsonString());
+                TraceProvider.Trace(TraceEventType.Critical, ex, "ElasticMapping: Property is a simple Type: {0}",
+                    elasticCrudJsonWriter.GetJsonString());
                 throw;
             }
         }
@@ -154,19 +164,19 @@ namespace TopCore.Framework.Search.Elastic
             if (beginMappingTree)
             {
                 SerializedTypes = new HashSet<string>();
-                TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: Serialize BEGIN for Type: {0}", entityInfo.Document.GetType());
+                TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: Serialize BEGIN for Type: {0}",
+                    entityInfo.Document.GetType());
             }
         }
 
-        private void ProcessSingleObject(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
+        private void ProcessSingleObject(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter,
+            PropertyInfo prop, bool createPropertyMappings)
         {
             TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: Property is an Object: {0}", prop.ToString());
             // This is a single object and not a reference to it's parent
 
             if (createPropertyMappings && prop.GetValue(entityInfo.Document) == null)
-            {
                 prop.SetValue(entityInfo.Document, Activator.CreateInstance(prop.PropertyType));
-            }
             if (prop.GetValue(entityInfo.Document) != null && SaveChildObjectsAsWellAsParent)
             {
                 var child = GetDocumentType(prop.GetValue(entityInfo.Document).GetType());
@@ -175,47 +185,38 @@ namespace TopCore.Framework.Search.Elastic
                 {
                     SerializedTypes.Add(parent + child);
                     if (ProcessChildDocumentsAsSeparateChildIndex)
-                    {
-                        ProcessSingleObjectAsChildDocument(entityInfo, elasticCrudJsonWriter, prop, createPropertyMappings);
-                    }
+                        ProcessSingleObjectAsChildDocument(entityInfo, elasticCrudJsonWriter, prop,
+                            createPropertyMappings);
                     else
-                    {
-                        ProcessSingleObjectAsNestedObject(entityInfo, elasticCrudJsonWriter, prop, createPropertyMappings);
-                    }
+                        ProcessSingleObjectAsNestedObject(entityInfo, elasticCrudJsonWriter, prop,
+                            createPropertyMappings);
                 }
             }
         }
 
-        private void ProcessArrayOrCollection(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
+        private void ProcessArrayOrCollection(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter,
+            PropertyInfo prop, bool createPropertyMappings)
         {
-            TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: IsPropertyACollection: {0}", prop.Name.ToLower());
+            TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: IsPropertyACollection: {0}",
+                prop.Name.ToLower());
 
             if (createPropertyMappings && prop.GetValue(entityInfo.Document) == null)
-            {
                 if (prop.PropertyType.IsArray)
-                {
                     prop.SetValue(entityInfo.Document, Array.CreateInstance(prop.PropertyType.GetElementType(), 0));
-                }
                 else
-                {
                     prop.SetValue(entityInfo.Document, Activator.CreateInstance(prop.PropertyType));
-                }
-            }
 
             if (prop.GetValue(entityInfo.Document) != null && SaveChildObjectsAsWellAsParent)
-            {
                 if (ProcessChildDocumentsAsSeparateChildIndex)
-                {
-                    ProcessArrayOrCollectionAsChildDocument(entityInfo, elasticCrudJsonWriter, prop, createPropertyMappings);
-                }
+                    ProcessArrayOrCollectionAsChildDocument(entityInfo, elasticCrudJsonWriter, prop,
+                        createPropertyMappings);
                 else
-                {
-                    ProcessArrayOrCollectionAsNestedObject(entityInfo, elasticCrudJsonWriter, prop, createPropertyMappings);
-                }
-            }
+                    ProcessArrayOrCollectionAsNestedObject(entityInfo, elasticCrudJsonWriter, prop,
+                        createPropertyMappings);
         }
 
-        private void ProcessSingleObjectAsNestedObject(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
+        private void ProcessSingleObjectAsNestedObject(EntityContextInfo entityInfo,
+            ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
         {
             elasticCrudJsonWriter.JsonWriter.WritePropertyName(prop.Name.ToLower());
             elasticCrudJsonWriter.JsonWriter.WriteStartObject();
@@ -228,55 +229,59 @@ namespace TopCore.Framework.Search.Elastic
             }
             // Do class mapping for nested type
             var entity = prop.GetValue(entityInfo.Document);
-            var routingDefinition = new RoutingDefinition { ParentId = entityInfo.Id };
-            var child = new EntityContextInfo { Document = entity, RoutingDefinition = routingDefinition, EntityType = entity.GetType(), DeleteDocument = entityInfo.DeleteDocument };
+            var routingDefinition = new RoutingDefinition {ParentId = entityInfo.Id};
+            var child = new EntityContextInfo
+            {
+                Document = entity,
+                RoutingDefinition = routingDefinition,
+                EntityType = entity.GetType(),
+                DeleteDocument = entityInfo.DeleteDocument
+            };
 
             MapEntityValues(child, elasticCrudJsonWriter, false, createPropertyMappings);
             elasticCrudJsonWriter.JsonWriter.WriteEndObject();
 
             if (createPropertyMappings)
-            {
                 elasticCrudJsonWriter.JsonWriter.WriteEndObject();
-            }
         }
 
-        private void ProcessSingleObjectAsChildDocument(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
+        private void ProcessSingleObjectAsChildDocument(EntityContextInfo entityInfo,
+            ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
         {
             var entity = prop.GetValue(entityInfo.Document);
             CreateChildEntityForDocumentIndex(entityInfo, elasticCrudJsonWriter, entity, createPropertyMappings);
         }
 
-        private void CreateChildEntityForDocumentIndex(EntityContextInfo parentEntityInfo, ElasticJsonWriter elasticCrudJsonWriter, object entity, bool createPropertyMappings)
+        private void CreateChildEntityForDocumentIndex(EntityContextInfo parentEntityInfo,
+            ElasticJsonWriter elasticCrudJsonWriter, object entity, bool createPropertyMappings)
         {
             var propertyInfo = entity.GetType().GetProperties();
             foreach (var property in propertyInfo)
-            {
                 //#if NET46 || NET451 || NET452
                 //                // TODO support this property.GetCustomAttribute(typeof(KeyAttribute)) != null ||
                 //                if ( property.GetCustomAttribute(typeof(ElasticIdAttribute)) != null)
                 //                {
                 //#else
-                if (property.GetCustomAttribute(typeof(KeyAttribute)) != null || property.GetCustomAttribute(typeof(ElasticIdAttribute)) != null)
+                if (property.GetCustomAttribute(typeof(KeyAttribute)) != null ||
+                    property.GetCustomAttribute(typeof(ElasticIdAttribute)) != null)
                 {
                     //#endif
                     var obj = property.GetValue(entity);
 
                     if (obj == null && createPropertyMappings)
-                    {
                         obj = "0";
-                    }
 
                     RoutingDefinition routingDefinition;
                     if (parentEntityInfo.RoutingDefinition.RoutingId != null)
-                    {
-                        // child of a child or lower...
-                        routingDefinition = new RoutingDefinition { ParentId = parentEntityInfo.Id, RoutingId = parentEntityInfo.RoutingDefinition.RoutingId };
-                    }
+                        routingDefinition =
+                            new RoutingDefinition
+                            {
+                                ParentId = parentEntityInfo.Id,
+                                RoutingId = parentEntityInfo.RoutingDefinition.RoutingId
+                            };
                     else
-                    {
-                        // This is a direct child
-                        routingDefinition = new RoutingDefinition { ParentId = parentEntityInfo.Id, RoutingId = parentEntityInfo.Id };
-                    }
+                        routingDefinition =
+                            new RoutingDefinition {ParentId = parentEntityInfo.Id, RoutingId = parentEntityInfo.Id};
 
                     var child = new EntityContextInfo
                     {
@@ -292,15 +297,16 @@ namespace TopCore.Framework.Search.Elastic
 
                     return;
                 }
-            }
 
             throw new ElasticException("No Key found for child object: " + parentEntityInfo.Document.GetType());
         }
 
-        private void ProcessArrayOrCollectionAsNestedObject(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
+        private void ProcessArrayOrCollectionAsNestedObject(EntityContextInfo entityInfo,
+            ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
         {
             elasticCrudJsonWriter.JsonWriter.WritePropertyName(prop.Name.ToLower());
-            TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: BEGIN ARRAY or COLLECTION: {0} {1}", prop.Name.ToLower(), elasticCrudJsonWriter.JsonWriter.Path);
+            TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: BEGIN ARRAY or COLLECTION: {0} {1}",
+                prop.Name.ToLower(), elasticCrudJsonWriter.JsonWriter.Path);
             var typeOfEntity = prop.GetValue(entityInfo.Document).GetType().GetGenericArguments();
             if (typeOfEntity.Length > 0)
             {
@@ -323,16 +329,19 @@ namespace TopCore.Framework.Search.Elastic
             }
             else
             {
-                TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: BEGIN ARRAY or COLLECTION NOT A GENERIC: {0}",
+                TraceProvider.Trace(TraceEventType.Verbose,
+                    "ElasticMapping: BEGIN ARRAY or COLLECTION NOT A GENERIC: {0}",
                     prop.Name.ToLower());
                 // Not a generic
                 MapCollectionOrArray(prop, entityInfo, elasticCrudJsonWriter, createPropertyMappings);
             }
         }
 
-        private void ProcessArrayOrCollectionAsChildDocument(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
+        private void ProcessArrayOrCollectionAsChildDocument(EntityContextInfo entityInfo,
+            ElasticJsonWriter elasticCrudJsonWriter, PropertyInfo prop, bool createPropertyMappings)
         {
-            TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: BEGIN ARRAY or COLLECTION: {0} {1}", prop.Name.ToLower(), elasticCrudJsonWriter.JsonWriter.Path);
+            TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: BEGIN ARRAY or COLLECTION: {0} {1}",
+                prop.Name.ToLower(), elasticCrudJsonWriter.JsonWriter.Path);
             var typeOfEntity = prop.GetValue(entityInfo.Document).GetType().GetGenericArguments();
             if (typeOfEntity.Length > 0)
             {
@@ -352,7 +361,8 @@ namespace TopCore.Framework.Search.Elastic
             }
             else
             {
-                TraceProvider.Trace(TraceEventType.Verbose, "ElasticMapping: BEGIN ARRAY or COLLECTION NOT A GENERIC: {0}",
+                TraceProvider.Trace(TraceEventType.Verbose,
+                    "ElasticMapping: BEGIN ARRAY or COLLECTION NOT A GENERIC: {0}",
                     prop.Name.ToLower());
                 // Not a generic
                 MapCollectionOrArray(prop, entityInfo, elasticCrudJsonWriter, createPropertyMappings);
@@ -367,101 +377,81 @@ namespace TopCore.Framework.Search.Elastic
         //		"name" : "prog_list",
         //		"description" : "programming list"
         //	},
-        protected virtual void MapCollectionOrArray(PropertyInfo prop, EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter, bool createPropertyMappings)
+        protected virtual void MapCollectionOrArray(PropertyInfo prop, EntityContextInfo entityInfo,
+            ElasticJsonWriter elasticCrudJsonWriter, bool createPropertyMappings)
         {
-            Type type = prop.PropertyType;
+            var type = prop.PropertyType;
 
             if (type.HasElementType)
             {
                 // It is a collection
-                var ienumerable = (Array)prop.GetValue(entityInfo.Document);
+                var ienumerable = (Array) prop.GetValue(entityInfo.Document);
                 if (ProcessChildDocumentsAsSeparateChildIndex)
                 {
-                    MapIEnumerableEntitiesForChildIndexes(elasticCrudJsonWriter, ienumerable, entityInfo, prop, createPropertyMappings);
+                    MapIEnumerableEntitiesForChildIndexes(elasticCrudJsonWriter, ienumerable, entityInfo, prop,
+                        createPropertyMappings);
                 }
                 else
                 {
                     if (createPropertyMappings)
-                    {
                         MapIEnumerableEntitiesForMapping(elasticCrudJsonWriter, entityInfo, prop, true);
-                    }
                     else
-                    {
                         MapIEnumerableEntities(elasticCrudJsonWriter, ienumerable, entityInfo, false);
-                    }
                 }
             }
             else if (prop.PropertyType.GetTypeInfo().IsGenericType)
             {
                 // It is a collection
-                var ienumerable = (IEnumerable)prop.GetValue(entityInfo.Document);
+                var ienumerable = (IEnumerable) prop.GetValue(entityInfo.Document);
 
                 if (ProcessChildDocumentsAsSeparateChildIndex)
                 {
-                    MapIEnumerableEntitiesForChildIndexes(elasticCrudJsonWriter, ienumerable, entityInfo, prop, createPropertyMappings);
+                    MapIEnumerableEntitiesForChildIndexes(elasticCrudJsonWriter, ienumerable, entityInfo, prop,
+                        createPropertyMappings);
                 }
                 else
                 {
                     if (createPropertyMappings)
-                    {
                         MapIEnumerableEntitiesForMapping(elasticCrudJsonWriter, entityInfo, prop, true);
-                    }
                     else
-                    {
                         MapIEnumerableEntities(elasticCrudJsonWriter, ienumerable, entityInfo, false);
-                    }
                 }
             }
         }
 
-        private void MapIEnumerableEntitiesForChildIndexes(ElasticJsonWriter elasticCrudJsonWriter, IEnumerable ienumerable, EntityContextInfo parentEntityInfo, PropertyInfo prop, bool createPropertyMappings)
+        private void MapIEnumerableEntitiesForChildIndexes(ElasticJsonWriter elasticCrudJsonWriter,
+            IEnumerable ienumerable, EntityContextInfo parentEntityInfo, PropertyInfo prop, bool createPropertyMappings)
         {
             if (createPropertyMappings)
             {
                 object item;
                 if (prop.PropertyType.GenericTypeArguments.Length == 0)
-                {
                     item = Activator.CreateInstance(prop.PropertyType.GetElementType());
-                }
                 else
-                {
                     item = Activator.CreateInstance(prop.PropertyType.GenericTypeArguments[0]);
-                }
 
                 CreateChildEntityForDocumentIndex(parentEntityInfo, elasticCrudJsonWriter, item, true);
             }
             else
             {
                 if (ienumerable != null)
-                {
                     foreach (var item in ienumerable)
-                    {
                         CreateChildEntityForDocumentIndex(parentEntityInfo, elasticCrudJsonWriter, item, false);
-                    }
-                }
             }
         }
 
         private void MapIEnumerableEntitiesForMapping(ElasticJsonWriter elasticCrudJsonWriter,
-             EntityContextInfo parentEntityInfo, PropertyInfo prop, bool createPropertyMappings)
+            EntityContextInfo parentEntityInfo, PropertyInfo prop, bool createPropertyMappings)
         {
             object item;
             if (prop.PropertyType.FullName == "System.String[]")
-            {
                 item = string.Empty;
-            }
             else if (prop.PropertyType.GenericTypeArguments.Length == 0)
-            {
                 item = Activator.CreateInstance(prop.PropertyType.GetElementType());
-            }
             else if (prop.PropertyType.GenericTypeArguments[0].FullName == "System.String")
-            {
                 item = string.Empty;
-            }
             else
-            {
                 item = Activator.CreateInstance(prop.PropertyType.GenericTypeArguments[0]);
-            }
 
             var typeofArrayItem = item.GetType();
             if (typeofArrayItem.GetTypeInfo().IsClass && typeofArrayItem.FullName != "System.String" &&
@@ -489,12 +479,10 @@ namespace TopCore.Framework.Search.Elastic
                     elasticCrudJsonWriter.JsonWriter.WritePropertyName("type");
                     elasticCrudJsonWriter.JsonWriter.WriteValue("nested");
 
-                    IEnumerable<Attribute> attrs = prop.GetCustomAttributes(typeof(ElasticNestedAttribute), true);
+                    var attrs = prop.GetCustomAttributes(typeof(ElasticNestedAttribute), true);
 
-                    if ((attrs.FirstOrDefault() as ElasticNestedAttribute) != null)
-                    {
+                    if (attrs.FirstOrDefault() as ElasticNestedAttribute != null)
                         (attrs.FirstOrDefault() as ElasticNestedAttribute).WriteJson(elasticCrudJsonWriter);
-                    }
                 }
                 //#endif
                 // "properties": {
@@ -528,11 +516,12 @@ namespace TopCore.Framework.Search.Elastic
             }
         }
 
-        private void MapIEnumerableEntities(ElasticJsonWriter elasticCrudJsonWriter, IEnumerable ienumerable, EntityContextInfo parentEntityInfo, bool createPropertyMappings)
+        private void MapIEnumerableEntities(ElasticJsonWriter elasticCrudJsonWriter, IEnumerable ienumerable,
+            EntityContextInfo parentEntityInfo, bool createPropertyMappings)
         {
             string json = null;
-            bool isSimpleArrayOrCollection = true;
-            bool doProccessingIfTheIEnumerableHasAtLeastOneItem = false;
+            var isSimpleArrayOrCollection = true;
+            var doProccessingIfTheIEnumerableHasAtLeastOneItem = false;
             if (ienumerable != null)
             {
                 var sbCollection = new StringBuilder();
@@ -552,8 +541,19 @@ namespace TopCore.Framework.Search.Elastic
                         // collection of Objects
                         childElasticJsonWriter.JsonWriter.WriteStartObject();
                         // Do class mapping for nested type
-                        var routingDefinition = new RoutingDefinition { ParentId = parentEntityInfo.Id, RoutingId = parentEntityInfo.RoutingDefinition.RoutingId };
-                        var child = new EntityContextInfo { Document = item, RoutingDefinition = routingDefinition, EntityType = item.GetType(), DeleteDocument = parentEntityInfo.DeleteDocument };
+                        var routingDefinition =
+                            new RoutingDefinition
+                            {
+                                ParentId = parentEntityInfo.Id,
+                                RoutingId = parentEntityInfo.RoutingDefinition.RoutingId
+                            };
+                        var child = new EntityContextInfo
+                        {
+                            Document = item,
+                            RoutingDefinition = routingDefinition,
+                            EntityType = item.GetType(),
+                            DeleteDocument = parentEntityInfo.DeleteDocument
+                        };
                         MapEntityValues(child, childElasticJsonWriter, false, createPropertyMappings);
                         childElasticJsonWriter.JsonWriter.WriteEndObject();
 
@@ -577,9 +577,7 @@ namespace TopCore.Framework.Search.Elastic
                 {
                     if (doProccessingIfTheIEnumerableHasAtLeastOneItem)
 
-                    {
                         sbCollection.Remove(sbCollection.Length - 1, 1);
-                    }
 
                     sbCollection.Append("]");
                     elasticCrudJsonWriter.JsonWriter.WriteRawValue(sbCollection.ToString());
@@ -600,16 +598,12 @@ namespace TopCore.Framework.Search.Elastic
         protected bool IsPropertyACollection(PropertyInfo property)
         {
             if (property.PropertyType.FullName == "System.String" || property.PropertyType.FullName == "System.Decimal")
-            {
                 return false;
-            }
 
             if (property.PropertyType.GetInterfaces().Contains(typeof(IEnumerable)) ||
-               property.PropertyType.GetInterfaces().Contains(typeof(ICollection)) ||
-               property.PropertyType.GetInterfaces().Contains(typeof(IList)))
-            {
+                property.PropertyType.GetInterfaces().Contains(typeof(ICollection)) ||
+                property.PropertyType.GetInterfaces().Contains(typeof(IList)))
                 return true;
-            }
 
             return false;
         }
@@ -623,7 +617,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Override this if you require a special type definition for your document type. 
+        ///     Override this if you require a special type definition for your document type.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> The type used in Elastic for this type </returns>
@@ -631,9 +625,7 @@ namespace TopCore.Framework.Search.Elastic
         {
             // Adding support for EF types
             if (type.GetTypeInfo().BaseType != null && type.Namespace == "System.Data.Entity.DynamicProxies")
-            {
                 type = type.GetTypeInfo().BaseType;
-            }
             return type.Name.ToLower();
         }
 
@@ -641,9 +633,7 @@ namespace TopCore.Framework.Search.Elastic
         {
             // Adding support for EF types
             if (type.GetTypeInfo().BaseType != null && type.Namespace == "System.Data.Entity.DynamicProxies")
-            {
                 type = type.GetTypeInfo().BaseType;
-            }
             return type;
         }
 
@@ -657,14 +647,14 @@ namespace TopCore.Framework.Search.Elastic
         {
             // Adding support for EF types
             if (type.GetTypeInfo().BaseType != null && type.Namespace == "System.Data.Entity.DynamicProxies")
-            {
                 type = type.GetTypeInfo().BaseType;
-            }
             return type.Name.ToLower() + "s";
         }
 
         /// <summary>
-        ///     bool System.Boolean byte System.Byte sbyte System.SByte char System.Char decimal System.Decimal =&gt; string double System.Double float System.Single int System.Int32 uint System.UInt32 long System.Int64 ulong System.UInt64 short System.Int16 ushort System.UInt16 string System.String 
+        ///     bool System.Boolean byte System.Byte sbyte System.SByte char System.Char decimal System.Decimal =&gt; string double
+        ///     System.Double float System.Single int System.Int32 uint System.UInt32 long System.Int64 ulong System.UInt64 short
+        ///     System.Int16 ushort System.UInt16 string System.String
         /// </summary>
         /// <param name="propertyType"></param>
         /// <returns> string, boolean, and null. float, double, byte, short, integer, and long date binary </returns>

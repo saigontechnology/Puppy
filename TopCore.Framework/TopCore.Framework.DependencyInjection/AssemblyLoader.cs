@@ -17,13 +17,13 @@
 
 #endregion License
 
+using Microsoft.DotNet.PlatformAbstractions;
+using Microsoft.Extensions.DependencyModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using Microsoft.DotNet.PlatformAbstractions;
-using Microsoft.Extensions.DependencyModel;
 
 namespace TopCore.Framework.DependencyInjection
 {
@@ -46,7 +46,7 @@ namespace TopCore.Framework.DependencyInjection
         public List<AssemblyName> ListLoadedAssemblyName { get; } = new List<AssemblyName>();
 
         /// <summary>
-        ///     Load an assembly, if the assembly already loaded then return null 
+        ///     Load an assembly, if the assembly already loaded then return null
         /// </summary>
         /// <param name="assemblyName"></param>
         /// <returns></returns>

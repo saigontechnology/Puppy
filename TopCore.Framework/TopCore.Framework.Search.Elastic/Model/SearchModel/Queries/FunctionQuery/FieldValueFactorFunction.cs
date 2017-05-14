@@ -11,8 +11,12 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         private bool _modifierSet;
 
         /// <summary>
-        ///     The field_value_factor function allows you to use a field from a document to influence the score. It’s similar to using the script_score function, however, it avoids the overhead of scripting. If used on a multi-valued field, only the first value of the field is used in calculations.
-        ///     Keep in mind that taking the log() of 0, or the square root of a negative number is an illegal operation, and an exception will be thrown. Be sure to limit the values of the field with a range filter to avoid this, or use log1p and ln1p.
+        ///     The field_value_factor function allows you to use a field from a document to influence the score. It’s similar to
+        ///     using the script_score function, however, it avoids the overhead of scripting. If used on a multi-valued field,
+        ///     only the first value of the field is used in calculations.
+        ///     Keep in mind that taking the log() of 0, or the square root of a negative number is an illegal operation, and an
+        ///     exception will be thrown. Be sure to limit the values of the field with a range filter to avoid this, or use log1p
+        ///     and ln1p.
         /// </summary>
         public FieldValueFactorFunction(string field)
         {
@@ -20,7 +24,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         }
 
         /// <summary>
-        ///     Optional factor to multiply the field value with, defaults to 1. 
+        ///     Optional factor to multiply the field value with, defaults to 1.
         /// </summary>
         public double Factor
         {
@@ -33,7 +37,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         }
 
         /// <summary>
-        ///     modifier Modifier to apply to the field value, can be one of: none, log, log1p, log2p, ln, ln1p, ln2p, square, sqrt, or reciprocal. Defaults to none. 
+        ///     modifier Modifier to apply to the field value, can be one of: none, log, log1p, log2p, ln, ln1p, ln2p, square,
+        ///     sqrt, or reciprocal. Defaults to none.
         /// </summary>
         public FieldValueFactorModifier Modifier
         {

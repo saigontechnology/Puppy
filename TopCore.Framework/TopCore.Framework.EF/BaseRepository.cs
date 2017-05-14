@@ -19,12 +19,12 @@
 
 #endregion License
 
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using TopCore.Framework.EF.Interfaces;
 
 namespace TopCore.Framework.EF
@@ -68,7 +68,8 @@ namespace TopCore.Framework.EF
             return predicate == null ? query : query.Where(predicate);
         }
 
-        public virtual T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+        public virtual T GetSingle(Expression<Func<T, bool>> predicate,
+            params Expression<Func<T, object>>[] includeProperties)
         {
             return Get(predicate, includeProperties).FirstOrDefault();
         }
@@ -86,7 +87,7 @@ namespace TopCore.Framework.EF
             if (changedProperties != null && changedProperties.Any())
                 foreach (var property in changedProperties)
                 {
-                    var expression = (MemberExpression)property.Body;
+                    var expression = (MemberExpression) property.Body;
                     var name = expression.Member.Name;
 
                     _baseDbContext.Entry(entity).Property(property).IsModified = true;

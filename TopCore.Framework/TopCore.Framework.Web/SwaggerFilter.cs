@@ -19,12 +19,12 @@
 
 #endregion License
 
-using System;
-using System.Linq;
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace TopCore.Framework.Web
 {
@@ -38,23 +38,23 @@ namespace TopCore.Framework.Web
         public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
         {
             foreach (var apiDescriptionGroup in context.ApiDescriptionsGroups.Items)
-                foreach (var apiDescription in apiDescriptionGroup.Items)
+            foreach (var apiDescription in apiDescriptionGroup.Items)
+            {
+                var controllerActionDescriptor = apiDescription.ActionDescriptor as ControllerActionDescriptor;
+                if (controllerActionDescriptor != null)
                 {
-                    var controllerActionDescriptor = apiDescription.ActionDescriptor as ControllerActionDescriptor;
-                    if (controllerActionDescriptor != null)
-                    {
-                        var isHideInDocAttributeInType = controllerActionDescriptor.ControllerTypeInfo
-                            .GetCustomAttributes<HideInDocsAttribute>(true)
-                            .Any();
-                        var isHideInDocAttributeInMethod = controllerActionDescriptor.MethodInfo
-                            .GetCustomAttributes<HideInDocsAttribute>(true)
-                            .Any();
+                    var isHideInDocAttributeInType = controllerActionDescriptor.ControllerTypeInfo
+                        .GetCustomAttributes<HideInDocsAttribute>(true)
+                        .Any();
+                    var isHideInDocAttributeInMethod = controllerActionDescriptor.MethodInfo
+                        .GetCustomAttributes<HideInDocsAttribute>(true)
+                        .Any();
 
-                        if (!isHideInDocAttributeInType && !isHideInDocAttributeInMethod) continue;
-                        var route = "/" + controllerActionDescriptor.AttributeRouteInfo.Template.TrimEnd('/');
-                        swaggerDoc.Paths.Remove(route);
-                    }
+                    if (!isHideInDocAttributeInType && !isHideInDocAttributeInMethod) continue;
+                    var route = "/" + controllerActionDescriptor.AttributeRouteInfo.Template.TrimEnd('/');
+                    swaggerDoc.Paths.Remove(route);
                 }
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.MappingModel;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel;
@@ -44,7 +44,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
                 indexDefinition = new IndexDefinition();
             _traceProvider.Trace(TraceEventType.Verbose, "{0}: CreateIndexWithMappingAsync Elastic started",
                 "ElasticContextIndexMapping");
-            var resultDetails = new ResultDetails<string> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<string> {Status = HttpStatusCode.InternalServerError};
 
             try
             {
@@ -99,7 +99,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             if (string.IsNullOrEmpty(index))
                 throw new ElasticException("CreateIndexAsync: index is required");
             if (indexSettings == null)
-                indexSettings = new IndexSettings { NumberOfShards = 5, NumberOfReplicas = 1 };
+                indexSettings = new IndexSettings {NumberOfShards = 5, NumberOfReplicas = 1};
             if (indexAliases == null)
                 indexAliases = new IndexAliases();
 
@@ -108,7 +108,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
 
             _traceProvider.Trace(TraceEventType.Verbose, "{0}: CreateIndexAsync Elastic started",
                 "ElasticContextIndexMapping");
-            var resultDetails = new ResultDetails<string> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<string> {Status = HttpStatusCode.InternalServerError};
 
             try
             {
@@ -143,7 +143,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
                     "CreateTypeMappingForIndexAsync: A mapping definition with the parent index is required");
             _traceProvider.Trace(TraceEventType.Verbose, "{0}: CreateTypeMappingForIndex Elastic started",
                 "ElasticContextIndexMapping");
-            var resultDetails = new ResultDetails<string> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<string> {Status = HttpStatusCode.InternalServerError};
 
             try
             {
@@ -194,7 +194,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         {
             _traceProvider.Trace(TraceEventType.Verbose, "{0}: UpdateIndexSettingsAsync Elastic started",
                 "ElasticContextIndexMapping");
-            var resultDetails = new ResultDetails<string> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<string> {Status = HttpStatusCode.InternalServerError};
 
             try
             {
@@ -265,7 +265,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
             _traceProvider.Trace(TraceEventType.Verbose, "IndexOptimizeAsync Request POST with url: {0}",
                 uri.ToString());
 
-            var resultDetails = new ResultDetails<OptimizeResult> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<OptimizeResult> {Status = HttpStatusCode.InternalServerError};
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -311,7 +311,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         {
             _traceProvider.Trace(TraceEventType.Verbose, "CloseOpenIndexAsync Request POST with url: {0}",
                 uri.ToString());
-            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
+            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, uri);

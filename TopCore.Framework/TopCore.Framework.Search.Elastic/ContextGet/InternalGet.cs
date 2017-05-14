@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TopCore.Framework.Search.Elastic.Model;
 using TopCore.Framework.Search.Elastic.Tracing;
 using TopCore.Framework.Search.Elastic.Utils;

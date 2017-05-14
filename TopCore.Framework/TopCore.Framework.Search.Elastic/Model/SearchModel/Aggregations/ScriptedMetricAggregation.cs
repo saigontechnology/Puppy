@@ -4,7 +4,8 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
 {
     /// <summary>
-    ///     map_script Executed once per document collected. This is the only required script. If no combine_script is specified, the resulting state needs to be stored in an object named _agg. 
+    ///     map_script Executed once per document collected. This is the only required script. If no combine_script is
+    ///     specified, the resulting state needs to be stored in an object named _agg.
     /// </summary>
     public class ScriptedMetricAggregation : IAggs
     {
@@ -56,7 +57,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     init_script Executed prior to any collection of documents. Allows the aggregation to set up any initial state. 
+        ///     init_script Executed prior to any collection of documents. Allows the aggregation to set up any initial state.
         /// </summary>
         public string InitScript
         {
@@ -69,7 +70,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     combine_script Executed once on each shard after document collection is complete. Allows the aggregation to consolidate the state returned from each shard. If a combine_script is not provided the combine phase will return the aggregation variable. 
+        ///     combine_script Executed once on each shard after document collection is complete. Allows the aggregation to
+        ///     consolidate the state returned from each shard. If a combine_script is not provided the combine phase will return
+        ///     the aggregation variable.
         /// </summary>
         public string CombineScript
         {
@@ -82,7 +85,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     reduce_script Executed once on the coordinating node after all shards have returned their results. The script is provided with access to a variable _aggs which is an array of the result of the combine_script on each shard. If a reduce_script is not provided the reduce phase will
+        ///     reduce_script Executed once on the coordinating node after all shards have returned their results. The script is
+        ///     provided with access to a variable _aggs which is an array of the result of the combine_script on each shard. If a
+        ///     reduce_script is not provided the reduce phase will
         ///     return the _aggs variable.
         /// </summary>
         public string ReduceScript
@@ -96,7 +101,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     reduce_params Optional. An object whose contents will be passed as variables to the reduce_script. This can be useful to allow the user to control the behavior of the reduce phase. If this is not specified the variable will be undefined in the reduce_script execution. 
+        ///     reduce_params Optional. An object whose contents will be passed as variables to the reduce_script. This can be
+        ///     useful to allow the user to control the behavior of the reduce phase. If this is not specified the variable will be
+        ///     undefined in the reduce_script execution.
         /// </summary>
         public ParamsForScript ReduceParams
         {
@@ -109,7 +116,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     lang Optional. The script language used for the scripts. If this is not specified the default scripting language is used. 
+        ///     lang Optional. The script language used for the scripts. If this is not specified the default scripting language is
+        ///     used.
         /// </summary>
         public string Lang
         {
@@ -122,7 +130,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     init_script_file Optional. Can be used in place of the init_script parameter to provide the script using in a file. 
+        ///     init_script_file Optional. Can be used in place of the init_script parameter to provide the script using in a file.
         /// </summary>
         public string InitScriptFile
         {
@@ -135,7 +143,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     init_script_id Optional. Can be used in place of the init_script parameter to provide the script using an indexed script. 
+        ///     init_script_id Optional. Can be used in place of the init_script parameter to provide the script using an indexed
+        ///     script.
         /// </summary>
         public string InitScriptId
         {
@@ -148,7 +157,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     map_script_file Optional. Can be used in place of the map_script parameter to provide the script using in a file. 
+        ///     map_script_file Optional. Can be used in place of the map_script parameter to provide the script using in a file.
         /// </summary>
         public string MapScriptFile
         {
@@ -161,7 +170,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     map_script_id Optional. Can be used in place of the map_script parameter to provide the script using an indexed script. 
+        ///     map_script_id Optional. Can be used in place of the map_script parameter to provide the script using an indexed
+        ///     script.
         /// </summary>
         public string MapScriptId
         {
@@ -174,7 +184,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     combine_script_file Optional. Can be used in place of the combine_script parameter to provide the script using in a file. 
+        ///     combine_script_file Optional. Can be used in place of the combine_script parameter to provide the script using in a
+        ///     file.
         /// </summary>
         public string CombineScriptFile
         {
@@ -187,7 +198,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     combine_script_id Optional. Can be used in place of the combine_script parameter to provide the script using an indexed script. 
+        ///     combine_script_id Optional. Can be used in place of the combine_script parameter to provide the script using an
+        ///     indexed script.
         /// </summary>
         public string CombineScriptId
         {
@@ -200,7 +212,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     reduce_script_file Optional. Can be used in place of the reduce_script parameter to provide the script using in a file. 
+        ///     reduce_script_file Optional. Can be used in place of the reduce_script parameter to provide the script using in a
+        ///     file.
         /// </summary>
         public string ReduceScriptFile
         {
@@ -213,7 +226,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///     reduce_script_id Optional. Can be used in place of the reduce_script parameter to provide the script using an indexed script. 
+        ///     reduce_script_id Optional. Can be used in place of the reduce_script parameter to provide the script using an
+        ///     indexed script.
         /// </summary>
         public string ReduceScriptId
         {

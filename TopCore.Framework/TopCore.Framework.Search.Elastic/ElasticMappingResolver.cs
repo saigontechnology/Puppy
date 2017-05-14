@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace TopCore.Framework.Search.Elastic
 {
     /// <summary>
-    ///     This class is used to add all register all the type definitions and then resolver them when requesting or handling response data from Elastic. If no mapping is defined, the default mapping is used. 
+    ///     This class is used to add all register all the type definitions and then resolver them when requesting or handling
+    ///     response data from Elastic. If no mapping is defined, the default mapping is used.
     /// </summary>
     public class ElasticMappingResolver : IElasticMappingResolver
     {
@@ -20,7 +21,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     You can add custom Type handlers here for specific mapping. Only one mapping can be defined pro type. 
+        ///     You can add custom Type handlers here for specific mapping. Only one mapping can be defined pro type.
         /// </summary>
         /// <param name="type">    Type of class </param>
         /// <param name="mapping"> mapping definition. </param>

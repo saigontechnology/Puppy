@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Buckets;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
@@ -10,13 +10,13 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
         //doc_count_error_upper_bound":0,"sum_other_doc_count":0
 
         /// <summary>
-        ///     doc_count_error_upper_bound 
+        ///     doc_count_error_upper_bound
         /// </summary>
         [JsonProperty("doc_count_error_upper_bound")]
         public int DocCountErrorUpperBound { get; set; }
 
         /// <summary>
-        ///     sum_other_doc_count 
+        ///     sum_other_doc_count
         /// </summary>
         [JsonProperty("sum_other_doc_count")]
         public int SumOtherDocCount { get; set; }

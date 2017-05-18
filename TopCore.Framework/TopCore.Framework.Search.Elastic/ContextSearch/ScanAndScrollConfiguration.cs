@@ -5,7 +5,7 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
     public class ScanAndScrollConfiguration
     {
         private readonly TimeUnit _lengthOfTime;
-        private readonly int _size = 50;
+        private readonly int _size;
 
         public ScanAndScrollConfiguration(TimeUnit lengthOfTime, int size)
         {

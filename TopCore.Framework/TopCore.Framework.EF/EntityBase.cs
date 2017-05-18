@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
+using Newtonsoft.Json;
 using TopCore.Framework.Core.DateTimeUtils;
 
 namespace TopCore.Framework.EF
@@ -46,44 +47,48 @@ namespace TopCore.Framework.EF
     /// </summary>
     /// <typeparam name="TId">Id type of this entity</typeparam>
     /// <typeparam name="TOwnerId">Id type of who do the action of entity (for tracking)</typeparam>
+    [JsonObject(MemberSerialization.OptOut)]
     public abstract class EntityBase<TId, TOwnerId> : IBaseEntity
     {
         [Key]
-        public TId Id { get; set; }
+        public virtual TId Id { get; set; }
 
-        public string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
+        public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
-        public DateTimeOffset CreatedTime { get; set; } = DateTime.UtcNow;
-
-        /// <summary>
-        /// For tracking
-        /// </summary>
-        public TOwnerId CreatedBy { get; set; }
-
-        public DateTimeOffset? LastUpdatedTime { get; set; }
+        public virtual DateTimeOffset CreatedTime { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// For tracking
         /// </summary>
-        public TOwnerId UpdatedBy { get; set; }
+        public virtual TOwnerId CreatedBy { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public DateTimeOffset? DeletedTime { get; set; }
+        public virtual DateTimeOffset? LastUpdatedTime { get; set; }
 
         /// <summary>
         /// For tracking
         /// </summary>
-        public TOwnerId DeletedBy { get; set; }
+        public virtual TOwnerId UpdatedBy { get; set; }
+
+        public virtual bool IsDeleted { get; set; }
+
+        public virtual DateTimeOffset? DeletedTime { get; set; }
+
+        /// <summary>
+        /// For tracking
+        /// </summary>
+        public virtual TOwnerId DeletedBy { get; set; }
 
         [Timestamp]
-        public byte[] Version { get; set; }
+        public virtual byte[] Version { get; set; }
     }
 
-    public abstract class EntityBase : EntityBase<int, int?>
+    [JsonObject(MemberSerialization.OptOut)]
+    public class EntityBase : EntityBase<int, int?>
     {
-        public new int? CreatedBy { get; set; } = null;
-        public new int? UpdatedBy { get; set; } = null;
-        public new int? DeletedBy { get; set; } = null;
+        public override int? CreatedBy { get; set; }
+
+        public override int? UpdatedBy { get; set; }
+
+        public override int? DeletedBy { get; set; }
     }
 }

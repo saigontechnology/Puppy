@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TopCore.Framework.Core
 {
@@ -33,6 +34,12 @@ namespace TopCore.Framework.Core
             foreach (var element in source)
                 if (seenKeys.Add(keySelector(element)))
                     yield return element;
+        }
+
+        public static IEnumerable<TSource> RemoveWhere<TSource>
+            (this IEnumerable<TSource> source, Predicate<TSource> predicate)
+        {
+            return source.Where(x => !predicate(x));
         }
     }
 }

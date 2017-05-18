@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes;
 using TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
@@ -50,7 +51,7 @@ namespace TopCore.Framework.Search.Elastic
                     GetDocumentType(entityInfo.Document.GetType()));
                 var propertyInfo = entityInfo.Document.GetType().GetProperties();
                 foreach (var prop in propertyInfo)
-                    if (prop.GetCustomAttribute(typeof(JsonIgnoreAttribute)) == null)
+                    if (prop.GetCustomAttribute(typeof(IgnoreDataMemberAttribute)) == null && prop.GetCustomAttribute(typeof(JsonIgnoreAttribute)) == null)
                         if (prop.GetCustomAttribute(typeof(ElasticGeoTypeAttribute)) != null)
                         {
                             var obj = prop.Name.ToLower();
@@ -68,7 +69,7 @@ namespace TopCore.Framework.Search.Elastic
                                 //#else
                                 var attrs = prop.GetCustomAttributes(typeof(ElasticCoreTypes), true);
 
-                                if (attrs.FirstOrDefault() as ElasticCoreTypes != null)
+                                if (attrs.FirstOrDefault() is ElasticCoreTypes)
                                 {
                                     elasticCrudJsonWriter.JsonWriter.WritePropertyName(obj);
                                     elasticCrudJsonWriter.JsonWriter.WriteRawValue(

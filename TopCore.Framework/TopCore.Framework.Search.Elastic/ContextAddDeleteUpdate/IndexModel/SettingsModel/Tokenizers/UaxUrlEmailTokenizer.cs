@@ -5,8 +5,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
     public class UaxUrlEmailTokenizer : BaseTokenizer
     {
         /// <summary>
-        ///     A tokenizer of type uax_url_email which works exactly like the standard tokenizer, but tokenizes emails and urls as
-        ///     single tokens.
+        ///   A tokenizer of type uax_url_email which works exactly like the standard tokenizer, but tokenizes emails and urls as single tokens. 
         /// </summary>
         /// <param name="name"> name of the custom tokenizer (ToLower() </param>
         public UaxUrlEmailTokenizer(string name)

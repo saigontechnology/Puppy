@@ -7,7 +7,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
     public class Fields
     {
         /// <summary>
-        ///     You can define all the Elastic properties here
+        ///   You can define all the Elastic properties here 
         /// </summary>
         public Type FieldClass { get; set; }
 

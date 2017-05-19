@@ -9,9 +9,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _preserveOriginalSet;
 
         /// <summary>
-        ///     A token filter of type asciifolding that converts alphabetic, numeric, and symbolic Unicode characters which are
-        ///     not in the first 127 ASCII characters (the "Basic Latin" Unicode block) into their ASCII equivalents, if one
-        ///     exists.
+        ///   A token filter of type asciifolding that converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127
+        ///   ASCII characters (the "Basic Latin" Unicode block) into their ASCII equivalents, if one exists.
         /// </summary>
         public AsciifoldingTokenFilter(string name)
         {
@@ -21,8 +20,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     Accepts preserve_original setting which defaults to false but if true will keep the original token as well as emit
-        ///     the folded token.
+        ///   Accepts preserve_original setting which defaults to false but if true will keep the original token as well as emit the folded token. 
         /// </summary>
         public bool PreserveOriginal
         {

@@ -32,7 +32,7 @@ namespace TopCore.Framework.Core.StringUtils
         public static Random Random = new Random();
 
         /// <summary>
-        ///     Generate Random String
+        ///   Generate Random String 
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
@@ -47,7 +47,7 @@ namespace TopCore.Framework.Core.StringUtils
         }
 
         /// <summary>
-        ///     Remove all diacritics (accents) in string
+        ///   Remove all diacritics (accents) in string 
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -70,27 +70,27 @@ namespace TopCore.Framework.Core.StringUtils
         }
 
         /// <summary>
-        ///     Normalize:
-        ///     <code>
+        ///   Normalize: 
+        ///   <code>
         ///   UPPER CASE
-        ///     </code>
-        ///     with
-        ///     <code>
+        ///   </code>
+        ///   with 
+        ///   <code>
         ///   remove all diacritic (accents)
-        ///     </code>
-        ///     in string
+        ///   </code>
+        ///   in string 
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         /// <remarks>
-        ///     Replace
-        ///     <code>
+        ///   Replace 
+        ///   <code>
         /// đ, Đ to D
-        ///     </code>
-        ///     . if value is is Null Or WhiteSpace will return
-        ///     <code>
+        ///   </code>
+        ///   . if value is is Null Or WhiteSpace will return 
+        ///   <code>
         /// string.Empty
-        ///     </code>
+        ///   </code>
         /// </remarks>
         public static string Normalize(string value)
         {
@@ -114,7 +114,7 @@ namespace TopCore.Framework.Core.StringUtils
         }
 
         /// <summary>
-        ///     Remove all tag html
+        ///   Remove all tag html 
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

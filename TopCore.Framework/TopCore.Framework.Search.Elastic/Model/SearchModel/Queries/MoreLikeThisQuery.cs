@@ -4,22 +4,17 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///     More like this query find documents that are "like" provided text by running it against one or more fields.
-    ///     Additionally, More Like This can find documents that are "like" a set of chosen documents. The syntax to specify
-    ///     one or more documents is similar to the Multi GET API, and supports
-    ///     the ids or docs array. If only one document is specified, the query behaves the same as the More Like This API.
-    ///     Under the hood, more_like_this simply creates multiple should clauses in a bool query of interesting terms
-    ///     extracted from some provided text. The interesting terms are selected
-    ///     with respect to their tf-idf scores. These are controlled by min_term_freq, min_doc_freq, and max_doc_freq. The
-    ///     number of interesting terms is controlled by max_query_terms. While the minimum number of clauses that must be
-    ///     satisfied is controlled by percent_terms_to_match. The terms are
-    ///     extracted from like_text which is analyzed by the analyzer associated with the field, unless specified by analyzer.
-    ///     There are other parameters, such as min_word_length, max_word_length or stop_words, to control what terms should be
-    ///     considered as interesting. In order to give more weight
-    ///     to more interesting terms, each boolean clause associated with a term could be boosted by the term tf-idf score
-    ///     times some boosting factor boost_terms. When a search for multiple docs is issued, More Like This generates a
-    ///     more_like_this query per document field in fields. These fields are
-    ///     specified as a top level parameter or within each doc.
+    ///   More like this query find documents that are "like" provided text by running it against one or more fields. Additionally, More Like This can
+    ///   find documents that are "like" a set of chosen documents. The syntax to specify one or more documents is similar to the Multi GET API, and
+    ///   supports the ids or docs array. If only one document is specified, the query behaves the same as the More Like This API. Under the hood,
+    ///   more_like_this simply creates multiple should clauses in a bool query of interesting terms extracted from some provided text. The interesting
+    ///   terms are selected with respect to their tf-idf scores. These are controlled by min_term_freq, min_doc_freq, and max_doc_freq. The number of
+    ///   interesting terms is controlled by max_query_terms. While the minimum number of clauses that must be satisfied is controlled by
+    ///   percent_terms_to_match. The terms are extracted from like_text which is analyzed by the analyzer associated with the field, unless specified
+    ///   by analyzer. There are other parameters, such as min_word_length, max_word_length or stop_words, to control what terms should be considered
+    ///   as interesting. In order to give more weight to more interesting terms, each boolean clause associated with a term could be boosted by the
+    ///   term tf-idf score times some boosting factor boost_terms. When a search for multiple docs is issued, More Like This generates a
+    ///   more_like_this query per document field in fields. These fields are specified as a top level parameter or within each doc.
     /// </summary>
     public class MoreLikeThisQuery : IQuery
     {
@@ -67,7 +62,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     like_text The text to find documents like it, required if ids or docs are not specified.
+        ///   like_text The text to find documents like it, required if ids or docs are not specified. 
         /// </summary>
         public string LikeText
         {
@@ -90,8 +85,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     include When using ids or docs, specifies whether the documents should be included from the search. Defaults to
-        ///     false.
+        ///   include When using ids or docs, specifies whether the documents should be included from the search. Defaults to false. 
         /// </summary>
         public bool Include
         {
@@ -104,8 +98,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     exclude When using ids or docs, specifies whether the documents should be excluded from the search. Defaults to
-        ///     true.
+        ///   exclude When using ids or docs, specifies whether the documents should be excluded from the search. Defaults to true. 
         /// </summary>
         public bool Exclude
         {
@@ -118,31 +111,24 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     minimum_should_match The minimum_should_match parameter possible values: Integer : Indicates a fixed value
-        ///     regardless of the number of optional clauses. Negative integer : Indicates that the total number of optional
-        ///     clauses, minus this number should be mandatory. Percentage 75% :
-        ///     Indicates that this percent of the total number of optional clauses are necessary. The number computed from the
-        ///     percentage is rounded down and used as the minimum. Negative percentage -25% Indicates that this percent of the
-        ///     total number of optional clauses can be missing. The number
-        ///     computed from the percentage is rounded down, before being subtracted from the total to determine the minimum.
-        ///     Combination : A positive integer, followed by the less-than symbol, followed by any of the previously mentioned
-        ///     specifiers is a conditional specification. It indicates that
-        ///     if the number of optional clauses is equal to (or less than) the integer, they are all required, but if it’s
-        ///     greater than the integer, the specification applies. In this example: if there are 1 to 3 clauses they are all
-        ///     required, but for 4 or more clauses only 90% are required.
-        ///     Multiple combinations : Multiple conditional specifications can be separated by spaces, each one only being valid
-        ///     for numbers greater than the one before it. In this example: if there are 1 or 2 clauses both are required, if
-        ///     there are 3-9 clauses all but 25% are required, and if there
-        ///     are more than 9 clauses, all but three are required. NOTE: When dealing with percentages, negative values can be
-        ///     used to get different behavior in edge cases. 75% and -25% mean the same thing when dealing with 4 clauses, but
-        ///     when dealing with 5 clauses 75% means 3 are required, but
-        ///     -25% means 4 are required. If the calculations based on the specification determine that no optional clauses are
-        ///     needed, the usual rules about BooleanQueries still apply at search time (a BooleanQuery containing no required
-        ///     clauses must still match at least one optional clause) No
-        ///     matter what number the calculation arrives at, a value greater than the number of optional clauses, or a value less
-        ///     than 1 will never be used. (ie: no matter how low or how high the result of the calculation result is, the minimum
-        ///     number of required matches will never be lower than 1
-        ///     or greater than the number of clauses.
+        ///   minimum_should_match The minimum_should_match parameter possible values: Integer : Indicates a fixed value regardless of the number of
+        ///   optional clauses. Negative integer : Indicates that the total number of optional clauses, minus this number should be mandatory.
+        ///   Percentage 75% : Indicates that this percent of the total number of optional clauses are necessary. The number computed from the
+        ///   percentage is rounded down and used as the minimum. Negative percentage -25% Indicates that this percent of the total number of optional
+        ///   clauses can be missing. The number computed from the percentage is rounded down, before being subtracted from the total to determine the
+        ///   minimum. Combination : A positive integer, followed by the less-than symbol, followed by any of the previously mentioned specifiers is a
+        ///   conditional specification. It indicates that if the number of optional clauses is equal to (or less than) the integer, they are all
+        ///   required, but if it’s greater than the integer, the specification applies. In this example: if there are 1 to 3 clauses they are all
+        ///   required, but for 4 or more clauses only 90% are required. Multiple combinations : Multiple conditional specifications can be separated
+        ///   by spaces, each one only being valid for numbers greater than the one before it. In this example: if there are 1 or 2 clauses both are
+        ///   required, if there are 3-9 clauses all but 25% are required, and if there are more than 9 clauses, all but three are required. NOTE: When
+        ///   dealing with percentages, negative values can be used to get different behavior in edge cases. 75% and -25% mean the same thing when
+        ///   dealing with 4 clauses, but when dealing with 5 clauses 75% means 3 are required, but
+        ///   -25% means 4 are required. If the calculations based on the specification determine that no optional clauses are needed, the usual rules
+        ///    about BooleanQueries still apply at search time (a BooleanQuery containing no required clauses must still match at least one optional
+        ///    clause) No matter what number the calculation arrives at, a value greater than the number of optional clauses, or a value less than 1
+        ///    will never be used. (ie: no matter how low or how high the result of the calculation result is, the minimum number of required matches
+        ///    will never be lower than 1 or greater than the number of clauses.
         /// </summary>
         public string MinimumShouldMatch
         {
@@ -155,7 +141,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     min_term_freq The frequency below which terms will be ignored in the source doc. The default frequency is 2.
+        ///   min_term_freq The frequency below which terms will be ignored in the source doc. The default frequency is 2. 
         /// </summary>
         public uint MinTermFreq
         {
@@ -168,7 +154,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     max_query_terms The maximum number of query terms that will be included in any generated query. Defaults to 25.
+        ///   max_query_terms The maximum number of query terms that will be included in any generated query. Defaults to 25. 
         /// </summary>
         public uint MaxQueryTerms
         {
@@ -181,8 +167,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     analyzer The analyzer can be set to control which analyzer will perform the analysis process on the text. It
-        ///     default to the field explicit mapping definition, or the default search analyzer, for example:
+        ///   analyzer The analyzer can be set to control which analyzer will perform the analysis process on the text. It default to the field
+        ///   explicit mapping definition, or the default search analyzer, for example:
         /// </summary>
         public string Analyzer
         {
@@ -205,10 +191,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     stop_words An array of stop words. Any word in this set is considered "uninteresting" and ignored. Even if your
-        ///     Analyzer allows stopwords, you might want to tell the MoreLikeThis code to ignore them, as for the purposes of
-        ///     document similarity it seems reasonable to assume that "a stop
-        ///     word is never interesting".
+        ///   stop_words An array of stop words. Any word in this set is considered "uninteresting" and ignored. Even if your Analyzer allows
+        ///   stopwords, you might want to tell the MoreLikeThis code to ignore them, as for the purposes of document similarity it seems reasonable to
+        ///   assume that "a stop word is never interesting".
         /// </summary>
         public List<string> StopWords
         {
@@ -221,8 +206,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     min_doc_freq The frequency at which words will be ignored which do not occur in at least this many docs. Defaults
-        ///     to 5.
+        ///   min_doc_freq The frequency at which words will be ignored which do not occur in at least this many docs. Defaults to 5. 
         /// </summary>
         public uint MinDocFreq
         {
@@ -235,8 +219,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     max_doc_freq The maximum frequency in which words may still appear. Words that appear in more than this many docs
-        ///     will be ignored. Defaults to unbounded.
+        ///   max_doc_freq The maximum frequency in which words may still appear. Words that appear in more than this many docs will be ignored.
+        ///   Defaults to unbounded.
         /// </summary>
         public uint MaxDocFreq
         {
@@ -249,8 +233,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     min_word_length The minimum word length below which words will be ignored. Defaults to 0.(Old name "min_word_len"
-        ///     is deprecated)
+        ///   min_word_length The minimum word length below which words will be ignored. Defaults to 0.(Old name "min_word_len" is deprecated) 
         /// </summary>
         public uint MinWordLength
         {
@@ -263,8 +246,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     max_word_length The maximum word length above which words will be ignored. Defaults to unbounded (0). (Old name
-        ///     "max_word_len" is deprecated)
+        ///   max_word_length The maximum word length above which words will be ignored. Defaults to unbounded (0). (Old name "max_word_len" is deprecated) 
         /// </summary>
         public uint MaxWordLength
         {
@@ -277,8 +259,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     boost_terms Sets the boost factor to use when boosting terms. Defaults to deactivated (0). Any other value
-        ///     activates boosting with given boost factor.
+        ///   boost_terms Sets the boost factor to use when boosting terms. Defaults to deactivated (0). Any other value activates boosting with given
+        ///   boost factor.
         /// </summary>
         public uint BoostTerms
         {

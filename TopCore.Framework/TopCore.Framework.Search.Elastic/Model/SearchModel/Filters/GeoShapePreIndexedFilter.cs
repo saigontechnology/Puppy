@@ -3,13 +3,13 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
     /// <summary>
-    ///     The Filter also supports using a shape which has already been indexed in another index and/or index type. This is
-    ///     particularly useful for when you have a pre-defined list of shapes which are useful to your application and you
-    ///     want to reference this using a logical name (for example New
-    ///     Zealand) rather than having to provide their coordinates each time. In this situation it is only necessary to
-    ///     provide: id - The ID of the document that containing the pre-indexed shape. index - Name of the index where the
-    ///     pre-indexed shape is. Defaults to shapes. type - Index type where
-    ///     the pre-indexed shape is. path - The field specified as path containing the pre-indexed shape. Defaults to shape.
+    ///   The Filter also supports using a shape which has already been indexed in another index and/or index type. This is particularly useful for
+    ///   when you have a pre-defined list of shapes which are useful to your application and you want to reference this using a logical name (for
+    ///   example New
+    ///   Zealand) rather than having to provide their coordinates each time. In this situation it is only necessary to
+    ///   provide: id - The ID of the document that containing the pre-indexed shape. index - Name of the index where the pre-indexed shape is.
+    ///            Defaults to shapes. type - Index type where the pre-indexed shape is. path - The field specified as path containing the pre-indexed
+    ///            shape. Defaults to shape.
     /// </summary>
     public class GeoShapePreIndexedFilter : IFilter
     {
@@ -21,22 +21,22 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///     id - The ID of the document that containing the pre-indexed shape.
+        ///   id - The ID of the document that containing the pre-indexed shape. 
         /// </summary>
         public object Id { get; set; }
 
         /// <summary>
-        ///     index - Name of the index where the pre-indexed shape is. Defaults to shapes.
+        ///   index - Name of the index where the pre-indexed shape is. Defaults to shapes. 
         /// </summary>
         public string Index { get; set; }
 
         /// <summary>
-        ///     type - Index type where the pre-indexed shape is.
+        ///   type - Index type where the pre-indexed shape is. 
         /// </summary>
         public string PreIndexedType { get; set; }
 
         /// <summary>
-        ///     path - The field specified as path containing the pre-indexed shape. Defaults to shape.
+        ///   path - The field specified as path containing the pre-indexed shape. Defaults to shape. 
         /// </summary>
         public string Path { get; set; }
 

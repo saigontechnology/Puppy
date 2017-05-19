@@ -10,8 +10,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _articlesSet;
 
         /// <summary>
-        ///     A token filter which removes elisions. For example, "l’avion" (the plane) will tokenized as "avion" (plane).
-        ///     Accepts articles setting which is a set of stop words articles.
+        ///   A token filter which removes elisions. For example, "l’avion" (the plane) will tokenized as "avion" (plane). Accepts articles setting
+        ///   which is a set of stop words articles.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public ElisionTokenFilter(string name)
@@ -22,7 +22,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     articles Accepts articles setting which is a set of stop words articles.
+        ///   articles Accepts articles setting which is a set of stop words articles. 
         /// </summary>
         public List<string> Articles
         {

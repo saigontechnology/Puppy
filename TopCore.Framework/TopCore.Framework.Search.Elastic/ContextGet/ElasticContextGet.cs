@@ -54,7 +54,7 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
         {
             _traceProvider.Trace(TraceEventType.Verbose, "{2}: Request for select document with id: {0}, Type: {1}",
                 entityId, typeof(T), "ElasticSearchContextGet");
-            var resultDetails = new ResultDetails<T> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<T> { Status = HttpStatusCode.InternalServerError };
             try
             {
                 var elasticSearchMapping = _elasticSerializerConfiguration.ElasticMappingResolver
@@ -96,7 +96,7 @@ namespace TopCore.Framework.Search.Elastic.ContextGet
                 {
                     var result = _elasticSerializerConfiguration.ElasticMappingResolver
                         .GetElasticSearchMapping(typeof(T)).ParseEntity(source, typeof(T));
-                    resultDetails.PayloadResult = (T) result;
+                    resultDetails.PayloadResult = (T)result;
                 }
 
                 return resultDetails;

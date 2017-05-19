@@ -17,7 +17,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         private bool _similaritySet;
 
         /// <summary>
-        ///     "similarity":"BM25"
+        ///   "similarity":"BM25" 
         /// </summary>
         public virtual string Similarity
         {
@@ -79,7 +79,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
             }
             if (_fieldsSet)
             {
-                var fields = new Fields {FieldClass = _fields};
+                var fields = new Fields { FieldClass = _fields };
                 fields.AddFieldData(elasticCrudJsonWriter);
             }
         }

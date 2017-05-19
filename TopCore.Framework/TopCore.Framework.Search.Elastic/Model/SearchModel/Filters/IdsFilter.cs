@@ -4,8 +4,8 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
     /// <summary>
-    ///     Filters documents that only have the provided ids. Note, this filter does not require the _id field to be indexed
-    ///     since it works using the _uid field.
+    ///   Filters documents that only have the provided ids. Note, this filter does not require the _id field to be indexed since it works using the
+    ///   _uid field.
     /// </summary>
     public class IdsFilter : IFilter
     {

@@ -20,7 +20,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     lowercase Should terms be lowercased or not. Defaults to true.
+        ///   lowercase Should terms be lowercased or not. Defaults to true. 
         /// </summary>
         public bool Lowercase
         {
@@ -33,7 +33,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     pattern The regular expression pattern, defaults to \W+.
+        ///   pattern The regular expression pattern, defaults to \W+. 
         /// </summary>
         public string Pattern
         {
@@ -46,9 +46,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     flags The regular expression flags.
-        ///     IMPORTANT: The regular expression should match the token separators, not the tokens themselves. Flags should be
-        ///     pipe-separated, eg "CASE_INSENSITIVE|COMMENTS". Check Java Pattern API for more details about flags options.
+        ///   flags The regular expression flags.
+        ///   IMPORTANT: The regular expression should match the token separators, not the tokens themselves. Flags should be pipe-separated, eg
+        ///              "CASE_INSENSITIVE|COMMENTS". Check Java Pattern API for more details about flags options.
         /// </summary>
         public string Flags
         {

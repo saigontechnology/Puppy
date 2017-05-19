@@ -11,7 +11,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _bufferSizeSet;
 
         /// <summary>
-        ///     A tokenizer of type keyword that emits the entire input as a single output.
+        ///   A tokenizer of type keyword that emits the entire input as a single output. 
         /// </summary>
         /// <param name="name"> Name for the custom tokenizer </param>
         public KeywordTokenizer(string name)
@@ -22,7 +22,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to 255.
+        ///   The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to 255. 
         /// </summary>
         public int BufferSize
         {

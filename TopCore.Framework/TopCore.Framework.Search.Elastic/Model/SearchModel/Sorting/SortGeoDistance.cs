@@ -33,8 +33,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
         public OrderEnum Order { get; set; }
 
         /// <summary>
-        ///     mode Elastic supports sorting by array or multi-valued fields. The mode option controls what array value is picked
-        ///     for sorting the document it belongs to. The mode option can have the following values: SortMode enum: min, max, avg
+        ///   mode Elastic supports sorting by array or multi-valued fields. The mode option controls what array value is picked for sorting the
+        ///   document it belongs to. The mode option can have the following values: SortMode enum: min, max, avg
         /// </summary>
         public SortModeGeo Mode
         {
@@ -99,17 +99,17 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
     public enum SortModeGeo
     {
         /// <summary>
-        ///     Pick the lowest value.
+        ///   Pick the lowest value. 
         /// </summary>
         min,
 
         /// <summary>
-        ///     Pick the highest value.
+        ///   Pick the highest value. 
         /// </summary>
         max,
 
         /// <summary>
-        ///     Use the average of all values as sort value. Only applicable for number based array fields.
+        ///   Use the average of all values as sort value. Only applicable for number based array fields. 
         /// </summary>
         avg
     }

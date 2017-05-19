@@ -13,7 +13,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _tokenCharsSet;
 
         /// <summary>
-        ///     min_gram Minimum size in codepoints of a single n-gram
+        ///   min_gram Minimum size in codepoints of a single n-gram 
         /// </summary>
         public int MinGram
         {
@@ -26,7 +26,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     max_gram Maximum size in codepoints of a single n-gram
+        ///   max_gram Maximum size in codepoints of a single n-gram 
         /// </summary>
         public int MaxGram
         {
@@ -39,10 +39,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     token_chars Characters classes to keep in the tokens, Elastic will split on characters that don’t belong to any of
-        ///     these classes. [] (Keep all characters) token_chars accepts the following character classes: letter for example a,
-        ///     b, ï or 京 digit for example 3 or 7 whitespace for
-        ///     example " " or "\n" punctuation for example ! or " symbol for example $ or √
+        ///   token_chars Characters classes to keep in the tokens, Elastic will split on characters that don’t belong to any of these classes. []
+        ///   (Keep all characters) token_chars accepts the following character classes: letter for example a, b, ï or 京 digit for example 3 or 7
+        ///   whitespace for example " " or "\n" punctuation for example ! or " symbol for example $ or √
         /// </summary>
         public List<TokenChar> TokenChars
         {

@@ -46,7 +46,7 @@ namespace TopCore.Framework.DependencyInjection
         public List<AssemblyName> ListLoadedAssemblyName { get; } = new List<AssemblyName>();
 
         /// <summary>
-        ///     Load an assembly, if the assembly already loaded then return null
+        ///   Load an assembly, if the assembly already loaded then return null 
         /// </summary>
         /// <param name="assemblyName"></param>
         /// <returns></returns>

@@ -15,14 +15,14 @@ namespace TopCore.Framework.Search.Elastic
         {
             Stringbuilder = new StringBuilder();
             JsonWriter =
-                new JsonTextWriter(new StringWriter(Stringbuilder, CultureInfo.InvariantCulture)) {CloseOutput = true};
+                new JsonTextWriter(new StringWriter(Stringbuilder, CultureInfo.InvariantCulture)) { CloseOutput = true };
         }
 
         public ElasticJsonWriter(StringBuilder stringbuilder)
         {
             Stringbuilder = stringbuilder;
             JsonWriter = JsonWriter =
-                new JsonTextWriter(new StringWriter(Stringbuilder, CultureInfo.InvariantCulture)) {CloseOutput = true};
+                new JsonTextWriter(new StringWriter(Stringbuilder, CultureInfo.InvariantCulture)) { CloseOutput = true };
         }
 
         public ElasticJsonWriter ElasticJsonWriterChildItem { get; set; }
@@ -44,7 +44,7 @@ namespace TopCore.Framework.Search.Elastic
         public string GetJsonString()
         {
             var sb = new StringBuilder();
-            var jsonString = new List<string> {Stringbuilder.ToString()};
+            var jsonString = new List<string> { Stringbuilder.ToString() };
 
             AppendDataToTrace(ElasticJsonWriterChildItem, jsonString);
 

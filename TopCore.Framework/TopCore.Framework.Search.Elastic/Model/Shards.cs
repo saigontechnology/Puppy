@@ -3,7 +3,7 @@
 namespace TopCore.Framework.Search.Elastic.Model
 {
     /// <summary>
-    ///     "_shards":{"total":5,"successful":5,"failed":0}
+    ///   "_shards":{"total":5,"successful":5,"failed":0} 
     /// </summary>
     public class Shards
     {

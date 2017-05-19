@@ -51,10 +51,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
                 if (_saveChangesAndInitMappingsForChildDocuments)
                     _indexMappings.CreateIndexSettingsAndMappingsForDocument(
                         index,
-                        new IndexSettings {NumberOfShards = 5, NumberOfReplicas = 1},
+                        new IndexSettings { NumberOfShards = 5, NumberOfReplicas = 1 },
                         new IndexAliases(),
                         new IndexWarmers(),
-                        entity, new MappingDefinition {Index = index});
+                        entity, new MappingDefinition { Index = index });
 
                 if (entity.DeleteDocument)
                     DeleteEntity(entity);

@@ -15,11 +15,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _longestOnlySet;
 
         /// <summary>
-        ///     Basic support for hunspell stemming. Hunspell dictionaries will be picked up from a dedicated hunspell directory on
-        ///     the filesystem (defaults to path.conf/hunspell). Each dictionary is expected to have its own directory named after
-        ///     its associated locale (language). This dictionary
-        ///     directory is expected to hold a single *.aff and one or more
-        ///     *.dic files (all of which will automatically be picked up).
+        ///   Basic support for hunspell stemming. Hunspell dictionaries will be picked up from a dedicated hunspell directory on the filesystem
+        ///   (defaults to path.conf/hunspell). Each dictionary is expected to have its own directory named after its associated locale (language).
+        ///   This dictionary directory is expected to hold a single *.aff and one or more
+        ///   *.dic files (all of which will automatically be picked up).
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public HunspellTokenFilter(string name)
@@ -30,8 +29,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     locale A locale for this filter. If this is unset, the lang or language are used instead - so one of these has to
-        ///     be set.
+        ///   locale A locale for this filter. If this is unset, the lang or language are used instead - so one of these has to be set. 
         /// </summary>
         public string Locale
         {
@@ -44,8 +42,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     dictionary The name of a dictionary. The path to your hunspell dictionaries should be configured via
-        ///     indices.analysis.hunspell.dictionary.location before.
+        ///   dictionary The name of a dictionary. The path to your hunspell dictionaries should be configured via
+        ///   indices.analysis.hunspell.dictionary.location before.
         /// </summary>
         public string Dictionary
         {
@@ -58,7 +56,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     dedup If only unique terms should be returned, this needs to be set to true. Defaults to true.
+        ///   dedup If only unique terms should be returned, this needs to be set to true. Defaults to true. 
         /// </summary>
         public bool Dedup
         {
@@ -71,8 +69,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     longest_only If only the longest term should be returned, set this to true. Defaults to false: all possible stems
-        ///     are returned.
+        ///   longest_only If only the longest term should be returned, set this to true. Defaults to false: all possible stems are returned. 
         /// </summary>
         public bool LongestOnly
         {

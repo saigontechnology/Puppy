@@ -53,7 +53,7 @@ namespace TopCore.Framework.EF.Mapping
 
                 // Create the mapping type and do the mapping
                 var mapper = Activator.CreateInstance(mappingType);
-                mapper.GetType().GetMethod("Map").Invoke(mapper, new[] {entityBuilder});
+                mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
             }
         }
     }

@@ -12,8 +12,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _mappingsSet;
 
         /// <summary>
-        ///     A char filter of type mapping replacing characters of an analyzed text with given mapping. "char_filter" : {
-        ///     "my_mapping" : { "type" : "mapping", "mappings" : ["ph=&gt;f", "qu=&gt;k"] } },
+        ///   A char filter of type mapping replacing characters of an analyzed text with given mapping. "char_filter" : { "my_mapping" : { "type" :
+        ///   "mapping", "mappings" : ["ph=&gt;f", "qu=&gt;k"] } },
         /// </summary>
         /// <param name="name"> name for the custom mapping char filter </param>
         public MappingCharFilter(string name)
@@ -24,7 +24,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     mappings
+        ///   mappings 
         /// </summary>
         public List<string> Mappings
         {
@@ -37,7 +37,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     mappings_path
+        ///   mappings_path 
         /// </summary>
         public string MappingsPath
         {

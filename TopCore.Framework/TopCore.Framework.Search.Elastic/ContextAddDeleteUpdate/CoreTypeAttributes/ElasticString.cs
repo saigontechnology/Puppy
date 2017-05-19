@@ -41,7 +41,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         private bool _termVectorSet;
 
         /// <summary>
-        ///     index_name The name of the field that will be stored in the index. Defaults to the property/field name.
+        ///   index_name The name of the field that will be stored in the index. Defaults to the property/field name. 
         /// </summary>
         public virtual string IndexName
         {
@@ -54,8 +54,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     store Set to true to actually store the field in the index, false to not store it. Defaults to false (note, the
-        ///     JSON document itself is stored, and it can be retrieved from it).
+        ///   store Set to true to actually store the field in the index, false to not store it. Defaults to false (note, the JSON document itself is
+        ///   stored, and it can be retrieved from it).
         /// </summary>
         public virtual bool Store
         {
@@ -68,11 +68,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     index Set to analyzed for the field to be indexed and searchable after being broken down into token using an
-        ///     analyzer. not_analyzed means that its still searchable, but does not go through any analysis process or broken down
-        ///     into tokens. no means that it won’t be searchable at all (as
-        ///     an individual field; it may still be included in _all). Setting to no disables include_in_all. Defaults to
-        ///     analyzed.
+        ///   index Set to analyzed for the field to be indexed and searchable after being broken down into token using an analyzer. not_analyzed means
+        ///   that its still searchable, but does not go through any analysis process or broken down into tokens. no means that it won’t be searchable
+        ///   at all (as an individual field; it may still be included in _all). Setting to no disables include_in_all. Defaults to analyzed.
         /// </summary>
         public virtual StringIndex Index
         {
@@ -85,8 +83,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     doc_values Set to true to store field values in a column-stride fashion. Automatically set to true when the
-        ///     fielddata format is doc_values.
+        ///   doc_values Set to true to store field values in a column-stride fashion. Automatically set to true when the fielddata format is doc_values. 
         /// </summary>
         public virtual bool DocValues
         {
@@ -99,7 +96,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     term_vector Possible values are no, yes, with_offsets, with_positions, with_positions_offsets. Defaults to no.
+        ///   term_vector Possible values are no, yes, with_offsets, with_positions, with_positions_offsets. Defaults to no. 
         /// </summary>
         public virtual TermVector TermVector
         {
@@ -112,7 +109,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     boost The boost value. Defaults to 1.0.
+        ///   boost The boost value. Defaults to 1.0. 
         /// </summary>
         public virtual double Boost
         {
@@ -125,8 +122,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     null_value When there is a (JSON) null value for the field, use the null_value as the field value. Defaults to not
-        ///     adding the field at all.
+        ///   null_value When there is a (JSON) null value for the field, use the null_value as the field value. Defaults to not adding the field at all.
         /// </summary>
         public virtual object NullValue
         {
@@ -139,8 +135,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     norms: {enabled: value} Boolean value if norms should be enabled or not. Defaults to true for analyzed fields, and
-        ///     to false for not_analyzed fields. See the section about norms.
+        ///   norms: {enabled: value} Boolean value if norms should be enabled or not. Defaults to true for analyzed fields, and to false for
+        ///          not_analyzed fields. See the section about norms.
         /// </summary>
         public virtual bool NormsEnabled
         {
@@ -153,9 +149,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     norms: {loading: value} Describes how norms should be loaded, possible values are eager and lazy (default). It is
-        ///     possible to change the default value to eager for all fields by configuring the index setting index.norms.loading
-        ///     to eager.
+        ///   norms: {loading: value} Describes how norms should be loaded, possible values are eager and lazy (default). It is possible to change the
+        ///          default value to eager for all fields by configuring the index setting index.norms.loading to eager.
         /// </summary>
         public virtual NormsLoading NormsLoading
         {
@@ -168,10 +163,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     index_options Allows to set the indexing options, possible values are docs (only doc numbers are indexed), freqs
-        ///     (doc numbers and term frequencies), and positions (doc numbers, term frequencies and positions). Defaults to
-        ///     positions for analyzed fields, and to docs for not_analyzed
-        ///     fields. It is also possible to set it to offsets (doc numbers, term frequencies, positions and offsets).
+        ///   index_options Allows to set the indexing options, possible values are docs (only doc numbers are indexed), freqs (doc numbers and term
+        ///   frequencies), and positions (doc numbers, term frequencies and positions). Defaults to positions for analyzed fields, and to docs for
+        ///   not_analyzed fields. It is also possible to set it to offsets (doc numbers, term frequencies, positions and offsets).
         /// </summary>
         public virtual IndexOptions IndexOptions
         {
@@ -184,8 +178,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     analyzer The analyzer used to analyze the text contents when analyzed during indexing and when searching using a
-        ///     query string. Defaults to the globally configured analyzer.
+        ///   analyzer The analyzer used to analyze the text contents when analyzed during indexing and when searching using a query string. Defaults
+        ///   to the globally configured analyzer.
         /// </summary>
         public virtual string Analyzer
         {
@@ -198,7 +192,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     index_analyzer The analyzer used to analyze the text contents when analyzed during indexing.
+        ///   index_analyzer The analyzer used to analyze the text contents when analyzed during indexing. 
         /// </summary>
         public virtual string IndexAnalyzer
         {
@@ -211,8 +205,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     search_analyzer The analyzer used to analyze the field when part of a query string. Can be updated on an existing
-        ///     field.
+        ///   search_analyzer The analyzer used to analyze the field when part of a query string. Can be updated on an existing field. 
         /// </summary>
         public virtual string SearchAnalyzer
         {
@@ -225,8 +218,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     include_in_all Should the field be included in the _all field (if enabled). If index is set to no this defaults to
-        ///     false, otherwise, defaults to true or to the parent object type setting.
+        ///   include_in_all Should the field be included in the _all field (if enabled). If index is set to no this defaults to false, otherwise,
+        ///   defaults to true or to the parent object type setting.
         /// </summary>
         public virtual bool IncludeInAll
         {
@@ -239,8 +232,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     ignore_above The analyzer will ignore strings larger than this size. Useful for generic not_analyzed fields that
-        ///     should ignore long text.
+        ///   ignore_above The analyzer will ignore strings larger than this size. Useful for generic not_analyzed fields that should ignore long text. 
         /// </summary>
         public virtual string IgnoreAbove
         {
@@ -253,7 +245,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     position_offset_gap Position increment gap between field instances with the same field name. Defaults to 0.
+        ///   position_offset_gap Position increment gap between field instances with the same field name. Defaults to 0. 
         /// </summary>
         public virtual long PositionOffsetGap
         {

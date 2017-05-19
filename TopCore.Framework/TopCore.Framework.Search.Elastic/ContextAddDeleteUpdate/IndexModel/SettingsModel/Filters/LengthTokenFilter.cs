@@ -11,7 +11,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _minSet;
 
         /// <summary>
-        ///     A token filter of type length that removes words that are too long or too short for the stream.
+        ///   A token filter of type length that removes words that are too long or too short for the stream. 
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public LengthTokenFilter(string name)

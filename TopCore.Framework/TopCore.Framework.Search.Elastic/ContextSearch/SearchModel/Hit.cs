@@ -26,7 +26,7 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
         public Dictionary<string, IEnumerable<string>> Highlights { get; set; }
 
         /// <summary>
-        ///     This can be used for inner_hits or nested data which is added to the hit result
+        ///   This can be used for inner_hits or nested data which is added to the hit result 
         /// </summary>
         [JsonExtensionData]
         public Dictionary<string, JToken> ExtensionData { get; set; }

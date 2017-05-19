@@ -16,8 +16,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     max_token_length The maximum token length. If a token is seen that exceeds this length then it is discarded.
-        ///     Defaults to 255.
+        ///   max_token_length The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to 255. 
         /// </summary>
         public int MaxTokenLength
         {

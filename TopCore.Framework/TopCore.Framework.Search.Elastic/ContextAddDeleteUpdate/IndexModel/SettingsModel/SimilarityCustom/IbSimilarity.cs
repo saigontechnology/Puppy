@@ -14,8 +14,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _normalizationSet;
 
         /// <summary>
-        ///     nformation based model
-        ///     http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/IBSimilarity.html
+        ///   nformation based model http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/IBSimilarity.html 
         /// </summary>
         /// <param name="name"></param>
         public IbSimilarity(string name)
@@ -26,7 +25,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     distribution Possible values: ll and spl.
+        ///   distribution Possible values: ll and spl. 
         /// </summary>
         public IbDistribution Distribution
         {
@@ -39,7 +38,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     lambda Possible values: df and ttf.
+        ///   lambda Possible values: df and ttf. 
         /// </summary>
         public IbLambda Lambda
         {
@@ -52,7 +51,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     normalization Possible values: no, h1, h2, h3 and z.
+        ///   normalization Possible values: no, h1, h2, h3 and z. 
         /// </summary>
         public DfrIbNormalization Normalization
         {

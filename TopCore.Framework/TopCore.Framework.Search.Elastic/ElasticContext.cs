@@ -28,7 +28,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic
 {
     /// <summary>
-    ///     Context for crud operations.
+    ///   Context for crud operations. 
     /// </summary>
     public class ElasticContext : IDisposable
     {
@@ -52,17 +52,16 @@ namespace TopCore.Framework.Search.Elastic
         private SearchRequest _searchRequest;
 
         /// <summary>
-        ///     TraceProvider for all logs, trace etc. This can be replaced with any TraceProvider implementation.
+        ///   TraceProvider for all logs, trace etc. This can be replaced with any TraceProvider implementation. 
         /// </summary>
         private ITraceProvider _traceProvider = new NullTraceProvider();
 
         /// <summary>
-        ///     ctor
+        ///   ctor 
         /// </summary>
         /// <param name="connectionString">               Connection string which is used as ther base URL for the HttpClient </param>
         /// <param name="elasticSerializerConfiguration">
-        ///     Configuration class for the context. The default settings can be oset
-        ///     here. This class contains an IElasticMappingResolver
+        ///   Configuration class for the context. The default settings can be oset here. This class contains an IElasticMappingResolver
         /// </param>
         /// <param name="credentials">                    Basic auth credentials for logging into the server. </param>
         public ElasticContext(string connectionString, ElasticSerializerConfiguration elasticSerializerConfiguration,
@@ -79,12 +78,11 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     ctor
+        ///   ctor 
         /// </summary>
         /// <param name="connectionString">       Connection string which is used as ther base URL for the HttpClient </param>
         /// <param name="elasticMappingResolver">
-        ///     Resolver used for getting the index and type of a document type. The default
-        ///     ElasticSerializerConfiguration is used in this ctor.
+        ///   Resolver used for getting the index and type of a document type. The default ElasticSerializerConfiguration is used in this ctor.
         /// </param>
         /// <param name="credentials">            Basic auth credentials for logging into the server. </param>
         public ElasticContext(string connectionString, IElasticMappingResolver elasticMappingResolver,
@@ -111,12 +109,12 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     This bool needs to be set to true if you want to delete an index. Per default this is false.
+        ///   This bool needs to be set to true if you want to delete an index. Per default this is false. 
         /// </summary>
         public bool AllowDeleteForIndex { get; set; }
 
         /// <summary>
-        ///     Dispose used to clean the HttpClient
+        ///   Dispose used to clean the HttpClient 
         /// </summary>
         public void Dispose()
         {
@@ -125,7 +123,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Sets the HttpClient Basic Auth header.
+        ///   Sets the HttpClient Basic Auth header. 
         /// </summary>
         /// <param name="credentials"> Basic auth credentials for logging into the server. </param>
         private void SetBasicAuthHeader(NetworkCredential credentials)
@@ -136,21 +134,20 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Adds a document to the pending changes list. Nor HTTP request is sent with this method. If the save changes is not
-        ///     called, the document is not added or updated in the search engine
+        ///   Adds a document to the pending changes list. Nor HTTP request is sent with this method. If the save changes is not called, the document
+        ///   is not added or updated in the search engine
         /// </summary>
         /// <param name="document">          Document to be added or updated </param>
         /// <param name="id">                document id </param>
         /// <param name="routingDefinition">
-        ///     parent id of the document. This is only used if the
-        ///     ElasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex property is set to true. The document is
-        ///     then saved with the parent routing. It will also be saved even if the parent does not exist.
+        ///   parent id of the document. This is only used if the ElasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex property is
+        ///   set to true. The document is then saved with the parent routing. It will also be saved even if the parent does not exist.
         /// </param>
         public void AddUpdateDocument(object document, object id, RoutingDefinition routingDefinition = null)
         {
             TraceProvider.Trace(TraceEventType.Verbose, "{2}: Adding document: {0}, {1} to pending list",
                 document.GetType().Name, id, "ElasticContext");
-            var data = new EntityContextInfo {Id = id, EntityType = document.GetType(), Document = document};
+            var data = new EntityContextInfo { Id = id, EntityType = document.GetType(), Document = document };
             if (routingDefinition != null)
                 data.RoutingDefinition = routingDefinition;
 
@@ -158,8 +155,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Adds a document to the pending changes list to be deletedd. Nor HTTP request is sent with this method. If the save
-        ///     changes is not called, the document is not added or updated in the search engine
+        ///   Adds a document to the pending changes list to be deletedd. Nor HTTP request is sent with this method. If the save changes is not called,
+        ///   the document is not added or updated in the search engine
         /// </summary>
         /// <typeparam name="T"> This type is used to get the index and type of the document </typeparam>
         /// <param name="id">                id of the document which will be deleted. </param>
@@ -182,9 +179,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Saves all the changes in the pending list of changes, add, update and delete. It also creates mappings and indexes
-        ///     if the child documents are saved as separate index types.
-        ///     ElasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex= true
+        ///   Saves all the changes in the pending list of changes, add, update and delete. It also creates mappings and indexes if the child documents
+        ///   are saved as separate index types. ElasticSerializerConfiguration.ProcessChildDocumentsAsSeparateChildIndex= true
         /// </summary>
         /// <returns> Returns HTTP response information </returns>
         public ResultDetails<string> SaveChangesAndInitMappings()
@@ -193,8 +189,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Saves all the changes in the pending list of changes, add, update and delete. No mappings are created here for
-        ///     child document types.
+        ///   Saves all the changes in the pending list of changes, add, update and delete. No mappings are created here for child document types. 
         /// </summary>
         /// <returns> Returns HTTP response information </returns>
         public ResultDetails<string> SaveChanges()
@@ -203,8 +198,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Saves all the changes in the pending list of changes, add, update and delete. No mappings are created here
-        ///     for child document types.
+        ///   async Saves all the changes in the pending list of changes, add, update and delete. No mappings are created here for child document types. 
         /// </summary>
         /// <returns> Returns HTTP response information </returns>
         public async Task<ResultDetails<string>> SaveChangesAsync()
@@ -213,10 +207,9 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     The optimize API allows to optimize one or more indices through an API. The optimize process basically optimizes
-        ///     the index for faster search operations (and relates to the number of segments a Lucene index holds within each
-        ///     shard). The optimize operation allows to reduce the number of
-        ///     segments by merging them.
+        ///   The optimize API allows to optimize one or more indices through an API. The optimize process basically optimizes the index for faster
+        ///   search operations (and relates to the number of segments a Lucene index holds within each shard). The optimize operation allows to reduce
+        ///   the number of segments by merging them.
         /// </summary>
         /// <param name="index">              index to optimize </param>
         /// <param name="optimizeParameters"> all the possible parameters </param>
@@ -228,10 +221,9 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async The optimize API allows to optimize one or more indices through an API. The optimize process basically
-        ///     optimizes the index for faster search operations (and relates to the number of segments a Lucene index holds within
-        ///     each shard). The optimize operation allows to reduce the
-        ///     number of segments by merging them.
+        ///   Async The optimize API allows to optimize one or more indices through an API. The optimize process basically optimizes the index for
+        ///   faster search operations (and relates to the number of segments a Lucene index holds within each shard). The optimize operation allows to
+        ///   reduce the number of segments by merging them.
         /// </summary>
         /// <param name="index">              index to optimize </param>
         /// <param name="optimizeParameters"> all the possible parameters </param>
@@ -243,10 +235,9 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no
-        ///     overhead on the cluster (except for maintaining its metadata), and is blocked for read/write operations. A closed
-        ///     index can be opened which will then go through the normal
-        ///     recovery process.
+        ///   The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no overhead on the cluster
+        ///   (except for maintaining its metadata), and is blocked for read/write operations. A closed index can be opened which will then go through
+        ///   the normal recovery process.
         /// </summary>
         /// <param name="index"> index to be closed </param>
         /// <returns> true ids successfuly </returns>
@@ -256,10 +247,9 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no
-        ///     overhead on the cluster (except for maintaining its metadata), and is blocked for read/write operations. A closed
-        ///     index can be opened which will then go through the
-        ///     normal recovery process.
+        ///   Async The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no overhead on the
+        ///   cluster (except for maintaining its metadata), and is blocked for read/write operations. A closed index can be opened which will then go
+        ///   through the normal recovery process.
         /// </summary>
         /// <param name="index"> index to be closed </param>
         /// <returns> true ids successfuly </returns>
@@ -269,10 +259,9 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no
-        ///     overhead on the cluster (except for maintaining its metadata), and is blocked for read/write operations. A closed
-        ///     index can be opened which will then go through the normal
-        ///     recovery process.
+        ///   The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no overhead on the cluster
+        ///   (except for maintaining its metadata), and is blocked for read/write operations. A closed index can be opened which will then go through
+        ///   the normal recovery process.
         /// </summary>
         /// <param name="index"> index to be opened </param>
         /// <returns> true ids successfuly </returns>
@@ -282,10 +271,9 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no
-        ///     overhead on the cluster (except for maintaining its metadata), and is blocked for read/write operations. A closed
-        ///     index can be opened which will then go through the
-        ///     normal recovery process.
+        ///   Async The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no overhead on the
+        ///   cluster (except for maintaining its metadata), and is blocked for read/write operations. A closed index can be opened which will then go
+        ///   through the normal recovery process.
         /// </summary>
         /// <param name="index"> index to be opened </param>
         /// <returns> true ids successfuly </returns>
@@ -295,7 +283,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Change specific index level settings in real time Can change a single index or global changes
+        ///   Change specific index level settings in real time Can change a single index or global changes 
         /// </summary>
         /// <param name="indexUpdateSettings"> index settings, see properties doc for details </param>
         /// <param name="index">               index to be updated, if null, updatesa all indices </param>
@@ -306,7 +294,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Change specific index level settings in real time Can change a single index or global changes
+        ///   Async Change specific index level settings in real time Can change a single index or global changes 
         /// </summary>
         /// <param name="indexUpdateSettings"> index settings, see properties doc for details </param>
         /// <param name="index">               index to be updated, if null, updatesa all indices </param>
@@ -318,7 +306,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates a new index
+        ///   Creates a new index 
         /// </summary>
         /// <param name="index">         index name to lower string! </param>
         /// <param name="indexSettings"> settings for the new index </param>
@@ -332,7 +320,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates a new index
+        ///   Async Creates a new index 
         /// </summary>
         /// <param name="index">         index name to lower string! </param>
         /// <param name="indexSettings"> settings for the new index </param>
@@ -346,8 +334,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates a new index from a Type and also all the property mappings and index definitions
-        ///     Note: Child objects cannot be an interface if the mapping should be created first.
+        ///   Creates a new index from a Type and also all the property mappings and index definitions
+        ///   Note: Child objects cannot be an interface if the mapping should be created first.
         /// </summary>
         /// <param name="indexDefinition"> settings for the new index </param>
         /// <returns> details </returns>
@@ -357,7 +345,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates a new index from a Type and also all the property mappings and index definitions
+        ///   Async Creates a new index from a Type and also all the property mappings and index definitions 
         /// </summary>
         /// <param name="indexDefinition"> settings for the new index </param>
         /// <returns> details </returns>
@@ -367,7 +355,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates propety mappings for an existing index
+        ///   Creates propety mappings for an existing index 
         /// </summary>
         /// <typeparam name="T"> Type for the mapping </typeparam>
         /// <param name="mappingDefinition"> Routing index definitions </param>
@@ -378,7 +366,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates propety mappings for an existing index
+        ///   Async Creates propety mappings for an existing index 
         /// </summary>
         /// <typeparam name="T"> Type for the mapping </typeparam>
         /// <param name="mappingDefinition"> Routing index definitions </param>
@@ -389,14 +377,13 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Gets a document by id. Elastic GET API
+        ///   Gets a document by id. Elastic GET API 
         /// </summary>
         /// <typeparam name="T"> type used for the document index and type definition </typeparam>
         /// <param name="documentId">        document id </param>
         /// <param name="routingDefinition">
-        ///     Parent Id of the document if document is a child document Id the Id is incorrect, you may still recieve the child
-        ///     document (parentId might be saved to the same shard.) If the child is a child document and no parent id is set, no
-        ///     docuemnt will be found.
+        ///   Parent Id of the document if document is a child document Id the Id is incorrect, you may still recieve the child document (parentId
+        ///   might be saved to the same shard.) If the child is a child document and no parent id is set, no docuemnt will be found.
         /// </param>
         /// <returns> Document type T </returns>
         public T GetDocument<T>(object documentId, RoutingDefinition routingDefinition = null)
@@ -405,7 +392,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Uses Elastic search API to get the document per id
+        ///   Uses Elastic search API to get the document per id 
         /// </summary>
         /// <typeparam name="T"> type T used to get index anf the type of the document. </typeparam>
         /// <param name="documentId">         </param>
@@ -422,7 +409,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Uses Elastic search API to get the document per id
+        ///   async Uses Elastic search API to get the document per id 
         /// </summary>
         /// <typeparam name="T"> type T used to get index anf the type of the document. </typeparam>
         /// <param name="documentId">         </param>
@@ -435,8 +422,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only
-        ///     single index and type search
+        ///   Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only single index and type search
         /// </summary>
         /// <typeparam name="T"> Type T used for the index and tpye used in the search </typeparam>
         /// <param name="searchJsonParameters"> JSON string which matches the Elastic Search API </param>
@@ -449,8 +435,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only
-        ///     single index and type search
+        ///   Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only single index and type search
         /// </summary>
         /// <typeparam name="T"> Type T used for the index and tpye used in the search </typeparam>
         /// <param name="search">              search body for Elastic Search API </param>
@@ -463,8 +448,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Search API method to search for anything. Any json string which matches the Elastic Search API can be used.
-        ///     Only single index and type search
+        ///   async Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only single index and
+        ///   type search
         /// </summary>
         /// <typeparam name="T"> Type T used for the index and tpye used in the search </typeparam>
         /// <param name="searchJsonParameters"> JSON string which matches the Elastic Search API </param>
@@ -483,14 +468,10 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only
-        ///     single index and type search
+        ///   Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only single index and type search
         /// </summary>
         /// <typeparam name="T"> Type T used for the index and tpye used in the search </typeparam>
-        /// <param name="scrollId">
-        ///     If this search is part of a scan and scroll, you can add the scrollId to open
-        ///     the context
-        /// </param>
+        /// <param name="scrollId">                   If this search is part of a scan and scroll, you can add the scrollId to open the context </param>
         /// <param name="scanAndScrollConfiguration"> Required scroll configuration </param>
         /// <returns> A collection of documents of type T </returns>
         public ResultDetails<SearchResult<T>> SearchScanAndScroll<T>(string scrollId,
@@ -506,14 +487,11 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Search API method to search for anything. Any json string which matches the Elastic Search API can be used.
-        ///     Only single index and type search
+        ///   async Search API method to search for anything. Any json string which matches the Elastic Search API can be used. Only single index and
+        ///   type search
         /// </summary>
         /// <typeparam name="T"> Type T used for the index and tpye used in the search </typeparam>
-        /// <param name="scrollId">
-        ///     If this search is part of a scan and scroll, you can add the scrollId to open
-        ///     the context
-        /// </param>
+        /// <param name="scrollId">                   If this search is part of a scan and scroll, you can add the scrollId to open the context </param>
         /// <param name="scanAndScrollConfiguration"> Required scroll configuration </param>
         /// <returns> A collection of documents of type T in a Task </returns>
         public async Task<ResultDetails<SearchResult<T>>> SearchScanAndScrollAsync<T>(string scrollId,
@@ -529,7 +507,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     executes a post request to checks if at least one document exists for the search query.
+        ///   executes a post request to checks if at least one document exists for the search query. 
         /// </summary>
         /// <typeparam name="T"> Type used to define the type and index in elsticsearch </typeparam>
         /// <param name="searchJsonParameters"> json query for elastic </param>
@@ -547,7 +525,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     executes a post request to checks if at least one document exists for the search query.
+        ///   executes a post request to checks if at least one document exists for the search query. 
         /// </summary>
         /// <typeparam name="T"> Type used to define the type and index in elsticsearch </typeparam>
         /// <param name="search">  search body for Elastic Search API </param>
@@ -565,7 +543,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async executes a post request to checks if at least one document exists for the search query.
+        ///   async executes a post request to checks if at least one document exists for the search query. 
         /// </summary>
         /// <typeparam name="T"> Type used to define the type and index in elsticsearch </typeparam>
         /// <param name="searchJsonParameters"> json query for elastic </param>
@@ -583,7 +561,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async executes a post request to checks if at least one document exists for the search query.
+        ///   async executes a post request to checks if at least one document exists for the search query. 
         /// </summary>
         /// <typeparam name="T"> Type used to define the type and index in elsticsearch </typeparam>
         /// <param name="search">  search body for Elastic Search API </param>
@@ -602,8 +580,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload for the
-        ///     following searches. If your doing a live reindexing, you should use a timestamp in the json content query.
+        ///   Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload for the following searches. If
+        ///   your doing a live reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
         /// <param name="jsonContent">                query which will be saved. </param>
@@ -616,8 +594,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload for the
-        ///     following searches. If your doing a live reindexing, you should use a timestamp in the json content query.
+        ///   Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload for the following searches. If
+        ///   your doing a live reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
         /// <param name="search">                     search body for Elastic Search API </param>
@@ -630,8 +608,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload
-        ///     for the following searches. If your doing a live reindexing, you should use a timestamp in the json content query.
+        ///   Async Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload for the following
+        ///   searches. If your doing a live reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
         /// <param name="jsonContent">                query which will be saved. </param>
@@ -644,8 +622,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload
-        ///     for the following searches. If your doing a live reindexing, you should use a timestamp in the json content query.
+        ///   Async Creates a new scan and scroll search. Takes the query json content and returns a _scroll_id in the payload for the following
+        ///   searches. If your doing a live reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
         /// <param name="search">                     search body for Elastic Search API </param>
@@ -659,7 +637,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     ElasticContextCount to amount of hits for a index, type and query.
+        ///   ElasticContextCount to amount of hits for a index, type and query. 
         /// </summary>
         /// <typeparam name="T"> Type to find </typeparam>
         /// <param name="jsonContent"> json query data, returns all in emtpy </param>
@@ -670,7 +648,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     ElasticContextCount to amount of hits for a index, type and query.
+        ///   ElasticContextCount to amount of hits for a index, type and query. 
         /// </summary>
         /// <typeparam name="T"> Type to find </typeparam>
         /// <param name="search"> search body for Elastic Search API </param>
@@ -681,7 +659,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     ElasticContextCount to amount of hits for a index, type and query.
+        ///   ElasticContextCount to amount of hits for a index, type and query. 
         /// </summary>
         /// <typeparam name="T"> Type to find </typeparam>
         /// <param name="jsonContent"> json query data, returns all in emtpy </param>
@@ -692,7 +670,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     ElasticContextCount to amount of hits for a index, type and query.
+        ///   ElasticContextCount to amount of hits for a index, type and query. 
         /// </summary>
         /// <typeparam name="T"> Type to find </typeparam>
         /// <param name="search"> search body for Elastic Search API </param>
@@ -703,7 +681,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Deletes all documents found using the query in the body.
+        ///   Async Deletes all documents found using the query in the body. 
         /// </summary>
         /// <typeparam name="T"> Type used to define the index and the type in Elastic </typeparam>
         /// <param name="jsonContent"> json string using directly in Elastic API. </param>
@@ -717,7 +695,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Deletes all documents found using the query in the body.
+        ///   Deletes all documents found using the query in the body. 
         /// </summary>
         /// <typeparam name="T"> Type used to define the index and the type in Elastic </typeparam>
         /// <param name="jsonContent"> json string using directly in Elastic API. </param>
@@ -731,7 +709,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Deletes all documents found using the query in the body.
+        ///   Deletes all documents found using the query in the body. 
         /// </summary>
         /// <typeparam name="T"> Type used to define the index and the type in Elastic </typeparam>
         /// <param name="search"> search body for Elastic Search API </param>
@@ -745,14 +723,13 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Gets a document by id. Elastic GET API
+        ///   Gets a document by id. Elastic GET API 
         /// </summary>
         /// <typeparam name="T"> type used for the document index and type definition </typeparam>
         /// <param name="documentId">        document id </param>
         /// <param name="routingDefinition">
-        ///     Parent Id of the document if document is a child document Id the Id is incorrect, you may still recieve the child
-        ///     document (parentId might be saved to the same shard.) If the child is a child document and no parent id is set, no
-        ///     docuemnt will be found.
+        ///   Parent Id of the document if document is a child document Id the Id is incorrect, you may still recieve the child document (parentId
+        ///   might be saved to the same shard.) If the child is a child document and no parent id is set, no docuemnt will be found.
         /// </param>
         /// <returns> Document type T in a Task with result details </returns>
         public async Task<ResultDetails<T>> GetDocumentAsync<T>(object documentId,
@@ -762,13 +739,13 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Checks if a document exists with a head request
+        ///   Checks if a document exists with a head request 
         /// </summary>
         /// <typeparam name="T"> Type of document to find </typeparam>
         /// <param name="documentId">        Id of the document </param>
         /// <param name="routingDefinition">
-        ///     parent Id, required if hte docuemtnis a child document and routing is required.
-        ///     NOTE: if the parent Id is incorrect but save on the same shard as the correct parentId, the document will be found!
+        ///   parent Id, required if hte docuemtnis a child document and routing is required.
+        ///   NOTE: if the parent Id is incorrect but save on the same shard as the correct parentId, the document will be found!
         /// </param>
         /// <returns> true or false </returns>
         public bool DocumentExists<T>(object documentId, RoutingDefinition routingDefinition = null)
@@ -778,13 +755,13 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Checks if a document exists with a head request
+        ///   Async Checks if a document exists with a head request 
         /// </summary>
         /// <typeparam name="T"> Type of document to find </typeparam>
         /// <param name="documentId">        Id of the document </param>
         /// <param name="routingDefinition">
-        ///     parent Id, required if hte docuemtnis a child document and routing is required.
-        ///     NOTE: if the parent Id is incorrect but save on the same shard as the correct parentId, the document will be found!
+        ///   parent Id, required if hte docuemtnis a child document and routing is required.
+        ///   NOTE: if the parent Id is incorrect but save on the same shard as the correct parentId, the document will be found!
         /// </param>
         /// <returns> true or false </returns>
         public async Task<ResultDetails<bool>> DocumentExistsAsync<T>(object documentId,
@@ -794,7 +771,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Send a HEAD request to Eleasticseach to find out if the item defined in the URL exists
+        ///   Send a HEAD request to Eleasticseach to find out if the item defined in the URL exists 
         /// </summary>
         /// <param name="uri"> Full URI of Elasticseach plus item </param>
         /// <returns> true if it exists false for 404 </returns>
@@ -804,7 +781,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Send a HEAD request to Eleasticseach to find out if the item defined in the URL exists
+        ///   Async Send a HEAD request to Eleasticseach to find out if the item defined in the URL exists 
         /// </summary>
         /// <param name="uri"> Full URI of Elasticseach plus item </param>
         /// <returns> true if it exists false for 404 </returns>
@@ -814,7 +791,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Checks if a index exists for the type T
+        ///   async Checks if a index exists for the type T 
         /// </summary>
         /// <typeparam name="T"> Type used for the index exists HEAD request. Gets the index using the mapping </typeparam>
         /// <returns> true if it exists false for 404 </returns>
@@ -825,7 +802,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Checks if a index exists for the type T
+        ///   async Checks if a index exists for the type T 
         /// </summary>
         /// <typeparam name="T"> Type used for the index exists HEAD request. Gets the index using the mapping </typeparam>
         /// <returns> true if it exists false for 404 </returns>
@@ -835,7 +812,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Checks if a type exists for an index for the type T
+        ///   Checks if a type exists for an index for the type T 
         /// </summary>
         /// <typeparam name="T"> Type used for the index + plus exists HEAD request. Gets the index using the mapping </typeparam>
         /// <returns> true if it exists false for 404 </returns>
@@ -845,7 +822,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Checks if a type exists for an index for the type T
+        ///   Checks if a type exists for an index for the type T 
         /// </summary>
         /// <typeparam name="T"> Type used for the index + plus exists HEAD request. Gets the index using the mapping </typeparam>
         /// <returns> true if it exists false for 404 </returns>
@@ -855,7 +832,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Checks if an alias exists for an index for the type T
+        ///   Checks if an alias exists for an index for the type T 
         /// </summary>
         /// <typeparam name="T"> Type used for the index + plus exists HEAD request. Gets the index using the mapping </typeparam>
         /// <returns> true if the alias exists false for 404 </returns>
@@ -865,7 +842,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Checks if an alias exists for an index for the type T
+        ///   async Checks if an alias exists for an index for the type T 
         /// </summary>
         /// <typeparam name="T"> Type used for the index + plus exists HEAD request. Gets the index using the mapping </typeparam>
         /// <returns> true if the alias exists false for 404 </returns>
@@ -875,7 +852,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Checks if an alias exists
+        ///   Checks if an alias exists 
         /// </summary>
         /// <returns> true if the alias exists false for 404 </returns>
         public bool AliasExists(string alias)
@@ -884,7 +861,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     async Checks if an alias exists
+        ///   async Checks if an alias exists 
         /// </summary>
         /// <returns> true if the alias exists false for 404 </returns>
         public async Task<ResultDetails<bool>> AliasExistsAsync(string alias)
@@ -893,7 +870,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Clears the cache for the index. The index is defined using the Type
+        ///   Clears the cache for the index. The index is defined using the Type 
         /// </summary>
         /// <typeparam name="T"> Type used to get the index name </typeparam>
         /// <returns> returns true if cache has been cleared </returns>
@@ -903,7 +880,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Clears the cache for the index. The index is defined using the Type
+        ///   Clears the cache for the index. The index is defined using the Type 
         /// </summary>
         /// <returns> returns true if cache has been cleared </returns>
         public bool IndexClearCache(string index)
@@ -912,7 +889,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Clears the cache for the index. The index is defined using the Type
+        ///   Async Clears the cache for the index. The index is defined using the Type 
         /// </summary>
         /// <typeparam name="T"> Type used to get the index name </typeparam>
         /// <returns> returns true if cache has been cleared </returns>
@@ -922,7 +899,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates a new alias for the index parameter.
+        ///   Creates a new alias for the index parameter. 
         /// </summary>
         /// <param name="alias"> name of the alias </param>
         /// <param name="index"> index for the alias </param>
@@ -941,7 +918,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates a new alias for the index parameter.
+        ///   Async Creates a new alias for the index parameter. 
         /// </summary>
         /// <param name="alias"> name of the alias </param>
         /// <param name="index"> index for the alias </param>
@@ -959,7 +936,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates any alias command depending on the json content
+        ///   Creates any alias command depending on the json content 
         /// </summary>
         /// <param name="jsonContent"> content for the _aliases, see Elastic documentation </param>
         /// <returns> returns true if the alias command was completed successfully </returns>
@@ -969,9 +946,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Creates any alias command depending on the json content var aliasParameters = new AliasParameters { Actions = new
-        ///     List AliasBaseParameters { new AliasAddParameters("test2", "indexaliasdtotests"), new AliasAddParameters("test3",
-        ///     "indexaliasdtotests") } };
+        ///   Creates any alias command depending on the json content var aliasParameters = new AliasParameters { Actions = new List
+        ///   AliasBaseParameters { new AliasAddParameters("test2", "indexaliasdtotests"), new AliasAddParameters("test3", "indexaliasdtotests") } };
         /// </summary>
         /// <param name="aliasParameters"> content for the _aliases, see Elastic documentation </param>
         /// <returns> returns true if the alias command was completed successfully </returns>
@@ -981,7 +957,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates any alias command depending on the json content
+        ///   Async Creates any alias command depending on the json content 
         /// </summary>
         /// <param name="jsonContent"> content for the _aliases, see Elastic documentation </param>
         /// <returns> returns true if the alias command was completed successfully </returns>
@@ -991,7 +967,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Create a new warmer
+        ///   Create a new warmer 
         /// </summary>
         /// <param name="warmer"> Wamrer with Query or Agg </param>
         /// <param name="index">  index if required </param>
@@ -1003,7 +979,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Create a new warmer async
+        ///   Create a new warmer async 
         /// </summary>
         /// <param name="warmer"> Wamrer with Query or Agg </param>
         /// <param name="index">  index if required </param>
@@ -1015,7 +991,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     deletes a warmer
+        ///   deletes a warmer 
         /// </summary>
         /// <param name="warmerName"> name of the warmer </param>
         /// <param name="index">      index </param>
@@ -1026,7 +1002,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     deletes a warmer async
+        ///   deletes a warmer async 
         /// </summary>
         /// <param name="warmerName"> name of the warmer </param>
         /// <param name="index">      index </param>
@@ -1037,7 +1013,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Creates any alias command depending on the json content
+        ///   Async Creates any alias command depending on the json content 
         /// </summary>
         /// <param name="aliasParameters"> content for the _aliases, see Elastic documentation </param>
         /// <returns> returns true if the alias command was completed successfully </returns>
@@ -1047,7 +1023,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Removes a new alias for the index parameter.
+        ///   Removes a new alias for the index parameter. 
         /// </summary>
         /// <param name="alias"> name of the alias </param>
         /// <param name="index"> index for the alias </param>
@@ -1065,7 +1041,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     asnyc Removes a new alias for the index parameter.
+        ///   asnyc Removes a new alias for the index parameter. 
         /// </summary>
         /// <param name="alias"> name of the alias </param>
         /// <param name="index"> index for the alias </param>
@@ -1083,7 +1059,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Replaces the index for the alias. This can be used when reindexing live
+        ///   Replaces the index for the alias. This can be used when reindexing live 
         /// </summary>
         /// <param name="alias">    Name of the alias </param>
         /// <param name="indexOld"> Old index which will be removed </param>
@@ -1103,7 +1079,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Async Replaces the index for the alias. This can be used when reindexing live
+        ///   Async Replaces the index for the alias. This can be used when reindexing live 
         /// </summary>
         /// <param name="alias">    Name of the alias </param>
         /// <param name="indexOld"> Old index which will be removed </param>
@@ -1123,8 +1099,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Delete the whole index if it exists and Elastic allows delete index. Property AllowDeleteForIndex must also be set
-        ///     to true.
+        ///   Delete the whole index if it exists and Elastic allows delete index. Property AllowDeleteForIndex must also be set to true. 
         /// </summary>
         /// <typeparam name="T"> Type used to get the index to delete. </typeparam>
         /// <returns> Result details in a task </returns>
@@ -1134,8 +1109,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Delete the whole index if it exists and Elastic allows delete index. Property AllowDeleteForIndex must also be set
-        ///     to true.
+        ///   Delete the whole index if it exists and Elastic allows delete index. Property AllowDeleteForIndex must also be set to true. 
         /// </summary>
         /// <typeparam name="T"> Type used to get the index to delete. </typeparam>
         /// <returns> Result details in a , true if ok </returns>
@@ -1145,8 +1119,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     Delete the whole index if it exists and Elastic allows delete index. Property AllowDeleteForIndex must also be set
-        ///     to true.
+        ///   Delete the whole index if it exists and Elastic allows delete index. Property AllowDeleteForIndex must also be set to true. 
         /// </summary>
         /// <returns> Result details in a , true if ok </returns>
         public bool DeleteIndex(string index)

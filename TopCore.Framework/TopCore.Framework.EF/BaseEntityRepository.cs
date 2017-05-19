@@ -101,7 +101,7 @@ namespace TopCore.Framework.EF
             if (changedProperties != null && changedProperties.Any())
                 foreach (var property in changedProperties)
                 {
-                    var expression = (MemberExpression) property.Body;
+                    var expression = (MemberExpression)property.Body;
                     var name = expression.Member.Name;
                     _baseDbContext.Entry(entity).Property(name).IsModified = true;
                 }

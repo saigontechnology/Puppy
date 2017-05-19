@@ -3,12 +3,11 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///     The has_child filter accepts a query and the child type to run against, and results in parent documents that have
-    ///     child docs matching the query. The type is the child type to query against. The parent type to return is
-    ///     automatically detected based on the mappings. The way that the filter
-    ///     is implemented is by first running the child query, doing the matching up to the parent doc for each document
-    ///     matched. The has_child filter allows you to specify that a minimum and/or maximum number of children are required
-    ///     to match for the parent doc to be considered a match:
+    ///   The has_child filter accepts a query and the child type to run against, and results in parent documents that have child docs matching the
+    ///   query. The type is the child type to query against. The parent type to return is automatically detected based on the mappings. The way that
+    ///   the filter is implemented is by first running the child query, doing the matching up to the parent doc for each document matched. The
+    ///   has_child filter allows you to specify that a minimum and/or maximum number of children are required to match for the parent doc to be
+    ///   considered a match:
     /// </summary>
     public class HasChildQuery : IQuery
     {
@@ -30,7 +29,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     min_children
+        ///   min_children 
         /// </summary>
         public uint MinChildren
         {
@@ -43,7 +42,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     max_children
+        ///   max_children 
         /// </summary>
         public uint MaxChildren
         {
@@ -56,8 +55,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     score_mode The score_mode allows to set how inner children matching affects scoring of parent. It defaults to avg,
-        ///     but can be sum, max and none.
+        ///   score_mode The score_mode allows to set how inner children matching affects scoring of parent. It defaults to avg, but can be sum, max
+        ///   and none.
         /// </summary>
         public ScoreMode ScoreMode
         {

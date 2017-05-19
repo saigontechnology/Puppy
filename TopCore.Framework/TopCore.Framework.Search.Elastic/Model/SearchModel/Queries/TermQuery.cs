@@ -3,7 +3,7 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///     Matches documents that have fields that contain a term (not analyzed). The term query maps to Lucene TermQuery.
+    ///   Matches documents that have fields that contain a term (not analyzed). The term query maps to Lucene TermQuery. 
     /// </summary>
     public class TermQuery : IQuery
     {

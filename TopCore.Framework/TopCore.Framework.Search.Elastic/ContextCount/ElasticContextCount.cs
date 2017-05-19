@@ -80,7 +80,7 @@ namespace TopCore.Framework.Search.Elastic.ContextCount
                     "ElasticContextCount");
                 var responseObject = JObject.Parse(responseString);
 
-                resultDetails.Count = (long) responseObject["count"];
+                resultDetails.Count = (long)responseObject["count"];
                 resultDetails.PayloadResult = resultDetails.Count;
 
                 return resultDetails;

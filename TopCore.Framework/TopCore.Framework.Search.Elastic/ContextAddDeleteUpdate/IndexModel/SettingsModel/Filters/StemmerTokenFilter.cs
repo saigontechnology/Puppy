@@ -9,8 +9,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _stemmerNameSet;
 
         /// <summary>
-        ///     A filter that provides access to (almost) all of the available stemming token filters through a single unified
-        ///     interface
+        ///   A filter that provides access to (almost) all of the available stemming token filters through a single unified interface 
         /// </summary>
         /// <param name="name"></param>
         public StemmerTokenFilter(string name)
@@ -21,7 +20,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     Either front or back. Defaults to front.
+        ///   Either front or back. Defaults to front. 
         /// </summary>
         public Stemmer StemmerName
         {

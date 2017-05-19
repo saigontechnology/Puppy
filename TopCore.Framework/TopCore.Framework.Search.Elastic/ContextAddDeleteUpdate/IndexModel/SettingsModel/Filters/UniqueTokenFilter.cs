@@ -9,9 +9,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _onlyOnSamePositionSet;
 
         /// <summary>
-        ///     The unique token filter can be used to only index unique tokens during analysis. By default it is applied on all
-        ///     the token stream. If only_on_same_position is set to true, it will only remove duplicate tokens on the same
-        ///     position.
+        ///   The unique token filter can be used to only index unique tokens during analysis. By default it is applied on all the token stream. If
+        ///   only_on_same_position is set to true, it will only remove duplicate tokens on the same position.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public UniqueTokenFilter(string name)
@@ -22,7 +21,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     only_on_same_position Accepts articles setting which is a set of stop words articles.
+        ///   only_on_same_position Accepts articles setting which is a set of stop words articles. 
         /// </summary>
         public bool OnlyOnSamePosition
         {

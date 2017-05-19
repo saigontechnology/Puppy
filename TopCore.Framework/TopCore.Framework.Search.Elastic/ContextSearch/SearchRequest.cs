@@ -154,7 +154,7 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
 
                 var source = responseObject["exists"];
 
-                resultDetails.PayloadResult = (bool) source;
+                resultDetails.PayloadResult = (bool)source;
                 return resultDetails;
             }
             catch (OperationCanceledException oex)

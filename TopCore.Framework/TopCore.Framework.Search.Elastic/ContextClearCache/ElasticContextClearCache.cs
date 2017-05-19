@@ -48,7 +48,7 @@ namespace TopCore.Framework.Search.Elastic.ContextClearCache
             _traceProvider.Trace(TraceEventType.Verbose,
                 string.Format("ElasticContextClearCache: Clearing Cache for index {0}", index));
 
-            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
             var elasticUrlForClearCache = string.Format("{0}/{1}/_cache/clear", _connectionString, index);
             var uri = new Uri(elasticUrlForClearCache);
             _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP POST uri: {0}", uri.AbsoluteUri,
@@ -75,7 +75,7 @@ namespace TopCore.Framework.Search.Elastic.ContextClearCache
             _traceProvider.Trace(TraceEventType.Verbose,
                 string.Format("ElasticContextClearCache: Clearing Cache for index {0}", index));
 
-            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
             var elasticUrlForClearCache = string.Format("{0}/{1}/_cache/clear", _connectionString, index);
             var uri = new Uri(elasticUrlForClearCache);
             _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP POST uri: {0}", uri.AbsoluteUri,

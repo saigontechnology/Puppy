@@ -59,7 +59,7 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch
                 string.Format("ElasticContextSearch: Searching for document id: {0}, index {1}, type {2}", entityId,
                     index, type));
 
-            var resultDetails = new ResultDetails<T> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<T> { Status = HttpStatusCode.InternalServerError };
 
             var search = new SearchRequest(_traceProvider, _cancellationTokenSource, _elasticSerializerConfiguration,
                 _client, _connectionString);

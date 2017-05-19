@@ -39,7 +39,7 @@ namespace TopCore.Framework.Search.Elastic.ContextWarmers
             _traceProvider.Trace(TraceEventType.Verbose,
                 string.Format("ElasticContextWarmer: Creating Warmer {0}", warmer.Name));
 
-            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
             var elasticUrl = CreateWarmerUriParameter(index, type, warmer.Name);
             var uri = new Uri(elasticUrl);
             _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP PUT uri: {0}", uri.AbsoluteUri,
@@ -82,7 +82,7 @@ namespace TopCore.Framework.Search.Elastic.ContextWarmers
             _traceProvider.Trace(TraceEventType.Verbose,
                 string.Format("ElasticContextWarmer: Deleting Warmer {0}", warmerName));
 
-            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
             var elasticUrl = string.Format("{0}/{1}/_warmer/{2}", _connectionString, index, warmerName);
             var uri = new Uri(elasticUrl);
             _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP DELETE uri: {0}", uri.AbsoluteUri,

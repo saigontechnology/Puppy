@@ -4,7 +4,7 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes
 {
     /// <summary>
-    ///     type The type of the number. Can be float, double, integer, long, short, byte. Required.
+    ///   type The type of the number. Can be float, double, integer, long, short, byte. Required. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public abstract class ElasticNumber : ElasticCoreTypes
@@ -32,7 +32,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         private bool _storeSet;
 
         /// <summary>
-        ///     index_name The name of the field that will be stored in the index. Defaults to the property/field name.
+        ///   index_name The name of the field that will be stored in the index. Defaults to the property/field name. 
         /// </summary>
         public virtual string IndexName
         {
@@ -45,8 +45,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     store Set to true to actually store the field in the index, false to not store it. Defaults to false (note, the
-        ///     JSON document itself is stored, and it can be retrieved from it).
+        ///   store Set to true to actually store the field in the index, false to not store it. Defaults to false (note, the JSON document itself is
+        ///   stored, and it can be retrieved from it).
         /// </summary>
         public virtual bool Store
         {
@@ -59,8 +59,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     index Set to no if the value should not be indexed. Setting to no disables include_in_all. If set to no the field
-        ///     should be either stored in _source, have include_in_all enabled, or store be set to true for this to be useful.
+        ///   index Set to no if the value should not be indexed. Setting to no disables include_in_all. If set to no the field should be either stored
+        ///   in _source, have include_in_all enabled, or store be set to true for this to be useful.
         /// </summary>
         public virtual NumberIndex Index
         {
@@ -73,8 +73,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     doc_values Set to true to store field values in a column-stride fashion. Automatically set to true when the
-        ///     fielddata format is doc_values.
+        ///   doc_values Set to true to store field values in a column-stride fashion. Automatically set to true when the fielddata format is doc_values. 
         /// </summary>
         public virtual bool DocValues
         {
@@ -87,7 +86,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     boost The boost value. Defaults to 1.0.
+        ///   boost The boost value. Defaults to 1.0. 
         /// </summary>
         public virtual double Boost
         {
@@ -100,8 +99,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     null_value When there is a (JSON) null value for the field, use the null_value as the field value. Defaults to not
-        ///     adding the field at all.
+        ///   null_value When there is a (JSON) null value for the field, use the null_value as the field value. Defaults to not adding the field at all.
         /// </summary>
         public virtual object NullValue
         {
@@ -114,8 +112,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     include_in_all Should the field be included in the _all field (if enabled). If index is set to no this defaults to
-        ///     false, otherwise, defaults to true or to the parent object type setting.
+        ///   include_in_all Should the field be included in the _all field (if enabled). If index is set to no this defaults to false, otherwise,
+        ///   defaults to true or to the parent object type setting.
         /// </summary>
         public virtual bool IncludeInAll
         {
@@ -128,8 +126,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     precision_step The precision step (influences the number of terms generated for each number value). Defaults to 16
-        ///     for long, double, 8 for short, integer, float, and 2147483647 for byte.
+        ///   precision_step The precision step (influences the number of terms generated for each number value). Defaults to 16 for long, double, 8
+        ///   for short, integer, float, and 2147483647 for byte.
         /// </summary>
         public virtual int PrecisionStep
         {
@@ -142,7 +140,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     ignore_malformed Ignored a malformed number. Defaults to false.
+        ///   ignore_malformed Ignored a malformed number. Defaults to false. 
         /// </summary>
         public virtual bool IgnoreMalformed
         {
@@ -155,7 +153,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         }
 
         /// <summary>
-        ///     coerce Try convert strings to numbers and truncate fractions for integers. Defaults to true.
+        ///   coerce Try convert strings to numbers and truncate fractions for integers. Defaults to true. 
         /// </summary>
         public virtual bool Coerce
         {

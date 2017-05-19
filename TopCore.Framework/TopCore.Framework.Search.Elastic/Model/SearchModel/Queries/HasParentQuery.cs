@@ -3,14 +3,11 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///     The has_parent query works the same as the has_parent filter, by automatically wrapping the filter with a
-    ///     constant_score (when using the default score type). It has the same syntax as the has_parent filter. The has_parent
-    ///     also has scoring support. The supported score types are score or
-    ///     none. The default is none and this ignores the score from the parent document. The score is in this case equal to
-    ///     the boost on the has_parent query (Defaults to 1). If the score type is set to score, then the score of the
-    ///     matching parent document is aggregated into the child documents
-    ///     belonging to the matching parent document. The score type can be specified with the score_mode field inside the
-    ///     has_parent query
+    ///   The has_parent query works the same as the has_parent filter, by automatically wrapping the filter with a constant_score (when using the
+    ///   default score type). It has the same syntax as the has_parent filter. The has_parent also has scoring support. The supported score types are
+    ///   score or none. The default is none and this ignores the score from the parent document. The score is in this case equal to the boost on the
+    ///   has_parent query (Defaults to 1). If the score type is set to score, then the score of the matching parent document is aggregated into the
+    ///   child documents belonging to the matching parent document. The score type can be specified with the score_mode field inside the has_parent query
     /// </summary>
     public class HasParentQuery : IQuery
     {
@@ -28,7 +25,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     score_mode score, none
+        ///   score_mode score, none 
         /// </summary>
         public ScoreModeHasParentQuery ScoreMode
         {

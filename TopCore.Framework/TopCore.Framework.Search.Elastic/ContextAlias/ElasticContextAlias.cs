@@ -39,7 +39,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAlias
             _traceProvider.Trace(TraceEventType.Verbose,
                 string.Format("ElasticContextAlias: Creating Alias {0}", contentJson));
 
-            var resultDetails = new ResultDetails<bool> {Status = HttpStatusCode.InternalServerError};
+            var resultDetails = new ResultDetails<bool> { Status = HttpStatusCode.InternalServerError };
             var elasticUrlForClearCache = string.Format("{0}/_aliases", _connectionString);
             var uri = new Uri(elasticUrlForClearCache);
             _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP POST uri: {0}", uri.AbsoluteUri,

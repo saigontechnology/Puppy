@@ -14,11 +14,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         private bool _preSet;
 
         /// <summary>
-        ///     Removes matches which overlap with another span query. The span not query maps to Lucene SpanNotQuery. The include
-        ///     and exclude clauses can be any span type query. The include clause is the span query whose matches are filtered,
-        ///     and the exclude clause is the span query whose matches
-        ///     must not overlap those returned. In the above example all documents with the term hoya are filtered except the ones
-        ///     that have la preceeding them.
+        ///   Removes matches which overlap with another span query. The span not query maps to Lucene SpanNotQuery. The include and exclude clauses
+        ///   can be any span type query. The include clause is the span query whose matches are filtered, and the exclude clause is the span query
+        ///   whose matches must not overlap those returned. In the above example all documents with the term hoya are filtered except the ones that
+        ///   have la preceeding them.
         /// </summary>
         public SpanNotQuery(ISpanQuery include, ISpanQuery exclude)
         {
@@ -27,7 +26,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     pre If set the amount of tokens before the include span can’t have overlap with the exclude span.
+        ///   pre If set the amount of tokens before the include span can’t have overlap with the exclude span. 
         /// </summary>
         public uint Pre
         {
@@ -40,7 +39,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     post If set the amount of tokens after the include span can’t have overlap with the exclude span.
+        ///   post If set the amount of tokens after the include span can’t have overlap with the exclude span. 
         /// </summary>
         public uint Post
         {
@@ -53,8 +52,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///     dist If set the amount of tokens from within the include span can’t have overlap with the exclude span. Equivalent
-        ///     of setting both pre and post.
+        ///   dist If set the amount of tokens from within the include span can’t have overlap with the exclude span. Equivalent of setting both pre
+        ///   and post.
         /// </summary>
         public uint Dist
         {

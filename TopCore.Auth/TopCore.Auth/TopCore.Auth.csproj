@@ -67,6 +67,7 @@
     <Folder Include="assets\" />
     <Folder Include="assets\js\" />
     <Folder Include="log\" />
+    <Folder Include="log\" />
   </ItemGroup>
 
   <!-- Library -->

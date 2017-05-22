@@ -39,6 +39,7 @@ namespace TopCore.Auth.Service
         private readonly IDbContext _dbContext;
         private readonly UserManager<User> _userManager;
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<IdentityServer4.EntityFramework.Entities.ApiResource> _apiResourceRepository;
         private readonly IRepository<IdentityServer4.EntityFramework.Entities.Client> _clientRepository;
         private readonly IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> _identityResourceRepository;
 
@@ -46,6 +47,7 @@ namespace TopCore.Auth.Service
             IDbContext dbContext,
             UserManager<User> userManager,
             IRepository<User> userRepository,
+            IRepository<IdentityServer4.EntityFramework.Entities.ApiResource> apiResourceRepository,
             IRepository<IdentityServer4.EntityFramework.Entities.Client> clientRepository,
             IRepository<IdentityServer4.EntityFramework.Entities.IdentityResource> identityResourceRepository
             )
@@ -53,6 +55,7 @@ namespace TopCore.Auth.Service
             _dbContext = dbContext;
             _userManager = userManager;
             _userRepository = userRepository;
+            _apiResourceRepository = apiResourceRepository;
             _clientRepository = clientRepository;
             _identityResourceRepository = identityResourceRepository;
         }
@@ -82,7 +85,7 @@ namespace TopCore.Auth.Service
                 Email = "topnguyen92@gmail.com",
                 NormalizedEmail = "topnguyen92@gmail.com",
                 EmailConfirmed = true,
-                PhoneNumber = "0945188299",
+                PhoneNumber = "+84945188299",
                 PhoneNumberConfirmed = true,
                 Claims =
                 {
@@ -116,7 +119,7 @@ namespace TopCore.Auth.Service
                 Email = "hungnguyen@gmail.com",
                 NormalizedEmail = "hungnguyen@gmail.com",
                 EmailConfirmed = true,
-                PhoneNumber = "123456",
+                PhoneNumber = "+841643185433",
                 PhoneNumberConfirmed = true,
                 Claims =
                 {
@@ -150,7 +153,7 @@ namespace TopCore.Auth.Service
                 Email = "dungnguyen@gmail.com",
                 NormalizedEmail = "dungnguyen@gmail.com",
                 EmailConfirmed = true,
-                PhoneNumber = "123456",
+                PhoneNumber = "+841225514403",
                 PhoneNumberConfirmed = true,
                 Claims =
                 {
@@ -204,7 +207,8 @@ namespace TopCore.Auth.Service
 
             if (!isExist)
             {
-                _dbContext.Add(webClient);
+                _clientRepository.Add(webClient);
+                _clientRepository.SaveChanges();
             }
         }
 
@@ -238,7 +242,8 @@ namespace TopCore.Auth.Service
 
             if (!isExist)
             {
-                _dbContext.Add(mobileAndroidClient);
+                _clientRepository.Add(mobileAndroidClient);
+                _clientRepository.SaveChanges();
             }
         }
 
@@ -272,7 +277,8 @@ namespace TopCore.Auth.Service
 
             if (!isExist)
             {
-                _dbContext.Add(mobileiOsClient);
+                _clientRepository.Add(mobileiOsClient);
+                _clientRepository.SaveChanges();
             }
         }
 
@@ -280,11 +286,12 @@ namespace TopCore.Auth.Service
         {
             var apiResource = new ApiResource("topcore_api", "Top Core API").ToEntity();
 
-            var isExist = _identityResourceRepository.Get(x => x.Name == apiResource.Name).Any();
+            var isExist = _apiResourceRepository.Get(x => x.Name == apiResource.Name).Any();
 
             if (!isExist)
             {
-                _dbContext.Add(apiResource);
+                _apiResourceRepository.Add(apiResource);
+                _apiResourceRepository.SaveChanges();
             }
         }
 
@@ -317,7 +324,8 @@ namespace TopCore.Auth.Service
 
             if (!isExistOpenIdResource)
             {
-                _dbContext.Add(openIdResource);
+                _identityResourceRepository.Add(openIdResource);
+                _identityResourceRepository.SaveChanges();
             }
         }
     }

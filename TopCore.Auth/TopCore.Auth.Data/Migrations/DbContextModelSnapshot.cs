@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using TopCore.Auth.Data;
 
 namespace TopCore.Auth.Data.Migrations
 {
@@ -12,7 +14,7 @@ namespace TopCore.Auth.Data.Migrations
         {
             modelBuilder
                 .HasDefaultSchema("dbo")
-                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResource", b =>
@@ -577,18 +579,22 @@ namespace TopCore.Auth.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<DateTime>("CreatedOnUtc");
+                    b.Property<DateTimeOffset>("CreatedTime");
 
-                    b.Property<DateTime?>("DeletedOnUtc");
+                    b.Property<DateTimeOffset?>("DeletedOnUtc");
+
+                    b.Property<DateTimeOffset?>("DeletedTime");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("GlobalId");
+
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("LastUpdatedOnUtc");
+                    b.Property<DateTimeOffset?>("LastUpdatedTime");
 
                     b.Property<bool>("LockoutEnabled");
 

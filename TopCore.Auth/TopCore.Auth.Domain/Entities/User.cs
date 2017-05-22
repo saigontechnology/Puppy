@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
@@ -13,6 +14,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
@@ -24,13 +26,16 @@ namespace TopCore.Auth.Domain.Entities
 {
     public class User : IdentityUser, IBaseEntity
     {
-        public DateTimeOffset CreatedOnUtc { get; set; }
+        public DateTimeOffset? DeletedOnUtc { get; set; }
+        public string GlobalId { get; set; }
 
-        public DateTimeOffset? LastUpdatedOnUtc { get; set; }
+        public DateTimeOffset CreatedTime { get; set; }
+
+        public DateTimeOffset? LastUpdatedTime { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public DateTimeOffset? DeletedOnUtc { get; set; }
+        public DateTimeOffset? DeletedTime { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }

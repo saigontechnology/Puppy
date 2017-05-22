@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using System;
 using System.IO;
-using TopCore.Framework.Web;
+using System.Text;
 
 namespace TopCore.Auth
 {
@@ -8,19 +9,21 @@ namespace TopCore.Auth
     {
         public static void Main(string[] args)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Console.Title = "Eatup SSO";
+
             IWebHostBuilder hostBuilder =
                 new WebHostBuilder()
-                    .UseKestrel()
-                    .UseWebRoot(Domain.Constants.Web.WebRoot)
+                    .UseKestrel(options =>
+                    {
+                        options.AddServerHeader = false;
+                    })
+                    .UseWebRoot(Domain.Constants.System.WebRoot)
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseIISIntegration()
                     .UseStartup<Startup>();
 
-#if DEBUG
-            hostBuilder.BuildAndRunWithBrowser();
-#else
-            hostBuilder.BuildAndRun();
-#endif
+            hostBuilder.Build().Run();
         }
     }
 }

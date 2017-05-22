@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Author> Top </Author>
@@ -13,16 +14,67 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
+
+using System;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace TopCore.Auth.Domain
 {
     public static class Constants
     {
-        public static class Web
+        public static class System
         {
             public const string WebRoot = "assets";
-            public const string CookieSchemaName = "cookie";
+            public const string CookieSchemaName = "eatup_sso_cookie";
+
+
+            public static class Cros
+            {
+                public const string PolicyAllowAll = "CrosPolicyAllowAll";
+            }
+        }
+
+        /// <summary>
+        ///   Use only Plural Noun for Endpoint 
+        /// </summary>
+        public static class ApiEndPointsConst
+        {
+            public const string Base = "api";
+            public const string Root = ".well-known/" + Base;
+        }
+
+        /// <summary>
+        ///   Use for Global and common information 
+        /// </summary>
+        public static class Cache
+        {
+            /// <summary>
+            ///   Sliding cache 30 days 
+            /// </summary>
+            public static DistributedCacheEntryOptions DefaultSlidingOption = new DistributedCacheEntryOptions
+            {
+                SlidingExpiration = TimeSpan.FromDays(30)
+            };
+
+            /// <summary>
+            ///   Cache absolute 1 day 
+            /// </summary>
+            public static DistributedCacheEntryOptions DefaultAbsoluteOption = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpiration = DateTimeOffset.UtcNow + TimeSpan.FromDays(1)
+            };
+
+            /// <summary>
+            ///   Key name for cache all data 
+            /// </summary>
+            public static class KeyName
+            {
+                public const string DeliveryFee = nameof(DeliveryFee);
+                public const string DeliveryFeeOverride = nameof(DeliveryFeeOverride);
+                public const string Configuration = nameof(Configuration);
+            }
         }
     }
 }

@@ -4,16 +4,5 @@
     "inputFiles": [
       "assets/css/core.scss"
     ]
-  },
-  {
-    "outputFileName": "assets/js/core.min.js",
-    "inputFiles": [
-      "assets/js/core.ts"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    "sourceMap": false
   }
 ]

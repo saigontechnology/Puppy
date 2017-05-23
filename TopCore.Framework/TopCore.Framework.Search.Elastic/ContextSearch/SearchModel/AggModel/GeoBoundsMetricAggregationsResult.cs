@@ -8,7 +8,8 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel
         public GeoPoint BoundsTopLeft { get; set; }
         public GeoPoint BoundsBottomRight { get; set; }
 
-        // "bounds": { "top_left": { "lat": 80.45, "lon": -160.22 }, "bottom_right": { "lat": 40.65, "lon": 42.57 } }
+        // "bounds": { "top_left": { "lat": 80.45, "lon": -160.22 }, "bottom_right": { "lat": 40.65,
+        // "lon": 42.57 } }
 
         public override GeoBoundsMetricAggregationsResult GetValueFromJToken(JToken result)
         {

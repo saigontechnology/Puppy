@@ -20,7 +20,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   min_gram Minimum size in codepoints of a single n-gram 
+        ///     min_gram Minimum size in codepoints of a single n-gram 
         /// </summary>
         public int MinGram
         {
@@ -33,7 +33,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   max_gram Maximum size in codepoints of a single n-gram 
+        ///     max_gram Maximum size in codepoints of a single n-gram 
         /// </summary>
         public int MaxGram
         {
@@ -46,7 +46,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   Either front or back. Defaults to front. 
+        ///     Either front or back. Defaults to front. 
         /// </summary>
         public Side Side
         {

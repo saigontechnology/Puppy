@@ -13,7 +13,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _normalizationSet;
 
         /// <summary>
-        ///   Similarity that implements the divergence from randomness framework. http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/DFRSimilarity.html 
+        ///     Similarity that implements the divergence from randomness framework. http://lucene.apache.org/core/4_1_0/core/org/apache/lucene/search/similarities/DFRSimilarity.html 
         /// </summary>
         /// <param name="name"></param>
         public DfrSimilarity(string name)
@@ -24,7 +24,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   basic_model Possible values: be, d, g, if, in, ine and p 
+        ///     basic_model Possible values: be, d, g, if, in, ine and p 
         /// </summary>
         public DfrBasicModel BasicModel
         {
@@ -37,7 +37,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   after_effect Possible values: no, b and l. 
+        ///     after_effect Possible values: no, b and l. 
         /// </summary>
         public DfrAfterEffect AfterEffect
         {
@@ -50,7 +50,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   normalization Possible values: no, h1, h2, h3 and z. 
+        ///     normalization Possible values: no, h1, h2, h3 and z. 
         /// </summary>
         public DfrIbNormalization Normalization
         {

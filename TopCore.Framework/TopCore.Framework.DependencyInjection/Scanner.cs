@@ -40,7 +40,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///   Register Assembly by Name 
+        ///     Register Assembly by Name 
         /// </summary>
         /// <param name="services">    </param>
         /// <param name="assemblyName"></param>
@@ -76,7 +76,8 @@ namespace TopCore.Framework.DependencyInjection
                             $"Conflict register, ${serviceDescriptor.ImplementationType} try to register for {serviceDescriptor.ServiceType.FullName}. It already register by {implementationRegister.FullName} before.");
                     }
 
-                    // Check is service already register from same implementation => remove existing, replace by new one life time cycle
+                    // Check is service already register from same implementation => remove existing,
+                    // replace by new one life time cycle
                     var isAlreadySameImplementation = services.Any(
                         x =>
                             x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName &&
@@ -90,7 +91,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///   Register all assemblies 
+        ///     Register all assemblies 
         /// </summary>
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
@@ -114,7 +115,7 @@ namespace TopCore.Framework.DependencyInjection
         }
 
         /// <summary>
-        ///   Write registered service information to Console 
+        ///     Write registered service information to Console 
         /// </summary>
         /// <param name="services">         </param>
         /// <param name="serviceNameFilter"> null to get all </param>

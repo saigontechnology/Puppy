@@ -40,7 +40,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   aggregations request 
+        ///     aggregations request 
         /// </summary>
         public List<IAggs> Aggs
         {

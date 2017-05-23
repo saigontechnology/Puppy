@@ -9,7 +9,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _muSet;
 
         /// <summary>
-        ///   LM Jelinek Mercer similarity http://lucene.apache.org/core/4_7_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html 
+        ///     LM Jelinek Mercer similarity http://lucene.apache.org/core/4_7_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html 
         /// </summary>
         /// <param name="name"></param>
         public LmDirichletSimilarity(string name)

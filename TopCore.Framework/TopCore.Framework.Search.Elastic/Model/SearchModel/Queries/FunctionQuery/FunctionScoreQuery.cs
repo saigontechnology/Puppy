@@ -4,10 +4,12 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQuery
 {
     /// <summary>
-    ///   The function_score allows you to modify the score of documents that are retrieved by a query. This can be useful if, for example, a score
-    ///   function is computationally expensive and it is sufficient to compute the score on a filtered set of documents. function_score provides the
-    ///   same functionality that custom_boost_factor, custom_score and custom_filters_score provided but with additional capabilities such as distance
-    ///   and recency scoring
+    ///     The function_score allows you to modify the score of documents that are retrieved by a
+    ///     query. This can be useful if, for example, a score function is computationally expensive
+    ///     and it is sufficient to compute the score on a filtered set of documents. function_score
+    ///     provides the same functionality that custom_boost_factor, custom_score and
+    ///     custom_filters_score provided but with additional capabilities such as distance and
+    ///     recency scoring
     /// </summary>
     public class FunctionScoreQuery : IQuery
     {
@@ -60,12 +62,16 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         }
 
         /// <summary>
-        ///   score_mode If no filter is given with a function this is equivalent to specifying "match_all": {} First, each document is scored by the
-        ///   defined functions. The parameter score_mode specifies how the computed scores are combined. Because scores can be on different scales
-        ///   (for example, between 0 and 1 for decay functions but arbitrary for field_value_factor) and also because sometimes a different impact of
-        ///   functions on the score is desirable, the score of each function can be adjusted with a user defined weight ( [1.4.0.Beta1] Added in
-        ///   1.4.0.Beta1.). The weight can be defined per function in the functions array (example above) and is multiplied with the score computed by
-        ///   the respective function. If weight is given without any other function declaration, weight acts as a function that simply returns the weight.
+        ///     score_mode If no filter is given with a function this is equivalent to specifying
+        ///     "match_all": {} First, each document is scored by the defined functions. The
+        ///     parameter score_mode specifies how the computed scores are combined. Because scores
+        ///     can be on different scales (for example, between 0 and 1 for decay functions but
+        ///     arbitrary for field_value_factor) and also because sometimes a different impact of
+        ///     functions on the score is desirable, the score of each function can be adjusted with
+        ///     a user defined weight ( [1.4.0.Beta1] Added in 1.4.0.Beta1.). The weight can be
+        ///     defined per function in the functions array (example above) and is multiplied with
+        ///     the score computed by the respective function. If weight is given without any other
+        ///     function declaration, weight acts as a function that simply returns the weight.
         /// </summary>
         public FunctionScoreQueryScoreMode ScoreMode
         {
@@ -78,8 +84,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries.FunctionQue
         }
 
         /// <summary>
-        ///   The new score can be restricted to not exceed a certain limit by setting the max_boost parameter. The default for max_boost is FLT_MAX.
-        ///   Finally, the newly computed score is combined with the score of the query. The parameter boost_mode defines how.
+        ///     The new score can be restricted to not exceed a certain limit by setting the
+        ///     max_boost parameter. The default for max_boost is FLT_MAX. Finally, the newly
+        ///     computed score is combined with the score of the query. The parameter boost_mode
+        ///     defines how.
         /// </summary>
         public FunctionScoreQueryBoostMode BoostMode
         {

@@ -20,18 +20,23 @@ namespace TopCore.Framework.Search.Elastic
         private ITraceProvider _traceProvider = new NullTraceProvider();
 
         /// <summary>
-        ///   Scan ans scroll settings for the reindex. You should keep this small, otherwise the response request will be too larger. Default is 5
-        ///   seconds with a size of 500 documents pro shard.
+        ///     Scan ans scroll settings for the reindex. You should keep this small, otherwise the
+        ///     response request will be too larger. Default is 5 seconds with a size of 500
+        ///     documents pro shard.
         /// </summary>
         public ScanAndScrollConfiguration ScanAndScrollConfiguration =
             new ScanAndScrollConfiguration(new TimeUnitSecond(5), 500);
 
         /// <summary>
-        ///   Reindex constructor. The class reuires a index and a type for the old index and also the new index. The old index can then be converteds
-        ///   or reindexed to the new index.
+        ///     Reindex constructor. The class reuires a index and a type for the old index and also
+        ///     the new index. The old index can then be converteds or reindexed to the new index.
         /// </summary>
-        /// <param name="oldIndexTypeDescription"> index and index type parameters for the old index </param>
-        /// <param name="newIndexTypeDescription"> index and index type parameters for the new index </param>
+        /// <param name="oldIndexTypeDescription">
+        ///     index and index type parameters for the old index
+        /// </param>
+        /// <param name="newIndexTypeDescription">
+        ///     index and index type parameters for the new index
+        /// </param>
         /// <param name="connectionString">        Elastic connection string </param>
         public ElasticReindex(IndexTypeDescription oldIndexTypeDescription,
             IndexTypeDescription newIndexTypeDescription, string connectionString)
@@ -47,7 +52,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///   TraceProvider if logging or tracing is used 
+        ///     TraceProvider if logging or tracing is used 
         /// </summary>
         public ITraceProvider TraceProvider
         {
@@ -60,7 +65,8 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///   Resets the alias from the old index to the new index. Assumes that a alias is used for the old indeex. This way, reindex can be done live.
+        ///     Resets the alias from the old index to the new index. Assumes that a alias is used
+        ///     for the old indeex. This way, reindex can be done live.
         /// </summary>
         /// <param name="alias"> alias string used for the index. </param>
         public void SwitchAliasfromOldToNewIndex(string alias)
@@ -69,14 +75,19 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///   This method is used to reindex one index to a new index using a query, and two Functions. 
+        ///     This method is used to reindex one index to a new index using a query, and two Functions. 
         /// </summary>
         /// <param name="jsonContent">          Json content for the search query </param>
-        /// <param name="getKeyMethod">         Func is require to define the _id required for the new index </param>
-        /// <param name="convertMethod">       
-        ///   Func used to map the old index to the new old, whatever your required mapping/conversion logic is
+        /// <param name="getKeyMethod">        
+        ///     Func is require to define the _id required for the new index
         /// </param>
-        /// <param name="getRoutingDefinition"> Function to get the RoutingDefinition of the document </param>
+        /// <param name="convertMethod">       
+        ///     Func used to map the old index to the new old, whatever your required
+        ///     mapping/conversion logic is
+        /// </param>
+        /// <param name="getRoutingDefinition">
+        ///     Function to get the RoutingDefinition of the document
+        /// </param>
         public void Reindex(string jsonContent, Func<TOld, object> getKeyMethod, Func<TOld, TNew> convertMethod,
             Func<TOld, RoutingDefinition> getRoutingDefinition = null)
         {

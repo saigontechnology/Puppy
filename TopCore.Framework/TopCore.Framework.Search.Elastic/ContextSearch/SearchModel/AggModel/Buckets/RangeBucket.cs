@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel.AggModel.Buckets
 {
     /// <summary>
-    ///   "key":"2.0-1.5","from":2.0,"from_as_string":"2.0","to":1.5,"to_as_string":"1.5","doc_count":0 
+    ///     "key":"2.0-1.5","from":2.0,"from_as_string":"2.0","to":1.5,"to_as_string":"1.5","doc_count":0 
     /// </summary>
     public class RangeBucket : BaseBucket
     {

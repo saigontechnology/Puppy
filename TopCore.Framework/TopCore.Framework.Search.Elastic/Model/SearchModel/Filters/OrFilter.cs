@@ -3,7 +3,8 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
     /// <summary>
-    ///   A filter that matches documents using the OR boolean operator on other filters. Can be placed within queries that accept a filter. 
+    ///     A filter that matches documents using the OR boolean operator on other filters. Can be
+    ///     placed within queries that accept a filter.
     /// </summary>
     public class OrFilter : IFilter
     {

@@ -9,8 +9,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _languageSet;
 
         /// <summary>
-        ///   A token filter of type lowercase that normalizes token text to lower case. Lowercase token filter supports Greek, Irish, and Turkish
-        ///   lowercase token filters through the language parameter.
+        ///     A token filter of type lowercase that normalizes token text to lower case. Lowercase
+        ///     token filter supports Greek, Irish, and Turkish lowercase token filters through the
+        ///     language parameter.
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public LowercaseTokenFilter(string name)

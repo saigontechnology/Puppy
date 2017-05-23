@@ -3,7 +3,8 @@
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
 {
     /// <summary>
-    ///   This class is used to set routing or pretty search for the url parameters. All other options can be sent in the body 
+    ///     This class is used to set routing or pretty search for the url parameters. All other
+    ///     options can be sent in the body
     /// </summary>
     public class SearchUrlParameters
     {
@@ -37,8 +38,9 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
         }
 
         /// <summary>
-        ///   search_type The type of the search operation to perform. Can be dfs_query_then_fetch, dfs_query_and_fetch, query_then_fetch,
-        ///   query_and_fetch. Defaults to query_then_fetch. See Search Type for more. count and scan
+        ///     search_type The type of the search operation to perform. Can be dfs_query_then_fetch,
+        ///     dfs_query_and_fetch, query_then_fetch, query_and_fetch. Defaults to query_then_fetch.
+        ///     See Search Type for more. count and scan
         /// </summary>
         public SeachType SeachType
         {
@@ -51,8 +53,9 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
         }
 
         /// <summary>
-        ///   query_cache [1.4.0.Beta1] Added in 1.4.0.Beta1. Set to true or false to enable or disable the caching of search results for requests
-        ///   where ?search_type=count, ie aggregations and suggestions. See Shard query cache.
+        ///     query_cache [1.4.0.Beta1] Added in 1.4.0.Beta1. Set to true or false to enable or
+        ///     disable the caching of search results for requests where ?search_type=count, ie
+        ///     aggregations and suggestions. See Shard query cache.
         /// </summary>
         public bool QueryCache
         {

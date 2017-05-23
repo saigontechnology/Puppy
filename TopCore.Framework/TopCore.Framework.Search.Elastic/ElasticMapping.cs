@@ -18,8 +18,8 @@ using TopCore.Framework.Search.Elastic.Tracing;
 namespace TopCore.Framework.Search.Elastic
 {
     /// <summary>
-    ///   Default mapping for your Entity. You can implement this clas to implement your specific mapping if required Everything is lowercase and the
-    ///   index is pluralized
+    ///     Default mapping for your Entity. You can implement this clas to implement your specific
+    ///     mapping if required Everything is lowercase and the index is pluralized
     /// </summary>
     public class ElasticMapping
     {
@@ -30,13 +30,15 @@ namespace TopCore.Framework.Search.Elastic
         public bool ProcessChildDocumentsAsSeparateChildIndex { get; set; }
 
         /// <summary>
-        ///   Ovveride this if your default mapping needs to be changed. default type is lowercase for properties, indes pluralized and type to lower 
+        ///     Ovveride this if your default mapping needs to be changed. default type is lowercase
+        ///     for properties, indes pluralized and type to lower
         /// </summary>
         /// <param name="entityInfo">             Information about the entity </param>
         /// <param name="elasticCrudJsonWriter">  Serializer with added tracing </param>
         /// <param name="beginMappingTree">       begin new mapping tree </param>
         /// <param name="createPropertyMappings">
-        ///   This tells the serializer to create a Json property mapping from the entity and not the document itself
+        ///     This tells the serializer to create a Json property mapping from the entity and not
+        ///     the document itself
         /// </param>
         public virtual void MapEntityValues(EntityContextInfo entityInfo, ElasticJsonWriter elasticCrudJsonWriter,
             bool beginMappingTree = false, bool createPropertyMappings = false)
@@ -560,7 +562,8 @@ namespace TopCore.Framework.Search.Elastic
                     }
                     else
                     {
-                        // collection of simple types, serialize all items in one go and break from the loop
+                        // collection of simple types, serialize all items in one go and break from
+                        // the loop
                         json = JsonConvert.SerializeObject(ienumerable);
 
                         break;
@@ -616,7 +619,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///   Override this if you require a special type definition for your document type. 
+        ///     Override this if you require a special type definition for your document type. 
         /// </summary>
         /// <param name="type"></param>
         /// <returns> The type used in Elastic for this type </returns>
@@ -637,8 +640,9 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///   Overide this if you need to define the index for your document. Required if your using a child document type.
-        ///   Default: pluralize the default type
+        ///     Overide this if you need to define the index for your document. Required if your
+        ///     using a child document type.
+        ///     Default: pluralize the default type
         /// </summary>
         /// <param name="type"> Type of class used </param>
         /// <returns> The index used in Elastic for this type </returns>
@@ -651,11 +655,15 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///   bool System.Boolean byte System.Byte sbyte System.SByte char System.Char decimal System.Decimal =&gt; string double System.Double float
-        ///   System.Single int System.Int32 uint System.UInt32 long System.Int64 ulong System.UInt64 short System.Int16 ushort System.UInt16 string System.String
+        ///     bool System.Boolean byte System.Byte sbyte System.SByte char System.Char decimal
+        ///     System.Decimal =&gt; string double System.Double float System.Single int System.Int32
+        ///     uint System.UInt32 long System.Int64 ulong System.UInt64 short System.Int16 ushort
+        ///     System.UInt16 string System.String
         /// </summary>
         /// <param name="propertyType"></param>
-        /// <returns> string, boolean, and null. float, double, byte, short, integer, and long date binary </returns>
+        /// <returns>
+        ///     string, boolean, and null. float, double, byte, short, integer, and long date binary
+        /// </returns>
         public string GetElasticType(Type propertyType)
         {
             switch (propertyType.FullName)

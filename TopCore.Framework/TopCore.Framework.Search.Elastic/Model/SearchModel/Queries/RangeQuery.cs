@@ -3,8 +3,9 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///   Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the field type, for string
-    ///   fields, the TermRangeQuery, while for number/date fields, the query is a NumericRangeQuery. The
+    ///     Matches documents with fields that have terms within a certain range. The type of the
+    ///     Lucene query depends on the field type, for string fields, the TermRangeQuery, while for
+    ///     number/date fields, the query is a NumericRangeQuery. The
     /// </summary>
     public class RangeQuery : IQuery
     {
@@ -42,7 +43,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///   gte Greater-than or equal to 
+        ///     gte Greater-than or equal to 
         /// </summary>
         public object GreaterThanOrEqualTo
         {
@@ -55,7 +56,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///   gt Greater-than 
+        ///     gt Greater-than 
         /// </summary>
         public object GreaterThan
         {
@@ -68,7 +69,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///   lte Less-than or equal to 
+        ///     lte Less-than or equal to 
         /// </summary>
         public object LessThanOrEqualTo
         {
@@ -81,7 +82,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///   lt Less-than 
+        ///     lt Less-than 
         /// </summary>
         public object LessThan
         {
@@ -94,7 +95,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///   include_lower 
+        ///     include_lower 
         /// </summary>
         public bool IncludeLower
         {
@@ -107,7 +108,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///   include_upper 
+        ///     include_upper 
         /// </summary>
         public bool IncludeUpper
         {
@@ -120,10 +121,12 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
         }
 
         /// <summary>
-        ///   time_zone When applied on date fields the range filter accepts also a time_zone parameter. The time_zone parameter will be applied to
-        ///   your input lower and upper bounds and will move them to UTC time based date if you give a date with a timezone explicitly defined and use
-        ///   the time_zone parameter, time_zone will be ignored. For example, setting gte to 2012-01-01T00:00:00+01:00 with "time_zone":"+10:00" will
-        ///   still use +01:00 time zone.
+        ///     time_zone When applied on date fields the range filter accepts also a time_zone
+        ///     parameter. The time_zone parameter will be applied to your input lower and upper
+        ///     bounds and will move them to UTC time based date if you give a date with a timezone
+        ///     explicitly defined and use the time_zone parameter, time_zone will be ignored. For
+        ///     example, setting gte to 2012-01-01T00:00:00+01:00 with "time_zone":"+10:00" will
+        ///     still use +01:00 time zone.
         /// </summary>
         public string TimeZone
         {

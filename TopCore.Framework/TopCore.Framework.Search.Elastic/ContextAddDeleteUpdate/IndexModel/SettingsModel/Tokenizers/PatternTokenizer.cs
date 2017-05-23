@@ -13,7 +13,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _patternSet;
 
         /// <summary>
-        ///   A tokenizer of type pattern that can flexibly separate text into terms via a regular expression. 
+        ///     A tokenizer of type pattern that can flexibly separate text into terms via a regular expression.
         /// </summary>
         /// <param name="name"> name of custom tokenizer ToLower() </param>
         public PatternTokenizer(string name)
@@ -24,14 +24,19 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   pattern The regular expression pattern, defaults to \W+.
-        ///   IMPORTANT: The regular expression should match the token separators, not the tokens themselves. Note that you may need to escape pattern
-        ///              string literal according to your client language rules. For example, in many programming languages a string literal for \W+
-        ///              pattern is written as "\\W+". There is nothing special about pattern (you may have to escape other string literals as well);
-        ///              escaping pattern is common just because it often contains characters that should be escaped. group set to -1 (the default) is
-        ///              equivalent to "split". Using group &gt;= 0 selects the matching group as the token. For example, if you have: pattern =
-        ///              '([^']+)' group = 0 input = aaa 'bbb' 'ccc' the output will be two tokens: 'bbb' and 'ccc' (including the ' marks). With the
-        ///              same input but using group=1, the output would be: bbb and ccc (no ' marks).
+        ///     pattern The regular expression pattern, defaults to \W+.
+        ///     IMPORTANT: The regular expression should match the token separators, not the tokens
+        ///                themselves. Note that you may need to escape pattern string literal
+        ///                according to your client language rules. For example, in many programming
+        ///                languages a string literal for \W+ pattern is written as "\\W+". There is
+        ///                nothing special about pattern (you may have to escape other string
+        ///                literals as well); escaping pattern is common just because it often
+        ///                contains characters that should be escaped. group set to -1 (the default)
+        ///                is equivalent to "split". Using group &gt;= 0 selects the matching group
+        ///                as the token. For example, if you have: pattern = '([^']+)' group = 0
+        ///                input = aaa 'bbb' 'ccc' the output will be two tokens: 'bbb' and 'ccc'
+        ///                (including the ' marks). With the same input but using group=1, the output
+        ///                would be: bbb and ccc (no ' marks).
         /// </summary>
         public string Pattern
         {
@@ -44,7 +49,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   flags The regular expression flags. 
+        ///     flags The regular expression flags. 
         /// </summary>
         public string Flags
         {
@@ -57,7 +62,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   group Which group to extract into tokens. Defaults to -1 (split). 
+        ///     group Which group to extract into tokens. Defaults to -1 (split). 
         /// </summary>
         public string Group
         {

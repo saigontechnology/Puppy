@@ -6,7 +6,8 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel
 {
     /// <summary>
-    ///   The search request can be executed with a search DSL, which includes the Query DSL, within its body. 
+    ///     The search request can be executed with a search DSL, which includes the Query DSL,
+    ///     within its body.
     /// </summary>
     public class Search
     {
@@ -32,8 +33,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         private bool _timeoutSet;
 
         /// <summary>
-        ///   timeout A search timeout, bounding the search request to be executed within the specified time value and bail with the hits accumulated
-        ///   up to that point when expired. Defaults to no timeout. See the section called “Time unitsedit”.
+        ///     timeout A search timeout, bounding the search request to be executed within the
+        ///     specified time value and bail with the hits accumulated up to that point when
+        ///     expired. Defaults to no timeout. See the section called “Time unitsedit”.
         /// </summary>
         public TimeUnit Timeout
         {
@@ -46,7 +48,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         }
 
         /// <summary>
-        ///   from The starting from index of the hits to return. Defaults to 0. 
+        ///     from The starting from index of the hits to return. Defaults to 0. 
         /// </summary>
         public int From
         {
@@ -59,7 +61,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         }
 
         /// <summary>
-        ///   size The number of hits to return. Defaults to 10. 
+        ///     size The number of hits to return. Defaults to 10. 
         /// </summary>
         public int Size
         {
@@ -72,9 +74,10 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         }
 
         /// <summary>
-        ///   terminate_after [1.4.0.Beta1] Added in 1.4.0.Beta1. The maximum number of documents to collect for each shard, upon reaching which the
-        ///   query execution will terminate early. If set, the response will have a boolean field terminated_early to indicate whether the query
-        ///   execution has actually terminated_early. Defaults to no terminate_after.
+        ///     terminate_after [1.4.0.Beta1] Added in 1.4.0.Beta1. The maximum number of documents
+        ///     to collect for each shard, upon reaching which the query execution will terminate
+        ///     early. If set, the response will have a boolean field terminated_early to indicate
+        ///     whether the query execution has actually terminated_early. Defaults to no terminate_after.
         /// </summary>
         public int TerminateAfter
         {
@@ -137,7 +140,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         }
 
         /// <summary>
-        ///   aggregations request 
+        ///     aggregations request 
         /// </summary>
         public List<IAggs> Aggs
         {

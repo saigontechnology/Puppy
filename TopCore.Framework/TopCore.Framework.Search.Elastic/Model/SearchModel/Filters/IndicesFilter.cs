@@ -4,11 +4,13 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
     /// <summary>
-    ///   The indices query can be used when executed across multiple indices, allowing to have a query that executes only when executed on an index
-    ///   that matches a specific list of indices, and another filter that executes when it is executed on an index that does not match the listed
-    ///   indices. The fields order is important: if the indices are provided before filter or no_match_query, the related filters get parsed only
-    ///   against the indices that they are going to be executed on. This is useful to avoid parsing queries when it is not necessary and prevent
-    ///   potential mapping errors.
+    ///     The indices query can be used when executed across multiple indices, allowing to have a
+    ///     query that executes only when executed on an index that matches a specific list of
+    ///     indices, and another filter that executes when it is executed on an index that does not
+    ///     match the listed indices. The fields order is important: if the indices are provided
+    ///     before filter or no_match_query, the related filters get parsed only against the indices
+    ///     that they are going to be executed on. This is useful to avoid parsing queries when it is
+    ///     not necessary and prevent potential mapping errors.
     /// </summary>
     public class IndicesFilter : IFilter
     {
@@ -26,7 +28,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///   no_match_filter 
+        ///     no_match_filter 
         /// </summary>
         public IFilter NoMatchFilter
         {

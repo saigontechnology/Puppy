@@ -1,6 +1,7 @@
 ﻿namespace TopCore.Framework.Search.Elastic.ContextAlias.AliasModel
 {
-    // "actions" : [ { "remove" : { "index" : "test1", "alias" : "alias1" } }, { "add" : { "index" : "test1", "alias" : "alias2" } } ]
+    // "actions" : [ { "remove" : { "index" : "test1", "alias" : "alias1" } }, { "add" : { "index" :
+    // "test1", "alias" : "alias2" } } ]
 
     public class AliasRemoveParameters : AliasBaseParameters
     {

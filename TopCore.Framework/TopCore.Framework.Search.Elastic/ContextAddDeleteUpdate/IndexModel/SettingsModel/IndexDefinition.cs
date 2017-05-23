@@ -20,7 +20,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         public IndexWarmers IndexWarmers { get; set; }
 
         /// <summary>
-        ///   TODO change this to a list so n mappings can be defined 
+        ///     TODO change this to a list so n mappings can be defined 
         /// </summary>
         public MappingDefinition Mapping { get; set; }
     }

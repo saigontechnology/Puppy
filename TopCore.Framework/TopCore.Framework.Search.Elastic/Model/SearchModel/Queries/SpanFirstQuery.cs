@@ -3,8 +3,9 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
 {
     /// <summary>
-    ///   Matches spans near the beginning of a field. The span first query maps to Lucene SpanFirstQuery. The match clause can be any other span type
-    ///   query. The end controls the maximum end position permitted in a match.
+    ///     Matches spans near the beginning of a field. The span first query maps to Lucene
+    ///     SpanFirstQuery. The match clause can be any other span type query. The end controls the
+    ///     maximum end position permitted in a match.
     /// </summary>
     public class SpanFirstQuery : IQuery
     {

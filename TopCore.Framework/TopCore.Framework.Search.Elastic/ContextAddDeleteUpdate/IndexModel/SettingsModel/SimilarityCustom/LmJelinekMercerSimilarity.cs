@@ -9,7 +9,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _lambdaSet;
 
         /// <summary>
-        ///   LM Jelinek Mercer similarity http://lucene.apache.org/core/4_7_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html 
+        ///     LM Jelinek Mercer similarity http://lucene.apache.org/core/4_7_1/core/org/apache/lucene/search/similarities/LMJelinekMercerSimilarity.html 
         /// </summary>
         /// <param name="name"></param>
         public LmJelinekMercerSimilarity(string name)
@@ -20,8 +20,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   The optimal value depends on both the collection and the query. The optimal value is around 0.1 for title queries and 0.7 for long
-        ///   queries. Default to 0.1.
+        ///     The optimal value depends on both the collection and the query. The optimal value is
+        ///     around 0.1 for title queries and 0.7 for long queries. Default to 0.1.
         /// </summary>
         public double Lambda
         {

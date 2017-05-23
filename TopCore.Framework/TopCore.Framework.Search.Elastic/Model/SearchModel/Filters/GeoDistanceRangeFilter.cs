@@ -5,7 +5,8 @@ using TopCore.Framework.Search.Elastic.Utils;
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
     /// <summary>
-    ///   Filters documents that include only hits that exists within a specific distance from a geo point. 
+    ///     Filters documents that include only hits that exists within a specific distance from a
+    ///     geo point.
     /// </summary>
     public class GeoDistanceRangeFilter : IFilter
     {
@@ -27,7 +28,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         private bool _lessThanSet;
 
         /// <summary>
-        ///   Filters documents that include only hits that exists within a specific distance from a geo point. 
+        ///     Filters documents that include only hits that exists within a specific distance from
+        ///     a geo point.
         /// </summary>
         /// <param name="field">    name of the field used for the geo point </param>
         /// <param name="location"> GeoPoint location </param>
@@ -42,7 +44,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///   gte Greater-than or equal to 
+        ///     gte Greater-than or equal to 
         /// </summary>
         public string GreaterThanOrEqualTo
         {
@@ -55,7 +57,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///   gt Greater-than 
+        ///     gt Greater-than 
         /// </summary>
         public string GreaterThan
         {
@@ -68,7 +70,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///   lte Less-than or equal to 
+        ///     lte Less-than or equal to 
         /// </summary>
         public string LessThanOrEqualTo
         {
@@ -81,7 +83,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///   lt Less-than 
+        ///     lt Less-than 
         /// </summary>
         public string LessThan
         {
@@ -94,7 +96,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///   include_lower 
+        ///     include_lower 
         /// </summary>
         public bool IncludeLower
         {
@@ -107,7 +109,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         }
 
         /// <summary>
-        ///   include_upper 
+        ///     include_upper 
         /// </summary>
         public bool IncludeUpper
         {

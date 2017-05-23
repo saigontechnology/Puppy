@@ -17,7 +17,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         private bool _similaritySet;
 
         /// <summary>
-        ///   "similarity":"BM25" 
+        ///     "similarity":"BM25" 
         /// </summary>
         public virtual string Similarity
         {

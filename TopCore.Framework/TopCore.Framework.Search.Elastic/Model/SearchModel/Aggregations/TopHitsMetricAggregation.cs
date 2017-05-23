@@ -19,7 +19,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///   from The starting from index of the hits to return. Defaults to 0. 
+        ///     from The starting from index of the hits to return. Defaults to 0. 
         /// </summary>
         public int From
         {
@@ -32,7 +32,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         }
 
         /// <summary>
-        ///   size The number of hits to return. Defaults to 10. 
+        ///     size The number of hits to return. Defaults to 10. 
         /// </summary>
         public int Size
         {

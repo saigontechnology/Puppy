@@ -12,8 +12,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _rulesSet;
 
         /// <summary>
-        ///   Overrides stemming algorithms, by applying a custom mapping, then protecting these terms from being modified by stemmers. Must be placed
-        ///   before any stemming filters. Rules are separated by =&gt;
+        ///     Overrides stemming algorithms, by applying a custom mapping, then protecting these
+        ///     terms from being modified by stemmers. Must be placed before any stemming filters.
+        ///     Rules are separated by =&gt;
         /// </summary>
         /// <param name="name"> name for the custom filter </param>
         public StemmerOverrideTokenFilter(string name)
@@ -24,7 +25,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   rules A list of mapping rules to use. 
+        ///     rules A list of mapping rules to use. 
         /// </summary>
         public List<string> Rules
         {
@@ -37,7 +38,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   rules_path A path (either relative to config location, or absolute) to a list of mappings. 
+        ///     rules_path A path (either relative to config location, or absolute) to a list of mappings. 
         /// </summary>
         public string RulesPath
         {

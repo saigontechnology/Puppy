@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
 {
-    // "hits":[{ "_index":"parentdocuments", "_type":"childdocumentleveltwo", "_id":"35", "_score":1.0, "_source":{"id":35,"d3":"p8.p25.p35"} }]
+    // "hits":[{ "_index":"parentdocuments", "_type":"childdocumentleveltwo", "_id":"35",
+    // "_score":1.0, "_source":{"id":35,"d3":"p8.p25.p35"} }]
     public class Hit<T>
     {
         [JsonProperty(PropertyName = "_index")]
@@ -26,7 +27,7 @@ namespace TopCore.Framework.Search.Elastic.ContextSearch.SearchModel
         public Dictionary<string, IEnumerable<string>> Highlights { get; set; }
 
         /// <summary>
-        ///   This can be used for inner_hits or nested data which is added to the hit result 
+        ///     This can be used for inner_hits or nested data which is added to the hit result 
         /// </summary>
         [JsonExtensionData]
         public Dictionary<string, JToken> ExtensionData { get; set; }

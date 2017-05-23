@@ -193,7 +193,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///   Create a new index for the parent document 
+        ///     Create a new index for the parent document 
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -244,7 +244,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///   Create a new mapping for the child type in the parent document index 
+        ///     Create a new mapping for the child type in the parent document index 
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -295,7 +295,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///   Create a new index for the parent document 
+        ///     Create a new index for the parent document 
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -334,7 +334,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///   Create a new mapping for the child type in the parent document index 
+        ///     Create a new mapping for the child type in the parent document index 
         /// </summary>
         /// <param name="entityInfo">       </param>
         /// <param name="elasticMapping">   </param>
@@ -443,7 +443,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate
         }
 
         /// <summary>
-        ///   "_routing": { "required": true }, 
+        ///     "_routing": { "required": true }, 
         /// </summary>
         /// <param name="elasticCrudJsonWriter"></param>
         private void CreateForceRoutingMappingForDocument(ElasticJsonWriter elasticCrudJsonWriter)

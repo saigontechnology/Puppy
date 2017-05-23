@@ -9,7 +9,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         private bool _stopwordsPathSet;
 
         /// <summary>
-        ///   An analyzer of type stop that is built using a Lower Case Tokenizer, with Stop Token Filter. 
+        ///     An analyzer of type stop that is built using a Lower Case Tokenizer, with Stop Token Filter.
         /// </summary>
         /// <param name="name"> name of the analyzer </param>
         public StopAnalyzer(string name)
@@ -20,7 +20,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   stopwords_path A path (either relative to config location, or absolute) to a stopwords file configuration. 
+        ///     stopwords_path A path (either relative to config location, or absolute) to a
+        ///     stopwords file configuration.
         /// </summary>
         public string StopwordsPath
         {

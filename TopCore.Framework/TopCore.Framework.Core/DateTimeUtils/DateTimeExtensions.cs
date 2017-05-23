@@ -38,7 +38,7 @@ namespace TopCore.Framework.Core.DateTimeUtils
         }
 
         /// <summary>
-        ///   Truncate date time 
+        ///     Truncate date time 
         /// </summary>
         /// <param name="dt">        </param>
         /// <param name="truncateTo"></param>
@@ -64,7 +64,7 @@ namespace TopCore.Framework.Core.DateTimeUtils
         }
 
         /// <summary>
-        ///   Get Date Time without milliseconds 
+        ///     Get Date Time without milliseconds 
         /// </summary>
         /// <returns></returns>
         public static DateTime WithoutMillisecond(DateTime dateTime)

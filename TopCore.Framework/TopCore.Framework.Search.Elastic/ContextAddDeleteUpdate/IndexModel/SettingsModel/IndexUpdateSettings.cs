@@ -90,7 +90,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         public Similarities Similarities { get; set; }
 
         /// <summary>
-        ///   index.number_of_replicas The number of replicas each shard has. 
+        ///     index.number_of_replicas The number of replicas each shard has. 
         /// </summary>
         public int NumberOfReplicas
         {
@@ -103,11 +103,14 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.refresh_interval The async refresh interval of a shard. ----- bulk Indexing Usage For example, the update settings API can be used
-        ///   to dynamically change the index from being more performant for bulk indexing, and then move it to more real time indexing state. Before
-        ///   the bulk indexing is started, use: "refresh_interval" : "-1" (Another optimization option is to start the index without any replicas, and
-        ///   only later adding them, but that really depends on the use case). Then, once bulk indexing is done, the settings can be updated (back to
-        ///   the defaults for example): "refresh_interval" : "1s" And, an optimize should be called: curl -XPOST 'http://localhost:9200/test/_optimize?max_num_segments=5'
+        ///     index.refresh_interval The async refresh interval of a shard. ----- bulk Indexing
+        ///     Usage For example, the update settings API can be used to dynamically change the
+        ///     index from being more performant for bulk indexing, and then move it to more real
+        ///     time indexing state. Before the bulk indexing is started, use: "refresh_interval" :
+        ///     "-1" (Another optimization option is to start the index without any replicas, and
+        ///     only later adding them, but that really depends on the use case). Then, once bulk
+        ///     indexing is done, the settings can be updated (back to the defaults for example):
+        ///     "refresh_interval" : "1s" And, an optimize should be called: curl -XPOST 'http://localhost:9200/test/_optimize?max_num_segments=5'
         /// </summary>
         public string RefreshInterval
         {
@@ -120,8 +123,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.auto_expand_replicas (string) Set to a dash delimited lower and upper bound (e.g. 0-5) or one may use all as the upper bound (e.g.
-        ///   0-all), or false to disable it.
+        ///     index.auto_expand_replicas (string) Set to a dash delimited lower and upper bound
+        ///     (e.g. 0-5) or one may use all as the upper bound (e.g. 0-all), or false to disable it.
         /// </summary>
         public string AutoExpandReplicas
         {
@@ -134,7 +137,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.blocks.read_only Set to true to have the index read only, false to allow writes and metadata changes. 
+        ///     index.blocks.read_only Set to true to have the index read only, false to allow writes
+        ///     and metadata changes.
         /// </summary>
         public bool BlocksReadOnly
         {
@@ -147,7 +151,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.blocks.read Set to true to disable read operations against the index. 
+        ///     index.blocks.read Set to true to disable read operations against the index. 
         /// </summary>
         public bool BlocksRead
         {
@@ -160,7 +164,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.blocks.write Set to true to disable write operations against the index. 
+        ///     index.blocks.write Set to true to disable write operations against the index. 
         /// </summary>
         public bool BlocksWrite
         {
@@ -173,7 +177,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.blocks.metadata Set to true to disable metadata operations against the index. 
+        ///     index.blocks.metadata Set to true to disable metadata operations against the index. 
         /// </summary>
         public bool BlocksMetadata
         {
@@ -186,7 +190,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.index_concurrency Defaults to 8. 
+        ///     index.index_concurrency Defaults to 8. 
         /// </summary>
         public ushort IndexConcurrency
         {
@@ -199,7 +203,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.codec.bloom.load Whether to load the bloom filter. Defaults to false. 
+        ///     index.codec.bloom.load Whether to load the bloom filter. Defaults to false. 
         /// </summary>
         public bool CodecBloomLoad
         {
@@ -212,7 +216,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.fail_on_merge_failure Default to true. 
+        ///     index.fail_on_merge_failure Default to true. 
         /// </summary>
         public bool FailOnMergeFailure
         {
@@ -225,7 +229,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.translog.flush_threshold_ops When to flush based on operations. http://www.elastic.org/guide/en/elastic/reference/current/index-modules-translog.html 
+        ///     index.translog.flush_threshold_ops When to flush based on operations. http://www.elastic.org/guide/en/elastic/reference/current/index-modules-translog.html 
         /// </summary>
         public string TranslogFlushThresholdOps
         {
@@ -238,7 +242,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.translog.flush_threshold_size When to flush based on translog (bytes) size. 
+        ///     index.translog.flush_threshold_size When to flush based on translog (bytes) size. 
         /// </summary>
         public string TranslogFlushThresholdSize
         {
@@ -251,7 +255,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.translog.flush_threshold_period When to flush based on a period of not flushing. 
+        ///     index.translog.flush_threshold_period When to flush based on a period of not flushing. 
         /// </summary>
         public string TranslogflushThresholdPeriod
         {
@@ -264,7 +268,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.translog.disable_flush Disables flushing. Note, should be set for a short interval and then enabled. 
+        ///     index.translog.disable_flush Disables flushing. Note, should be set for a short
+        ///     interval and then enabled.
         /// </summary>
         public string TranslogDisableFlush
         {
@@ -277,7 +282,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.cache.filter.max_size The maximum size of filter cache (per segment in shard). Set to -1 to disable. 
+        ///     index.cache.filter.max_size The maximum size of filter cache (per segment in shard).
+        ///     Set to -1 to disable.
         /// </summary>
         public string CacheFilterMaxSize
         {
@@ -290,7 +296,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.cache.filter.expire The expire after access time for filter cache. Set to -1 to disable. 
+        ///     index.cache.filter.expire The expire after access time for filter cache. Set to -1 to disable.
         /// </summary>
         public string CacheFilterExpire
         {
@@ -303,7 +309,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.gateway.snapshot_interval The gateway snapshot interval (only applies to shared gateways). Defaults to 10s. 
+        ///     index.gateway.snapshot_interval The gateway snapshot interval (only applies to shared
+        ///     gateways). Defaults to 10s.
         /// </summary>
         public string GatewaySnapshotInterval
         {
@@ -316,7 +323,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.routing.allocation.include.* A node matching any rule will be allowed to host shards from the index. 
+        ///     index.routing.allocation.include.* A node matching any rule will be allowed to host
+        ///     shards from the index.
         /// </summary>
         public List<RoutingAllocation> RoutingAllocationInclude
         {
@@ -329,7 +337,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.routing.allocation.exclude.* A node matching any rule will NOT be allowed to host shards from the index. 
+        ///     index.routing.allocation.exclude.* A node matching any rule will NOT be allowed to
+        ///     host shards from the index.
         /// </summary>
         public List<RoutingAllocation> RoutingAllocationExclude
         {
@@ -342,7 +351,8 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.routing.allocation.require.* Only nodes matching all rules will be allowed to host shards from the index. 
+        ///     index.routing.allocation.require.* Only nodes matching all rules will be allowed to
+        ///     host shards from the index.
         /// </summary>
         public List<RoutingAllocation> RoutingAllocationRequire
         {
@@ -355,9 +365,11 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.routing.allocation.enable Enables shard allocation for a specific index. It can be set to: all (default) - Allows shard allocation
-        ///   for all shards. primaries - Allows shard allocation only for primary shards. new_primaries
-        ///   - Allows shard allocation only for primary shards for new indices. none - No shard allocation is allowed.
+        ///     index.routing.allocation.enable Enables shard allocation for a specific index. It can
+        ///     be set to: all (default) - Allows shard allocation for all shards. primaries - Allows
+        ///     shard allocation only for primary shards. new_primaries
+        ///     - Allows shard allocation only for primary shards for new indices. none - No shard
+        ///       allocation is allowed.
         /// </summary>
         public RoutingAllocationEnableEnum RoutingAllocationEnable
         {
@@ -370,8 +382,9 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.routing.allocation.total_shards_per_node Controls the total number of shards (replicas and primaries) allowed to be allocated on a
-        ///   single node. Defaults to unbounded (-1).
+        ///     index.routing.allocation.total_shards_per_node Controls the total number of shards
+        ///     (replicas and primaries) allowed to be allocated on a single node. Defaults to
+        ///     unbounded (-1).
         /// </summary>
         public string RoutingAllocationTotalShardsPerNode
         {
@@ -384,8 +397,10 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.recovery.initial_shards When using local gateway a particular shard is recovered only if there can be allocated quorum shards in
-        ///   the cluster. It can be set to: quorum (default) quorum-1 (or half) full full-1. Number values are also supported, e.g. 1.
+        ///     index.recovery.initial_shards When using local gateway a particular shard is
+        ///     recovered only if there can be allocated quorum shards in the cluster. It can be set
+        ///     to: quorum (default) quorum-1 (or half) full full-1. Number values are also
+        ///     supported, e.g. 1.
         /// </summary>
         public string RecoveryInitialShards
         {
@@ -398,7 +413,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.ttl.disable_purge Disables temporarily the purge of expired docs. 
+        ///     index.ttl.disable_purge Disables temporarily the purge of expired docs. 
         /// </summary>
         public bool TtlDisablePurge
         {
@@ -411,7 +426,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.gc_deletes Disables temporarily the purge of expired docs. 
+        ///     index.gc_deletes Disables temporarily the purge of expired docs. 
         /// </summary>
         public bool GcDeletes
         {
@@ -424,7 +439,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.translog.fs.type Either simple or buffered (default). 
+        ///     index.translog.fs.type Either simple or buffered (default). 
         /// </summary>
         public TranslogFsTypeEnum TranslogFsType
         {
@@ -437,7 +452,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.compound_format See index.compound_format in the section called “Index Settingsedit”. 
+        ///     index.compound_format See index.compound_format in the section called “Index Settingsedit”. 
         /// </summary>
         public bool CompoundFormat
         {
@@ -450,7 +465,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.compound_on_flush See `index.compound_on_flush in the section called “Index Settingsedit”. 
+        ///     index.compound_on_flush See `index.compound_on_flush in the section called “Index Settingsedit”. 
         /// </summary>
         public bool CompoundOnFlush
         {
@@ -463,7 +478,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///   index.warmer.enabled See Warmers. Defaults to true. 
+        ///     index.warmer.enabled See Warmers. Defaults to true. 
         /// </summary>
         public bool WarmerEnabled
         {

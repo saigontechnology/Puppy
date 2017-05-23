@@ -1,11 +1,11 @@
-﻿using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 using TopCore.Framework.Web;
 
 namespace TopCore.Auth
@@ -88,7 +88,7 @@ namespace TopCore.Auth
                     if (IsSwaggerUI(context) || IsSwaggerEndpoint(context))
                         if (!IsCanAccessSwagger(context))
                         {
-                            context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                             return Task.FromResult(0);
                         }
 

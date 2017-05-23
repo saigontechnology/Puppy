@@ -54,7 +54,8 @@ namespace TopCore.Auth
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory,
             IApplicationLifetime applicationLifetime)
         {
-            // [Important] The order of middleware very important for request and response handle! Don't mad it
+            // [Important] The order of middleware very important for request and response handle!
+            // Don't mad it
 
             // Startup
             applicationLifetime.ApplicationStarted.Register(OnStarted(app));

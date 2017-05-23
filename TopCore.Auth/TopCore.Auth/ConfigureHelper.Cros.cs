@@ -1,13 +1,13 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 using TopCore.Auth.Domain;
 
 namespace TopCore.Auth
@@ -62,7 +62,7 @@ namespace TopCore.Auth
                 {
                     context.Response.OnStarting(state =>
                     {
-                        var httpContext = (HttpContext) state;
+                        var httpContext = (HttpContext)state;
                         if (!httpContext.Response.Headers.ContainsKey("Access-Control-Allow-Origin"))
                             httpContext.Response.Headers.Add("Access-Control-Allow-Origin", AccessControlAllowOrigin);
 
@@ -73,7 +73,7 @@ namespace TopCore.Auth
                             httpContext.Response.Headers.Add("Access-Control-Allow-Methods", AccessControlAllowMethods);
 
                         if (httpContext.Request.Method.Equals("OPTIONS", StringComparison.Ordinal))
-                            httpContext.Response.StatusCode = (int) HttpStatusCode.NoContent;
+                            httpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
 
                         return Task.CompletedTask;
                     }, context);

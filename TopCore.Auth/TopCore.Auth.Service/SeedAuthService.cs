@@ -17,8 +17,6 @@
 
 #endregion License
 
-using System.Linq;
-using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.Mappers;
@@ -26,6 +24,8 @@ using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Interfaces.Data;
 using TopCore.Auth.Domain.Interfaces.Services;

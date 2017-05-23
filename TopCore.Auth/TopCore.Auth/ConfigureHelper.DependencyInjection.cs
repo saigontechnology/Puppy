@@ -1,6 +1,6 @@
-﻿using System.IO;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 using TopCore.Framework.DependencyInjection;
 
 namespace TopCore.Auth

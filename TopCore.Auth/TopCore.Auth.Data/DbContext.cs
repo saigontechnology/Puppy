@@ -15,19 +15,18 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Interfaces.Data;
-using TopCore.Framework.Core;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Data

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
+using System;
+using System.Net;
 using TopCore.Auth.Domain.Exceptions;
 using TopCore.Auth.Domain.ViewModels;
 
@@ -20,12 +20,12 @@ namespace TopCore.Auth.Filters
                 var ex = exception;
                 context.Exception = null;
                 apiErrorViewModel = new ApiErrorViewModel(ex.Code, ex.Message);
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             else if (context.Exception is UnauthorizedAccessException)
             {
                 apiErrorViewModel = new ApiErrorViewModel(ErrorCode.Unauthorized, "Unauthorized Access");
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
             else
             {
@@ -38,7 +38,7 @@ namespace TopCore.Auth.Filters
 #endif
 
                 apiErrorViewModel = new ApiErrorViewModel(ErrorCode.Unknown, msg);
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 
             Log.Logger.Error(context.Exception, apiErrorViewModel.Message);

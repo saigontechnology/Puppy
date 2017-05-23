@@ -17,8 +17,8 @@
 
 #endregion License
 
-using System;
 using Microsoft.Extensions.Caching.Distributed;
+using System;
 
 namespace TopCore.Auth.Domain
 {
@@ -29,7 +29,6 @@ namespace TopCore.Auth.Domain
             public const string WebRoot = "assets";
             public const string CookieSchemaName = "eatup_sso_cookie";
 
-
             public static class Cros
             {
                 public const string PolicyAllowAll = "CrosPolicyAllowAll";
@@ -37,7 +36,7 @@ namespace TopCore.Auth.Domain
         }
 
         /// <summary>
-        ///   Use only Plural Noun for Endpoint 
+        ///     Use only Plural Noun for Endpoint 
         /// </summary>
         public static class ApiEndPointsConst
         {
@@ -46,12 +45,12 @@ namespace TopCore.Auth.Domain
         }
 
         /// <summary>
-        ///   Use for Global and common information 
+        ///     Use for Global and common information 
         /// </summary>
         public static class Cache
         {
             /// <summary>
-            ///   Sliding cache 30 days 
+            ///     Sliding cache 30 days 
             /// </summary>
             public static DistributedCacheEntryOptions DefaultSlidingOption = new DistributedCacheEntryOptions
             {
@@ -59,7 +58,7 @@ namespace TopCore.Auth.Domain
             };
 
             /// <summary>
-            ///   Cache absolute 1 day 
+            ///     Cache absolute 1 day 
             /// </summary>
             public static DistributedCacheEntryOptions DefaultAbsoluteOption = new DistributedCacheEntryOptions
             {
@@ -67,7 +66,7 @@ namespace TopCore.Auth.Domain
             };
 
             /// <summary>
-            ///   Key name for cache all data 
+            ///     Key name for cache all data 
             /// </summary>
             public static class KeyName
             {

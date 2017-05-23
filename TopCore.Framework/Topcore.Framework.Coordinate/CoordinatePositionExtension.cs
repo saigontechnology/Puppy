@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Topcore.Framework.Coordinate
+namespace TopCore.Framework.Coordinate
 {
     public static class CoordinatePositionExtension
     {

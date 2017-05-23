@@ -4,6 +4,9 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <Copyright>http://topnguyen.net</Copyright>
+    <AssemblyName>TopCore.Framework.Coordinate</AssemblyName>
+    <RootNamespace>TopCore.Framework.Coordinate</RootNamespace>
+    <PackageId>TopCore.Framework.Coordinate</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

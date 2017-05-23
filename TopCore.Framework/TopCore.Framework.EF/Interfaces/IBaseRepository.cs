@@ -2,10 +2,10 @@
 
 //------------------------------------------------------------------------------------------------
 // <License>
-//     <Copyright> 2017 © Top Nguyen → AspNetCore → Topcore </Copyright>
+//     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> Topcore.WebAPI → Interface </Project>
+//     <Project> TopCore.WebAPI → Interface </Project>
 //     <File>
 //         <Name> IBaseRepository.cs </Name>
 //         <Created> 23 Apr 17 3:47:20 PM </Created>

@@ -19,7 +19,7 @@
 
 #endregion License
 
-namespace Topcore.Framework.Coordinate
+namespace TopCore.Framework.Coordinate
 {
     public class Coordinate
     {

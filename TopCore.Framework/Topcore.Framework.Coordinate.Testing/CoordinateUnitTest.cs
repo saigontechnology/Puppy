@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Topcore.Framework.Coordinate.Testing
+namespace TopCore.Framework.Coordinate.Testing
 {
     [TestClass]
     public class CoordinateUnitTest

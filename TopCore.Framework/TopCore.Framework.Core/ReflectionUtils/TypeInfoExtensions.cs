@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TopCore.Framework.Core
+namespace TopCore.Framework.Core.ReflectionUtils
 {
-    public static class TypeInfoAllMemberExtensions
+    public static class TypeInfoExtensions
     {
         public static IEnumerable<ConstructorInfo> GetAllConstructors(this TypeInfo typeInfo)
         {

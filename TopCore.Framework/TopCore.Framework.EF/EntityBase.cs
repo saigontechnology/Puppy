@@ -55,7 +55,7 @@ namespace TopCore.Framework.EF
 
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
-        public virtual DateTimeOffset CreatedTime { get; set; } = DateTime.UtcNow;
+        public virtual DateTimeOffset CreatedTime { get; set; }
 
         /// <summary>
         /// For tracking

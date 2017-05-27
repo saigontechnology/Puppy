@@ -3,11 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace TopCore.Auth.Filters
 {
     public class DeveloperAccessFilter : ActionFilterAttribute
     {
+        private readonly IConfigurationRoot _configurationRoot;
+
+        public DeveloperAccessFilter(IConfigurationRoot configurationRoot)
+        {
+            _configurationRoot = configurationRoot;
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (!IsValidDeveloperRequest(context.HttpContext))
@@ -20,17 +28,16 @@ namespace TopCore.Auth.Filters
             base.OnActionExecuting(context);
         }
 
-        private static bool IsValidDeveloperRequest(HttpContext context)
+        private bool IsValidDeveloperRequest(HttpContext context)
         {
             try
             {
-                var developerKey = ConfigHelper.GetValue("appsettings.json", "Developers:AccessKey");
+                var developerKey = _configurationRoot.GetValue<string>("Developers:AccessKey");
                 string developerKeyParam = context.Request.Query["key"];
                 var isValid = string.IsNullOrWhiteSpace(developerKey) || developerKey == developerKeyParam;
-                // Not setup developer enable or it is false then return invalid
                 return isValid;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

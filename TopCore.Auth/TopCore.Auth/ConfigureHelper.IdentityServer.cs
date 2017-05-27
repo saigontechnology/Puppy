@@ -84,7 +84,7 @@ namespace TopCore.Auth
                     GetClaimsFromUserInfoEndpoint = true,
                     SignInScheme = Domain.Constants.System.CookieSchemaName,
 
-                    Authority = Configuration.GetValue<string>($"OpenIdAuthorityUrl:{Environment.EnvironmentName}"),
+                    Authority = ConfigurationRoot.GetValue<string>($"OpenIdAuthorityUrl:{Environment.EnvironmentName}"),
                     PostLogoutRedirectUri = "/",
 
                     ClientId = "topcore_auth",

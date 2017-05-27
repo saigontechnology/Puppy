@@ -43,13 +43,13 @@ namespace TopCore.Auth
             public class ResponseMiddleware
             {
                 private static readonly string AccessControlAllowOrigin =
-                    Configuration.GetValue<string>("Server:Cros:AccessControlAllowOrigin");
+                    ConfigurationRoot.GetValue<string>("Server:Cros:AccessControlAllowOrigin");
 
                 private static readonly string AccessControlAllowHeaders =
-                    Configuration.GetValue<string>("Server:Cros:AccessControlAllowHeaders");
+                    ConfigurationRoot.GetValue<string>("Server:Cros:AccessControlAllowHeaders");
 
                 private static readonly string AccessControlAllowMethods =
-                    Configuration.GetValue<string>("Server:Cros:AccessControlAllowMethods");
+                    ConfigurationRoot.GetValue<string>("Server:Cros:AccessControlAllowMethods");
 
                 private readonly RequestDelegate _next;
 

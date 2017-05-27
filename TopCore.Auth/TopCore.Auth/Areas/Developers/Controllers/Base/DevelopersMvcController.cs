@@ -6,7 +6,7 @@ using TopCore.Framework.Web;
 namespace TopCore.Auth.Areas.Developers.Controllers
 {
     [Area("Developers")]
-    [DeveloperAccessFilter]
+    [ServiceFilter(typeof(DeveloperAccessFilter))]
     [HideInDocs]
     public class DevelopersMvcController : Controller
     {

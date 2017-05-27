@@ -21,7 +21,7 @@ using System.Reflection;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-
+using Microsoft.Extensions.Configuration;
 using TopCore.Framework.Core;
 
 namespace TopCore.Auth.Data.Factory
@@ -41,7 +41,8 @@ namespace TopCore.Auth.Data.Factory
         /// <returns></returns>
         private string GetConnectionString(DbContextFactoryOptions options)
         {
-            var connectionString = ConfigHelper.GetValue("appsettings.json", $"ConnectionStrings:{options.EnvironmentName}");
+            IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json", false, true).Build();
+            var connectionString = config.GetSection($"ConnectionStrings:{options.EnvironmentName}").Value;
             return connectionString;
         }
 

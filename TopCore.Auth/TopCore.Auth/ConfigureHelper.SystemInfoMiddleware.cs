@@ -8,10 +8,10 @@ namespace TopCore.Auth
     {
         public class SystemInfoMiddleware
         {
-            private static readonly string AuthorWebsite = Configuration.GetValue<string>("Server:AuthorWebsite");
-            private static readonly string AuthorName = Configuration.GetValue<string>("Server:AuthorName");
-            private static readonly string PoweredBy = Configuration.GetValue<string>("Server:PoweredBy");
-            private static readonly string ServerName = Configuration.GetValue<string>("Server:Name");
+            private static readonly string AuthorWebsite = ConfigurationRoot.GetValue<string>("Server:AuthorWebsite");
+            private static readonly string AuthorName = ConfigurationRoot.GetValue<string>("Server:AuthorName");
+            private static readonly string PoweredBy = ConfigurationRoot.GetValue<string>("Server:PoweredBy");
+            private static readonly string ServerName = ConfigurationRoot.GetValue<string>("Server:Name");
 
             private readonly RequestDelegate _next;
 

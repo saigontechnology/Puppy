@@ -2,9 +2,6 @@
     Layout = null;
     string apiDocumentPath = ViewBag.ApiDocumentPath;
     string developerKey = ViewBag.ApiKey;
-    string downloadErrorHandleJavaFile = Url.Action("DownloadErrorHandleJavaFile", "Developers", new { Area = "Developers", key = developerKey });
-    string downloadErrorHandleCSharpFile = Url.Action("DownloadErrorHandleCSharpFile", "Developers", new { Area = "Developers", key = developerKey });
-    string downloadErrorHandleJavascriptFile = Url.Action("DownloadErrorHandleJavascriptFile", "Developers", new { Area = "Developers", key = developerKey });
     string apiTokenKeyName = "Bearer";
 }
 
@@ -23,9 +20,6 @@
     <script>
         var apiDocumentPath = '@apiDocumentPath';
         var apiTokenKeyName = '@apiTokenKeyName';
-        var downloadErrorHandleJavaFileUrl = '@downloadErrorHandleJavaFile';
-        var downloadErrorHandleCSharpFileUrl = '@downloadErrorHandleCSharpFile';
-        var downloadErrorHandleJavascriptFileUrl = '@downloadErrorHandleJavascriptFile';
     </script>
     <script src='~/developers/template/lib/jquery-1.8.0.min.js' type='text/javascript'></script>
     <script src='~/developers/template/lib/jquery.slideto.min.js' type='text/javascript'></script>

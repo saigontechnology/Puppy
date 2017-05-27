@@ -5,9 +5,9 @@ namespace TopCore.Auth
 {
     public static partial class ConfigureHelper
     {
-        public static IConfigurationRoot Configuration;
+        public static IConfigurationRoot ConfigurationRoot;
         public static IHostingEnvironment Environment;
 
-        public static string DeveloperAccessKeyConfig => Configuration.GetValue<string>("Developers:AccessKey");
+        public static string DeveloperAccessKeyConfig => ConfigurationRoot.GetValue<string>("Developers:AccessKey");
     }
 }

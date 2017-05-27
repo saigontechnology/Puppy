@@ -11,7 +11,7 @@ namespace TopCore.Auth
             public static void Middleware(IApplicationBuilder app, ILoggerFactory loggerFactory)
             {
                 // Write log
-                Serilog.Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(Configuration).CreateLogger();
+                Serilog.Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(ConfigurationRoot).CreateLogger();
                 loggerFactory.AddSerilog();
             }
         }

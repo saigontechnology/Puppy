@@ -6,7 +6,7 @@
     <members>
         <member name="M:TopCore.Auth.Controllers.UserApiController.Post(TopCore.Auth.Controllers.UserApiController.LoginModel)">
             <summary>
-                Login
+                Login 
             </summary>
             <param name="model"></param>
             <returns></returns>

@@ -15,16 +15,16 @@ namespace TopCore.Auth
         public static class Swagger
         {
             private static readonly string DocumentTitle =
-                Configuration.GetValue<string>("Developers:ApiDocumentTitle");
+                ConfigurationRoot.GetValue<string>("Developers:ApiDocumentTitle");
 
             private static readonly string DocumentName =
-                Configuration.GetValue<string>("Developers:ApiDocumentName");
+                ConfigurationRoot.GetValue<string>("Developers:ApiDocumentName");
 
             private static readonly string DocumentApiBaseUrl =
-                Configuration.GetValue<string>("Developers:ApiDocumentUrl") + DocumentName;
+                ConfigurationRoot.GetValue<string>("Developers:ApiDocumentUrl") + DocumentName;
 
             private static readonly string DocumentJsonFileName =
-                Configuration.GetValue<string>("Developers:ApiDocumentJsonFile");
+                ConfigurationRoot.GetValue<string>("Developers:ApiDocumentJsonFile");
 
             private static readonly string DocumentUrlBase =
                 DocumentApiBaseUrl.Replace(DocumentName, string.Empty).TrimEnd('/');

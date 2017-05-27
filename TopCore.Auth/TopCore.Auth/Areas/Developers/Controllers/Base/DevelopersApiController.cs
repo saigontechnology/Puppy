@@ -6,8 +6,8 @@ using TopCore.Framework.Web;
 namespace TopCore.Auth.Areas.Developers.Controllers
 {
     [Area("Developers")]
-    [ApiExceptionFilter]
-    [DeveloperAccessFilter]
+    [ServiceFilter(typeof(ApiExceptionFilter))]
+    [ServiceFilter(typeof(DeveloperAccessFilter))]
     [HideInDocs]
     [Produces("application/json", "application/xml")]
     public class DevelopersApiController : Controller

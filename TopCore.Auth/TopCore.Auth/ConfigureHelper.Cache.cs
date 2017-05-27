@@ -10,8 +10,8 @@ namespace TopCore.Auth
         {
             public static void Service(IServiceCollection services)
             {
-                var redisConnection = Configuration["Redis:ConnectionString"];
-                var redisInstance = Configuration["Redis:InstanceName"];
+                var redisConnection = ConfigurationRoot["Redis:ConnectionString"];
+                var redisInstance = ConfigurationRoot["Redis:InstanceName"];
 
                 services.AddSingleton<IDistributedCache>(factory =>
                 {

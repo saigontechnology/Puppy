@@ -24,6 +24,7 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Interfaces.Data;
@@ -53,7 +54,9 @@ namespace TopCore.Auth.Data
             if (!optionsBuilder.IsConfigured)
             {
                 string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                string connectionString = ConfigHelper.GetValue("appsettings.json", $"ConnectionStrings:{environmentName}");
+
+                IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json", false, true).Build();
+                var connectionString = config.GetSection($"ConnectionStrings:{environmentName}").Value;
                 optionsBuilder.UseSqlServer(connectionString, o => o.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
 
                 _configurationStoreOptions = new ConfigurationStoreOptions

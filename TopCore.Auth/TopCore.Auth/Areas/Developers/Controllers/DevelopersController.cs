@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace TopCore.Auth.Areas.Developers.Controllers
 {
@@ -8,10 +9,12 @@ namespace TopCore.Auth.Areas.Developers.Controllers
     public class DevelopersController : DevelopersMvcController
     {
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IConfigurationRoot _configurationRoot;
 
-        public DevelopersController(IHttpContextAccessor contextAccessor)
+        public DevelopersController(IHttpContextAccessor contextAccessor, IConfigurationRoot configurationRoot)
         {
             _contextAccessor = contextAccessor;
+            _configurationRoot = configurationRoot;
         }
 
         [Route("")]
@@ -21,10 +24,10 @@ namespace TopCore.Auth.Areas.Developers.Controllers
             if (string.IsNullOrWhiteSpace(key))
                 key = string.Empty;
 
-            var documentName = ConfigHelper.GetValue("appsettings.json", "Developers:ApiDocumentName");
-            var documentApiBaseUrl = ConfigHelper.GetValue("appsettings.json", "Developers:ApiDocumentUrl") +
+            var documentName = _configurationRoot.GetValue<string>("Developers:ApiDocumentName");
+            var documentApiBaseUrl = _configurationRoot.GetValue<string>("Developers:ApiDocumentUrl") +
                                      documentName;
-            var documentJsonFileName = ConfigHelper.GetValue("appsettings.json", "Developers:ApiDocumentJsonFile");
+            var documentJsonFileName = _configurationRoot.GetValue<string>("Developers:ApiDocumentJsonFile");
             var documentUrlBase = documentApiBaseUrl.Replace(documentName, string.Empty).TrimEnd('/');
             var swaggerEndpoint = $"{documentUrlBase}/{documentName}/{documentJsonFileName}" + "?key=" + key;
             ViewBag.ApiDocumentPath = _contextAccessor.HttpContext.Request.Scheme + "://" +
@@ -43,27 +46,6 @@ namespace TopCore.Auth.Areas.Developers.Controllers
             ViewBag.ApiKey = key;
 
             return View();
-        }
-
-        [Route("[action]")]
-        [HttpGet]
-        public IActionResult DownloadErrorHandleJavaFile(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Route("[action]")]
-        [HttpGet]
-        public IActionResult DownloadErrorHandleCSharpFile(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Route("[action]")]
-        [HttpGet]
-        public IActionResult DownloadErrorHandleJavascriptFile(string key)
-        {
-            throw new NotImplementedException();
         }
     }
 }

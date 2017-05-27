@@ -68,7 +68,7 @@
         public const string BasicWeekDate = "basic_week_date";
 
         /// <summary>
-        ///     A basic formatter that combines a basic weekyear date and time, separated by a T (xxxx’W'wwe’T'HHmmss.SSSZ). 
+        ///     A basic formatter that combines a basic weekyear date and time, separated by a T (xxxx’W'wwe’T'HHmmss.SSSZ).
         /// </summary>
         public const string BasicWeekDateTime = "basic_week_date_time";
 
@@ -241,7 +241,7 @@
         public const string YearMonth = "year_month";
 
         /// <summary>
-        ///     A formatter for a four digit year, two digit month of year, and two digit day of month. 
+        ///     A formatter for a four digit year, two digit month of year, and two digit day of month.
         /// </summary>
         public const string YearMonthDay = "year_month_day";
     }

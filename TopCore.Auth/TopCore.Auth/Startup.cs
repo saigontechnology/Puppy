@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Reflection;
-using Microsoft.Extensions.Primitives;
 using TopCore.Auth.Data.Factory;
 using TopCore.Auth.Domain.Interfaces.Services;
 using TopCore.Auth.Filters;
@@ -62,7 +62,8 @@ namespace TopCore.Auth
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory,
             IApplicationLifetime applicationLifetime)
         {
-            // Currently, ASPNETCORE have a bug hit twice when change appsetting.json from 20/03/17 (see more: https://github.com/aspnet/Configuration/issues/624)
+            // Currently, ASPNETCORE have a bug hit twice when change appsetting.json from 20/03/17
+            // (see more: https://github.com/aspnet/Configuration/issues/624)
             ChangeToken.OnChange(ConfigureHelper.ConfigurationRoot.GetReloadToken,
                 () => loggerFactory.CreateLogger<Startup>().LogWarning("Configuration Changed"));
 

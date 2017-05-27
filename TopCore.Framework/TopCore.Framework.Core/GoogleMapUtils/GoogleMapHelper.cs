@@ -29,13 +29,15 @@ namespace TopCore.Framework.Core.GoogleMapUtils
     public static class GoogleMapHelper
     {
         /// <summary>
-        /// Get Distance Matrix
+        ///     Get Distance Matrix 
         /// </summary>
-        /// <param name="originalCorinates"></param>
+        /// <param name="originalCorinates">   </param>
         /// <param name="destinateCoordinates"></param>
-        /// <param name="googleMatrixBaseUrl">Google Matrix API base URL, default is https://maps.googleapis.com/maps/api/distancematrix/json </param>
-        /// <param name="googleApiKey">Google API Key, get it from https://console.developers.google.com </param>
-        /// <param name="extraValues">Extra query params, ex: "mode=driving", "language=en-US"</param>
+        /// <param name="googleMatrixBaseUrl">  Google Matrix API base URL, default is https://maps.googleapis.com/maps/api/distancematrix/json </param>
+        /// <param name="googleApiKey">         Google API Key, get it from https://console.developers.google.com </param>
+        /// <param name="extraValues">         
+        ///     Extra query params, ex: "mode=driving", "language=en-US"
+        /// </param>
         /// <returns></returns>
         public static async Task<DistanceMatrixModel> GetDistanceMatrix(CoordinateModel[] originalCorinates, CoordinateModel[] destinateCoordinates, string googleApiKey = "", KeyValuePair<string, string>[] extraValues = null, string googleMatrixBaseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json")
         {

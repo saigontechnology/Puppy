@@ -53,7 +53,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     keep_words_case a boolean indicating whether to lower case the words (defaults to false) 
+        ///     keep_words_case a boolean indicating whether to lower case the words (defaults to false)
         /// </summary>
         public bool KeepWordsCase
         {

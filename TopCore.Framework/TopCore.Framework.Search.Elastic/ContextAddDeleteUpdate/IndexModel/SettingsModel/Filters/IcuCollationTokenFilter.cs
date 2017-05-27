@@ -49,7 +49,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         ///     significant during comparison. The default strength for the Collator is tertiary,
         ///     unless specified otherwise by the locale used to create the Collator. Possible
         ///     values: primary, secondary, tertiary, quaternary or identical. See ICU Collation
-        ///     documentation for a more detailed explanation for the specific values.
+        ///             documentation for a more detailed explanation for the specific values.
         /// </summary>
         public IcuCollationStrength Strength
         {

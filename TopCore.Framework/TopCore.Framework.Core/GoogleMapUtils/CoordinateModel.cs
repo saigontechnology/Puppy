@@ -26,6 +26,7 @@ namespace TopCore.Framework.Core.GoogleMapUtils
             Latitude = lat;
             Longitude = lng;
         }
+
         public double Latitude { get; set; }
         public double Longitude { get; set; }
     }

@@ -38,7 +38,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     rules_path A path (either relative to config location, or absolute) to a list of words. 
+        ///     rules_path A path (either relative to config location, or absolute) to a list of words.
         /// </summary>
         public string KeywordsPath
         {

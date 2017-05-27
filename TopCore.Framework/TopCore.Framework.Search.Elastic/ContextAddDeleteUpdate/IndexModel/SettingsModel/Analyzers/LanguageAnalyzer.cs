@@ -13,15 +13,17 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         /// <summary>
         ///     A set of analyzers aimed at analyzing specific language text. The following types are
         ///     supported: arabic, armenian, basque, brazilian, bulgarian, catalan, chinese, cjk,
-        ///     czech, danish, dutch, english, finnish, french, galician, german, greek, hindi,
-        ///     hungarian, indonesian, irish, italian, latvian, norwegian, persian, portuguese,
-        ///     romanian, russian, sorani, spanish, swedish, turkish, thai. Configuring language
-        ///     analyzersedit Stopwordsedit All analyzers support setting custom stopwords either
-        ///     internally in the config, or by using an external stopwords file by setting
-        ///     stopwords_path. The following analyzers support setting custom stem_exclusion list:
-        ///     arabic, armenian, basque, catalan, bulgarian, catalan, czech, finnish, dutch,
-        ///     english, finnish, french, galician, german, irish, hindi, hungarian, indonesian,
-        ///     italian, latvian, norwegian, portuguese, romanian, russian, sorani, spanish, swedish, turkish.
+        ///                czech, danish, dutch, english, finnish, french, galician, german, greek,
+        ///                hindi, hungarian, indonesian, irish, italian, latvian, norwegian, persian,
+        ///                portuguese, romanian, russian, sorani, spanish, swedish, turkish, thai.
+        ///                Configuring language analyzersedit Stopwordsedit All analyzers support
+        ///                setting custom stopwords either internally in the config, or by using an
+        ///                external stopwords file by setting stopwords_path. The following analyzers
+        ///                support setting custom stem_exclusion list: arabic, armenian, basque,
+        ///                catalan, bulgarian, catalan, czech, finnish, dutch, english, finnish,
+        ///                french, galician, german, irish, hindi, hungarian, indonesian, italian,
+        ///                latvian, norwegian, portuguese, romanian, russian, sorani, spanish,
+        ///                swedish, turkish.
         /// </summary>
         /// <param name="name">     name of the analyzer </param>
         /// <param name="analyzer"> required for language analyzers </param>

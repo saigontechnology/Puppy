@@ -6,7 +6,8 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
     ///     A rescore request is executed on each shard before it returns its results to be sorted by
     ///     the node handling the overall search request. Currently the rescore API has only one
     ///     implementation: the query rescorer, which uses a query to tweak the scoring. In the
-    ///     future, alternative rescorers may be made available, for example, a pair-wise rescorer.
+    ///                     future, alternative rescorers may be made available, for example, a
+    ///                     pair-wise rescorer.
     ///     Note: the rescore phase is not executed when search_type is set to scan or count. The
     ///           query rescorer executes a second query only on the Top-K results returned by the
     ///           query and post_filter phases. The number of docs which will be examined on each
@@ -117,7 +118,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         total,
 
         /// <summary>
-        ///     Multiply the original score by the rescore query score. Useful for function query rescores. 
+        ///     Multiply the original score by the rescore query score. Useful for function query rescores.
         /// </summary>
         multiply
     }

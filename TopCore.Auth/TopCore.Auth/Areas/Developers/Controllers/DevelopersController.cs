@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using Microsoft.Extensions.Configuration;
 
 namespace TopCore.Auth.Areas.Developers.Controllers

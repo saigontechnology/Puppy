@@ -39,7 +39,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
         public string PreIndexedType { get; set; }
 
         /// <summary>
-        ///     path - The field specified as path containing the pre-indexed shape. Defaults to shape. 
+        ///     path - The field specified as path containing the pre-indexed shape. Defaults to shape.
         /// </summary>
         public string Path { get; set; }
 

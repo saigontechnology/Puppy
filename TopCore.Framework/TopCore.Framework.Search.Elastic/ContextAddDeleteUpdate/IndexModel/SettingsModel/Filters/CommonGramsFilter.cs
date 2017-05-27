@@ -63,7 +63,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     ignore_case If true, common words matching will be case insensitive (defaults to false). 
+        ///     ignore_case If true, common words matching will be case insensitive (defaults to false).
         /// </summary>
         public bool IgnoreCase
         {

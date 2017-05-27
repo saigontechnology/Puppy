@@ -40,7 +40,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Sorting
         /// <summary>
         ///     The missing parameter specifies how docs which are missing the field should be
         ///     treated: The missing value can be set to _last, _first, or a custom value (that will
-        ///     be used for missing docs as the sort value).
+        ///              be used for missing docs as the sort value).
         /// </summary>
         public SortMissing Missing
         {

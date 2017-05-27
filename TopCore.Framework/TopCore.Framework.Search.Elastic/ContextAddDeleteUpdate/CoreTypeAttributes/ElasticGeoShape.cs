@@ -37,7 +37,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttrib
         ///     Elastic will calculate the best tree_levels value to honor this precision. The value
         ///     should be a number followed by an optional distance unit. Valid distance units
         ///     include: in, inch, yd, yard, mi, miles, km, kilometers, m,meters (default),
-        ///     cm,centimeters, mm, millimeters.
+        ///              cm,centimeters, mm, millimeters.
         /// </summary>
         public virtual string Precision
         {

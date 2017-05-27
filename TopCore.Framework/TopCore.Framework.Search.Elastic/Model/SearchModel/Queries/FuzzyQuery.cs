@@ -9,7 +9,7 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Queries
     ///     and then checks the term dictionary to find out which of those generated terms actually
     ///     exist in the index.
     ///     Warning: this query can be very heavy if prefix_length and max_expansions are both set to
-    ///              0. This could cause every term in the index to be examined!
+    ///     0. This could cause every term in the index to be examined!
     /// </summary>
     public class FuzzyQuery : IQuery
     {

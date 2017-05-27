@@ -207,9 +207,9 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel
         ///     fragment to highlight, the default is to not return anything. Instead, we can return
         ///     a snippet of text from the beginning of the field by setting no_match_size (default
         ///     0) to the length of the text that you want returned. The actual length may be shorter
-        ///     than specified as it tries to break on a word boundary. When using the postings
-        ///     highlighter it is not possible to control the actual size of the snippet, therefore
-        ///     the first sentence gets returned whenever no_match_size is greater than 0.
+        ///        than specified as it tries to break on a word boundary. When using the postings
+        ///        highlighter it is not possible to control the actual size of the snippet,
+        ///        therefore the first sentence gets returned whenever no_match_size is greater than 0.
         /// </summary>
         public uint FragmentOffset
         {

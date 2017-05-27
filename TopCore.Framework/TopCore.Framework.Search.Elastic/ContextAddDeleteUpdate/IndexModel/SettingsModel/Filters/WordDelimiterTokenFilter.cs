@@ -37,7 +37,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         ///     Named word_delimiter, it Splits words into subwords and performs optional
         ///     transformations on subword groups. Words are split into subwords with the following
         ///     rules: split on intra-word delimiters (by default, all non alpha-numeric characters).
-        ///     "Wi-Fi" → "Wi", "Fi" split on case
+        ///            "Wi-Fi" → "Wi", "Fi" split on case
         ///     transitions: "PowerShot" → "Power", "Shot" split on letter-number transitions:
         ///                  "SD500" → "SD", "500" leading and trailing intra-word delimiters on each
         ///                  subword are ignored: "//hello---there, dude" → "hello", "there", "dude"

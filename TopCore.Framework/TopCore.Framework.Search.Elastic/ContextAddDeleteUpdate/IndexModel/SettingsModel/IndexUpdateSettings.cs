@@ -400,7 +400,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         ///     index.recovery.initial_shards When using local gateway a particular shard is
         ///     recovered only if there can be allocated quorum shards in the cluster. It can be set
         ///     to: quorum (default) quorum-1 (or half) full full-1. Number values are also
-        ///     supported, e.g. 1.
+        ///         supported, e.g. 1.
         /// </summary>
         public string RecoveryInitialShards
         {
@@ -465,7 +465,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     index.compound_on_flush See `index.compound_on_flush in the section called “Index Settingsedit”. 
+        ///     index.compound_on_flush See `index.compound_on_flush in the section called “Index Settingsedit”.
         /// </summary>
         public bool CompoundOnFlush
         {

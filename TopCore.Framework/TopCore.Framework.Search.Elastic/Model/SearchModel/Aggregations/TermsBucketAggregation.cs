@@ -199,12 +199,13 @@ namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Aggregations
         /// <summary>
         ///     execution_hint There are different mechanisms by which terms aggregations can be
         ///     executed: by using field values directly in order to aggregate data per-bucket (map)
-        ///     by using ordinals of the field and preemptively allocating one bucket per ordinal
-        ///     value (global_ordinals) by using ordinals of the field and dynamically allocating one
-        ///     bucket per ordinal value (global_ordinals_hash) by using per-segment ordinals to
-        ///     compute counts and remap these counts to global counts using global ordinals
-        ///     (global_ordinals_low_cardinality) Elastic tries to have sensible defaults so this is
-        ///     something that generally doesn’t need to be configured.
+        ///               by using ordinals of the field and preemptively allocating one bucket per
+        ///               ordinal value (global_ordinals) by using ordinals of the field and
+        ///               dynamically allocating one bucket per ordinal value (global_ordinals_hash)
+        ///               by using per-segment ordinals to compute counts and remap these counts to
+        ///               global counts using global ordinals (global_ordinals_low_cardinality)
+        ///               Elastic tries to have sensible defaults so this is something that generally
+        ///               doesn’t need to be configured.
         /// </summary>
         public ExecutionHint ExecutionHint
         {

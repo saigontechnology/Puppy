@@ -3,7 +3,7 @@
 namespace TopCore.Framework.Search.Elastic.Model.SearchModel.Filters
 {
     /// <summary>
-    ///     Returns documents that have at least one non-null value in the original field: Always cached 
+    ///     Returns documents that have at least one non-null value in the original field: Always cached
     /// </summary>
     public class ExistsFilter : IFilter
     {

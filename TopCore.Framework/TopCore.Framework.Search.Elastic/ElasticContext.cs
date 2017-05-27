@@ -173,9 +173,7 @@ namespace TopCore.Framework.Search.Elastic
         ///     updated in the search engine
         /// </summary>
         /// <typeparam name="T"> This type is used to get the index and type of the document </typeparam>
-        /// <param name="id">               
-        ///     id of the document which will be deleted.
-        /// </param>
+        /// <param name="id">                id of the document which will be deleted. </param>
         /// <param name="routingDefinition"></param>
         public void DeleteDocument<T>(object id, RoutingDefinition routingDefinition = null)
         {
@@ -473,9 +471,7 @@ namespace TopCore.Framework.Search.Elastic
         ///     Search API can be used. Only single index and type search
         /// </summary>
         /// <typeparam name="T"> Type T used for the index and tpye used in the search </typeparam>
-        /// <param name="search">             
-        ///     search body for Elastic Search API
-        /// </param>
+        /// <param name="search">              search body for Elastic Search API </param>
         /// <param name="searchUrlParameters"> add routing or pretty parameters if required </param>
         /// <returns> A collection of documents of type T </returns>
         public ResultDetails<SearchResult<T>> Search<T>(Model.SearchModel.Search search,
@@ -551,7 +547,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     executes a post request to checks if at least one document exists for the search query. 
+        ///     executes a post request to checks if at least one document exists for the search query.
         /// </summary>
         /// <typeparam name="T"> Type used to define the type and index in elsticsearch </typeparam>
         /// <param name="searchJsonParameters"> json query for elastic </param>
@@ -569,7 +565,7 @@ namespace TopCore.Framework.Search.Elastic
         }
 
         /// <summary>
-        ///     executes a post request to checks if at least one document exists for the search query. 
+        ///     executes a post request to checks if at least one document exists for the search query.
         /// </summary>
         /// <typeparam name="T"> Type used to define the type and index in elsticsearch </typeparam>
         /// <param name="search">  search body for Elastic Search API </param>
@@ -631,9 +627,7 @@ namespace TopCore.Framework.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="jsonContent">               
-        ///     query which will be saved.
-        /// </param>
+        /// <param name="jsonContent">                query which will be saved. </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>
@@ -652,9 +646,7 @@ namespace TopCore.Framework.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="search">                    
-        ///     search body for Elastic Search API
-        /// </param>
+        /// <param name="search">                     search body for Elastic Search API </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>
@@ -673,9 +665,7 @@ namespace TopCore.Framework.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="jsonContent">               
-        ///     query which will be saved.
-        /// </param>
+        /// <param name="jsonContent">                query which will be saved. </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>
@@ -694,9 +684,7 @@ namespace TopCore.Framework.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="search">                    
-        ///     search body for Elastic Search API
-        /// </param>
+        /// <param name="search">                     search body for Elastic Search API </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>

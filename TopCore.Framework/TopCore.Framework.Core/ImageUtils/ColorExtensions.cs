@@ -17,7 +17,6 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
 using System.Drawing;
 
 namespace TopCore.Framework.Core.ImageUtils

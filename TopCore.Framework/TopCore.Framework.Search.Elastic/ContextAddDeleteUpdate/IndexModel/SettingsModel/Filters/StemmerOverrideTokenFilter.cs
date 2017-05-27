@@ -38,7 +38,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         }
 
         /// <summary>
-        ///     rules_path A path (either relative to config location, or absolute) to a list of mappings. 
+        ///     rules_path A path (either relative to config location, or absolute) to a list of mappings.
         /// </summary>
         public string RulesPath
         {

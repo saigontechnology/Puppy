@@ -22,7 +22,7 @@ namespace TopCore.Framework.Search.Elastic.ContextAddDeleteUpdate.IndexModel.Set
         /// <summary>
         ///     discount_overlaps Determines whether overlap tokens (Tokens with 0 position
         ///     increment) are ignored when computing norm. By default this is true, meaning overlap
-        ///     tokens do not count when computing norms.
+        ///                tokens do not count when computing norms.
         /// </summary>
         public bool DiscountOverlaps
         {

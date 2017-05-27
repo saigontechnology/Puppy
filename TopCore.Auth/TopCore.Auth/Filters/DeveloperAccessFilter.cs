@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Net;
-using Microsoft.Extensions.Configuration;
 
 namespace TopCore.Auth.Filters
 {

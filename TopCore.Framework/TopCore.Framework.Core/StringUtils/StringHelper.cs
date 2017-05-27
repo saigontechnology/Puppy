@@ -32,6 +32,16 @@ namespace TopCore.Framework.Core.StringUtils
         public static Random Random = new Random();
 
         /// <summary>
+        ///     Generate Random UPPER String 
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string GetRandomUpperString(int length)
+        {
+            return GetRandomString(length).ToUpperInvariant();
+        }
+
+        /// <summary>
         ///     Generate Random String 
         /// </summary>
         /// <param name="length"></param>
@@ -70,27 +80,12 @@ namespace TopCore.Framework.Core.StringUtils
         }
 
         /// <summary>
-        ///     Normalize: 
-        ///     <code>
-        ///   UPPER CASE
-        ///     </code>
-        ///     with 
-        ///     <code>
-        ///   remove all diacritic (accents)
-        ///     </code>
-        ///     in string 
+        ///     Normalize: UPPER CASE with remove all diacritic (accents) in string 
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         /// <remarks>
-        ///     Replace 
-        ///     <code>
-        /// đ, Đ to D
-        ///     </code>
-        ///     . if value is is Null Or WhiteSpace will return 
-        ///     <code>
-        /// string.Empty
-        ///     </code>
+        ///     Replace đ, Đ to D.if value is is Null Or WhiteSpace will return string.Empty
         /// </remarks>
         public static string Normalize(string value)
         {

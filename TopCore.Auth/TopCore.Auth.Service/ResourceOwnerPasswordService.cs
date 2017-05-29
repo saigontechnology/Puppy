@@ -17,7 +17,6 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using EnumsNET;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
@@ -102,8 +101,7 @@ namespace TopCore.Auth.Service
                         Dictionary<string, object> errorDictionary =
                             JsonConvert.DeserializeObject<Dictionary<string, object>>(errorJson);
 
-                        context.Result = new GrantValidationResult(TokenRequestErrors.InvalidClient,
-                            ErrorCode.OtpExpired.AsString(EnumFormat.Description), errorDictionary);
+                        context.Result = new GrantValidationResult(errorDictionary);
                         return;
                     }
 

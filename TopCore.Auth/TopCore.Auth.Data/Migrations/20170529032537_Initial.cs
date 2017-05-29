@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TopCore.Auth.Data.Migrations
 {
@@ -139,23 +140,25 @@ namespace TopCore.Auth.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
+                name: "User",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    CreatedOnUtc = table.Column<DateTime>(nullable: false),
-                    DeletedOnUtc = table.Column<DateTime>(nullable: true),
+                    CreatedTime = table.Column<DateTimeOffset>(nullable: false),
+                    DeletedTime = table.Column<DateTimeOffset>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
+                    GlobalId = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    LastUpdatedOnUtc = table.Column<DateTime>(nullable: true),
+                    LastUpdatedTime = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    PasswordExpireTime = table.Column<DateTimeOffset>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
@@ -166,7 +169,7 @@ namespace TopCore.Auth.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +191,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "ApiResources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,7 +218,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "ApiResources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,7 +243,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "ApiResources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -263,7 +266,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -285,7 +288,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -307,7 +310,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -329,7 +332,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -351,7 +354,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -373,7 +376,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -395,7 +398,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -420,7 +423,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -442,7 +445,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "IdentityResources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -465,7 +468,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -483,12 +486,12 @@ namespace TopCore.Auth.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        name: "FK_AspNetUserClaims_User_UserId",
                         column: x => x.UserId,
                         principalSchema: "dbo",
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -505,12 +508,12 @@ namespace TopCore.Auth.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        name: "FK_AspNetUserLogins_User_UserId",
                         column: x => x.UserId,
                         principalSchema: "dbo",
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -530,14 +533,14 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        name: "FK_AspNetUserRoles_User_UserId",
                         column: x => x.UserId,
                         principalSchema: "dbo",
-                        principalTable: "AspNetUsers",
+                        principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -559,7 +562,7 @@ namespace TopCore.Auth.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "ApiScopes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -708,13 +711,13 @@ namespace TopCore.Auth.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 schema: "dbo",
-                table: "AspNetUsers",
+                table: "User",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 schema: "dbo",
-                table: "AspNetUsers",
+                table: "User",
                 column: "NormalizedUserName",
                 unique: true);
         }
@@ -810,7 +813,7 @@ namespace TopCore.Auth.Data.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers",
+                name: "User",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

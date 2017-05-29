@@ -15,11 +15,55 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 namespace TopCore.Auth.Domain.Exceptions
 {
+    /// <summary>
+    ///     Error code for whole system, 
+    ///     <code>
+    ///  DisplayAttribute.Name
+    ///     </code>
+    ///     as a Group/Module, 
+    ///     <code>
+    ///  DescriptionAttribute
+    ///     </code>
+    ///     as a string format 
+    /// </summary>
     public enum ErrorCode
     {
-        Unknown = -1,
-        Unauthorized = 1
+        // Global
+        [Display(Name = "Global")]
+        [Description("Bad Request")]
+        BadRequest = 400,
+
+        [Display(Name = "Global")]
+        [Description("Un-Authenticate")]
+        UnAuthenticated = 401,
+
+        [Display(Name = "Global")]
+        [Description("Forbidden, this feature for 18+ :))")]
+        Unauthorized = 403,
+
+        [Display(Name = "Global")]
+        [Description("Awesome, You break the system :o. You know what they say, you get what you pay for... The features do not write themselves, you know. Now, just god and you know what happen.")]
+        Unknown = 500,
+
+        // User
+        [Display(Name = "User")]
+        [Description("OTP is expired.")]
+        OtpExpired = 1001,
+
+        [Display(Name = "User")]
+        [Description("Subject Id is invalid.")]
+        InvalidSubjectId = 1002,
+
+        /// <summary>
+        /// [Description("User with id: {0} not found.")]
+        /// </summary>
+        [Display(Name = "User")]
+        [Description("User is not found.")]
+        UserNotfound = 1003,
     }
 }

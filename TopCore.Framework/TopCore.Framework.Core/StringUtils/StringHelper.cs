@@ -29,6 +29,7 @@ namespace TopCore.Framework.Core.StringUtils
     public static class StringHelper
     {
         public const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        public const string NumberChars = "0123456789";
         public static Random Random = new Random();
 
         /// <summary>
@@ -52,6 +53,21 @@ namespace TopCore.Framework.Core.StringUtils
 
             for (var i = 0; i < stringChars.Length; i++)
                 stringChars[i] = Chars[Random.Next(Chars.Length)];
+
+            return new string(stringChars);
+        }
+
+        /// <summary>
+        ///     Generate Random String 
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string GetRandomNumber(int length)
+        {
+            var stringChars = new char[length];
+
+            for (var i = 0; i < stringChars.Length; i++)
+                stringChars[i] = NumberChars[Random.Next(NumberChars.Length)];
 
             return new string(stringChars);
         }
@@ -124,6 +140,77 @@ namespace TopCore.Framework.Core.StringUtils
             Guid guid;
             var isValid = Guid.TryParse(value, out guid);
             return isValid;
+        }
+
+        public static bool IsValidEmail(string value)
+        {
+            RegexUtilities regexUtilities = new RegexUtilities();
+            return regexUtilities.IsValidEmail(value);
+        }
+
+        public static bool IsValidPhoneNumber(string value, string countryCode = "+84", int minLength = 9, int maxLength = 11)
+        {
+            var regex = value.StartsWith("0")
+                ? $@"^(\d[0-9]{{{minLength},{maxLength}}}$"
+                : $@"^(\+{countryCode}[0-9]{{{minLength},{maxLength}}}$";
+
+            return Regex.Match(value, regex).Success;
+        }
+    }
+
+    internal class RegexUtilities
+    {
+        private bool _invalid;
+
+        public bool IsValidEmail(string strIn)
+        {
+            _invalid = false;
+            if (String.IsNullOrEmpty(strIn))
+                return false;
+
+            // Use IdnMapping class to convert Unicode domain names.
+            try
+            {
+                strIn = Regex.Replace(strIn, @"(@)(.+)$", this.DomainMapper,
+                    RegexOptions.None, TimeSpan.FromMilliseconds(200));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+
+            if (_invalid)
+                return false;
+
+            // Return true if strIn is in valid e-mail format.
+            try
+            {
+                return Regex.IsMatch(strIn,
+                    @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                    @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+        }
+
+        private string DomainMapper(Match match)
+        {
+            // IdnMapping class with default property values.
+            IdnMapping idn = new IdnMapping();
+
+            string domainName = match.Groups[2].Value;
+            try
+            {
+                domainName = idn.GetAscii(domainName);
+            }
+            catch (ArgumentException)
+            {
+                _invalid = true;
+            }
+            return match.Groups[1].Value + domainName;
         }
     }
 }

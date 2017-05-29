@@ -15,24 +15,27 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using EnumsNET;
+using System.Collections.Generic;
 using TopCore.Auth.Domain.Exceptions;
 
 namespace TopCore.Auth.Domain.ViewModels
 {
     public class ApiErrorViewModel
     {
-        public ErrorCode Code { get; set; }
-        public string Message { get; set; }
-
-        public ApiErrorViewModel(ErrorCode code)
-        {
-            Code = code;
-        }
-
         public ApiErrorViewModel(ErrorCode code, string message)
         {
             Code = code;
-            Message = message;
+            Message = string.IsNullOrWhiteSpace(message) ? code.AsString(EnumFormat.Description) : message;
+            Module = code.AsString(EnumFormat.DisplayName); ;
         }
+
+        public ErrorCode Code { get; set; }
+
+        public string Message { get; set; }
+
+        public string Module { get; set; }
+
+        public List<(string PropertyName, object value)> ListPropertyValue { get; set; }
     }
 }

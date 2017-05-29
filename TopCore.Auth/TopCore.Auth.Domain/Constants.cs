@@ -29,6 +29,9 @@ namespace TopCore.Auth.Domain
             public const string WebRoot = "assets";
             public const string CookieSchemaName = "eatup_sso_cookie";
 
+            // This system use Viet Nam time zone, alias "SE Asia Standard Time"
+            public static readonly TimeZoneInfo TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
             public static class Cros
             {
                 public const string PolicyAllowAll = "CrosPolicyAllowAll";

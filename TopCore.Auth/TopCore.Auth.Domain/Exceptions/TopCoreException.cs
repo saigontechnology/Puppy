@@ -21,21 +21,31 @@ namespace TopCore.Auth.Domain.Exceptions
 {
     public class TopCoreException : Exception
     {
-        public ErrorCode Code { get; }
-
         public TopCoreException(ErrorCode code)
         {
             Code = code;
         }
 
-        public TopCoreException(ErrorCode code, string message) : base(message)
+        public TopCoreException(ErrorCode code, params (string PropertyName, object value)[] arrayPropertyValue)
         {
             Code = code;
+            ArrayPropertyValue = arrayPropertyValue;
         }
 
-        public TopCoreException(ErrorCode code, string message, Exception innerException) : base(message, innerException)
+        public TopCoreException(ErrorCode code, string message, params (string PropertyName, object value)[] arrayPropertyValue) : base(message)
         {
             Code = code;
+            ArrayPropertyValue = arrayPropertyValue;
         }
+
+        public TopCoreException(ErrorCode code, string message, Exception innerException, params (string PropertyName, object value)[] arrayPropertyValue) : base(message, innerException)
+        {
+            Code = code;
+            ArrayPropertyValue = arrayPropertyValue;
+        }
+
+        public ErrorCode Code { get; }
+
+        public (string PropertyName, object value)[] ArrayPropertyValue { get; }
     }
 }

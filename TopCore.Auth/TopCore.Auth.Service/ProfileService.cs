@@ -15,6 +15,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using EnumsNET;
 using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
@@ -25,8 +26,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TopCore.Auth.Domain.Entities;
+using TopCore.Auth.Domain.Exceptions;
 using TopCore.Auth.Domain.Interfaces.Data;
 using TopCore.Auth.Domain.Interfaces.Services;
+using TopCore.Auth.Domain.Utils;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Service
@@ -53,7 +56,6 @@ namespace TopCore.Auth.Service
 
             var subjectId = subject.GetSubjectId();
             var user = await _userManager.FindByIdAsync(subjectId).ConfigureAwait(true);
-
             context.IsActive = false;
             if (user != null)
             {
@@ -89,11 +91,18 @@ namespace TopCore.Auth.Service
             }
 
             var subjectId = subject.GetSubjectId();
-
             var user = await _userManager.FindByIdAsync(subjectId).ConfigureAwait(true);
             if (user == null)
             {
-                throw new ArgumentException("Invalid subject identifier");
+                throw new TopCoreException(ErrorCode.InvalidSubjectId);
+            }
+
+            // check token expire
+            DateTimeOffset systemTimeNow = SystemUtils.GetSystemTimeNow();
+
+            if (user.PasswordExpireTime < systemTimeNow)
+            {
+                throw new TopCoreException(ErrorCode.OtpExpired);
             }
 
             var claims = await GetClaimsFromUser(user).ConfigureAwait(true);
@@ -109,7 +118,7 @@ namespace TopCore.Auth.Service
 
             if (userData == null)
             {
-                throw new NullReferenceException($"User with id: {user.Id} not found.");
+                throw new TopCoreException(ErrorCode.UserNotfound);
             }
 
             var claims = new List<Claim>

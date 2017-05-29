@@ -20,16 +20,18 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
+using TopCore.Auth.Domain.Utils;
 using TopCore.Framework.EF;
 
 namespace TopCore.Auth.Domain.Entities
 {
     public class User : IdentityUser, IBaseEntity
     {
-        public DateTimeOffset? DeletedOnUtc { get; set; }
-        public string GlobalId { get; set; }
+        public string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
-        public DateTimeOffset CreatedTime { get; set; }
+        public DateTimeOffset PasswordExpireTime { get; set; }
+
+        public DateTimeOffset CreatedTime { get; set; } = SystemUtils.GetSystemTimeNow();
 
         public DateTimeOffset? LastUpdatedTime { get; set; }
 

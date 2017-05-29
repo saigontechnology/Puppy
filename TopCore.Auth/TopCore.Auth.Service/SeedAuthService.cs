@@ -29,6 +29,8 @@ using System.Threading.Tasks;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Interfaces.Data;
 using TopCore.Auth.Domain.Interfaces.Services;
+using TopCore.Auth.Domain.Utils;
+using TopCore.Framework.Core.StringUtils;
 using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Service
@@ -80,13 +82,14 @@ namespace TopCore.Auth.Service
         {
             var user = new User
             {
-                UserName = "topnguyen",
-                NormalizedUserName = "topnguyen",
+                UserName = "0945188299",
+                NormalizedUserName = "0945188299",
                 Email = "topnguyen92@gmail.com",
-                NormalizedEmail = "topnguyen92@gmail.com",
+                NormalizedEmail = StringHelper.Normalize("topnguyen92@gmail.com"),
                 EmailConfirmed = true,
                 PhoneNumber = "+84945188299",
-                PhoneNumberConfirmed = true,
+                PasswordExpireTime = SystemUtils.GetSystemTimeNow().AddMinutes(2),
+                PhoneNumberConfirmed = false,
                 Claims =
                 {
                     new IdentityUserClaim<string>
@@ -106,7 +109,7 @@ namespace TopCore.Auth.Service
 
             if (!isExist)
             {
-                _userManager.CreateAsync(user, "123456").Wait();
+                _userManager.CreateAsync(user).Wait();
             }
         }
 
@@ -114,13 +117,14 @@ namespace TopCore.Auth.Service
         {
             var user = new User
             {
-                UserName = "hungnguyen",
-                NormalizedUserName = "hungnguyen",
+                UserName = "01643185433",
+                NormalizedUserName = "01643185433",
                 Email = "hungnguyen@gmail.com",
-                NormalizedEmail = "hungnguyen@gmail.com",
+                NormalizedEmail = StringHelper.Normalize("hungnguyen@gmail.com"),
                 EmailConfirmed = true,
                 PhoneNumber = "+841643185433",
-                PhoneNumberConfirmed = true,
+                PasswordExpireTime = SystemUtils.GetSystemTimeNow().AddMinutes(2),
+                PhoneNumberConfirmed = false,
                 Claims =
                 {
                     new IdentityUserClaim<string>
@@ -140,7 +144,7 @@ namespace TopCore.Auth.Service
 
             if (!isExist)
             {
-                _userManager.CreateAsync(user, "123456").Wait();
+                _userManager.CreateAsync(user).Wait();
             }
         }
 
@@ -148,13 +152,14 @@ namespace TopCore.Auth.Service
         {
             var user = new User
             {
-                UserName = "dungnguyen",
-                NormalizedUserName = "dungnguyen",
+                UserName = "01225514403",
+                NormalizedUserName = "01225514403",
                 Email = "dungnguyen@gmail.com",
-                NormalizedEmail = "dungnguyen@gmail.com",
+                NormalizedEmail = StringHelper.Normalize("dungnguyen@gmail.com"),
                 EmailConfirmed = true,
                 PhoneNumber = "+841225514403",
-                PhoneNumberConfirmed = true,
+                PasswordExpireTime = SystemUtils.GetSystemTimeNow().AddMinutes(2),
+                PhoneNumberConfirmed = false,
                 Claims =
                 {
                     new IdentityUserClaim<string>
@@ -174,7 +179,7 @@ namespace TopCore.Auth.Service
 
             if (!isExist)
             {
-                _userManager.CreateAsync(user, "123456").Wait();
+                _userManager.CreateAsync(user).Wait();
             }
         }
 

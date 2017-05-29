@@ -47,7 +47,6 @@ namespace TopCore.Framework.EF
     /// </summary>
     /// <typeparam name="TId">Id type of this entity</typeparam>
     /// <typeparam name="TOwnerId">Id type of who do the action of entity (for tracking)</typeparam>
-    [JsonObject(MemberSerialization.OptOut)]
     public abstract class EntityBase<TId, TOwnerId> : IBaseEntity
     {
         [Key]
@@ -82,7 +81,6 @@ namespace TopCore.Framework.EF
         public virtual byte[] Version { get; set; }
     }
 
-    [JsonObject(MemberSerialization.OptOut)]
     public class EntityBase : EntityBase<int, int?>
     {
         public override int? CreatedBy { get; set; }

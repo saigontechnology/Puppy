@@ -16,6 +16,7 @@
 
   <!-- Use Identity Server -->
   <ItemGroup>
+    <PackageReference Include="Enums.NET" Version="2.1.1" />
     <PackageReference Include="IdentityServer4" Version="1.5.1" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="1.0.1" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="1.0.1" />

@@ -24,8 +24,8 @@ namespace TopCore.Auth.Domain.Interfaces.Services
     public interface IAccountService
     {
         /// <summary>
-        ///     Add user if not exist and generate OTP as a password
+        ///     Generate and send OTP as a password for user. Add user if not exist 
         /// </summary>
-        Task<string> GetOtp(string phoneOrEmail);
+        Task SendOtp(string phoneOrEmail, string requestIpAddress, string clientId);
     }
 }

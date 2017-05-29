@@ -51,19 +51,23 @@ namespace TopCore.Auth.Domain.Exceptions
         Unknown = 500,
 
         // User
-        [Display(Name = "User")]
+        [Display(Name = "OTP")]
         [Description("OTP is expired.")]
         OtpExpired = 1001,
 
+        [Display(Name = "OTP")]
+        [Description("User already have OTP not yet expired.")]
+        AlreadyHaveOtpNotExpire = 1002,
+
         [Display(Name = "User")]
         [Description("Subject Id is invalid.")]
-        InvalidSubjectId = 1002,
+        InvalidSubjectId = 2001,
 
         /// <summary>
-        /// [Description("User with id: {0} not found.")]
+        ///     [Description("User with id: {0} not found.")] 
         /// </summary>
         [Display(Name = "User")]
         [Description("User is not found.")]
-        UserNotfound = 1003,
+        UserNotfound = 2002,
     }
 }

@@ -4,9 +4,9 @@
         <name>TopCore.Auth</name>
     </assembly>
     <members>
-        <member name="M:TopCore.Auth.Controllers.AccountApiController.GetOtp(System.String)">
+        <member name="M:TopCore.Auth.Controllers.AccountApiController.SendOtp(System.String)">
             <summary>
-                Get OTP 
+                Send OTP 
             </summary>
             <param name="phoneOrEmail"></param>
             <returns></returns>

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
@@ -10,24 +11,29 @@ namespace TopCore.Auth.Controllers
     public class AccountApiController : ApiController
     {
         private readonly IAccountService _accountSeeService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountApiController(IAccountService accountSeeService)
+        public AccountApiController(IAccountService accountSeeService, IHttpContextAccessor httpContextAccessor)
         {
             _accountSeeService = accountSeeService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
-        ///     Get OTP 
+        ///     Send OTP 
         /// </summary>
         /// <param name="phoneOrEmail"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("otp/{phoneOrEmail}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, null, "OTP")]
-        public async Task<IActionResult> GetOtp([FromRoute]string phoneOrEmail)
+        [SwaggerResponse((int)HttpStatusCode.OK, null, "OTP Sent")]
+        public async Task<IActionResult> SendOtp([FromRoute]string phoneOrEmail)
         {
-            string otp = await _accountSeeService.GetOtp(phoneOrEmail);
-            return Ok(otp);
+            // TODO verify Client id, client secret with permission
+            var requestIpAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            string clientId = "client id"; // TODO get it from identity server by request
+            await _accountSeeService.SendOtp(phoneOrEmail, requestIpAddress, clientId);
+            return Ok();
         }
     }
 }

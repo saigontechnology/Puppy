@@ -10,6 +10,7 @@ namespace TopCore.Auth.Data.Mapping
         public void Map(EntityTypeBuilder<User> builder)
         {
             builder.ToTable(nameof(User));
+            builder.HasKey(x => x.Id);
             builder.Property(x => x.Version).IsRowVersion();
         }
     }

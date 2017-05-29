@@ -105,7 +105,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _userRepository.Get(x => x.UserName == user.UserName).Any();
+            var isExist = _userRepository.Get(x => x.PhoneNumber == user.PhoneNumber).Any();
 
             if (!isExist)
             {
@@ -140,7 +140,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _userRepository.Get(x => x.UserName == user.UserName).Any();
+            var isExist = _userRepository.Get(x => x.PhoneNumber == user.PhoneNumber).Any();
 
             if (!isExist)
             {
@@ -175,7 +175,7 @@ namespace TopCore.Auth.Service
                 }
             };
 
-            var isExist = _userRepository.Get(x => x.UserName == user.UserName).Any();
+            var isExist = _userRepository.Get(x => x.PhoneNumber == user.PhoneNumber).Any();
 
             if (!isExist)
             {

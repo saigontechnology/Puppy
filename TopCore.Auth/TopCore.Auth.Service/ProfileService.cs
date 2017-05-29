@@ -15,7 +15,6 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using EnumsNET;
 using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
@@ -28,17 +27,14 @@ using System.Threading.Tasks;
 using TopCore.Auth.Domain.Entities;
 using TopCore.Auth.Domain.Exceptions;
 using TopCore.Auth.Domain.Interfaces.Data;
-using TopCore.Auth.Domain.Interfaces.Services;
 using TopCore.Auth.Domain.Utils;
-using TopCore.Framework.DependencyInjection.Attributes;
 
 namespace TopCore.Auth.Service
 {
     /// <summary>
     ///     Identity Server call flow: Check IsActiveAsync then GetProfileDataAsync 
     /// </summary>
-    [PerRequestDependency(ServiceType = typeof(IProfileService))]
-    public class ProfileService : IProfileService, IdentityServer4.Services.IProfileService
+    public class ProfileService : IdentityServer4.Services.IProfileService
     {
         private readonly UserManager<User> _userManager;
         private readonly IRepository<User> _userRepository;
@@ -78,6 +74,18 @@ namespace TopCore.Auth.Service
                     return;
                 }
 
+                // Check token expire
+                DateTimeOffset systemTimeNow = SystemUtils.GetSystemTimeNow();
+                if (user.PasswordExpireTime < systemTimeNow)
+                {
+                    throw new TopCoreException(ErrorCode.OtpExpired);
+                }
+
+                // Token is valid, set token expired
+                user.PasswordExpireTime = systemTimeNow;
+                await _userManager.UpdateAsync(user);
+
+                // Is Active
                 context.IsActive = true;
             }
         }
@@ -95,14 +103,6 @@ namespace TopCore.Auth.Service
             if (user == null)
             {
                 throw new TopCoreException(ErrorCode.InvalidSubjectId);
-            }
-
-            // check token expire
-            DateTimeOffset systemTimeNow = SystemUtils.GetSystemTimeNow();
-
-            if (user.PasswordExpireTime < systemTimeNow)
-            {
-                throw new TopCoreException(ErrorCode.OtpExpired);
             }
 
             var claims = await GetClaimsFromUser(user).ConfigureAwait(true);

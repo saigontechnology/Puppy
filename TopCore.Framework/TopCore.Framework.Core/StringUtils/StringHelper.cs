@@ -148,13 +148,38 @@ namespace TopCore.Framework.Core.StringUtils
             return regexUtilities.IsValidEmail(value);
         }
 
-        public static bool IsValidPhoneNumber(string value, string countryCode = "+84", int minLength = 9, int maxLength = 11)
+        /// <summary>
+        ///     Check string is valid phone number 
+        /// </summary>
+        /// <param name="value">       Phone number </param>
+        /// <param name="countryCode"> Country code, ex: vietnam is 84 </param>
+        /// <param name="minLength">   Phone min length without first 0 or country code </param>
+        /// <param name="maxLength">   Phone max length without first 0 or country code </param>
+        /// <returns></returns>
+        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9, int maxLength = 10)
         {
-            var regex = value.StartsWith("0")
-                ? $@"^(\d[0-9]{{{minLength},{maxLength}}}$"
-                : $@"^(\+{countryCode}[0-9]{{{minLength},{maxLength}}}$";
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
 
-            return Regex.Match(value, regex).Success;
+            countryCode = countryCode?.Replace("+", string.Empty);
+            value = value.Replace("+", string.Empty);
+
+            string regexStartWithZero = $@"^\d[0-9]{{{minLength},{maxLength}}}$";
+            string regexStartWithCountryCode = $@"^\+({countryCode})[0-9]{{{minLength},{maxLength}}}$";
+
+            if (value.StartsWith("0"))
+            {
+                return Regex.Match(value, regexStartWithZero).Success;
+            }
+            if (value.StartsWith($"+{countryCode}") || value.StartsWith(countryCode))
+            {
+                value = $"+{value}";
+                return Regex.Match(value, regexStartWithCountryCode).Success;
+            }
+
+            return false;
         }
     }
 

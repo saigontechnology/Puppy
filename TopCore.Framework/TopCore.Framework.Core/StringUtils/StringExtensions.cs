@@ -19,9 +19,109 @@
 
 #endregion License
 
+using System;
+using System.Diagnostics;
+
 namespace TopCore.Framework.Core.StringUtils
 {
-    public class StringExtensions
+    public static class StringExtensions
     {
+        [DebuggerStepThrough]
+        public static bool IsMissing(this string value)
+        {
+            return string.IsNullOrWhiteSpace(value);
+        }
+
+        [DebuggerStepThrough]
+        public static bool IsMissingOrTooLong(this string value, int maxLength)
+        {
+            return string.IsNullOrWhiteSpace(value) || value.Length > maxLength;
+        }
+
+        [DebuggerStepThrough]
+        public static bool IsPresent(this string value)
+        {
+            return !string.IsNullOrWhiteSpace(value);
+        }
+
+        [DebuggerStepThrough]
+        public static string EnsureLeadingSlash(this string url)
+        {
+            if (!url.StartsWith("/"))
+                return "/" + url;
+            return url;
+        }
+
+        [DebuggerStepThrough]
+        public static string EnsureTrailingSlash(this string url)
+        {
+            if (!url.EndsWith("/"))
+                return url + "/";
+            return url;
+        }
+
+        [DebuggerStepThrough]
+        public static string RemoveLeadingSlash(this string url)
+        {
+            if (url != null && url.StartsWith("/"))
+                url = url.Substring(1);
+            return url;
+        }
+
+        [DebuggerStepThrough]
+        public static string RemoveTrailingSlash(this string url)
+        {
+            if (url != null && url.EndsWith("/"))
+                url = url.Substring(0, url.Length - 1);
+            return url;
+        }
+
+        [DebuggerStepThrough]
+        public static string CleanUrlPath(this string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                url = "/";
+            if (url != "/" && url.EndsWith("/"))
+                url = url.Substring(0, url.Length - 1);
+            return url;
+        }
+
+        [DebuggerStepThrough]
+        public static bool IsLocalUrl(this string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return false;
+            if (url[0] == 47 && (url.Length == 1 || url[1] != 47 && url[1] != 92))
+                return true;
+            if (url.Length > 1 && url[0] == 126)
+                return url[1] == 47;
+            return false;
+        }
+
+        [DebuggerStepThrough]
+        public static string AddQueryString(this string url, string query)
+        {
+            if (!url.Contains("?"))
+                url += "?";
+            else if (!url.EndsWith("&"))
+                url += "&";
+            return url + query;
+        }
+
+        public static string GetOrigin(this string url)
+        {
+            if (url != null && (url.StartsWith("http://") || url.StartsWith("https://")))
+            {
+                int num = url.IndexOf("//", StringComparison.Ordinal);
+                if (num > 0)
+                {
+                    int length = url.IndexOf("/", num + 2, StringComparison.Ordinal);
+                    if (length >= 0)
+                        url = url.Substring(0, length);
+                    return url;
+                }
+            }
+            return null;
+        }
     }
 }

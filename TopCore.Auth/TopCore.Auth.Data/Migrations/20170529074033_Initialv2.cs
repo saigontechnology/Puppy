@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TopCore.Auth.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initialv2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

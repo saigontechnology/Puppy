@@ -8,9 +8,10 @@ using TopCore.Auth.Data;
 namespace TopCore.Auth.Data.Migrations
 {
     [DbContext(typeof(DbContext))]
-    partial class DbContextModelSnapshot : ModelSnapshot
+    [Migration("20170529074033_Initialv2")]
+    partial class Initialv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasDefaultSchema("dbo")
@@ -567,42 +568,6 @@ namespace TopCore.Auth.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("TopCore.Auth.Domain.Entities.OtpTracking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClientId");
-
-                    b.Property<int?>("CreatedBy");
-
-                    b.Property<DateTimeOffset>("CreatedTime");
-
-                    b.Property<int?>("DeletedBy");
-
-                    b.Property<DateTimeOffset?>("DeletedTime");
-
-                    b.Property<string>("GlobalId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTimeOffset?>("LastUpdatedTime");
-
-                    b.Property<string>("RequestIpAddress");
-
-                    b.Property<int?>("UpdatedBy");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OtpTracking");
                 });
 
             modelBuilder.Entity("TopCore.Auth.Domain.Entities.User", b =>

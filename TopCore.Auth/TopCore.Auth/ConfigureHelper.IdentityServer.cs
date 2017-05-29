@@ -36,7 +36,7 @@ namespace TopCore.Auth
                         o.Password.RequireLowercase = false;
                         o.Password.RequireNonAlphanumeric = false;
                         o.Password.RequireUppercase = false;
-                        o.Password.RequiredLength = 6;
+                        o.Password.RequiredLength = ConfigurationRoot.GetValue<int>("UserSecurity:PasswordRequiredLength");
                         o.Cookies.ApplicationCookie.AuthenticationScheme = Domain.Constants.System.CookieSchemaName;
                     })
                     .AddEntityFrameworkStores<Data.DbContext>()
@@ -86,10 +86,12 @@ namespace TopCore.Auth
 
                     Authority = ConfigurationRoot.GetValue<string>($"OpenIdAuthorityUrl:{Environment.EnvironmentName}"),
                     PostLogoutRedirectUri = "/",
-
+                    AutomaticAuthenticate = true,
                     ClientId = "topcore_auth",
                     ClientSecret = "topcoreauth",
                     DisplayName = "Top Core Auth",
+                    // required if you want to return a 403 and not a 401 for forbidden responses
+                    AutomaticChallenge = true,
                     SaveTokens = true,
                     Scope =
                     {
@@ -97,7 +99,6 @@ namespace TopCore.Auth
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                     }
                 });
-
                 // Middleware Identity Server
                 app.UseIdentity();
                 app.UseIdentityServer();

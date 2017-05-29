@@ -95,6 +95,8 @@ namespace TopCore.Auth.Data
 
         #region DbSet
 
+        public DbSet<OtpTracking> OtpTrackings { get; set; }
+
         public DbSet<IdentityServer4.EntityFramework.Entities.Client> Clients { get; set; }
 
         public DbSet<IdentityServer4.EntityFramework.Entities.IdentityResource> IdentityResources { get; set; }

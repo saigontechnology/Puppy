@@ -21,7 +21,7 @@ namespace TopCore.Auth.Domain.Exceptions
 {
     public class TopCoreException : Exception
     {
-        public TopCoreException(ErrorCode code)
+        public TopCoreException(ErrorCode code, string message = null) : base(message)
         {
             Code = code;
         }

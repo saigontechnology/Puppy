@@ -56,7 +56,8 @@ namespace TopCore.Auth
                     .AddOperationalStore(builder => builder.UseSqlServer(connectionString,
                         options => options.MigrationsAssembly(migrationsAssembly)))
                     .AddAspNetIdentity<User>()
-                    .AddProfileService<ProfileService>();
+                    .AddProfileService<ProfileService>()
+                    .AddResourceOwnerValidator<ResourceOwnerPasswordService>();
             }
 
             public static void Middleware(IApplicationBuilder app)

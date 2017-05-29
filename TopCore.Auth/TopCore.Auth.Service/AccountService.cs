@@ -125,13 +125,6 @@ namespace TopCore.Auth.Service
 
                 // Update password expire time and user name
                 user.PasswordExpireTime = SystemUtils.GetSystemTimeNow().AddMinutes(2);
-
-                if (string.CompareOrdinal(phoneOrEmailNormalize, user.NormalizedUserName) == 0)
-                {
-                    user.UserName = phoneOrEmail;
-                    user.NormalizedUserName = phoneOrEmailNormalize;
-                }
-
                 await _userManager.UpdateAsync(user);
             }
 
@@ -150,12 +143,22 @@ namespace TopCore.Auth.Service
             // Send OTP
             if (isEmailOtp)
             {
-                // TODO send otp via email
+                SendOtpByEmail(user.Email, otp);
             }
             else
             {
-                // TODO send otp via phone number
+                SendOtpBySms(user.PhoneNumber, otp);
             }
+        }
+
+        private void SendOtpByEmail(string email, string otp)
+        {
+            
+        }
+
+        private void SendOtpBySms(string phoneNumber, string otp)
+        {
+            
         }
     }
 }

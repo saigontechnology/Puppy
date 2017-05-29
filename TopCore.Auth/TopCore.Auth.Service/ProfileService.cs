@@ -74,17 +74,6 @@ namespace TopCore.Auth.Service
                     return;
                 }
 
-                // Check token expire
-                DateTimeOffset systemTimeNow = SystemUtils.GetSystemTimeNow();
-                if (user.PasswordExpireTime < systemTimeNow)
-                {
-                    throw new TopCoreException(ErrorCode.OtpExpired);
-                }
-
-                // Token is valid, set token expired
-                user.PasswordExpireTime = systemTimeNow;
-                await _userManager.UpdateAsync(user);
-
                 // Is Active
                 context.IsActive = true;
             }

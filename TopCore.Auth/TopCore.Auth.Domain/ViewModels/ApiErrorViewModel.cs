@@ -23,7 +23,7 @@ namespace TopCore.Auth.Domain.ViewModels
 {
     public class ApiErrorViewModel
     {
-        public ApiErrorViewModel(ErrorCode code, string message)
+        public ApiErrorViewModel(ErrorCode code, string message = null)
         {
             Code = code;
             Message = string.IsNullOrWhiteSpace(message) ? code.AsString(EnumFormat.Description) : message;

@@ -23,6 +23,7 @@ using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +93,12 @@ namespace TopCore.Auth.Service
                     if (user.PasswordExpireTime < systemTimeNow)
                     {
                         ApiErrorViewModel errorViewModel = new ApiErrorViewModel(ErrorCode.OtpExpired);
-                        string errorJson = JsonConvert.SerializeObject(errorViewModel);
+                        string errorJson = JsonConvert.SerializeObject(errorViewModel, new JsonSerializerSettings
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                            NullValueHandling = NullValueHandling.Ignore,
+                            ContractResolver = new CamelCasePropertyNamesContractResolver()
+                        });
                         Dictionary<string, object> errorDictionary =
                             JsonConvert.DeserializeObject<Dictionary<string, object>>(errorJson);
 

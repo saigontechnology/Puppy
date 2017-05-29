@@ -25,7 +25,6 @@ namespace TopCore.Auth
                     {
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                        options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
 
                         // Indented for Development only
                         options.SerializerSettings.Formatting = Environment.IsDevelopment()

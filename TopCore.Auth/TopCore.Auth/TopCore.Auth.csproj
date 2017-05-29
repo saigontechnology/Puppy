@@ -9,6 +9,8 @@
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
     <Copyright>http://topnguyen.net</Copyright>
+    <RootNamespace>TopCore.Auth</RootNamespace>
+    <AssemblyName>TopCore.Auth</AssemblyName>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

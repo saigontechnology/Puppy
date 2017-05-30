@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
     <ProjectReference Include="..\Puppy.DependencyInjection\Puppy.DependencyInjection.csproj" />
     <ProjectReference Include="..\Puppy.EF\Puppy.EF.csproj" />
+    <ProjectReference Include="..\Puppy.OneSignal\Puppy.OneSignal.csproj" />
     <ProjectReference Include="..\Puppy.Search.Elastic\Puppy.Search.Elastic.csproj" />
     <ProjectReference Include="..\Puppy.Web\Puppy.Web.csproj" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 ﻿# Important Note
 > Project Created by **Top Nguyen** (http://topnguyen.net)
 - Another Framework/Project use this framework.
-- This framework is standalone, it main not use another TopCore framework.
+- This framework is standalone, it main not use another Puppy Frameworks.
 
 # Templates
 

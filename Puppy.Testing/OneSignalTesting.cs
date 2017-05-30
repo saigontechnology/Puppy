@@ -19,12 +19,12 @@
 
 #endregion License
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Puppy.OneSignal;
 using Puppy.OneSignal.Notifications;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Puppy.Testing
 {
@@ -47,9 +47,11 @@ namespace Puppy.Testing
         [TestMethod]
         public async Task Create()
         {
-            _options.IncludedSegments = new List<string> {"All"};
-            _options.Contents.Add(LanguageCodes.Vietnamese, "Kiểm tra hiển thị Tiếng Việt á à ả ã ạ ô ơ ự ư ă đ d đé kè");
-            var result = await  _client.Notifications.Create(_options);
+            const string topnguyenIosDevice = "ae7cdb36-7120-4254-8867-5ed1ecbad7f8";
+            _options.IncludePlayerIds = new List<string> { topnguyenIosDevice };
+            //_options.IncludedSegments = new List<string> {"All"};
+            _options.Contents.Add(LanguageCodes.English, "Ai đây?");
+            var result = await _client.Notifications.Create(_options);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using RestSharp;
@@ -45,7 +47,7 @@ namespace Puppy.OneSignal.Devices
         {
             var restRequest = new RestRequest("players", Method.POST);
 
-            restRequest.AddHeader("Authorization", string.Format("Basic {0}", base.ApiKey));
+            restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
 
             restRequest.RequestFormat = DataFormat.Json;
             restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
@@ -54,9 +56,7 @@ namespace Puppy.OneSignal.Devices
             var restResponse = await RestClient.ExecuteAsync<DeviceAddResult>(restRequest);
 
             if (restResponse.ErrorException != null)
-            {
                 throw restResponse.ErrorException;
-            }
 
             return restResponse.Data;
         }
@@ -69,9 +69,9 @@ namespace Puppy.OneSignal.Devices
         /// <exception cref="Exception"></exception>
         public async Task Edit(string id, DeviceEditOptions options)
         {
-            RestRequest restRequest = new RestRequest("players/{id}", Method.PUT);
+            var restRequest = new RestRequest("players/{id}", Method.PUT);
 
-            restRequest.AddHeader("Authorization", string.Format("Basic {0}", base.ApiKey));
+            restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
 
             restRequest.AddUrlSegment("id", id);
 
@@ -79,12 +79,10 @@ namespace Puppy.OneSignal.Devices
             restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
             restRequest.AddBody(options);
 
-            IRestResponse restResponse = await RestClient.ExecuteAsync(restRequest);
+            var restResponse = await RestClient.ExecuteAsync(restRequest);
 
             if (restResponse.ErrorException != null)
-            {
                 throw restResponse.ErrorException;
-            }
         }
     }
 }

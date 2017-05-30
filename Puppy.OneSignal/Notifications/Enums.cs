@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,12 +16,13 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 namespace Puppy.OneSignal.Notifications
 {
     /// <summary>
-    ///     Types of visibility for apps targeting Android API level 21+ running on Android 5.0+ devices. 
+    ///     Types of visibility for apps targeting Android API level 21+ running on Android 5.0+ devices.
     /// </summary>
     public enum AndroidVisibilityEnum
     {

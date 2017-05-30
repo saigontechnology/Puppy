@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Newtonsoft.Json;
@@ -29,6 +31,16 @@ namespace Puppy.OneSignal.Notifications
     /// </summary>
     public class NotificationCreateOptions
     {
+        /// <summary>
+        ///     Default constructor that initializes empty Contents and Headings. All other
+        ///     collection objects needs to be instantiated in order to be able to be serialized.
+        /// </summary>
+        public NotificationCreateOptions()
+        {
+            Contents = new Dictionary<string, string>();
+            Headings = new Dictionary<string, string>();
+        }
+
         /// <summary>
         ///     <br /> Your OneSignal application ID, which can be found on our dashboard at
         ///     onesignal.com under App Settings &gt; Keys &amp; IDs. <br /> It is a UUID and looks
@@ -47,7 +59,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> See the language codes you can use
         ///     <see cref="!:https://documentation.onesignal.com/docs/language-localization"> here
-        ///     </see>. <br />
+        ///     </see> . <br />
         /// </summary>
         [JsonProperty("contents")]
         public IDictionary<string, string> Contents { get; set; }
@@ -62,7 +74,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> See the language codes you can use
         ///     <see cref="!:https://documentation.onesignal.com/docs/language-localization"> here
-        ///     </see>. <br />
+        ///     </see> . <br />
         /// </summary>
         [JsonProperty("headings")]
         public IDictionary<string, string> Headings { get; set; }
@@ -74,7 +86,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> See the language codes you can use
         ///     <see cref="!:https://documentation.onesignal.com/docs/language-localization"> here
-        ///     </see>. <br />
+        ///     </see> . <br />
         /// </summary>
         [JsonProperty("data")]
         public IDictionary<string, string> Data { get; set; }
@@ -115,7 +127,7 @@ namespace Puppy.OneSignal.Notifications
         ///     localized text you would like users to receive for that language. <br /> A default
         ///     title may be displayed if a title is not provided. <br /> This field supports
         ///     <see cref="!:https://documentation.onesignal.com/docs/notification-content#section-notification-content-substitution">
-        ///     inline substitutions </see>. <br />
+        ///     inline substitutions </see> . <br />
         ///     <code>
         /// Example: {"en": "English Subtitle", "es": "Spanish Subtitle"}
         ///     </code>
@@ -158,7 +170,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> This field supports
         ///     <see cref="!:https://documentation.onesignal.com/docs/notification-content#section-notification-content-substitution">
-        ///     inline substitutions </see>. <br />
+        ///     inline substitutions </see> . <br />
         ///     Platforms: ALL <br />
         /// </summary>
         [JsonProperty("url")]
@@ -242,7 +254,7 @@ namespace Puppy.OneSignal.Notifications
         ///     object containing the following keys. <br /> See our Background Image documentation
         ///     for
         ///     <see cref="!:https://documentation.onesignal.com/docs/android-customizations#section-background-images">
-        ///     image sizes </see>. <br /> image - Asset file, android resource name, or URL to
+        ///     image sizes </see> . <br /> image - Asset file, android resource name, or URL to
         ///     remote image. <br /> headings_color - Title text color ARGB Hex format.
         ///     <code>
         /// Example(Blue): "FF0000FF".
@@ -273,7 +285,7 @@ namespace Puppy.OneSignal.Notifications
         ///     <br /> If blank the small_icon is used. Can be a drawable resource name or a URL.
         ///     <br /> See how to
         ///     <see cref="!:https://documentation.onesignal.com/docs/android-customizations#section-large-notification-icons">
-        ///     create large icons </see>. <br />
+        ///     create large icons </see> . <br />
         ///     Platforms: Android <br />
         /// </summary>
         [JsonProperty("large_icon")]
@@ -393,7 +405,7 @@ namespace Puppy.OneSignal.Notifications
         ///     on the lock screen unless the user has disabled all notifications from showing on the
         ///     lock screen. Please consider the user and mark private if the contents are.) <br /> 0
         ///     = Private (Hides message contents on lock screen if the user set "Hide sensitive
-        ///     notification content" in the system settings) <br />
+        ///       notification content" in the system settings) <br />
         ///     -1 = Secret (Notification does not show on the lock screen at all) <br />
         ///     Platforms: Android 5.0+ <br />
         /// </summary>
@@ -404,8 +416,8 @@ namespace Puppy.OneSignal.Notifications
         ///     <br /> Describes whether to set or increase/decrease your app's iOS badge count by
         ///     the ios_badgeCount specified count. Can specify None, SetTo, or Increase. <br /> None
         ///     - leaves the count unaffected. <br /> SetTo - directly sets the badge count to the
-        ///     number specified in ios_badgeCount. <br /> Increase - adds the number specified in
-        ///     ios_badgeCount to the total. Use a negative number to decrease the badge count. <br />
+        ///       number specified in ios_badgeCount. <br /> Increase - adds the number specified in
+        ///       ios_badgeCount to the total. Use a negative number to decrease the badge count. <br />
         ///     Platforms: iOS <br />
         /// </summary>
         [JsonProperty("ios_badgeType")]
@@ -487,7 +499,7 @@ namespace Puppy.OneSignal.Notifications
         ///     <br /> All notifications with the same group will be stacked together using Android's
         ///     Notification Stacking feature. <br /> More info
         ///     <see cref="!:https://developer.android.com/training/wearables/notifications/stacks.html">
-        ///     here </see>. <br />
+        ///     here </see> . <br />
         ///     Platforms: Android <br />
         /// </summary>
         [JsonProperty("android_group")]
@@ -501,7 +513,7 @@ namespace Puppy.OneSignal.Notifications
         ///     <br /> The key of each hash is either a a 2 character language code or one of
         ///     zh-Hans/zh-Hant for Simplified or Traditional Chinese. <br /> Read about
         ///     <see cref="!:https://documentation.onesignal.com/docs/language-localization#section-supported-languages">
-        ///     supported languages </see>. <br />
+        ///     supported languages </see> . <br />
         ///     <code>
         /// Example: {"en": "You have $[notif_count] new messages"}
         ///     </code>
@@ -515,7 +527,7 @@ namespace Puppy.OneSignal.Notifications
         ///     <br /> All notifications with the same group will be stacked together using Android's
         ///     Notification Stacking feature. <br /> More info
         ///     <see cref="!:https://developer.android.com/training/wearables/notifications/stacks.html">
-        ///     here </see>. <br />
+        ///     here </see> . <br />
         ///     Platforms: Amazon <br />
         /// </summary>
         [JsonProperty("adm_group")]
@@ -583,7 +595,7 @@ namespace Puppy.OneSignal.Notifications
         ///     <br /> Does not support iOS Safari Indicates whether to send to all Apple's Safari
         ///     desktop users registered under your Safari web push platform. <br /> Read more about
         ///     <see cref="!:https://documentation.onesignal.com/docs/why-doesnt-web-push-work-with-ios">
-        ///     iOS Safari </see>. <br />
+        ///     iOS Safari </see> . <br />
         ///     Platforms: WEB <br />
         /// </summary>
         [JsonProperty("isSafari")]
@@ -622,15 +634,5 @@ namespace Puppy.OneSignal.Notifications
         /// </summary>
         [JsonProperty("isChrome")]
         public bool? DeliverToChrome { get; set; }
-
-        /// <summary>
-        ///     Default constructor that initializes empty Contents and Headings. All other
-        ///     collection objects needs to be instantiated in order to be able to be serialized.
-        /// </summary>
-        public NotificationCreateOptions()
-        {
-            Contents = new Dictionary<string, string>();
-            Headings = new Dictionary<string, string>();
-        }
     }
 }

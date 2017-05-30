@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Newtonsoft.Json;
@@ -39,7 +41,7 @@ namespace Puppy.OneSignal.Notifications
         /// </summary>
         public CustomDateTimeConverter()
         {
-            base.DateTimeFormat = "yyyy-MM-dd HH:mm:ss \"GMT\"zzz";
+            DateTimeFormat = "yyyy-MM-dd HH:mm:ss \"GMT\"zzz";
         }
     }
 
@@ -53,6 +55,11 @@ namespace Puppy.OneSignal.Notifications
     public class DelayedOptionJsonConverter : StringEnumConverter
     {
         /// <summary>
+        ///     Defines if converter can be used for deserialization. 
+        /// </summary>
+        public override bool CanRead => true;
+
+        /// <summary>
         ///     Deserializes object 
         /// </summary>
         /// <param name="reader">       </param>
@@ -60,10 +67,11 @@ namespace Puppy.OneSignal.Notifications
         /// <param name="existingValue"></param>
         /// <param name="serializer">   </param>
         /// <returns></returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
-            bool isNullable = (Nullable.GetUnderlyingType(objectType) != null);
-            var enumType = (Nullable.GetUnderlyingType(objectType) ?? objectType);
+            var isNullable = Nullable.GetUnderlyingType(objectType) != null;
+            var enumType = Nullable.GetUnderlyingType(objectType) ?? objectType;
             if (!enumType.GetTypeInfo().IsEnum)
                 throw new JsonSerializationException("Type " + enumType.FullName + " is not a enum type");
 
@@ -76,8 +84,7 @@ namespace Puppy.OneSignal.Notifications
 
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.String)
-            {
-                token = (JValue)string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
+                token = (JValue) string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
                 {
                     switch (s)
                     {
@@ -94,7 +101,6 @@ namespace Puppy.OneSignal.Notifications
                             return "";
                     }
                 }).ToArray());
-            }
 
             using (var subReader = token.CreateReader())
             {
@@ -114,7 +120,9 @@ namespace Puppy.OneSignal.Notifications
         {
             var array = new JArray();
             using (var tempWriter = array.CreateWriter())
+            {
                 base.WriteJson(tempWriter, value, serializer);
+            }
             var token = array.Single();
 
             if (token.Type == JTokenType.String && value != null)
@@ -143,17 +151,6 @@ namespace Puppy.OneSignal.Notifications
         }
 
         /// <summary>
-        ///     Defines if converter can be used for deserialization. 
-        /// </summary>
-        public override bool CanRead
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
         ///     Defines if converter can be used for serialization. 
         /// </summary>
         /// <param name="objectType"></param>
@@ -175,6 +172,11 @@ namespace Puppy.OneSignal.Notifications
     public class NotificationFilterFieldTypeConverter : StringEnumConverter
     {
         /// <summary>
+        ///     Defines if converter can be used for deserialization. 
+        /// </summary>
+        public override bool CanRead => true;
+
+        /// <summary>
         ///     Deserializes object 
         /// </summary>
         /// <param name="reader">       </param>
@@ -182,10 +184,11 @@ namespace Puppy.OneSignal.Notifications
         /// <param name="existingValue"></param>
         /// <param name="serializer">   </param>
         /// <returns></returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
-            bool isNullable = (Nullable.GetUnderlyingType(objectType) != null);
-            var enumType = (Nullable.GetUnderlyingType(objectType) ?? objectType);
+            var isNullable = Nullable.GetUnderlyingType(objectType) != null;
+            var enumType = Nullable.GetUnderlyingType(objectType) ?? objectType;
             if (!enumType.GetTypeInfo().IsEnum)
                 throw new JsonSerializationException("Type " + enumType.FullName + " is not a enum type");
 
@@ -198,8 +201,7 @@ namespace Puppy.OneSignal.Notifications
 
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.String)
-            {
-                token = (JValue)string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
+                token = (JValue) string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
                 {
                     switch (s)
                     {
@@ -240,7 +242,6 @@ namespace Puppy.OneSignal.Notifications
                             return "";
                     }
                 }).ToArray());
-            }
 
             using (var subReader = token.CreateReader())
             {
@@ -260,7 +261,9 @@ namespace Puppy.OneSignal.Notifications
         {
             var array = new JArray();
             using (var tempWriter = array.CreateWriter())
+            {
                 base.WriteJson(tempWriter, value, serializer);
+            }
             var token = array.Single();
 
             if (token.Type == JTokenType.String && value != null)
@@ -313,17 +316,6 @@ namespace Puppy.OneSignal.Notifications
         }
 
         /// <summary>
-        ///     Defines if converter can be used for deserialization. 
-        /// </summary>
-        public override bool CanRead
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
         ///     Defines if converter can be used for serialization. 
         /// </summary>
         /// <param name="objectType"></param>
@@ -344,6 +336,11 @@ namespace Puppy.OneSignal.Notifications
     public class UnixDateTimeJsonConverter : StringEnumConverter
     {
         /// <summary>
+        ///     Defines if converter can be used for deserialization. 
+        /// </summary>
+        public override bool CanRead => true;
+
+        /// <summary>
         ///     Deserializes object 
         /// </summary>
         /// <param name="reader">       </param>
@@ -351,10 +348,11 @@ namespace Puppy.OneSignal.Notifications
         /// <param name="existingValue"></param>
         /// <param name="serializer">   </param>
         /// <returns></returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
-            bool isNullable = (Nullable.GetUnderlyingType(objectType) != null);
-            var enumType = (Nullable.GetUnderlyingType(objectType) ?? objectType);
+            var isNullable = Nullable.GetUnderlyingType(objectType) != null;
+            var enumType = Nullable.GetUnderlyingType(objectType) ?? objectType;
 
             if (reader.TokenType == JsonToken.Null)
             {
@@ -365,15 +363,13 @@ namespace Puppy.OneSignal.Notifications
 
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.String)
-            {
-                token = (JValue)string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
+                token = (JValue) string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
                 {
                     var unixTime = double.Parse(s);
                     var dateTime = UnixTimeStampToDateTime(unixTime);
 
                     return dateTime.ToString("s");
                 }).ToArray());
-            }
 
             using (var subReader = token.CreateReader())
             {
@@ -393,7 +389,9 @@ namespace Puppy.OneSignal.Notifications
         {
             var array = new JArray();
             using (var tempWriter = array.CreateWriter())
+            {
                 base.WriteJson(tempWriter, value, serializer);
+            }
             var token = array.Single();
 
             if (token.Type == JTokenType.String && value != null)
@@ -412,17 +410,6 @@ namespace Puppy.OneSignal.Notifications
         }
 
         /// <summary>
-        ///     Defines if converter can be used for deserialization. 
-        /// </summary>
-        public override bool CanRead
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
         ///     Defines if converter can be used for serialization. 
         /// </summary>
         /// <param name="objectType"></param>
@@ -435,15 +422,15 @@ namespace Puppy.OneSignal.Notifications
         private DateTime UnixTimeStampToDateTime(double unixTimeStamp)
         {
             // Unix timestamp is seconds past epoch
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp);
             return dtDateTime;
         }
 
-        private Double DateTimeToUnixTimeStamp(DateTime dateTime)
+        private double DateTimeToUnixTimeStamp(DateTime dateTime)
         {
             // Unix timestamp is seconds past epoch
-            var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             var elapsed = dateTime.Subtract(dtDateTime).TotalSeconds;
 
             return elapsed;

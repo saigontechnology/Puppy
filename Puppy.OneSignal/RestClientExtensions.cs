@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using RestSharp;
@@ -24,16 +26,17 @@ namespace Puppy.OneSignal
 {
     public static class RestClientExtensions
     {
-        public static Task<IRestResponse<T>> ExecuteAsync<T>(this IRestClient client, IRestRequest request) where T : new()
+        public static Task<IRestResponse<T>> ExecuteAsync<T>(this IRestClient client, IRestRequest request)
+            where T : new()
         {
-            TaskCompletionSource<IRestResponse<T>> taskCompletion = new TaskCompletionSource<IRestResponse<T>>();
+            var taskCompletion = new TaskCompletionSource<IRestResponse<T>>();
             client.ExecuteAsync<T>(request, r => taskCompletion.SetResult(r));
             return taskCompletion.Task;
         }
 
         public static Task<IRestResponse> ExecuteAsync(this IRestClient client, IRestRequest request)
         {
-            TaskCompletionSource<IRestResponse> taskCompletion = new TaskCompletionSource<IRestResponse>();
+            var taskCompletion = new TaskCompletionSource<IRestResponse>();
             client.ExecuteAsync(request, r => taskCompletion.SetResult(r));
             return taskCompletion.Task;
         }

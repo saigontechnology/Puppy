@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Newtonsoft.Json;
@@ -80,7 +82,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> This field supports
         ///     <see cref="!:https://documentation.onesignal.com/docs/notification-content#section-notification-content-substitution">
-        ///     inline substitutions </see>. <br />
+        ///     inline substitutions </see> . <br />
         ///     Platforms: ALL <br />
         /// </summary>
         [JsonProperty("url")]
@@ -96,7 +98,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> See the language codes you can use
         ///     <see cref="!:https://documentation.onesignal.com/docs/language-localization"> here
-        ///     </see>. <br />
+        ///     </see> . <br />
         /// </summary>
         [JsonProperty("contents")]
         [JsonExtensionData]
@@ -112,7 +114,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> See the language codes you can use
         ///     <see cref="!:https://documentation.onesignal.com/docs/language-localization"> here
-        ///     </see>. <br />
+        ///     </see> . <br />
         /// </summary>
         [JsonProperty("headings")]
         [JsonExtensionData]
@@ -125,7 +127,7 @@ namespace Puppy.OneSignal.Notifications
         ///     </code>
         ///     <br /> See the language codes you can use
         ///     <see cref="!:https://documentation.onesignal.com/docs/language-localization"> here
-        ///     </see>. <br />
+        ///     </see> . <br />
         /// </summary>
         [JsonProperty("data")]
         [JsonExtensionData]

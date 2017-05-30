@@ -7,46 +7,47 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> BaseResource.cs </Name>
-//         <Created> 30/05/2017 4:42:17 PM </Created>
-//         <Key> 4c31a1b0-aa83-4769-ba89-20660a875107 </Key>
+//         <Name> OneSignalClient.cs </Name>
+//         <Created> 30/05/2017 5:30:31 PM </Created>
+//         <Key> 91d8a982-97d6-4b46-99a7-b9f4ca6246ce </Key>
 //     </File>
 //     <Summary>
-//         BaseResource.cs
+//         OneSignalClient.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
-using RestSharp;
+using Puppy.OneSignal.Devices;
+using Puppy.OneSignal.Notifications;
 
 namespace Puppy.OneSignal
 {
     /// <summary>
-    ///     Abstract class which helps easier implementation of new client resources. 
+    ///     OneSignal client 
     /// </summary>
-    public abstract class BaseResource
+    public class OneSignalClient : IOneSignalClient
     {
         /// <summary>
         ///     Default constructor. 
         /// </summary>
         /// <param name="apiKey"> Your OneSignal API key </param>
-        /// <param name="apiUri"> API uri (https://onesignal.com/api/v1/notifications) </param>
-        protected BaseResource(string apiKey, string apiUri)
+        /// <param name="apiUri"> API uri (default is "https://onesignal.com/api/v1") </param>
+        public OneSignalClient(string apiKey, string apiUri = "https://onesignal.com/api/v1")
         {
-            ApiKey = apiKey;
-            RestClient = new RestClient(apiUri);
+            Devices = new DevicesResource(apiKey, apiUri);
+            Notifications = new NotificationsResource(apiKey, apiUri);
         }
 
         /// <summary>
-        ///     Rest client reference. 
+        ///     Device resources. 
         /// </summary>
-        protected RestClient RestClient { get; set; }
+        public IDevicesResource Devices { get; }
 
         /// <summary>
-        ///     Your OneSignal Api key. 
+        ///     Notification resources. 
         /// </summary>
-        protected string ApiKey { get; set; }
+        public INotificationsResource Notifications { get; }
     }
 }

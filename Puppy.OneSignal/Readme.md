@@ -1,7 +1,13 @@
-﻿# Important Note
+﻿![OneSignal Logo](https://onesignal.com/assets/common/logo_onesignal_color.png)
+# Puppy.OneSignal
+A General purpose rest ApiClient write in C# language for the OneSignal API
+
+# Important Note
 > Project Created by **Top Nguyen** (http://topnguyen.net)
 
-Project focus on wrapping 3rd Party service: https://documentation.onesignal.com/reference
+## OneSignal Api Oficial Documentation
+Project focus on wrapping 3rd Party service
+[OneSignal Server API] (https://documentation.onesignal.com/reference)
 
 # How to use
 ```csharp
@@ -17,5 +23,3 @@ options.Contents.Add(LanguageCodes.English, "Hello world!");
 
 client.Notifications.Create(options);
 ```
-# OneSignal Api Oficial Documentation
-[OneSignal Server API] (https://documentation.onesignal.com/reference)

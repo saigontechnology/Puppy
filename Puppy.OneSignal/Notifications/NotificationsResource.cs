@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using RestSharp;
@@ -45,7 +47,7 @@ namespace Puppy.OneSignal.Notifications
         /// <returns></returns>
         public async Task<NotificationCreateResult> Create(NotificationCreateOptions options)
         {
-            RestRequest restRequest = new RestRequest("notifications", Method.POST);
+            var restRequest = new RestRequest("notifications", Method.POST);
 
             restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
 
@@ -53,19 +55,13 @@ namespace Puppy.OneSignal.Notifications
             restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
             restRequest.AddBody(options);
 
-            IRestResponse<NotificationCreateResult> restResponse = await RestClient.ExecuteAsync<NotificationCreateResult>(restRequest);
+            var restResponse = await RestClient.ExecuteAsync<NotificationCreateResult>(restRequest);
 
             if (!(restResponse.StatusCode != HttpStatusCode.Created || restResponse.StatusCode != HttpStatusCode.OK))
-            {
                 if (restResponse.ErrorException != null)
-                {
                     throw restResponse.ErrorException;
-                }
                 else if (restResponse.StatusCode != HttpStatusCode.OK && restResponse.Content != null)
-                {
                     throw new Exception(restResponse.Content);
-                }
-            }
 
             return restResponse.Data;
         }
@@ -81,7 +77,7 @@ namespace Puppy.OneSignal.Notifications
         {
             var baseRequestPath = "notifications/{0}?app_id={1}";
 
-            RestRequest restRequest = new RestRequest(string.Format(baseRequestPath, options.Id, options.AppId), Method.GET);
+            var restRequest = new RestRequest(string.Format(baseRequestPath, options.Id, options.AppId), Method.GET);
 
             restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
 
@@ -91,16 +87,10 @@ namespace Puppy.OneSignal.Notifications
             var restResponse = await RestClient.ExecuteAsync<NotificationViewResult>(restRequest);
 
             if (!(restResponse.StatusCode != HttpStatusCode.Created || restResponse.StatusCode != HttpStatusCode.OK))
-            {
                 if (restResponse.ErrorException != null)
-                {
                     throw restResponse.ErrorException;
-                }
                 else if (restResponse.StatusCode != HttpStatusCode.OK && restResponse.Content != null)
-                {
                     throw new Exception(restResponse.Content);
-                }
-            }
 
             return restResponse.Data;
         }
@@ -112,7 +102,7 @@ namespace Puppy.OneSignal.Notifications
         /// <returns></returns>
         public async Task<NotificationCancelResult> Cancel(NotificationCancelOptions options)
         {
-            RestRequest restRequest = new RestRequest("notifications/" + options.Id, Method.DELETE);
+            var restRequest = new RestRequest("notifications/" + options.Id, Method.DELETE);
 
             restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
 
@@ -120,16 +110,12 @@ namespace Puppy.OneSignal.Notifications
 
             restRequest.RequestFormat = DataFormat.Json;
 
-            IRestResponse<NotificationCancelResult> restResponse = await RestClient.ExecuteAsync<NotificationCancelResult>(restRequest);
+            var restResponse = await RestClient.ExecuteAsync<NotificationCancelResult>(restRequest);
 
             if (restResponse.ErrorException != null)
-            {
                 throw restResponse.ErrorException;
-            }
-            else if (restResponse.StatusCode != HttpStatusCode.OK && restResponse.Content != null)
-            {
+            if (restResponse.StatusCode != HttpStatusCode.OK && restResponse.Content != null)
                 throw new Exception(restResponse.Content);
-            }
 
             return restResponse.Data;
         }

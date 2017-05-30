@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,11 +16,13 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Newtonsoft.Json;
 using RestSharp.Serializers;
 using System.IO;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Puppy.OneSignal
 {
@@ -28,7 +31,20 @@ namespace Puppy.OneSignal
     /// </summary>
     public class NewtonsoftJsonSerializer : ISerializer
     {
-        private readonly Newtonsoft.Json.JsonSerializer _serializer;
+        private readonly JsonSerializer _serializer;
+
+        /// <summary>
+        ///     Default constructor that prevents null values to be serialized. 
+        /// </summary>
+        public NewtonsoftJsonSerializer()
+        {
+            _serializer = new JsonSerializer
+            {
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Include
+            };
+        }
 
         /// <summary>
         ///     Content type. 
@@ -74,19 +90,6 @@ namespace Puppy.OneSignal
                     return result;
                 }
             }
-        }
-
-        /// <summary>
-        ///     Default constructor that prevents null values to be serialized. 
-        /// </summary>
-        public NewtonsoftJsonSerializer()
-        {
-            _serializer = new Newtonsoft.Json.JsonSerializer
-            {
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-                NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Include
-            };
         }
     }
 }

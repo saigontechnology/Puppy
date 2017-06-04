@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,15 +16,16 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
-using System;
-using AngleSharp.Extensions;
 using AngleSharp.Parser.Html;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -33,14 +35,14 @@ namespace Puppy.Eye.TripAdvisor.DotNet
 {
     public class RestaurantEye
     {
-        public async Task<List<string>> GetListDetailUrl(string cityCode)
+        public async Task<List<string>> GetListDetailUrl(string cityCode, string cityName)
         {
             var listUrl = new List<string>();
 
             using (var client = new HttpClient())
             {
                 // Request
-                var url = BuildPageUrl(cityCode);
+                var url = BuildPageUrl(cityCode, cityName);
                 var result = await client.GetAsync(url);
                 var buffer = await result.Content.ReadAsByteArrayAsync();
                 var byteArray = buffer.ToArray();
@@ -53,14 +55,14 @@ namespace Puppy.Eye.TripAdvisor.DotNet
                 // Get total page
                 var listPageNumberSelector = document.QuerySelectorAll(".pageNumbers a");
                 var maxPageNumberSelector = listPageNumberSelector.LastOrDefault();
-                int totalPage = int.Parse(maxPageNumberSelector.GetAttribute("data-page-number"));
+                var totalPage = int.Parse(maxPageNumberSelector?.GetAttribute("data-page-number") ?? "1");
                 const int itemPerPage = 30;
 
                 // Get detail urls in each page
-                for (int i = 0; i < totalPage; i++)
+                for (var i = 0; i < totalPage; i++)
                 {
-                    int offSet = itemPerPage * i;
-                    var pageUrl = BuildPageUrl(cityCode, offSet);
+                    var offSet = itemPerPage * i;
+                    var pageUrl = BuildPageUrl(cityCode, cityName, offSet);
 
                     // Request
                     var pageResult = await client.GetAsync(pageUrl);
@@ -69,7 +71,8 @@ namespace Puppy.Eye.TripAdvisor.DotNet
                     var pageResponseString = Encoding.UTF8.GetString(pageByteArray, 0, pageByteArray.Length);
                     var pageDocument = parser.Parse(pageResponseString);
 
-                    var listDetailUrlInPage = pageDocument.QuerySelectorAll("h3.title a").Select(x => "https://www.tripadvisor.com.vn" + x.GetAttribute("href"));
+                    var listDetailUrlInPage = pageDocument.QuerySelectorAll("h3.title a")
+                        .Select(x => "https://www.tripadvisor.com.vn" + x.GetAttribute("href"));
                     listUrl.AddRange(listDetailUrlInPage);
                 }
 
@@ -77,65 +80,119 @@ namespace Puppy.Eye.TripAdvisor.DotNet
             }
         }
 
-        public string BuildPageUrl(string cityCode, int offSet = 0)
+        public string BuildPageUrl(string cityCode, string cityName, int offSet = 0)
         {
-            var url = $"https://www.tripadvisor.com.vn/RestaurantSearch-g293925-oa{offSet}-{cityCode}.html";
+            var url = $"https://www.tripadvisor.com.vn/RestaurantSearch-g{cityCode}-oa{offSet}-{cityName}.html";
             return url;
         }
 
         public async Task<RestaurantDetailModel> GetDetail(string url)
         {
-            using (var client = new HttpClient())
+            try
             {
-                // Request
-                var result = await client.GetAsync(url);
-                var buffer = await result.Content.ReadAsByteArrayAsync();
-                var byteArray = buffer.ToArray();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+                int regionId = int.Parse(url.Split('-')[1].Replace("g", string.Empty));
+                int restaurantId = int.Parse(url.Split('-')[2].Replace("d", string.Empty));
 
-                // Parse
-                var parser = new HtmlParser();
-                var document = parser.Parse(responseString);
+                using (var client = new HttpClient())
+                {
+                    client.Timeout = new TimeSpan(0, 1, 0, 0);
 
-                RestaurantDetailModel restaurantDetailModel = new RestaurantDetailModel();
+                    // Request
+                    var result = await client.GetAsync(url).ConfigureAwait(true);
+                    var buffer = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
+                    var byteArray = buffer.ToArray();
+                    var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
 
-                // SEO
-                restaurantDetailModel.SeoTitle = document.All
-                    .Where(x => x.NodeName == "Meta" && x.GetAttribute("property") == "og:title")
-                    .Select(x => x.GetAttribute("content")).Single().Trim();
-                restaurantDetailModel.SeoKeywords = document.All
-                    .Where(x => x.NodeName == "Meta" && x.GetAttribute("property") == "keywords")
-                    .Select(x => x.GetAttribute("content")).Single().Trim();
-                restaurantDetailModel.SeoDescription = document.All
-                    .Where(x => x.NodeName == "Meta" && x.GetAttribute("property") == "description")
-                    .Select(x => x.GetAttribute("content")).Single().Trim();
+                    // Parse
+                    var parser = new HtmlParser();
+                    var document = parser.Parse(responseString);
 
-                // Basic Info
+                    var detail = new RestaurantDetailModel();
 
-                var summaryInfoString = document.All
-                    .Where(m => m.NodeName == "SCRIPT" && m.InnerHtml.Contains("@context"))
-                    .Select(x => x.InnerHtml).Single().Trim();
+                    // SEO
+                    detail.SeoTitle = document.All
+                        .Where(x => x.NodeName == "META" && x.GetAttribute("property") == "og:title")
+                        .Select(x => x.GetAttribute("content")).Single().Trim();
 
-                SummaryInfo summaryInfo = JsonConvert.DeserializeObject<SummaryInfo>(summaryInfoString);
+                    detail.SeoKeywords = document.All
+                        .Where(x => x.NodeName == "META" && x.GetAttribute("name") == "keywords")
+                        .Select(x => x.GetAttribute("content")).Single().Trim();
+                    detail.SeoDescription = document.All
+                        .Where(x => x.NodeName == "META" && x.GetAttribute("name") == "description")
+                        .Select(x => x.GetAttribute("content")).Single().Trim();
 
-                restaurantDetailModel.Url = summaryInfo.Url;
-                restaurantDetailModel.Name = summaryInfo.Name;
-                restaurantDetailModel.ImageUrl = summaryInfo.Image;
-                restaurantDetailModel.Phone = document.QuerySelector(".phone").TextContent.Trim();
+                    // Basic Info
+                    var summaryInfoString = document.All
+                        .Where(m => m.NodeName == "SCRIPT" && m.InnerHtml.Contains("@context"))
+                        .Select(x => x.InnerHtml).Single().Trim();
 
-                // Rating
-                restaurantDetailModel.AverageRating = double.Parse(summaryInfo.AggregateRating.RatingValue);
-                restaurantDetailModel.RatingCount = int.Parse(summaryInfo.AggregateRating.ReviewCount);
+                    var summaryInfo = JsonConvert.DeserializeObject<SummaryInfo>(summaryInfoString);
 
-                // Address
-                restaurantDetailModel.Street = summaryInfo.Address.StreetAddress;
-                restaurantDetailModel.Region = summaryInfo.Address.AddressRegion;
-                restaurantDetailModel.Country = summaryInfo.Address.AddressCountry.Name;
+                    detail.Url = url;
+                    detail.Id = restaurantId;
+                    detail.Name = summaryInfo.Name;
+                    detail.Cuisines = document.QuerySelector(".cuisines")?.QuerySelector(".text")?.TextContent.Trim();
 
+                    detail.SeoImageUrl = summaryInfo.Image;
+                    detail.Phone = document.QuerySelector(".phone").TextContent.Trim();
 
-                restaurantDetailModel.Latitude = 0;
-                restaurantDetailModel.Longitude = 0;
-                return restaurantDetailModel;
+                    // Rating
+                    if (string.IsNullOrWhiteSpace(summaryInfo.AggregateRating?.ReviewCount))
+                    {
+                        return null;
+                    }
+                    detail.AverageRating = double.Parse(summaryInfo.AggregateRating.RatingValue);
+                    detail.RatingCount = int.Parse(summaryInfo.AggregateRating.ReviewCount);
+                    detail.RatingDescription = document.QuerySelector(".header_popularity")?.TextContent.Trim();
+
+                    if (!string.IsNullOrWhiteSpace(detail.RatingDescription))
+                    {
+                        int indexOfRank = detail.RatingDescription.IndexOf(" ", StringComparison.OrdinalIgnoreCase) + 1;
+                        int indexOfEndRank = detail.RatingDescription.IndexOf("trong", StringComparison.OrdinalIgnoreCase) - 1;
+                        detail.Rank = int.Parse(detail.RatingDescription.Substring(indexOfRank, indexOfEndRank - indexOfRank).Replace(".", string.Empty));
+
+                        int indexOfTotalRank = detail.RatingDescription.IndexOf("trong số", StringComparison.OrdinalIgnoreCase) + 9;
+                        int indexOfTotalEndRank = detail.RatingDescription.IndexOf("Nhà", StringComparison.OrdinalIgnoreCase) - 1;
+                        detail.TotalRank = int.Parse(detail.RatingDescription.Substring(indexOfTotalRank, indexOfTotalEndRank - indexOfTotalRank).Replace(".", string.Empty));
+                    }
+
+                    var startCounts = document.QuerySelector("#ratingFilter").QuerySelectorAll(".filterItem")
+                        .Select(x => x.QuerySelectorAll("span")[3].TextContent).ToList();
+
+                    detail.Star5Count = int.Parse(startCounts[0]);
+                    detail.Star4Count = int.Parse(startCounts[1]);
+                    detail.Star3Count = int.Parse(startCounts[2]);
+                    detail.Star2Count = int.Parse(startCounts[3]);
+                    detail.Star1Count = int.Parse(startCounts[4]);
+
+                    // Address
+                    detail.Street = summaryInfo.Address.StreetAddress;
+                    detail.RegionId = regionId;
+                    detail.RegionName = summaryInfo.Address.AddressLocality;
+                    detail.Country = summaryInfo.Address.AddressCountry.Name;
+
+                    // GEO
+                    var geoString = document.All
+                        .Where(m => m.NodeName == "SCRIPT" && m.InnerHtml != null && m.InnerHtml.Contains("window.mapDivId"))
+                        .Select(x => x.InnerHtml).Single().Trim();
+
+                    int startGeoJsonIndex = geoString.IndexOf("window.map0Div = ",
+                        StringComparison.InvariantCultureIgnoreCase) + "window.map0Div = ".Length;
+                    geoString = geoString.Substring(startGeoJsonIndex, geoString.Length - startGeoJsonIndex);
+                    geoString = geoString.Substring(0, geoString.IndexOf(";", StringComparison.InvariantCultureIgnoreCase));
+
+                    AddressMap addressMap = JsonConvert.DeserializeObject<AddressMap>(geoString);
+
+                    detail.Latitude = double.Parse(addressMap.Lat.ToString(CultureInfo.InvariantCulture));
+                    detail.Longitude = double.Parse(addressMap.Lng.ToString(CultureInfo.InvariantCulture));
+
+                    return detail;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
             }
         }
     }
@@ -143,11 +200,16 @@ namespace Puppy.Eye.TripAdvisor.DotNet
     public class RestaurantDetailModel
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+
         public string Url { get; set; }
 
         public string Name { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string Cuisines { get; set; }
+
+        public string SeoImageUrl { get; set; }
 
         public string SeoTitle { get; set; }
 
@@ -155,15 +217,29 @@ namespace Puppy.Eye.TripAdvisor.DotNet
 
         public string SeoDescription { get; set; }
 
+        public int Rank { get; set; }
+
+        public int TotalRank { get; set; }
+
+        public string RatingDescription { get; set; }
+
         public double AverageRating { get; set; }
 
         public int RatingCount { get; set; }
+
+        public int Star5Count { get; set; }
+        public int Star4Count { get; set; }
+        public int Star3Count { get; set; }
+        public int Star2Count { get; set; }
+        public int Star1Count { get; set; }
 
         public string Phone { get; set; }
 
         public string Street { get; set; }
 
-        public string Region { get; set; }
+        public int RegionId { get; set; }
+
+        public string RegionName { get; set; }
 
         public string Country { get; set; }
 
@@ -240,5 +316,62 @@ namespace Puppy.Eye.TripAdvisor.DotNet
 
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+    }
+
+    internal class AddressMap
+    {
+        [JsonProperty(PropertyName = "lat")]
+        public float Lat { get; set; }
+
+        [JsonProperty(PropertyName = "lng")]
+        public float Lng { get; set; }
+
+        [JsonProperty(PropertyName = "zoom")]
+        public object Zoom { get; set; }
+
+        [JsonProperty(PropertyName = "locId")]
+        public int LocId { get; set; }
+
+        [JsonProperty(PropertyName = "geoId")]
+        public int GeoId { get; set; }
+
+        [JsonProperty(PropertyName = "isAttraction")]
+        public bool IsAttraction { get; set; }
+
+        [JsonProperty(PropertyName = "isEatery")]
+        public bool IsEatery { get; set; }
+
+        [JsonProperty(PropertyName = "isLodging")]
+        public bool IsLodging { get; set; }
+
+        [JsonProperty(PropertyName = "isNeighborhood")]
+        public bool IsNeighborhood { get; set; }
+
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
+
+        [JsonProperty(PropertyName = "homeIcon")]
+        public bool HomeIcon { get; set; }
+
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
+
+        [JsonProperty(PropertyName = "minPins")]
+        public object[][] MinPins { get; set; }
+
+        [JsonProperty(PropertyName = "units")]
+        public string Units { get; set; }
+
+        [JsonProperty(PropertyName = "geoMap")]
+        public bool GeoMap { get; set; }
+
+        [JsonProperty(PropertyName = "tabletFullSite")]
+        public bool TabletFullSite { get; set; }
+
+        [JsonProperty(PropertyName = "reuseHoverDivs")]
+        public bool ReuseHoverDivs { get; set; }
+
+        [JsonProperty(PropertyName = "noSponsors")]
+        public bool NoSponsors { get; set; }
     }
 }

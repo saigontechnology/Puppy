@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Diagnostics;
 
@@ -19,13 +18,13 @@ namespace Puppy.Eye.TripAdvisor.DotNet.Crawler
 
             Console.WriteLine($"Start Crawler At: {DateTime.Now}");
 
-            var listUrlDetail = restaurantEye.GetListDetailUrl("g293925", "Ho_Chi_Minh_City").Result;
+            //var listUrlDetail = restaurantEye.GetListDetailUrl("g293925", "Ho_Chi_Minh_City").Result;
+            var listUrlDetail = restaurantEye.GetListDetailUrl("g293924", "Hanoi").Result;
+            listUrlDetail.AddRange(restaurantEye.GetListDetailUrl("g298085", "Da_Nang_Quang_Nam_Province").Result);
             stopwatch.Stop();
             Console.WriteLine(
                 $"Done Get List URL Detail: {listUrlDetail.Count} url, {stopwatch.Elapsed.TotalSeconds} s");
             stopwatch.Restart();
-            var listDetail = new List<RestaurantDetailModel>();
-            var listDetailError = new List<RestaurantDetailModel>();
 
             using (var dbContext = new TripAdvisorDataModel())
             {
@@ -35,7 +34,6 @@ namespace Puppy.Eye.TripAdvisor.DotNet.Crawler
                     var detail = restaurantEyeDetail.GetDetail(url).Result;
                     if (detail != null)
                     {
-                        listDetail.Add(detail);
                         dbContext.Restaurants.AddOrUpdate(detail);
                         try
                         {
@@ -43,7 +41,6 @@ namespace Puppy.Eye.TripAdvisor.DotNet.Crawler
                         }
                         catch (Exception e)
                         {
-                            listDetailError.Add(detail);
                             Console.WriteLine(e);
                             continue;
                         }

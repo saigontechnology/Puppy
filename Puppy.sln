@@ -31,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Eyes", "4. Eyes", "{D0E9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.Eye.TripAdvisor.DotNet", "Puppy.Eye.TripAdvisor.DotNet\Puppy.Eye.TripAdvisor.DotNet.csproj", "{2C23D751-C0E8-461E-B08E-DF26DA3F422D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Eye.TripAdvisor", "Puppy.Eye.TripAdvisor\Puppy.Eye.TripAdvisor.csproj", "{D278C337-711E-46AD-9233-ABDD22AB98C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.Eye.TripAdvisor.DotNet.Crawler", "Puppy.Eye.TripAdvisor.DotNet.Crawler\Puppy.Eye.TripAdvisor.DotNet.Crawler\Puppy.Eye.TripAdvisor.DotNet.Crawler.csproj", "{70297257-6CB4-456D-BAD6-24D7A7A805C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,14 @@ Global
 		{2C23D751-C0E8-461E-B08E-DF26DA3F422D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C23D751-C0E8-461E-B08E-DF26DA3F422D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C23D751-C0E8-461E-B08E-DF26DA3F422D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D278C337-711E-46AD-9233-ABDD22AB98C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D278C337-711E-46AD-9233-ABDD22AB98C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D278C337-711E-46AD-9233-ABDD22AB98C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D278C337-711E-46AD-9233-ABDD22AB98C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70297257-6CB4-456D-BAD6-24D7A7A805C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70297257-6CB4-456D-BAD6-24D7A7A805C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70297257-6CB4-456D-BAD6-24D7A7A805C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70297257-6CB4-456D-BAD6-24D7A7A805C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,5 +104,7 @@ Global
 		{33C5DB7B-B86A-4D14-B019-CEAF5173C1C4} = {E19F2823-E134-4661-998E-0516173DAC0F}
 		{EA86D671-68F8-426A-9DBF-2E689DDDE7EC} = {DDFE5228-9164-4672-A1E1-39BFEE1883E2}
 		{2C23D751-C0E8-461E-B08E-DF26DA3F422D} = {D0E94688-48FB-4BC2-AFB2-D2473460044C}
+		{D278C337-711E-46AD-9233-ABDD22AB98C3} = {D0E94688-48FB-4BC2-AFB2-D2473460044C}
+		{70297257-6CB4-456D-BAD6-24D7A7A805C1} = {D0E94688-48FB-4BC2-AFB2-D2473460044C}
 	EndGlobalSection
 EndGlobal

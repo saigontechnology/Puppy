@@ -1,5 +1,5 @@
-﻿using System;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
+﻿using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
+using System;
 
 namespace Puppy.Search.Elastic.Model
 {

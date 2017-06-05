@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
+﻿using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 using Puppy.Search.Elastic.ContextSearch;
 using Puppy.Search.Elastic.Model;
 using Puppy.Search.Elastic.Model.Units;
 using Puppy.Search.Elastic.Tracing;
 using Puppy.Search.Elastic.Utils;
+using System;
+using System.Diagnostics;
 
 namespace Puppy.Search.Elastic
 {

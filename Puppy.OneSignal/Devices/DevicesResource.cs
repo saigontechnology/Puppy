@@ -19,7 +19,6 @@
 
 #endregion License
 
-using System;
 using RestSharp;
 using System.Threading.Tasks;
 

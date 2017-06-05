@@ -1,5 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Puppy.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes;
+using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
+using Puppy.Search.Elastic.Model;
+using Puppy.Search.Elastic.Model.GeoModel;
+using Puppy.Search.Elastic.Tracing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,11 +14,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.CoreTypeAttributes;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
-using Puppy.Search.Elastic.Model;
-using Puppy.Search.Elastic.Model.GeoModel;
-using Puppy.Search.Elastic.Tracing;
 
 namespace Puppy.Search.Elastic
 {

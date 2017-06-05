@@ -20,12 +20,12 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
+using Puppy.EF.Interfaces;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Puppy.EF.Interfaces;
 
 namespace Puppy.EF
 {

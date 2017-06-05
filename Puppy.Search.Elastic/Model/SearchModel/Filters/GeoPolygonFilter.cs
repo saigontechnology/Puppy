@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Puppy.Search.Elastic.Model.GeoModel;
+using System.Collections.Generic;
 
 namespace Puppy.Search.Elastic.Model.SearchModel.Filters
 {

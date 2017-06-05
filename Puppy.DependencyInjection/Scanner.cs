@@ -20,13 +20,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.PlatformAbstractions;
+using Puppy.DependencyInjection.Attributes;
+using Puppy.DependencyInjection.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Puppy.DependencyInjection.Attributes;
-using Puppy.DependencyInjection.Exceptions;
 
 namespace Puppy.DependencyInjection
 {

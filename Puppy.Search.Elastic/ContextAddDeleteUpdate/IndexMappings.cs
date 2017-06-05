@@ -1,4 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
+using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
+using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.MappingModel;
+using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel;
+using Puppy.Search.Elastic.Model;
+using Puppy.Search.Elastic.Tracing;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -6,11 +11,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.MappingModel;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel;
-using Puppy.Search.Elastic.Model;
-using Puppy.Search.Elastic.Tracing;
 
 namespace Puppy.Search.Elastic.ContextAddDeleteUpdate
 {

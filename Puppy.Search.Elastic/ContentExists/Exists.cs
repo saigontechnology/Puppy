@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Puppy.Search.Elastic.Model;
+using Puppy.Search.Elastic.Tracing;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Puppy.Search.Elastic.Model;
-using Puppy.Search.Elastic.Tracing;
 
 namespace Puppy.Search.Elastic.ContentExists
 {

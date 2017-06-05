@@ -1,14 +1,14 @@
-﻿using System.Diagnostics;
+﻿using Puppy.Search.Elastic.ContextSearch.SearchModel;
+using Puppy.Search.Elastic.Model;
+using Puppy.Search.Elastic.Tracing;
+using Puppy.Search.Elastic.Utils;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Puppy.Search.Elastic.ContextSearch.SearchModel;
-using Puppy.Search.Elastic.Model;
-using Puppy.Search.Elastic.Tracing;
-using Puppy.Search.Elastic.Utils;
 
 namespace Puppy.Search.Elastic.ContextSearch
 {

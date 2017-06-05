@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Puppy.Search.Elastic.ContentExists;
+﻿using Puppy.Search.Elastic.ContentExists;
 using Puppy.Search.Elastic.ContextAddDeleteUpdate;
 using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.MappingModel;
@@ -24,6 +15,15 @@ using Puppy.Search.Elastic.ContextWarmers;
 using Puppy.Search.Elastic.Model;
 using Puppy.Search.Elastic.Tracing;
 using Puppy.Search.Elastic.Utils;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Puppy.Search.Elastic
 {
@@ -173,7 +173,9 @@ namespace Puppy.Search.Elastic
         ///     updated in the search engine
         /// </summary>
         /// <typeparam name="T"> This type is used to get the index and type of the document </typeparam>
-        /// <param name="id">                id of the document which will be deleted. </param>
+        /// <param name="id">               
+        ///     id of the document which will be deleted.
+        /// </param>
         /// <param name="routingDefinition"></param>
         public void DeleteDocument<T>(object id, RoutingDefinition routingDefinition = null)
         {
@@ -471,7 +473,9 @@ namespace Puppy.Search.Elastic
         ///     Search API can be used. Only single index and type search
         /// </summary>
         /// <typeparam name="T"> Type T used for the index and tpye used in the search </typeparam>
-        /// <param name="search">              search body for Elastic Search API </param>
+        /// <param name="search">             
+        ///     search body for Elastic Search API
+        /// </param>
         /// <param name="searchUrlParameters"> add routing or pretty parameters if required </param>
         /// <returns> A collection of documents of type T </returns>
         public ResultDetails<SearchResult<T>> Search<T>(Model.SearchModel.Search search,
@@ -627,7 +631,9 @@ namespace Puppy.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="jsonContent">                query which will be saved. </param>
+        /// <param name="jsonContent">               
+        ///     query which will be saved.
+        /// </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>
@@ -646,7 +652,9 @@ namespace Puppy.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="search">                     search body for Elastic Search API </param>
+        /// <param name="search">                    
+        ///     search body for Elastic Search API
+        /// </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>
@@ -665,7 +673,9 @@ namespace Puppy.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="jsonContent">                query which will be saved. </param>
+        /// <param name="jsonContent">               
+        ///     query which will be saved.
+        /// </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>
@@ -684,7 +694,9 @@ namespace Puppy.Search.Elastic
         ///     reindexing, you should use a timestamp in the json content query.
         /// </summary>
         /// <typeparam name="T"> index and type formt search scan and scroll </typeparam>
-        /// <param name="search">                     search body for Elastic Search API </param>
+        /// <param name="search">                    
+        ///     search body for Elastic Search API
+        /// </param>
         /// <param name="scanAndScrollConfiguration">
         ///     The scan and scroll configuration, for example scroll in time units
         /// </param>

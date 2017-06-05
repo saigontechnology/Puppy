@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Puppy.Search.Elastic.Model;
+using Puppy.Search.Elastic.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Puppy.Search.Elastic.Model;
-using Puppy.Search.Elastic.Utils;
 
 namespace Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel.Analyzers
 {

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
+﻿using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel;
 using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.MappingModel;
 using Puppy.Search.Elastic.ContextAddDeleteUpdate.IndexModel.SettingsModel;
 using Puppy.Search.Elastic.Model;
 using Puppy.Search.Elastic.Tracing;
 using Puppy.Search.Elastic.Utils;
+using System;
+using System.Collections.Generic;
 
 namespace Puppy.Search.Elastic.ContextAddDeleteUpdate
 {

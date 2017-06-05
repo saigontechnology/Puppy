@@ -84,23 +84,23 @@ namespace Puppy.OneSignal.Notifications
 
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.String)
-                token = (JValue) string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
-                {
-                    switch (s)
-                    {
-                        case "last-active":
-                            return "LastActive";
+                token = (JValue)string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
+               {
+                   switch (s)
+                   {
+                       case "last-active":
+                           return "LastActive";
 
-                        case "timezone":
-                            return "TimeZone";
+                       case "timezone":
+                           return "TimeZone";
 
-                        case "send_after":
-                            return "SendAfter";
+                       case "send_after":
+                           return "SendAfter";
 
-                        default:
-                            return "";
-                    }
-                }).ToArray());
+                       default:
+                           return "";
+                   }
+               }).ToArray());
 
             using (var subReader = token.CreateReader())
             {
@@ -201,47 +201,47 @@ namespace Puppy.OneSignal.Notifications
 
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.String)
-                token = (JValue) string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
-                {
-                    switch (s)
-                    {
-                        case "last_session":
-                            return "LastSession";
+                token = (JValue)string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
+               {
+                   switch (s)
+                   {
+                       case "last_session":
+                           return "LastSession";
 
-                        case "first_session":
-                            return "FirstSession";
+                       case "first_session":
+                           return "FirstSession";
 
-                        case "session_count":
-                            return "SessionCount";
+                       case "session_count":
+                           return "SessionCount";
 
-                        case "session_time":
-                            return "SessionTime";
+                       case "session_time":
+                           return "SessionTime";
 
-                        case "amount_spent":
-                            return "AmountSpent";
+                       case "amount_spent":
+                           return "AmountSpent";
 
-                        case "bought_sku":
-                            return "BoughtSku";
+                       case "bought_sku":
+                           return "BoughtSku";
 
-                        case "tag":
-                            return "Tag";
+                       case "tag":
+                           return "Tag";
 
-                        case "language":
-                            return "Language";
+                       case "language":
+                           return "Language";
 
-                        case "app_version":
-                            return "AppVersion";
+                       case "app_version":
+                           return "AppVersion";
 
-                        case "location":
-                            return "Location";
+                       case "location":
+                           return "Location";
 
-                        case "email":
-                            return "Email";
+                       case "email":
+                           return "Email";
 
-                        default:
-                            return "";
-                    }
-                }).ToArray());
+                       default:
+                           return "";
+                   }
+               }).ToArray());
 
             using (var subReader = token.CreateReader())
             {
@@ -363,13 +363,13 @@ namespace Puppy.OneSignal.Notifications
 
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.String)
-                token = (JValue) string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
-                {
-                    var unixTime = double.Parse(s);
-                    var dateTime = UnixTimeStampToDateTime(unixTime);
+                token = (JValue)string.Join(", ", token.ToString().Split(',').Select(s => s.Trim()).Select(s =>
+               {
+                   var unixTime = double.Parse(s);
+                   var dateTime = UnixTimeStampToDateTime(unixTime);
 
-                    return dateTime.ToString("s");
-                }).ToArray());
+                   return dateTime.ToString("s");
+               }).ToArray());
 
             using (var subReader = token.CreateReader())
             {

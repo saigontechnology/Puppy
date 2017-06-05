@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Puppy.Search.Elastic.Model;
+﻿using Puppy.Search.Elastic.Model;
+using System.Text.RegularExpressions;
 
 namespace Puppy.Search.Elastic.Utils
 {

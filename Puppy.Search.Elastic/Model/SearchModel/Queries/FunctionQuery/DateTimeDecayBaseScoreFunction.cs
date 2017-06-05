@@ -1,6 +1,6 @@
-﻿using System;
-using Puppy.Search.Elastic.Model.Units;
+﻿using Puppy.Search.Elastic.Model.Units;
 using Puppy.Search.Elastic.Utils;
+using System;
 
 namespace Puppy.Search.Elastic.Model.SearchModel.Queries.FunctionQuery
 {

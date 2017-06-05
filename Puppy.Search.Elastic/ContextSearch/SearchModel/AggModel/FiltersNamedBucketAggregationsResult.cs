@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using Puppy.Search.Elastic.ContextSearch.SearchModel.AggModel.Buckets;
+using System.Collections.Generic;
 
 namespace Puppy.Search.Elastic.ContextSearch.SearchModel.AggModel
 {

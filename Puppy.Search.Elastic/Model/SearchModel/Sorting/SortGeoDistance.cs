@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Puppy.Search.Elastic.Model.GeoModel;
 using Puppy.Search.Elastic.Utils;
+using System.Collections.Generic;
 
 namespace Puppy.Search.Elastic.Model.SearchModel.Sorting
 {

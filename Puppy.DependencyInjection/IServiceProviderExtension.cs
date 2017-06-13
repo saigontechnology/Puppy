@@ -2,10 +2,10 @@
 
 //------------------------------------------------------------------------------------------------
 // <License>
-//     <Copyright> 2017 © Top Nguyen → AspNetCore → Eatup </Copyright>
+//     <Copyright> 2017 © Top Nguyen → AspNetCore → I-Educator </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> Eatup.WebAPI </Project>
+//     <Project> I-Educator.WebAPI </Project>
 //     <File>
 //         <Name> IServiceProviderExtension.cs </Name>
 //         <Created> 27 Apr 17 10:19:15 AM </Created>

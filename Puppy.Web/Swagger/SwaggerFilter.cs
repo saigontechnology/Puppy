@@ -26,10 +26,10 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.Web
+namespace Puppy.Web.Swagger
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class HideInDocsAttribute : Attribute
+    public class HideInDocsAttribute : System.Attribute
     {
     }
 

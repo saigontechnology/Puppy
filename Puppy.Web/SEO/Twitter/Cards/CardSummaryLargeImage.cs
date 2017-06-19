@@ -21,6 +21,7 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
+using Puppy.Web.SEO.Twitter.Enums;
 
 namespace Puppy.Web.SEO.Twitter.Cards
 {

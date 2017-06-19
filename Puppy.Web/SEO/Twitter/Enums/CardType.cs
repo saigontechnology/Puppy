@@ -19,7 +19,7 @@
 
 #endregion License
 
-namespace Puppy.Web.SEO.Twitter
+namespace Puppy.Web.SEO.Twitter.Enums
 {
     /// <summary>
     ///     The type of Twitter card. 

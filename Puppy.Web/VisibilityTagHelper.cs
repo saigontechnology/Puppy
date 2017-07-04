@@ -43,7 +43,9 @@ namespace Puppy.Web
         ///     <see cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given
         ///     <paramref name="context" /> and <paramref name="output" />.
         /// </summary>
-        /// <param name="context"> Contains information associated with the current HTML tag. </param>
+        /// <param name="context">
+        ///     Contains information associated with the current HTML tag.
+        /// </param>
         /// <param name="output">  A stateful HTML element used to generate an HTML tag. </param>
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {

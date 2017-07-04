@@ -18,6 +18,7 @@
 #endregion License
 
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -35,20 +36,26 @@ namespace Puppy.Core.InstagramUtils
         /// <returns></returns>
         public static async Task<InstagramUserFeeds> GetUserFeeds(string accessToken, string userId = "self")
         {
-            var endpoint = $"https://api.instagram.com/v1/users/{userId}/media/recent?access_token={accessToken}";
-
-            using (var client = new HttpClient())
+            try
             {
-                // Request
-                var result = await client.GetAsync(endpoint);
-                var buffer = await result.Content.ReadAsByteArrayAsync();
-                var byteArray = buffer.ToArray();
-                var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
+                var endpoint = $"https://api.instagram.com/v1/users/{userId}/media/recent?access_token={accessToken}";
+                using (var client = new HttpClient())
+                {
+                    var result = await client.GetAsync(endpoint).ConfigureAwait(true);
 
-                InstagramUserFeeds instagramUserFeeds =
-                    JsonConvert.DeserializeObject<InstagramUserFeeds>(responseString);
+                    var buffer = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
+                    var byteArray = buffer.ToArray();
+                    var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
 
-                return instagramUserFeeds;
+                    InstagramUserFeeds instagramUserFeeds = JsonConvert.DeserializeObject<InstagramUserFeeds>(responseString);
+
+                    return instagramUserFeeds;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
             }
         }
     }

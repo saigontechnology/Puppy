@@ -20,8 +20,8 @@
 #endregion License
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System.Text;
 using Puppy.Web.SEO.Twitter.Enums;
+using System.Text;
 
 namespace Puppy.Web.SEO.Twitter.Cards
 {

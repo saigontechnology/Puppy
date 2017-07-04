@@ -17,26 +17,24 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Puppy.Core.StringUtils;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
-using Puppy.Core.StringUtils;
 
 namespace Puppy.Core
 {
     /// <summary>
-    /// <see cref="XDocument"/> extension methods
+    ///     <see cref="XDocument" /> extension methods 
     /// </summary>
     public static class XDocumentExtensions
     {
         /// <summary>
-        /// Returns a <see cref="string" /> that represents the XML document in the specified encoding.
+        ///     Returns a <see cref="string" /> that represents the XML document in the specified encoding. 
         /// </summary>
-        /// <param name="document">The document.</param>
-        /// <param name="encoding">The encoding.</param>
-        /// <returns>
-        /// A <see cref="string" /> that represents the XML document.
-        /// </returns>
+        /// <param name="document"> The document. </param>
+        /// <param name="encoding"> The encoding. </param>
+        /// <returns> A <see cref="string" /> that represents the XML document. </returns>
         public static string ToString(this XDocument document, Encoding encoding)
         {
             var stringBuilder = new StringBuilder();

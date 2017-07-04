@@ -17,8 +17,6 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Newtonsoft.Json;
-
 namespace Puppy.Core.InstagramUtils
 {
     public class InstagramUserFeeds

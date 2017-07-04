@@ -356,7 +356,8 @@ namespace Puppy.Web.SEO.OpenGraph.ObjectTypes
                 .RequestServices
                 .GetRequiredService<IUrlHelper>();
             var request = httpContext.Request;
-            return new Uri(new Uri(request.Scheme + "://" + request.Host.Value), urlHelper.Content(request.Path.Value)).ToString();
+            return new Uri(new Uri(request.Scheme + "://" + request.Host.Value), urlHelper.Content(request.Path.Value))
+                .ToString();
         }
     }
 }

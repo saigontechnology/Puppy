@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> SitemapNode.cs </Name>
+//         <Name> SitemapItem.cs </Name>
 //         <Created> 07/06/2017 9:57:13 PM </Created>
 //         <Key> 8f6d7012-c381-4017-ac39-c22075b68b6f </Key>
 //     </File>
 //     <Summary>
-//         SitemapNode.cs
+//         SitemapItem.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -26,15 +26,27 @@ namespace Puppy.Web.SEO.Sitemap
     /// <summary>
     ///     Represents a page or URL in your sitemap. 
     /// </summary>
-    public sealed class SitemapNode
+    public sealed class SitemapItem
     {
         private double? _priority;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SitemapNode" /> class. 
+        ///     Creates a new instance of <see cref="SitemapItem" /> 
         /// </summary>
-        /// <param name="url"> The URL of the page. </param>
-        public SitemapNode(string url)
+        /// <param name="url">             URL of the page. </param>
+        /// <param name="lastModified">   
+        ///     The date of last modification of the file. Optional.
+        /// </param>
+        /// <param name="changeFrequency"> How frequently the page is likely to change. Optional. </param>
+        /// <param name="priority">       
+        ///     The priority of this URL relative to other URLs on your site. Valid values range from
+        ///     0.0 to 1.0. Optional.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        ///     If the <paramref name="url" /> is null or empty.
+        /// </exception>
+        public SitemapItem(string url, DateTime? lastModified = null, SitemapFrequency? changeFrequency = null,
+            double? priority = null)
         {
             Url = url ?? throw new ArgumentNullException(nameof(url));
         }
@@ -49,7 +61,7 @@ namespace Puppy.Web.SEO.Sitemap
         ///     pages marked "never" so that they can handle unexpected changes to those pages.
         /// </summary>
         /// <value> The frequency the page is likely to change. </value>
-        public SitemapFrequency? Frequency { get; set; }
+        public SitemapFrequency? ChangeFrequency { get; set; }
 
         /// <summary>
         ///     Gets or sets the date of last modification of the file. This is an optional field.

@@ -7,56 +7,48 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> SitemapGenerator.cs </Name>
-//         <Created> 07/06/2017 9:57:33 PM </Created>
-//         <Key> c3c4f203-8130-4402-a895-e561b724587c </Key>
+//         <Name> SitemapIndexGenerator.cs </Name>
+//         <Created> 04/07/2017 4:19:26 PM </Created>
+//         <Key> 1cbb0fb9-9270-4a6a-af17-7fac8951e1b1 </Key>
 //     </File>
 //     <Summary>
-//         SitemapGenerator.cs
+//         SitemapIndexGenerator.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
-using Puppy.Core;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using Puppy.Core;
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SitemapIndex
 {
     /// <summary>
-    ///     Generates sitemap XML. 
+    ///     Generate Sitemap index (see more http://www.sitemaps.org/protocol.html) 
     /// </summary>
-    public class SitemapGenerator
+    public class SitemapIndexGenerator
     {
         private static readonly XNamespace xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
 
         private static readonly XNamespace xsi = @"http://www.w3.org/2001/XMLSchema-instance";
 
-        
-
-        public virtual string GenerateSiteMap(IEnumerable<SitemapItem> items)
+        public virtual string GenerateSiteMapIndex(IEnumerable<SitemapIndexItem> items)
         {
-            var sitemapCount = (int)Math.Ceiling(items.Count() / (double)SitemapHelper.MaximumSitemapIndexCount);
-            SitemapHelper.CheckSitemapCount(sitemapCount);
-
             if (items == null || !items.Any())
-            {
                 throw new ArgumentNullException($"{nameof(items)} is null");
-            }
 
             var sitemap = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
-                new XElement(xmlns + "urlset",
+                new XElement(xmlns + "sitemapindex",
                     new XAttribute("xmlns", xmlns),
                     new XAttribute(XNamespace.Xmlns + "xsi", xsi),
                     new XAttribute(xsi + "schemaLocation",
-                        @"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"),
+                        @"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd"),
                     from item in items
                     select CreateItemElement(item)
                 )
@@ -64,24 +56,17 @@ namespace Puppy.Web.SEO.Sitemap
 
             var xml = sitemap.ToString(Encoding.UTF8);
             SitemapHelper.CheckDocumentSize(xml);
-
             return xml;
         }
 
-        private XElement CreateItemElement(SitemapItem item)
+        private XElement CreateItemElement(SitemapIndexItem item)
         {
-            var itemElement = new XElement(xmlns + "url", new XElement(xmlns + "loc", item.Url.ToLowerInvariant()));
+            var itemElement = new XElement(xmlns + "sitemap", new XElement(xmlns + "loc", item.Url.ToLowerInvariant()));
 
             // all other elements are optional
             if (item.LastModified.HasValue)
-                itemElement.Add(new XElement(xmlns + "lastmod", item.LastModified.Value.ToString("yyyy-MM-ddTHH:mm:sszzz")));
-
-            if (item.ChangeFrequency.HasValue)
-                itemElement.Add(new XElement(xmlns + "changefreq", item.ChangeFrequency.Value.ToString().ToLower()));
-
-            if (item.Priority.HasValue)
-                itemElement.Add(new XElement(xmlns + "priority", item.Priority.Value.ToString("F1", CultureInfo.InvariantCulture)));
-
+                itemElement.Add(new XElement(xmlns + "lastmod",
+                    item.LastModified.Value.ToString("yyyy-MM-ddTHH:mm:sszzz")));
             return itemElement;
         }
     }

@@ -19,35 +19,51 @@
 
 #endregion License
 
+using Microsoft.AspNetCore.Mvc;
+using Puppy.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Puppy.Core;
 
 namespace Puppy.Web.SEO.SitemapIndex
 {
     /// <summary>
     ///     Generate Sitemap index (see more http://www.sitemaps.org/protocol.html) 
     /// </summary>
-    public class SitemapIndexGenerator
+    public class SitemapIndexGenerator : ISitemapGenerator<SitemapIndexItem>
     {
-        private static readonly XNamespace xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
+        private static readonly XNamespace Xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
 
-        private static readonly XNamespace xsi = @"http://www.w3.org/2001/XMLSchema-instance";
+        private static readonly XNamespace Xsi = @"http://www.w3.org/2001/XMLSchema-instance";
 
-        public virtual string GenerateSiteMapIndex(IEnumerable<SitemapIndexItem> items)
+        public virtual ContentResult GenerateContentResult(IEnumerable<SitemapIndexItem> items)
         {
-            if (items == null || !items.Any())
+            string sitemapContent = GenerateXmlString(items);
+
+            ContentResult contentResult = new ContentResult
+            {
+                ContentType = ContentType.Xml,
+                StatusCode = 200,
+                Content = sitemapContent
+            };
+            return contentResult;
+        }
+
+        public virtual string GenerateXmlString(IEnumerable<SitemapIndexItem> items)
+        {
+            if (items?.Any() != true)
+            {
                 throw new ArgumentNullException($"{nameof(items)} is null");
+            }
 
             var sitemap = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
-                new XElement(xmlns + "sitemapindex",
-                    new XAttribute("xmlns", xmlns),
-                    new XAttribute(XNamespace.Xmlns + "xsi", xsi),
-                    new XAttribute(xsi + "schemaLocation",
+                new XElement(Xmlns + "sitemapindex",
+                    new XAttribute("xmlns", Xmlns),
+                    new XAttribute(XNamespace.Xmlns + "xsi", Xsi),
+                    new XAttribute(Xsi + "schemaLocation",
                         @"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd"),
                     from item in items
                     select CreateItemElement(item)
@@ -61,11 +77,11 @@ namespace Puppy.Web.SEO.SitemapIndex
 
         private XElement CreateItemElement(SitemapIndexItem item)
         {
-            var itemElement = new XElement(xmlns + "sitemap", new XElement(xmlns + "loc", item.Url.ToLowerInvariant()));
+            var itemElement = new XElement(Xmlns + "sitemap", new XElement(Xmlns + "loc", item.Url.ToLowerInvariant()));
 
             // all other elements are optional
             if (item.LastModified.HasValue)
-                itemElement.Add(new XElement(xmlns + "lastmod",
+                itemElement.Add(new XElement(Xmlns + "lastmod",
                     item.LastModified.Value.ToString("yyyy-MM-ddTHH:mm:sszzz")));
             return itemElement;
         }

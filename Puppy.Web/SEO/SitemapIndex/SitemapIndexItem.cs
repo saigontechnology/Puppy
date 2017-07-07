@@ -26,7 +26,7 @@ namespace Puppy.Web.SEO.SitemapIndex
     /// <summary>
     ///     Represents a sitemap index item. 
     /// </summary>
-    public class SitemapIndexItem
+    public class SitemapIndexItem : ISitemapItem
     {
         /// <summary>
         ///     Creates a new instance of <see cref="SitemapIndexItem" /> 

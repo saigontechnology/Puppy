@@ -54,7 +54,7 @@ namespace Puppy.EF
 
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
-        public virtual DateTimeOffset CreatedTime { get; set; }
+        public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
 
         /// <summary>
         /// For tracking

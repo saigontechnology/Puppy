@@ -19,6 +19,7 @@
 
 #endregion License
 
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Puppy.Web.SEO.Sitemap
 {
     public static class SitemapMvcActionHelper
     {
-        public static List<SitemapActionInfo> GetSiteMapActionList(Assembly asm)
+        public static List<SitemapActionInfo> GetListActionInfo(Assembly asm)
         {
             var listAction = asm.GetTypes()
                 .Where(type => typeof(Controller).IsAssignableFrom(type))
@@ -40,15 +41,27 @@ namespace Puppy.Web.SEO.Sitemap
                 {
                     Controller = x.DeclaringType,
                     Action = x,
-                    SitemapFrequency =
-                        (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute)
-                        .SitemapFrequency,
-                    Priority =
-                        (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute)
-                        .Priority
+                    SitemapFrequency = (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute)?.SitemapFrequency ?? SitemapFrequency.Never,
+                    Priority = (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute) ?.Priority ?? 0
                 })
                 .ToList();
             return listAction;
+        }
+
+        public static ContentResult GetContentResult(Type startup, IUrlHelper iUrlHelper)
+        {
+            var asm = startup.GetTypeInfo().Assembly;
+            var actionList = SitemapMvcActionHelper.GetListActionInfo(asm);
+            var sitemapItems = actionList.Select(
+                    x =>
+                        new SitemapItem(
+                            iUrlHelper.AbsoluteAction(x.Action.Name, x.Controller.Name.Replace("Controller", string.Empty)),
+                            changeFrequency: x.SitemapFrequency,
+                            priority: x.Priority))
+                .ToList();
+
+            var sitemapContentResult = new SitemapGenerator().GenerateContentResult(sitemapItems);
+            return sitemapContentResult;
         }
     }
 }

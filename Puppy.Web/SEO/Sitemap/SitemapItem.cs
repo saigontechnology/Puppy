@@ -26,7 +26,7 @@ namespace Puppy.Web.SEO.Sitemap
     /// <summary>
     ///     Represents a page or URL in your sitemap. 
     /// </summary>
-    public sealed class SitemapItem
+    public sealed class SitemapItem : ISitemapItem
     {
         private double? _priority;
 

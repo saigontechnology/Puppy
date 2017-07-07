@@ -19,6 +19,7 @@
 
 #endregion License
 
+using Microsoft.AspNetCore.Mvc;
 using Puppy.Core;
 using System;
 using System.Collections.Generic;
@@ -32,15 +33,26 @@ namespace Puppy.Web.SEO.Sitemap
     /// <summary>
     ///     Generates sitemap XML. 
     /// </summary>
-    public class SitemapGenerator
+    public class SitemapGenerator : ISitemapGenerator<SitemapItem>
     {
-        private static readonly XNamespace xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
+        private static readonly XNamespace Xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
 
-        private static readonly XNamespace xsi = @"http://www.w3.org/2001/XMLSchema-instance";
+        private static readonly XNamespace Xsi = @"http://www.w3.org/2001/XMLSchema-instance";
 
-        
+        public virtual ContentResult GenerateContentResult(IEnumerable<SitemapItem> items)
+        {
+            string sitemapContent = GenerateXmlString(items);
 
-        public virtual string GenerateSiteMap(IEnumerable<SitemapItem> items)
+            ContentResult contentResult = new ContentResult
+            {
+                ContentType = ContentType.Xml,
+                StatusCode = 200,
+                Content = sitemapContent
+            };
+            return contentResult;
+        }
+
+        public virtual string GenerateXmlString(IEnumerable<SitemapItem> items)
         {
             var sitemapCount = (int)Math.Ceiling(items.Count() / (double)SitemapHelper.MaximumSitemapIndexCount);
             SitemapHelper.CheckSitemapCount(sitemapCount);
@@ -52,10 +64,10 @@ namespace Puppy.Web.SEO.Sitemap
 
             var sitemap = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
-                new XElement(xmlns + "urlset",
-                    new XAttribute("xmlns", xmlns),
-                    new XAttribute(XNamespace.Xmlns + "xsi", xsi),
-                    new XAttribute(xsi + "schemaLocation",
+                new XElement(Xmlns + "urlset",
+                    new XAttribute("xmlns", Xmlns),
+                    new XAttribute(XNamespace.Xmlns + "xsi", Xsi),
+                    new XAttribute(Xsi + "schemaLocation",
                         @"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"),
                     from item in items
                     select CreateItemElement(item)
@@ -70,17 +82,17 @@ namespace Puppy.Web.SEO.Sitemap
 
         private XElement CreateItemElement(SitemapItem item)
         {
-            var itemElement = new XElement(xmlns + "url", new XElement(xmlns + "loc", item.Url.ToLowerInvariant()));
+            var itemElement = new XElement(Xmlns + "url", new XElement(Xmlns + "loc", item.Url.ToLowerInvariant()));
 
             // all other elements are optional
             if (item.LastModified.HasValue)
-                itemElement.Add(new XElement(xmlns + "lastmod", item.LastModified.Value.ToString("yyyy-MM-ddTHH:mm:sszzz")));
+                itemElement.Add(new XElement(Xmlns + "lastmod", item.LastModified.Value.ToString("yyyy-MM-ddTHH:mm:sszzz")));
 
             if (item.ChangeFrequency.HasValue)
-                itemElement.Add(new XElement(xmlns + "changefreq", item.ChangeFrequency.Value.ToString().ToLower()));
+                itemElement.Add(new XElement(Xmlns + "changefreq", item.ChangeFrequency.Value.ToString().ToLower()));
 
             if (item.Priority.HasValue)
-                itemElement.Add(new XElement(xmlns + "priority", item.Priority.Value.ToString("F1", CultureInfo.InvariantCulture)));
+                itemElement.Add(new XElement(Xmlns + "priority", item.Priority.Value.ToString("F1", CultureInfo.InvariantCulture)));
 
             return itemElement;
         }

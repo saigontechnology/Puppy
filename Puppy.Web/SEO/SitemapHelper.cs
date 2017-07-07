@@ -17,8 +17,8 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System.Globalization;
 using Puppy.Web.SEO.Sitemap;
+using System.Globalization;
 
 namespace Puppy.Web.SEO
 {

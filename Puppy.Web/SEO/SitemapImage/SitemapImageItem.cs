@@ -28,7 +28,7 @@ namespace Puppy.Web.SEO.SitemapImage
     /// <summary>
     ///     Represents a sitemap image item. 
     /// </summary>
-    public class SitemapImageItem
+    public class SitemapImageItem : ISitemapItem
     {
         /// <summary>
         ///     Creates a new instance of <see cref="SitemapImageItem" /> 

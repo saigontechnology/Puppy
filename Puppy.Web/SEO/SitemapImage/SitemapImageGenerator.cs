@@ -19,35 +19,48 @@
 
 #endregion License
 
+using Microsoft.AspNetCore.Mvc;
+using Puppy.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Puppy.Core;
-using Puppy.Web.SEO.Sitemap;
 
 namespace Puppy.Web.SEO.SitemapImage
 {
     /// <summary>
     ///     Generate Image Sitemap (see more https://support.google.com/webmasters/answer/178636?hl=en) 
     /// </summary>
-    public class SitemapImageGenerator
+    public class SitemapImageGenerator : ISitemapGenerator<SitemapImageItem>
     {
-        public static readonly XNamespace image = @"http://www.google.com/schemas/sitemap-image/1.1";
+        public static readonly XNamespace Image = @"http://www.google.com/schemas/sitemap-image/1.1";
 
-        public static readonly XNamespace xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
+        public static readonly XNamespace Xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
 
-        public virtual string GenerateSiteMapImage(IEnumerable<SitemapImageItem> items)
+        public virtual ContentResult GenerateContentResult(IEnumerable<SitemapImageItem> items)
+        {
+            string sitemapContent = GenerateXmlString(items);
+
+            ContentResult contentResult = new ContentResult
+            {
+                ContentType = ContentType.Xml,
+                StatusCode = 200,
+                Content = sitemapContent
+            };
+            return contentResult;
+        }
+
+        public virtual string GenerateXmlString(IEnumerable<SitemapImageItem> items)
         {
             if (items == null || !items.Any())
                 throw new ArgumentNullException($"{nameof(items)} is null");
 
             var sitemap = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
-                new XElement(xmlns + "urlset",
-                    new XAttribute("xmlns", xmlns),
-                    new XAttribute(XNamespace.Xmlns + "image", image),
+                new XElement(Xmlns + "urlset",
+                    new XAttribute("xmlns", Xmlns),
+                    new XAttribute(XNamespace.Xmlns + "image", Image),
                     from item in items
                     select CreateItemElement(item)
                 )
@@ -60,26 +73,26 @@ namespace Puppy.Web.SEO.SitemapImage
 
         private string CreateItemElement(SitemapImageItem item)
         {
-            var itemElement = new XElement(xmlns + "url", new XElement(xmlns + "loc", item.Url.ToLowerInvariant()));
+            var itemElement = new XElement(Xmlns + "url", new XElement(Xmlns + "loc", item.Url.ToLowerInvariant()));
 
             foreach (var sitemapImageDetail in item.ListImage)
             {
-                var imageElement = new XElement(image + "image");
+                var imageElement = new XElement(Image + "image");
 
                 // all other elements are optional
-                imageElement.Add(new XElement(image + "loc", sitemapImageDetail.ImagePath.ToLowerInvariant()));
+                imageElement.Add(new XElement(Image + "loc", sitemapImageDetail.ImagePath.ToLowerInvariant()));
 
                 if (!string.IsNullOrWhiteSpace(sitemapImageDetail.Caption))
-                    imageElement.Add(new XElement(image + "caption", sitemapImageDetail.Caption));
+                    imageElement.Add(new XElement(Image + "caption", sitemapImageDetail.Caption));
 
                 if (!string.IsNullOrWhiteSpace(sitemapImageDetail.GeoLocation))
-                    imageElement.Add(new XElement(image + "geo_location", sitemapImageDetail.GeoLocation));
+                    imageElement.Add(new XElement(Image + "geo_location", sitemapImageDetail.GeoLocation));
 
                 if (!string.IsNullOrWhiteSpace(sitemapImageDetail.Title))
-                    imageElement.Add(new XElement(image + "title", sitemapImageDetail.Title));
+                    imageElement.Add(new XElement(Image + "title", sitemapImageDetail.Title));
 
                 if (!string.IsNullOrWhiteSpace(sitemapImageDetail.License))
-                    imageElement.Add(new XElement(image + "license", sitemapImageDetail.License));
+                    imageElement.Add(new XElement(Image + "license", sitemapImageDetail.License));
 
                 itemElement.Add(imageElement);
             }

@@ -61,7 +61,7 @@ namespace Puppy.Web.SEO.OpenGraph
                 // using ViewContext. https://github.com/aspnet/Mvc/issues/3233 and https://github.com/aspnet/Razor/issues/564
                 if (ViewContext.ViewData.ContainsKey(nameof(OpenGraphPrefixTagHelper)))
                 {
-                    var namespaces = (string) ViewContext.ViewData[nameof(OpenGraphPrefixTagHelper)];
+                    var namespaces = (string)ViewContext.ViewData[nameof(OpenGraphPrefixTagHelper)];
                     output.Attributes.Add(PrefixAttributeName, namespaces);
                 }
 

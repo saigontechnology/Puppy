@@ -5,12 +5,12 @@
 //     <Author> Top Nguyen (http://topnguyen.net) </Author>
 //     <Project> TopCore.Auth.Domain </Project>
 //     <File> 
-//         <Name> EntityBase.cs </Name>
+//         <Name> BaseEntity.cs </Name>
 //         <Created> 27 03 2017 02:39:27 PM </Created>
 //         <Key> 9BBFB04B-177D-4D87-B047-2F94F957E579 </Key>
 //     </File>
 //     <Summary>
-//         EntityBase is abstract entity to another entity inherit
+//         BaseEntity is abstract entity to another entity inherit
 //     </Summary>
 // </Auto-generated>
 //------------------------------------------------------------------------------------------------
@@ -18,11 +18,7 @@
 #endregion License
 
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Newtonsoft.Json;
-using Puppy.Core.DateTimeUtils;
 
 namespace Puppy.EF
 {
@@ -43,45 +39,45 @@ namespace Puppy.EF
     }
 
     /// <summary>
-    /// Entity Base for Entity Framework
+    ///     Entity Base for Entity Framework
     /// </summary>
     /// <typeparam name="TId">Id type of this entity</typeparam>
     /// <typeparam name="TOwnerId">Id type of who do the action of entity (for tracking)</typeparam>
-    public abstract class EntityBase<TId, TOwnerId> : IBaseEntity
+    public abstract class BaseEntity<TId, TOwnerId> : IBaseEntity
     {
         [Key]
         public virtual TId Id { get; set; }
+
+        /// <summary>
+        ///     For tracking
+        /// </summary>
+        public virtual TOwnerId CreatedBy { get; set; }
+
+        /// <summary>
+        ///     For tracking
+        /// </summary>
+        public virtual TOwnerId UpdatedBy { get; set; }
+
+        /// <summary>
+        ///     For tracking
+        /// </summary>
+        public virtual TOwnerId DeletedBy { get; set; }
 
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
         public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
 
-        /// <summary>
-        /// For tracking
-        /// </summary>
-        public virtual TOwnerId CreatedBy { get; set; }
-
         public virtual DateTimeOffset? LastUpdatedTime { get; set; }
-
-        /// <summary>
-        /// For tracking
-        /// </summary>
-        public virtual TOwnerId UpdatedBy { get; set; }
 
         public virtual bool IsDeleted { get; set; }
 
         public virtual DateTimeOffset? DeletedTime { get; set; }
 
-        /// <summary>
-        /// For tracking
-        /// </summary>
-        public virtual TOwnerId DeletedBy { get; set; }
-
         [Timestamp]
         public virtual byte[] Version { get; set; }
     }
 
-    public class EntityBase : EntityBase<int, int?>
+    public class BaseEntity : BaseEntity<int, int?>
     {
         public override int? CreatedBy { get; set; }
 

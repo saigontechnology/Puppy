@@ -2,10 +2,10 @@
 
 //------------------------------------------------------------------------------------------------
 // <License>
-//     <Copyright> 2017 © Top Nguyen → AspNetCore → I-Educator </Copyright>
+//     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> I-Educator.WebAPI </Project>
+//     <Project> Puppy </Project>
 //     <File>
 //         <Name> IServiceProviderExtension.cs </Name>
 //         <Created> 27 Apr 17 10:19:15 AM </Created>

@@ -31,6 +31,7 @@ namespace Puppy.Web.SEO.SitemapImage
 {
     /// <summary>
     ///     Generate Image Sitemap (see more https://support.google.com/webmasters/answer/178636?hl=en) 
+    ///     List up to 1,000 images for each page
     /// </summary>
     public class SitemapImageGenerator : ISitemapGenerator<SitemapImageItem>
     {

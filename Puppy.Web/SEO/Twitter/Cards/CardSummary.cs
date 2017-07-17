@@ -57,8 +57,8 @@ namespace Puppy.Web.SEO.Twitter.Cards
         ///     use a generic image such as your website logo, author photo, or other image that
         ///     spans multiple pages. The image must be a minimum size of 120px by 120px and must be
         ///     less than 1MB in file size. For an expanded tweet and its detail page, the image will
-        ///     be cropped to a 4:3 aspect ratio and resized to be displayed at 120px by 90px. The
-        ///     image will also be cropped and resized to 120px by 120px for use in embedded tweets.
+        ///     be cropped to a 4:3 aspect ratio and resize to be displayed at 120px by 90px. The
+        ///     image will also be cropped and resize to 120px by 120px for use in embedded tweets.
         ///     If you are using Facebook's Open Graph og:image, you do not have to use this unless
         ///     you want a different image but it is recommended to get supply a smaller image that
         ///     fits Twitters needs.

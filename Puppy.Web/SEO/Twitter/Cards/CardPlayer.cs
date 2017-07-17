@@ -34,7 +34,7 @@ namespace Puppy.Web.SEO.Twitter.Cards
     /// </summary>
     [HtmlTargetElement(
         "twitter-card-player",
-        Attributes = SiteUsernameAttributeName + "," + SiteIdAttributName + "," + ImageAttributeName + "," +
+        Attributes = SiteUsernameAttributeName + "," + SiteIdAttributeName + "," + ImageAttributeName + "," +
                      PlayerAttributeName,
         TagStructure = TagStructure.WithoutEndTag)]
     public class CardPlayer : TwitterCard

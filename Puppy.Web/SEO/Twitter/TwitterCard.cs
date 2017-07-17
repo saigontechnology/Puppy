@@ -41,18 +41,18 @@ namespace Puppy.Web.SEO.Twitter
         protected const string CreatorIdAttributeName = "creator-id";
 
         /// <summary>
-        ///     The Twitter @username of content creator e.g. @RehanSaeedUK. 
+        ///     The Twitter @username of content creator e.g. @Top. 
         /// </summary>
         protected const string CreatorUsernameAttributeName = "creator";
 
         /// <summary>
         ///     The Twitter Id associated with this site. 
         /// </summary>
-        protected const string SiteIdAttributName = "site-id";
+        protected const string SiteIdAttributeName = "site-id";
 
         /// <summary>
         ///     The Twitter @username associated with the page e.g. @Microsoft. This is a required
-        ///     property. Required for Twitter Card analytics.
+        ///     property. Required for Twitter Card analytic.
         /// </summary>
         protected const string SiteUsernameAttributeName = "site";
 
@@ -64,7 +64,7 @@ namespace Puppy.Web.SEO.Twitter
         public string CreatorId { get; set; }
 
         /// <summary>
-        ///     Gets or sets the Twitter @username of content creator e.g. @RehanSaeedUK. 
+        ///     Gets or sets the Twitter @username of content creator e.g. @Top. 
         /// </summary>
         [HtmlAttributeName(CreatorUsernameAttributeName)]
         public string CreatorUsername { get; set; }
@@ -73,7 +73,7 @@ namespace Puppy.Web.SEO.Twitter
         ///     Gets or sets the Site's Twitter site Id. Either twitter:site or twitter:site:id is required.
         /// </summary>
         /// <value> The twitter Id for the site. </value>
-        [HtmlAttributeName(SiteIdAttributName)]
+        [HtmlAttributeName(SiteIdAttributeName)]
         public string SiteId { get; set; }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Puppy.Web.SEO.Twitter
         /// </summary>
         /// <value>
         ///     The Site's Twitter @username the card should be attributed to. Required for Twitter
-        ///     Card analytics.
+        ///     Card analytic.
         /// </value>
         [HtmlAttributeName(SiteUsernameAttributeName)]
         public string SiteUsername { get; set; }

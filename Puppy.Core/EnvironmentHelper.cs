@@ -17,26 +17,29 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
+
 namespace Puppy.Core
 {
     public static class EnvironmentHelper
     {
-        private const string Development = "Development";
-        private const string Production = "Production";
+        public const string Development = "Development";
+        public const string Staging = "Staging";
+        public const string Production = "Production";
         private const string EnvironmentVariable = "ASPNETCORE_ENVIRONMENT";
 
-        public static readonly string Name = System.Environment.GetEnvironmentVariable(EnvironmentVariable);
+        public static readonly string Name = Environment.GetEnvironmentVariable(EnvironmentVariable);
 
-        public static readonly string MachineName = System.Environment.MachineName;
+        public static readonly string MachineName = Environment.MachineName;
 
         public static bool IsDevelopment()
         {
-            return Name == Development;
+            return string.Equals(Name, Development, StringComparison.OrdinalIgnoreCase);
         }
 
         public static bool IsProduction()
         {
-            return Name == Production;
+            return string.Equals(Name, Production, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿# Important Note
-> Project Created by **Top Nguyen** (http://topnguyen.net)
+﻿# Puppy.Core
+> Project Created by [**Top Nguyen**](http://topnguyen.net)
 - Another Framework/Project use this framework.
 - This framework is standalone, it mean not use any other Puppy Frameworks.
 

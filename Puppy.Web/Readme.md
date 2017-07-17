@@ -1,5 +1,5 @@
 ﻿# Important Note
-> Project Created by **Top Nguyen** (http://topnguyen.net)
+> Project Created by [**Top Nguyen**](http://topnguyen.net)
 
 ## Setup Program.cs
 ```c#

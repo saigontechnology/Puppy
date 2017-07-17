@@ -1,5 +1,5 @@
 ﻿# Important Note
-> Project Created by **Top Nguyen** (http://topnguyen.net)
+> Project Created by [**Top Nguyen**](http://topnguyen.net)
 
 - Set main project (Web.API) build output with all configuration is ".\bin\" (.\bin\\\<Main Project>.xml for XML to use swagger)
 

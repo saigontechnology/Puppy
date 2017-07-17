@@ -1,4 +1,5 @@
-﻿# Important Note
+﻿![Logo](favicon.ico)
+# Puppy.EF
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
 ## Initial Database

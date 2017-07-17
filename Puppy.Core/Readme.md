@@ -1,7 +1,10 @@
-﻿# Puppy.Core
+﻿![Logo](favicon.ico)
+# Puppy.Core
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 - Another Framework/Project use this framework.
 - This framework is standalone, it mean not use any other Puppy Frameworks.
+- Convention: use postfix `Extensions` for extension class, `Helper` for helper class.
+	> Remember: Extensions with 's'
 
 # Templates
 

@@ -119,9 +119,7 @@ namespace Puppy.Core.StringUtils
 
         public static string ReplaceNullOrWhiteSpaceToEmpty(string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                return string.Empty;
-            return value;
+            return string.IsNullOrWhiteSpace(value) ? string.Empty : value;
         }
 
         /// <summary>

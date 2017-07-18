@@ -19,8 +19,8 @@
 
 #endregion License
 
-using System;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -42,7 +42,7 @@ namespace Puppy.Web.SEO.Sitemap
                     Controller = x.DeclaringType,
                     Action = x,
                     SitemapFrequency = (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute)?.SitemapFrequency ?? SitemapFrequency.Never,
-                    Priority = (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute) ?.Priority ?? 0
+                    Priority = (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute)?.Priority ?? 0
                 })
                 .ToList();
             return listAction;

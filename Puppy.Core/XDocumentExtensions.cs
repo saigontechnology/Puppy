@@ -30,7 +30,7 @@ namespace Puppy.Core
     public static class XDocumentExtensions
     {
         /// <summary>
-        ///     Returns a <see cref="string" /> that represents the XML document in the specified encoding. 
+        ///     Returns a <see cref="string" /> that represents the XML document in the specified encoding.
         /// </summary>
         /// <param name="document"> The document. </param>
         /// <param name="encoding"> The encoding. </param>

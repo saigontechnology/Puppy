@@ -63,12 +63,8 @@ namespace Puppy.Web.SEO.Twitter
         ///     The URL to an iframe player. This must be a HTTPS URL which does not generate active
         ///     mixed content warnings in a web browser.
         /// </param>
-        /// <param name="width">            
-        ///     The width of the iFrame player in pixels.
-        /// </param>
-        /// <param name="height">           
-        ///     The height of the iFrame player in pixels.
-        /// </param>
+        /// <param name="width">             The width of the iFrame player in pixels. </param>
+        /// <param name="height">            The height of the iFrame player in pixels. </param>
         /// <param name="streamContentType">
         ///     The MIME type/subtype combination that describes the content contained in
         ///     twitter:player:stream. Takes the form specified in RFC 6381. Currently supported

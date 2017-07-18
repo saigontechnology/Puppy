@@ -18,6 +18,8 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -26,6 +28,11 @@ namespace Puppy.EF.Mapping
 {
     public static class ModelBuilderExtensions
     {
+        /// <summary>
+        ///     Scan and apply Config/Mapping for Tables/Entities 
+        /// </summary>
+        /// <param name="builder"> </param>
+        /// <param name="assembly"></param>
         public static void AddConfigFromAssembly(this ModelBuilder builder, Assembly assembly)
         {
             // Types that do entity mapping
@@ -54,6 +61,52 @@ namespace Puppy.EF.Mapping
                 // Create the mapping type and do the mapping
                 var mapper = Activator.CreateInstance(mappingType);
                 mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
+            }
+        }
+
+        /// <summary>
+        ///     Set Delete Behavior as Restrict in Relationship 
+        /// </summary>
+        /// <param name="builder"></param>
+        public static void SetDeleteBehaviorRestrict(this ModelBuilder builder)
+        {
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+        }
+
+        /// <summary>
+        ///     Remove plural table name 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        public static void RemovePluralizingTableNameConvention(this ModelBuilder modelBuilder)
+        {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                // Skip Shadow Types
+                if (entityType.ClrType == null)
+                    continue;
+
+                entityType.Relational().TableName = entityType.ClrType.Name;
+            }
+        }
+
+        /// <summary>
+        ///     Replace table name by new value 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        /// <param name="oldValue">    </param>
+        /// <param name="newValue">    </param>
+        public static void ReplaceTableNameConvention(this ModelBuilder modelBuilder, string oldValue, string newValue)
+        {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                // Skip Shadow Types
+                if (entityType.ClrType == null)
+                    continue;
+
+                entityType.Relational().TableName = entityType.Relational().TableName.Replace(oldValue, newValue);
             }
         }
     }

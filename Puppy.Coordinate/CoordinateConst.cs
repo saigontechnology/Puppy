@@ -5,7 +5,7 @@
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> TopCore.WebAPI </Project>
+//     <Project> Puppy </Project>
 //     <File>
 //         <Name> CoordinateConst.cs </Name>
 //         <Created> 27 Apr 17 2:02:14 PM </Created>

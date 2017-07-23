@@ -112,10 +112,10 @@ namespace Puppy.Core.StringUtils
         {
             if (url != null && (url.StartsWith("http://") || url.StartsWith("https://")))
             {
-                int num = url.IndexOf("//", StringComparison.Ordinal);
+                var num = url.IndexOf("//", StringComparison.Ordinal);
                 if (num > 0)
                 {
-                    int length = url.IndexOf("/", num + 2, StringComparison.Ordinal);
+                    var length = url.IndexOf("/", num + 2, StringComparison.Ordinal);
                     if (length >= 0)
                         url = url.Substring(0, length);
                     return url;

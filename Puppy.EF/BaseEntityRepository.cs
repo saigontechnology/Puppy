@@ -5,7 +5,7 @@
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> TopCore.WebAPI </Project>
+//     <Project> Puppy </Project>
 //     <File>
 //         <Name> BaseEntityRepository.cs </Name>
 //         <Created> 25 Apr 17 10:52:19 PM </Created>

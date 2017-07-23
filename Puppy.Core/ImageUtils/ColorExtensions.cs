@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System.Drawing;

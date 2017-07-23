@@ -19,6 +19,7 @@
 
 #endregion License
 
+using System;
 using System.Threading.Tasks;
 
 namespace Puppy.OneSignal.Devices
@@ -33,7 +34,7 @@ namespace Puppy.OneSignal.Devices
         /// </summary>
         /// <param name="options"> Here you can specify options used to add new device. </param>
         /// <returns> Result of device add operation. </returns>
-        Task<DeviceAddResult> Add(DeviceAddOptions options);
+        Task<DeviceAddResult> AddAsync(DeviceAddOptions options);
 
         /// <summary>
         ///     Edits existing device defined in OneSignal App. 
@@ -41,6 +42,6 @@ namespace Puppy.OneSignal.Devices
         /// <param name="id">      Id of the device </param>
         /// <param name="options"> Options used to modify attributes of the device. </param>
         /// <exception cref="Exception"></exception>
-        Task Edit(string id, DeviceEditOptions options);
+        Task EditAsync(string id, DeviceEditOptions options);
     }
 }

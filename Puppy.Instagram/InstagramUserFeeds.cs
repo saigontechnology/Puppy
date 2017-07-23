@@ -19,7 +19,7 @@
 
 #endregion License
 
-namespace Puppy.Core.InstagramUtils
+namespace Puppy.Instagram
 {
     public class InstagramUserFeeds
     {

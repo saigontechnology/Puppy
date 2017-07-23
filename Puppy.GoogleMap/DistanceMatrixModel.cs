@@ -21,7 +21,7 @@
 
 using Newtonsoft.Json;
 
-namespace Puppy.Core.GoogleMapUtils
+namespace Puppy.GoogleMap
 {
     public class DistanceMatrixModel
     {

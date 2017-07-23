@@ -19,14 +19,14 @@
 
 #endregion License
 
-using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace Puppy.Core.InstagramUtils
+namespace Puppy.Instagram
 {
     public static class InstagramHelper
     {
@@ -36,7 +36,7 @@ namespace Puppy.Core.InstagramUtils
         /// <param name="accessToken"></param>
         /// <param name="userId">     </param>
         /// <returns></returns>
-        public static async Task<InstagramUserFeeds> GetUserFeeds(string accessToken, string userId = "self")
+        public static async Task<InstagramUserFeeds> GetUserFeedsAsync(string accessToken, string userId = "self")
         {
             try
             {

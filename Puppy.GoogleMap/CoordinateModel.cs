@@ -19,7 +19,7 @@
 
 #endregion License
 
-namespace Puppy.Core.GoogleMapUtils
+namespace Puppy.GoogleMap
 {
     public class CoordinateModel
     {

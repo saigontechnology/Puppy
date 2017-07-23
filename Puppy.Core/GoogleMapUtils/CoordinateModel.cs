@@ -1,10 +1,11 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> TopCore.WebAPI </Project>
+//     <Project> Puppy </Project>
 //     <File>
 //         <Name> CoordinateModel.cs </Name>
 //         <Created> 27/05/2017 12:12:22 AM </Created>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 namespace Puppy.Core.GoogleMapUtils

@@ -9,6 +9,7 @@
   }
 
 ```
+
 - In Startup.cs
 ```csharp
 	string redisConnection = Configuration["Redis:ConnectionString"];

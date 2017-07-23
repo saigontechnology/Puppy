@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,12 +16,13 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace Puppy.Core
+namespace Puppy.Core.ConfigUtils
 {
     /// <summary>
     ///     <see cref="IConfiguration" /> 
@@ -41,14 +43,10 @@ namespace Puppy.Core
             where T : new()
         {
             if (configuration == null)
-            {
                 throw new ArgumentNullException(nameof(configuration));
-            }
 
             if (key == null)
-            {
                 key = typeof(T).Name;
-            }
 
             var section = new T();
             configuration.GetSection(key).Bind(section);

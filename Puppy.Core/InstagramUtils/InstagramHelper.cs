@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Newtonsoft.Json;
@@ -47,7 +49,7 @@ namespace Puppy.Core.InstagramUtils
                     var byteArray = buffer.ToArray();
                     var responseString = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
 
-                    InstagramUserFeeds instagramUserFeeds = JsonConvert.DeserializeObject<InstagramUserFeeds>(responseString);
+                    var instagramUserFeeds = JsonConvert.DeserializeObject<InstagramUserFeeds>(responseString);
 
                     return instagramUserFeeds;
                 }

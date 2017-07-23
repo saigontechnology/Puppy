@@ -19,6 +19,7 @@
 
 #endregion License
 
+using Puppy.RestSharp;
 using RestSharp;
 using System;
 using System.Net;
@@ -45,7 +46,7 @@ namespace Puppy.OneSignal.Notifications
         /// </summary>
         /// <param name="options"> Options used for notification create operation. </param>
         /// <returns></returns>
-        public async Task<NotificationCreateResult> Create(NotificationCreateOptions options)
+        public async Task<NotificationCreateResult> CreateAsync(NotificationCreateOptions options)
         {
             var restRequest = new RestRequest("notifications", Method.POST);
 
@@ -55,7 +56,7 @@ namespace Puppy.OneSignal.Notifications
             restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
             restRequest.AddBody(options);
 
-            var restResponse = await RestClient.ExecuteAsync<NotificationCreateResult>(restRequest);
+            var restResponse = await RestClient.ExecuteAsync<NotificationCreateResult>(restRequest).ConfigureAwait(true);
 
             if (!(restResponse.StatusCode != HttpStatusCode.Created || restResponse.StatusCode != HttpStatusCode.OK))
                 if (restResponse.ErrorException != null)
@@ -84,7 +85,7 @@ namespace Puppy.OneSignal.Notifications
             restRequest.RequestFormat = DataFormat.Json;
             restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
 
-            var restResponse = await RestClient.ExecuteAsync<NotificationViewResult>(restRequest);
+            var restResponse = await RestClient.ExecuteAsync<NotificationViewResult>(restRequest).ConfigureAwait(true);
 
             if (!(restResponse.StatusCode != HttpStatusCode.Created || restResponse.StatusCode != HttpStatusCode.OK))
                 if (restResponse.ErrorException != null)
@@ -100,7 +101,7 @@ namespace Puppy.OneSignal.Notifications
         /// </summary>
         /// <param name="options"> Options used for notification cancel operation. </param>
         /// <returns></returns>
-        public async Task<NotificationCancelResult> Cancel(NotificationCancelOptions options)
+        public async Task<NotificationCancelResult> CancelAsync(NotificationCancelOptions options)
         {
             var restRequest = new RestRequest("notifications/" + options.Id, Method.DELETE);
 
@@ -110,7 +111,7 @@ namespace Puppy.OneSignal.Notifications
 
             restRequest.RequestFormat = DataFormat.Json;
 
-            var restResponse = await RestClient.ExecuteAsync<NotificationCancelResult>(restRequest);
+            var restResponse = await RestClient.ExecuteAsync<NotificationCancelResult>(restRequest).ConfigureAwait(true);
 
             if (restResponse.ErrorException != null)
                 throw restResponse.ErrorException;

@@ -1,5 +1,4 @@
 ﻿#region	License
-
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -8,21 +7,20 @@
 //     <Project> Puppy </Project>
 //     <File>
 //         <Name> RestClientExtensions.cs </Name>
-//         <Created> 30/05/2017 4:58:39 PM </Created>
-//         <Key> e4a81464-d951-4757-a95c-aaf8c8946916 </Key>
+//         <Created> 23/07/17 4:05:27 PM </Created>
+//         <Key> 09abbb85-f442-4b3e-85e1-2aa5a53ca2df </Key>
 //     </File>
 //     <Summary>
 //         RestClientExtensions.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
-
 #endregion License
 
-using RestSharp;
 using System.Threading.Tasks;
+using RestSharp;
 
-namespace Puppy.OneSignal
+namespace Puppy.RestSharp
 {
     public static class RestClientExtensions
     {

@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.Core
+namespace Puppy.Core.LinqUtils
 {
     public static class LinqExtensions
     {

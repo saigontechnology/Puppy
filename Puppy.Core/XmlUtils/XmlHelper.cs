@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using System;
@@ -93,7 +95,7 @@ namespace Puppy.Core.XmlUtils
         {
             using (var fileStream = new FileStream(path, FileMode.Append, FileAccess.Write))
             {
-                using (StreamWriter sw = new StreamWriter(fileStream))
+                using (var sw = new StreamWriter(fileStream))
                 {
                     string xmlStr = ToXmlString(data);
                     sw.WriteLine(xmlStr);

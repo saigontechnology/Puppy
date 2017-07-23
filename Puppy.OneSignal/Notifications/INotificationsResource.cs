@@ -35,7 +35,7 @@ namespace Puppy.OneSignal.Notifications
         ///     This parameter can contai variety of possible options used to create notification.
         /// </param>
         /// <returns> Returns result of notification create operation. </returns>
-        Task<NotificationCreateResult> Create(NotificationCreateOptions options);
+        Task<NotificationCreateResult> CreateAsync(NotificationCreateOptions options);
 
         /// <summary>
         ///     Cancel notification Stop a scheduled or currently outgoing notification 
@@ -44,7 +44,7 @@ namespace Puppy.OneSignal.Notifications
         ///     This parameter contains the information required to cancel a scheduled notification
         /// </param>
         /// <returns> Returns result of notification cancel operation. </returns>
-        Task<NotificationCancelResult> Cancel(NotificationCancelOptions options);
+        Task<NotificationCancelResult> CancelAsync(NotificationCancelOptions options);
 
         /// <summary>
         ///     Get report about notification 

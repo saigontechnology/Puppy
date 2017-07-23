@@ -19,6 +19,7 @@
 
 #endregion License
 
+using Puppy.RestSharp;
 using RestSharp;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace Puppy.OneSignal.Devices
         /// </summary>
         /// <param name="options"> Here you can specify options used to add new device. </param>
         /// <returns> Result of device add operation. </returns>
-        public async Task<DeviceAddResult> Add(DeviceAddOptions options)
+        public async Task<DeviceAddResult> AddAsync(DeviceAddOptions options)
         {
             var restRequest = new RestRequest("players", Method.POST);
 
@@ -53,7 +54,7 @@ namespace Puppy.OneSignal.Devices
             restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
             restRequest.AddBody(options);
 
-            var restResponse = await RestClient.ExecuteAsync<DeviceAddResult>(restRequest);
+            var restResponse = await RestClient.ExecuteAsync<DeviceAddResult>(restRequest).ConfigureAwait(true);
 
             if (restResponse.ErrorException != null)
                 throw restResponse.ErrorException;
@@ -67,7 +68,7 @@ namespace Puppy.OneSignal.Devices
         /// <param name="id">      Id of the device </param>
         /// <param name="options"> Options used to modify attributes of the device. </param>
         /// <exception cref="Exception"></exception>
-        public async Task Edit(string id, DeviceEditOptions options)
+        public async Task EditAsync(string id, DeviceEditOptions options)
         {
             var restRequest = new RestRequest("players/{id}", Method.PUT);
 
@@ -79,7 +80,7 @@ namespace Puppy.OneSignal.Devices
             restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
             restRequest.AddBody(options);
 
-            var restResponse = await RestClient.ExecuteAsync(restRequest);
+            var restResponse = await RestClient.ExecuteAsync(restRequest).ConfigureAwait(true);
 
             if (restResponse.ErrorException != null)
                 throw restResponse.ErrorException;

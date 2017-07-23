@@ -142,7 +142,7 @@ namespace Puppy.Core.StringUtils
 
         public static bool IsValidEmail(string value)
         {
-            RegexUtilities regexUtilities = new RegexUtilities();
+            var regexUtilities = new RegexUtilities();
             return regexUtilities.IsValidEmail(value);
         }
 
@@ -154,23 +154,20 @@ namespace Puppy.Core.StringUtils
         /// <param name="minLength">   Phone min length without first 0 or country code </param>
         /// <param name="maxLength">   Phone max length without first 0 or country code </param>
         /// <returns></returns>
-        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9, int maxLength = 10)
+        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9,
+            int maxLength = 10)
         {
             if (string.IsNullOrWhiteSpace(value))
-            {
                 return false;
-            }
 
             countryCode = countryCode?.Replace("+", string.Empty);
             value = value.Replace("+", string.Empty);
 
-            string regexStartWithZero = $@"^\d[0-9]{{{minLength},{maxLength}}}$";
-            string regexStartWithCountryCode = $@"^\+({countryCode})[0-9]{{{minLength},{maxLength}}}$";
+            var regexStartWithZero = $@"^\d[0-9]{{{minLength},{maxLength}}}$";
+            var regexStartWithCountryCode = $@"^\+({countryCode})[0-9]{{{minLength},{maxLength}}}$";
 
             if (value.StartsWith("0"))
-            {
                 return Regex.Match(value, regexStartWithZero).Success;
-            }
             if (value.StartsWith($"+{countryCode}") || value.StartsWith(countryCode))
             {
                 value = $"+{value}";
@@ -188,13 +185,13 @@ namespace Puppy.Core.StringUtils
         public bool IsValidEmail(string strIn)
         {
             _invalid = false;
-            if (String.IsNullOrEmpty(strIn))
+            if (string.IsNullOrEmpty(strIn))
                 return false;
 
             // Use IdnMapping class to convert Unicode domain names.
             try
             {
-                strIn = Regex.Replace(strIn, @"(@)(.+)$", this.DomainMapper,
+                strIn = Regex.Replace(strIn, @"(@)(.+)$", DomainMapper,
                     RegexOptions.None, TimeSpan.FromMilliseconds(200));
             }
             catch (RegexMatchTimeoutException)
@@ -222,9 +219,9 @@ namespace Puppy.Core.StringUtils
         private string DomainMapper(Match match)
         {
             // IdnMapping class with default property values.
-            IdnMapping idn = new IdnMapping();
+            var idn = new IdnMapping();
 
-            string domainName = match.Groups[2].Value;
+            var domainName = match.Groups[2].Value;
             try
             {
                 domainName = idn.GetAscii(domainName);

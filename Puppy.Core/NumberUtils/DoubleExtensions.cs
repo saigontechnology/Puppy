@@ -5,7 +5,7 @@
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> TopCore.WebAPI </Project>
+//     <Project> Puppy </Project>
 //     <File>
 //         <Name> DoubleExtensions.cs </Name>
 //         <Created> 07 May 17 2:42:28 AM </Created>

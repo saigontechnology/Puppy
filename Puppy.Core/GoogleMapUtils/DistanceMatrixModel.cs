@@ -1,10 +1,11 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> TopCore.WebAPI </Project>
+//     <Project> Puppy </Project>
 //     <File>
 //         <Name> DistanceMatrixModel.cs </Name>
 //         <Created> 26/05/2017 11:21:44 PM </Created>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Newtonsoft.Json;
@@ -23,6 +25,10 @@ namespace Puppy.Core.GoogleMapUtils
 {
     public class DistanceMatrixModel
     {
+        private int[,] _distanceMatrix;
+
+        private int[,] _durationMatrix;
+
         [JsonProperty(PropertyName = "origin_addresses")]
         public string[] OriginAddresses { get; set; }
 
@@ -35,14 +41,10 @@ namespace Puppy.Core.GoogleMapUtils
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
 
-        private int[,] _distanceMatrix;
-
         /// <summary>
         ///     Get distance in meters from <see cref="OriginAddresses" />[i] to <see cref="DestinationAddresses" />[j] 
         /// </summary>
         public int[,] DistanceMatrix => _distanceMatrix ?? (_distanceMatrix = GetDistanceMatrix());
-
-        private int[,] _durationMatrix;
 
         /// <summary>
         ///     Get duration int second from <see cref="OriginAddresses" />[i] to <see cref="DestinationAddresses" />[j] 
@@ -51,30 +53,22 @@ namespace Puppy.Core.GoogleMapUtils
 
         private int[,] GetDistanceMatrix()
         {
-            int[,] matrix = new int[OriginAddresses.Length, DestinationAddresses.Length];
+            var matrix = new int[OriginAddresses.Length, DestinationAddresses.Length];
 
-            for (int i = 0; i < Rows.Length; i++)
-            {
-                for (int j = 0; j < Rows[i].Elements.Length; j++)
-                {
+            for (var i = 0; i < Rows.Length; i++)
+                for (var j = 0; j < Rows[i].Elements.Length; j++)
                     matrix[i, j] = Rows[i].Elements[j].Distance.Value;
-                }
-            }
 
             return matrix;
         }
 
         private int[,] GetDurationMatrix()
         {
-            int[,] matrix = new int[OriginAddresses.Length, DestinationAddresses.Length];
+            var matrix = new int[OriginAddresses.Length, DestinationAddresses.Length];
 
-            for (int i = 0; i < Rows.Length; i++)
-            {
-                for (int j = 0; j < Rows[i].Elements.Length; j++)
-                {
+            for (var i = 0; i < Rows.Length; i++)
+                for (var j = 0; j < Rows[i].Elements.Length; j++)
                     matrix[i, j] = Rows[i].Elements[j].Duration.Value;
-                }
-            }
 
             return matrix;
         }

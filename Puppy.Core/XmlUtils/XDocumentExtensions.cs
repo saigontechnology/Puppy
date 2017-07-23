@@ -1,4 +1,5 @@
 ﻿#region	License
+
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
@@ -15,6 +16,7 @@
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
+
 #endregion License
 
 using Puppy.Core.StringUtils;
@@ -22,7 +24,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Puppy.Core
+namespace Puppy.Core.XmlUtils
 {
     /// <summary>
     ///     <see cref="XDocument" /> extension methods 

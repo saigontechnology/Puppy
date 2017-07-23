@@ -49,7 +49,7 @@ namespace Puppy.Testing
         {
             _options.IncludedSegments = new List<string> { "All" };
             _options.Contents.Add(LanguageCodes.English, "Hello World");
-            var result = await _client.Notifications.Create(_options).ConfigureAwait(true);
+            var result = await _client.Notifications.CreateAsync(_options).ConfigureAwait(true);
         }
     }
 }

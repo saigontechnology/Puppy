@@ -24,7 +24,7 @@ namespace Puppy.Web
     /// <summary>
     ///     Determine whether a target element should be visible or not based on a conditional. 
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     [HtmlTargetElement(Attributes = IsVisibleAttributeName)]
     public class VisibilityTagHelper : TagHelper
     {
@@ -49,7 +49,7 @@ namespace Puppy.Web
         /// <param name="output">  A stateful HTML element used to generate an HTML tag. </param>
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (!this.IsVisible)
+            if (!IsVisible)
             {
                 output.SuppressOutput();
             }

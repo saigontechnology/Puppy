@@ -21,6 +21,7 @@
 
 using System;
 using System.Globalization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -29,47 +30,100 @@ namespace Puppy.Core.StringUtils
     public static class StringHelper
     {
         public const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        public const string LowerChars = "abcdefghijklmnopqrstuvwxyz";
+        public const string UpperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         public const string NumberChars = "0123456789";
-        public static Random Random = new Random();
+        public const string SpecialChars = "!@#$%^*&";
 
         /// <summary>
-        ///     Generate Random UPPER String 
+        ///     Get Random String 
         /// </summary>
-        /// <param name="length"></param>
+        /// <param name="length"> </param>
+        /// <param name="alpha">  </param>
+        /// <param name="upper">  </param>
+        /// <param name="lower">  </param>
+        /// <param name="numeric"></param>
+        /// <param name="special"></param>
         /// <returns></returns>
-        public static string GetRandomUpperString(int length)
+        public static string GetRandomString(int length, bool alpha = true, bool upper = true, bool lower = true, bool numeric = true, bool special = false)
         {
-            return GetRandomString(length).ToUpperInvariant();
+            var characters = string.Empty;
+            if (alpha)
+            {
+                if (upper)
+                {
+                    characters += UpperChars;
+                }
+
+                if (lower)
+                {
+                    characters += LowerChars;
+                }
+            }
+
+            if (numeric)
+            {
+                characters += NumberChars;
+            }
+
+            if (special)
+            {
+                characters += SpecialChars;
+            }
+
+            return GetRandomString(length, characters);
         }
 
         /// <summary>
-        ///     Generate Random String 
+        ///     Get Random String 
         /// </summary>
-        /// <param name="length"></param>
+        /// <param name="length">    </param>
+        /// <param name="characters"></param>
         /// <returns></returns>
-        public static string GetRandomString(int length)
+        public static string GetRandomString(int length, string characters)
         {
-            var stringChars = new char[length];
+            if (length < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length), "length cannot be less than zero.");
+            }
 
-            for (var i = 0; i < stringChars.Length; i++)
-                stringChars[i] = Chars[Random.Next(Chars.Length)];
+            if (string.IsNullOrWhiteSpace(characters))
+            {
+                throw new ArgumentOutOfRangeException(nameof(characters), "characters invalid.");
+            }
 
-            return new string(stringChars);
-        }
+            const int byteSize = 0x100;
+            if (byteSize < characters.Length)
+            {
+                throw new ArgumentException(
+                    string.Format("{0} may contain no more than {1} characters.", nameof(characters), byteSize),
+                    nameof(characters));
+            }
 
-        /// <summary>
-        ///     Generate Random String 
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public static string GetRandomNumber(int length)
-        {
-            var stringChars = new char[length];
+            var outOfRangeStart = byteSize - (byteSize % characters.Length);
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                var sb = new StringBuilder();
+                var buffer = new byte[128];
+                while (sb.Length < length)
+                {
+                    rng.GetBytes(buffer);
+                    for (var i = 0; i < buffer.Length && sb.Length < length; ++i)
+                    {
+                        // Divide the byte into charSet-sized groups. If the random value falls into
+                        // the last group and the last group is too small to choose from the entire
+                        // allowedCharSet, ignore the value in order to avoid biasing the result.
+                        if (outOfRangeStart <= buffer[i])
+                        {
+                            continue;
+                        }
 
-            for (var i = 0; i < stringChars.Length; i++)
-                stringChars[i] = NumberChars[Random.Next(NumberChars.Length)];
+                        sb.Append(characters[buffer[i] % characters.Length]);
+                    }
+                }
 
-            return new string(stringChars);
+                return sb.ToString();
+            }
         }
 
         /// <summary>

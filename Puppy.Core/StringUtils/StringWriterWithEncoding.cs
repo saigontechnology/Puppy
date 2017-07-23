@@ -31,7 +31,7 @@ namespace Puppy.Core.StringUtils
     /// </summary>
     public class StringWriterWithEncoding : StringWriter
     {
-        private readonly Encoding encoding;
+        private readonly Encoding _encoding;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="StringWriterWithEncoding" /> class. 
@@ -76,7 +76,7 @@ namespace Puppy.Core.StringUtils
         /// <param name="encoding"> The encoding. </param>
         public StringWriterWithEncoding(Encoding encoding)
         {
-            this.encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
+            this._encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Puppy.Core.StringUtils
         public StringWriterWithEncoding(IFormatProvider formatProvider, Encoding encoding)
             : base(formatProvider)
         {
-            this.encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
+            this._encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Puppy.Core.StringUtils
         public StringWriterWithEncoding(StringBuilder stringBuilder, Encoding encoding)
             : base(stringBuilder)
         {
-            this.encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
+            this._encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
         }
 
         /// <summary>
@@ -110,12 +110,12 @@ namespace Puppy.Core.StringUtils
         public StringWriterWithEncoding(StringBuilder stringBuilder, IFormatProvider formatProvider, Encoding encoding)
             : base(stringBuilder, formatProvider)
         {
-            this.encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
+            this._encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
         }
 
         /// <summary>
         ///     Gets the <see cref="T:System.Text.Encoding" /> in which the output is written. 
         /// </summary>
-        public override Encoding Encoding => encoding ?? base.Encoding;
+        public override Encoding Encoding => _encoding ?? base.Encoding;
     }
 }

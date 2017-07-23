@@ -6,25 +6,19 @@
 - Convention: use postfix `Extensions` for extension class, `Helper` for helper class.
 	> Remember: Extensions with 's'
 
-# Templates
+# External Libraries Used
+```markup
+  <!-- External Libraries -->
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
 
-## Export
-1. Export Template
-- VS < 2017
-> - Click on "File" > Export Template
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="1.1.2" />
 
-- VS >= 2017
-> - Click on "Project" > Export Template
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
 
-2. Select Item Template
-3. Select Solution have template
-4. Give Name, Icon
-5. Copy Export Zip file and use it like Import steps below.
-
-## Import
-- Copy .Zip file to visual studio item Templates Without Unzip, Just keep .Zip file!
-> - %userprofile%\documents\Visual Studio 2017\Templates\ItemTemplates
-> - %userprofile%\documents\Visual Studio 2015\Templates\ItemTemplates
-
-- Then Restart Visual Studio, try to use Add New Item.
-- Done
+    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
+  </ItemGroup>
+```

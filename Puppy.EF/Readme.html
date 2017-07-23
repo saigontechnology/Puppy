@@ -721,15 +721,153 @@ pre {
   position: relative;
   border-color: #4078c0;
 }
-</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" alt="Logo" style="max-width:100%;"></a></p>
+</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.EF/favicon.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.EF/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
 <h1>
-<a id="user-content-puppy---aspnetcore---daily-use-framework" class="anchor" href="#puppy---aspnetcore---daily-use-framework" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy - AspNetCore - Daily Use Framework.</h1>
+<a id="user-content-puppyef" class="anchor" href="#puppyef" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.EF</h1>
 <blockquote>
 <p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
 </blockquote>
-<p>Please view <a href="https://github.com/stssoftware/Puppy/blob/master/Mind%20Map.pdf">Mind Map</a> to get Puppy overview.</p>
+<h2>
+<a id="user-content-initial-database" class="anchor" href="#initial-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initial Database</h2>
+<p>Setup by Command Windows of current project</p>
+<pre lang="markup"><code>dotnet ef migrations add Initial
+dotnet ef database update  -v
+</code></pre>
+<p><strong>Don't use/run Package Manager Console to do the above action</strong>
+<strong>It will hang the Console and never stop without any result.</strong></p>
+<h1>
+<a id="user-content-important-thing-about-csproj" class="anchor" href="#important-thing-about-csproj" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Important Thing about csproj</h1>
+<pre lang="markup"><code>  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;netcoreapp1.1&lt;/TargetFramework&gt;
+    &lt;ApplicationIcon&gt;favicon.ico&lt;/ApplicationIcon&gt;
+    &lt;Copyright&gt;http://topnguyen.net&lt;/Copyright&gt;
+    
+    &lt;!-- Enable runtime config and runtime version, Need for entity framework DonetClioTool --&gt;
+    &lt;GenerateRuntimeConfigurationFiles&gt;true&lt;/GenerateRuntimeConfigurationFiles&gt;
+  &lt;/PropertyGroup&gt;
+
+  &lt;!-- Entity Framework --&gt;
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" /&gt;
+    &lt;PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" /&gt;
+    &lt;PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" /&gt;
+    &lt;!-- START Keep Runtime version is 1.0.0-* --&gt;
+    &lt;PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" /&gt;
+    &lt;DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-*" /&gt;
+    &lt;!-- END --&gt;
+  &lt;/ItemGroup&gt;
+</code></pre>
+<h1>
+<a id="user-content-templates" class="anchor" href="#templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Templates</h1>
+<h2>
+<a id="user-content-export" class="anchor" href="#export" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Export</h2>
+<ol>
+<li>Export Template</li>
+</ol>
 <ul>
-<li>Templates support to speedup coding time in AspNetCore Templates <a href="https://github.com/stssoftware/Penguin">Penguin</a>
-</li>
+<li>VS &lt; 2017</li>
 </ul>
+<blockquote>
+<ul>
+<li>Click on "File" &gt; Export Template</li>
+</ul>
+</blockquote>
+<ul>
+<li>VS &gt;= 2017</li>
+</ul>
+<blockquote>
+<ul>
+<li>Click on "Project" &gt; Export Template</li>
+</ul>
+</blockquote>
+<ol start="2">
+<li>Select Item Template</li>
+<li>Select Solution have template</li>
+<li>Give Name, Icon</li>
+<li>Copy Export Zip file and use it like Import steps below.</li>
+</ol>
+<h2>
+<a id="user-content-import" class="anchor" href="#import" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Import</h2>
+<ul>
+<li>Copy .Zip file to visual studio item Templates Without Unzip, Just keep .Zip file!</li>
+</ul>
+<blockquote>
+<ul>
+<li>%userprofile%\documents\Visual Studio 2017\Templates\ItemTemplates</li>
+<li>%userprofile%\documents\Visual Studio 2015\Templates\ItemTemplates</li>
+</ul>
+</blockquote>
+<ul>
+<li>Then Restart Visual Studio, try to use Add New Item.</li>
+<li>Done</li>
+</ul>
+<h1>
+<a id="user-content-dbcontext" class="anchor" href="#dbcontext" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DbContext</h1>
+<div class="highlight highlight-source-cs"><pre>[PerRequestDependency(ServiceType = typeof(IDbContext))]
+<span class="pl-k">public</span> <span class="pl-k">partial</span> <span class="pl-k">class</span> <span class="pl-en">DbContext</span> : <span class="pl-en">BaseDbContext</span>, <span class="pl-en">IDbContext</span>
+{
+    <span class="pl-k">public</span> <span class="pl-en">DbContext</span>()
+    {
+    }
+
+    <span class="pl-k">public</span> <span class="pl-en">DbContext</span>(DbContextOptions&lt;DbContext&gt; options) : <span class="pl-c1">base</span>(options)
+    {
+    }
+
+    <span class="pl-k">protected</span> <span class="pl-k">override</span> <span class="pl-k">void</span> <span class="pl-en">OnConfiguring</span>(<span class="pl-en">DbContextOptionsBuilder</span> <span class="pl-smi">optionsBuilder</span>)
+    {
+        <span class="pl-k">if</span> (!optionsBuilder.IsConfigured)
+        {
+            <span class="pl-k">string</span> <span class="pl-en">environmentName</span> = Environment.GetEnvironmentVariable(<span class="pl-s"><span class="pl-pds">"</span>ASPNETCORE_ENVIRONMENT<span class="pl-pds">"</span></span>);
+            <span class="pl-k">string</span> <span class="pl-en">connectionString</span> = ConfigHelper.GetValue(<span class="pl-s"><span class="pl-pds">"</span>appsettings.json<span class="pl-pds">"</span></span>, <span class="pl-pds">$"</span><span class="pl-s">ConnectionStrings:</span>{environmentName}<span class="pl-pds">"</span>);
+            optionsBuilder.UseSqlServer(<span class="pl-en">connectionString</span>, <span class="pl-en">o</span> =&gt; o.MigrationsAssembly(<span class="pl-k">typeof</span>(<span class="pl-en">IDataModule</span>).GetTypeInfo().Assembly.GetName().Name));
+        }
+    }
+
+    <span class="pl-k">protected</span> <span class="pl-k">override</span> <span class="pl-k">void</span> <span class="pl-en">OnModelCreating</span>(<span class="pl-en">ModelBuilder</span> <span class="pl-smi">builder</span>)
+    {
+        <span class="pl-c1">base</span>.OnModelCreating(builder);
+
+        <span class="pl-k">foreach</span> (<span class="pl-k">var</span> <span class="pl-en">relationship in builder.Model.GetEntityTypes().SelectMany(e </span>=&gt; e.GetForeignKeys()))
+        {
+            relationship.DeleteBehavior = DeleteBehavior.Restrict;
+        }
+
+        <span class="pl-c">// Keep under base for override and make end result</span>
+        builder.AddConfigFromAssembly(<span class="pl-k">typeof</span>(<span class="pl-en">IDataModule</span>).GetTypeInfo().Assembly);
+    }
+}</pre></div>
+<h1>
+<a id="user-content-dbfactory" class="anchor" href="#dbfactory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DbFactory</h1>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">DbContextFactory</span> : <span class="pl-en">IDbContextFactory</span>&lt;<span class="pl-en">DbContext</span>&gt;
+{
+    <span class="pl-k">public</span> <span class="pl-en">DbContext</span> <span class="pl-en">Create</span>(<span class="pl-en">DbContextFactoryOptions</span> <span class="pl-smi">options</span>)
+    {
+        <span class="pl-k">var</span> <span class="pl-en">connectionString </span>= GetConnectionString(options);
+        <span class="pl-k">return</span> CreateCoreContext(connectionString);
+    }
+
+    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> Get connection from DbContextFactoryOptions Environment<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>options<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">param</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">returns</span>&gt;&lt;/<span class="pl-ent">returns</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-k">private</span> <span class="pl-k">string</span> <span class="pl-en">GetConnectionString</span>(<span class="pl-en">DbContextFactoryOptions</span> <span class="pl-smi">options</span>)
+    {
+        <span class="pl-k">var</span> <span class="pl-en">connectionString </span>= ConfigHelper.GetValue(<span class="pl-s"><span class="pl-pds">"</span>appsettings.json<span class="pl-pds">"</span></span>, <span class="pl-pds">$"</span><span class="pl-s">ConnectionStrings:</span>{options.EnvironmentName}<span class="pl-pds">"</span>);
+        <span class="pl-k">return</span> connectionString;
+    }
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-en">DbContext</span> <span class="pl-en">CreateCoreContext</span>(<span class="pl-k">string</span> <span class="pl-smi">connectionString</span>)
+    {
+        <span class="pl-k">var</span> <span class="pl-en">builder </span>= <span class="pl-k">new</span> <span class="pl-en">DbContextOptionsBuilder</span>&lt;DbContext&gt;();
+        builder.UseSqlServer(<span class="pl-en">connectionString</span>, <span class="pl-en">optionsBuilder</span> =&gt; optionsBuilder.MigrationsAssembly(<span class="pl-k">typeof</span>(<span class="pl-en">IDataModule</span>).GetTypeInfo().Assembly.GetName().Name));
+        <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">DbContext</span>(builder.Options);
+    }
+}</pre></div>
+<h1>
+<a id="user-content-idbmodule" class="anchor" href="#idbmodule" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>IDbModule</h1>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">interface</span> <span class="pl-en">IDataModule</span>
+{
+}</pre></div>
 </article></body></html>

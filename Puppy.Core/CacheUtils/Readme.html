@@ -721,15 +721,33 @@ pre {
   position: relative;
   border-color: #4078c0;
 }
-</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" alt="Logo" style="max-width:100%;"></a></p>
-<h1>
-<a id="user-content-puppy---aspnetcore---daily-use-framework" class="anchor" href="#puppy---aspnetcore---daily-use-framework" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy - AspNetCore - Daily Use Framework.</h1>
+</style><title>Readme</title></head><body><article class="markdown-body"><h1>
+<a id="user-content-redis-cache-helper" class="anchor" href="#redis-cache-helper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Redis Cache Helper</h1>
 <blockquote>
-<p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
+<p>Created by <strong>Top Nguyen</strong> (<a href="http://topnguyen.net">http://topnguyen.net</a>)</p>
 </blockquote>
-<p>Please view <a href="https://github.com/stssoftware/Puppy/blob/master/Mind%20Map.pdf">Mind Map</a> to get Puppy overview.</p>
 <ul>
-<li>Templates support to speedup coding time in AspNetCore Templates <a href="https://github.com/stssoftware/Penguin">Penguin</a>
-</li>
+<li>use appsettings.json to config default cache duration</li>
 </ul>
+<div class="highlight highlight-source-json"><pre>  <span class="pl-s"><span class="pl-pds">"</span>Redis<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>ConnectionString<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>localhost:&lt;redis server port&gt;<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>InstanceName<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Eatup.WebAPI<span class="pl-pds">"</span></span>
+  }
+</pre></div>
+<ul>
+<li>In Startup.cs</li>
+</ul>
+<div class="highlight highlight-source-cs"><pre>	<span class="pl-k">string</span> <span class="pl-en">redisConnection</span> = <span class="pl-en">Configuration</span>["Redis:ConnectionString"];
+	<span class="pl-k">string</span> <span class="pl-en">redisInstance</span> = <span class="pl-en">Configuration</span>["Redis:InstanceName"];
+
+	<span class="pl-en">services.AddSingleton</span>&lt;<span class="pl-en">IDistributedCache</span>&gt;(factory =&gt;
+	{
+		<span class="pl-k">var</span> <span class="pl-en">cache </span>= <span class="pl-k">new</span> <span class="pl-en">RedisCache</span>(<span class="pl-k">new</span> <span class="pl-en">RedisCacheOptions</span>
+		{
+			Configuration = redisConnection,
+			InstanceName = redisInstance
+		});
+
+		<span class="pl-k">return</span> cache;
+	});</pre></div>
 </article></body></html>

@@ -65,10 +65,10 @@ namespace Puppy.EF.Mapping
         }
 
         /// <summary>
-        ///     Set Delete Behavior as Restrict in Relationship 
+        ///     Set Delete Behavior as Restrict in Relationship for disable cascading delete 
         /// </summary>
         /// <param name="builder"></param>
-        public static void SetDeleteBehaviorRestrict(this ModelBuilder builder)
+        public static void DisableCascadingDelete(this ModelBuilder builder)
         {
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
@@ -86,7 +86,9 @@ namespace Puppy.EF.Mapping
             {
                 // Skip Shadow Types
                 if (entityType.ClrType == null)
+                {
                     continue;
+                }
 
                 entityType.Relational().TableName = entityType.ClrType.Name;
             }
@@ -107,6 +109,27 @@ namespace Puppy.EF.Mapping
                     continue;
 
                 entityType.Relational().TableName = entityType.Relational().TableName.Replace(oldValue, newValue);
+            }
+        }
+
+        /// <summary>
+        ///     Replace table name by new value 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        /// <param name="oldValue">    </param>
+        /// <param name="newValue">    </param>
+        public static void ReplaceColumnNameConvention(this ModelBuilder modelBuilder, string oldValue, string newValue)
+        {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                // Skip Shadow Types
+                if (entityType.ClrType == null)
+                    continue;
+
+                foreach (var property in entityType.GetProperties())
+                {
+                    property.Relational().ColumnName = property.Name.Replace(oldValue, newValue);
+                }
             }
         }
     }

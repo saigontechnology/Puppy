@@ -721,15 +721,29 @@ pre {
   position: relative;
   border-color: #4078c0;
 }
-</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" alt="Logo" style="max-width:100%;"></a></p>
+</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.OneSignal/logo%20onesignal.png" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.OneSignal/logo%20onesignal.png" alt="Logo" style="max-width:100%;"></a></p>
 <h1>
-<a id="user-content-puppy---aspnetcore---daily-use-framework" class="anchor" href="#puppy---aspnetcore---daily-use-framework" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy - AspNetCore - Daily Use Framework.</h1>
+<a id="user-content-puppyonesignal" class="anchor" href="#puppyonesignal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.OneSignal</h1>
 <blockquote>
-<p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
+<p>Project Created by <strong>Top Nguyen</strong> (<a href="http://topnguyen.net">http://topnguyen.net</a>)</p>
 </blockquote>
-<p>Please view <a href="https://github.com/stssoftware/Puppy/blob/master/Mind%20Map.pdf">Mind Map</a> to get Puppy overview.</p>
 <ul>
-<li>Templates support to speedup coding time in AspNetCore Templates <a href="https://github.com/stssoftware/Penguin">Penguin</a>
+<li>A General purpose rest ApiClient write in C# language for the OneSignal API</li>
+<li>Project focus on wrapping 3rd Party service
+<a href="https://documentation.onesignal.com/reference">OneSignal Server API</a>
 </li>
 </ul>
+<h1>
+<a id="user-content-how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use</h1>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">var</span> <span class="pl-en">client </span>= <span class="pl-k">new</span> <span class="pl-en">OneSignalClient</span>(<span class="pl-s"><span class="pl-pds">"</span>&lt;api key&gt;<span class="pl-pds">"</span></span>);
+
+<span class="pl-k">var</span> <span class="pl-en">options </span>= <span class="pl-k">new</span> <span class="pl-en">NotificationCreateOptions</span>();
+
+<span class="pl-en">options.AppId</span> = "&lt;app id&gt;";
+
+<span class="pl-en">options.IncludedSegments</span> = new List&lt;string&gt; { <span class="pl-s"><span class="pl-pds">"</span>All<span class="pl-pds">"</span></span> };
+
+<span class="pl-en">options.Contents.Add</span>(LanguageCodes.English, "Hello World");
+
+<span class="pl-en">client.Notifications.Create</span>(options);</pre></div>
 </article></body></html>

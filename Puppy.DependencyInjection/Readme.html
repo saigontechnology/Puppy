@@ -721,15 +721,104 @@ pre {
   position: relative;
   border-color: #4078c0;
 }
-</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" alt="Logo" style="max-width:100%;"></a></p>
+</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.DependencyInjection/favicon.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.DependencyInjection/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
 <h1>
-<a id="user-content-puppy---aspnetcore---daily-use-framework" class="anchor" href="#puppy---aspnetcore---daily-use-framework" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy - AspNetCore - Daily Use Framework.</h1>
+<a id="user-content-puppydependencyinjection" class="anchor" href="#puppydependencyinjection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.DependencyInjection</h1>
 <blockquote>
 <p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
 </blockquote>
-<p>Please view <a href="https://github.com/stssoftware/Puppy/blob/master/Mind%20Map.pdf">Mind Map</a> to get Puppy overview.</p>
 <ul>
-<li>Templates support to speedup coding time in AspNetCore Templates <a href="https://github.com/stssoftware/Penguin">Penguin</a>
+<li>
+<p>Set main project (Web.API) build output with all configuration is ".\bin" (.\bin&lt;Main Project&gt;.xml for XML to use swagger)</p>
+</li>
+<li>
+<p>Set all project build output to ".\bin\netcoreapp1.1" of main project to do the scan.</p>
+</li>
+<li>
+<p>Right Click on Project &gt; Build Tab &gt; All Configuration &gt; Put Build output path "..&lt;Main Project&gt;\bin"</p>
+</li>
+<li>
+<p>1 Service just have only one Implement, if have more than 1 =&gt; throw ConflictRegisterException</p>
+</li>
+<li>
+<p>1 Implement have only register for a Service, if have more than 1 =&gt; Just get last one :D (ok, let support for inheric case)</p>
+</li>
+</ul>
+<h2>
+<a id="user-content-startup-config" class="anchor" href="#startup-config" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Startup Config</h2>
+<div class="highlight highlight-source-cs"><pre><span class="pl-en">services</span>
+	.<span class="pl-en">AddDependencyInjectionScanner</span>()
+	.<span class="pl-en">ScanFromSelf</span>()
+	.<span class="pl-en">ScanFromAllAssemblies</span>();
+     
+<span class="pl-c">// or </span>
+<span class="pl-en">services</span>
+	.<span class="pl-en">AddDependencyInjectionScanner</span>()
+	.<span class="pl-en">ScanFromAllAssemblies</span>(<span class="pl-pds">$"</span>{<span class="pl-k">nameof</span>(<span class="pl-en">TopCore</span>)}<span class="pl-s">.*.dll</span><span class="pl-pds">"</span>, Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));</pre></div>
+<h2>
+<a id="user-content-class-use" class="anchor" href="#class-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Class Use</h2>
+<div class="highlight highlight-source-cs"><pre>- <span class="pl-en">Use</span> <span class="pl-en">PerRequestDependencyAttribute</span>([PerRequestDependency]) for Request Scope
+  - ServiceLifetime.Scoped: Shared within a single <span class="pl-en">request</span> (<span class="pl-en">or</span> <span class="pl-smi">Service</span> Scope).
+
+- Use <span class="pl-en">PerResolveDependencyAttribute</span> ([PerResolveDependency]) for Resolve Scope
+  - ServiceLifetime.Transient: Created on every request for the service.
+
+- Use <span class="pl-en">SingletonDependencyAttribute</span> ([SingletonDependency]) for Application Scope
+  - ServiceLifetime.Singleton: A single shared instance throughout your application’s lifetime. Only created once.</pre></div>
+<h2>
+<a id="user-content-get-instance" class="anchor" href="#get-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get Instance</h2>
+<div class="highlight highlight-source-cs"><pre><span class="pl-en">IDataMigrationService</span> <span class="pl-en">dataMigrationService</span> = <span class="pl-en">services.Resolve</span>&lt;<span class="pl-en">IDataMigrationService</span>&gt;();</pre></div>
+<h2>
+<a id="user-content-sample" class="anchor" href="#sample" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample</h2>
+<div class="highlight highlight-source-cs"><pre>    [PerResolveDependency(ServiceType = typeof(IEmailSender))]
+    [PerRequestDependency(ServiceType = typeof(ISmsSender))]
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">LogService</span> : <span class="pl-en">ITextLogService</span>, <span class="pl-en">IDbLogService</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-en">Task</span> <span class="pl-en">LogTextAsync</span>(<span class="pl-k">string</span> <span class="pl-smi">filePath</span>, <span class="pl-k">string</span> <span class="pl-smi">message</span>)
+        {
+            <span class="pl-c">// TODO insert to file</span>
+            <span class="pl-k">return</span> Task.FromResult(<span class="pl-c1">0</span>);
+        }
+        <span class="pl-k">public</span> <span class="pl-en">Task</span> <span class="pl-en">LogDbAsync</span>(<span class="pl-k">string</span> <span class="pl-smi">message</span>, <span class="pl-k">string</span> <span class="pl-smi">level</span>)
+        {
+            <span class="pl-c">// TODO insert to database</span>
+            <span class="pl-k">return</span> Task.FromResult(<span class="pl-c1">0</span>);
+        }
+    }
+
+    <span class="pl-c">// Self Register to inject and control life time cycle</span>
+    [PerRequestDependency]
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">LogService</span> : <span class="pl-en">ITextLogService</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-en">Task</span> <span class="pl-en">LogTextAsync</span>(<span class="pl-k">string</span> <span class="pl-smi">filePath</span>, <span class="pl-k">string</span> <span class="pl-smi">message</span>)
+        {
+            <span class="pl-c">// TODO insert to file</span>
+            <span class="pl-k">return</span> Task.FromResult(<span class="pl-c1">0</span>);
+        }
+    }</pre></div>
+<h1>
+<a id="user-content-understanding-scope-lifetime" class="anchor" href="#understanding-scope-lifetime" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Understanding Scope Lifetime</h1>
+<ul>
+<li>The Transient and Singleton scopes are very obvious, but the Scope lifetime is more confusing. Many people (yours included) assumed that this meant once-per-request or transient if outside a request. But that’s not what it means. In fact, the DI layer specific has an interface called IServiceScopeFactory to allow you to create a scope for DI injection. Calling CreateScope returns an IServiceScope which implements IDisposable. Therefore you’d commonly use a ‘using’ statement to protect it’s destruction (and ending the scope)</li>
+</ul>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> (<span class="pl-en">var</span> scope = <span class="pl-en">scopeFactory.CreateScope</span>())
+{
+    <span class="pl-c">// ...</span>
+}</pre></div>
+<ul>
+<li>Then I'm creating a scope around the call to seed the database and use the scope to create the instance of my seeder (so that all the DI inside is inside a scope):</li>
+</ul>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> (<span class="pl-en">var</span> scope = <span class="pl-en">scopeFactory.CreateScope</span>())
+{
+    <span class="pl-en">var</span> <span class="pl-en">initializer</span> = <span class="pl-en">scope.ServiceProvider.GetService</span>&lt;<span class="pl-en">WilderInitializer</span>&gt;();
+    <span class="pl-en">initializer.SeedAsync</span>().<span class="pl-en">Wait</span>();
+}</pre></div>
+<ul>
+<li>
+<p>This way the initializer doesn’t need to do the actual execution of the scope and can be DI ignorant (in case of testing or moving the seeding to inside a request later).</p>
+</li>
+<li>
+<p>Here is a <a href="http://thedatafarm.com/dotnet/twitter-education-re-aspnet-core-scope/">link</a> to Julie’s post of the twitter conversation if you want to see how it transpired!</p>
 </li>
 </ul>
 </article></body></html>

@@ -721,15 +721,53 @@ pre {
   position: relative;
   border-color: #4078c0;
 }
-</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" alt="Logo" style="max-width:100%;"></a></p>
+</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.Web/favicon.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.Web/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
 <h1>
-<a id="user-content-puppy---aspnetcore---daily-use-framework" class="anchor" href="#puppy---aspnetcore---daily-use-framework" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy - AspNetCore - Daily Use Framework.</h1>
+<a id="user-content-puppyweb" class="anchor" href="#puppyweb" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.Web</h1>
 <blockquote>
 <p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
 </blockquote>
-<p>Please view <a href="https://github.com/stssoftware/Puppy/blob/master/Mind%20Map.pdf">Mind Map</a> to get Puppy overview.</p>
-<ul>
-<li>Templates support to speedup coding time in AspNetCore Templates <a href="https://github.com/stssoftware/Penguin">Penguin</a>
-</li>
-</ul>
+<h1>
+<a id="user-content-setup-tag-helper" class="anchor" href="#setup-tag-helper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup Tag Helper</h1>
+<p>Go to _ViewImports.cshtml then add <code>@addTagHelper "*, Puppy.Web"</code></p>
+<h2>
+<a id="user-content-markdown-tag-helper" class="anchor" href="#markdown-tag-helper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Markdown Tag Helper</h2>
+<p>Write text in html with tag <code>&lt;markdown&gt;</code> or <code>&lt;p markdown&gt;</code></p>
+<pre lang="markup"><code>&lt;markdown&gt;
+
+```csharp
+	public void Main()
+	{
+		Console.WriteLine("Markdown by Top Nguyen");
+	}
+```.
+
+&lt;/markdown&gt;
+
+@{
+    ViewData["MarkdownContent"] = "*Italic*, **bold**, and `monospace`";
+}
+
+&lt;markdown asp-for="@ViewData["MarkdownContent"]" /&gt;
+</code></pre>
+<p>It will transform to</p>
+<pre lang="markup"><code>&lt;pre&gt;&lt;code class='language-cs'&gt;
+	public void Main()
+	{
+	  Console.WriteLine("Markdown by Top Nguyen");
+	}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Italic&lt;/em&gt;, &lt;strong&gt;bold&lt;/strong&gt;, and &lt;code&gt;monospace&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+<p>You can use a library like <a href="http://highlightjs.org">HighlightJS</a> to sytnax highlight that code block!</p>
+<pre lang="markup"><code>@section Styles
+{
+    &lt;link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"&gt;
+}
+@section Scripts{
+    &lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+}
+</code></pre>
 </article></body></html>

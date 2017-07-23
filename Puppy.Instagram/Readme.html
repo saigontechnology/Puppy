@@ -721,15 +721,40 @@ pre {
   position: relative;
   border-color: #4078c0;
 }
-</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.ico" alt="Logo" style="max-width:100%;"></a></p>
+</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Monkey/Puppy/Puppy.Instagram/favicon.ico" target="_blank"><img src="///D://Dropbox/Github/Monkey/Puppy/Puppy.Instagram/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
 <h1>
-<a id="user-content-puppy---aspnetcore---daily-use-framework" class="anchor" href="#puppy---aspnetcore---daily-use-framework" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy - AspNetCore - Daily Use Framework.</h1>
+<a id="user-content-puppyinstagram" class="anchor" href="#puppyinstagram" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.Instagram</h1>
 <blockquote>
 <p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
 </blockquote>
-<p>Please view <a href="https://github.com/stssoftware/Puppy/blob/master/Mind%20Map.pdf">Mind Map</a> to get Puppy overview.</p>
+<ol>
+<li>Register Instagram app via instagram.com/developer</li>
+<li>Add Client and change security tab =&gt; un-check Disable implict OAuth
+add security redirect uri, ex: <code>localhost:10001</code>
+</li>
+</ol>
 <ul>
-<li>Templates support to speedup coding time in AspNetCore Templates <a href="https://github.com/stssoftware/Penguin">Penguin</a>
+<li>
+<p>Get AccessToken and UserId.</p>
+<ul>
+<li>Find Instagram User Id by <a href="https://smashballoon.com/instagram-feed/find-instagram-user-id">this link</a>.</li>
+<li>api.instagram.com/oauth/authorize/?client_id=<code>[clientID]</code>&amp;redirect_uri=<code>[redirectURI]</code>&amp;response_type=token</li>
+</ul>
+</li>
+<li>
+<p>Request Feeds via api.instagram.com/v1/users/<code>&lt;userid&gt;</code>/media/recent?access_token=<code>&lt;userid&gt;.&lt;access_token&gt;</code>.</p>
+</li>
+<li>
+<p>Refer: Service Integrate multiple social <a href="https://snapwidget.com/">Snap Widget</a>.</p>
+</li>
+<li>
+<p>Use Result - InstagramuserFeeds</p>
 </li>
 </ul>
+<div class="highlight highlight-source-cs"><pre>@<span class="pl-k">foreach</span> (<span class="pl-en">var</span> datum in InstagramuserFeeds.data)
+{
+    &lt;<span class="pl-en">a</span> <span class="pl-en">href</span>=<span class="pl-s"><span class="pl-pds">"</span>@datum.link<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-en">img</span> <span class="pl-en">src</span>=<span class="pl-s"><span class="pl-pds">"</span>@datum.images.low_resolution.url<span class="pl-pds">"</span></span> alt=<span class="pl-s"><span class="pl-pds">"</span>@datum.caption<span class="pl-pds">"</span></span>&gt;
+    &lt;/a&gt;
+}</pre></div>
 </article></body></html>

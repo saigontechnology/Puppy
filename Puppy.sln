@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.DependencyInjection",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.EF", "Puppy.EF\Puppy.EF.csproj", "{027A51BE-D9DD-4BC4-8A3C-D7BC290CECC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Search.Elastic", "Puppy.Search.Elastic\Puppy.Search.Elastic.csproj", "{AEB32062-F732-4939-A26F-295DF4261475}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Elastic", "Puppy.Elastic\Puppy.Elastic.csproj", "{AEB32062-F732-4939-A26F-295DF4261475}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Web", "Puppy.Web\Puppy.Web.csproj", "{2703DD10-C4BB-4FA0-9380-45284EF6AAE0}"
 EndProject

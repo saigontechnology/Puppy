@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Elastic", "Puppy.Elas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Web", "Puppy.Web\Puppy.Web.csproj", "{2703DD10-C4BB-4FA0-9380-45284EF6AAE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Testing", "Puppy.Testing\Puppy.Testing.csproj", "{33C5DB7B-B86A-4D14-B019-CEAF5173C1C4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.OneSignal", "Puppy.OneSignal\Puppy.OneSignal.csproj", "{EA86D671-68F8-426A-9DBF-2E689DDDE7EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.RestSharp", "Puppy.RestSharp\Puppy.RestSharp.csproj", "{136E3808-89AF-4587-B6CD-73D6E92EFDF8}"

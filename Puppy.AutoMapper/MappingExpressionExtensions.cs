@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> TopCore </Project>
 //     <File>
-//         <Name> AutoMapperExtensions.cs </Name>
+//         <Name> MappingExpressionExtensions.cs </Name>
 //         <Created> 24 Apr 17 1:25:34 AM </Created>
 //         <Key> ef316320-0a7a-4999-b90f-543679175c88 </Key>
 //     </File>
 //     <Summary>
-//         AutoMapperExtensions.cs
+//         MappingExpressionExtensions.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -25,12 +25,11 @@ using System.Reflection;
 
 namespace Puppy.AutoMapper
 {
-    public static class AutoMapperExtensions
+    public static class MappingExpressionExtensions
     {
-        public static IMappingExpression<TSource, TDestination> IgnoreAllNonExisting<TSource, TDestination>(
-            this IMappingExpression<TSource, TDestination> expression)
+        public static IMappingExpression<TSource, TDestination> IgnoreAllNonExisting<TSource, TDestination>(this IMappingExpression<TSource, TDestination> expression)
         {
-            var flags = BindingFlags.Public | BindingFlags.Instance;
+            const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
             var sourceType = typeof(TSource);
             var destinationProperties = typeof(TDestination).GetProperties(flags);
 

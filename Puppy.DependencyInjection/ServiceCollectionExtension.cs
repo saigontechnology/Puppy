@@ -24,8 +24,7 @@ using System.Reflection;
 
 namespace Puppy.DependencyInjection
 {
-    // ReSharper disable once InconsistentNaming
-    public static class IServiceCollectionExtension
+    public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddDependencyInjectionScanner(this IServiceCollection services)
         {

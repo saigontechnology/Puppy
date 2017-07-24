@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> IServiceProviderExtension.cs </Name>
+//         <Name> ServiceProviderExtension.cs </Name>
 //         <Created> 27 Apr 17 10:19:15 AM </Created>
 //         <Key> 54d16db5-cbfe-43cc-8326-453257bdca32 </Key>
 //     </File>
 //     <Summary>
-//         IServiceProviderExtension.cs
+//         ServiceProviderExtension.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -24,8 +24,7 @@ using System;
 
 namespace Puppy.DependencyInjection
 {
-    // ReSharper disable once InconsistentNaming
-    public static class IServiceProviderExtension
+    public static class ServiceProviderExtension
     {
         public static T Resolve<T>(this IServiceProvider services) where T : class
         {

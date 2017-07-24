@@ -22,11 +22,11 @@
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
-using Puppy.Core.ReflectionUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Puppy.Core.TypeUtils;
 
 namespace Puppy.AutoMapper
 {

@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.Core.ReflectionUtils
+namespace Puppy.Core.TypeUtils
 {
     public static class TypeExtensions
     {

@@ -62,7 +62,7 @@ namespace Puppy.Web
         public const string Json = "application/json";
 
         /// <summary>
-        ///     Multi-part form daata; Defined in RFC 2388. 
+        ///     Multi-part form data; Defined in RFC 2388. 
         /// </summary>
         public const string MultipartFormData = "multipart/form-data";
 

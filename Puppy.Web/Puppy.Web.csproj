@@ -34,10 +34,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="1.1.2" />
 
-    <!-- Web Code Generation -->
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" PrivateAssets="All" />
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0-preview1-final" />
-
     <!-- Swagger -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
   </ItemGroup>

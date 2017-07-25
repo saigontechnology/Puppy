@@ -32,11 +32,10 @@ namespace Puppy.EF
         ///         database if it does not already exist.
         ///     </para>
         /// </summary>
-        public static IApplicationBuilder DatabaseMigrate(this IApplicationBuilder app)
+        public static IApplicationBuilder DatabaseMigrate<T>(this IApplicationBuilder app) where T : IBaseDbContext
         {
-            IBaseDbContext dbContext = app.ApplicationServices.GetService<IBaseDbContext>();
+            T dbContext = app.ApplicationServices.GetService<T>();
             dbContext.Database.Migrate();
-
             return app;
         }
     }

@@ -20,13 +20,12 @@
 #endregion License
 
 using Microsoft.AspNetCore.Mvc;
-using Puppy.Core;
+using Puppy.Core.XmlUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Puppy.Core.XmlUtils;
 
 namespace Puppy.Web.SEO.SitemapIndex
 {

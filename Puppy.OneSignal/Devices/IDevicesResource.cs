@@ -19,7 +19,6 @@
 
 #endregion License
 
-using System;
 using System.Threading.Tasks;
 
 namespace Puppy.OneSignal.Devices

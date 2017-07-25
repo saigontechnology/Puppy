@@ -18,10 +18,8 @@ namespace Puppy.Elastic.Model.SearchModel.Queries.FunctionQuery
         private readonly TimeUnit _scale;
 
         private double _decay;
-        private bool _decaySet;
 
-        private TimeUnit _offset;
-        private bool _offsetSet;
+        private bool _decaySet;
 
         /// <summary>
         ///     origin The point of origin used for calculating distance. Must be given as a number
@@ -29,17 +27,6 @@ namespace Puppy.Elastic.Model.SearchModel.Queries.FunctionQuery
         ///     geo and numeric field. For date fields the default is now. Date math (for example
         ///     now-1h) is supported for origin.
         /// </summary>
-        private DateTime _origin;
-
-        private bool _originSet;
-
-        protected DateTimeDecayBaseScoreFunction(string field, TimeUnit scale, string decayType)
-        {
-            _field = field;
-            _scale = scale;
-            _decayType = decayType;
-        }
-
         public DateTime Origin
         {
             get => _origin;
@@ -50,20 +37,22 @@ namespace Puppy.Elastic.Model.SearchModel.Queries.FunctionQuery
             }
         }
 
+        private DateTime _origin;
+        private bool _originSet;
+
+        protected DateTimeDecayBaseScoreFunction(string field, TimeUnit scale, string decayType)
+        {
+            _field = field;
+            _scale = scale;
+            _decayType = decayType;
+        }
+
         /// <summary>
         ///     offset If an offset is defined, the decay function will only compute the decay
         ///     function for documents with a distance greater that the defined offset. The default
         ///     is 0.
         /// </summary>
-        public TimeUnit Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                _offsetSet = true;
-            }
-        }
+        public TimeUnit Offset { get; set; }
 
         /// <summary>
         ///     decay The decay parameter defines how documents are scored at the distance given at
@@ -87,7 +76,7 @@ namespace Puppy.Elastic.Model.SearchModel.Queries.FunctionQuery
             elasticCrudJsonWriter.JsonWriter.WriteStartObject();
 
             JsonHelper.WriteValue("origin", _origin, elasticCrudJsonWriter, _originSet);
-            JsonHelper.WriteValue("offset", _offset.GetTimeUnit(), elasticCrudJsonWriter);
+            JsonHelper.WriteValue("offset", Offset.GetTimeUnit(), elasticCrudJsonWriter);
             JsonHelper.WriteValue("scale", _scale.GetTimeUnit(), elasticCrudJsonWriter);
             JsonHelper.WriteValue("decay", _decay, elasticCrudJsonWriter, _decaySet);
 

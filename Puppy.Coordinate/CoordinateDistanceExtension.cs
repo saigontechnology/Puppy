@@ -26,7 +26,7 @@ namespace Puppy.Coordinate
     public static class CoordinateDistanceExtension
     {
         /// <summary>
-        ///     Distance to targetCoordinate
+        ///     Distance to targetCoordinate 
         /// </summary>
         /// <param name="src"> </param>
         /// <param name="dest"></param>
@@ -37,7 +37,7 @@ namespace Puppy.Coordinate
         }
 
         /// <summary>
-        ///     By Spherical law of cosines http://en.wikipedia.org/wiki/Spherical_law_of_cosines
+        ///     By Spherical law of cosines http://en.wikipedia.org/wiki/Spherical_law_of_cosines 
         /// </summary>
         public static double DistanceTo(this Coordinate src, Coordinate dest, UnitOfLength unitOfLength)
         {
@@ -60,7 +60,7 @@ namespace Puppy.Coordinate
         }
 
         /// <summary>
-        ///     By Haversine https://en.wikipedia.org/wiki/Haversine_formula
+        ///     By Haversine https://en.wikipedia.org/wiki/Haversine_formula 
         /// </summary>
         /// <returns></returns>
         public static double DistanceToByHaversine(this Coordinate src, Coordinate dest, UnitOfLength unitOfLength)
@@ -81,7 +81,7 @@ namespace Puppy.Coordinate
         }
 
         /// <summary>
-        ///     By Geographical distance http://en.wikipedia.org/wiki/Geographical_distance
+        ///     By Geographical distance http://en.wikipedia.org/wiki/Geographical_distance 
         /// </summary>
         public static double DistanceToByGeo(this Coordinate src, Coordinate dest, UnitOfLength unitOfLength)
         {

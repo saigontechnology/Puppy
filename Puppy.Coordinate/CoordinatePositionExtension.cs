@@ -55,7 +55,7 @@ namespace Puppy.Coordinate
         }
 
         /// <summary>
-        ///     Get Top Left Coordinate of square (out bound of circle) corner
+        ///     Get Top Left Coordinate of square (out bound of circle) corner 
         /// </summary>
         /// <param name="src">            </param>
         /// <param name="radiusKilometer"></param>
@@ -68,7 +68,7 @@ namespace Puppy.Coordinate
         }
 
         /// <summary>
-        ///     Get Bot Right Coordinate of square (out bound of circle) corner
+        ///     Get Bot Right Coordinate of square (out bound of circle) corner 
         /// </summary>
         /// <param name="src">            </param>
         /// <param name="radiusKilometer"></param>
@@ -81,7 +81,7 @@ namespace Puppy.Coordinate
         }
 
         /// <summary>
-        ///     Get Hypotenuse Edge of the right isosceles triangle
+        ///     Get Hypotenuse Edge of the right isosceles triangle 
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>

@@ -50,7 +50,7 @@ namespace Puppy.Web
         ///     characters so they are displayed as'%C3%A8'. What you set this to depends on whether
         ///     your target users are English speakers or not.
         /// </param>
-        /// <param name="maxlength">    The maximum allowed length of the title. </param>
+        /// <param name="maxLength">    The maximum allowed length of the title. </param>
         /// <returns> The SEO and human friendly title. </returns>
         /// <code>
         ///  [HttpGet("product/{id}/{title}", Name = "GetDetails")]
@@ -80,37 +80,36 @@ namespace Puppy.Web
         ///      return this.View(product);
         ///  }
         /// </code>
-        public static string GetFriendlyTitle(string title, bool remapToAscii = false, int maxlength = 80)
+        public static string GetFriendlyTitle(string title, bool remapToAscii = false, int maxLength = 80)
         {
             if (title == null)
                 return string.Empty;
 
             var length = title.Length;
-            var prevdash = false;
+            var prevDash = false;
             var stringBuilder = new StringBuilder(length);
-            char c;
 
             for (var i = 0; i < length; ++i)
             {
-                c = title[i];
+                var c = title[i];
                 if (c >= 'a' && c <= 'z' || c >= '0' && c <= '9')
                 {
                     stringBuilder.Append(c);
-                    prevdash = false;
+                    prevDash = false;
                 }
                 else if (c >= 'A' && c <= 'Z')
                 {
                     // tricky way to convert to lower-case
                     stringBuilder.Append((char)(c | 32));
-                    prevdash = false;
+                    prevDash = false;
                 }
                 else if (c == ' ' || c == ',' || c == '.' || c == '/' ||
                          c == '\\' || c == '-' || c == '_' || c == '=')
                 {
-                    if (!prevdash && stringBuilder.Length > 0)
+                    if (!prevDash && stringBuilder.Length > 0)
                     {
                         stringBuilder.Append('-');
-                        prevdash = true;
+                        prevDash = true;
                     }
                 }
                 else if (c >= 128)
@@ -123,14 +122,14 @@ namespace Puppy.Web
                         stringBuilder.Append(c);
 
                     if (previousLength != stringBuilder.Length)
-                        prevdash = false;
+                        prevDash = false;
                 }
 
-                if (stringBuilder.Length >= maxlength)
+                if (stringBuilder.Length >= maxLength)
                     break;
             }
 
-            if (prevdash || stringBuilder.Length > maxlength)
+            if (prevDash || stringBuilder.Length > maxLength)
                 return stringBuilder.ToString().Substring(0, stringBuilder.Length - 1);
             return stringBuilder.ToString();
         }

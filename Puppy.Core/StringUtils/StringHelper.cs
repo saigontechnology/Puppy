@@ -21,6 +21,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -131,6 +132,7 @@ namespace Puppy.Core.StringUtils
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <remarks> Already handle edge case <see cref="ConvertEdgeCases" /> </remarks>
         public static string RemoveAccents(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -143,7 +145,10 @@ namespace Puppy.Core.StringUtils
             {
                 var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
                 if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                    stringBuilder.Append(c);
+                {
+                    var edgeCases = ConvertEdgeCases(c);
+                    stringBuilder.Append(edgeCases);
+                }
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
@@ -155,7 +160,8 @@ namespace Puppy.Core.StringUtils
         /// <param name="value"></param>
         /// <returns></returns>
         /// <remarks>
-        ///     Replace đ, Đ to D.if value is is Null Or WhiteSpace will return string.Empty
+        ///     Already handle edge case <see cref="ConvertEdgeCases" />. If value is is Null Or
+        ///     WhiteSpace will return string.Empty
         /// </remarks>
         public static string Normalize(string value)
         {
@@ -164,11 +170,54 @@ namespace Puppy.Core.StringUtils
 
             value = value.Trim();
 
-            // Special word in vietnamese
-            value = value.Replace("đ", "d").Replace("Đ", "D");
+            // Convert Edge case
+            value = string.Join(string.Empty, value.Select(ConvertEdgeCases));
 
             var normalizedString = RemoveAccents(value);
+
             return normalizedString.ToUpperInvariant();
+        }
+
+        public static string ConvertEdgeCases(char c)
+        {
+            string swap;
+            switch (c)
+            {
+                case 'ı':
+                    swap = "i";
+                    break;
+
+                case 'ł':
+                case 'Ł':
+                    swap = "l";
+                    break;
+
+                case 'đ':
+                    swap = "d";
+                    break;
+
+                case 'Đ':
+                    swap = "D";
+                    break;
+
+                case 'ß':
+                    swap = "ss";
+                    break;
+
+                case 'ø':
+                    swap = "o";
+                    break;
+
+                case 'Þ':
+                    swap = "th";
+                    break;
+
+                default:
+                    swap = c.ToString();
+                    break;
+            }
+
+            return swap;
         }
 
         public static string ReplaceNullOrWhiteSpaceToEmpty(string value)
@@ -208,8 +257,7 @@ namespace Puppy.Core.StringUtils
         /// <param name="minLength">   Phone min length without first 0 or country code </param>
         /// <param name="maxLength">   Phone max length without first 0 or country code </param>
         /// <returns></returns>
-        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9,
-            int maxLength = 10)
+        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9, int maxLength = 10)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return false;

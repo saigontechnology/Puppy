@@ -34,6 +34,8 @@ namespace Puppy.Core.TypeUtils
 
         public static Assembly GetAssembly(this Type type) => type.GetTypeInfo().Assembly;
 
+        public static string GetAssemblySimpleName(this Type type) => type.GetAssembly().GetName().Name;
+
         public static IEnumerable<Assembly> GetAssemblies(this ICollection<Type> types) => types.Select(x => x.GetAssembly());
 
         public static IEnumerable<Assembly> GetAssemblies(this IEnumerable<Type> types) => types.Select(x => x.GetAssembly());

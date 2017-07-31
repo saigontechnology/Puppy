@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy → Interface </Project>
 //     <File>
-//         <Name> IBaseEntityRepository.cs </Name>
+//         <Name> IEntityRepository.cs </Name>
 //         <Created> 23 Apr 17 3:55:08 PM </Created>
 //         <Key> b47adcbd-ac4a-4f10-8be1-e391588aafe4 </Key>
 //     </File>
 //     <Summary>
-//         IBaseEntityRepository.cs
+//         IEntityRepository.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -26,17 +26,15 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Puppy.EF.Interfaces
+namespace Puppy.EF.Interfaces.Repository
 {
-    public interface IBaseEntityRepository<TEntity> where TEntity : class, IBaseEntity
+    public interface IEntityRepository<TEntity> where TEntity : class
     {
         IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
 
-        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
-            params Expression<Func<TEntity, object>>[] includeProperties);
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
 
-        TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false,
-            params Expression<Func<TEntity, object>>[] includeProperties);
+        TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
 
         TEntity Add(TEntity entity);
 
@@ -46,15 +44,18 @@ namespace Puppy.EF.Interfaces
 
         void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
 
+        void RefreshEntity(TEntity entity);
+
         [DebuggerStepThrough]
         int SaveChanges();
 
         [DebuggerStepThrough]
         int SaveChanges(bool acceptAllChangesOnSuccess);
 
+        [DebuggerStepThrough]
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = default(CancellationToken));
+        [DebuggerStepThrough]
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

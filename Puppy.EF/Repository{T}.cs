@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> BaseRepository.cs </Name>
+//         <Name> Repository.cs </Name>
 //         <Created> 23 Apr 17 3:57:10 PM </Created>
 //         <Key> 3b818713-4d97-47d0-8844-ec124b27f1e0 </Key>
 //     </File>
 //     <Summary>
-//         BaseRepository.cs
+//         Repository.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -21,7 +21,9 @@
 
 using Microsoft.EntityFrameworkCore;
 using Puppy.EF.Interfaces;
+using Puppy.EF.Interfaces.Repository;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -29,18 +31,13 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class
     {
         private readonly IBaseDbContext _baseDbContext;
 
         private DbSet<T> _dbSet;
 
-        public BaseRepository(IBaseDbContext baseDbContext)
-        {
-            _baseDbContext = baseDbContext;
-        }
-
-        private DbSet<T> DbSet
+        protected DbSet<T> DbSet
         {
             get
             {
@@ -51,6 +48,11 @@ namespace Puppy.EF
             }
         }
 
+        protected Repository(IBaseDbContext baseDbContext)
+        {
+            _baseDbContext = baseDbContext;
+        }
+
         public virtual IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
@@ -59,8 +61,7 @@ namespace Puppy.EF
             return query;
         }
 
-        public virtual IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
-            params Expression<Func<T, object>>[] includeProperties)
+        public virtual IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
             foreach (var includeProperty in includeProperties)
@@ -68,8 +69,7 @@ namespace Puppy.EF
             return predicate == null ? query : query.Where(predicate);
         }
 
-        public virtual T GetSingle(Expression<Func<T, bool>> predicate,
-            params Expression<Func<T, object>>[] includeProperties)
+        public virtual T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
             return Get(predicate, includeProperties).FirstOrDefault();
         }
@@ -87,9 +87,6 @@ namespace Puppy.EF
             if (changedProperties != null && changedProperties.Any())
                 foreach (var property in changedProperties)
                 {
-                    var expression = (MemberExpression)property.Body;
-                    var name = expression.Member.Name;
-
                     _baseDbContext.Entry(entity).Property(property).IsModified = true;
                 }
             else
@@ -119,30 +116,33 @@ namespace Puppy.EF
                 Delete(entity);
         }
 
+        public virtual void RefreshEntity(T entity)
+        {
+            _baseDbContext.Entry(entity).Reload();
+        }
+
+        [DebuggerStepThrough]
         public virtual int SaveChanges()
         {
             return _baseDbContext.SaveChanges();
         }
 
+        [DebuggerStepThrough]
         public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
+        [DebuggerStepThrough]
         public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             return _baseDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = new CancellationToken())
+        [DebuggerStepThrough]
+        public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
             return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        public virtual void RefreshEntity(T entityToReload)
-        {
-            _baseDbContext.Entry(entityToReload).Reload();
         }
     }
 }

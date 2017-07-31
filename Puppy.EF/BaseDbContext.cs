@@ -22,13 +22,13 @@ using Puppy.EF.Interfaces;
 
 namespace Puppy.EF
 {
-    public class BaseDbContext : DbContext, IBaseDbContext
+    public abstract class BaseDbContext : DbContext, IBaseDbContext
     {
         protected BaseDbContext()
         {
         }
 
-        public BaseDbContext(DbContextOptions options) : base(options)
+        protected BaseDbContext(DbContextOptions options) : base(options)
         {
         }
     }

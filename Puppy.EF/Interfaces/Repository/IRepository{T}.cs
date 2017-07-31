@@ -26,14 +26,13 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Puppy.EF.Interfaces
+namespace Puppy.EF.Interfaces.Repository
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties);
 
-        IQueryable<T> Get(Expression<Func<T, bool>> predicate = null,
-            params Expression<Func<T, object>>[] includeProperties);
+        IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
 
         T GetSingle(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
 
@@ -45,15 +44,18 @@ namespace Puppy.EF.Interfaces
 
         void DeleteWhere(Expression<Func<T, bool>> predicate);
 
+        void RefreshEntity(T entity);
+
         [DebuggerStepThrough]
         int SaveChanges();
 
         [DebuggerStepThrough]
         int SaveChanges(bool acceptAllChangesOnSuccess);
 
+        [DebuggerStepThrough]
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = default(CancellationToken));
+        [DebuggerStepThrough]
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

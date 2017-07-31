@@ -810,53 +810,24 @@ MathJax.Hub.Config({
   onReady(function(){convertUML('uml-sequence-diagram', Diagram, {theme: 'simple'});});
 })(window, document)
 </script>
-<title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Dropbox/Github/Puppy/Puppy.Web/favicon.ico" target="_blank"><img src="///D://Dropbox/Github/Puppy/Puppy.Web/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
-<h1>
-<a id="user-content-puppyweb" class="anchor" href="#puppyweb" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.Web</h1>
-<blockquote>
-<p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
-</blockquote>
-<h1>
-<a id="user-content-setup-tag-helper" class="anchor" href="#setup-tag-helper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup Tag Helper</h1>
-<p>Go to _ViewImports.cshtml then add <code>@addTagHelper "*, Puppy.Web"</code></p>
-<h2>
-<a id="user-content-markdown-tag-helper" class="anchor" href="#markdown-tag-helper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Markdown Tag Helper</h2>
-<p>Write text in html with tag <code>&lt;markdown&gt;</code> or <code>&lt;p markdown&gt;</code></p>
-<pre lang="markup"><code>&lt;markdown&gt;
-
-```csharp
-	public void Main()
-	{
-		Console.WriteLine("Markdown by Top Nguyen");
-	}
-```.
-
-&lt;/markdown&gt;
-
-@{
-    ViewData["MarkdownContent"] = "*Italic*, **bold**, and `monospace`";
-}
-
-&lt;markdown asp-for="@ViewData["MarkdownContent"]" /&gt;
-</code></pre>
-<p>It will transform to</p>
-<pre lang="markup"><code>&lt;pre&gt;&lt;code class='language-cs'&gt;
-	public void Main()
-	{
-	  Console.WriteLine("Markdown by Top Nguyen");
-	}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;em&gt;Italic&lt;/em&gt;, &lt;strong&gt;bold&lt;/strong&gt;, and &lt;code&gt;monospace&lt;/code&gt;&lt;/p&gt;
-</code></pre>
-<p>You can use a library like <a href="http://highlightjs.org">HighlightJS</a> to sytnax highlight that code block!</p>
-<pre lang="markup"><code>@section Styles
-{
-    &lt;link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"&gt;
-}
-@section Scripts{
-    &lt;script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"&gt;&lt;/script&gt;
-    &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-}
-</code></pre>
+<title>LICENSE</title></head><body><article class="markdown-body"><p>This is free and unencumbered software released into the public domain.</p>
+<p>Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.</p>
+<p>In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.</p>
+<p>For more information, please refer to <a href="http://unlicense.org">http://unlicense.org</a></p>
 </article></body></html>

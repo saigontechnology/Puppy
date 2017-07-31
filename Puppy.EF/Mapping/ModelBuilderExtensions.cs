@@ -64,6 +64,11 @@ namespace Puppy.EF.Mapping
             }
         }
 
+        public static void AddConfiguration<TEntity>(this ModelBuilder modelBuilder, EntityTypeConfiguration<TEntity> configuration) where TEntity : class
+        {
+            configuration.Map(modelBuilder.Entity<TEntity>());
+        }
+
         /// <summary>
         ///     Set Delete Behavior as Restrict in Relationship for disable cascading delete 
         /// </summary>

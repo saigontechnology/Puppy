@@ -28,7 +28,11 @@ namespace Puppy.EF
     /// </summary>
     /// <typeparam name="TId">Id type of this entity</typeparam>
     /// <typeparam name="TBy">Id type of who do the action of entity (for tracking)</typeparam>
-    public abstract class Entity<TId, TBy> : ISoftDeletableEntity<bool, DateTimeOffset>, IAuditableEntity<DateTimeOffset, DateTimeOffset>, IVersionEntity, IGlobalIdentityEntity
+    public abstract class Entity<TId, TBy> :
+        ISoftDeletableEntity<TBy>,
+        IAuditableEntity<TBy>,
+        IVersionEntity,
+        IGlobalIdentityEntity where TId : struct where TBy : struct
     {
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
@@ -41,13 +45,13 @@ namespace Puppy.EF
 
         // Create Info
 
-        public virtual TBy CreatedBy { get; set; }
+        public virtual TBy? CreatedBy { get; set; }
 
         public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
 
         // Update Info
 
-        public virtual TBy UpdatedBy { get; set; }
+        public virtual TBy? LastUpdatedBy { get; set; }
 
         public virtual DateTimeOffset? LastUpdatedTime { get; set; }
 
@@ -55,12 +59,12 @@ namespace Puppy.EF
 
         public virtual bool IsDeleted { get; set; }
 
-        public virtual TBy DeletedBy { get; set; }
+        public virtual TBy? DeletedBy { get; set; }
 
         public virtual DateTimeOffset? DeletedTime { get; set; }
     }
 
-    public abstract class Entity : Entity<int, int?>
+    public abstract class Entity : Entity<int, int>
     {
     }
 }

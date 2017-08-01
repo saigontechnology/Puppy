@@ -17,18 +17,20 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
+
 namespace Puppy.EF.Interfaces.Entity
 {
     /// <summary>
-    /// Soft Deletable Entity by IsDeleted as marker and Nullable TDeletedTime as audit log
+    ///     Soft Deletable Entity by IsDeleted as marker and Nullable DateTimeOffset as audit log 
     /// </summary>
-    /// <typeparam name="TIsDeleted">Refer use <c>Boolean</c></typeparam>
-    /// <typeparam name="TDeletedTime">Refer use <c> DateTimeOffset </c></typeparam>
-    /// <remarks>Refer use <c>Boolean</c> for <c>TIsDeleted</c> and <c> DateTimeOffset </c> for <c>TDeletedTime</c></remarks>
-    public interface ISoftDeletableEntity<TIsDeleted, TDeletedTime> where TIsDeleted : struct where TDeletedTime : struct
+    /// <typeparam name="TBy"> User Id </typeparam>
+    public interface ISoftDeletableEntity<TBy> where TBy : struct
     {
-        TIsDeleted IsDeleted { get; set; }
+        bool IsDeleted { get; set; }
 
-        TDeletedTime? DeletedTime { get; set; }
+        DateTimeOffset? DeletedTime { get; set; }
+
+        TBy? DeletedBy { get; set; }
     }
 }

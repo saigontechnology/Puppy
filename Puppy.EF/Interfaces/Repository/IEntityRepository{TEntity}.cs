@@ -25,6 +25,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Puppy.EF.Interfaces.Entity;
 
 namespace Puppy.EF.Interfaces.Repository
 {

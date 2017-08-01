@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy → Interface </Project>
 //     <File>
-//         <Name> IBaseRepository.cs </Name>
+//         <Name> IPuppy.EF.Repository.cs </Name>
 //         <Created> 23 Apr 17 3:47:20 PM </Created>
 //         <Key> 3e4a5d95-7957-4305-ad6f-b4452d8ccfda </Key>
 //     </File>
 //     <Summary>
-//         IBaseRepository.cs
+//         IPuppy.EF.Repository.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------

@@ -17,18 +17,22 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
+
 namespace Puppy.EF.Interfaces.Entity
 {
     /// <summary>
-    ///     Audiable entity by CreatedTime and Nullable LastUpdatedTime 
+    ///     Audiable entity by CreatedTime and Nullable LastUpdatedTime
     /// </summary>
-    /// <typeparam name="TCreatedTime">Refer use <c> DateTimeOffset </c></typeparam>
-    /// <typeparam name="TLastUpdatedTime"> Refer use <c> DateTimeOffset </c> </typeparam>
-    /// <remarks> Refer use <c> DateTimeOffset </c> for both </remarks>
-    public interface IAuditableEntity<TCreatedTime, TLastUpdatedTime> where TCreatedTime : struct where TLastUpdatedTime : struct
+    /// <typeparam name="TBy"> User Id </typeparam>
+    public interface IAuditableEntity<TBy> where TBy : struct
     {
-        TCreatedTime CreatedTime { get; set; }
+        DateTimeOffset CreatedTime { get; set; }
 
-        TLastUpdatedTime? LastUpdatedTime { get; set; }
+        TBy? CreatedBy { get; set; }
+
+        DateTimeOffset? LastUpdatedTime { get; set; }
+
+        TBy? LastUpdatedBy { get; set; }
     }
 }

@@ -32,8 +32,7 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF
 {
-    public abstract class EntityRepository<TEntity, TBy> : 
-        IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TBy>, IAuditableEntity<TBy> where TBy : struct 
+    public abstract class EntityRepository<TEntity, TKey> : IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct 
     {
         private readonly IBaseDbContext _baseDbContext;
 

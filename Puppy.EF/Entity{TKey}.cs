@@ -26,18 +26,17 @@ namespace Puppy.EF
     /// <summary>
     ///     Entity for Entity Framework
     /// </summary>
-    /// <typeparam name="TId">Id type of this entity</typeparam>
-    /// <typeparam name="TBy">Id type of who do the action of entity (for tracking)</typeparam>
-    public abstract class Entity<TId, TBy> :
-        ISoftDeletableEntity<TBy>,
-        IAuditableEntity<TBy>,
+    /// <typeparam name="TKey">Id type of this entity</typeparam>
+    public abstract class Entity<TKey> :
+        ISoftDeletableEntity<TKey>,
+        IAuditableEntity<TKey>,
         IVersionEntity,
-        IGlobalIdentityEntity where TId : struct where TBy : struct
+        IGlobalIdentityEntity where TKey : struct
     {
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
         [Key]
-        public virtual TId Id { get; set; }
+        public virtual TKey Id { get; set; }
 
         [Timestamp]
         public virtual byte[] Version { get; set; }
@@ -45,13 +44,13 @@ namespace Puppy.EF
 
         // Create Info
 
-        public virtual TBy? CreatedBy { get; set; }
+        public virtual TKey? CreatedBy { get; set; }
 
         public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
 
         // Update Info
 
-        public virtual TBy? LastUpdatedBy { get; set; }
+        public virtual TKey? LastUpdatedBy { get; set; }
 
         public virtual DateTimeOffset? LastUpdatedTime { get; set; }
 
@@ -59,12 +58,12 @@ namespace Puppy.EF
 
         public virtual bool IsDeleted { get; set; }
 
-        public virtual TBy? DeletedBy { get; set; }
+        public virtual TKey? DeletedBy { get; set; }
 
         public virtual DateTimeOffset? DeletedTime { get; set; }
     }
 
-    public abstract class Entity : Entity<int, int>
+    public abstract class Entity : Entity<int>
     {
     }
 }

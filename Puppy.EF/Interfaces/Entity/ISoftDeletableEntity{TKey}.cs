@@ -24,13 +24,13 @@ namespace Puppy.EF.Interfaces.Entity
     /// <summary>
     ///     Soft Deletable Entity by IsDeleted as marker and Nullable DateTimeOffset as audit log 
     /// </summary>
-    /// <typeparam name="TBy"> User Id </typeparam>
-    public interface ISoftDeletableEntity<TBy> where TBy : struct
+    /// <typeparam name="TKey"> User Id </typeparam>
+    public interface ISoftDeletableEntity<TKey> where TKey : struct
     {
         bool IsDeleted { get; set; }
 
         DateTimeOffset? DeletedTime { get; set; }
 
-        TBy? DeletedBy { get; set; }
+        TKey? DeletedBy { get; set; }
     }
 }

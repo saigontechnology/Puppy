@@ -22,17 +22,17 @@ using System;
 namespace Puppy.EF.Interfaces.Entity
 {
     /// <summary>
-    ///     Audiable entity by CreatedTime and Nullable LastUpdatedTime
+    ///     Audiable entity by CreatedTime and Nullable LastUpdatedTime 
     /// </summary>
-    /// <typeparam name="TBy"> User Id </typeparam>
-    public interface IAuditableEntity<TBy> where TBy : struct
+    /// <typeparam name="TKey"> User Id </typeparam>
+    public interface IAuditableEntity<TKey> where TKey : struct
     {
         DateTimeOffset CreatedTime { get; set; }
 
-        TBy? CreatedBy { get; set; }
+        TKey? CreatedBy { get; set; }
 
         DateTimeOffset? LastUpdatedTime { get; set; }
 
-        TBy? LastUpdatedBy { get; set; }
+        TKey? LastUpdatedBy { get; set; }
     }
 }

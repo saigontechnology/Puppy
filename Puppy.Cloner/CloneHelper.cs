@@ -26,7 +26,7 @@ namespace Puppy.Cloner
     {
         public static void ReplaceFolderNames(string directory, string oldValue, string newValue)
         {
-            var subDirectories = Directory.GetDirectories(directory);
+            var subDirectories = Directory.GetDirectories(directory, $"*{oldValue}*", SearchOption.AllDirectories);
 
             foreach (var subDirectory in subDirectories)
             {
@@ -48,7 +48,7 @@ namespace Puppy.Cloner
 
         public static void ReplaceFileNames(string directory, string oldValue, string newValue)
         {
-            var files = Directory.GetFiles(directory);
+            var files = Directory.GetFiles(directory, $"*{oldValue}*", SearchOption.AllDirectories);
             foreach (var file in files)
             {
                 var newFileName = file.Replace(oldValue, newValue);
@@ -67,7 +67,7 @@ namespace Puppy.Cloner
 
         public static void ReplaceFileContents(string directory, string oldValue, string newValue)
         {
-            var files = Directory.GetFiles(directory);
+            var files = Directory.GetFiles(directory, $"*{oldValue}*", SearchOption.AllDirectories);
 
             foreach (var file in files)
             {

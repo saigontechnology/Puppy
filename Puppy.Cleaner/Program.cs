@@ -31,6 +31,8 @@ namespace Puppy.Cleaner
 
         private static void Main()
         {
+            Console.Title = "Puppy Cleaner";
+
             ProcessCleanup();
         }
 

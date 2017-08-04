@@ -3,48 +3,65 @@ using System.IO;
 
 namespace Puppy.Cloner
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            string directory = Directory.GetCurrentDirectory();
+            Console.Title = "Puppy Cloner";
+            Console.WriteLine("Welcome to Puppy Cloner!");
 
-            Console.WriteLine("Puppy Cloner");
+            // Working Folder
+            Console.WriteLine();
+            Console.WriteLine("[Tip] Set empty for [Puppy Cloner] working in current folder");
+            Console.Write("What is your new project's folder: ");
+            var workingFolderPath = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(workingFolderPath))
+            {
+                workingFolderPath = Directory.GetCurrentDirectory();
+            }
+            Console.WriteLine("[Puppy Cloner] working in: " + workingFolderPath);
 
-            Console.WriteLine("Working in: " + Directory.GetCurrentDirectory());
+            Console.WriteLine();
+            Console.WriteLine("[Tip] [Puppy Cloner] Auto make extra search for Upper Case and Lower Case to replace old name to new name!");
+            Console.WriteLine();
 
+            // Old Name
             var oldValue = string.Empty;
             while (string.IsNullOrWhiteSpace(oldValue))
             {
-                Console.Write("What is your project's old name: ");
+                Console.Write("What is your old project name: ");
                 oldValue = Console.ReadLine();
             }
 
+            // New Name
+            Console.WriteLine();
             var newValue = string.Empty;
             while (string.IsNullOrWhiteSpace(newValue))
             {
-                Console.Write("What is your project's name: ");
+                Console.Write("What is your new project name: ");
                 newValue = Console.ReadLine();
             }
 
+            // Replace Directories
+            Console.WriteLine();
             Console.WriteLine("Renaming directories...");
-
-            CloneHelper.ReplaceFolderNames(directory, oldValue, newValue);
-
+            CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue);
             Console.WriteLine("Directories renamed.");
 
+            // Replace Files Name
+            Console.WriteLine();
             Console.WriteLine("Renaming files...");
-
-            CloneHelper.ReplaceFolderNames(directory, oldValue, newValue);
-
+            CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue);
             Console.WriteLine("Files renamed.");
 
-            Console.WriteLine("Renaming file contents...");
+            // Replace Content Files
+            Console.WriteLine();
+            Console.WriteLine("Name replacing file contents...");
+            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue);
+            Console.WriteLine("File contents name replaced.");
 
-            CloneHelper.ReplaceFileContents(directory, oldValue, newValue);
-
-            Console.WriteLine("File contents renamed.");
-
+            // Finish
+            Console.WriteLine();
             Console.WriteLine("Done!");
         }
     }

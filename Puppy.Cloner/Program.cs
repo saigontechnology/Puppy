@@ -7,7 +7,7 @@ namespace Puppy.Cloner
     {
         private static void Main(string[] args)
         {
-            Console.Title = "Puppy Cloner";
+            Console.Title = "Puppy Cloner - Fastest way to clone project!";
             Console.WriteLine("Welcome to Puppy Cloner!");
 
             // Working Folder
@@ -19,9 +19,10 @@ namespace Puppy.Cloner
             {
                 workingFolderPath = Directory.GetCurrentDirectory();
             }
-            Console.WriteLine("[Puppy Cloner] working in: " + workingFolderPath);
 
+            Console.WriteLine("[Puppy Cloner] working in: " + workingFolderPath);
             Console.WriteLine();
+
             Console.WriteLine("[Tip] [Puppy Cloner] Auto make extra search for Upper Case and Lower Case to replace old name to new name!");
             Console.WriteLine();
 
@@ -43,22 +44,14 @@ namespace Puppy.Cloner
             }
 
             // Replace Directories
-            Console.WriteLine();
-            Console.WriteLine("Renaming directories...");
             CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue);
-            Console.WriteLine("Directories renamed.");
 
             // Replace Files Name
-            Console.WriteLine();
-            Console.WriteLine("Renaming files...");
             CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue);
-            Console.WriteLine("Files renamed.");
 
             // Replace Content Files
-            Console.WriteLine();
-            Console.WriteLine("Name replacing file contents...");
             CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue);
-            Console.WriteLine("File contents name replaced.");
+
 
             // Finish
             Console.WriteLine();

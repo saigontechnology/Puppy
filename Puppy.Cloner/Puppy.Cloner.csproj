@@ -46,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloneHelper.cs" />
+    <Compile Include="ConsoleUtils\ConsoleWriter.cs" />
+    <Compile Include="ConsoleUtils\IConsole.cs" />
+    <Compile Include="ConsoleUtils\ProgressBar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

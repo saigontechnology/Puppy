@@ -44,13 +44,13 @@ namespace Puppy.Cloner
             }
 
             // Replace Directories
-            CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue);
+            CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue, true);
 
             // Replace Files Name
-            CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue);
+            CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue, true);
 
             // Replace Content Files
-            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue);
+            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, true);
 
 
             // Finish

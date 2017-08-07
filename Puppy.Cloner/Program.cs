@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Puppy.Cloner
@@ -8,11 +9,16 @@ namespace Puppy.Cloner
         private static void Main(string[] args)
         {
             Console.Title = "Puppy Cloner - Fastest way to clone project!";
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Welcome to Puppy Cloner!");
 
             // Working Folder
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("[Tip] Set empty for [Puppy Cloner] working in current folder");
+
+            Console.ResetColor();
             Console.Write("What is your new project's folder: ");
             var workingFolderPath = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(workingFolderPath))
@@ -20,11 +26,10 @@ namespace Puppy.Cloner
                 workingFolderPath = Directory.GetCurrentDirectory();
             }
 
-            Console.WriteLine("[Puppy Cloner] working in: " + workingFolderPath);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("> Puppy Cloner working in: " + workingFolderPath);
             Console.WriteLine();
-
-            Console.WriteLine("[Tip] [Puppy Cloner] Auto make extra search for Upper Case and Lower Case to replace old name to new name!");
-            Console.WriteLine();
+            Console.ResetColor();
 
             // Old Name
             var oldValue = string.Empty;
@@ -43,19 +48,60 @@ namespace Puppy.Cloner
                 newValue = Console.ReadLine();
             }
 
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"Start progress replace from '{oldValue}' to '{newValue}'");
+            Console.ResetColor();
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             // Replace Directories
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Start Replace Folders Name");
+
+            stopwatch.Restart();
             CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue, true);
+            stopwatch.Stop();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Finish Replace Folders Name - {stopwatch.Elapsed.Milliseconds} ms!");
+            Console.ResetColor();
 
             // Replace Files Name
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Start Replace Files Name");
+
+            stopwatch.Restart();
             CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue, true);
+            stopwatch.Stop();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Finish Replace Files Name - {stopwatch.Elapsed.Milliseconds} ms!");
+            Console.ResetColor();
 
             // Replace Content Files
-            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, true);
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Start Replace Files Content");
 
+            stopwatch.Restart();
+            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, true);
+            stopwatch.Stop();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Finish Replace Files Content - {stopwatch.Elapsed.Milliseconds} ms!");
+            Console.ResetColor();
 
             // Finish
             Console.WriteLine();
-            Console.WriteLine("Done!");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Done, thank for using [Puppy Cloner]!");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Press any key to close.");
+            Console.ReadKey();
         }
     }
 }

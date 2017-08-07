@@ -30,22 +30,24 @@ namespace Puppy.Cloner.ConsoleUtils
         private readonly int _y;
         private int _current;
         private readonly ConsoleColor _consoleColor;
+        private readonly ConsoleColor _percentConsoleColor;
 
         public const string DefaultFormat = "Item {0,-5} of {1,-5}. ({2,-3}%) ";
 
-        public ProgressBar(int max) : this(max, '#', DefaultFormat, new ConsoleWriter())
+        public ProgressBar(int max) : this(max, '#', DefaultFormat, ConsoleColor.Green, new ConsoleWriter())
         {
         }
 
-        public ProgressBar(int max, IConsole console) : this(max, '#', DefaultFormat, console)
+        public ProgressBar(int max, IConsole console) : this(max, '#', DefaultFormat, ConsoleColor.Green,  console)
         {
         }
 
-        public ProgressBar(int max, char character, string format, IConsole console)
+        public ProgressBar(int max, char character, string format, ConsoleColor percentColor, IConsole console)
         {
             _console = console;
             _y = _console.Y;
             _consoleColor = _console.ForegroundColor;
+            _percentConsoleColor = percentColor;
             _current = 0;
             _max = max;
             _character = character;
@@ -75,7 +77,7 @@ namespace Puppy.Cloner.ConsoleUtils
                     _console.Y = _y;
                     _console.ForegroundColor = _consoleColor;
                     _console.Write(line);
-                    _console.ForegroundColor = ConsoleColor.Green;
+                    _console.ForegroundColor = _percentConsoleColor;
                     _console.WriteLine(bar);
                     _console.ForegroundColor = _consoleColor;
                     _console.WriteLine(item.PadRight(_console.WindowWidth - 2));

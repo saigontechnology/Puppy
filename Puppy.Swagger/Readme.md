@@ -75,12 +75,12 @@ This sample below is use `Developers` area as route for swagger.
 [Route("")]
 [HttpGet]
 [ServiceFilter(typeof(ApiDocAccessFilter))]
-public IActionResult Index() => Helper.GetApiDocHtml(Url, Url.AbsoluteAction("Viewer", "Developers", new { area = "Developers" }));
+public IActionResult Index() => Helper.GetApiDocHtml(Url, Url.AbsoluteAction("JsonViewer", "Developers", new { area = "Developers" }));
 
-[Route("Viewer")]
+[Route("JsonViewer")]
 [HttpGet]
 [ServiceFilter(typeof(ApiDocAccessFilter))]
-public IActionResult Viewer() => Helper.GetApiViewerHtml(Url);
+public IActionResult JsonViewer() => Helper.GetApiJsonViewerHtml(Url);
 ```
 
 `GetApiDocHtml()` and `GetApiJsonViewerHtml()` already have css, js and html inside configuration depend on `Config` object.

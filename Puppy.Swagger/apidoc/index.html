@@ -6,27 +6,27 @@
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <!--style type="text/css"></style-->
-    <link href="@asset/images/logo.png" rel="shortcut icon">
-    <link href="@asset/css/index.css" rel="stylesheet" />
-    <link href="@asset/css/standalone.css" rel="stylesheet" />
-    <link href="@asset/css/api-explorer.css" rel="stylesheet" type="text/css" />
+    <link href="@AssetPath/images/logo.png" rel="shortcut icon">
+    <link href="@AssetPath/css/index.css" rel="stylesheet" />
+    <link href="@AssetPath/css/standalone.css" rel="stylesheet" />
+    <link href="@AssetPath/css/api-explorer.css" rel="stylesheet" type="text/css" />
     <script>
         var apiDocumentPath = '@SwaggerEndpoint';
         var apiTokenKeyName = '@AuthTokenKeyPrefix';
     </script>
-    <script src="@asset/lib/jquery-1.8.0.min.js" type="text/javascript"></script>
-    <script src="@asset/lib/jquery.slideto.min.js" type="text/javascript"></script>
-    <script src="@asset/lib/jquery.wiggle.min.js" type="text/javascript"></script>
-    <script src="@asset/lib/jquery.ba-bbq.min.js" type="text/javascript"></script>
-    <script src="@asset/lib/handlebars-2.0.0.js" type="text/javascript"></script>
-    <script src="@asset/lib/underscore-min.js" type="text/javascript"></script>
-    <script src="@asset/lib/backbone-min.js" type="text/javascript"></script>
-    <script src="@asset/swagger-ui.js" type="text/javascript"></script>
-    <script src="@asset/lib/highlight.7.3.pack.js" type='text/javascript'></script>
-    <script src="@asset/lib/marked.js" type="text/javascript"></script>
-    <script src="@asset/lib/swagger-oauth.js" type="text/javascript"></script>
-    <script src="@asset/lib/bootstrap.min.js" type="text/javascript"></script>
-    <script src="@asset/lib/clipboard.min.js"></script>
+    <script src="@AssetPath/lib/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/jquery.slideto.min.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/jquery.wiggle.min.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/jquery.ba-bbq.min.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/handlebars-2.0.0.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/underscore-min.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/backbone-min.js" type="text/javascript"></script>
+    <script src="@AssetPath/swagger-ui.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/highlight.7.3.pack.js" type='text/javascript'></script>
+    <script src="@AssetPath/lib/marked.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/swagger-oauth.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/bootstrap.min.js" type="text/javascript"></script>
+    <script src="@AssetPath/lib/clipboard.min.js"></script>
     <script type="text/javascript">
         jQuery.browser = jQuery.browser || {};
         (function () {
@@ -191,7 +191,7 @@
     <script type="text/javascript">
         function gotoJsonViewer() {
             localStorage.setItem("jsonViewerData", window.lastServerResponse);
-            window.open('@ViewerUrl', "jsonViewer");
+            window.open('@JsonViewerUrl', "jsonViewer");
         }
         $(function () {
             $("[data-toggle='tooltip']").tooltip();

@@ -810,7 +810,7 @@ MathJax.Hub.Config({
   onReady(function(){convertUML('uml-sequence-diagram', Diagram, {theme: 'simple'});});
 })(window, document)
 </script>
-<title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Projects/TOP/AspNetCore/mixup/Puppy/Puppy.Swagger/favicon.ico" target="_blank"><img src="///D://Projects/TOP/AspNetCore/mixup/Puppy/Puppy.Swagger/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
+<title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Projects/TOP/AspNetCore/educator/Puppy/Puppy.Swagger/favicon.ico" target="_blank"><img src="///D://Projects/TOP/AspNetCore/educator/Puppy/Puppy.Swagger/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
 <h1>
 <a id="user-content-puppyswagger" class="anchor" href="#puppyswagger" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.Swagger</h1>
 <blockquote>
@@ -876,11 +876,11 @@ This sample below is use <code>Developers</code> area as route for swagger.</p>
 <div class="highlight highlight-source-cs"><pre>[Route(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>)]
 [HttpGet]
 [ServiceFilter(typeof(ApiDocAccessFilter))]
-<span class="pl-k">public</span> <span class="pl-en">IActionResult</span> <span class="pl-en">Index</span>() =&gt; Helper.GetApiDocHtml(Url, Url.AbsoluteAction(<span class="pl-s"><span class="pl-pds">"</span>Viewer<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Developers<span class="pl-pds">"</span></span>, new { area = <span class="pl-s"><span class="pl-pds">"</span>Developers<span class="pl-pds">"</span></span> }));
+<span class="pl-k">public</span> <span class="pl-en">IActionResult</span> <span class="pl-en">Index</span>() =&gt; Helper.GetApiDocHtml(Url, Url.AbsoluteAction(<span class="pl-s"><span class="pl-pds">"</span>JsonViewer<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Developers<span class="pl-pds">"</span></span>, new { area = <span class="pl-s"><span class="pl-pds">"</span>Developers<span class="pl-pds">"</span></span> }));
 
-[Route(<span class="pl-s"><span class="pl-pds">"</span>Viewer<span class="pl-pds">"</span></span>)]
+[Route(<span class="pl-s"><span class="pl-pds">"</span>JsonViewer<span class="pl-pds">"</span></span>)]
 [HttpGet]
 [ServiceFilter(typeof(ApiDocAccessFilter))]
-<span class="pl-k">public</span> <span class="pl-en">IActionResult</span> <span class="pl-en">Viewer</span>() =&gt; Helper.GetApiViewerHtml(Url);</pre></div>
+<span class="pl-k">public</span> <span class="pl-en">IActionResult</span> <span class="pl-en">JsonViewer</span>() =&gt; Helper.GetApiJsonViewerHtml(Url);</pre></div>
 <p><code>GetApiDocHtml()</code> and <code>GetApiJsonViewerHtml()</code> already have css, js and html inside configuration depend on <code>Config</code> object.</p>
 </article></body></html>

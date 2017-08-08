@@ -28,7 +28,7 @@ namespace Puppy.Swagger
 
         public static readonly string IndexHtmlPath = $"{ApiDocAssetFolderPath}/index.html";
 
-        public static readonly string ViewerHtmlPath = $"{ApiDocAssetFolderPath}/viewer.html";
+        public static readonly string ViewerHtmlPath = $"{ApiDocAssetFolderPath}/json-viewer.html";
 
         public static readonly PathString ApiDocAssetRequestPath = new PathString("/.well-known/api-define/assets");
 

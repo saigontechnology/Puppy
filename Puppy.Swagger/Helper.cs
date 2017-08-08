@@ -35,28 +35,28 @@ namespace Puppy.Swagger
         ///     Serve for update asset URL in Api Doc at first time, check by <c>
         ///     SwaggerConfig.IsApiDocUpdated </c>
         /// </param>
-        /// <param name="viewerUrl">
+        /// <param name="jsonViewerUrl">
         ///     Update Json Viewer by AspNetCore project route config at first time, check by <c>
         ///     SwaggerConfig.ViewerUrl </c>
         /// </param>
         /// <returns></returns>
-        public static ContentResult GetApiDocHtml(IUrlHelper urlHelper, string viewerUrl)
+        public static ContentResult GetApiDocHtml(IUrlHelper urlHelper, string jsonViewerUrl)
         {
-            if (SwaggerConfig.ViewerUrl != viewerUrl)
+            if (SwaggerConfig.ViewerUrl != jsonViewerUrl)
             {
                 UpdateIndexHtml(new Dictionary<string, string>
                 {
-                    { "@ViewerUrl", viewerUrl }
+                    { "@JsonViewerUrl", jsonViewerUrl }
                 });
 
-                SwaggerConfig.ViewerUrl = viewerUrl;
+                SwaggerConfig.ViewerUrl = jsonViewerUrl;
             }
 
             if (!SwaggerConfig.IsApiDocUpdated)
             {
                 UpdateIndexHtml(new Dictionary<string, string>
                 {
-                    {"@asset", urlHelper.AbsoluteContent(Constant.ApiDocAssetRequestPath)},
+                    {"@AssetPath", urlHelper.AbsoluteContent(Constant.ApiDocAssetRequestPath)},
                     {"@ApiDocumentHtmlTitle", SwaggerConfig.ApiDocumentHtmlTitle},
                     {"@SwaggerEndpoint", SwaggerConfig.SwaggerEndpoint},
                     {"@AuthTokenKeyPrefix", SwaggerConfig.AuthTokenKeyName}
@@ -79,13 +79,13 @@ namespace Puppy.Swagger
             return contentResult;
         }
 
-        public static ContentResult GetApiViewerHtml(IUrlHelper urlHelper)
+        public static ContentResult GetApiJsonViewerHtml(IUrlHelper urlHelper)
         {
             if (!SwaggerConfig.IsViewerUpdated)
             {
-                UpdateIndexHtml(new Dictionary<string, string>
+                UpdateJsonViewerHtml(new Dictionary<string, string>
                 {
-                    {"@asset", urlHelper.AbsoluteContent(Constant.ApiDocAssetRequestPath)},
+                    {"@AssetPath", urlHelper.AbsoluteContent(Constant.ApiDocAssetRequestPath)},
                     {"@ApiDocumentHtmlTitle", SwaggerConfig.ApiDocumentHtmlTitle}
                 });
 
@@ -128,7 +128,7 @@ namespace Puppy.Swagger
             File.WriteAllText(indexFileFullPath, indexFileContent);
         }
 
-        public static void UpdateViewHtml(Dictionary<string, string> replaceDictionary)
+        public static void UpdateJsonViewerHtml(Dictionary<string, string> replaceDictionary)
         {
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             string viewerFileFullPath = Path.Combine(executedFolder, Constant.ViewerHtmlPath);

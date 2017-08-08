@@ -20,6 +20,7 @@
 using Puppy.Cloner.ConsoleUtils;
 using System;
 using System.IO;
+using System.Security;
 using System.Text;
 
 namespace Puppy.Cloner
@@ -49,7 +50,7 @@ namespace Puppy.Cloner
             {
                 DirectoryInfo subDirectoryInfo = new DirectoryInfo(subDirectory);
 
-                progressBar.Next($"Replace name for '{subDirectoryInfo.Name}'...");
+                progressBar.Next($"Replace name for '{subDirectoryInfo.Name.ConsoleNormalize()}'...");
 
                 ReplaceFolderNames(subDirectory, oldValue, newValue, isSkipHidden);
 
@@ -73,7 +74,17 @@ namespace Puppy.Cloner
                     Console.ResetColor();
                     continue;
                 }
-                Directory.Move(subDirectory, newDirectoryName);
+
+                try
+                {
+                    Directory.Move(subDirectory, newDirectoryName);
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"Error: {e.Message}");
+                    Console.ResetColor();
+                }
             }
         }
 
@@ -98,10 +109,9 @@ namespace Puppy.Cloner
 
             foreach (var file in files)
             {
-
                 FileInfo fileInfo = new FileInfo(file);
 
-                progressBar.Next($"Replace name for '{fileInfo.Name}'...");
+                progressBar.Next($"Replace name for '{fileInfo.Name.ConsoleNormalize()}'...");
 
                 // Skip Hidden File
                 if (isSkipHidden && fileInfo.IsHidden())
@@ -123,13 +133,23 @@ namespace Puppy.Cloner
                     Console.ResetColor();
                     continue;
                 }
-                Directory.Move(file, newFileName);
+
+                try
+                {
+                    Directory.Move(file, newFileName);
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"Error: {e.Message}");
+                    Console.ResetColor();
+                }
             }
         }
 
         public static void ReplaceFileContents(string directory, string oldValue, string newValue, bool isSkipHidden)
         {
-            var files = Directory.GetFiles(directory, $"*{newValue}*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
 
             if (files.Length <= 0)
             {
@@ -151,7 +171,7 @@ namespace Puppy.Cloner
             {
                 FileInfo fileInfo = new FileInfo(file);
 
-                progressBar.Next($"Replace content for '{fileInfo.Name}'...");
+                progressBar.Next($"Replace content for '{fileInfo.Name.ConsoleNormalize()}'...");
 
                 if (file.EndsWith(".exe"))
                 {
@@ -168,7 +188,22 @@ namespace Puppy.Cloner
 
                 contents = contents.Replace(oldValue, newValue);
 
-                File.WriteAllText(file, contents, Encoding.UTF8);
+                try
+                {
+                    File.WriteAllText(file, contents, Encoding.UTF8);
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"Error: {e.Message}");
+                    Console.ResetColor();
+                }
+                catch (SecurityException e)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"Error: {e.Message}");
+                    Console.ResetColor();
+                }
             }
         }
 

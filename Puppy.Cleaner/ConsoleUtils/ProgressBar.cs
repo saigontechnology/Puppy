@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Puppy.Core.ConsoleUtils
+namespace Puppy.Cleaner.ConsoleUtils
 {
     public class ProgressBar
     {

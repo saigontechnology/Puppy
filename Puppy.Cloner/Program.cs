@@ -61,7 +61,9 @@ namespace Puppy.Cloner
             Console.WriteLine("Start Replace Folders Name");
 
             stopwatch.Restart();
+            Console.WriteLine();
             CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue, true);
+            Console.WriteLine();
             stopwatch.Stop();
 
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -74,7 +76,9 @@ namespace Puppy.Cloner
             Console.WriteLine("Start Replace Files Name");
 
             stopwatch.Restart();
+            Console.WriteLine();
             CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue, true);
+            Console.WriteLine();
             stopwatch.Stop();
 
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -87,7 +91,9 @@ namespace Puppy.Cloner
             Console.WriteLine("Start Replace Files Content");
 
             stopwatch.Restart();
+            Console.WriteLine();
             CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, true);
+            Console.WriteLine();
             stopwatch.Stop();
 
             Console.ForegroundColor = ConsoleColor.Cyan;

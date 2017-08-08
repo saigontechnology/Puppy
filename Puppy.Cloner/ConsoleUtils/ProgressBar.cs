@@ -38,7 +38,7 @@ namespace Puppy.Cloner.ConsoleUtils
         {
         }
 
-        public ProgressBar(int max, IConsole console) : this(max, '#', DefaultFormat, ConsoleColor.Green,  console)
+        public ProgressBar(int max, IConsole console) : this(max, '#', DefaultFormat, ConsoleColor.Green, console)
         {
         }
 

@@ -46,6 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CleanHelper.cs" />
+    <Compile Include="ConsoleUtils\ConsoleWriter.cs" />
+    <Compile Include="ConsoleUtils\IConsole.cs" />
+    <Compile Include="ConsoleUtils\ProgressBar.cs" />
+    <Compile Include="ConsoleUtils\StringExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

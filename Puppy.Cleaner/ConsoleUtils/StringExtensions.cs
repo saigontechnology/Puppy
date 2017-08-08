@@ -6,20 +6,29 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> CleanHelper.cs </Name>
-//         <Created> 01/08/17 1:09:09 AM </Created>
-//         <Key> 4bfd203d-659a-47f7-a1f4-a66edf466826 </Key>
+//         <Name> StringExtensions.cs </Name>
+//         <Created> 08/08/17 9:56:01 AM </Created>
+//         <Key> f4978b2e-9b79-4b91-ab2a-cb028f270bcf </Key>
 //     </File>
 //     <Summary>
-//         CleanHelper.cs
+//         StringExtensions.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-namespace Puppy.Cleaner
+namespace Puppy.Cleaner.ConsoleUtils
 {
-    public static class CleanHelper
+    public static class StringExtensions
     {
+        public static string ConsoleNormalize(this string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return value;
+
+            value = value.Replace('{', '<').Replace('}', '>');
+
+            return value;
+        }
     }
 }

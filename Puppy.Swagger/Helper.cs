@@ -46,7 +46,7 @@ namespace Puppy.Swagger
             {
                 UpdateIndexHtml(new Dictionary<string, string>
                 {
-                    { "JsonViewerUrl", viewerUrl }
+                    { "@ViewerUrl", viewerUrl }
                 });
 
                 SwaggerConfig.ViewerUrl = viewerUrl;

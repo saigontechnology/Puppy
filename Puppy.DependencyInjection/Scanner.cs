@@ -129,8 +129,7 @@ namespace Puppy.DependencyInjection
                     .ToList();
 
             Console.WriteLine($"{Environment.NewLine}{new string('-', 50)}");
-
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"[Total Dependency Injection {listServiceDescriptors.Count}]");
             for (var index = 0; index < listServiceDescriptors.Count; index++)
             {
@@ -148,20 +147,20 @@ namespace Puppy.DependencyInjection
                 Console.ResetColor();
                 Console.WriteLine($"{no}.");
 
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"    Service         |  ");
                 Console.ResetColor();
                 Console.Write($"{service.ServiceType?.Name?.PadRight(maximumCharacter)}");
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"  |  {service.ServiceType?.FullName}");
 
                 Console.Write($"    Implementation  |  ");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write($"{service.ImplementationType?.Name?.PadRight(maximumCharacter)}");
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"  |  {service.ImplementationType?.FullName}");
 
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"    Lifetime        |  ");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine($"[{GetLifeTime(service.Lifetime)}]");
@@ -172,7 +171,7 @@ namespace Puppy.DependencyInjection
             Console.WriteLine($"{new string('-', 50)}{Environment.NewLine}");
         }
 
-        private string GetLifeTime(ServiceLifetime serviceLifetime)
+        private static string GetLifeTime(ServiceLifetime serviceLifetime)
         {
             if (serviceLifetime == ServiceLifetime.Transient)
                 return "Per Resolve";

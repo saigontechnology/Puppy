@@ -46,7 +46,8 @@ namespace Puppy.Core.StringUtils
         /// <param name="numeric"></param>
         /// <param name="special"></param>
         /// <returns></returns>
-        public static string GetRandomString(int length, bool alpha = true, bool upper = true, bool lower = true, bool numeric = true, bool special = false)
+        public static string GetRandomString(int length, bool alpha = true, bool upper = true, bool lower = true,
+            bool numeric = true, bool special = false)
         {
             var characters = string.Empty;
             if (alpha)
@@ -257,7 +258,8 @@ namespace Puppy.Core.StringUtils
         /// <param name="minLength">   Phone min length without first 0 or country code </param>
         /// <param name="maxLength">   Phone max length without first 0 or country code </param>
         /// <returns></returns>
-        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9, int maxLength = 10)
+        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9,
+            int maxLength = 10)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return false;
@@ -277,6 +279,11 @@ namespace Puppy.Core.StringUtils
             }
 
             return false;
+        }
+
+        public static string UriBuilder(params string[] uriPaths)
+        {
+            return uriPaths.Where(x => !string.IsNullOrWhiteSpace(x)).Aggregate((current, path) => $"{current.TrimEnd('/')}/{path.TrimStart('/')}");
         }
     }
 

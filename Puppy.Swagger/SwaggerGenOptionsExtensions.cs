@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace Puppy.Web.Swagger
+namespace Puppy.Swagger
 {
     /// <summary>
     ///     <see cref="SwaggerGenOptions" /> extension methods. 

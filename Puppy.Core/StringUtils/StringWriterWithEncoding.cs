@@ -26,8 +26,11 @@ using System.Text;
 namespace Puppy.Core.StringUtils
 {
     /// <summary>
-    ///     The <see cref="StringWriter" /> class always outputs UTF-16 encoded strings. To use a
-    ///     different encoding, we must inherit from <see cref="StringWriter" />. See http://stackoverflow.com/questions/9459184/why-is-the-xmlwriter-always-outputing-utf-16-encoding.
+    ///     <para>
+    ///         The <see cref="StringWriter" /> class always outputs UTF-16 encoded strings. To use a
+    ///         different encoding, we must inherit from <see cref="StringWriter" />.
+    ///     </para>
+    ///     <para> See http://stackoverflow.com/questions/9459184/why-is-the-xmlwriter-always-outputing-utf-16-encoding. </para>
     /// </summary>
     public class StringWriterWithEncoding : StringWriter
     {

@@ -52,7 +52,7 @@
 
 ```csharp
 // [API Document] Swagger
-services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documentation.xml"), ConfigurationRoot, "ApiDocument")
+services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documentation.xml"), ConfigurationRoot, "ApiDocument");
 ```
 
 ---
@@ -61,7 +61,7 @@ services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documenta
 
 ```csharp
 // [API Document] Swagger
-app.UseApiDocument()
+app.UseApiDocument();
 ```
 
 ---

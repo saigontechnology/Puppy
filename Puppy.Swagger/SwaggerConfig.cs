@@ -58,6 +58,7 @@ namespace Puppy.Swagger
         /// <summary>
         ///     Query parameter via http request 
         /// </summary>
+        /// <remarks> Empty is allow <c> Anonymous </c> </remarks>
         public static string AccessKeyQueryParam { get; set; } = "key";
 
         /// <summary>

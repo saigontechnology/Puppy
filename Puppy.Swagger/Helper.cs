@@ -31,7 +31,7 @@ namespace Puppy.Swagger
         /// <summary>
         ///     Get API DOC Html 
         /// </summary>
-        /// <param name="urlHelper">
+        /// <param name="urlHelper">    
         ///     Serve for update asset URL in Api Doc at first time, check by <c>
         ///     SwaggerConfig.IsApiDocUpdated </c>
         /// </param>
@@ -108,8 +108,13 @@ namespace Puppy.Swagger
 
         public static bool IsCanAccessSwagger(HttpContext httpContext)
         {
+            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
+            {
+                return true;
+            }
+
             string requestKey = httpContext.Request.Query[SwaggerConfig.AccessKeyQueryParam];
-            var isCanAccess = String.IsNullOrWhiteSpace(SwaggerConfig.AccessKey) || SwaggerConfig.AccessKey == requestKey;
+            var isCanAccess = string.IsNullOrWhiteSpace(SwaggerConfig.AccessKey) || SwaggerConfig.AccessKey == requestKey;
             return isCanAccess;
         }
 

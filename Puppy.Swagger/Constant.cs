@@ -33,5 +33,7 @@ namespace Puppy.Swagger
         public static readonly PathString ApiDocAssetRequestPath = new PathString("/.well-known/api-define/assets");
 
         public static readonly TimeSpan? ApiDocAssetMaxAgeResponseHeader = new TimeSpan(365, 0, 0, 0);
+
+        public const string DefaultConfigSection = "ApiDocument";
     }
 }

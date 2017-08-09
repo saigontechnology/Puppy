@@ -835,13 +835,13 @@ MathJax.Hub.Config({
 </ul>
 <h2>
 <a id="user-content-startup-config" class="anchor" href="#startup-config" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Startup Config</h2>
-<div class="highlight highlight-source-cs"><pre><span class="pl-en">services</span>
+<div class="highlight highlight-source-cs"><pre><span class="pl-en">applicationBuilder</span>
 	.<span class="pl-en">AddDependencyInjectionScanner</span>()
 	.<span class="pl-en">ScanFromSelf</span>()
 	.<span class="pl-en">ScanFromAllAssemblies</span>();
      
 <span class="pl-c">// or </span>
-<span class="pl-en">services</span>
+<span class="pl-en">applicationBuilder</span>
 	.<span class="pl-en">AddDependencyInjectionScanner</span>()
 	.<span class="pl-en">ScanFromAllAssemblies</span>(<span class="pl-pds">$"</span>{<span class="pl-k">nameof</span>(<span class="pl-en">TopCore</span>)}<span class="pl-s">.*.dll</span><span class="pl-pds">"</span>, Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath));</pre></div>
 <h2>
@@ -856,7 +856,7 @@ MathJax.Hub.Config({
   - ServiceLifetime.Singleton: A single shared instance throughout your application’s lifetime. Only created once.</pre></div>
 <h2>
 <a id="user-content-get-instance" class="anchor" href="#get-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get Instance</h2>
-<div class="highlight highlight-source-cs"><pre><span class="pl-en">IDataMigrationService</span> <span class="pl-en">dataMigrationService</span> = <span class="pl-en">services.Resolve</span>&lt;<span class="pl-en">IDataMigrationService</span>&gt;();</pre></div>
+<div class="highlight highlight-source-cs"><pre><span class="pl-en">IDataMigrationService</span> <span class="pl-en">dataMigrationService</span> = <span class="pl-en">applicationBuilder.Resolve</span>&lt;<span class="pl-en">IDataMigrationService</span>&gt;();</pre></div>
 <h2>
 <a id="user-content-sample" class="anchor" href="#sample" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample</h2>
 <div class="highlight highlight-source-cs"><pre>    [PerResolveDependency(ServiceType = typeof(IEmailSender))]

@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> RedisDistributedCacheHelper.cs </Name>
+//         <Name> RedisCacheManager.cs </Name>
 //         <Created> 17/07/17 4:40:21 PM </Created>
 //         <Key> f2340ebd-5b03-4ffb-a45e-71d9cc1748e3 </Key>
 //     </File>
 //     <Summary>
-//         RedisDistributedCacheHelper.cs
+//         RedisCacheManager.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -21,16 +21,17 @@
 
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using Puppy.Core.EnvironmentUtils;
 using System;
 using System.Text;
 
-namespace Puppy.Core.CacheUtils
+namespace Puppy.Redis
 {
-    public class RedisDistributedCacheHelper : IDistributedCacheHelper
+    public class RedisCacheManager : IRedisCacheManager
     {
         protected IDistributedCache Cache;
 
-        public RedisDistributedCacheHelper(IDistributedCache cache)
+        public RedisCacheManager(IDistributedCache cache)
         {
             Cache = cache;
         }
@@ -46,9 +47,11 @@ namespace Puppy.Core.CacheUtils
             if (string.IsNullOrWhiteSpace(key) || data == null)
                 return;
 
+            DateTimeOffset absoluteExpiration = DateTime.UtcNow + duration;
+
             Set(key, data, new DistributedCacheEntryOptions
             {
-                AbsoluteExpiration = DateTime.UtcNow + duration
+                AbsoluteExpiration = absoluteExpiration
             });
         }
 
@@ -60,12 +63,28 @@ namespace Puppy.Core.CacheUtils
             var dataStr = data as string;
             var dataStore = dataStr ?? JsonConvert.SerializeObject(data);
             Cache.Set(key, Encoding.UTF8.GetBytes(dataStore), options);
+
+            if (!EnvironmentHelper.IsDevelopment()) return;
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Redis Cache Set Key '{key}' with Data '{dataStore}' and Options is '{JsonConvert.SerializeObject(options)}'");
+            Console.ResetColor();
         }
 
         public void Remove(string key)
         {
             if (IsExist(key))
+            {
                 Cache.Remove(key);
+
+                if (!EnvironmentHelper.IsDevelopment()) return;
+
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"Redis Cache Remove Key '{key}'");
+                Console.ResetColor();
+            }
         }
 
         public bool IsExist(string key)

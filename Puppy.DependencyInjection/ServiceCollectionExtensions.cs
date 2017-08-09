@@ -5,12 +5,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy.DependencyInjection </Project>
 //     <File>
-//         <Name> Helper </Name>
+//         <Name> ServiceCollectionExtensions </Name>
 //         <Created> 30 Mar 17 8:18:26 PM </Created>
 //         <Key> 92d2515d-04f0-4d5f-a109-e7ba1655bb42 </Key>
 //     </File>
 //     <Summary>
-//         Helper
+//         ServiceCollectionExtensions
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ using System.Reflection;
 
 namespace Puppy.DependencyInjection
 {
-    public static class ServiceCollectionExtension
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDependencyInjectionScanner(this IServiceCollection services)
         {
@@ -89,11 +89,6 @@ namespace Puppy.DependencyInjection
                 throw new InvalidOperationException(
                     $"Unable to resolve {nameof(Scanner)}. Did you forget to call {nameof(services)}.{nameof(AddDependencyInjectionScanner)}?");
             return scanner;
-        }
-
-        public static T Resolve<T>(this IServiceCollection services) where T : class
-        {
-            return services.BuildServiceProvider().GetService<T>();
         }
     }
 }

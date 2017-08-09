@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy → Interface </Project>
 //     <File>
-//         <Name> IDistributedCacheHelper.cs </Name>
+//         <Name> IRedisCacheManager.cs </Name>
 //         <Created> 17/07/17 4:38:34 PM </Created>
 //         <Key> 8d005ff7-9257-484d-aaf9-2e94c1ca9ee0 </Key>
 //     </File>
 //     <Summary>
-//         IDistributedCacheHelper.cs
+//         IRedisCacheManager.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -22,9 +22,9 @@
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 
-namespace Puppy.Core.CacheUtils
+namespace Puppy.Redis
 {
-    public interface IDistributedCacheHelper
+    public interface IRedisCacheManager
     {
         bool IsExist(string key);
 

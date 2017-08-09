@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Monkey </Project>
 //     <File>
-//         <Name> Extensions.cs </Name>
+//         <Name> ServiceCollectionExtensions.cs </Name>
 //         <Created> 31/07/17 10:43:01 PM </Created>
 //         <Key> fa38efb4-82e0-41c8-9e65-9b86a7d91bcf </Key>
 //     </File>
 //     <Summary>
-//         Extensions.cs
+//         ServiceCollectionExtensions.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -36,10 +36,8 @@ using System.Threading.Tasks;
 
 namespace Puppy.Swagger
 {
-    public static class Extensions
+    public static class ServiceCollectionExtensions
     {
-        public static IConfiguration Configuration { get; set; }
-
         /// <summary>
         ///     Add Swagger API Document 
         ///     <para> Xml documentation file full path generate by build main project </para>
@@ -56,18 +54,13 @@ namespace Puppy.Swagger
         ///     Path.Combine(Directory.GetCurrentDirectory(), "Puppy.xml") </c>
         /// </remarks>
         /// <returns></returns>
-        public static IServiceCollection AddApiDocument(
-                                                        this IServiceCollection services,
-                                                        string xmlDocumentFileFullPath,
-                                                        IConfiguration configuration,
-                                                        string configSection = "ApiDocument")
+        public static IServiceCollection AddApiDocument(this IServiceCollection services, string xmlDocumentFileFullPath, IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
             // Add Filter Service
             services.AddScoped<ApiDocAccessFilter>();
 
             // Build Config
-            Configuration = configuration;
-            BuildSwaggerConfig(configSection);
+            configuration.BuildSwaggerConfig(configSection);
 
             services.AddSwaggerGen(options =>
             {
@@ -194,19 +187,20 @@ namespace Puppy.Swagger
             }
         }
 
-        private static void BuildSwaggerConfig(string configSection)
+        public static void BuildSwaggerConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
-            SwaggerConfig.ApiDocumentHtmlTitle = Configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}");
-            SwaggerConfig.ApiDocumentUrl = Configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}");
-            SwaggerConfig.ApiDocumentName = Configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}");
-            SwaggerConfig.ApiDocumentJsonFile = Configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentJsonFile)}");
-            SwaggerConfig.AccessKey = Configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKey)}");
-            SwaggerConfig.AccessKeyQueryParam = Configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKeyQueryParam)}");
-            SwaggerConfig.AuthTokenKeyName = Configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AuthTokenKeyName)}");
-            SwaggerConfig.Contact = Configuration.GetSection<SwaggerContactConfigModel>($"{configSection}:{nameof(SwaggerConfig.Contact)}");
+            SwaggerConfig.ApiDocumentHtmlTitle = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}");
+            SwaggerConfig.ApiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}");
+            SwaggerConfig.ApiDocumentName = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}");
+            SwaggerConfig.ApiDocumentJsonFile = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentJsonFile)}");
+            SwaggerConfig.AccessKey = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKey)}");
+            SwaggerConfig.AccessKeyQueryParam = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKeyQueryParam)}");
+            SwaggerConfig.AuthTokenKeyName = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AuthTokenKeyName)}");
+            SwaggerConfig.Contact = configuration.GetSection<SwaggerContactConfigModel>($"{configSection}:{nameof(SwaggerConfig.Contact)}");
 
             if (!EnvironmentHelper.IsDevelopment()) return;
 
+            Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"API Document Json File Endpoint: {SwaggerConfig.SwaggerEndpoint}");
             Console.ResetColor();

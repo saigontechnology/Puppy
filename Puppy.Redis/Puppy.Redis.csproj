@@ -8,21 +8,13 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
-  <!-- Copy Swagger UI Template to Output folder -->
-  <ItemGroup>
-    <None Update="apidoc\**\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <!-- <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> -->
-    </None>
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
 
   <!-- Puppy -->
   <ItemGroup>
@@ -32,14 +24,15 @@
   <!-- External Libraries -->
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
 
     <!-- Configuration -->
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="1.1.2" />
-    
-    <!-- Swagger -->
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+
+    <!-- Redis Caching -->
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="1.1.2" />
   </ItemGroup>
 </Project>

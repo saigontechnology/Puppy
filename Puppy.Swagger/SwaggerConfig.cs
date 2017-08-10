@@ -29,48 +29,54 @@ namespace Puppy.Swagger
     public static class SwaggerConfig
     {
         /// <summary>
-        ///     Api Document Title. Ex: Puppy API 
+        ///     Api Document Title. Default is <c> API Document </c> 
         /// </summary>
         public static string ApiDocumentHtmlTitle { get; set; } = "API Document";
 
         /// <summary>
-        ///     Url of Api Document 
+        ///     Url of Api Document, default is <c> /.well-known/api-configuration/ </c> 
         /// </summary>
         /// <remarks> Start and End with <c> "/" </c>. Ex: "/.well-known/api-configuration/" </remarks>
         public static string ApiDocumentUrl { get; set; } = "/.well-known/api-configuration/";
 
         /// <summary>
-        ///     Api Document Name/Version. Ex: latest, v1, v2 and so on. 
+        ///     Api Document Name/Version. Ex: latest, v1, v2 and so on. Default is <c> latest </c> 
         /// </summary>
         public static string ApiDocumentName { get; set; } = "latest";
 
         /// <summary>
-        ///     Api Document Json File Name. Ex: all => all.json
+        ///     Api Document Json File Name. Ex: all =&gt; all.json. Default is <c> all </c> 
         /// </summary>
         public static string ApiDocumentJsonFile { get; set; } = "all";
 
         /// <summary>
-        ///     Access Key read from URI 
+        ///     Access Key read from URI, Default is <c> Empty </c> 
         /// </summary>
         /// <remarks> Empty is allow <c> Anonymous </c> </remarks>
         public static string AccessKey { get; set; } = string.Empty;
 
         /// <summary>
-        ///     Query parameter via http request 
+        ///     Query parameter via http request. Default is <c> key </c> 
         /// </summary>
         /// <remarks> Empty is allow <c> Anonymous </c> </remarks>
         public static string AccessKeyQueryParam { get; set; } = "key";
 
         /// <summary>
-        ///     Authenticate Token Key. Ex: Bearer 
+        ///     Authenticate Token Key. Ex: Bearer. Default is <c> Bearer </c> 
         /// </summary>
         /// <remarks> Default is Bearer </remarks>
         public static string AuthTokenKeyName { get; set; } = "Bearer";
 
         public static SwaggerContactConfigModel Contact { get; set; }
 
+        /// <summary>
+        ///     Default is <c> true </c> 
+        /// </summary>
         public static bool IsDescribeAllEnumsAsString { get; set; } = true;
 
+        /// <summary>
+        ///     Default is <c> true </c> 
+        /// </summary>
         public static bool IsDescribeAllParametersInCamelCase { get; set; } = true;
 
         /// <summary>

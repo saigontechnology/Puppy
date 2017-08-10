@@ -21,8 +21,14 @@ namespace Puppy.Redis
 {
     public static class RedisCacheConfig
     {
-        public static string ConnectionString { get; set; }
+        /// <summary>
+        ///     Default is <c> localhost:6379 </c> 
+        /// </summary>
+        public static string ConnectionString { get; set; } = "localhost:6379";
 
-        public static string InstanceName { get; set; }
+        /// <summary>
+        ///     Default is <c> Default </c> 
+        /// </summary>
+        public static string InstanceName { get; set; } = "Default";
     }
 }

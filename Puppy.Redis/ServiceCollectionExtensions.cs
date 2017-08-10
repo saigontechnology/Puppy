@@ -23,6 +23,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.EnvironmentUtils;
 using System;
+using System.Linq;
 
 namespace Puppy.Redis
 {
@@ -30,14 +31,17 @@ namespace Puppy.Redis
     {
         public static IServiceCollection AddRedisCache(this IServiceCollection services, IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
             // Build Config
             configuration.BuildRedisCacheConfig(configSection);
 
             if (string.IsNullOrWhiteSpace(RedisCacheConfig.ConnectionString))
-                throw new ArgumentException($"{nameof(RedisCacheConfig.ConnectionString)} Is Null Or WhiteSpace", nameof(RedisCacheConfig.ConnectionString));
+                throw new ArgumentNullException(nameof(RedisCacheConfig.ConnectionString), $"{nameof(RedisCacheConfig.ConnectionString)} Is Null Or WhiteSpace");
 
             if (string.IsNullOrWhiteSpace(RedisCacheConfig.InstanceName))
-                throw new ArgumentException($"{nameof(RedisCacheConfig.InstanceName)} Is Null Or WhiteSpace", nameof(RedisCacheConfig.InstanceName));
+                throw new ArgumentNullException(nameof(RedisCacheConfig.InstanceName), $"{nameof(RedisCacheConfig.InstanceName)} Is Null Or WhiteSpace");
 
             // Register Dependency for DistributedCache
             services.AddSingleton<IDistributedCache>(factory =>
@@ -59,6 +63,12 @@ namespace Puppy.Redis
 
         public static IServiceCollection AddRedisCache(this IServiceCollection services, string connectionString, string instanceName)
         {
+            if (string.IsNullOrWhiteSpace(RedisCacheConfig.ConnectionString))
+                throw new ArgumentNullException(nameof(RedisCacheConfig.ConnectionString), $"{nameof(RedisCacheConfig.ConnectionString)} Is Null Or WhiteSpace");
+
+            if (string.IsNullOrWhiteSpace(RedisCacheConfig.InstanceName))
+                throw new ArgumentNullException(nameof(RedisCacheConfig.InstanceName), $"{nameof(RedisCacheConfig.InstanceName)} Is Null Or WhiteSpace");
+
             // Build Config
             RedisCacheConfig.ConnectionString = connectionString;
             RedisCacheConfig.InstanceName = instanceName;
@@ -89,8 +99,12 @@ namespace Puppy.Redis
 
         public static void BuildRedisCacheConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
-            RedisCacheConfig.ConnectionString = configuration.GetValue<string>($"{configSection}:{nameof(RedisCacheConfig.ConnectionString)}");
-            RedisCacheConfig.InstanceName = configuration.GetValue<string>($"{configSection}:{nameof(RedisCacheConfig.InstanceName)}");
+            var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
+            if (isHaveConfig)
+            {
+                RedisCacheConfig.ConnectionString = configuration.GetValue<string>($"{configSection}:{nameof(RedisCacheConfig.ConnectionString)}");
+                RedisCacheConfig.InstanceName = configuration.GetValue<string>($"{configSection}:{nameof(RedisCacheConfig.InstanceName)}");
+            }
 
             if (!EnvironmentHelper.IsDevelopment()) return;
 

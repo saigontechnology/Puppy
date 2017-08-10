@@ -2,9 +2,9 @@
 # Puppy.Swagger
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
-# How to Use
-
-### 1. Add config section to `appsettings.json`
+## Config
+- Add config section to `appsettings.json`
+- If you not have custom setting in appsettings.json, `default setting` will be apply.
 
 ```json
 "ApiDocument": {
@@ -48,7 +48,7 @@
 
 ---
 
-### 2. Add Service
+## Add Service
 
 ```csharp
 // [API Document] Swagger
@@ -57,7 +57,7 @@ services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documenta
 
 ---
 
-### 3. Use in App Builder
+## Use Application Builder
 
 ```csharp
 // [API Document] Swagger
@@ -66,7 +66,7 @@ app.UseApiDocument();
 
 ---
 
-### 4. Enable Swagger Custom UI
+## Enable Swagger Custom UI
 
 Now you have Swagger Service, let add route for swagger.
 This sample below is use `Developers` area as route for swagger.

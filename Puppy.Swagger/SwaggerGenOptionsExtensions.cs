@@ -50,6 +50,7 @@ namespace Puppy.Swagger
                 throw new ArgumentNullException(nameof(assembly));
 
             var filePath = Path.ChangeExtension(assembly.Location, ".xml");
+
             if (!IncludeXmlCommentsIfExists(options, filePath) && assembly.CodeBase != null)
             {
                 filePath = Path.ChangeExtension(new Uri(assembly.CodeBase).AbsolutePath, ".xml");

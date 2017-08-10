@@ -21,7 +21,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Puppy.Core.EnvironmentUtils;
 using Serilog;
+using Serilog.Core;
+using Serilog.Events;
+using Serilog.Formatting.Json;
+using System;
+using System.Linq;
 
 namespace Puppy.Logger
 {
@@ -29,14 +35,73 @@ namespace Puppy.Logger
     {
         public static IServiceCollection AddLogger(this IServiceCollection services, IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
+            configuration.BuildLoggerConfig();
             return services;
         }
 
-        public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory, IConfiguration configuration)
+        /// <summary>
+        ///     Use Puppy Logger, remember to <see cref="AddLogger" /> before <c> UseLogger </c> 
+        /// </summary>
+        /// <param name="app">          </param>
+        /// <param name="loggerFactory"></param>
+        /// <returns></returns>
+        /// <remarks>
+        ///     The file will be written using the UTF-8 encoding without a byte-order mark.
+        /// </remarks>
+        public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            //Serilog.Log.Logger = new LoggerConfiguration();
+            BuildLogger();
             loggerFactory.AddSerilog();
             return app;
+        }
+
+        public static void BuildLoggerConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
+        {
+            var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
+            if (isHaveConfig)
+            {
+                LoggerConfig.PathFormat = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.PathFormat)}");
+                LoggerConfig.RetainedFileCountLimit = configuration.GetValue<int>($"{configSection}:{nameof(LoggerConfig.RetainedFileCountLimit)}");
+                LoggerConfig.FileSizeLimitBytes = configuration.GetValue<int>($"{configSection}:{nameof(LoggerConfig.FileSizeLimitBytes)}");
+            }
+
+            if (!EnvironmentHelper.IsDevelopment()) return;
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Logger Rolling File Path: {LoggerConfig.PathFormat}, Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes), Max File Count: {LoggerConfig.RetainedFileCountLimit}");
+            Console.ResetColor();
+        }
+
+        private static void BuildLogger()
+        {
+            var levelSwitch = new LoggingLevelSwitch
+            {
+                MinimumLevel = LogEventLevel.Warning
+            };
+
+            var loggerConfig =
+                new LoggerConfiguration()
+                    .MinimumLevel.ControlledBy(levelSwitch)
+                    .WriteTo.RollingFile(
+                        pathFormat: LoggerConfig.PathFormat,
+                        fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
+                        retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
+                        levelSwitch: levelSwitch,
+                        formatter: new JsonFormatter(null, false)
+                    );
+
+            if (EnvironmentHelper.IsDevelopment())
+            {
+                // Add Write to Console with Colored
+                loggerConfig = loggerConfig.WriteTo.ColoredConsole();
+            }
+
+            // Add Logger to Serilog
+            Serilog.Log.Logger = loggerConfig.CreateLogger();
         }
     }
 }

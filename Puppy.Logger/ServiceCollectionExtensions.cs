@@ -18,13 +18,17 @@
 #endregion License
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.Logger.Core;
 using Serilog;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Puppy.Logger
 {
@@ -44,15 +48,47 @@ namespace Puppy.Logger
         /// </summary>
         /// <param name="app">          </param>
         /// <param name="loggerFactory"></param>
+        /// <param name="appLifetime">   Ensure any buffered events are sent at shutdown </param>
         /// <returns></returns>
         /// <remarks>
         ///     The file will be written using the UTF-8 encoding without a byte-order mark.
         /// </remarks>
-        public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
         {
+            // Build the config for Logger
             Log.BuildLogger();
+
+            // Add Logger for microsoft logger factory
             loggerFactory.AddSerilog();
+
+            // Ensure any buffered events are sent at shutdown
+            appLifetime.ApplicationStopped.Register(Serilog.Log.CloseAndFlush);
+
             return app;
+        }
+
+        public class LoggerMiddleware
+        {
+            private readonly RequestDelegate _next;
+
+            public LoggerMiddleware(RequestDelegate next)
+            {
+                _next = next;
+            }
+
+            public Task Invoke(HttpContext context)
+            {
+                // Server
+                if (context.Request.Headers.ContainsKey("Id"))
+                {
+                    context.Request.Headers.Remove("Id");
+                }
+
+                var id = Guid.NewGuid().ToString("N");
+                context.Request.Headers.Add(nameof(LoggerException.Id), id);
+
+                return _next.Invoke(context);
+            }
         }
 
         /// <summary>

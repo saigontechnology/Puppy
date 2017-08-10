@@ -19,6 +19,7 @@
 
 using Microsoft.AspNetCore.Mvc.Filters;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.Logger.Core;
 using Serilog;
 using Serilog.Core;
 using System;
@@ -29,80 +30,106 @@ namespace Puppy.Logger
     {
         public static void Verbose(string message)
         {
-            Serilog.Log.Verbose(message);
+            LoggerException loggerException = new LoggerException(message, LogLevel.Verbose);
+            Serilog.Log.Verbose(loggerException.ToString());
         }
 
         public static void Debug(string message)
         {
-            Serilog.Log.Debug(message);
+            LoggerException loggerException = new LoggerException(message, LogLevel.Debug);
+            Serilog.Log.Debug(loggerException.ToString());
         }
 
         public static void Information(string message)
         {
-            Serilog.Log.Information(message);
+            LoggerException loggerException = new LoggerException(message, LogLevel.Information);
+            Serilog.Log.Information(loggerException.ToString());
         }
 
         public static void Warning(string message)
         {
-            Serilog.Log.Warning(message);
+            LoggerException loggerException = new LoggerException(message, LogLevel.Warning);
+            Serilog.Log.Warning(loggerException.ToString());
         }
 
         public static void Error(string message)
         {
-            Serilog.Log.Error(message);
+            LoggerException loggerException = new LoggerException(message, LogLevel.Error);
+            Serilog.Log.Error(loggerException.ToString());
         }
 
         /// <summary>
-        ///     Write Log with Error Level and Return Global ID as Guid of Log Entry 
+        ///     Write Log with Error Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="ex"></param>
         /// <returns></returns>
-        public static Guid Error(Exception e)
+        public static string Error(Exception ex)
         {
-            LoggerModel loggerModel = new LoggerModel(e);
-            Serilog.Log.Error(loggerModel.ToString());
-            return loggerModel.Id;
+            LoggerException loggerException = new LoggerException(ex, LogLevel.Error);
+            Serilog.Log.Error(loggerException.ToString());
+            return loggerException.Id;
         }
 
         /// <summary>
-        ///     Write Log with Error Level and Return Global ID as Guid of Log Entry 
+        ///     Write Log with Error Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        public static Guid Error(ExceptionContext e)
+        /// <remarks> Priority to use Header Id instead of self generate Id </remarks>
+        public static string Error(ExceptionContext context)
         {
-            LoggerModel loggerModel = new LoggerModel(e.Exception);
-            Serilog.Log.Error(loggerModel.ToString());
-            return loggerModel.Id;
+            // TODO Log Request Information: Endpoint with Param values
+
+            LoggerException loggerException = new LoggerException(context, LogLevel.Error);
+
+            // Priority to use Header Id instead of self generate Id
+            if (context.HttpContext.Request.Headers.ContainsKey(nameof(LoggerException.Id)))
+            {
+                loggerException.Id = context.HttpContext.Request.Headers[nameof(LoggerException.Id)];
+            }
+
+            Serilog.Log.Error(loggerException.ToString());
+            return loggerException.Id;
         }
 
         public static void Fatal(string message)
         {
-            Serilog.Log.Fatal(message);
+            LoggerException loggerException = new LoggerException(message, LogLevel.Fatal);
+            Serilog.Log.Fatal(loggerException.ToString());
         }
 
         /// <summary>
-        ///     Write Log with Fatal Level and Return Global ID as Guid of Log Entry 
+        ///     Write Log with Fatal Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="ex"></param>
         /// <returns></returns>
-        public static Guid Fatal(Exception e)
+        public static string Fatal(Exception ex)
         {
-            LoggerModel loggerModel = new LoggerModel(e);
-            Serilog.Log.Fatal(loggerModel.ToString());
-            return loggerModel.Id;
+            LoggerException loggerException = new LoggerException(ex, LogLevel.Fatal);
+            Serilog.Log.Fatal(loggerException.ToString());
+            return loggerException.Id;
         }
 
         /// <summary>
-        ///     Write Log with Fatal Level and Return Global ID as Guid of Log Entry 
+        ///     Write Log with Fatal Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        public static Guid Fatal(ExceptionContext e)
+        /// <remarks> Priority to use Header Id instead of self generate Id </remarks>
+        public static string Fatal(ExceptionContext context)
         {
-            LoggerModel loggerModel = new LoggerModel(e.Exception);
-            Serilog.Log.Fatal(loggerModel.ToString());
-            return loggerModel.Id;
+            // TODO Log Request Information: Endpoint with Param values
+
+            LoggerException loggerException = new LoggerException(context, LogLevel.Fatal);
+
+            // Priority to use Header Id instead of self generate Id
+            if (context.HttpContext.Request.Headers.ContainsKey(nameof(LoggerException.Id)))
+            {
+                loggerException.Id = context.HttpContext.Request.Headers[nameof(LoggerException.Id)];
+            }
+
+            Serilog.Log.Fatal(loggerException.ToString());
+            return loggerException.Id;
         }
 
         internal static void BuildLogger()
@@ -115,11 +142,6 @@ namespace Puppy.Logger
             var loggerConfig =
                 new LoggerConfiguration()
                     .MinimumLevel.ControlledBy(levelSwitch)
-                    .Enrich.WithProcessId()
-                    .Enrich.WithProcessName()
-                    .Enrich.WithMachineName()
-                    .Enrich.WithEnvironmentUserName()
-                    .Enrich.WithThreadId()
                     .WriteTo.RollingFile(
                         pathFormat: LoggerConfig.PathFormat,
                         fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,

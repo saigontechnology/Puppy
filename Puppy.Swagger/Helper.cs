@@ -113,8 +113,19 @@ namespace Puppy.Swagger
                 return true;
             }
 
-            string requestKey = httpContext.Request.Query[SwaggerConfig.AccessKeyQueryParam];
-            var isCanAccess = string.IsNullOrWhiteSpace(SwaggerConfig.AccessKey) || SwaggerConfig.AccessKey == requestKey;
+            string paramKeyValue = httpContext.Request.Query[SwaggerConfig.AccessKeyQueryParam];
+
+            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKey))
+            {
+                return true;
+            }
+
+            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKey) && string.IsNullOrWhiteSpace(paramKeyValue))
+            {
+                return true;
+            }
+
+            var isCanAccess = SwaggerConfig.AccessKey == paramKeyValue;
             return isCanAccess;
         }
 

@@ -196,13 +196,36 @@ namespace Puppy.Swagger
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
             if (isHaveConfig)
             {
-                SwaggerConfig.ApiDocumentHtmlTitle = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}");
-                SwaggerConfig.ApiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}");
-                SwaggerConfig.ApiDocumentName = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}");
-                SwaggerConfig.ApiDocumentJsonFile = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentJsonFile)}");
+                var apiDocumentHtmlTitle = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}");
+                if (!string.IsNullOrWhiteSpace(apiDocumentHtmlTitle))
+                {
+                    SwaggerConfig.ApiDocumentHtmlTitle = apiDocumentHtmlTitle;
+                }
+
+                var apiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}");
+                if (!string.IsNullOrWhiteSpace(apiDocumentUrl))
+                {
+                    SwaggerConfig.ApiDocumentUrl = apiDocumentUrl;
+                }
+
+                var apiDocumentName = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}");
+                if (!string.IsNullOrWhiteSpace(apiDocumentName))
+                {
+                    SwaggerConfig.ApiDocumentName = apiDocumentName;
+                }
+
+                var apiDocumentJsonFile = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentJsonFile)}");
+                if (!string.IsNullOrWhiteSpace(apiDocumentJsonFile))
+                {
+                    SwaggerConfig.ApiDocumentJsonFile = apiDocumentJsonFile;
+                }
+
                 SwaggerConfig.AccessKey = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKey)}");
+
                 SwaggerConfig.AccessKeyQueryParam = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKeyQueryParam)}");
+
                 SwaggerConfig.AuthTokenKeyName = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AuthTokenKeyName)}");
+
                 SwaggerConfig.Contact = configuration.GetSection<SwaggerContactConfigModel>($"{configSection}:{nameof(SwaggerConfig.Contact)}");
             }
 

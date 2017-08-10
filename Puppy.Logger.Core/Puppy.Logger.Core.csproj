@@ -19,7 +19,6 @@
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
-    <ProjectReference Include="..\Puppy.Logger.Core\Puppy.Logger.Core.csproj" />
   </ItemGroup>
 
   <!-- External Libraries -->
@@ -28,15 +27,15 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Enums.NET" Version="2.2.0" />
 
-    <!-- Configuration -->
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="1.1.2" />
-
     <!-- Write Log - Serilog -->
     <PackageReference Include="Serilog" Version="2.5.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="1.4.0" />
-    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="LoggerException.cs">
+      <SubType>Puppy</SubType>
+    </Compile>
+    <Compile Update="SerializableException.cs">
+      <SubType>Puppy</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

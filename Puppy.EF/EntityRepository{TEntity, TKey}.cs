@@ -32,9 +32,9 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF
 {
-    public abstract class EntityRepository<TEntity, TKey> : IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct 
+    public abstract class EntityRepository<TEntity, TKey> : IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct
     {
-        private readonly IBaseDbContext _baseDbContext;
+        protected readonly IBaseDbContext DbContext;
 
         private DbSet<TEntity> _dbSet;
 
@@ -44,14 +44,14 @@ namespace Puppy.EF
             {
                 if (_dbSet != null)
                     return _dbSet;
-                _dbSet = _baseDbContext.Set<TEntity>();
+                _dbSet = DbContext.Set<TEntity>();
                 return _dbSet;
             }
         }
 
-        protected EntityRepository(IBaseDbContext baseDbContext)
+        protected EntityRepository(IBaseDbContext dbContext)
         {
-            _baseDbContext = baseDbContext;
+            DbContext = dbContext;
         }
 
         public virtual IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
@@ -103,17 +103,17 @@ namespace Puppy.EF
                 {
                     var expression = (MemberExpression)property.Body;
                     var name = expression.Member.Name;
-                    _baseDbContext.Entry(entity).Property(name).IsModified = true;
+                    DbContext.Entry(entity).Property(name).IsModified = true;
                 }
             else
-                _baseDbContext.Entry(entity).State = EntityState.Modified;
+                DbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
         {
             try
             {
-                if (_baseDbContext.Entry(entity).State == EntityState.Detached)
+                if (DbContext.Entry(entity).State == EntityState.Detached)
                     DbSet.Attach(entity);
 
                 if (!isPhysicalDelete)
@@ -145,31 +145,70 @@ namespace Puppy.EF
 
         public virtual void RefreshEntity(TEntity entity)
         {
-            _baseDbContext.Entry(entity).Reload();
+            DbContext.Entry(entity).Reload();
         }
 
         [DebuggerStepThrough]
         public virtual int SaveChanges()
         {
-            return _baseDbContext.SaveChanges();
+            StandardizeEntities();
+            return DbContext.SaveChanges();
         }
 
         [DebuggerStepThrough]
         public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
+            StandardizeEntities();
+            return DbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         [DebuggerStepThrough]
         public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            return _baseDbContext.SaveChangesAsync(cancellationToken);
+            StandardizeEntities();
+            return DbContext.SaveChangesAsync(cancellationToken);
         }
 
         [DebuggerStepThrough]
         public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
-            return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            StandardizeEntities();
+            return DbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        public void StandardizeEntities()
+        {
+            var listEntryAddUpdate = DbContext.ChangeTracker.Entries()
+                .Where(x => x.Entity is Entity && (x.State == EntityState.Added || x.State == EntityState.Modified))
+                .Select(x => x).ToList();
+
+            foreach (var entry in listEntryAddUpdate)
+            {
+                var entity = entry.Entity as TEntity;
+
+                if (entity == null)
+                    continue;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entity.IsDeleted = false;
+                    entity.LastUpdatedTime = null;
+                    entity.CreatedTime = entity.CreatedTime == default(DateTimeOffset)
+                        ? DateTimeOffset.UtcNow
+                        : entity.CreatedTime;
+                }
+                else
+                {
+                    if (entity.IsDeleted)
+                        entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset)
+                            ? DateTimeOffset.UtcNow
+                            : entity.DeletedTime;
+                    else
+                        entity.LastUpdatedTime = entity.LastUpdatedTime == default(DateTimeOffset)
+                            ? DateTimeOffset.UtcNow
+                            : entity.LastUpdatedTime;
+                }
+            }
         }
     }
 }

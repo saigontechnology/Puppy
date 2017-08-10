@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using Serilog.Events;
 using System;
 using System.Linq;
+using Puppy.Logger.Core;
 
 namespace Puppy.Logger
 {
@@ -59,16 +60,16 @@ namespace Puppy.Logger
         ///     </para>
         /// </summary>
         /// <remarks> Default is <c> Warning </c> </remarks>
-        public static string FileLogMinimumLevel
+        public static LogLevel FileLogMinimumLevel
         {
-            get => FileLogMinimumLevelEnum.ToString();
+            get => (LogLevel)Enum.Parse(typeof(LogLevel), FileLogMinimumLevelEnum.ToString());
             set
             {
-                if (!Constant.LogLevels.Contains(value))
+                if (!Enum.IsDefined(typeof(LogLevel), value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(FileLogMinimumLevel));
                 }
-                FileLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value);
+                FileLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value.ToString());
             }
         }
 

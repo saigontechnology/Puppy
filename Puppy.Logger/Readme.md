@@ -1,4 +1,4 @@
-﻿# Redis Cache Helper
+﻿# Puppy.Logger
 > Created by **Top Nguyen** (http://topnguyen.net)
 
 ## Config

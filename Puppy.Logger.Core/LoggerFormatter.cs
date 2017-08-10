@@ -17,28 +17,29 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Serilog.Events;
-using Serilog.Formatting;
 using System;
 using System.IO;
+using Serilog.Events;
+using Serilog.Formatting;
 
-namespace Puppy.Logger
+namespace Puppy.Logger.Core
 {
     /// <summary>
-    ///     Logger Formatter for Serilog, Write only Message Template as Message 
+    ///     Logger Formatter for Serilog, Write only Message Template as Message (Message is JSON String)
     /// </summary>
+    /// <remarks> Auto add <c> ,Environment.NewLine </c> to the end of message </remarks>
     public class LoggerFormatter : ITextFormatter
     {
         public void Format(LogEvent logEvent, TextWriter output)
         {
-            // logEvent.Properties
             if (logEvent == null)
-                throw new ArgumentNullException("logEvent");
+                throw new ArgumentNullException(nameof(logEvent));
             if (output == null)
-                throw new ArgumentNullException("output");
+                throw new ArgumentNullException(nameof(output));
 
+            // Write Message Template as Json
             output.Write(logEvent.MessageTemplate);
-            output.Write(Environment.NewLine);
+            output.Write($",{Environment.NewLine}");
         }
     }
 }

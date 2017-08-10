@@ -16,11 +16,14 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
-  <!-- Copy Swagger UI Template to Output folder -->
+  <!-- Copy Output folder -->
+  <!-- <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> -->
   <ItemGroup>
+    <Folder Include="apidoc\">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Folder>
     <None Update="apidoc\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <!-- <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> -->
     </None>
   </ItemGroup>
 
@@ -38,7 +41,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="1.1.2" />
-    
+
     <!-- Swagger -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
   </ItemGroup>

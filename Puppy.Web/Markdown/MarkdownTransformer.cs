@@ -186,7 +186,7 @@ namespace Puppy.Web.Markdown
         private static readonly Regex HeaderAtx = new Regex(@"
                 ^(\#{1,6})  # $1 = string of #'s
                 [ ]*
-                (.+?)       # $2 = Header text
+                (.+?)       # $2 = ProcessingTimeResponseHeader text
                 [ ]*
                 \#*         # optional closing #'s (not counted)
                 \n+",
@@ -937,8 +937,8 @@ namespace Puppy.Web.Markdown
         ///     Turn Markdown headers into HTML header tags 
         /// </summary>
         /// <remarks>
-        ///     Header 1 ======== Header 2 -------- # Header 1 ## Header 2 ## Header 2 with closing
-        ///     hashes ## ... ###### Header 6
+        ///     ProcessingTimeResponseHeader 1 ======== ProcessingTimeResponseHeader 2 -------- # ProcessingTimeResponseHeader 1 ## ProcessingTimeResponseHeader 2 ## ProcessingTimeResponseHeader 2 with closing
+        ///     hashes ## ... ###### ProcessingTimeResponseHeader 6
         /// </remarks>
         private string DoHeaders(string text)
         {

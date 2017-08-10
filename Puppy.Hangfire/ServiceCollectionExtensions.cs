@@ -51,7 +51,7 @@ namespace Puppy.Hangfire
         /// <param name="app"></param>
         public static IApplicationBuilder UseHangfire(this IApplicationBuilder app)
         {
-            if (string.IsNullOrWhiteSpace(HangfireConfig.DashboardUrl))
+            if (!string.IsNullOrWhiteSpace(HangfireConfig.DashboardUrl))
             {
                 app.UseHangfireDashboard(HangfireConfig.DashboardUrl, new DashboardOptions
                 {

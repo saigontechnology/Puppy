@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> Constant.cs </Name>
+//         <Name> Constants.cs </Name>
 //         <Created> 08/08/17 6:44:48 PM </Created>
 //         <Key> 00f48db3-ad03-4ed7-b163-5b9124afba84 </Key>
 //     </File>
 //     <Summary>
-//         Constant.cs
+//         Constants.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ using System;
 
 namespace Puppy.Swagger
 {
-    public static class Constant
+    public static class Constants
     {
         public const string ApiDocAssetFolderPath = "apidoc";
 

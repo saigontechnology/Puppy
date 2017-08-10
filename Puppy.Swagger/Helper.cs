@@ -56,7 +56,7 @@ namespace Puppy.Swagger
             {
                 UpdateIndexHtml(new Dictionary<string, string>
                 {
-                    {"@AssetPath", urlHelper.AbsoluteContent(Constant.ApiDocAssetRequestPath)},
+                    {"@AssetPath", urlHelper.AbsoluteContent(Constants.ApiDocAssetRequestPath)},
                     {"@ApiDocumentHtmlTitle", SwaggerConfig.ApiDocumentHtmlTitle},
                     {"@SwaggerEndpoint", SwaggerConfig.SwaggerEndpoint},
                     {"@AuthTokenKeyPrefix", SwaggerConfig.AuthTokenKeyName}
@@ -66,7 +66,7 @@ namespace Puppy.Swagger
             }
 
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string indexFileFullPath = Path.Combine(executedFolder, Constant.IndexHtmlPath);
+            string indexFileFullPath = Path.Combine(executedFolder, Constants.IndexHtmlPath);
             var indexFileContent = File.ReadAllText(indexFileFullPath);
 
             ContentResult contentResult = new ContentResult
@@ -85,7 +85,7 @@ namespace Puppy.Swagger
             {
                 UpdateJsonViewerHtml(new Dictionary<string, string>
                 {
-                    {"@AssetPath", urlHelper.AbsoluteContent(Constant.ApiDocAssetRequestPath)},
+                    {"@AssetPath", urlHelper.AbsoluteContent(Constants.ApiDocAssetRequestPath)},
                     {"@ApiDocumentHtmlTitle", SwaggerConfig.ApiDocumentHtmlTitle}
                 });
 
@@ -93,7 +93,7 @@ namespace Puppy.Swagger
             }
 
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string jsonViewerFileFullPath = Path.Combine(executedFolder, Constant.ViewerHtmlPath);
+            string jsonViewerFileFullPath = Path.Combine(executedFolder, Constants.ViewerHtmlPath);
             var jsonViewerFileContent = File.ReadAllText(jsonViewerFileFullPath);
 
             ContentResult contentResult = new ContentResult
@@ -121,7 +121,7 @@ namespace Puppy.Swagger
         public static void UpdateIndexHtml(Dictionary<string, string> replaceDictionary)
         {
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string indexFileFullPath = Path.Combine(executedFolder, Constant.IndexHtmlPath);
+            string indexFileFullPath = Path.Combine(executedFolder, Constants.IndexHtmlPath);
 
             var indexFileContent = File.ReadAllText(indexFileFullPath);
 
@@ -136,7 +136,7 @@ namespace Puppy.Swagger
         public static void UpdateJsonViewerHtml(Dictionary<string, string> replaceDictionary)
         {
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string viewerFileFullPath = Path.Combine(executedFolder, Constant.ViewerHtmlPath);
+            string viewerFileFullPath = Path.Combine(executedFolder, Constants.ViewerHtmlPath);
             var viewerFileContent = File.ReadAllText(viewerFileFullPath);
 
             foreach (var key in replaceDictionary.Keys)

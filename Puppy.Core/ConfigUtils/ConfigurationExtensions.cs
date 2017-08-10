@@ -20,7 +20,7 @@
 #endregion License
 
 using Microsoft.Extensions.Configuration;
-using System;
+using Puppy.Core.EnvironmentUtils;
 
 namespace Puppy.Core.ConfigUtils
 {
@@ -39,18 +39,36 @@ namespace Puppy.Core.ConfigUtils
         ///     The section key. If <c> null </c>, the name of the type <typeparamref name="T" /> is used.
         /// </param>
         /// <returns> The bound object. </returns>
-        public static T GetSection<T>(this IConfiguration configuration, string key = null)
-            where T : new()
+        public static T GetSection<T>(this IConfiguration configuration, string key = null) where T : new()
         {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
-            if (key == null)
+            if (string.IsNullOrWhiteSpace(key))
                 key = typeof(T).Name;
 
-            var section = new T();
-            configuration.GetSection(key).Bind(section);
-            return section;
+            var value = new T();
+            configuration.GetSection(key).Bind(value);
+            return value;
+        }
+
+        /// <summary>
+        ///     Production, Staging will read from key Environment Name, else by MachineName 
+        /// </summary>
+        /// <typeparam name="T"> The type to convert the value to. </typeparam>
+        /// <param name="section"> The configuration section for the value to convert. </param>
+        /// <returns></returns>
+        public static T GetValueByMachineAndEnv<T>(this IConfiguration configuration, string section = null)
+        {
+            if (string.IsNullOrWhiteSpace(section))
+                section = typeof(T).Name;
+
+            var value =
+                configuration.GetValue<T>
+                (
+                    (EnvironmentHelper.IsProduction() || EnvironmentHelper.IsStaging())
+                        ? $"{section}:{EnvironmentHelper.Name}"
+                        : $"{section}:{EnvironmentHelper.MachineName}"
+                );
+
+            return value;
         }
     }
 }

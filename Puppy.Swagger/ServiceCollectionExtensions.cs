@@ -54,7 +54,7 @@ namespace Puppy.Swagger
         ///     Path.Combine(Directory.GetCurrentDirectory(), "Puppy.xml") </c>
         /// </remarks>
         /// <returns></returns>
-        public static IServiceCollection AddApiDocument(this IServiceCollection services, string xmlDocumentFileFullPath, IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
+        public static IServiceCollection AddApiDocument(this IServiceCollection services, string xmlDocumentFileFullPath, IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
         {
             // Add Filter Service
             services.AddScoped<ApiDocAccessFilter>();
@@ -118,12 +118,12 @@ namespace Puppy.Swagger
             // Path and GZip for Statics Content
             string currentDirectory = Directory.GetCurrentDirectory();
             string executedAssemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string fileProviderPath = Path.Combine(currentDirectory, Constant.ApiDocAssetFolderPath);
+            string fileProviderPath = Path.Combine(currentDirectory, Constants.ApiDocAssetFolderPath);
 
             if (!Directory.Exists(fileProviderPath))
             {
                 // Try to get folder in executed assembly
-                fileProviderPath = Path.Combine(executedAssemblyDirectory, Constant.ApiDocAssetFolderPath);
+                fileProviderPath = Path.Combine(executedAssemblyDirectory, Constants.ApiDocAssetFolderPath);
             }
 
             if (!Directory.Exists(fileProviderPath)) return app;
@@ -131,13 +131,13 @@ namespace Puppy.Swagger
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(fileProviderPath),
-                RequestPath = Constant.ApiDocAssetRequestPath,
+                RequestPath = Constants.ApiDocAssetRequestPath,
                 OnPrepareResponse = (context) =>
                 {
                     var headers = context.Context.Response.GetTypedHeaders();
                     headers.CacheControl = new CacheControlHeaderValue
                     {
-                        MaxAge = Constant.ApiDocAssetMaxAgeResponseHeader
+                        MaxAge = Constants.ApiDocAssetMaxAgeResponseHeader
                     };
                 }
             });
@@ -187,7 +187,7 @@ namespace Puppy.Swagger
             }
         }
 
-        public static void BuildSwaggerConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
+        public static void BuildSwaggerConfig(this IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
         {
             SwaggerConfig.ApiDocumentHtmlTitle = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}");
             SwaggerConfig.ApiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}");

@@ -41,5 +41,10 @@ namespace Puppy.Redis
         void Set(string key, object data, DistributedCacheEntryOptions options);
 
         void Remove(string key);
+
+        /// <summary>
+        ///     Verify Redis is work well by through all methods 
+        /// </summary>
+        void VerifySetup();
     }
 }

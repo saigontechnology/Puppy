@@ -10,7 +10,8 @@
     "PathFormat": "Logs/LOG_{Date}.txt",
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
-    "ConsoleTemplate": "{mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}] {Message}{NewLine}{Exception}"
+    "FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
+    "ConsoleLogMinimumLevel": "Warning" // Verbose, Debug, Information, Warning, Error, Fatal.
   },
 ```
 
@@ -26,3 +27,8 @@ services.AddLogger(ConfigurationRoot)
 app.UseLogger(loggerFactory)
 ```
 
+## Enhance Logger
+- Puppy Logger use `Serilog` to implement Logger Client.
+- Please refer `Serilog` official document to enhance config.
+  + [Wiki](https://github.com/serilog/serilog/wiki)
+  + [Output Template](https://github.com/serilog/serilog/wiki/Formatting-Output)

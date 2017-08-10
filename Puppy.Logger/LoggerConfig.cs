@@ -17,6 +17,11 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Newtonsoft.Json;
+using Serilog.Events;
+using System;
+using System.Linq;
+
 namespace Puppy.Logger
 {
     /// <summary>
@@ -43,14 +48,52 @@ namespace Puppy.Logger
         /// </summary>
         public static long? FileSizeLimitBytes { get; set; } = 1048576;
 
+        [JsonIgnore]
+        internal static LogEventLevel FileLogMinimumLevelEnum = LogEventLevel.Warning;
+
         /// <summary>
-        ///     <para> Console Template to write log </para>
+        ///     <para> Minimum level to log by file. </para>
         ///     <para>
-        ///         Default is <c> {mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}]
-        ///         {Message}{NewLine}{Exception} </c>
+        ///         Have 5 levels: <c> Verbose </c>, <c> Debug </c>, <c> Information </c>, <c>
+        ///         Warning </c>, <c> Error </c>, <c> Fatal </c>
         ///     </para>
         /// </summary>
-        /// <remarks> Console only enable in <c> Development Environment </c> </remarks>
-        public static string ConsoleTemplate { get; set; } = "{mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}] {Message}{NewLine}{Exception}";
+        /// <remarks> Default is <c> Warning </c> </remarks>
+        public static string FileLogMinimumLevel
+        {
+            get => FileLogMinimumLevelEnum.ToString();
+            set
+            {
+                if (!Constant.LogLevels.Contains(value))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(FileLogMinimumLevel));
+                }
+                FileLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value);
+            }
+        }
+
+        [JsonIgnore]
+        internal static LogEventLevel ConsoleLogMinimumLevelEnum = LogEventLevel.Warning;
+
+        /// <summary>
+        ///     <para> Minimum level to log by console. </para>
+        ///     <para>
+        ///         Have 5 levels: <c> Verbose </c>, <c> Debug </c>, <c> Information </c>, <c>
+        ///         Warning </c>, <c> Error </c>, <c> Fatal </c>
+        ///     </para>
+        /// </summary>
+        /// <remarks> Default is <c> Warning </c> </remarks>
+        public static string ConsoleLogMinimumLevel
+        {
+            get => ConsoleLogMinimumLevelEnum.ToString();
+            set
+            {
+                if (!Constant.LogLevels.Contains(value))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(ConsoleLogMinimumLevel));
+                }
+                ConsoleLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value);
+            }
+        }
     }
 }

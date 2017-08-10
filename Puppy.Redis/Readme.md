@@ -17,3 +17,12 @@
 services.AddRedisCache(ConfigurationRoot)
 ```
 - How to Use: Inject `IRedisCacheManager` (refer) or `IDistributedCache` and call methods.
+
+## Check Redis Setup on Application Start
+
+At the End of Application Builder in `Startup.cs` call the method below to verify the `IRedisCacheManager` is work well.
+```csharp
+// Verify Redis Setting is Fine
+IRedisCacheManager redisCacheManager = app.Resolve<IRedisCacheManager>();
+redisCacheManager.VerifySetup();
+```

@@ -23,9 +23,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Puppy.Core.EnvironmentUtils;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
-using Serilog.Formatting.Json;
 using System;
 using System.Linq;
 
@@ -53,11 +50,16 @@ namespace Puppy.Logger
         /// </remarks>
         public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            BuildLogger();
+            Log.BuildLogger();
             loggerFactory.AddSerilog();
             return app;
         }
 
+        /// <summary>
+        ///     Update LoggerConfig by <see cref="configuration" /> 
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="configSection"></param>
         public static void BuildLoggerConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
@@ -74,34 +76,6 @@ namespace Puppy.Logger
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"Logger Rolling File Path: {LoggerConfig.PathFormat}, Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes), Max File Count: {LoggerConfig.RetainedFileCountLimit}");
             Console.ResetColor();
-        }
-
-        private static void BuildLogger()
-        {
-            var levelSwitch = new LoggingLevelSwitch
-            {
-                MinimumLevel = LogEventLevel.Warning
-            };
-
-            var loggerConfig =
-                new LoggerConfiguration()
-                    .MinimumLevel.ControlledBy(levelSwitch)
-                    .WriteTo.RollingFile(
-                        pathFormat: LoggerConfig.PathFormat,
-                        fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
-                        retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
-                        levelSwitch: levelSwitch,
-                        formatter: new JsonFormatter(null, false)
-                    );
-
-            if (EnvironmentHelper.IsDevelopment())
-            {
-                // Add Write to Console with Colored
-                loggerConfig = loggerConfig.WriteTo.ColoredConsole();
-            }
-
-            // Add Logger to Serilog
-            Serilog.Log.Logger = loggerConfig.CreateLogger();
         }
     }
 }

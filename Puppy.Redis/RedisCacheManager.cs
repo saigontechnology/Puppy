@@ -111,5 +111,41 @@ namespace Puppy.Redis
 
             return JsonConvert.DeserializeObject<T>(str);
         }
+
+        public void VerifySetup()
+        {
+            string verifyKey = "VerifySetup";
+            string verifyOriginalData = "Check Redis is Healthy";
+
+            // Verify Set
+            try
+            {
+                Set(verifyKey, verifyOriginalData, TimeSpan.FromSeconds(10));
+            }
+            catch (Exception)
+            {
+                throw new Exception($"{nameof(Set)} of {nameof(IRedisCacheManager)} is not working, you missing setup Redis Cache or wrong Redis Connection String.");
+            }
+
+            // Verify IsExist
+            if (!IsExist(verifyKey))
+            {
+                throw new Exception($"{nameof(IsExist)} of {nameof(IRedisCacheManager)} is not working.");
+            }
+
+            // Verify Get
+            var verifyData = Get<string>(verifyKey);
+            if (verifyData != verifyOriginalData)
+            {
+                throw new Exception($"{nameof(Get)} of {nameof(IRedisCacheManager)} is not working.");
+            }
+
+            // Verify Delete
+            Remove(verifyKey);
+            if (IsExist(verifyKey))
+            {
+                throw new Exception($"{nameof(Remove)} of {nameof(IRedisCacheManager)} is not working.");
+            }
+        }
     }
 }

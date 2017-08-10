@@ -17,10 +17,31 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Serilog.Events;
+
 namespace Puppy.Logger
 {
     public static class Constant
     {
         public const string DefaultConfigSection = "Logger";
+
+        /// <summary>
+        ///     <para> Console Template to write log </para>
+        ///     <para>
+        ///         Default is <c> {mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}]
+        ///         {Message}{NewLine}{Exception} </c>
+        ///     </para>
+        /// </summary>
+        /// <remarks> Console only enable in <c> Development Environment </c> </remarks>
+        public const string ConsoleTemplate = "{mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}] {Message}{NewLine}{Exception}";
+
+        public static string[] LogLevels = {
+             LogEventLevel.Verbose.ToString(),
+             LogEventLevel.Debug.ToString(),
+             LogEventLevel.Information.ToString(),
+             LogEventLevel.Warning.ToString(),
+             LogEventLevel.Error.ToString(),
+             LogEventLevel.Fatal.ToString()
+        };
     }
 }

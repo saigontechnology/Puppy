@@ -20,6 +20,7 @@
 using Hangfire;
 using Hangfire.Annotations;
 using Hangfire.Dashboard;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,17 +32,28 @@ namespace Puppy.Hangfire
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        ///     [Background Job] Hangfire store job information in database 
+        ///     [Background Job] Hangfire 
         /// </summary>
         /// <param name="services">                </param>
         /// <param name="databaseConnectionString"></param>
         /// <param name="configuration">           </param>
         /// <param name="configSection">           </param>
-        public static IServiceCollection AddHangfire(this IServiceCollection services, string databaseConnectionString, IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
+        /// <remarks>
+        ///     <see cref="databaseConnectionString" /> is null or empty for store job in memory,
+        ///     else in Sql Server. Default is in memory
+        /// </remarks>
+        public static IServiceCollection AddHangfire(this IServiceCollection services, IConfiguration configuration, string configSection = Constant.DefaultConfigSection, string databaseConnectionString = null)
         {
             // Build Config
             configuration.BuildHangfireConfig(configSection);
-            services.AddHangfire(config => config.UseSqlServerStorage(databaseConnectionString));
+            if (string.IsNullOrWhiteSpace(databaseConnectionString))
+            {
+                services.AddHangfire(config => config.UseMemoryStorage());
+            }
+            else
+            {
+                services.AddHangfire(config => config.UseSqlServerStorage(databaseConnectionString));
+            }
             return services;
         }
 

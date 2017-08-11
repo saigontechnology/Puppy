@@ -17,12 +17,15 @@
 
 - Add Service
 ```csharp
-services.AddHangfire(SystemConfigs.DatabaseConnectionString, ConfigurationRoot)
+// [Background Job] Store Job in Memory. Add param
+// databaseConnectionString to store job in Sql Server
+.AddHangfire(ConfigurationRoot)
 ```
 
 - Use in Application Builder 
 ```csharp
-app.UseHangfire();
+// [Background Job] Hangfire
+.UseHangfire()
 ```
 
 - How to Use: Inject `IRedisCacheManager` (refer) or `IDistributedCache` and call methods.

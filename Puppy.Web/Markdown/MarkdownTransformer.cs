@@ -937,8 +937,10 @@ namespace Puppy.Web.Markdown
         ///     Turn Markdown headers into HTML header tags 
         /// </summary>
         /// <remarks>
-        ///     ProcessingTimeResponseHeader 1 ======== ProcessingTimeResponseHeader 2 -------- # ProcessingTimeResponseHeader 1 ## ProcessingTimeResponseHeader 2 ## ProcessingTimeResponseHeader 2 with closing
-        ///     hashes ## ... ###### ProcessingTimeResponseHeader 6
+        ///     ProcessingTimeResponseHeader 1 ======== ProcessingTimeResponseHeader 2 -------- #
+        ///     ProcessingTimeResponseHeader 1 ## ProcessingTimeResponseHeader 2 ##
+        ///     ProcessingTimeResponseHeader 2 with closing hashes ## ... ######
+        ///     ProcessingTimeResponseHeader 6
         /// </remarks>
         private string DoHeaders(string text)
         {

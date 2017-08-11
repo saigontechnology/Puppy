@@ -18,10 +18,13 @@
 #endregion License
 
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Puppy.Logger.Core.Models
 {
@@ -46,18 +49,51 @@ namespace Puppy.Logger.Core.Models
         /// </summary>
         public string DisplayUrl { get; set; }
 
+        /// <summary>
+        ///     Need to <c> EnableRewind </c> for Request in middleware to get Request Body. 
+        /// </summary>
+        public object RequestBody { get; set; }
+
         public HttpContextInfo()
         {
         }
 
-        public HttpContextInfo(HttpContext httpContext) : this()
+        public HttpContextInfo(HttpContext context) : this()
         {
-            Headers = httpContext.Request.Headers.ToDictionary(x => x.Key, x => x.Value.ToList());
-            Protocol = httpContext.Request.Protocol;
-            Method = httpContext.Request.Method;
-            Endpoint = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}{httpContext.Request.Path.Value}";
-            QueryStrings = httpContext.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToList());
-            DisplayUrl = $"[{Protocol}]({Method}){Endpoint}{httpContext.Request.QueryString}";
+            Headers = context.Request.Headers.ToDictionary(x => x.Key, x => x.Value.ToList());
+            Protocol = context.Request.Protocol;
+            Method = context.Request.Method;
+            Endpoint = $"{context.Request.Scheme}://{context.Request.Host.Value}{context.Request.Path.Value}";
+            QueryStrings = context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToList());
+            DisplayUrl = $"[{Protocol}]({Method}){Endpoint}{context.Request.QueryString}";
+            RequestBody = GetRequestBody(context);
+        }
+
+        private static object GetRequestBody(HttpContext context)
+        {
+            try
+            {
+                object requestBodyObj;
+
+                // Reset Body to Original Position
+                context.Request.Body.Position = 0;
+
+                using (StreamReader reader = new StreamReader(context.Request.Body, Encoding.UTF8, true, 1024, true))
+                {
+                    string requestBody = reader.ReadToEnd();
+
+                    // Reformat to have beautiful json string
+                    requestBodyObj = JsonConvert.DeserializeObject(requestBody);
+                }
+                // Reset Body to Original Position
+                context.Request.Body.Position = 0;
+
+                return requestBodyObj;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

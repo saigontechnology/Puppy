@@ -20,11 +20,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Puppy.Core.EnvironmentUtils;
-using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Serilog;
 using System;
@@ -52,8 +52,9 @@ namespace Puppy.Logger
         /// <param name="appLifetime">   Ensure any buffered events are sent at shutdown </param>
         /// <returns></returns>
         /// <remarks>
-        ///     Auto add request header "Id" and "RequestTime". The file will be written using the
-        ///     UTF-8 encoding without a byte-order mark.
+        ///     Auto add request header <c> "Id" </c>, <c> "RequestTime" </c> and <c> EnableRewind
+        ///     </c> for Request to get <c> Request Body </c> when logging. The file will be written
+        ///     using the <c> UTF-8 encoding </c> without a byte-order mark.
         /// </remarks>
         public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
         {
@@ -95,6 +96,10 @@ namespace Puppy.Logger
                     var requestTime = DateTimeOffset.Now.ToString(Core.Constant.DateTimeOffSetFormat);
                     context.Request.Headers.Add(nameof(HttpContextInfo.RequestTime), requestTime);
                 }
+
+                // Allows using several time the stream in ASP.Net Core. Enable Rewind for Request to
+                // get Request Body when logging
+                context.Request.EnableRewind();
 
                 return _next.Invoke(context);
             }

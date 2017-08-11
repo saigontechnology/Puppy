@@ -24,7 +24,7 @@ using Serilog.Formatting;
 using System;
 using System.IO;
 
-namespace Puppy.Logger.Core
+namespace Puppy.Logger
 {
     /// <summary>
     ///     Logger Formatter for Serilog, Write only Message is LoggerException JSON String 
@@ -53,7 +53,7 @@ namespace Puppy.Logger.Core
         {
             try
             {
-                var loggerException = JsonConvert.DeserializeObject<LoggerException>(message, Constant.JsonSerializerSettings);
+                var loggerException = JsonConvert.DeserializeObject<LoggerException>(message, Core.Constant.JsonSerializerSettings);
                 return loggerException != null;
             }
             catch (Exception)

@@ -29,11 +29,11 @@ namespace Puppy.Logger
         ///     <para> Console Template to write log </para>
         ///     <para>
         ///         Default is <c> {mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}]
-        ///         {Message}{NewLine}{Exception} </c>
+        ///         {MessageJob}{NewLine}{Exception} </c>
         ///     </para>
         /// </summary>
         /// <remarks> Console only enable in <c> Development Environment </c> </remarks>
-        public const string ConsoleTemplate = "{mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}] {Message}{NewLine}{Exception}";
+        public const string ConsoleTemplate = "{mm:ss.fff zzz} [{Level}] [{SourceContext}] [{EventId}] {MessageJob}{NewLine}{Exception}";
 
         public static string[] LogLevels = {
              LogEventLevel.Verbose.ToString(),

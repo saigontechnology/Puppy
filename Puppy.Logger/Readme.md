@@ -9,7 +9,7 @@ Puppy Logger, log error with http request information and exception as detail as
 
 ```json
   "Logger": {
-    "PathFormat": "Logs/LOG_{Date}.txt",
+    "PathFormat": "Logs\\LOG_{Date}.txt",
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
     "FileLogMinimumLevel": "Error", // Verbose, Debug, Information, Warning, Error, Fatal.

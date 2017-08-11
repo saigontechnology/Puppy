@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +28,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
+using Puppy.Logger.Models;
 using Serilog;
 using System;
 using System.Linq;
@@ -35,12 +38,26 @@ namespace Puppy.Logger
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        ///     Add Logger Service with Hangfire on Memory if it not added by another service before. 
+        /// </summary>
+        /// <param name="services">     </param>
+        /// <param name="configuration"></param>
+        /// <param name="configSection"></param>
+        /// <returns></returns>
         public static IServiceCollection AddLogger(this IServiceCollection services, IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
 
             configuration.BuildLoggerConfig();
+
+            // Check if don't have hangfire service, let add to run background job.
+            if (services.All(x => x.ServiceType != typeof(JobStorage)))
+            {
+                services.AddHangfire(x => x.UseMemoryStorage());
+            }
+
             return services;
         }
 
@@ -59,7 +76,7 @@ namespace Puppy.Logger
         public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
         {
             // Build the config for Logger
-            Log.BuildLogger();
+            Log.Log.BuildLogger();
 
             // Add Logger for microsoft logger factory
             loggerFactory.AddSerilog();
@@ -124,7 +141,7 @@ namespace Puppy.Logger
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Logger Rolling File Path: {LoggerConfig.PathFormat}, Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes), Maximum: {LoggerConfig.RetainedFileCountLimit} (files)");
+            Console.WriteLine($"Logger Rolling File Path: {LoggerConfig.PathFormat}, Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes), Maximum: {LoggerConfig.RetainedFileCountLimit} (files) | Full Path: {LoggerConfig.FullPath}, Folder Full Path: {LoggerConfig.FolderFullPath}");
             Console.ResetColor();
         }
     }

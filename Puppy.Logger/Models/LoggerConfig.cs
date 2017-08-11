@@ -21,9 +21,10 @@ using Newtonsoft.Json;
 using Puppy.Logger.Core;
 using Serilog.Events;
 using System;
+using System.IO;
 using System.Linq;
 
-namespace Puppy.Logger
+namespace Puppy.Logger.Models
 {
     /// <summary>
     ///     Logger Configuration 
@@ -35,9 +36,13 @@ namespace Puppy.Logger
     public static class LoggerConfig
     {
         /// <summary>
-        ///     Path format to write log, default is <c> Logs/LOG_{Date}.txt </c> 
+        ///     Path format to write log, default is <c> Logs\\LOG_{Date}.txt </c> 
         /// </summary>
-        public static string PathFormat { get; set; } = "Logs/LOG_{Date}.txt";
+        public static string PathFormat { get; set; } = "Logs\\LOG_{Date}.txt";
+
+        public static string FullPath { get; } = Path.Combine(Directory.GetCurrentDirectory(), PathFormat);
+
+        public static string FolderFullPath { get; } = Path.Combine(Directory.GetCurrentDirectory(), Path.GetDirectoryName(PathFormat));
 
         /// <summary>
         ///     Maximum retained file, default is <c> 365 </c> 

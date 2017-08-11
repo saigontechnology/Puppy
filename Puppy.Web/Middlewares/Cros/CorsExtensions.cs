@@ -138,10 +138,10 @@ namespace Puppy.Web.Middlewares.Cros
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(
-                $"API Cros Config: {CrosConfig.PolicyAllowAllName}: {CrosConfig.PolicyAllowAllName}," +
-                $" {CrosConfig.AccessControlAllowOrigin}: {CrosConfig.AccessControlAllowOrigin}," +
-                $" {CrosConfig.AccessControlAllowHeaders}: {CrosConfig.AccessControlAllowHeaders}," +
-                $" {CrosConfig.AccessControlAllowMethods}: {CrosConfig.AccessControlAllowMethods}");
+                $"API Cros Config: {nameof(CrosConfig.PolicyAllowAllName)}: {CrosConfig.PolicyAllowAllName}," +
+                $" {nameof(CrosConfig.AccessControlAllowOrigin)}: {CrosConfig.AccessControlAllowOrigin}," +
+                $" {nameof(CrosConfig.AccessControlAllowHeaders)}: {CrosConfig.AccessControlAllowHeaders}," +
+                $" {nameof(CrosConfig.AccessControlAllowMethods)}: {CrosConfig.AccessControlAllowMethods}");
             Console.ResetColor();
         }
     }

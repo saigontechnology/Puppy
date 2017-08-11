@@ -18,10 +18,10 @@
 #endregion License
 
 using Newtonsoft.Json;
+using Puppy.Logger.Core;
 using Serilog.Events;
 using System;
 using System.Linq;
-using Puppy.Logger.Core;
 
 namespace Puppy.Logger
 {
@@ -74,7 +74,7 @@ namespace Puppy.Logger
         }
 
         [JsonIgnore]
-        internal static LogEventLevel ConsoleLogMinimumLevelEnum = LogEventLevel.Warning;
+        internal static LogEventLevel ConsoleLogMinimumLevelEnum = LogEventLevel.Information;
 
         /// <summary>
         ///     <para> Minimum level to log by console. </para>
@@ -83,7 +83,7 @@ namespace Puppy.Logger
         ///         Warning </c>, <c> Error </c>, <c> Fatal </c>
         ///     </para>
         /// </summary>
-        /// <remarks> Default is <c> Warning </c> </remarks>
+        /// <remarks> Default is <c> Information </c> </remarks>
         public static string ConsoleLogMinimumLevel
         {
             get => ConsoleLogMinimumLevelEnum.ToString();

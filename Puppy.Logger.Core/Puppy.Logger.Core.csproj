@@ -31,10 +31,13 @@
     <PackageReference Include="Serilog" Version="2.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="LoggerException.cs">
+    <Compile Update="Models\LoggerException.cs">
       <SubType>Puppy</SubType>
     </Compile>
-    <Compile Update="SerializableException.cs">
+    <Compile Update="Models\SerializableException.cs">
+      <SubType>Puppy</SubType>
+    </Compile>
+    <Compile Update="Models\HttpContextInfo.cs">
       <SubType>Puppy</SubType>
     </Compile>
   </ItemGroup>

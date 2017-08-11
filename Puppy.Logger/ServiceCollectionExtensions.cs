@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------------------------
 // <License>
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
-//     <Url> http://topnguyen.net/ </Url>
+//     <DisplayUrl> http://topnguyen.net/ </DisplayUrl>
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
@@ -25,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
+using Puppy.Logger.Core.Models;
 using Serilog;
 using System;
 using System.Linq;
@@ -51,7 +52,8 @@ namespace Puppy.Logger
         /// <param name="appLifetime">   Ensure any buffered events are sent at shutdown </param>
         /// <returns></returns>
         /// <remarks>
-        ///     The file will be written using the UTF-8 encoding without a byte-order mark.
+        ///     Auto add request header "Id" and "RequestTime". The file will be written using the
+        ///     UTF-8 encoding without a byte-order mark.
         /// </remarks>
         public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
         {
@@ -63,6 +65,9 @@ namespace Puppy.Logger
 
             // Ensure any buffered events are sent at shutdown
             appLifetime.ApplicationStopped.Register(Serilog.Log.CloseAndFlush);
+
+            // Add middleware to inject Request Id
+            app.UseMiddleware<LoggerMiddleware>();
 
             return app;
         }
@@ -78,14 +83,18 @@ namespace Puppy.Logger
 
             public Task Invoke(HttpContext context)
             {
-                // Server
-                if (context.Request.Headers.ContainsKey("Id"))
+                // Add Request Id if not have already.
+                if (!context.Request.Headers.ContainsKey(nameof(LoggerException.Id)))
                 {
-                    context.Request.Headers.Remove("Id");
+                    var id = Guid.NewGuid().ToString("N");
+                    context.Request.Headers.Add(nameof(LoggerException.Id), id);
                 }
 
-                var id = Guid.NewGuid().ToString("N");
-                context.Request.Headers.Add(nameof(LoggerException.Id), id);
+                if (!context.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
+                {
+                    var requestTime = DateTimeOffset.Now.ToString(Core.Constant.DateTimeOffSetFormat);
+                    context.Request.Headers.Add(nameof(HttpContextInfo.RequestTime), requestTime);
+                }
 
                 return _next.Invoke(context);
             }
@@ -110,7 +119,7 @@ namespace Puppy.Logger
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Logger Rolling File Path: {LoggerConfig.PathFormat}, Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes), Max File Count: {LoggerConfig.RetainedFileCountLimit}");
+            Console.WriteLine($"Logger Rolling File Path: {LoggerConfig.PathFormat}, Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes), Maximum: {LoggerConfig.RetainedFileCountLimit} (files)");
             Console.ResetColor();
         }
     }

@@ -17,15 +17,17 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
-using System.IO;
+using Newtonsoft.Json;
+using Puppy.Logger.Core.Models;
 using Serilog.Events;
 using Serilog.Formatting;
+using System;
+using System.IO;
 
 namespace Puppy.Logger.Core
 {
     /// <summary>
-    ///     Logger Formatter for Serilog, Write only Message Template as Message (Message is JSON String)
+    ///     Logger Formatter for Serilog, Write only Message is LoggerException JSON String 
     /// </summary>
     /// <remarks> Auto add <c> ,Environment.NewLine </c> to the end of message </remarks>
     public class LoggerFormatter : ITextFormatter
@@ -37,9 +39,27 @@ namespace Puppy.Logger.Core
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
 
-            // Write Message Template as Json
-            output.Write(logEvent.MessageTemplate);
+            if (string.IsNullOrWhiteSpace(logEvent.MessageTemplate?.Text))
+            {
+                return;
+            }
+
+            if (!IsLoggerExceptionType(logEvent.MessageTemplate.Text)) return;
+            output.Write(logEvent.MessageTemplate.Text);
             output.Write($",{Environment.NewLine}");
+        }
+
+        private static bool IsLoggerExceptionType(string message)
+        {
+            try
+            {
+                var loggerException = JsonConvert.DeserializeObject<LoggerException>(message, Constant.JsonSerializerSettings);
+                return loggerException != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

@@ -23,13 +23,35 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel;
 
-namespace Puppy.Logger.Core
+namespace Puppy.Logger.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public class LoggerException
+    public class LoggerException : Serializable
     {
-        // TODO Log Request Information: Endpoint with Param values
+        public string CallerMemberName { get; set; }
+
+        public string CallerFilePath { get; set; }
+
+        public string CallerRelativePath { get; set; }
+
+        private int? _callerLineMember;
+
+        public int? CallerLineNumber
+        {
+            get => _callerLineMember;
+            set
+            {
+                if (value == null || value <= 0)
+                {
+                    _callerLineMember = null;
+                }
+                else
+                {
+                    _callerLineMember = value;
+                }
+            }
+        }
 
         public string Id { get; set; } = Guid.NewGuid().ToString("N");
 
@@ -40,7 +62,9 @@ namespace Puppy.Logger.Core
 
         public string Message { get; set; }
 
-        public SerializableException Exception { get; }
+        public SerializableException Exception { get; set; }
+
+        public HttpContextInfo HttpContextInfo { get; set; }
 
         public LoggerException()
         {
@@ -60,11 +84,7 @@ namespace Puppy.Logger.Core
         public LoggerException(ExceptionContext context, LogLevel level, string message = null) : this(message, level)
         {
             Exception = new SerializableException(context.Exception);
-        }
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
+            HttpContextInfo = new HttpContextInfo(context.HttpContext);
         }
     }
 }

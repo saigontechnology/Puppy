@@ -17,15 +17,14 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace Puppy.Logger.Core
+namespace Puppy.Logger.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public class SerializableException
+    public class SerializableException : Serializable
     {
         public string HelpLink { get; set; }
 
@@ -35,9 +34,9 @@ namespace Puppy.Logger.Core
 
         public string StackTrace { get; set; }
 
-        public Type Type { get; set; }
+        public string TypeName { get; set; }
 
-        public Type BaseType { get; set; }
+        public string BaseTypeName { get; set; }
 
         public SerializableException InternalException { get; set; }
 
@@ -55,14 +54,9 @@ namespace Puppy.Logger.Core
             HelpLink = ex.HelpLink;
             Source = ex.Source;
             StackTrace = ex.StackTrace;
-            Type = ex.GetType();
-            BaseType = ex.GetBaseException()?.GetType();
+            TypeName = ex.GetType()?.FullName;
+            BaseTypeName = ex.GetBaseException()?.GetType()?.FullName;
             InternalException = ex.InnerException != null ? new SerializableException(ex.InnerException) : null;
-        }
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
         }
     }
 }

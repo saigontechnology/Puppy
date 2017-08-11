@@ -10,8 +10,8 @@
     "PathFormat": "Logs/LOG_{Date}.txt",
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
-    "FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
-    "ConsoleLogMinimumLevel": "Warning" // Verbose, Debug, Information, Warning, Error, Fatal.
+    "FileLogMinimumLevel": "Error", // Verbose, Debug, Information, Warning, Error, Fatal.
+    "ConsoleLogMinimumLevel": "Information" // Verbose, Debug, Information, Warning, Error, Fatal.
   },
 ```
 

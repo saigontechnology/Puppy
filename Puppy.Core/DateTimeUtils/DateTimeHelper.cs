@@ -19,9 +19,24 @@
 
 #endregion License
 
+using System;
+using System.Globalization;
+
 namespace Puppy.Core.DateTimeUtils
 {
     public static class DateTimeHelper
     {
+        public static DateTime Parse(string value, string format)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentNullException(nameof(value));
+
+            return DateTime.ParseExact(value, format, CultureInfo.InvariantCulture);
+        }
+
+        public static bool TryParse(string value, string format, out DateTime dateTime)
+        {
+            return DateTime.TryParseExact(value, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
+        }
     }
 }

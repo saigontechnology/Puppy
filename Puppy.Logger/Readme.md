@@ -29,6 +29,49 @@ services.AddLogger(ConfigurationRoot)
 app.UseLogger(loggerFactory)
 ```
 
+## Logging
+
+- Call static method in class `Puppy.Logger.Log` to write log with `Log Level`.
+- This below is sample to write logs.
+
+```csharp
+Puppy.Logger.Log.Verbose("<message>");
+Puppy.Logger.Log.Debug("<message>");
+Puppy.Logger.Log.Information("<message>");
+Puppy.Logger.Log.Warning("<message>");
+Puppy.Logger.Log.Error("<message>");
+Puppy.Logger.Log.Fatal("<message>");
+
+// Use Write with specific LogLevel
+Puppy.Logger.Log.Write(LogLevel.Verbose, "<message>");
+Puppy.Logger.Log.Write(LogLevel.Debug, "<message>");
+Puppy.Logger.Log.Write(LogLevel.Information, "<message>");
+Puppy.Logger.Log.Write(LogLevel.Warning, "<message>");
+Puppy.Logger.Log.Write(LogLevel.Error, "<message>");
+Puppy.Logger.Log.Write(LogLevel.Fatal, "<message>");
+```
+
+## Exception Global Log with Logger
+If you want to global log with logger, just `throw exception` and not use any specific `try-catch` block in your code. Then add `Exception Filter` as below to handle exception and Log when exception occur.
+
+```csharp
+public class LoggerExceptionFilter : ExceptionFilterAttribute
+{
+    public override void OnException(ExceptionContext context)
+    {
+        // Your other logic before log...
+
+        // Log with Logger
+        string logId = Log.Error(context);
+
+        // Your other logic after Log...
+
+        // Keep base Exception
+        base.OnException(context);
+    }
+}
+```
+
 ## Enhance Logger
 - Puppy Logger use `Serilog` to implement Logger Client.
 - Please refer `Serilog` official document to enhance config.

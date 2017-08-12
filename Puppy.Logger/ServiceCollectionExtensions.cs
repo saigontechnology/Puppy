@@ -76,7 +76,7 @@ namespace Puppy.Logger
         public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
         {
             // Build the config for Logger
-            Log.Log.BuildLogger();
+            Log.BuildLogger();
 
             // Add Logger for microsoft logger factory
             loggerFactory.AddSerilog();

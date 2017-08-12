@@ -37,26 +37,38 @@ namespace Puppy.Logger
     {
         internal static void BuildLogger()
         {
-            var levelSwitch = new LoggingLevelSwitch
+            var fileLogLevelSwitch = new LoggingLevelSwitch
             {
                 MinimumLevel = LoggerConfig.FileLogMinimumLevelEnum
             };
 
             var loggerConfig =
                 new LoggerConfiguration()
-                    .MinimumLevel.ControlledBy(levelSwitch)
+                    .MinimumLevel.ControlledBy(fileLogLevelSwitch)
                     .WriteTo.RollingFile(
                         pathFormat: LoggerConfig.PathFormat,
                         fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
                         retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
-                        levelSwitch: levelSwitch,
-                        formatter: new LoggerFormatter() // Custom Formatter for LoggerException
+                        levelSwitch: fileLogLevelSwitch,
+                        formatter: new LoggerFormatter(), // Custom Formatter for LoggerException
+                        shared: true // Make shared file to another process, this help another method can read and write to file
+
+                    // shared and buffered can not be same true value.
+
+                    //buffered: true, // Enable buffered, it is for performance issue when write each log to disk after right write.
+                    //flushToDiskInterval: TimeSpan.FromSeconds(5) // Flush to disk interval if buffered is true
                     );
 
             if (EnvironmentHelper.IsDevelopment())
-                loggerConfig =
-                    loggerConfig.WriteTo.ColoredConsole(LoggerConfig.ConsoleLogMinimumLevelEnum,
-                        Constant.ConsoleTemplate);
+            {
+                var consoleLogLevelSwitch = new LoggingLevelSwitch
+                {
+                    MinimumLevel = LoggerConfig.ConsoleLogMinimumLevelEnum
+                };
+                loggerConfig = loggerConfig
+                    .WriteTo
+                    .ColoredConsole(LoggerConfig.ConsoleLogMinimumLevelEnum, Constant.ConsoleTemplate, levelSwitch: consoleLogLevelSwitch);
+            }
 
             // Add Logger to Serilog
             Serilog.Log.Logger = loggerConfig.CreateLogger();

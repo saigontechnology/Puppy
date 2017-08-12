@@ -18,7 +18,9 @@
 #endregion License
 
 using Newtonsoft.Json;
+using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
+using Puppy.Logger.Models;
 using Serilog.Events;
 using Serilog.Formatting;
 using System;
@@ -44,15 +46,16 @@ namespace Puppy.Logger
                 return;
             }
 
-            if (!IsLoggerExceptionType(logEvent.MessageTemplate.Text)) return;
+            if (!IsCanLog(logEvent.MessageTemplate.Text)) return;
             output.Write(logEvent.MessageTemplate.Text);
             output.Write($",{Environment.NewLine}");
         }
 
-        private static bool IsLoggerExceptionType(string message)
+        private static bool IsCanLog(string message)
         {
             try
             {
+                // Check if message is LoggerException JSON string.
                 var loggerException = JsonConvert.DeserializeObject<LoggerException>(message, Core.Constant.JsonSerializerSettings);
                 return loggerException != null;
             }

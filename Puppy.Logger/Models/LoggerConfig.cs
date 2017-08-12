@@ -18,7 +18,6 @@
 #endregion License
 
 using Newtonsoft.Json;
-using Puppy.Logger.Core;
 using Serilog.Events;
 using System;
 using System.IO;
@@ -65,12 +64,12 @@ namespace Puppy.Logger.Models
         ///     </para>
         /// </summary>
         /// <remarks> Default is <c> Warning </c> </remarks>
-        public static LogLevel FileLogMinimumLevel
+        public static string FileLogMinimumLevel
         {
-            get => (LogLevel)Enum.Parse(typeof(LogLevel), FileLogMinimumLevelEnum.ToString());
+            get => FileLogMinimumLevelEnum.ToString();
             set
             {
-                if (!Enum.IsDefined(typeof(LogLevel), value))
+                if (!Constant.LogEventLevels.Contains(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(FileLogMinimumLevel));
                 }
@@ -94,7 +93,7 @@ namespace Puppy.Logger.Models
             get => ConsoleLogMinimumLevelEnum.ToString();
             set
             {
-                if (!Constant.LogLevels.Contains(value))
+                if (!Constant.LogEventLevels.Contains(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(ConsoleLogMinimumLevel));
                 }

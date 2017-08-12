@@ -62,7 +62,7 @@ namespace Puppy.Logger
         }
 
         /// <summary>
-        ///     Use Puppy Logger, remember to <see cref="AddLogger" /> before <c> UseLogger </c> 
+        ///     Use Puppy Logger, remember to <see cref="AddLogger" /> before <c> UseLogger </c>.
         /// </summary>
         /// <param name="app">          </param>
         /// <param name="loggerFactory"></param>
@@ -135,13 +135,21 @@ namespace Puppy.Logger
                 LoggerConfig.PathFormat = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.PathFormat)}");
                 LoggerConfig.RetainedFileCountLimit = configuration.GetValue<int>($"{configSection}:{nameof(LoggerConfig.RetainedFileCountLimit)}");
                 LoggerConfig.FileSizeLimitBytes = configuration.GetValue<int>($"{configSection}:{nameof(LoggerConfig.FileSizeLimitBytes)}");
+                LoggerConfig.FileLogMinimumLevel = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.FileLogMinimumLevel)}");
+                LoggerConfig.ConsoleLogMinimumLevel = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.ConsoleLogMinimumLevel)}");
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Logger Rolling File Path: {LoggerConfig.PathFormat}, Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes), Maximum: {LoggerConfig.RetainedFileCountLimit} (files) | Full Path: {LoggerConfig.FullPath}, Folder Full Path: {LoggerConfig.FolderFullPath}");
+            Console.WriteLine("Logger Rolling File Path" +
+                              $": {LoggerConfig.PathFormat}" +
+                              $", Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes)" +
+                              $", Maximum: {LoggerConfig.RetainedFileCountLimit} (files)" +
+                              $", File Log Minimum Level: {LoggerConfig.FileLogMinimumLevel}" +
+                              $", Console Log Minimum Level: {LoggerConfig.ConsoleLogMinimumLevel}" +
+                              $"| Full Path: {LoggerConfig.FullPath}, Folder Full Path: {LoggerConfig.FolderFullPath}");
             Console.ResetColor();
         }
     }

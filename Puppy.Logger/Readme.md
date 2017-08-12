@@ -9,12 +9,16 @@ Puppy Logger, log error with http request information and exception as detail as
 
 ```json
   "Logger": {
+    // PathFormat
+    // {Date} Creates a file per day. Filenames use the yyyyMMdd format.
+    // {Hour} Creates a file per hour. Filenames use the yyyyMMddHH format.
+    // {HalfHour} Creates a file per half hour. Filenames use the yyyyMMddHHmm format.
     "PathFormat": "Logs\\LOG_{Date}.json",
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
     "FileLogMinimumLevel": "Error", // Verbose, Debug, Information, Warning, Error, Fatal.
     "ConsoleLogMinimumLevel": "Information" // Verbose, Debug, Information, Warning, Error, Fatal.
-  },
+  }
 ```
 
 ## Add Service

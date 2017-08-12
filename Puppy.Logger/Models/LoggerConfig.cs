@@ -36,9 +36,9 @@ namespace Puppy.Logger.Models
     public static class LoggerConfig
     {
         /// <summary>
-        ///     Path format to write log, default is <c> Logs\\LOG_{Date}.txt </c> 
+        ///     Path format to write log, default is <c> Logs\\LOG_{Date}.json </c> 
         /// </summary>
-        public static string PathFormat { get; set; } = "Logs\\LOG_{Date}.txt";
+        public static string PathFormat { get; set; } = "Logs\\LOG_{Date}.json";
 
         public static string FullPath { get; } = Path.Combine(Directory.GetCurrentDirectory(), PathFormat);
 

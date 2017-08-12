@@ -103,7 +103,7 @@ function handleLogin() {
         var authSchemes = window.swaggerUi.api.authSchemes;
         var host = window.location;
         var pathname = location.pathname.substring(0, location.pathname.lastIndexOf("/"));
-        var defaultRedirectUrl = host.protocol + '//' + host.host + pathname + '/SwaggerTemplate/o2c.html';
+        var defaultRedirectUrl = host.protocol + '//' + host.host + pathname + '/SwaggerTemplate/lib/o2c.html';
         var redirectUrl = window.oAuthRedirectUrl || defaultRedirectUrl;
         var url = null;
 

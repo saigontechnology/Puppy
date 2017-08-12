@@ -103,6 +103,70 @@ namespace Puppy.Swagger
             return services;
         }
 
+        /// <summary>
+        ///     Add Swagger API Document 
+        ///     <para> Xml documentation file full path generate by build main project </para>
+        ///     <para>
+        ///         File Path follow config from <c> .csproj </c>, not from <c> appsettings.json </c>
+        ///     </para>
+        /// </summary>
+        /// <param name="services">               </param>
+        /// <param name="assembly"></param>
+        /// <param name="configuration">          </param>
+        /// <param name="configSection">          </param>
+        /// <remarks>
+        ///     Example for Xml Document File Full Path: <c>
+        ///     Path.Combine(Directory.GetCurrentDirectory(), "Puppy.xml") </c>
+        /// </remarks>
+        /// <returns></returns>
+        public static IServiceCollection AddApiDocument(this IServiceCollection services, Assembly assembly, IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
+        {
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
+            // Add Filter Service
+            services.AddScoped<ApiDocAccessFilter>();
+
+            // Build Config
+            configuration.BuildSwaggerConfig(configSection);
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc(SwaggerConfig.ApiDocumentName, new Info
+                {
+                    Title = SwaggerConfig.ApiDocumentHtmlTitle,
+                    Version = SwaggerConfig.ApiDocumentName,
+                    Contact = SwaggerConfig.Contact != null
+                        ? new Contact
+                        {
+                            Name = SwaggerConfig.Contact.Name,
+                            Url = SwaggerConfig.Contact.Url,
+                            Email = SwaggerConfig.Contact.Email
+                        }
+                        : null
+                });
+
+                options.IncludeXmlCommentsIfExists(assembly);
+                options.DocumentFilter<HideInDocsFilter>();
+
+                // Ignore Obsolete
+                options.IgnoreObsoleteProperties();
+                options.IgnoreObsoleteActions();
+
+                if (SwaggerConfig.IsDescribeAllEnumsAsString)
+                {
+                    options.DescribeAllEnumsAsStrings();
+                }
+
+                if (SwaggerConfig.IsDescribeAllParametersInCamelCase)
+                {
+                    options.DescribeAllParametersInCamelCase();
+                }
+            });
+
+            return services;
+        }
+
         public static IApplicationBuilder UseApiDocument(this IApplicationBuilder app)
         {
             app.UseSwagger(c =>

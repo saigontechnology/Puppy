@@ -22,6 +22,7 @@
     <Folder Include="apidoc\">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Folder>
+    <Folder Include="Assets\" />
     <None Update="apidoc\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

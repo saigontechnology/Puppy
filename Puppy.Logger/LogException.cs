@@ -94,7 +94,7 @@ namespace Puppy.Logger
         {
             var loggerException = new LoggerException(ex, logLevel);
             UpdateLoggerException(loggerException, callerMemberName, callerFilePath, callerLineNumber);
-            BackgroundJob.Enqueue(() => Write(LogLevel.Fatal, loggerException.ToString()));
+            BackgroundJob.Enqueue(() => Write(logLevel, loggerException.ToString()));
             return loggerException.Id;
         }
 
@@ -102,7 +102,7 @@ namespace Puppy.Logger
         {
             var loggerException = new LoggerException(context, logLevel);
             UpdateLoggerException(context, loggerException, callerMemberName, callerFilePath, callerLineNumber);
-            BackgroundJob.Enqueue(() => Write(LogLevel.Fatal, loggerException.ToString()));
+            BackgroundJob.Enqueue(() => Write(logLevel, loggerException.ToString()));
             return loggerException.Id;
         }
     }

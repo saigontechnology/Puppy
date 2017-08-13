@@ -11,6 +11,23 @@
 5. [Optional] add `Suppress warnings` codes: `1701;1702;1705;1591`, if make project stop warning add `XML comment block` for all `Action` when you enable `Documentation` xml file.
 6. Let enable `Documentation` xml by select checkbox `XML document file`, Visual Studio will auto add the path of xml file is `<Your Output Path>\<Your Name Space>.xml`. You can change it if you want or just keep it to make `Puppy.Swagger` work well.
 
+Other way is copy code below and put into your `.cspoj`
+```xml
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>.\bin\netcoreapp1.1\<your aseembly name>.xml</DocumentationFile>
+    <OutputPath>.\bin\</OutputPath>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>.\bin\netcoreapp1.1\<your aseembly name>.xml</DocumentationFile>
+    <OutputPath>.\bin\</OutputPath>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+```
+
 ## Config
 - Add config section to `appsettings.json`
 - If you not have custom setting in appsettings.json, `default setting` will be apply.

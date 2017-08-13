@@ -62,7 +62,9 @@ namespace Puppy.Logger
         }
 
         /// <summary>
-        ///     Use Puppy Logger, remember to <see cref="AddLogger" /> before <c> UseLogger </c>.
+        ///     Use Puppy Logger, remember to <see cref="AddLogger" /> before <c> UseLogger </c>. In
+        ///     Configure of Application Builder, you need inject "IApplicationLifetime appLifetime"
+        ///     to use Logger.
         /// </summary>
         /// <param name="app">          </param>
         /// <param name="loggerFactory"></param>

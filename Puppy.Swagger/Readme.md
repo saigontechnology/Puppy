@@ -1,5 +1,5 @@
 ﻿![Logo](favicon.ico)
-# Puppy.Swagger
+# Puppy.Api Document
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
 ## Enable Project Documentation xml file.
@@ -9,7 +9,7 @@
 3. Let select Configuration: `All Configurations` to make the setting apply for all configuration.
 4. [Optional] you can forse all configuration run with `x64` bit (it better x86 or any CPU if your project always run on x64 machine) by select `x64` in `Platform Target` dropdown list.
 5. [Optional] add `Suppress warnings` codes: `1701;1702;1705;1591`, if make project stop warning add `XML comment block` for all `Action` when you enable `Documentation` xml file.
-6. Let enable `Documentation` xml by select checkbox `XML document file`, Visual Studio will auto add the path of xml file is `<Your Output Path>\<Your Name Space>.xml`. You can change it if you want or just keep it to make `Puppy.Swagger` work well.
+6. Let enable `Documentation` xml by select checkbox `XML document file`, Visual Studio will auto add the path of xml file is `<Your Output Path>\<Your Name Space>.xml`. You can change it if you want or just keep it to make `Puppy.Api Document` work well.
 
 Other way is copy code below and put into your `.cspoj`
 ```xml
@@ -77,10 +77,10 @@ Other way is copy code below and put into your `.cspoj`
 ## Add Service
 - If you use default documentation file path (the xml file in output folder and same name with the assembly).
 - Then use `services.AddApiDocument(<your assembly>, <ConfigurationRoot instance>, <config section key name in appsettings.json>)`
-- The below is sample to use `Puppy.Swagger` with custom documentation xml file path.
+- The below is sample to use `Puppy.Api Document` with custom documentation xml file path.
 
 ```csharp
-// [API Document] Swagger
+// [API Document] Api Document
 services.AddApiDocument(typeof(Startup).GetTypeInfo().Assembly, ConfigurationRoot, "ApiDocument")
 
 // With Puppy.Core
@@ -88,9 +88,9 @@ services.AddApiDocument(typeof(Startup).GetAssembly(), ConfigurationRoot, "ApiDo
 ```
 
 - If you setup custom xml file path for your Documentation xml file, then use `services.AddApiDocument(<your  documentation xml absolute file path>, <ConfigurationRoot instance>, <config section key name in appsettings.json>)`
-- The below is sample to use `Puppy.Swagger` with custom documentation xml file path.
+- The below is sample to use `Puppy.ApiDocument` with custom documentation xml file path.
 ```csharp
-// [API Document] Swagger
+// [API Document] Api Document
 services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documentation.xml"), ConfigurationRoot, "ApiDocument");
 ```
 
@@ -108,16 +108,16 @@ services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documenta
 ## Use Application Builder
 
 ```csharp
-// [API Document] Swagger
+// [API Document] Api Document
 app.UseApiDocument();
 ```
 
 ---
 
-## Enable Swagger Custom UI
+## Enable Api Document UI
 
-Now you have Swagger Service, let add route for swagger.
-This sample below is use `Developers` area as route for swagger.
+Now you have Api Document Service, let add route for Api Document.
+This sample below is use `Developers` area as route for Api Document.
 
 ```csharp
 [Route("")]

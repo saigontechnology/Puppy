@@ -1,22 +1,20 @@
 ﻿#region	License
-
 //------------------------------------------------------------------------------------------------
 // <License>
-//     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
+//     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> EntityRepository.cs </Name>
-//         <Created> 25 Apr 17 10:52:19 PM </Created>
-//         <Key> 901d3a41-e746-400a-83df-6150d206c1b5 </Key>
+//         <Name> EntityRepositoryString.cs </Name>
+//         <Created> 15/08/17 9:48:18 AM </Created>
+//         <Key> 871abf7c-d29e-4fee-bb93-28352529452b </Key>
 //     </File>
 //     <Summary>
-//         EntityRepository.cs
+//         EntityRepositoryString.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
-
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +30,7 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF
 {
-    public abstract class EntityRepository<TEntity, TKey> : IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct
+    public abstract class EntityRepositoryString<TEntity> : IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntityString, IAuditableEntityString
     {
         protected readonly IBaseDbContext DbContext;
 
@@ -49,7 +47,7 @@ namespace Puppy.EF
             }
         }
 
-        protected EntityRepository(IBaseDbContext dbContext)
+        protected EntityRepositoryString(IBaseDbContext dbContext)
         {
             DbContext = dbContext;
         }

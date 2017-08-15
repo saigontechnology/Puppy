@@ -20,6 +20,7 @@
 using Puppy.Cloner.ConsoleUtils;
 using System;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Text;
 
@@ -147,7 +148,17 @@ namespace Puppy.Cloner
             }
         }
 
-        public static void ReplaceFileContents(string directory, string oldValue, string newValue, bool isSkipHidden)
+        /// <summary>
+        /// </summary>
+        /// <param name="directory">      </param>
+        /// <param name="oldValue">       </param>
+        /// <param name="newValue">       </param>
+        /// <param name="isSkipHidden">   </param>
+        /// <param name="ignoreExtension">
+        ///     Ignore file by extension, ex: .exe, .ico and so on (compare extension by <c> Ordinal
+        ///     Ignore Case </c>)
+        /// </param>
+        public static void ReplaceFileContents(string directory, string oldValue, string newValue, bool isSkipHidden, params string[] ignoreExtension)
         {
             var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
 
@@ -170,12 +181,15 @@ namespace Puppy.Cloner
             foreach (var file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
-
                 progressBar.Next($"Replace content for '{fileInfo.Name.ConsoleNormalize()}'...");
 
-                if (file.EndsWith(".exe"))
+                // Ignore file by Extensions, ex: .exe, .png, .ico and so on.
+                if (ignoreExtension?.Any() == true)
                 {
-                    continue;
+                    if (ignoreExtension.Any(x => file.EndsWith(x, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        continue;
+                    }
                 }
 
                 // Skip Hidden File

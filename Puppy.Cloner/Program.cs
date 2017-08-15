@@ -92,7 +92,8 @@ namespace Puppy.Cloner
 
             stopwatch.Restart();
             Console.WriteLine();
-            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, true);
+            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, true, 
+                                                                ".exe", ".ico", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".bmp", ".tiff");
             Console.WriteLine();
             stopwatch.Stop();
 

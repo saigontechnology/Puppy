@@ -32,7 +32,7 @@ namespace Puppy.Web.Middlewares.ServerInfo
         public const string DefaultConfigSection = "ServerInfo";
 
         /// <summary>
-        ///     User server info to let client app know about server author and server time zone 
+        ///     Use server info to let client app know about server author and server time zone 
         /// </summary>
         /// <param name="app">          </param>
         /// <param name="configuration"></param>

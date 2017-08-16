@@ -26,6 +26,11 @@ namespace Puppy.Web.Middlewares
 {
     public static class RequestRewindExtensions
     {
+        /// <summary>
+        ///     [Rewind] Enable Rewind help to get Request Body content. 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
         public static IApplicationBuilder UseRequestRewind(this IApplicationBuilder app)
         {
             return app.UseMiddleware<RequestRewindMiddleware>();

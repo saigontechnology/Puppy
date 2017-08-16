@@ -52,3 +52,44 @@ You can use a library like [HighlightJS](http://highlightjs.org) to sytnax highl
     <script>hljs.initHighlightingOnLoad();</script>
 }
 ```
+
+## ServiceCollections Extensions
+
+### 1. MinResponseExtensions
+Add mini response service to mini and compress HTML, XML, CSS, JS in response.
+- Add Service
+```csharp
+// [Mini Response]
+service.AddMinResponse()
+```
+
+- Use Application Builder
+```csharp
+// [Mini Response]
+app.UseMinResponse()
+```
+
+### 2. ProcessingTimeExtensions
+Use ProcessingTimeExtensions to get the server executed time in reponse header.
+- Use Application Builder
+```csharp
+// [Response] Time Executed Information
+app.UseProcessingTime()
+```
+
+### 3. RequestRewindExtensions
+Use RequestRewindExtensions Allows using several time the stream in ASP.Net Core. Enable Rewind help to get Request Body content.
+
+- Use Application Builder
+```csharp
+// [Rewind] Enable Rewind help to get Request Body content.
+app.UseRequestRewind()
+```
+
+### 4.ServerInfoExtensions
+- Use server info to let client app know about server author and server time zone.
+- Please read the [Readme.md](Middlewares/ServerInfo/Readme.md) file in Middlewares/ServerInfo folder.
+
+### 5.CorsExtensions
+- Help to enbale and config Cros for API.
+- Please read the [Readme.md](Middlewares/Cros/Readme.md) file in Middlewares/Cros folder.

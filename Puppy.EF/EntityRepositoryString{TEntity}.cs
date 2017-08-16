@@ -27,6 +27,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Puppy.Core.ObjectUtils;
 
 namespace Puppy.EF
 {
@@ -96,9 +97,7 @@ namespace Puppy.EF
             if (changedProperties != null && changedProperties.Any())
                 foreach (var property in changedProperties)
                 {
-                    var expression = (MemberExpression)property.Body;
-                    var name = expression.Member.Name;
-                    DbContext.Entry(entity).Property(name).IsModified = true;
+                    DbContext.Entry(entity).Property(property).IsModified = true;
                 }
             else
                 DbContext.Entry(entity).State = EntityState.Modified;

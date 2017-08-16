@@ -20,6 +20,7 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
+using Puppy.Core.ObjectUtils;
 using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Entity;
 using Puppy.EF.Interfaces.Repository;
@@ -98,9 +99,7 @@ namespace Puppy.EF
             if (changedProperties != null && changedProperties.Any())
                 foreach (var property in changedProperties)
                 {
-                    var expression = (MemberExpression)property.Body;
-                    var name = expression.Member.Name;
-                    DbContext.Entry(entity).Property(name).IsModified = true;
+                    DbContext.Entry(entity).Property(property).IsModified = true;
                 }
             else
                 DbContext.Entry(entity).State = EntityState.Modified;

@@ -9,23 +9,35 @@
 3. Let select Configuration: `All Configurations` to make the setting apply for all configuration.
 4. [Optional] you can forse all configuration run with `x64` bit (it better x86 or any CPU if your project always run on x64 machine) by select `x64` in `Platform Target` dropdown list.
 5. [Optional] add `Suppress warnings` codes: `1701;1702;1705;1591`, if make project stop warning add `XML comment block` for all `Action` when you enable `Documentation` xml file.
-6. Let enable `Documentation` xml by select checkbox `XML document file`, Visual Studio will auto add the path of xml file is `<Your Output Path>\<Your Name Space>.xml`. You can change it if you want or just keep it to make `Puppy.Api Document` work well.
+6. Let enable `Documentation` xml by select checkbox `XML document file`, Visual Studio will auto add the path of xml file is `<Your Output Path>\<Your Name Space>.xml` but please change to `<Your Name Space>.xml`. You can change it if you want or just keep it to make `Puppy.Api Document` work well.
+7. Try to build project and see your documentation xml file generated in the path config by above step, right click on the file and select `Property` then make the file `always copy` to out put folder (it help the deploy package always have descrption for all API) or you can do it in .csproj
 
-Other way is copy code below and put into your `.cspoj`
+**Other way is copy code below and put into your `.cspoj`**
 ```xml
+  <!-- Generate Documentation XML -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>.\bin\netcoreapp1.1\<your aseembly name>.xml</DocumentationFile>
+    <DocumentationFile><your aseembly name>.xml</DocumentationFile>
     <OutputPath>.\bin\</OutputPath>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>.\bin\netcoreapp1.1\<your aseembly name>.xml</DocumentationFile>
+    <DocumentationFile><your aseembly name>.xml</DocumentationFile>
     <OutputPath>.\bin\</OutputPath>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
+
+  <!-- Copy Output folder -->
+  <!--<CopyToOutputDirectory>Always</CopyToOutputDirectory>-->
+  <!-- <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> -->
+  <ItemGroup>
+    <!-- Documentation XML -->
+    <None Update="Monkey.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 ```
 
 ## Config

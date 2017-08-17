@@ -18,9 +18,7 @@
 #endregion License
 
 using Newtonsoft.Json;
-using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
-using Puppy.Logger.Models;
 using Serilog.Events;
 using Serilog.Formatting;
 using System;

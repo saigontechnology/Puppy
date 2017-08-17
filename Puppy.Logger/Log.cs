@@ -25,6 +25,7 @@ using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.Models;
+using Puppy.Logger.RollingFile;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;

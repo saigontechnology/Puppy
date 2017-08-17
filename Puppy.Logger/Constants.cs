@@ -27,7 +27,9 @@ namespace Puppy.Logger
 
         /// <summary>
         ///     <para> Console Template to write log </para>
-        ///     <para> Default is <c> [{Timestamp:mm:ss.fff} {Level:u3}] {Message}{NewLine} </c> </para>
+        ///     <para>
+        ///         Default is <c> [{Timestamp:mm:ss.fff} {Level:u3}] {Message}{NewLine} </c>
+        ///     </para>
         /// </summary>
         /// <remarks> Console only enable in <c> Development Environment </c> </remarks>
         public const string ConsoleTemplate = "[{Timestamp:mm:ss.fff} {Level:u3}] {Message}{NewLine}";

@@ -19,9 +19,8 @@
 
 using Newtonsoft.Json;
 using Puppy.Core.StringUtils;
-using Puppy.Swagger.Models;
 
-namespace Puppy.Swagger
+namespace Puppy.Swagger.Models
 {
     /// <summary>
     ///     Swagger Config 
@@ -70,9 +69,9 @@ namespace Puppy.Swagger
         public static SwaggerContactConfigModel Contact { get; set; }
 
         /// <summary>
-        ///     Default is <c> true </c> 
+        ///     Default is <c> false </c> 
         /// </summary>
-        public static bool IsDescribeAllEnumsAsString { get; set; } = true;
+        public static bool IsDescribeAllEnumsAsString { get; set; } = false;
 
         /// <summary>
         ///     Default is <c> true </c> 

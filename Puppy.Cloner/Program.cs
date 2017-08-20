@@ -76,36 +76,41 @@ namespace Puppy.Cloner
             Console.WriteLine();
             Console.ResetColor();
 
-            // Ignore File Extensions
+            // Ignore Replace Content by File Extensions
+            
+            // Normalized Ignore Files
+            _ignoreReplaceContentFileEx = _ignoreReplaceContentFileEx.Distinct().ToList();
+            _ignoreReplaceContentFileEx.Sort();
+
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($"[!] Puppy Cloner ignore file with extensions: {string.Join(", ", _ignoreReplaceContentFileEx)} by default.");
+            Console.WriteLine($"[!] Puppy Cloner ignore replace content by file extensions: {string.Join(", ", _ignoreReplaceContentFileEx)} by default.");
             Console.WriteLine("[!] Set empty if default setting is enough for you. Use \",\" to add multiple extensions (ex: \".exe, .png\")");
             Console.ResetColor();
 
             Console.WriteLine();
-            Console.Write("Add more [ignore] files by [extension]: ");
+            Console.Write("Add more [ignore] replace content by file [extension]: ");
             var ignoreFileExs = Console.ReadLine();
 
             if (!string.IsNullOrWhiteSpace(ignoreFileExs))
             {
                 var listAddIgnoreFileByEx = ignoreFileExs.Split(',').Select(x => x.Trim()).Where(x => x.StartsWith(".")).ToList();
                 _ignoreReplaceContentFileEx.AddRange(listAddIgnoreFileByEx);
+
+                // Normalized Ignore Files
+                _ignoreReplaceContentFileEx = _ignoreReplaceContentFileEx.Distinct().ToList();
+                _ignoreReplaceContentFileEx.Sort();
             }
 
-            // Normalized Ignore Files
-            _ignoreReplaceContentFileEx = _ignoreReplaceContentFileEx.Distinct().ToList();
-            _ignoreReplaceContentFileEx.Sort();
-
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"> Ignore files by extensions: {string.Join(", ", _ignoreReplaceContentFileEx)}");
+            Console.WriteLine($"> Ignore replace content by file extensions: {string.Join(", ", _ignoreReplaceContentFileEx)}");
             Console.WriteLine();
             Console.ResetColor();
 
             // Start Process
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine($"Start progress replace from '{oldValue}' to '{newValue}'");
+            Console.WriteLine($"Start progress replace name and content from '{oldValue}' to '{newValue}', ignore replace content by extensions: {string.Join(", ", _ignoreReplaceContentFileEx)}.");
             Console.ResetColor();
 
             // Replace Directories

@@ -74,14 +74,21 @@ namespace Puppy.Cloner.ConsoleUtils
                     // %
                     var percent = current / (float)_max;
 
-                    // Percent string length
-                    int percentStringLength = _console.WindowWidth - (item.Length + 10);
-                    percentStringLength = percentStringLength <= 0 ? _console.WindowWidth : percentStringLength;
-
-                    // Bar chars
-                    var bar = new string(_character, (int)((percentStringLength) * percent));
+                    // Text Write
                     var line = string.Format(_format, current, _max, (int)(percent * 100));
 
+                    // Percent Write Length of percent is console - line
+                    var lineLength = item.Length;
+                    while (lineLength > _console.WindowWidth)
+                    {
+                        lineLength -= _console.WindowWidth;
+                    }
+
+                    int percentBarMaxLength = _console.WindowWidth - line.Length;
+                    int currentBarLength = (int)(percentBarMaxLength * percent);
+                    var bar = new string(_character, currentBarLength);
+
+                    // Write Process
                     _console.Y = _y;
                     _console.ForegroundColor = _consoleColor;
                     _console.Write(line);

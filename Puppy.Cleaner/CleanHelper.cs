@@ -34,6 +34,8 @@ namespace Puppy.Cleaner
         /// <param name="searchPatterns"></param>
         public static void CleanupFolders(string directory, params string[] searchPatterns)
         {
+            Console.ResetColor();
+
             var workingDirectoryInfo = new DirectoryInfo(directory);
             var cleanupFolders = searchPatterns.SelectMany(x => workingDirectoryInfo.EnumerateDirectories(x, SearchOption.AllDirectories)).ToList();
 
@@ -78,6 +80,8 @@ namespace Puppy.Cleaner
         /// <param name="searchPatterns"></param>
         public static void CleanupFiles(string directory, params string[] searchPatterns)
         {
+            Console.ResetColor();
+
             var workingDirectoryInfo = new DirectoryInfo(directory);
             var cleanupFiles = searchPatterns.SelectMany(x => workingDirectoryInfo.EnumerateFiles(x, SearchOption.AllDirectories)).ToList();
 
@@ -144,6 +148,8 @@ namespace Puppy.Cleaner
         // Cleanup MEF Cache
         public static void CleanupMefCache()
         {
+            Console.ResetColor();
+
             string visualStudioAppDataFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\VisualStudio");
             List<DirectoryInfo> mefCacheFolders = GetListDirectoryInPath(visualStudioAppDataFolderPath, "ComponentModelCache");
 
@@ -184,6 +190,8 @@ namespace Puppy.Cleaner
         // Cleanup Website Cache
         public static void CleanupWebsiteCache()
         {
+            Console.ResetColor();
+
             string websiteCacheFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WebsiteCache");
 
             DirectoryInfo websiteCacheFolderInfo = new DirectoryInfo(websiteCacheFolder);
@@ -239,6 +247,8 @@ namespace Puppy.Cleaner
         // Cleanup Temporary ASP.NET
         public static void CleanupTemporaryDotNet()
         {
+            Console.ResetColor();
+
             string netFrameworkFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"Microsoft.NET\Framework");
             List<DirectoryInfo> temporaryNetFrameworkFolders = GetListDirectoryInPath(netFrameworkFolderPath, "Temporary ASP.NET Files");
 
@@ -279,6 +289,8 @@ namespace Puppy.Cleaner
         // Cleanup Team Foundation Server Cache
         public static void CleanupTeamFoundationServerCache()
         {
+            Console.ResetColor();
+
             string teamFoundationServerFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\Team Foundation");
             List<DirectoryInfo> teamFoundationServerCacheFolders = GetListDirectoryInPath(teamFoundationServerFolder, "Cache");
 
@@ -319,6 +331,8 @@ namespace Puppy.Cleaner
         // Cleanup Temp Folder
         public static void CleanupTemp()
         {
+            Console.ResetColor();
+
             string tempFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Temp");
 
             DirectoryInfo tempFolderInfo = new DirectoryInfo(tempFolderPath);

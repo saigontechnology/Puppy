@@ -71,9 +71,17 @@ namespace Puppy.Core.ConsoleUtils
 
                 try
                 {
+                    // %
                     var percent = current / (float)_max;
-                    var bar = new string(_character, (int)((_console.WindowWidth - 30) * percent));
+
+                    // Percent string length
+                    int percentStringLength = _console.WindowWidth - (item.Length + 10);
+                    percentStringLength = percentStringLength <= 0 ? _console.WindowWidth : percentStringLength;
+
+                    // Bar chars
+                    var bar = new string(_character, (int)((percentStringLength) * percent));
                     var line = string.Format(_format, current, _max, (int)(percent * 100));
+
                     _console.Y = _y;
                     _console.ForegroundColor = _consoleColor;
                     _console.Write(line);

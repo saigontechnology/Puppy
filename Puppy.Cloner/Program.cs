@@ -73,7 +73,6 @@ namespace Puppy.Cloner
             }
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("> New project name is: " + newValue);
-            Console.WriteLine();
             Console.ResetColor();
 
             // Ignore Replace Content by File Extensions

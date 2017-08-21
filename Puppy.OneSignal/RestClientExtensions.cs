@@ -17,10 +17,10 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using RestSharp;
 using System.Threading.Tasks;
+using RestSharp;
 
-namespace Puppy.RestSharp
+namespace Puppy.OneSignal
 {
     public static class RestClientExtensions
     {

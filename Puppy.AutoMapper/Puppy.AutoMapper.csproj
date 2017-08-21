@@ -6,16 +6,13 @@
     <Copyright>http://topnguyen.net</Copyright>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PreserveCompilationContext>false</PreserveCompilationContext>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>AnyCPU;x86;x64</Platforms>
+    <OutputPath>.\bin\</OutputPath>
   </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-
 
   <!-- Puppy -->
   <ItemGroup>

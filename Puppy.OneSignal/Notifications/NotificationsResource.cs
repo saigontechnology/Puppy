@@ -19,7 +19,6 @@
 
 #endregion License
 
-using Puppy.RestSharp;
 using RestSharp;
 using System;
 using System.Net;

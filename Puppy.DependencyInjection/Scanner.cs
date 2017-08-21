@@ -46,7 +46,6 @@ namespace Puppy.DependencyInjection
         /// <param name="assemblyName"></param>
         public void RegisterAssembly(IServiceCollection services, AssemblyName assemblyName)
         {
-            // Maybe throw AlreadyLoaddedAssemblyException in internal exception
             var assembly = AssemblyLoader.LoadFromAssemblyName(assemblyName);
 
             foreach (var typeInfo in assembly.DefinedTypes)

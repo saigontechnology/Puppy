@@ -19,7 +19,7 @@
 
 #endregion License
 
-using Puppy.RestSharp;
+using System;
 using RestSharp;
 using System.Threading.Tasks;
 

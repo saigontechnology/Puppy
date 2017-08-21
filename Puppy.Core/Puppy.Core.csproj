@@ -6,32 +6,30 @@
     <Copyright>http://topnguyen.net</Copyright>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
+    <OutputType>Library</OutputType>
+    <PreserveCompilationContext>false</PreserveCompilationContext>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>AnyCPU;x86;x64</Platforms>
+    <OutputPath>.\bin\</OutputPath>
   </PropertyGroup>
 
   <!-- External Libraries -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="1.1.2" />
-    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
-
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="1.1.2" />
-
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
-  
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="1.1.2" />
+    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="1.1.2" />
+
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+
+    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
   </ItemGroup>
 
 </Project>

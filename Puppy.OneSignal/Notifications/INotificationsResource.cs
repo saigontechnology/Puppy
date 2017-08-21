@@ -32,7 +32,7 @@ namespace Puppy.OneSignal.Notifications
         ///     Creates a new notification. 
         /// </summary>
         /// <param name="options">
-        ///     This parameter can contai variety of possible options used to create notification.
+        ///     This parameter can contain variety of possible options used to create notification.
         /// </param>
         /// <returns> Returns result of notification create operation. </returns>
         Task<NotificationCreateResult> CreateAsync(NotificationCreateOptions options);
@@ -50,7 +50,7 @@ namespace Puppy.OneSignal.Notifications
         ///     Get report about notification 
         /// </summary>
         /// <param name="options">
-        ///     This parameter can contai variety of possible options used to create notification.
+        ///     This parameter can contain variety of possible options used to create notification.
         /// </param>
         /// <returns> Returns result of notification create operation. </returns>
         Task<NotificationViewResult> ViewAsync(NotificationViewOptions options);

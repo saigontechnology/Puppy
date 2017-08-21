@@ -20,12 +20,33 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
 using System.Reflection;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Puppy.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        ///     [Dependency Injection] 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="systemName">Ex: Monkey => scan for Monkey.dll and Monkey.*.dll</param>
+        /// <param name="assemblyFolderPath"> Default is null = current execute application folder </param>
+        public static IServiceCollection AddDependencyInjection(this IServiceCollection services, string systemName, string assemblyFolderPath = null)
+        {
+            services
+                .AddDependencyInjectionScanner()
+                .ScanFromAllAssemblies($"{systemName}.dll", assemblyFolderPath)
+                .ScanFromAllAssemblies($"{systemName}.*.dll", assemblyFolderPath);
+
+            // Write out all dependency injection services
+            services.WriteOut(systemName);
+
+            return services;
+        }
+
         public static IServiceCollection AddDependencyInjectionScanner(this IServiceCollection services)
         {
             services.AddSingleton<Scanner>();
@@ -62,8 +83,7 @@ namespace Puppy.DependencyInjection
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
         /// <param name="folderFullPath"> Default is null = current execute application folder </param>
-        public static IServiceCollection ScanFromAllAssemblies(this IServiceCollection services,
-            string searchPattern = "*.dll", string folderFullPath = null)
+        public static IServiceCollection ScanFromAllAssemblies(this IServiceCollection services, string searchPattern = "*.dll", string folderFullPath = null)
         {
             var scanner = services.GetScanner();
             scanner.RegisterAllAssemblies(services, searchPattern, folderFullPath);

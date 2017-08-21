@@ -22,21 +22,31 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
+  <!-- Propert Group Config in Visual Studio < 15.3 -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile><your aseembly name>.xml</DocumentationFile>
-    <OutputPath>.\bin\</OutputPath>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>.\bin\</OutputPath>
+    <DocumentationFile><your aseembly name>.xml</DocumentationFile>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
 
+  <!-- Propert Group Config in Visual Studio >= 15.3 -->
+	<PropertyGroup>
+		<Configurations>Debug;Release</Configurations>
+		<Platforms>AnyCPU;x86;x64</Platforms>
+		<PlatformTarget>x64</PlatformTarget>
+		<OutputPath>.\bin\</OutputPath>
+		<DocumentationFile>Monkey.xml</DocumentationFile>
+		<NoWarn>1701;1702;1705;1591</NoWarn>
+	</PropertyGroup>
+
   <!-- Copy Output folder -->
-  <!--<CopyToOutputDirectory>Always</CopyToOutputDirectory>-->
-  <!-- <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> -->
+  <!--<CopyToOutputDirectory>Always/PreserveNewest</CopyToOutputDirectory>-->
   <ItemGroup>
     <!-- Documentation XML -->
-    <None Update="Monkey.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Content Update="Monkey.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 ```
 

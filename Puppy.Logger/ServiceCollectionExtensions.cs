@@ -134,10 +134,11 @@ namespace Puppy.Logger
             if (isHaveConfig)
             {
                 LoggerConfig.PathFormat = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.PathFormat)}");
-                LoggerConfig.RetainedFileCountLimit = configuration.GetValue<int>($"{configSection}:{nameof(LoggerConfig.RetainedFileCountLimit)}");
-                LoggerConfig.FileSizeLimitBytes = configuration.GetValue<int>($"{configSection}:{nameof(LoggerConfig.FileSizeLimitBytes)}");
+                LoggerConfig.RetainedFileCountLimit = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.RetainedFileCountLimit)}", 365);
+                LoggerConfig.FileSizeLimitBytes = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.FileSizeLimitBytes)}", 1048576);
                 LoggerConfig.FileLogMinimumLevel = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.FileLogMinimumLevel)}");
                 LoggerConfig.ConsoleLogMinimumLevel = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.ConsoleLogMinimumLevel)}");
+                LoggerConfig.IsEnableRollingFileLog = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.IsEnableRollingFileLog)}", true);
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

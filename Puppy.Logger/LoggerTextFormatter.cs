@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> LoggerFormatter.cs </Name>
+//         <Name> LoggerTextFormatter.cs </Name>
 //         <Created> 10/08/17 6:40:02 PM </Created>
 //         <Key> 3fd9e5d6-a135-4970-911e-e528f7a4b885 </Key>
 //     </File>
 //     <Summary>
-//         LoggerFormatter.cs
+//         LoggerTextFormatter.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ namespace Puppy.Logger
     ///     Logger Formatter for Serilog, Write only Message is LoggerException JSON String 
     /// </summary>
     /// <remarks> Auto add <c> ,Environment.NewLine </c> to the end of message </remarks>
-    public class LoggerFormatter : ITextFormatter
+    public class LoggerTextFormatter : ITextFormatter
     {
         public void Format(LogEvent logEvent, TextWriter output)
         {

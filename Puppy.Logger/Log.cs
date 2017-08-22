@@ -30,6 +30,7 @@ using Serilog.Core;
 using Serilog.Events;
 using System;
 using System.IO;
+using Puppy.Logger.SQLite;
 
 namespace Puppy.Logger
 {
@@ -44,25 +45,38 @@ namespace Puppy.Logger
 
             var loggerConfig =
                 new LoggerConfiguration()
-                    .MinimumLevel.ControlledBy(fileLogLevelSwitch)
-                    .WriteTo.RollingFile(
-                        pathFormat: LoggerConfig.PathFormat,
-                        fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
-                        retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
-                        levelSwitch: fileLogLevelSwitch,
-                        formatter: new LoggerFormatter(), // Custom Formatter for LoggerException
-                        shared: true
-                    );
+                    .MinimumLevel
+                    .ControlledBy(fileLogLevelSwitch)
+                    .WriteTo.SQLite(LoggerConfig.SQLiteConnectionString, LoggerConfig.SQLiteLogTableName,
+                        LoggerConfig.SQLiteLogMinimumLevelEnum, storeTimestampInUtc: true);
 
+            // Enable rolling file log by config
+            if (LoggerConfig.IsEnableRollingFileLog)
+            {
+                loggerConfig
+                    .WriteTo.RollingFile(
+                    pathFormat: LoggerConfig.PathFormat,
+                    fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
+                    retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
+                    levelSwitch: fileLogLevelSwitch,
+                    formatter: new LoggerTextFormatter(), // Custom Formatter for LoggerException
+                    shared: true
+                );
+            }
+
+            // Only enable console log in Development
             if (EnvironmentHelper.IsDevelopment())
             {
                 var consoleLogLevelSwitch = new LoggingLevelSwitch
                 {
                     MinimumLevel = LoggerConfig.ConsoleLogMinimumLevelEnum
                 };
-                loggerConfig = loggerConfig
-                    .WriteTo
-                    .ColoredConsole(LoggerConfig.ConsoleLogMinimumLevelEnum, Constant.ConsoleTemplate, levelSwitch: consoleLogLevelSwitch);
+
+                loggerConfig =
+                    loggerConfig
+                        .WriteTo
+                        .ColoredConsole(LoggerConfig.ConsoleLogMinimumLevelEnum, Constant.ConsoleTemplate,
+                            levelSwitch: consoleLogLevelSwitch);
             }
 
             // Add Logger to Serilog

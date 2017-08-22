@@ -34,14 +34,22 @@ namespace Puppy.Logger
     /// </remarks>
     public static class LoggerConfig
     {
+        #region Rolling File
+
+        /// <summary>
+        ///     Default Puppy Logger always log in SQLite file and also in Rolling File with config,
+        ///     so you can enable or disable rolling file option
+        /// </summary>
+        public static bool IsEnableRollingFileLog { get; set; } = true;
+
         /// <summary>
         ///     Path format to write log, default is <c> Logs\\LOG_{Date}.json </c> 
         /// </summary>
         public static string PathFormat { get; set; } = "Logs\\LOG_{Date}.json";
 
-        public static string FullPath { get; } = Path.Combine(Directory.GetCurrentDirectory(), PathFormat);
+        public static string FullPath { get; } = PathFormat.GetFullPath();
 
-        public static string FolderFullPath { get; } = Path.Combine(Directory.GetCurrentDirectory(), Path.GetDirectoryName(PathFormat));
+        public static string FolderFullPath { get; } = Path.GetDirectoryName(PathFormat).GetFullPath();
 
         /// <summary>
         ///     Maximum retained file, default is <c> 365 </c> 
@@ -77,6 +85,11 @@ namespace Puppy.Logger
             }
         }
 
+        #endregion
+
+
+        #region Console
+
         [JsonIgnore]
         internal static LogEventLevel ConsoleLogMinimumLevelEnum = LogEventLevel.Information;
 
@@ -100,5 +113,40 @@ namespace Puppy.Logger
                 ConsoleLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value);
             }
         }
+
+        #endregion
+
+
+        #region SQLite
+
+        public static string SQLiteConnectionString { get; } = @"Logs\Puppy.Logger.db";
+
+        public static string SQLiteLogTableName { get; } = "Log";
+
+        [JsonIgnore]
+        internal static LogEventLevel SQLiteLogMinimumLevelEnum = LogEventLevel.Information;
+
+        /// <summary>
+        ///     <para> Minimum level to log by SQLite. </para>
+        ///     <para>
+        ///         Have 5 levels: <c> Verbose </c>, <c> Debug </c>, <c> Information </c>, <c>
+        ///         Warning </c>, <c> Error </c>, <c> Fatal </c>
+        ///     </para>
+        /// </summary>
+        /// <remarks> Default is <c> Information </c> </remarks>
+        public static string SQLiteLogMinimumLevel
+        {
+            get => SQLiteLogMinimumLevelEnum.ToString();
+            set
+            {
+                if (!Constant.LogEventLevels.Contains(value))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(SQLiteLogMinimumLevelEnum));
+                }
+                SQLiteLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value);
+            }
+        }
+
+        #endregion
     }
 }

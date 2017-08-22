@@ -9,6 +9,9 @@ Puppy Logger, log error with http request information and exception as detail as
 
 ```json
   "Logger": {
+    // Default Puppy Logger always log in SQLite file and also in Rolling File with config, so you can enable or disable rolling file option
+    "IsEnableRollingFileLog": true,
+    
     // PathFormat
     // {Date} Creates a file per day. Filenames use the yyyy-MM-dd format.
     // {Hour} Creates a file per hour. Filenames use the yyyy-MM-dd HH format.
@@ -18,6 +21,8 @@ Puppy Logger, log error with http request information and exception as detail as
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
     "FileLogMinimumLevel": "Error", // Verbose, Debug, Information, Warning, Error, Fatal.
+    
+    // Puppy Logger do log in Console only in Development Environment
     "ConsoleLogMinimumLevel": "Information" // Verbose, Debug, Information, Warning, Error, Fatal.
   }
 ```

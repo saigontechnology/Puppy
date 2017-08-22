@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> LoggerException.cs </Name>
+//         <Name> LogInfo.cs </Name>
 //         <Created> 10/08/17 11:20:21 PM </Created>
 //         <Key> 141ffe67-ca45-4c4c-8234-c97f287b66aa </Key>
 //     </File>
 //     <Summary>
-//         LoggerException.cs
+//         LogInfo.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ namespace Puppy.Logger.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public class LoggerException : Serializable
+    public class LogInfo : Serializable
     {
         public string CallerMemberName { get; set; }
 
@@ -62,28 +62,28 @@ namespace Puppy.Logger.Core.Models
 
         public string Message { get; set; }
 
-        public SerializableException Exception { get; set; }
+        public ExceptionInfo ExceptionInfo { get; set; }
 
         public HttpContextInfo HttpContextInfo { get; set; }
 
-        public LoggerException()
+        public LogInfo()
         {
         }
 
-        public LoggerException(string message, LogLevel level) : this()
+        public LogInfo(string message, LogLevel level) : this()
         {
             Message = message;
             Level = level;
         }
 
-        public LoggerException(Exception ex, LogLevel level, string message = null) : this(message, level)
+        public LogInfo(Exception ex, LogLevel level, string message = null) : this(message, level)
         {
-            Exception = new SerializableException(ex);
+            ExceptionInfo = new ExceptionInfo(ex);
         }
 
-        public LoggerException(ExceptionContext context, LogLevel level, string message = null) : this(message, level)
+        public LogInfo(ExceptionContext context, LogLevel level, string message = null) : this(message, level)
         {
-            Exception = new SerializableException(context.Exception);
+            ExceptionInfo = new ExceptionInfo(context.Exception);
             HttpContextInfo = new HttpContextInfo(context.HttpContext);
         }
     }

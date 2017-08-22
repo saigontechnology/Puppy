@@ -17,19 +17,19 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Newtonsoft.Json;
+using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Serilog.Events;
 using Serilog.Formatting;
 using System;
 using System.IO;
 
-namespace Puppy.Logger
+namespace Puppy.Logger.RollingFile
 {
     /// <summary>
-    ///     Logger Formatter for Serilog, Write only Message is LoggerException JSON String 
+    ///     Logger Formatter for Serilog, Write only Message is LogInfo JSON String 
     /// </summary>
-    /// <remarks> Auto add <c> ,Environment.NewLine </c> to the end of message </remarks>
+    /// <remarks> Auto add <c> ,Environment.NewLine </c> to the end of value </remarks>
     public class LoggerTextFormatter : ITextFormatter
     {
         public void Format(LogEvent logEvent, TextWriter output)
@@ -44,23 +44,10 @@ namespace Puppy.Logger
                 return;
             }
 
-            if (!IsCanLog(logEvent.MessageTemplate.Text)) return;
+            if (!LoggerHelper.TryParseLogInfo(logEvent.MessageTemplate.Text, out LogInfo logInfo)) return;
+
             output.Write(logEvent.MessageTemplate.Text);
             output.Write($",{Environment.NewLine}");
-        }
-
-        private static bool IsCanLog(string message)
-        {
-            try
-            {
-                // Check if message is LoggerException JSON string.
-                var loggerException = JsonConvert.DeserializeObject<LoggerException>(message, Core.Constant.JsonSerializerSettings);
-                return loggerException != null;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
     }
 }

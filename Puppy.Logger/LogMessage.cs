@@ -64,9 +64,9 @@ namespace Puppy.Logger
 
         private static void JobLogMessage(LogLevel logLevel, string message, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var loggerException = new LoggerException(message, logLevel);
-            UpdateLoggerException(loggerException, callerMemberName, callerFilePath, callerLineNumber);
-            BackgroundJob.Enqueue(() => Write(logLevel, loggerException.ToString()));
+            var logInfo = new LogInfo(message, logLevel);
+            UpdateLogInfo(logInfo, callerMemberName, callerFilePath, callerLineNumber);
+            BackgroundJob.Enqueue(() => Write(logLevel, logInfo.ToString()));
         }
     }
 }

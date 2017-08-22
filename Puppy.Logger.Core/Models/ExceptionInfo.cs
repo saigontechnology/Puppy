@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> SerializableException.cs </Name>
+//         <Name> ExceptionInfo.cs </Name>
 //         <Created> 10/08/17 5:58:52 PM </Created>
 //         <Key> 69f64980-151f-44db-ba2a-d05775526df7 </Key>
 //     </File>
 //     <Summary>
-//         SerializableException.cs
+//         ExceptionInfo.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ namespace Puppy.Logger.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public class SerializableException : Serializable
+    public class ExceptionInfo : Serializable
     {
         public string HelpLink { get; set; }
 
@@ -38,25 +38,25 @@ namespace Puppy.Logger.Core.Models
 
         public string BaseTypeName { get; set; }
 
-        public SerializableException InternalException { get; set; }
+        public ExceptionInfo InternalExceptionInfo { get; set; }
 
-        public SerializableException()
+        public ExceptionInfo()
         {
         }
 
-        public SerializableException(string message) : this()
+        public ExceptionInfo(string message) : this()
         {
             Message = message;
         }
 
-        public SerializableException(Exception ex) : this(ex.Message)
+        public ExceptionInfo(Exception ex) : this(ex.Message)
         {
             HelpLink = ex.HelpLink;
             Source = ex.Source;
             StackTrace = ex.StackTrace;
             TypeName = ex.GetType()?.FullName;
             BaseTypeName = ex.GetBaseException()?.GetType()?.FullName;
-            InternalException = ex.InnerException != null ? new SerializableException(ex.InnerException) : null;
+            InternalExceptionInfo = ex.InnerException != null ? new ExceptionInfo(ex.InnerException) : null;
         }
     }
 }

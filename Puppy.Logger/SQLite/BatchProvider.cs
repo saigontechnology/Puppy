@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Serilog.Debugging;
+using Serilog.Events;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Serilog.Debugging;
-using Serilog.Events;
 
 namespace Puppy.Logger.SQLite
 {

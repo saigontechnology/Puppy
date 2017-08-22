@@ -25,12 +25,12 @@ using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
+using Puppy.Logger.SQLite;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System;
 using System.IO;
-using Puppy.Logger.SQLite;
 
 namespace Puppy.Logger
 {
@@ -38,17 +38,10 @@ namespace Puppy.Logger
     {
         internal static void BuildLogger()
         {
-            var fileLogLevelSwitch = new LoggingLevelSwitch
-            {
-                MinimumLevel = LoggerConfig.FileLogMinimumLevelEnum
-            };
-
             var loggerConfig =
                 new LoggerConfiguration()
-                    .MinimumLevel
-                    .ControlledBy(fileLogLevelSwitch)
-                    .WriteTo.SQLite(LoggerConfig.SQLiteConnectionString, LoggerConfig.SQLiteLogTableName,
-                        LoggerConfig.SQLiteLogMinimumLevelEnum, storeTimestampInUtc: true);
+                    .WriteTo
+                    .SQLite(LoggerConfig.SQLiteConnectionString, LoggerConfig.SQLiteLogMinimumLevelEnum);
 
             // Enable rolling file log by config
             if (LoggerConfig.IsEnableRollingFileLog)
@@ -58,8 +51,8 @@ namespace Puppy.Logger
                     pathFormat: LoggerConfig.PathFormat,
                     fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
                     retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
-                    levelSwitch: fileLogLevelSwitch,
-                    formatter: new LoggerTextFormatter(), // Custom Formatter for LoggerException
+                    restrictedToMinimumLevel: LoggerConfig.FileLogMinimumLevelEnum,
+                    formatter: new LoggerTextFormatter(),
                     shared: true
                 );
             }
@@ -89,13 +82,13 @@ namespace Puppy.Logger
             Serilog.Log.Write(logEventLevel, message);
         }
 
-        private static void UpdateLoggerException(ExceptionContext context, LoggerException loggerException, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static void UpdateLogInfo(ExceptionContext context, LogInfo logInfo, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            UpdateLoggerException(loggerException, callerMemberName, callerFilePath, callerLineNumber);
+            UpdateLogInfo(logInfo, callerMemberName, callerFilePath, callerLineNumber);
 
             // Priority to use Header Id instead of self generate Id
-            if (context.HttpContext.Request.Headers.ContainsKey(nameof(LoggerException.Id)))
-                loggerException.Id = context.HttpContext.Request.Headers[nameof(LoggerException.Id)];
+            if (context.HttpContext.Request.Headers.ContainsKey(nameof(logInfo.Id)))
+                logInfo.Id = context.HttpContext.Request.Headers[nameof(logInfo.Id)];
 
             // Get Request Time from Header
             if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
@@ -104,17 +97,17 @@ namespace Puppy.Logger
                 DateTime requestTime;
                 var isCanGetRequestTime =
                     DateTimeHelper.TryParse(requestTimeStr, Core.Constant.DateTimeOffSetFormat, out requestTime);
-                loggerException.HttpContextInfo.RequestTime =
+                logInfo.HttpContextInfo.RequestTime =
                     isCanGetRequestTime ? (DateTimeOffset?)requestTime : null;
             }
         }
 
-        private static void UpdateLoggerException(LoggerException loggerException, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static void UpdateLogInfo(LogInfo logInfo, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            loggerException.CallerMemberName = callerMemberName;
-            loggerException.CallerFilePath = callerFilePath;
-            loggerException.CallerRelativePath = GetCallerRelativePath(loggerException.CallerFilePath);
-            loggerException.CallerLineNumber = callerLineNumber;
+            logInfo.CallerMemberName = callerMemberName;
+            logInfo.CallerFilePath = callerFilePath;
+            logInfo.CallerRelativePath = GetCallerRelativePath(logInfo.CallerFilePath);
+            logInfo.CallerLineNumber = callerLineNumber;
         }
 
         private static string GetCallerRelativePath(string callerFilePath)

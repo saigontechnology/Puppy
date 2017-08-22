@@ -103,10 +103,10 @@ namespace Puppy.Logger
             public Task Invoke(HttpContext context)
             {
                 // Add Request Id if not have already.
-                if (!context.Request.Headers.ContainsKey(nameof(LoggerException.Id)))
+                if (!context.Request.Headers.ContainsKey(nameof(LogInfo.Id)))
                 {
                     var id = Guid.NewGuid().ToString("N");
-                    context.Request.Headers.Add(nameof(LoggerException.Id), id);
+                    context.Request.Headers.Add(nameof(LogInfo.Id), id);
                 }
 
                 if (!context.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
@@ -133,18 +133,22 @@ namespace Puppy.Logger
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
             if (isHaveConfig)
             {
-                LoggerConfig.PathFormat = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.PathFormat)}");
-                LoggerConfig.RetainedFileCountLimit = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.RetainedFileCountLimit)}", 365);
-                LoggerConfig.FileSizeLimitBytes = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.FileSizeLimitBytes)}", 1048576);
-                LoggerConfig.FileLogMinimumLevel = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.FileLogMinimumLevel)}");
-                LoggerConfig.ConsoleLogMinimumLevel = configuration.GetValue<string>($"{configSection}:{nameof(LoggerConfig.ConsoleLogMinimumLevel)}");
-                LoggerConfig.IsEnableRollingFileLog = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.IsEnableRollingFileLog)}", true);
+                LoggerConfig.PathFormat = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.PathFormat)}", LoggerConfig.PathFormat);
+                LoggerConfig.RetainedFileCountLimit = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.RetainedFileCountLimit)}", LoggerConfig.RetainedFileCountLimit);
+                LoggerConfig.FileSizeLimitBytes = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.FileSizeLimitBytes)}", LoggerConfig.FileSizeLimitBytes);
+                LoggerConfig.FileLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.FileLogMinimumLevel)}", LoggerConfig.FileLogMinimumLevel);
+                LoggerConfig.ConsoleLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.ConsoleLogMinimumLevel)}", LoggerConfig.ConsoleLogMinimumLevel);
+                LoggerConfig.IsEnableRollingFileLog = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.IsEnableRollingFileLog)}", LoggerConfig.IsEnableRollingFileLog);
+                LoggerConfig.SQLiteConnectionString = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteConnectionString)}", LoggerConfig.SQLiteConnectionString);
+                LoggerConfig.SQLiteLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteLogMinimumLevel)}", LoggerConfig.SQLiteLogMinimumLevel);
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;
 
             Console.WriteLine();
+
             Console.ForegroundColor = ConsoleColor.Cyan;
+
             Console.WriteLine("Logger Rolling File Path" +
                               $": {LoggerConfig.PathFormat}" +
                               $", Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes)" +
@@ -152,6 +156,10 @@ namespace Puppy.Logger
                               $", File Log Minimum Level: {LoggerConfig.FileLogMinimumLevel}" +
                               $", Console Log Minimum Level: {LoggerConfig.ConsoleLogMinimumLevel}" +
                               $"| Full Path: {LoggerConfig.FullPath}, Folder Full Path: {LoggerConfig.FolderFullPath}");
+
+            Console.WriteLine("Logger SQLite File Path" +
+                              $": {LoggerConfig.SQLiteConnectionString}" +
+                              $", SQLite Minimum Level: {LoggerConfig.SQLiteLogMinimumLevel}");
             Console.ResetColor();
         }
     }

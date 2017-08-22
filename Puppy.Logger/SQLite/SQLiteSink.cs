@@ -1,39 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
+using Puppy.Logger.Core.Models;
 using Serilog.Core;
 using Serilog.Debugging;
 using Serilog.Events;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace Puppy.Logger.SQLite
 {
     internal class SQLiteSink : BatchProvider, ILogEventSink
     {
         private readonly string _connString;
-        private readonly IFormatProvider _formatProvider;
-        private readonly TimeSpan? _retentionPeriod;
-        private readonly Stopwatch _retentionWatch = new Stopwatch();
-        private readonly bool _storeTimestampInUtc;
-        private readonly string _tableName;
 
-        public SQLiteSink(string sqlLiteDbPath,
-            string tableName,
-            IFormatProvider formatProvider,
-            bool storeTimestampInUtc,
-            TimeSpan? retentionPeriod)
+        public SQLiteSink(string sqlLiteDbPath)
         {
             _connString = CreateConnectionString(sqlLiteDbPath);
-            _tableName = tableName;
-            _formatProvider = formatProvider;
-            _storeTimestampInUtc = storeTimestampInUtc;
-
-            if (retentionPeriod.HasValue)
-                // impose a min retention period of 1 minute
-                _retentionPeriod = new[] { retentionPeriod.Value, TimeSpan.FromMinutes(1) }.Max();
-
             InitializeDatabase();
         }
 
@@ -68,74 +51,110 @@ namespace Puppy.Logger.SQLite
 
         private void CreateSqlTable(SqliteConnection sqlConnection)
         {
-            var colDefs = "id INTEGER PRIMARY KEY AUTOINCREMENT,";
-            colDefs += "Timestamp TEXT,";
-            colDefs += "Level VARCHAR(10),";
-            colDefs += "Exception TEXT,";
-            colDefs += "RenderedMessage TEXT,";
-            colDefs += "Properties TEXT";
+            var colDefs = $"{nameof(LogInfo.Id)} TEXT PRIMARY KEY NOT NULL,";
+            colDefs += $"{nameof(LogInfo.CallerMemberName)} TEXT NULL,";
+            colDefs += $"{nameof(LogInfo.CallerFilePath)} TEXT NULL,";
+            colDefs += $"{nameof(LogInfo.CallerRelativePath)} TEXT NULL,";
+            colDefs += $"{nameof(LogInfo.CallerLineNumber)} INT NULL,";
+            colDefs += $"{nameof(LogInfo.CreatedOn)} DATETIME NOT NULL,";
+            colDefs += $"{nameof(LogInfo.Level)} VARCHAR(10) NOT NULL,";
+            colDefs += $"{nameof(LogInfo.Message)} TEXT NULL,";
+            colDefs += $"{nameof(LogInfo.ExceptionInfo)} TEXT NULL,";
+            colDefs += $"{nameof(LogInfo.HttpContextInfo)} TEXT NULL";
 
-            var sqlCreateText = $"CREATE TABLE IF NOT EXISTS {_tableName} ({colDefs})";
-
+            var sqlCreateText = $"CREATE TABLE IF NOT EXISTS {nameof(LogInfo)} ({colDefs})";
             var sqlCommand = new SqliteCommand(sqlCreateText, sqlConnection);
             sqlCommand.ExecuteNonQuery();
         }
 
         private SqliteCommand CreateSqlInsertCommand(SqliteConnection connection)
         {
-            var sqlInsertText = "INSERT INTO {0} (Timestamp, Level, Exception, RenderedMessage, Properties)";
-            sqlInsertText += " VALUES (@timeStamp, @level, @exception, @renderedMessage, @properties)";
-            sqlInsertText = string.Format(sqlInsertText, _tableName);
+            var sqlInsertText =
+                $"INSERT INTO {nameof(LogInfo)}" +
+                $" (" +
+                $"{nameof(LogInfo.Id)}" +
+                $", {nameof(LogInfo.CallerMemberName)}" +
+                $", {nameof(LogInfo.CallerFilePath)}" +
+                $", {nameof(LogInfo.CallerRelativePath)}" +
+                $", {nameof(LogInfo.CallerLineNumber)}" +
+                $", {nameof(LogInfo.CreatedOn)}" +
+                $", {nameof(LogInfo.Level)}" +
+                $", {nameof(LogInfo.Message)}" +
+                $", {nameof(LogInfo.ExceptionInfo)}" +
+                $", {nameof(LogInfo.HttpContextInfo)}" +
+                $")";
+
+            sqlInsertText += $" VALUES" +
+                             $" (" +
+                             $"@{nameof(LogInfo.Id)}" +
+                             $", @{nameof(LogInfo.CallerMemberName)}" +
+                             $", @{nameof(LogInfo.CallerFilePath)}" +
+                             $", @{nameof(LogInfo.CallerRelativePath)}" +
+                             $", @{nameof(LogInfo.CallerLineNumber)}" +
+                             $", @{nameof(LogInfo.CreatedOn)}" +
+                             $", @{nameof(LogInfo.Level)}" +
+                             $", @{nameof(LogInfo.Message)}" +
+                             $", @{nameof(LogInfo.ExceptionInfo)}" +
+                             $", @{nameof(LogInfo.HttpContextInfo)}" +
+                             $")";
 
             var sqlCommand = connection.CreateCommand();
             sqlCommand.CommandText = sqlInsertText;
             sqlCommand.CommandType = CommandType.Text;
 
-            sqlCommand.Parameters.Add(new SqliteParameter("@timeStamp", DbType.DateTime2));
-            sqlCommand.Parameters.Add(new SqliteParameter("@level", DbType.String));
-            sqlCommand.Parameters.Add(new SqliteParameter("@exception", DbType.String));
-            sqlCommand.Parameters.Add(new SqliteParameter("@renderedMessage", DbType.String));
-            sqlCommand.Parameters.Add(new SqliteParameter("@properties", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.Id)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.CallerMemberName)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.CallerFilePath)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.CallerRelativePath)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.CallerLineNumber)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.CreatedOn)}", DbType.DateTimeOffset));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.Level)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.Message)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.ExceptionInfo)}", DbType.String));
+            sqlCommand.Parameters.Add(new SqliteParameter($"@{nameof(LogInfo.HttpContextInfo)}", DbType.String));
 
             return sqlCommand;
         }
 
         protected override void WriteLogEvent(ICollection<LogEvent> logEventsBatch)
         {
-            if (logEventsBatch == null || logEventsBatch.Count == 0)
+            if (logEventsBatch?.Any() != true)
+            {
                 return;
+            }
+
             try
             {
                 using (var sqlConnection = GetSqLiteConnection())
                 {
-                    ApplyRetentionPolicy(sqlConnection);
-
-                    using (var tr = sqlConnection.BeginTransaction())
+                    using (var transaction = sqlConnection.BeginTransaction())
                     {
                         using (var sqlCommand = CreateSqlInsertCommand(sqlConnection))
                         {
-                            sqlCommand.Transaction = tr;
+                            sqlCommand.Transaction = transaction;
 
                             foreach (var logEvent in logEventsBatch)
                             {
-                                sqlCommand.Parameters["@timeStamp"].Value = _storeTimestampInUtc
-                                    ? logEvent.Timestamp.ToUniversalTime()
-                                    : logEvent.Timestamp;
-                                sqlCommand.Parameters["@level"].Value = logEvent.Level.ToString();
-                                sqlCommand.Parameters["@exception"].Value =
-                                    logEvent.Exception?.ToString() ?? string.Empty;
-                                sqlCommand.Parameters["@renderedMessage"].Value = logEvent.MessageTemplate.ToString();
+                                if (logEvent == null || !Core.LoggerHelper.TryParseLogInfo(logEvent.MessageTemplate.Text, out LogInfo logInfo))
+                                {
+                                    return;
+                                };
 
-                                sqlCommand.Parameters["@properties"].Value = logEvent.Properties.Count > 0
-                                    ? logEvent.Properties.Json()
-                                    : string.Empty;
-
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.Id)}"].Value = logInfo.Id;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.CallerMemberName)}"].Value = logInfo.CallerMemberName ?? string.Empty;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.CallerFilePath)}"].Value = logInfo.CallerFilePath ?? string.Empty;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.CallerRelativePath)}"].Value = logInfo.CallerRelativePath ?? string.Empty;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.CallerLineNumber)}"].Value = logInfo.CallerLineNumber;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.CreatedOn)}"].Value = logInfo.CreatedOn;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.Level)}"].Value = logInfo.Level.ToString();
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.Message)}"].Value = logInfo.Message ?? string.Empty;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.ExceptionInfo)}"].Value = logInfo.ExceptionInfo.ToString() ?? string.Empty;
+                                sqlCommand.Parameters[$"@{nameof(LogInfo.HttpContextInfo)}"].Value = logInfo.HttpContextInfo.ToString() ?? string.Empty;
                                 sqlCommand.ExecuteNonQuery();
                             }
+                            transaction.Commit();
                         }
-                        tr.Commit();
                     }
-
                     sqlConnection.Close();
                 }
             }
@@ -143,39 +162,6 @@ namespace Puppy.Logger.SQLite
             {
                 SelfLog.WriteLine(e.Message);
             }
-        }
-
-        private void ApplyRetentionPolicy(SqliteConnection sqlConnection)
-        {
-            if (!_retentionPeriod.HasValue)
-                // there is no retention policy
-                return;
-
-            if (_retentionWatch.IsRunning && _retentionWatch.Elapsed < _retentionPeriod.Value)
-                // Besides deleting records older than X let's only delete records every X often
-                // because of the check whether the _retentionWatch is running, the first write
-                // operation during this application run will result in deleting old records
-                return;
-
-            var epoch = DateTimeOffset.Now.Subtract(_retentionPeriod.Value);
-            using (var cmd = CreateSqlDeleteCommand(sqlConnection, epoch))
-            {
-                SelfLog.WriteLine("Deleting log entries older than {0}", epoch);
-                cmd.ExecuteNonQuery();
-            }
-
-            _retentionWatch.Restart();
-        }
-
-        private SqliteCommand CreateSqlDeleteCommand(SqliteConnection sqlConnection, DateTimeOffset epoch)
-        {
-            var cmd = sqlConnection.CreateCommand();
-            cmd.CommandText = $"DELETE FROM {_tableName} WHERE Timestamp < @epoch";
-            cmd.Parameters.Add(new SqliteParameter("@epoch", DbType.DateTime2)
-            {
-                Value = _storeTimestampInUtc ? epoch.ToUniversalTime() : epoch
-            });
-            return cmd;
         }
     }
 }

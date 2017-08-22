@@ -20,10 +20,13 @@ Puppy Logger, log error with http request information and exception as detail as
     "PathFormat": "Logs\\{Level}\\LOG_{Level}_{Date}.json",
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
-    "FileLogMinimumLevel": "Error", // Verbose, Debug, Information, Warning, Error, Fatal.
+    "FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
     
     // Puppy Logger do log in Console only in Development Environment
     "ConsoleLogMinimumLevel": "Information" // Verbose, Debug, Information, Warning, Error, Fatal.
+    
+    "SQLiteConnectionString": "Logs\\Puppy.Logger.db",
+    "SQLiteLogMinimumLevel": "Warning" // Verbose, Debug, Information, Warning, Error, Fatal.
   }
 ```
 
@@ -65,7 +68,7 @@ Puppy.Logger.Log.Write(LogLevel.Fatal, "<message>");
 If you want to global log with logger, just `throw exception` and not use any specific `try-catch` block in your code. Then add `Exception Filter` as below to handle exception and Log when exception occur.
 
 ```csharp
-public class LoggerExceptionFilter : ExceptionFilterAttribute
+public class LogInfoFilter : ExceptionFilterAttribute
 {
     public override void OnException(ExceptionContext context)
     {

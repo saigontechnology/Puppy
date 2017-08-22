@@ -43,9 +43,9 @@ namespace Puppy.Logger
         public static bool IsEnableRollingFileLog { get; set; } = true;
 
         /// <summary>
-        ///     Path format to write log, default is <c> Logs\\LOG_{Date}.json </c> 
+        ///     Path format to write log, default is <c> "Logs\\{Level}\\LOG_{Level}_{Date}.json" </c>
         /// </summary>
-        public static string PathFormat { get; set; } = "Logs\\LOG_{Date}.json";
+        public static string PathFormat { get; set; } = "Logs\\{Level}\\LOG_{Level}_{Date}.json";
 
         public static string FullPath { get; } = PathFormat.GetFullPath();
 
@@ -87,7 +87,6 @@ namespace Puppy.Logger
 
         #endregion
 
-
         #region Console
 
         [JsonIgnore]
@@ -116,15 +115,12 @@ namespace Puppy.Logger
 
         #endregion
 
-
         #region SQLite
 
-        public static string SQLiteConnectionString { get; } = @"Logs\Puppy.Logger.db";
-
-        public static string SQLiteLogTableName { get; } = "Log";
+        public static string SQLiteConnectionString { get; set; } = @"Logs\Puppy.Logger.db";
 
         [JsonIgnore]
-        internal static LogEventLevel SQLiteLogMinimumLevelEnum = LogEventLevel.Information;
+        internal static LogEventLevel SQLiteLogMinimumLevelEnum = LogEventLevel.Warning;
 
         /// <summary>
         ///     <para> Minimum level to log by SQLite. </para>

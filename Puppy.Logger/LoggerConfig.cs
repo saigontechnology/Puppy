@@ -23,7 +23,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace Puppy.Logger.Models
+namespace Puppy.Logger
 {
     /// <summary>
     ///     Logger Configuration 

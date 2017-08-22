@@ -17,6 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -42,7 +43,7 @@ namespace Puppy.Logger.RollingFile
 
         private readonly Specifier _specifier;
 
-        public string LogFileDirectory { get; }
+        public string LogFileDirectory { get; set; }
 
         public string DirectorySearchPattern { get; }
 
@@ -51,21 +52,26 @@ namespace Puppy.Logger.RollingFile
             if (pathTemplate == null) throw new ArgumentNullException(nameof(pathTemplate));
 
             var directory = Path.GetDirectoryName(pathTemplate);
+
             if (string.IsNullOrEmpty(directory))
+            {
                 directory = Directory.GetCurrentDirectory();
+            }
 
             Specifier directorySpecifier;
             if (Specifier.TryGetSpecifier(directory, out directorySpecifier))
+            {
                 throw new ArgumentException($"The {directorySpecifier.Token} specifier cannot form part of the directory name.");
+            }
 
             directory = Path.GetFullPath(directory);
 
-            var filenameTemplate = Path.GetFileName(pathTemplate);
+            var filenameTemplate = pathTemplate.Substring(pathTemplate.LastIndexOf("\\", StringComparison.Ordinal) + 1);
+
             if (!Specifier.TryGetSpecifier(filenameTemplate, out _specifier))
             {
                 _specifier = Specifier.Date;
-                filenameTemplate = Path.GetFileNameWithoutExtension(filenameTemplate) + DefaultSeparator +
-                                   _specifier.Token + Path.GetExtension(filenameTemplate);
+                filenameTemplate = Path.GetFileNameWithoutExtension(filenameTemplate) + DefaultSeparator + _specifier.Token + Path.GetExtension(filenameTemplate);
             }
 
             var indexOfSpecifier = filenameTemplate.IndexOf(_specifier.Token, StringComparison.Ordinal);
@@ -84,16 +90,22 @@ namespace Puppy.Logger.RollingFile
             _pathTemplate = Path.Combine(LogFileDirectory, filenameTemplate);
         }
 
-        public void GetLogFilePath(DateTime date, int sequenceNumber, out string path)
+        public void GetLogFilePath(LogEvent logEvent, int sequenceNumber, out string path)
         {
-            var currentCheckpoint = GetCurrentCheckpoint(date);
+            var currentCheckpoint = GetCurrentCheckpoint(logEvent.Timestamp);
 
             var tok = currentCheckpoint.ToString(_specifier.Format, CultureInfo.InvariantCulture);
 
             if (sequenceNumber != 0)
+            {
                 tok += "_" + sequenceNumber.ToString("000", CultureInfo.InvariantCulture);
+            }
 
+            // Replace by Token
             path = _pathTemplate.Replace(_specifier.Token, tok);
+
+            // Replace by Level
+            path = path.Replace("{Level}", logEvent.Level.ToString());
         }
 
         public IEnumerable<RollingLogFile> SelectMatches(IEnumerable<string> fileNames)
@@ -122,8 +134,8 @@ namespace Puppy.Logger.RollingFile
             }
         }
 
-        public DateTime GetCurrentCheckpoint(DateTime instant) => _specifier.GetCurrentCheckpoint(instant);
+        public DateTime GetCurrentCheckpoint(DateTimeOffset instant) => _specifier.GetCurrentCheckpoint(instant);
 
-        public DateTime GetNextCheckpoint(DateTime instant) => _specifier.GetNextCheckpoint(instant);
+        public DateTime GetNextCheckpoint(DateTimeOffset instant) => _specifier.GetNextCheckpoint(instant);
     }
 }

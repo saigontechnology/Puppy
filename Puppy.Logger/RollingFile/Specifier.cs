@@ -26,15 +26,15 @@ namespace Puppy.Logger.RollingFile
 {
     internal class Specifier
     {
-        public static readonly Specifier Date = new Specifier("Date", "yyyy-MM-dd", TimeSpan.FromDays(1));
-        public static readonly Specifier Hour = new Specifier("Hour", "yyyy-MM-dd HH", TimeSpan.FromHours(1));
-        public static readonly Specifier HalfHour = new Specifier("HalfHour", "yyyy-MM-dd HH-mm", TimeSpan.FromMinutes(30));
+        public static readonly Specifier Date = new Specifier(nameof(Date), "yyyy-MM-dd", TimeSpan.FromDays(1));
+        public static readonly Specifier Hour = new Specifier(nameof(Hour), "yyyy-MM-dd HH", TimeSpan.FromHours(1));
+        public static readonly Specifier HalfHour = new Specifier(nameof(HalfHour), "yyyy-MM-dd HH_mm", TimeSpan.FromMinutes(30));
 
-        public string Token { get; }
+        public string Token { get; private set; }
 
-        public string Format { get; }
+        public string Format { get; private set; }
 
-        public TimeSpan Interval { get; }
+        public TimeSpan Interval { get; private set; }
 
         private Specifier(string name, string format, TimeSpan interval)
 
@@ -46,7 +46,7 @@ namespace Puppy.Logger.RollingFile
             Interval = interval;
         }
 
-        public DateTime GetCurrentCheckpoint(DateTime instant)
+        public DateTime GetCurrentCheckpoint(DateTimeOffset instant)
         {
             if (this == Hour)
                 return instant.Date.AddHours(instant.Hour);
@@ -59,7 +59,7 @@ namespace Puppy.Logger.RollingFile
             return instant.Minute >= 30 ? hour.AddMinutes(30) : hour;
         }
 
-        public DateTime GetNextCheckpoint(DateTime instant)
+        public DateTime GetNextCheckpoint(DateTimeOffset instant)
         {
             return GetCurrentCheckpoint(instant).Add(Interval);
         }
@@ -68,12 +68,13 @@ namespace Puppy.Logger.RollingFile
         {
             if (pathTemplate == null) throw new ArgumentNullException(nameof(pathTemplate));
 
-            var specifiers = new[] { HalfHour, Hour, Date }.Where(s => pathTemplate.Contains(s.Token)).ToArray();
+            var specifiers = new[] { HalfHour, Hour, Date }.Where(s => !string.IsNullOrWhiteSpace(s.Token) && pathTemplate.Contains(s.Token)).ToArray();
 
             if (specifiers.Length > 1)
                 throw new ArgumentException("Only one interval specifier can be used in a rolling log file path.", nameof(pathTemplate));
 
             specifier = specifiers.FirstOrDefault();
+
             return specifier != null;
         }
     }

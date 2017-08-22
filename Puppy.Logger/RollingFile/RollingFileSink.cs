@@ -143,7 +143,7 @@ namespace Puppy.Logger.RollingFile
             {
                 if (_isDisposed) throw new ObjectDisposedException("The rolling log file has been disposed.");
 
-                AlignCurrentFileTo(Clock.DateTimeNow);
+                AlignCurrentFileTo(logEvent);
 
                 // If the file was unable to be opened on the last attempt, it will remain null until
                 // the next checkpoint passes, at which time another attempt will be made to open it.
@@ -151,32 +151,45 @@ namespace Puppy.Logger.RollingFile
             }
         }
 
-        private void AlignCurrentFileTo(DateTime now)
+        private void AlignCurrentFileTo(LogEvent logEvent)
         {
-            if (!_nextCheckpoint.HasValue)
-            {
-                OpenFile(now);
-            }
-            else if (now >= _nextCheckpoint.Value)
+            UpdateLogFileDirectory(logEvent);
+
+            if (_nextCheckpoint.HasValue && logEvent.Timestamp >= _nextCheckpoint.Value)
             {
                 CloseFile();
-                OpenFile(now);
             }
+
+            OpenFile(logEvent);
         }
 
-        private void OpenFile(DateTime now)
+        /// <summary>
+        ///     Update _roller directory by {Level} 
+        /// </summary>
+        /// <param name="logEvent"></param>
+        private void UpdateLogFileDirectory(LogEvent logEvent)
         {
-            var currentCheckpoint = _roller.GetCurrentCheckpoint(now);
+            _roller.LogFileDirectory = _roller.LogFileDirectory.Replace("{Level}", logEvent.Level.ToString());
+            _roller.LogFileDirectory = _roller.LogFileDirectory.Replace(LogEventLevel.Verbose.ToString(), logEvent.Level.ToString());
+            _roller.LogFileDirectory = _roller.LogFileDirectory.Replace(LogEventLevel.Debug.ToString(), logEvent.Level.ToString());
+            _roller.LogFileDirectory = _roller.LogFileDirectory.Replace(LogEventLevel.Information.ToString(), logEvent.Level.ToString());
+            _roller.LogFileDirectory = _roller.LogFileDirectory.Replace(LogEventLevel.Warning.ToString(), logEvent.Level.ToString());
+            _roller.LogFileDirectory = _roller.LogFileDirectory.Replace(LogEventLevel.Error.ToString(), logEvent.Level.ToString());
+            _roller.LogFileDirectory = _roller.LogFileDirectory.Replace(LogEventLevel.Fatal.ToString(), logEvent.Level.ToString());
+        }
+
+        private void OpenFile(LogEvent logEvent)
+        {
+            var currentCheckpoint = _roller.GetCurrentCheckpoint(logEvent.Timestamp);
 
             // We only take one attempt at it because repeated failures to open log files REALLY slow
             // an app down.
-            _nextCheckpoint = _roller.GetNextCheckpoint(now);
+            _nextCheckpoint = _roller.GetNextCheckpoint(logEvent.Timestamp);
 
             var existingFiles = Enumerable.Empty<string>();
             try
             {
-                existingFiles = Directory.GetFiles(_roller.LogFileDirectory, _roller.DirectorySearchPattern)
-                    .Select(Path.GetFileName);
+                existingFiles = Directory.GetFiles(_roller.LogFileDirectory, _roller.DirectorySearchPattern).Select(Path.GetFileName);
             }
             catch (DirectoryNotFoundException)
             {
@@ -194,7 +207,7 @@ namespace Puppy.Logger.RollingFile
             for (var attempt = 0; attempt < maxAttempts; attempt++)
             {
                 string path;
-                _roller.GetLogFilePath(now, sequence, out path);
+                _roller.GetLogFilePath(logEvent, sequence, out path);
 
                 try
                 {
@@ -206,9 +219,7 @@ namespace Puppy.Logger.RollingFile
                 {
                     if (IoErrors.IsLockedFile(ex))
                     {
-                        SelfLog.WriteLine(
-                            "Rolling file target {0} was locked, attempting to open next in sequence (attempt {1})",
-                            path, attempt + 1);
+                        SelfLog.WriteLine("Rolling file target {0} was locked, attempting to open next in sequence (attempt {1})", path, attempt + 1);
                         sequence++;
                         continue;
                     }

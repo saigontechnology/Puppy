@@ -10,10 +10,11 @@ Puppy Logger, log error with http request information and exception as detail as
 ```json
   "Logger": {
     // PathFormat
-    // {Date} Creates a file per day. Filenames use the yyyyMMdd format.
-    // {Hour} Creates a file per hour. Filenames use the yyyyMMddHH format.
-    // {HalfHour} Creates a file per half hour. Filenames use the yyyyMMddHHmm format.
-    "PathFormat": "Logs\\LOG_{Date}.json",
+    // {Date} Creates a file per day. Filenames use the yyyy-MM-dd format.
+    // {Hour} Creates a file per hour. Filenames use the yyyy-MM-dd HH format.
+    // {HalfHour} Creates a file per half hour. Filenames use the yyyy-MM-dd HH_mm format.
+    // {Level} use run time level when you call Write Log method: Verbose, Debug, Information, Warning, Error, Fatal
+    "PathFormat": "Logs\\{Level}\\LOG_{Level}_{Date}.json",
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
     "FileLogMinimumLevel": "Error", // Verbose, Debug, Information, Warning, Error, Fatal.
@@ -76,13 +77,8 @@ public class LoggerExceptionFilter : ExceptionFilterAttribute
 }
 ```
 
-## Enhance Logger
-- Puppy Logger use `Serilog` to implement Logger Client.
-- Please refer `Serilog` official document to enhance config.
-  + [Wiki](https://github.com/serilog/serilog/wiki)
-  + [Output Template](https://github.com/serilog/serilog/wiki/Formatting-Output)
+## Sample Log File
 
-## Sample Log
 ```json
 {
   "CallerMemberName": "OnException",

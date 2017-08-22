@@ -24,7 +24,6 @@ using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
-using Puppy.Logger.Models;
 using Puppy.Logger.RollingFile;
 using Serilog;
 using Serilog.Core;
@@ -52,12 +51,7 @@ namespace Puppy.Logger
                         retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
                         levelSwitch: fileLogLevelSwitch,
                         formatter: new LoggerFormatter(), // Custom Formatter for LoggerException
-                        shared: true // Make shared file to another process, this help another method can read and write to file
-
-                    // shared and buffered can not be same true value.
-
-                    //buffered: true, // Enable buffered, it is for performance issue when write each log to disk after right write.
-                    //flushToDiskInterval: TimeSpan.FromSeconds(5) // Flush to disk interval if buffered is true
+                        shared: true
                     );
 
             if (EnvironmentHelper.IsDevelopment())

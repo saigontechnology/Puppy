@@ -28,7 +28,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
-using Puppy.Logger.Models;
 using Serilog;
 using System;
 using System.Linq;

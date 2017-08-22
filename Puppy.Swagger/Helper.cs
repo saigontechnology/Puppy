@@ -19,11 +19,11 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Puppy.Swagger.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Puppy.Swagger.Models;
 
 namespace Puppy.Swagger
 {

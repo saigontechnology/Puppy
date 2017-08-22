@@ -76,7 +76,7 @@ namespace Puppy.Cloner
             Console.ResetColor();
 
             // Ignore Replace Content by File Extensions
-            
+
             // Normalized Ignore Files
             _ignoreReplaceContentFileEx = _ignoreReplaceContentFileEx.Distinct().ToList();
             _ignoreReplaceContentFileEx.Sort();

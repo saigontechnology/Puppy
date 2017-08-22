@@ -17,8 +17,8 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System.Threading.Tasks;
 using RestSharp;
+using System.Threading.Tasks;
 
 namespace Puppy.OneSignal
 {

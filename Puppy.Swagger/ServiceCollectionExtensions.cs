@@ -110,10 +110,10 @@ namespace Puppy.Swagger
         ///         File Path follow config from <c> .csproj </c>, not from <c> appsettings.json </c>
         ///     </para>
         /// </summary>
-        /// <param name="services">               </param>
-        /// <param name="assembly"></param>
-        /// <param name="configuration">          </param>
-        /// <param name="configSection">          </param>
+        /// <param name="services">     </param>
+        /// <param name="assembly">     </param>
+        /// <param name="configuration"></param>
+        /// <param name="configSection"></param>
         /// <remarks>
         ///     Example for Xml Document File Full Path: <c>
         ///     Path.Combine(Directory.GetCurrentDirectory(), "Puppy.xml") </c>

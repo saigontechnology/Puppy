@@ -22,7 +22,8 @@ using System.ComponentModel.DataAnnotations;
 namespace Puppy.EF.Interfaces.Entity
 {
     /// <summary>
-    ///     Use version as <c>byte[]</c> with database type is <c>Timestamp</c> to resolve concurrency issue. 
+    ///     Use version as <c> byte[] </c> with database type is <c> Timestamp </c> to resolve
+    ///     concurrency issue.
     /// </summary>
     public interface IVersionEntity
     {

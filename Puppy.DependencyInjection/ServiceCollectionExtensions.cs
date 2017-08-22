@@ -20,9 +20,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 using System.Reflection;
-using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Puppy.DependencyInjection
 {
@@ -31,9 +29,11 @@ namespace Puppy.DependencyInjection
         /// <summary>
         ///     [Dependency Injection] 
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="systemName">Ex: Monkey => scan for Monkey.dll and Monkey.*.dll</param>
-        /// <param name="assemblyFolderPath"> Default is null = current execute application folder </param>
+        /// <param name="services">          </param>
+        /// <param name="systemName">         Ex: Monkey =&gt; scan for Monkey.dll and Monkey.*.dll </param>
+        /// <param name="assemblyFolderPath">
+        ///     Default is null = current execute application folder
+        /// </param>
         public static IServiceCollection AddDependencyInjection(this IServiceCollection services, string systemName, string assemblyFolderPath = null)
         {
             services

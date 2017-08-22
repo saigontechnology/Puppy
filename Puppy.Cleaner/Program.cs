@@ -83,7 +83,6 @@ namespace Puppy.Cleaner
             Console.WriteLine("Start cleanup progress!");
             Console.ResetColor();
 
-
             // Cleanup Folder
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Magenta;

@@ -20,7 +20,6 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
-using Puppy.Core.ObjectUtils;
 using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Entity;
 using Puppy.EF.Interfaces.Repository;

@@ -26,6 +26,7 @@
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
+    <ProjectReference Include="..\Puppy.Web\Puppy.Web.csproj" />
   </ItemGroup>
 
   <!-- External Libraries -->

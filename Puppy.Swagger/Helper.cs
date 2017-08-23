@@ -23,7 +23,9 @@ using Puppy.Swagger.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Reflection;
+using Puppy.Web;
 
 namespace Puppy.Swagger
 {
@@ -72,8 +74,8 @@ namespace Puppy.Swagger
 
             ContentResult contentResult = new ContentResult
             {
-                ContentType = "html",
-                StatusCode = 200,
+                ContentType = ContentType.Html,
+                StatusCode = (int)HttpStatusCode.OK,
                 Content = indexFileContent
             };
 
@@ -99,8 +101,8 @@ namespace Puppy.Swagger
 
             ContentResult contentResult = new ContentResult
             {
-                ContentType = "html",
-                StatusCode = 200,
+                ContentType = ContentType.Html,
+                StatusCode = (int)HttpStatusCode.OK,
                 Content = jsonViewerFileContent
             };
 

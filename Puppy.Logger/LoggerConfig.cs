@@ -149,6 +149,18 @@ namespace Puppy.Logger
             }
         }
 
+        /// <summary>
+        ///     Access Key read from URI, default is empty
+        /// </summary>
+        /// <remarks> Empty is allow <c> anonymous </c> </remarks>
+        public static string AccessKey { get; set; } = string.Empty;
+
+        /// <summary>
+        ///     Query parameter via http request, default is "key"
+        /// </summary>
+        /// <remarks> Empty is allow <c> anonymous </c> </remarks>
+        public static string AccessKeyQueryParam { get; set; } = "key";
+
         #endregion
     }
 }

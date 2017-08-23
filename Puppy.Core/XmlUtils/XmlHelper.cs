@@ -19,9 +19,11 @@
 
 #endregion License
 
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Puppy.Core.XmlUtils
@@ -78,10 +80,30 @@ namespace Puppy.Core.XmlUtils
             using (var stream = new MemoryStream())
             {
                 TextWriter writer = new StreamWriter(stream, new UTF8Encoding());
-
                 var xmlSerializer = new XmlSerializer(typeof(T));
                 xmlSerializer.Serialize(writer, objectToSerialize);
                 return Encoding.UTF8.GetString(stream.ToArray(), 0, Convert.ToInt32(stream.Length));
+            }
+        }
+
+        /// <summary>
+        ///     Convert the object to json string, then use <paramref name="rootElementName" /> as
+        ///     root xml to de-serialize to xml string.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectToSerialize"></param>
+        /// <param name="rootElementName">   default value is "Root" </param>
+        /// <returns></returns>
+        public static string ToXmlStringViaJson<T>(T objectToSerialize, string rootElementName = "Root")
+        {
+            var json = JsonConvert.SerializeObject(objectToSerialize);
+            XmlDocument doc = JsonConvert.DeserializeXmlNode(json, rootElementName);
+            using (var stringWriter = new StringWriter())
+            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
+            {
+                doc.WriteTo(xmlTextWriter);
+                xmlTextWriter.Flush();
+                return stringWriter.GetStringBuilder().ToString();
             }
         }
 

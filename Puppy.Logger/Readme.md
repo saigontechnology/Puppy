@@ -45,6 +45,12 @@
     //------------------ Database ------------------
     "SQLiteConnectionString": "Logs\\Puppy.Logger.db",
     "SQLiteLogMinimumLevel": "Warning" // Verbose, Debug, Information, Warning, Error, Fatal.
+    
+    // Access Key read from URI, empty is allow anonymous, default is empty.
+    "AccessKey" : "",
+
+    // Query parameter via http request, empty is allow anonymous, default is "key"
+    "AccessKeyQueryParam": "key"
   }
 ```
 
@@ -104,38 +110,115 @@ public class LogInfoFilter : ExceptionFilterAttribute
 }
 ```
 
+## Get Log and View Log Via URL
+- Get Log: Use `Log.Where()` and `Log.Get()` methods to get log data.
+```csharp
+var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
+```
+
+- View Log Via URL: The sample below use Puppy.Web.Models.Api to create http collection response.
+
+```csharp
+public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
+
+/// <summary>
+///     Logs 
+/// </summary>
+/// <returns></returns>
+[ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
+[HttpGet]
+[Route(LogsEndpointPattern)]
+[Produces(ContentType.Json, ContentType.Xml)]
+public IActionResult Logs([FromRoute]int skip, [FromRoute]int take, [FromQuery]string terms)
+{
+    // Base on "httpContext" will return ContentType XML when Request Header Accept or
+    // ContentType is XML, else return ContentType Json
+    return Log.GetLogsContentResult(HttpContext, LogsEndpointPattern, skip, take, terms);
+}
+
+/// <summary>
+///     Log 
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
+[ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
+[HttpGet]
+[Route("logs/{id}")]
+[Produces(ContentType.Json, ContentType.Xml)]
+public IActionResult SingleLog([FromRoute]string id)
+{
+    // Base on "httpContext" will return ContentType XML when Request Header Accept or
+    // ContentType is XML, else return ContentType Json
+    return Log.GetLogContentResult(HttpContext, id);
+}
+```
+
+- OR manual implement with Log.Get()
+```csharp
+public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
+
+/// <summary>
+///     Logs 
+/// </summary>
+/// <returns></returns>
+[ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
+[HttpGet]
+[Route(LogsEndpointPattern)]
+[Produces(ContentType.Json, ContentType.Xml)]
+public IActionResult GetLogs([FromRoute]int skip, [FromRoute]int take, [FromQuery]string terms)
+{
+    Expression<Func<LogEntity, bool>> predicate = null;
+
+    if (!string.IsNullOrWhiteSpace(terms))
+    {
+        predicate = x => x.Message.Contains(terms);
+    }
+
+    var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
+
+    if (total <= 0)
+    {
+        // Return 204 for No Data Case
+        return NoContent();
+    }
+
+    var placeholderLinkView = PlaceholderLinkViewModel.ToCollection(LogsEndpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
+    var collectionFactoryViewModel = new PagedCollectionFactoryViewModel<LogEntity>(placeholderLinkView, LogsEndpointPattern);
+    var collectionViewModel = collectionFactoryViewModel.CreateFrom(logs, skip, take, total);
+    return Ok(collectionViewModel);
+}
+```
+
+- Use can write your **custom filter** with check `AccessKey` query param with name `AccessKeyQueryParam` from a request by method `Log.IsCanAccessLogViaUrl(HttpContext httpContext)`
+
 ## Sample Log File
 
 ```json
 {
+  "Id": "7f0634e4677d4fb49b6f63b6f410a01d",
   "CallerMemberName": "OnException",
   "CallerFilePath": "D:\\Dropbox\\Github\\Monkey\\Monkey\\Monkey\\Filters\\ApiExceptionFilter.cs",
   "CallerRelativePath": "Monkey\\Filters\\ApiExceptionFilter.cs",
-  "CallerLineNumber": 46,
-  "Id": "26b9716decbe4a819c539f1ffd3a6871",
-  "CreatedOn": "2017-08-11T19:20:58.9626676+07:00",
-  "Level": "Error",
+  "CallerLineNumber": 50,
+  "CreatedTime": "2017-08-23T18:38:49.2024055+07:00",
+  "Level": "Fatal",
   "Exception": {
+    "Id": "a83b117553614e4f94a3c6eec542a54f",
     "Message": "Input string was not in a correct format.",
     "Source": "System.Private.CoreLib",
-    "StackTrace": "   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)\r\n   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)\r\n   at Monkey.Controllers.Api.TestApiController.Post(String data, TestData testData) in D:\\Dropbox\\Github\\Monkey\\Monkey\\Monkey\\Controllers\\Api\\TestApiController.cs:line 19\r\n   at lambda_method(Closure , Object , Object[] )\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__27.MoveNext()\r\n--- End of stack trace from previous location where exception was thrown ---\r\n   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()\r\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__25.MoveNext()\r\n--- End of stack trace from previous location where exception was thrown ---\r\n   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextExceptionFilterAsync>d__24.MoveNext()",
+    "StackTrace": "   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)\r\n   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)\r\n   at Monkey.Controllers.Api.TestApiController.TestException() in D:\\Dropbox\\Github\\Monkey\\Monkey\\Monkey\\Controllers\\Api\\TestApiController.cs:line 21\r\n   at lambda_method(Closure , Object , Object[] )\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__27.MoveNext()\r\n--- End of stack trace from previous location where exception was thrown ---\r\n   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()\r\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__25.MoveNext()\r\n--- End of stack trace from previous location where exception was thrown ---\r\n   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextExceptionFilterAsync>d__24.MoveNext()",
     "TypeName": "System.FormatException",
     "BaseTypeName": "System.FormatException"
   },
-  "HttpContextInfo": {
-    "RequestTime": "2017-08-11T07:20:56.738+07:00",
+  "HttpContext": {
+    "Id": "2273ad4258f84d4e800bcb1ff9c6ebb4",
+    "RequestTime": "2017-08-23T06:38:43.643+07:00",
     "Headers": {
       "Connection": [
         "keep-alive"
       ],
-      "Content-Length": [
-        "28"
-      ],
-      "Content-Type": [
-        "application/json"
-      ],
       "Accept": [
-        "application/json"
+        "*/*"
       ],
       "Accept-Encoding": [
         "gzip, deflate, br"
@@ -144,40 +227,29 @@ public class LogInfoFilter : ExceptionFilterAttribute
         "en-US,en;q=0.8"
       ],
       "Cookie": [
-        ".AspNetCore.Antiforgery.5Vkc_VEHWDw=CfDJ8G1e7Qna5WlPnbPKLeQdxZBbyaoWo6yWb_fIy9BB9V_kj_H6rrgFFnrSh982Mosq6XbNEKBjOg1SMoi_7Glc9axfaF5J79oBONAXGqdtxK5TPUWabiSq5caI6LLAGxTdrzkguTXvtFWbe7Y4gBKNUyM; driftt_aid=fe218537-7b71-4f2f-aec7-270df2bc46d0; __atuvc=4%7C32"
+        ".AspNetCore.Antiforgery.5Vkc_VEHWDw=CfDJ8G1e7Qna5WlPnbPKLeQdxZBbyaoWo6yWb_fIy9BB9V_kj_H6rrgFFnrSh982Mosq6XbNEKBjOg1SMoi_7Glc9axfaF5J79oBONAXGqdtxK5TPUWabiSq5caI6LLAGxTdrzkguTXvtFWbe7Y4gBKNUyM; .AspNetCore.Session=CfDJ8G1e7Qna5WlPnbPKLeQdxZBKU8sWxocCOA3LgqXU43Wu0Phe15s4TSfnN5%2BsFSAu9My3Z8XFsZr%2FkDdlXyM2gy0xo%2B9h6B41p0MgY2fJYUzQKTYYEVJaJqwFaISb7hfh%2BDG9UlVim9zBKWQHZP6zWzEvxS9LLFsCazzRHX3kwMxX; .AspNetCore.Antiforgery.qOkU0vtAckQ=CfDJ8G1e7Qna5WlPnbPKLeQdxZDHIs_VOvaTin9_8M8GdE2XuPd8HZzgeCH03l54bMjR3kBj4o7AlWLNiFhsDrewQQ_VaBjaS23OOoAlxb3JXxVUilEegBilX-t7ZlIQ4v5OL-ZJqIB7cUIeMkPyjV9hK2U; driftt_aid=fe218537-7b71-4f2f-aec7-270df2bc46d0; driftt_wmd=true; .AspNetCore.educator_cookie=CfDJ8G1e7Qna5WlPnbPKLeQdxZC81_UkcP4xD5dLK5Zvia8UsIjk0sXJ7LhLs7MNllv-e0fshZwrJy0wDW59YorO3avCMDF913dtK-E2qDt7vmfQvPy_8v44dt7QT59CgJc6eqQDmTU87JMBPAo7pZcINSF0M0VFBU0ckyH1_Bb5xt7ZUGHOoovGNeO5CMBk3uW4fM32L4fTc-ZwplL_E0JaZKL5-rX8iNPtZalzlK7zx7-Hzxo7l_M-k2aPIga2b0WcoBvy3CxQEzVGEoqp9UxGUgvxDSRYKgKX7Zse-QFQ-NUO4OMLUbsSEMs8o0rQ0YNsFIys41X6Ed3NIJV2xHwgkUBxU4PTE-YVS97KyTc9iQXDwT2WCa_Gq-403CKPmevR9iEnMECQbRWDBcvdgqDNDlqMZoiKrhg5eda6ZQ70Ze81fauhC090uTFieiCmv5IaFX2yCuqansaAF5MDhMFKTLXsqDjCXL--1HLB0E5qzhfUoArU-Tk43o9Va3kPPnTUwSJaihR_wXgFQ52NJAnBtcDxoJGfT4VlxzCjWFDJK7EgPlxp9pKwB5lHZ5g7SZwtpEjWStD23Y7m1LMc_O_jg32JpTF1SiC9_7WT9qc2uM6g2tib4CsXL-vFbJR7XTcpKnXq2RJNTkAkrCf2hA1lqGAQ8EvR-RRWwRJO6qn6LGlK2ApzE2XPE3EuWnenv5eQHA; __atuvc=10%7C32%2C15%7C33%2C55%7C34; _ga=GA1.1.917835040.1502609572"
       ],
       "Host": [
         "localhost:7777"
       ],
       "Referer": [
-        "http://localhost:7777/developers/"
+        "http://localhost:7777/developers"
       ],
       "User-Agent": [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
-      ],
-      "Origin": [
-        "http://localhost:7777"
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36"
       ],
       "Id": [
-        "26b9716decbe4a819c539f1ffd3a6871"
+        "7f0634e4677d4fb49b6f63b6f410a01d"
       ],
       "RequestTime": [
-        "2017/08/11 07:20:56.738 +07:00"
+        "2017/08/23 06:38:43.643 +07:00"
       ]
     },
     "Protocol": "HTTP/1.1",
-    "Method": "POST",
-    "Endpoint": "http://localhost:7777/api/test",
-    "QueryStrings": {
-      "data": [
-        "puppy logger"
-      ]
-    },
-    "DisplayUrl": "[HTTP/1.1](POST)http://localhost:7777/api/test?data=puppy%20logger",
-    "RequestBody": {
-      "data": "Puppy Logger"
-    }
+    "Method": "GET",
+    "Endpoint": "http://localhost:7777/api/test/exception",
+    "QueryStrings": {},
+    "DisplayUrl": "[HTTP/1.1](GET)http://localhost:7777/api/test/exception"
   }
-},
-
+}
 ```

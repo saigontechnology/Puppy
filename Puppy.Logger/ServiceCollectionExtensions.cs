@@ -29,6 +29,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
+using Puppy.Logger.Filters;
 using Serilog;
 using System;
 using System.Linq;
@@ -52,6 +53,9 @@ namespace Puppy.Logger
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _configSection = configSection;
+
+            // Add Filter Service
+            services.AddScoped<ViewLogViaUrlAccessFilter>();
 
             // Check if don't have hangfire service, let add to run background job.
             if (services.All(x => x.ServiceType != typeof(JobStorage)))
@@ -175,8 +179,10 @@ namespace Puppy.Logger
 
                 // Database
                 LoggerConfig.SQLiteConnectionString = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteConnectionString)}", LoggerConfig.SQLiteConnectionString);
-
                 LoggerConfig.SQLiteLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteLogMinimumLevel)}", LoggerConfig.SQLiteLogMinimumLevel);
+
+                LoggerConfig.AccessKey = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.AccessKey)}", LoggerConfig.AccessKey);
+                LoggerConfig.AccessKeyQueryParam = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.AccessKeyQueryParam)}", LoggerConfig.AccessKeyQueryParam);
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

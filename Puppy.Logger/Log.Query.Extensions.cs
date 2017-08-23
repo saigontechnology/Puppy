@@ -1,29 +1,11 @@
-﻿#region	License
-//------------------------------------------------------------------------------------------------
-// <License>
-//     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
-//     <Url> http://topnguyen.net/ </Url>
-//     <Author> Top </Author>
-//     <Project> Puppy </Project>
-//     <File>
-//         <Name> LogQueryExtensions.cs </Name>
-//         <Created> 23/08/17 9:13:22 PM </Created>
-//         <Key> 7f383467-708d-457f-b865-bf65110fdac5 </Key>
-//     </File>
-//     <Summary>
-//         LogQueryExtensions.cs
-//     </Summary>
-// <License>
-//------------------------------------------------------------------------------------------------
-#endregion License
-
-using Puppy.Logger.Core.Models;
+﻿using Puppy.Logger.Core.Models;
+using Puppy.Logger.SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Puppy.Logger.SQLite
+namespace Puppy.Logger
 {
     public static class LogQueryExtensions
     {

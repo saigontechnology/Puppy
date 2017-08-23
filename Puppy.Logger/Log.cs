@@ -19,13 +19,17 @@
 
 #endregion License
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
 using Puppy.Logger.SQLite;
+using Puppy.Web;
+using Puppy.Web.Models.Api;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -34,6 +38,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
+using System.Net.Http;
 
 namespace Puppy.Logger
 {
@@ -81,51 +87,6 @@ namespace Puppy.Logger
         {
             LogEventLevel logEventLevel = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), logLevel.ToString());
             Serilog.Log.Write(logEventLevel, message);
-        }
-
-        public static IQueryable<LogEntity> Where(Expression<Func<LogEntity, bool>> predicate = null)
-        {
-            return LogQueryExtensions.Where(predicate);
-        }
-
-        /// <summary>
-        ///     Get result with fill info for HttpContext and Exception from Json. Ex call: 
-        ///     <code>
-        /// Log.Get(out long total, orders: x =&gt; x.CreatedTime, isOrderByDescending: true, skip: skip, take: take)
-        ///     </code>
-        /// </summary>
-        /// <returns></returns>
-        public static List<LogEntity> Get(out long total, Expression<Func<LogEntity, bool>> predicate = null,
-            Expression<Func<LogEntity, object>> orders = null, bool isOrderByDescending = true, int? skip = null,
-            int? take = null)
-        {
-            // Get result with fill info for HttpContext and Exception from Json
-            var query = Where(predicate);
-
-            // get total records in advance
-            total = query.LongCount();
-
-            // orders
-            if (orders != null)
-            {
-                query = isOrderByDescending ? query.OrderByDescending(orders) : query.OrderBy(orders);
-            }
-
-            // skip
-            if (skip.HasValue)
-            {
-                query = query.Skip(skip.Value);
-            }
-
-            // take
-            if (take.HasValue)
-            {
-                query = query.Take(take.Value);
-            }
-
-            var result = query.Get();
-
-            return result;
         }
 
         private static void UpdateLogInfo(ActionContext context, LogEntity logEntity, string callerMemberName, string callerFilePath, int callerLineNumber)

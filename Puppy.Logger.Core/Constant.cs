@@ -23,13 +23,14 @@ namespace Puppy.Logger.Core
 {
     public static class Constant
     {
-        public const string DateTimeOffSetFormat = "yyyy/MM/dd hh:mm:ss.fff zzz";
+        public const string DateTimeOffSetFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
 
         public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
-            MissingMemberHandling = MissingMemberHandling.Error
+            MissingMemberHandling = MissingMemberHandling.Error,
+            DateFormatHandling = DateFormatHandling.IsoDateFormat
         };
     }
 }

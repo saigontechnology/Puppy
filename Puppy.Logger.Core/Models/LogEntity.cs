@@ -55,6 +55,7 @@ namespace Puppy.Logger.Core.Models
             }
         }
 
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
 
         [JsonConverter(typeof(StringEnumConverter))]

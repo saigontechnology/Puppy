@@ -84,7 +84,12 @@ namespace Puppy.Logger
         /// <param name="logEndpointPattern"></param>
         /// <param name="skip">              </param>
         /// <param name="take">              </param>
-        /// <param name="terms">             </param>
+        /// <param name="terms">             
+        ///     terms do contains search for <see cref="LogEntity.Id" />,
+        ///     <see cref="LogEntity.Message" />, <see cref="LogEntity.Level" />,
+        ///     <see cref="LogEntity.CreatedTime" /> (with string format is
+        ///     "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK", ex: "2017-08-24T00:56:29.6271125+07:00")
+        /// </param>
         /// <returns></returns>
         /// <remarks>
         ///     Base on <paramref name="httpContext"> </paramref> will return <c> ContentType XML
@@ -97,7 +102,7 @@ namespace Puppy.Logger
 
             if (!string.IsNullOrWhiteSpace(terms))
             {
-                predicate = x => x.Message.Contains(terms);
+                predicate = x => x.Id.Contains(terms) || x.Message.Contains(terms) || x.Level.ToString().Contains(terms) || x.CreatedTime.ToString().Contains(terms);
             }
 
             var logs = Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);

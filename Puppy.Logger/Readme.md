@@ -124,6 +124,11 @@ public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
 /// <summary>
 ///     Logs 
 /// </summary>
+/// <param name="skip"> </param>
+/// <param name="take"> </param>
+/// <param name="terms">
+///     terms do contains search for Id, Message, Level, CreatedTime (with string format is "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK")
+/// </param>
 /// <returns></returns>
 [ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
 [HttpGet]
@@ -139,7 +144,7 @@ public IActionResult Logs([FromRoute]int skip, [FromRoute]int take, [FromQuery]s
 /// <summary>
 ///     Log 
 /// </summary>
-/// <param name="id"></param>
+/// <param name="id"> Id should be a guid string with format "N" </param>
 /// <returns></returns>
 [ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
 [HttpGet]
@@ -171,7 +176,7 @@ public IActionResult GetLogs([FromRoute]int skip, [FromRoute]int take, [FromQuer
 
     if (!string.IsNullOrWhiteSpace(terms))
     {
-        predicate = x => x.Message.Contains(terms);
+        predicate = x => x.Id.Contains(terms) || x.Message.Contains(terms) || x.Level.ToString().Contains(terms) || x.CreatedTime.ToString().Contains(terms);
     }
 
     var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);

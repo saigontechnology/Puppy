@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> ExceptionInfo.cs </Name>
+//         <Name> Exception.cs </Name>
 //         <Created> 10/08/17 5:58:52 PM </Created>
 //         <Key> 69f64980-151f-44db-ba2a-d05775526df7 </Key>
 //     </File>
 //     <Summary>
-//         ExceptionInfo.cs
+//         Exception.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -20,12 +20,14 @@
 using System;
 using System.ComponentModel;
 
-namespace Puppy.Logger.Core.Models
+namespace Puppy.Logger.Core.Entities
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public class ExceptionInfo : Serializable
+    public sealed class ExceptionEntity : Serializable
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString("N");
+
         public string HelpLink { get; set; }
 
         public string Message { get; set; }
@@ -38,25 +40,25 @@ namespace Puppy.Logger.Core.Models
 
         public string BaseTypeName { get; set; }
 
-        public ExceptionInfo InternalExceptionInfo { get; set; }
+        public ExceptionEntity InternalException { get; set; }
 
-        public ExceptionInfo()
+        public ExceptionEntity()
         {
         }
 
-        public ExceptionInfo(string message) : this()
+        public ExceptionEntity(string message) : this()
         {
             Message = message;
         }
 
-        public ExceptionInfo(Exception ex) : this(ex.Message)
+        public ExceptionEntity(Exception ex) : this(ex.Message)
         {
             HelpLink = ex.HelpLink;
             Source = ex.Source;
             StackTrace = ex.StackTrace;
             TypeName = ex.GetType()?.FullName;
             BaseTypeName = ex.GetBaseException()?.GetType()?.FullName;
-            InternalExceptionInfo = ex.InnerException != null ? new ExceptionInfo(ex.InnerException) : null;
+            InternalException = ex.InnerException != null ? new ExceptionEntity(ex.InnerException) : null;
         }
     }
 }

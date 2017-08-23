@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> HttpContextInfo.cs </Name>
+//         <Name> HttpContext.cs </Name>
 //         <Created> 11/08/17 2:28:30 PM </Created>
 //         <Key> 464c387f-a9b1-461f-986e-c60ca46b7dcd </Key>
 //     </File>
 //     <Summary>
-//         HttpContextInfo.cs
+//         HttpContext.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -26,12 +26,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Puppy.Logger.Core.Models
+namespace Puppy.Logger.Core.Entities
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public class HttpContextInfo : Serializable
+    public sealed class HttpContextEntity : Serializable
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString("N");
+
         public DateTimeOffset? RequestTime { get; set; }
 
         public Dictionary<string, List<string>> Headers { get; set; } = new Dictionary<string, List<string>>();
@@ -54,11 +56,11 @@ namespace Puppy.Logger.Core.Models
         /// </summary>
         public object RequestBody { get; set; }
 
-        public HttpContextInfo()
+        public HttpContextEntity()
         {
         }
 
-        public HttpContextInfo(HttpContext context) : this()
+        public HttpContextEntity(HttpContext context) : this()
         {
             Headers = context.Request.Headers.ToDictionary(x => x.Key, x => x.Value.ToList());
             Protocol = context.Request.Protocol;

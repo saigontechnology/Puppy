@@ -18,28 +18,28 @@
 #endregion License
 
 using Newtonsoft.Json;
-using Puppy.Logger.Core.Models;
+using Puppy.Logger.Core.Entities;
 using System;
 
 namespace Puppy.Logger.Core
 {
     public class LoggerHelper
     {
-        public static bool TryParseLogInfo(string value, out LogInfo logInfo)
+        public static bool TryParseLogInfo(string value, out LogEntity logEntity)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    logInfo = null;
+                    logEntity = null;
                     return false;
                 }
-                logInfo = JsonConvert.DeserializeObject<LogInfo>(value, Constant.JsonSerializerSettings);
-                return logInfo != null;
+                logEntity = JsonConvert.DeserializeObject<LogEntity>(value, Constant.JsonSerializerSettings);
+                return logEntity != null;
             }
             catch (Exception)
             {
-                logInfo = null;
+                logEntity = null;
                 return false;
             }
         }

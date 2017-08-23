@@ -12,12 +12,15 @@
     <Configurations>Debug;Release</Configurations>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <OutputPath>.\bin\</OutputPath>
+    <!-- Enable runtime config and runtime version, Need for entity framework DonetClioTool -->
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
 
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
     <ProjectReference Include="..\Puppy.Logger.Core\Puppy.Logger.Core.csproj" />
+    <ProjectReference Include="..\Puppy.EF\Puppy.EF.csproj" />
   </ItemGroup>
 
   <!-- External Libraries -->
@@ -40,9 +43,13 @@
     <PackageReference Include="Serilog.Sinks.File" Version="3.2.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
 
-    <!-- SQLite -->
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.1" />
-    <PackageReference Include="SQLite" Version="3.13.0" />
-    <PackageReference Include="SQLite.Native" Version="3.12.3" />
+    <!-- EF Framework - SQLite -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />
+
+    <!-- START Keep Runtime version is 1.0.0-* -->
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-*" />
   </ItemGroup>
 </Project>

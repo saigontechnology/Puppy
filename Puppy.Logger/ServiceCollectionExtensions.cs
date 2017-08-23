@@ -27,11 +27,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Puppy.Core.EnvironmentUtils;
-using Puppy.Logger.Core.Models;
 using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Puppy.Logger.Core.Entities;
 
 namespace Puppy.Logger
 {
@@ -103,16 +103,16 @@ namespace Puppy.Logger
             public Task Invoke(HttpContext context)
             {
                 // Add Request Id if not have already.
-                if (!context.Request.Headers.ContainsKey(nameof(LogInfo.Id)))
+                if (!context.Request.Headers.ContainsKey(nameof(LogEntity.Id)))
                 {
                     var id = Guid.NewGuid().ToString("N");
-                    context.Request.Headers.Add(nameof(LogInfo.Id), id);
+                    context.Request.Headers.Add(nameof(LogEntity.Id), id);
                 }
 
-                if (!context.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
+                if (!context.Request.Headers.ContainsKey(nameof(HttpContextEntity.RequestTime)))
                 {
                     var requestTime = DateTimeOffset.Now.ToString(Core.Constant.DateTimeOffSetFormat);
-                    context.Request.Headers.Add(nameof(HttpContextInfo.RequestTime), requestTime);
+                    context.Request.Headers.Add(nameof(HttpContextEntity.RequestTime), requestTime);
                 }
 
                 // Allows using several time the stream in ASP.Net Core. Enable Rewind for Request to

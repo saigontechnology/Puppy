@@ -20,9 +20,9 @@
 using Hangfire;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Puppy.Logger.Core;
-using Puppy.Logger.Core.Models;
 using System;
 using System.Runtime.CompilerServices;
+using Puppy.Logger.Core.Entities;
 
 namespace Puppy.Logger
 {
@@ -92,7 +92,7 @@ namespace Puppy.Logger
 
         private static string JobLogException(LogLevel logLevel, Exception ex, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logInfo = new LogInfo(ex, logLevel);
+            var logInfo = new LogEntity(ex, logLevel);
             UpdateLogInfo(logInfo, callerMemberName, callerFilePath, callerLineNumber);
             BackgroundJob.Enqueue(() => Write(logLevel, logInfo.ToString()));
             return logInfo.Id;
@@ -100,7 +100,7 @@ namespace Puppy.Logger
 
         private static string JobLogExceptionContext(LogLevel logLevel, ExceptionContext context, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logInfo = new LogInfo(context, logLevel);
+            var logInfo = new LogEntity(context, logLevel);
             UpdateLogInfo(context, logInfo, callerMemberName, callerFilePath, callerLineNumber);
             BackgroundJob.Enqueue(() => Write(logLevel, logInfo.ToString()));
             return logInfo.Id;

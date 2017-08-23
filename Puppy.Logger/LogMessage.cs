@@ -19,8 +19,8 @@
 
 using Hangfire;
 using Puppy.Logger.Core;
-using Puppy.Logger.Core.Models;
 using System.Runtime.CompilerServices;
+using Puppy.Logger.Core.Entities;
 
 namespace Puppy.Logger
 {
@@ -64,7 +64,7 @@ namespace Puppy.Logger
 
         private static void JobLogMessage(LogLevel logLevel, string message, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logInfo = new LogInfo(message, logLevel);
+            var logInfo = new LogEntity(message, logLevel);
             UpdateLogInfo(logInfo, callerMemberName, callerFilePath, callerLineNumber);
             BackgroundJob.Enqueue(() => Write(logLevel, logInfo.ToString()));
         }

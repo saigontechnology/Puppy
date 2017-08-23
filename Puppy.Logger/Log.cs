@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
-using Puppy.Logger.Core.Models;
+using Puppy.Logger.Core.Entities;
 using Puppy.Logger.RollingFile;
 using Puppy.Logger.SQLite;
 using Serilog;
@@ -39,9 +39,7 @@ namespace Puppy.Logger
         internal static void BuildLogger()
         {
             var loggerConfig =
-                new LoggerConfiguration()
-                    .WriteTo
-                    .SQLite(LoggerConfig.SQLiteConnectionString, LoggerConfig.SQLiteLogMinimumLevelEnum);
+                new LoggerConfiguration().WriteTo.SQLite();
 
             // Enable rolling file log by config
             if (LoggerConfig.IsEnableRollingFileLog)
@@ -82,32 +80,32 @@ namespace Puppy.Logger
             Serilog.Log.Write(logEventLevel, message);
         }
 
-        private static void UpdateLogInfo(ExceptionContext context, LogInfo logInfo, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static void UpdateLogInfo(ExceptionContext context, LogEntity logEntity, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            UpdateLogInfo(logInfo, callerMemberName, callerFilePath, callerLineNumber);
+            UpdateLogInfo(logEntity, callerMemberName, callerFilePath, callerLineNumber);
 
             // Priority to use Header Id instead of self generate Id
-            if (context.HttpContext.Request.Headers.ContainsKey(nameof(logInfo.Id)))
-                logInfo.Id = context.HttpContext.Request.Headers[nameof(logInfo.Id)];
+            if (context.HttpContext.Request.Headers.ContainsKey(nameof(logEntity.Id)))
+                logEntity.Id = context.HttpContext.Request.Headers[nameof(logEntity.Id)];
 
             // Get Request Time from Header
-            if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
+            if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextEntity.RequestTime)))
             {
-                string requestTimeStr = context.HttpContext.Request.Headers[nameof(HttpContextInfo.RequestTime)];
+                string requestTimeStr = context.HttpContext.Request.Headers[nameof(HttpContextEntity.RequestTime)];
                 DateTime requestTime;
                 var isCanGetRequestTime =
                     DateTimeHelper.TryParse(requestTimeStr, Core.Constant.DateTimeOffSetFormat, out requestTime);
-                logInfo.HttpContextInfo.RequestTime =
+                logEntity.HttpContext.RequestTime =
                     isCanGetRequestTime ? (DateTimeOffset?)requestTime : null;
             }
         }
 
-        private static void UpdateLogInfo(LogInfo logInfo, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static void UpdateLogInfo(LogEntity logEntity, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            logInfo.CallerMemberName = callerMemberName;
-            logInfo.CallerFilePath = callerFilePath;
-            logInfo.CallerRelativePath = GetCallerRelativePath(logInfo.CallerFilePath);
-            logInfo.CallerLineNumber = callerLineNumber;
+            logEntity.CallerMemberName = callerMemberName;
+            logEntity.CallerFilePath = callerFilePath;
+            logEntity.CallerRelativePath = GetCallerRelativePath(logEntity.CallerFilePath);
+            logEntity.CallerLineNumber = callerLineNumber;
         }
 
         private static string GetCallerRelativePath(string callerFilePath)

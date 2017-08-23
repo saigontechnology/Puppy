@@ -4,28 +4,22 @@
 //     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
-//     <Project> Puppy </Project>
+//     <Project> Puppy → Interface </Project>
 //     <File>
-//         <Name> Serializable.cs </Name>
-//         <Created> 11/08/17 5:11:21 PM </Created>
-//         <Key> 08056cc7-81c9-49c9-a4a9-b62c131ff068 </Key>
+//         <Name> ISqliteDatabase.cs </Name>
+//         <Created> 23/08/17 10:09:56 AM </Created>
+//         <Key> 98d4dead-149b-4be3-a002-6c00b2b9dd3b </Key>
 //     </File>
 //     <Summary>
-//         Serializable.cs
+//         ISqliteDatabase.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Newtonsoft.Json;
-
-namespace Puppy.Logger.Core.Models
+namespace Puppy.Logger.SQLite.Factory
 {
-    public abstract class Serializable
+    public interface ISqliteDatabase
     {
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this, Constant.JsonFormatting, Constant.JsonSerializerSettings);
-        }
     }
 }

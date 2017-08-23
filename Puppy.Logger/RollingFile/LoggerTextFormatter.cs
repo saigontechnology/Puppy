@@ -18,7 +18,7 @@
 #endregion License
 
 using Puppy.Logger.Core;
-using Puppy.Logger.Core.Models;
+using Puppy.Logger.Core.Entities;
 using Serilog.Events;
 using Serilog.Formatting;
 using System;
@@ -27,7 +27,7 @@ using System.IO;
 namespace Puppy.Logger.RollingFile
 {
     /// <summary>
-    ///     Logger Formatter for Serilog, Write only Message is LogInfo JSON String 
+    ///     Logger Formatter for Serilog, Write only Message is LogEntity JSON String 
     /// </summary>
     /// <remarks> Auto add <c> ,Environment.NewLine </c> to the end of value </remarks>
     public class LoggerTextFormatter : ITextFormatter
@@ -44,7 +44,7 @@ namespace Puppy.Logger.RollingFile
                 return;
             }
 
-            if (!LoggerHelper.TryParseLogInfo(logEvent.MessageTemplate.Text, out LogInfo logInfo)) return;
+            if (!LoggerHelper.TryParseLogInfo(logEvent.MessageTemplate.Text, out LogEntity _)) return;
 
             output.Write(logEvent.MessageTemplate.Text);
             output.Write($",{Environment.NewLine}");

@@ -26,17 +26,21 @@ using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.Logger.Core.Models;
 using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Puppy.Logger.Core.Entities;
 
 namespace Puppy.Logger
 {
     public static class ServiceCollectionExtensions
     {
+        private static IConfiguration _configuration;
+        private static string _configSection;
+
         /// <summary>
         ///     Add Logger Service with Hangfire on Memory if it not added by another service before. 
         /// </summary>
@@ -46,10 +50,8 @@ namespace Puppy.Logger
         /// <returns></returns>
         public static IServiceCollection AddLogger(this IServiceCollection services, IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
-            configuration.BuildLoggerConfig();
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _configSection = configSection;
 
             // Check if don't have hangfire service, let add to run background job.
             if (services.All(x => x.ServiceType != typeof(JobStorage)))
@@ -70,13 +72,21 @@ namespace Puppy.Logger
         /// <param name="appLifetime">   Ensure any buffered events are sent at shutdown </param>
         /// <returns></returns>
         /// <remarks>
-        ///     Auto add request header <c> "Id" </c>, <c> "RequestTime" </c> and <c> EnableRewind
-        ///     </c> for Request to get <c> Request Body </c> when logging. The file will be written
-        ///     using the <c> UTF-8 encoding </c> without a byte-order mark.
+        ///     <para>
+        ///         Auto add request header <c> "Id" </c>, <c> "RequestTime" </c> and <c>
+        ///         EnableRewind </c> for Request to get <c> Request Body </c> when logging.
+        ///     </para>
+        ///     <para>
+        ///         The file will be written using the <c> UTF-8 encoding </c> without a byte-order mark.
+        ///     </para>
+        ///     <para> Auto reload config when the appsettings.json changed </para>
         /// </remarks>
         public static IApplicationBuilder UseLogger(this IApplicationBuilder app, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
         {
-            // Build the config for Logger
+            // Re-Build the config for Logger - parameters
+            _configuration.BuildLoggerConfig(_configSection);
+
+            // Build the config for Logger - methods
             Log.BuildLogger();
 
             // Add Logger for microsoft logger factory
@@ -87,6 +97,17 @@ namespace Puppy.Logger
 
             // Add middleware to inject Request Id
             app.UseMiddleware<LoggerMiddleware>();
+
+            ChangeToken.OnChange(_configuration.GetReloadToken, () =>
+            {
+                // Re-Build the config for Logger - parameters
+                _configuration.BuildLoggerConfig();
+
+                // Re-Build the config for Logger - methods
+                Log.BuildLogger();
+
+                Log.Warning("Puppy Logger Changed Configuration");
+            });
 
             return app;
         }
@@ -109,10 +130,10 @@ namespace Puppy.Logger
                     context.Request.Headers.Add(nameof(LogEntity.Id), id);
                 }
 
-                if (!context.Request.Headers.ContainsKey(nameof(HttpContextEntity.RequestTime)))
+                if (!context.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
                 {
                     var requestTime = DateTimeOffset.Now.ToString(Core.Constant.DateTimeOffSetFormat);
-                    context.Request.Headers.Add(nameof(HttpContextEntity.RequestTime), requestTime);
+                    context.Request.Headers.Add(nameof(HttpContextInfo.RequestTime), requestTime);
                 }
 
                 // Allows using several time the stream in ASP.Net Core. Enable Rewind for Request to
@@ -131,15 +152,30 @@ namespace Puppy.Logger
         public static void BuildLoggerConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
+
             if (isHaveConfig)
             {
+                // Rolling File
+                LoggerConfig.IsEnableRollingFileLog = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.IsEnableRollingFileLog)}", LoggerConfig.IsEnableRollingFileLog);
+
+                // Path Format
                 LoggerConfig.PathFormat = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.PathFormat)}", LoggerConfig.PathFormat);
+
+                // Date Time Format
+                LoggerConfig.DateFormat = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.DateFormat)}", LoggerConfig.DateFormat);
+                LoggerConfig.HourFormat = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.HourFormat)}", LoggerConfig.HourFormat);
+                LoggerConfig.HalfHourFormat = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.HalfHourFormat)}", LoggerConfig.HalfHourFormat);
+
                 LoggerConfig.RetainedFileCountLimit = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.RetainedFileCountLimit)}", LoggerConfig.RetainedFileCountLimit);
                 LoggerConfig.FileSizeLimitBytes = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.FileSizeLimitBytes)}", LoggerConfig.FileSizeLimitBytes);
                 LoggerConfig.FileLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.FileLogMinimumLevel)}", LoggerConfig.FileLogMinimumLevel);
+
+                // Console
                 LoggerConfig.ConsoleLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.ConsoleLogMinimumLevel)}", LoggerConfig.ConsoleLogMinimumLevel);
-                LoggerConfig.IsEnableRollingFileLog = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.IsEnableRollingFileLog)}", LoggerConfig.IsEnableRollingFileLog);
+
+                // Database
                 LoggerConfig.SQLiteConnectionString = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteConnectionString)}", LoggerConfig.SQLiteConnectionString);
+
                 LoggerConfig.SQLiteLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteLogMinimumLevel)}", LoggerConfig.SQLiteLogMinimumLevel);
             }
 
@@ -149,7 +185,7 @@ namespace Puppy.Logger
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
-            Console.WriteLine("Logger Rolling File Path" +
+            Console.WriteLine("[Puppy.Logger] Rolling File Path" +
                               $": {LoggerConfig.PathFormat}" +
                               $", Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes)" +
                               $", Maximum: {LoggerConfig.RetainedFileCountLimit} (files)" +
@@ -157,9 +193,10 @@ namespace Puppy.Logger
                               $", Console Log Minimum Level: {LoggerConfig.ConsoleLogMinimumLevel}" +
                               $"| Full Path: {LoggerConfig.FullPath}, Folder Full Path: {LoggerConfig.FolderFullPath}");
 
-            Console.WriteLine("Logger SQLite File Path" +
+            Console.WriteLine("[Puppy.Logger] SQLite File Path" +
                               $": {LoggerConfig.SQLiteConnectionString}" +
                               $", SQLite Minimum Level: {LoggerConfig.SQLiteLogMinimumLevel}");
+
             Console.ResetColor();
         }
     }

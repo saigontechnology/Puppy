@@ -17,10 +17,10 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Reflection;
-using Microsoft.Data.Sqlite;
 
 namespace Puppy.Logger.SQLite.Factory
 {

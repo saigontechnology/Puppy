@@ -26,9 +26,11 @@ namespace Puppy.Logger.RollingFile
 {
     internal class Specifier
     {
-        public static readonly Specifier Date = new Specifier(nameof(Date), "yyyy-MM-dd", TimeSpan.FromDays(1));
-        public static readonly Specifier Hour = new Specifier(nameof(Hour), "yyyy-MM-dd HH", TimeSpan.FromHours(1));
-        public static readonly Specifier HalfHour = new Specifier(nameof(HalfHour), "yyyy-MM-dd HH_mm", TimeSpan.FromMinutes(30));
+        public static readonly Specifier Date = new Specifier(nameof(Date), LoggerConfig.DateFormat, TimeSpan.FromDays(1));
+        public static readonly Specifier Hour = new Specifier(nameof(Hour), LoggerConfig.HourFormat, TimeSpan.FromHours(1));
+        public static readonly Specifier HalfHour = new Specifier(nameof(HalfHour), LoggerConfig.HalfHourFormat, TimeSpan.FromMinutes(30));
+
+        public string Name { get; private set; }
 
         public string Token { get; private set; }
 
@@ -41,6 +43,8 @@ namespace Puppy.Logger.RollingFile
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
             if (string.IsNullOrWhiteSpace(format)) throw new ArgumentNullException(nameof(format));
+
+            Name = name;
             Token = "{" + name + "}";
             Format = format;
             Interval = interval;
@@ -66,14 +70,40 @@ namespace Puppy.Logger.RollingFile
 
         public static bool TryGetSpecifier(string pathTemplate, out Specifier specifier)
         {
-            if (pathTemplate == null) throw new ArgumentNullException(nameof(pathTemplate));
+            if (string.IsNullOrWhiteSpace(pathTemplate)) throw new ArgumentNullException(nameof(pathTemplate));
 
-            var specifiers = new[] { HalfHour, Hour, Date }.Where(s => !string.IsNullOrWhiteSpace(s.Token) && pathTemplate.Contains(s.Token)).ToArray();
+            var specifiers = new[] { HalfHour, Hour, Date }.Where(s => pathTemplate.Contains(s.Token)).ToArray();
 
             if (specifiers.Length > 1)
                 throw new ArgumentException("Only one interval specifier can be used in a rolling log file path.", nameof(pathTemplate));
 
             specifier = specifiers.FirstOrDefault();
+
+            if (specifier == null) return specifier != null;
+
+            // Update format from logger config
+            switch (specifier.Name)
+            {
+                case nameof(Date):
+                    {
+                        specifier.Format = LoggerConfig.DateFormat;
+                        break;
+                    }
+                case nameof(Hour):
+                    {
+                        specifier.Format = LoggerConfig.HourFormat;
+                        break;
+                    }
+                case nameof(HalfHour):
+                    {
+                        specifier.Format = LoggerConfig.HalfHourFormat;
+                        break;
+                    }
+                default:
+                    {
+                        throw new ArgumentException("Only one interval specifier can be used in a rolling log file path.", nameof(pathTemplate));
+                    }
+            }
 
             return specifier != null;
         }

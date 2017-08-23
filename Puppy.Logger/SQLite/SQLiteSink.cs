@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Puppy.Logger.Core.Entities;
+using Puppy.Logger.Core.Models;
 using Serilog.Core;
 using Serilog.Debugging;
 using Serilog.Events;

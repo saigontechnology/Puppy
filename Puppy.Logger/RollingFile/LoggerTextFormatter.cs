@@ -18,7 +18,7 @@
 #endregion License
 
 using Puppy.Logger.Core;
-using Puppy.Logger.Core.Entities;
+using Puppy.Logger.Core.Models;
 using Serilog.Events;
 using Serilog.Formatting;
 using System;

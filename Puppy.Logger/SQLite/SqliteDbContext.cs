@@ -20,7 +20,7 @@
 using Microsoft.EntityFrameworkCore;
 using Puppy.EF;
 using Puppy.EF.Mapping;
-using Puppy.Logger.Core.Entities;
+using Puppy.Logger.Core.Models;
 using Puppy.Logger.SQLite.Factory;
 
 namespace Puppy.Logger.SQLite

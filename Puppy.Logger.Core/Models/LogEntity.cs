@@ -23,7 +23,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel;
 
-namespace Puppy.Logger.Core.Entities
+namespace Puppy.Logger.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
@@ -64,13 +64,13 @@ namespace Puppy.Logger.Core.Entities
 
         #region Exception
 
-        private ExceptionEntity _exception;
+        private ExceptionInfo _exception;
 
         /// <summary>
         ///     Exception Info 
         /// </summary>
         /// <remarks> Set value for HttpContext auto update value for <see cref="ExceptionJson" /> </remarks>
-        public ExceptionEntity Exception
+        public ExceptionInfo Exception
         {
             get => _exception;
             set
@@ -86,7 +86,7 @@ namespace Puppy.Logger.Core.Entities
         ///     Json String of <see cref="Exception" /> 
         /// </summary>
         /// <remarks>
-        ///     When set value for this, only accept json string can parse to <c> ExceptionEntity </c>
+        ///     When set value for this, only accept json string can parse to <c> ExceptionInfo </c>
         /// </remarks>
         [JsonIgnore]
         public string ExceptionJson
@@ -94,8 +94,8 @@ namespace Puppy.Logger.Core.Entities
             get => _exceptionJson;
             set
             {
-                var exceptionEntity = JsonConvert.DeserializeObject<ExceptionEntity>(value, Constant.JsonSerializerSettings);
-                if (exceptionEntity == null) throw new NotSupportedException($"{value} is not {nameof(ExceptionEntity)} Json String");
+                var exceptionEntity = JsonConvert.DeserializeObject<ExceptionInfo>(value, Constant.JsonSerializerSettings);
+                if (exceptionEntity == null) throw new NotSupportedException($"{value} is not {nameof(ExceptionInfo)} Json String");
                 _exceptionJson = value;
             }
         }
@@ -104,13 +104,13 @@ namespace Puppy.Logger.Core.Entities
 
         #region HttpContext
 
-        private HttpContextEntity _httpContext;
+        private HttpContextInfo _httpContext;
 
         /// <summary>
         ///     Http Context Info 
         /// </summary>
         /// <remarks> Set value for HttpContext auto update value for <see cref="HttpContextJson" /> </remarks>
-        public HttpContextEntity HttpContext
+        public HttpContextInfo HttpContext
         {
             get => _httpContext;
             set
@@ -126,7 +126,7 @@ namespace Puppy.Logger.Core.Entities
         ///     Json String of <see cref="HttpContext" /> 
         /// </summary>
         /// <remarks>
-        ///     When set value for this, only accept json string can parse to <c> HttpContextEntity </c>
+        ///     When set value for this, only accept json string can parse to <c> HttpContextInfo </c>
         /// </remarks>
         [JsonIgnore]
         public string HttpContextJson
@@ -134,9 +134,9 @@ namespace Puppy.Logger.Core.Entities
             get => _httpContextJson;
             set
             {
-                var httpContext = JsonConvert.DeserializeObject<HttpContextEntity>(value, Constant.JsonSerializerSettings);
+                var httpContext = JsonConvert.DeserializeObject<HttpContextInfo>(value, Constant.JsonSerializerSettings);
 
-                if (httpContext == null) throw new NotSupportedException($"{value} is not {nameof(HttpContextEntity)} Json String");
+                if (httpContext == null) throw new NotSupportedException($"{value} is not {nameof(HttpContextInfo)} Json String");
 
                 _httpContextJson = value;
             }
@@ -156,13 +156,13 @@ namespace Puppy.Logger.Core.Entities
 
         public LogEntity(Exception ex, LogLevel level, string message = null) : this(message, level)
         {
-            Exception = new ExceptionEntity(ex);
+            Exception = new ExceptionInfo(ex);
         }
 
         public LogEntity(ExceptionContext context, LogLevel level, string message = null) : this(message, level)
         {
-            Exception = new ExceptionEntity(context.Exception);
-            HttpContext = new HttpContextEntity(context.HttpContext);
+            Exception = new ExceptionInfo(context.Exception);
+            HttpContext = new HttpContextInfo(context.HttpContext);
         }
     }
 }

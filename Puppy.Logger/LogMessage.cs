@@ -19,8 +19,8 @@
 
 using Hangfire;
 using Puppy.Logger.Core;
+using Puppy.Logger.Core.Models;
 using System.Runtime.CompilerServices;
-using Puppy.Logger.Core.Entities;
 
 namespace Puppy.Logger
 {

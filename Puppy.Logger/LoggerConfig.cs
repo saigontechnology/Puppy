@@ -47,9 +47,15 @@ namespace Puppy.Logger
         /// </summary>
         public static string PathFormat { get; set; } = "Logs\\{Level}\\LOG_{Level}_{Date}.json";
 
-        public static string FullPath { get; } = PathFormat.GetFullPath();
+        public static string DateFormat { get; set; } = "yyyy-MM-dd";
 
-        public static string FolderFullPath { get; } = Path.GetDirectoryName(PathFormat).GetFullPath();
+        public static string HourFormat { get; set; } = "yyyy-MM-dd HH";
+
+        public static string HalfHourFormat { get; set; } = "yyyy-MM-dd HH_mm";
+
+        public static string FullPath => PathFormat.GetFullPath();
+
+        public static string FolderFullPath => Path.GetDirectoryName(PathFormat).GetFullPath();
 
         /// <summary>
         ///     Maximum retained file, default is <c> 365 </c> 
@@ -81,7 +87,7 @@ namespace Puppy.Logger
                 {
                     throw new ArgumentOutOfRangeException(nameof(FileLogMinimumLevel));
                 }
-                FileLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value.ToString());
+                FileLogMinimumLevelEnum = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), value);
             }
         }
 

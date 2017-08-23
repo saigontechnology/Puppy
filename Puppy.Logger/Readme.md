@@ -9,22 +9,35 @@ Puppy Logger, log error with http request information and exception as detail as
 
 ```json
   "Logger": {
+    //------------------ Rolling File ------------------
     // Default Puppy Logger always log in SQLite file and also in Rolling File with config, so you can enable or disable rolling file option
     "IsEnableRollingFileLog": true,
     
     // PathFormat
-    // {Date} Creates a file per day. Filenames use the yyyy-MM-dd format.
+    // {Date} Creates a file per day. Filenames use the DateFormat format.
     // {Hour} Creates a file per hour. Filenames use the yyyy-MM-dd HH format.
     // {HalfHour} Creates a file per half hour. Filenames use the yyyy-MM-dd HH_mm format.
     // {Level} use run time level when you call Write Log method: Verbose, Debug, Information, Warning, Error, Fatal
     "PathFormat": "Logs\\{Level}\\LOG_{Level}_{Date}.json",
+    
+    // Format Date Time config for PathFormat
+    // {Date} date format, default is "yyyy-MM-dd"
+    "DateFormat": "yyyy-MM-dd",
+    // {Hour} time format, default is "yyyy-MM-dd HH"
+    "HourFormat": "yyyy-MM-dd HH",
+    // {HalfHour} time format, default is "yyyy-MM-dd HH_mm"
+    "HalfHourFormat": "yyyy-MM-dd HH_mm",
+
     "RetainedFileCountLimit": 365,
     "FileSizeLimitBytes": 1048576,
     "FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
     
+    //------------------ Console ------------------
+
     // Puppy Logger do log in Console only in Development Environment
     "ConsoleLogMinimumLevel": "Information" // Verbose, Debug, Information, Warning, Error, Fatal.
     
+    //------------------ Database ------------------
     "SQLiteConnectionString": "Logs\\Puppy.Logger.db",
     "SQLiteLogMinimumLevel": "Warning" // Verbose, Debug, Information, Warning, Error, Fatal.
   }
@@ -37,9 +50,10 @@ services.AddLogger(ConfigurationRoot)
 ```
 
 ## Use Application Builder
+- In Configure of Application Builder, you need inject `IApplicationLifetime appLifetime` to use Puppy Logger
 ```csharp
 // [Logger]
-app.UseLogger(loggerFactory)
+app.UseLogger(loggerFactory, appLifetime)
 ```
 
 ## Logging

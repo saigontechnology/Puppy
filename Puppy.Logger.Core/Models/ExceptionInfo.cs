@@ -20,11 +20,11 @@
 using System;
 using System.ComponentModel;
 
-namespace Puppy.Logger.Core.Entities
+namespace Puppy.Logger.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public sealed class ExceptionEntity : Serializable
+    public sealed class ExceptionInfo : Serializable
     {
         public string Id { get; set; } = Guid.NewGuid().ToString("N");
 
@@ -40,25 +40,25 @@ namespace Puppy.Logger.Core.Entities
 
         public string BaseTypeName { get; set; }
 
-        public ExceptionEntity InternalException { get; set; }
+        public ExceptionInfo InternalException { get; set; }
 
-        public ExceptionEntity()
+        public ExceptionInfo()
         {
         }
 
-        public ExceptionEntity(string message) : this()
+        public ExceptionInfo(string message) : this()
         {
             Message = message;
         }
 
-        public ExceptionEntity(Exception ex) : this(ex.Message)
+        public ExceptionInfo(Exception ex) : this(ex.Message)
         {
             HelpLink = ex.HelpLink;
             Source = ex.Source;
             StackTrace = ex.StackTrace;
             TypeName = ex.GetType()?.FullName;
             BaseTypeName = ex.GetBaseException()?.GetType()?.FullName;
-            InternalException = ex.InnerException != null ? new ExceptionEntity(ex.InnerException) : null;
+            InternalException = ex.InnerException != null ? new ExceptionInfo(ex.InnerException) : null;
         }
     }
 }

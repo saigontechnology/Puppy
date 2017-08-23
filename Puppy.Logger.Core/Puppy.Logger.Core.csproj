@@ -20,13 +20,13 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Entities\ExceptionEntity.cs">
+    <Compile Update="Models\ExceptionInfo.cs">
       <SubType>Puppy</SubType>
     </Compile>
-    <Compile Update="Entities\HttpContextEntity.cs">
+    <Compile Update="Models\HttpContextInfo.cs">
       <SubType>Puppy</SubType>
     </Compile>
-    <Compile Update="Entities\LogEntity.cs">
+    <Compile Update="Models\LogEntity.cs">
       <SubType>Puppy</SubType>
     </Compile>
   </ItemGroup>

@@ -25,11 +25,10 @@ namespace Puppy.Logger.Core
     {
         public const string DateTimeOffSetFormat = "yyyy/MM/dd hh:mm:ss.fff zzz";
 
-        public static readonly Formatting JsonFormatting = Formatting.Indented;
-
         public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented,
             MissingMemberHandling = MissingMemberHandling.Error
         };
     }

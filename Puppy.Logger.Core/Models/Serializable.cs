@@ -19,13 +19,13 @@
 
 using Newtonsoft.Json;
 
-namespace Puppy.Logger.Core.Entities
+namespace Puppy.Logger.Core.Models
 {
     public abstract class Serializable
     {
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, Constant.JsonFormatting, Constant.JsonSerializerSettings);
+            return JsonConvert.SerializeObject(this, Constant.JsonSerializerSettings);
         }
     }
 }

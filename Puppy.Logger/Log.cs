@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
-using Puppy.Logger.Core.Entities;
+using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
 using Puppy.Logger.SQLite;
 using Serilog;
@@ -38,13 +38,13 @@ namespace Puppy.Logger
     {
         internal static void BuildLogger()
         {
-            var loggerConfig =
+            var loggerConfiguration =
                 new LoggerConfiguration().WriteTo.SQLite();
 
             // Enable rolling file log by config
             if (LoggerConfig.IsEnableRollingFileLog)
             {
-                loggerConfig
+                loggerConfiguration
                     .WriteTo.RollingFile(
                     pathFormat: LoggerConfig.PathFormat,
                     fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
@@ -63,15 +63,15 @@ namespace Puppy.Logger
                     MinimumLevel = LoggerConfig.ConsoleLogMinimumLevelEnum
                 };
 
-                loggerConfig =
-                    loggerConfig
+                loggerConfiguration =
+                    loggerConfiguration
                         .WriteTo
                         .ColoredConsole(LoggerConfig.ConsoleLogMinimumLevelEnum, Constant.ConsoleTemplate,
                             levelSwitch: consoleLogLevelSwitch);
             }
 
             // Add Logger to Serilog
-            Serilog.Log.Logger = loggerConfig.CreateLogger();
+            Serilog.Log.Logger = loggerConfiguration.CreateLogger();
         }
 
         public static void Write(LogLevel logLevel, string message)
@@ -89,9 +89,9 @@ namespace Puppy.Logger
                 logEntity.Id = context.HttpContext.Request.Headers[nameof(logEntity.Id)];
 
             // Get Request Time from Header
-            if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextEntity.RequestTime)))
+            if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
             {
-                string requestTimeStr = context.HttpContext.Request.Headers[nameof(HttpContextEntity.RequestTime)];
+                string requestTimeStr = context.HttpContext.Request.Headers[nameof(HttpContextInfo.RequestTime)];
                 DateTime requestTime;
                 var isCanGetRequestTime =
                     DateTimeHelper.TryParse(requestTimeStr, Core.Constant.DateTimeOffSetFormat, out requestTime);

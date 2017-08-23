@@ -20,9 +20,9 @@
 using Hangfire;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Puppy.Logger.Core;
+using Puppy.Logger.Core.Models;
 using System;
 using System.Runtime.CompilerServices;
-using Puppy.Logger.Core.Entities;
 
 namespace Puppy.Logger
 {

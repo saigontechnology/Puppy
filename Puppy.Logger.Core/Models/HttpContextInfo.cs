@@ -26,11 +26,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Puppy.Logger.Core.Entities
+namespace Puppy.Logger.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public sealed class HttpContextEntity : Serializable
+    public sealed class HttpContextInfo : Serializable
     {
         public string Id { get; set; } = Guid.NewGuid().ToString("N");
 
@@ -56,11 +56,11 @@ namespace Puppy.Logger.Core.Entities
         /// </summary>
         public object RequestBody { get; set; }
 
-        public HttpContextEntity()
+        public HttpContextInfo()
         {
         }
 
-        public HttpContextEntity(HttpContext context) : this()
+        public HttpContextInfo(HttpContext context) : this()
         {
             Headers = context.Request.Headers.ToDictionary(x => x.Key, x => x.Value.ToList());
             Protocol = context.Request.Protocol;

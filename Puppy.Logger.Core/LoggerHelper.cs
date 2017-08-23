@@ -18,7 +18,7 @@
 #endregion License
 
 using Newtonsoft.Json;
-using Puppy.Logger.Core.Entities;
+using Puppy.Logger.Core.Models;
 using System;
 
 namespace Puppy.Logger.Core

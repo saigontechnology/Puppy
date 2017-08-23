@@ -157,12 +157,22 @@ namespace Puppy.Logger.Core.Models
         public LogEntity(Exception ex, LogLevel level, string message = null) : this(message, level)
         {
             Exception = new ExceptionInfo(ex);
+
+            if (string.IsNullOrWhiteSpace(Message))
+            {
+                Message = Exception.RootExceptionMessage;
+            }
         }
 
         public LogEntity(ExceptionContext context, LogLevel level, string message = null) : this(message, level)
         {
             Exception = new ExceptionInfo(context.Exception);
             HttpContext = new HttpContextInfo(context.HttpContext);
+
+            if (string.IsNullOrWhiteSpace(Message))
+            {
+                Message = Exception.RootExceptionMessage;
+            }
         }
 
         /// <summary>

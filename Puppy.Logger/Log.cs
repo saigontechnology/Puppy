@@ -22,7 +22,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
-using Puppy.EF.Interfaces.Repository;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
@@ -84,17 +83,49 @@ namespace Puppy.Logger
             Serilog.Log.Write(logEventLevel, message);
         }
 
-        public static List<LogEntity> Get(Expression<Func<LogEntity, bool>> predicate = null)
+        public static IQueryable<LogEntity> Where(Expression<Func<LogEntity, bool>> predicate = null)
         {
-            using (var db = new SqliteDbContext())
-            {
-                IRepository<LogEntity> logRepository = new Repository<LogEntity>(db);
-                var query = logRepository.Get(predicate);
+            return LogQueryExtensions.Where(predicate);
+        }
 
-                // Get result with fill info for HttpContext and Exception from Json
-                var result = query.ToList().Select(x => x.FillInfo()).ToList();
-                return result;
+        /// <summary>
+        ///     Get result with fill info for HttpContext and Exception from Json. Ex call: 
+        ///     <code>
+        /// Log.Get(out long total, orders: x =&gt; x.CreatedTime, isOrderByDescending: true, skip: skip, take: take)
+        ///     </code>
+        /// </summary>
+        /// <returns></returns>
+        public static List<LogEntity> Get(out long total, Expression<Func<LogEntity, bool>> predicate = null,
+            Expression<Func<LogEntity, object>> orders = null, bool isOrderByDescending = true, int? skip = null,
+            int? take = null)
+        {
+            // Get result with fill info for HttpContext and Exception from Json
+            var query = Where(predicate);
+
+            // get total records in advance
+            total = query.LongCount();
+
+            // orders
+            if (orders != null)
+            {
+                query = isOrderByDescending ? query.OrderByDescending(orders) : query.OrderBy(orders);
             }
+
+            // skip
+            if (skip.HasValue)
+            {
+                query = query.Skip(skip.Value);
+            }
+
+            // take
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            var result = query.Get();
+
+            return result;
         }
 
         private static void UpdateLogInfo(ActionContext context, LogEntity logEntity, string callerMemberName, string callerFilePath, int callerLineNumber)

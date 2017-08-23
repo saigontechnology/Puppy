@@ -42,6 +42,8 @@ namespace Puppy.Logger.Core.Models
 
         public ExceptionInfo InternalException { get; set; }
 
+        public string RootExceptionMessage => InternalException != null ? InternalException.RootExceptionMessage : Message;
+
         public ExceptionInfo()
         {
         }

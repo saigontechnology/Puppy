@@ -1,11 +1,16 @@
 ﻿# Puppy.Logger
 > Created by **Top Nguyen** (http://topnguyen.net)
 
-Puppy Logger, log error with http request information and exception as detail as possible.
+- Puppy Logger, log error with HTTP request information and exception as detail as possible and structure by `LogEntity` object.
+
+- Puppy Logger log into 3 places: **Sqlite** (Force), **Rolling File** (Optional) and **Console** with Color (Only in Development Environment).
+
+- I already apply **message queue** and use Entity Framework to write logs to SQLite. Therefore, When log writes to SQLite it **nearly realtime, not realtime**.
 
 ## Config
 - Add config section to `appsettings.json`
-- If you not have custom setting in appsettings.json, `default setting` will be apply.
+- If you do not have custom setting in `appsettings.json`, **default setting will be apply**.
+- Puppy Logger auto add a watcher to `appsettings.json`, when you change the config in `appsettings.json` new logger config applies immediately.
 
 ```json
   "Logger": {

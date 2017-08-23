@@ -19,9 +19,10 @@
 
 #endregion License
 
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.EF.Interfaces.Repository;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
@@ -30,7 +31,10 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Puppy.Logger
 {
@@ -80,7 +84,20 @@ namespace Puppy.Logger
             Serilog.Log.Write(logEventLevel, message);
         }
 
-        private static void UpdateLogInfo(ExceptionContext context, LogEntity logEntity, string callerMemberName, string callerFilePath, int callerLineNumber)
+        public static List<LogEntity> Get(Expression<Func<LogEntity, bool>> predicate = null)
+        {
+            using (var db = new SqliteDbContext())
+            {
+                IRepository<LogEntity> logRepository = new Repository<LogEntity>(db);
+                var query = logRepository.Get(predicate);
+
+                // Get result with fill info for HttpContext and Exception from Json
+                var result = query.ToList().Select(x => x.FillInfo()).ToList();
+                return result;
+            }
+        }
+
+        private static void UpdateLogInfo(ActionContext context, LogEntity logEntity, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
             UpdateLogInfo(logEntity, callerMemberName, callerFilePath, callerLineNumber);
 

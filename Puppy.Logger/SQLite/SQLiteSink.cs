@@ -33,6 +33,8 @@ namespace Puppy.Logger.SQLite
 
         protected override void WriteLogEvent(ICollection<LogEvent> logEventsBatch)
         {
+            logEventsBatch = logEventsBatch?.Where(x => x != null).ToList();
+
             if (logEventsBatch?.Any() != true)
             {
                 return;
@@ -42,16 +44,18 @@ namespace Puppy.Logger.SQLite
             {
                 using (var db = new SqliteDbContext())
                 {
+                    var logRepository = new Repository<LogEntity>(db);
+
                     foreach (var logEvent in logEventsBatch)
                     {
-                        if (logEvent == null || !Core.LoggerHelper.TryParseLogInfo(logEvent.MessageTemplate.Text, out LogEntity logEntity))
+                        if (!Core.LoggerHelper.TryParseLogInfo(logEvent.MessageTemplate.Text, out LogEntity logEntity))
                         {
                             return;
                         }
 
-                        db.Logs.Add(logEntity);
+                        logRepository.Add(logEntity);
                     }
-                    db.SaveChanges();
+                    logRepository.SaveChanges();
                 }
             }
             catch (Exception e)

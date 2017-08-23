@@ -69,7 +69,7 @@ namespace Puppy.Logger.Core.Models
         /// <summary>
         ///     Exception Info 
         /// </summary>
-        /// <remarks> Set value for HttpContext auto update value for <see cref="ExceptionJson" /> </remarks>
+        /// <remarks> Set value for Exception auto update value for <see cref="ExceptionJson" /> </remarks>
         public ExceptionInfo Exception
         {
             get => _exception;
@@ -163,6 +163,25 @@ namespace Puppy.Logger.Core.Models
         {
             Exception = new ExceptionInfo(context.Exception);
             HttpContext = new HttpContextInfo(context.HttpContext);
+        }
+
+        /// <summary>
+        ///     Fill data for HttpContext from HttpContextJson and Exception from ExceptionJson 
+        /// </summary>
+        /// <returns></returns>
+        public LogEntity FillInfo()
+        {
+            if (!string.IsNullOrWhiteSpace(ExceptionJson))
+            {
+                Exception = JsonConvert.DeserializeObject<ExceptionInfo>(ExceptionJson, Constant.JsonSerializerSettings);
+            }
+
+            if (!string.IsNullOrWhiteSpace(HttpContextJson))
+            {
+                HttpContext = JsonConvert.DeserializeObject<HttpContextInfo>(HttpContextJson, Constant.JsonSerializerSettings);
+            }
+
+            return this;
         }
     }
 }

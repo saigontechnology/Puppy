@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using Serilog.Configuration;
 using Serilog.Debugging;
 using System;
@@ -15,6 +17,7 @@ namespace Puppy.Logger.SQLite
         ///     Adds a sink that writes log events to a SQLite database. 
         /// </summary>
         /// <param name="loggerConfiguration"> The logger configuration. </param>
+        /// <param name="app">                </param>
         /// <exception cref="ArgumentNullException"> A required parameter is null. </exception>
         public static LoggerConfiguration SQLite(this LoggerSinkConfiguration loggerConfiguration)
         {

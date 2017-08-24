@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Puppy.Core.StringUtils;
 using Puppy.Core.XmlUtils;
 using Puppy.Logger.Core.Models;
 using Puppy.Web;
@@ -77,9 +78,7 @@ namespace Puppy.Logger
             return isCanAccess;
         }
 
-        /// <summary>
-        ///     Create Content Result with response type is <see cref="PagedCollectionViewModel{LogEntity}" /> 
-        /// </summary>
+        /// <summary> Create Content Result with response type is <see cref="PagedCollectionViewModel{LogEntity}" /> </summary>
         /// <param name="httpContext">       </param>
         /// <param name="logEndpointPattern"></param>
         /// <param name="skip">              </param>
@@ -99,9 +98,14 @@ namespace Puppy.Logger
         {
             Expression<Func<LogEntity, bool>> predicate = null;
 
-            if (!string.IsNullOrWhiteSpace(terms))
+            var termsNormalize = StringHelper.Normalize(terms);
+
+            if (!string.IsNullOrWhiteSpace(termsNormalize))
             {
-                predicate = x => x.Id.Contains(terms) || x.Message.Contains(terms) || x.Level.ToString().Contains(terms) || x.CreatedTime.ToString().Contains(terms);
+                predicate = x => x.Id.ToUpperInvariant().Contains(termsNormalize)
+                || x.Message.ToUpperInvariant().Contains(termsNormalize)
+                || x.Level.ToString().ToUpperInvariant().Contains(termsNormalize)
+                || x.CreatedTime.ToString(Core.Constant.DateTimeOffSetFormat).Contains(termsNormalize);
             }
 
             var logs = Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
@@ -150,9 +154,7 @@ namespace Puppy.Logger
             return contentResult;
         }
 
-        /// <summary>
-        ///     Create Content Result with response type is <see cref="LogEntity" /> 
-        /// </summary>
+        /// <summary> Create Content Result with response type is <see cref="LogEntity" /> </summary>
         /// <param name="httpContext"></param>
         /// <param name="id">         </param>
         /// <returns></returns>
@@ -163,9 +165,26 @@ namespace Puppy.Logger
         /// </remarks>
         public static ContentResult GetLogContentResult(HttpContext httpContext, string id)
         {
-            var log = Get(out long _, x => x.Id == id).FirstOrDefault();
-
             ContentResult contentResult;
+
+            id = StringHelper.Normalize(id);
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                // Return 204 for No Data Case
+                contentResult = new ContentResult
+                {
+                    ContentType =
+                        (httpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml || httpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
+                            ? ContentType.Xml
+                            : ContentType.Json,
+                    StatusCode = (int)HttpStatusCode.NoContent,
+                    Content = null
+                };
+
+                return contentResult;
+            }
+            var log = Get(out long _, x => x.Id.ToUpperInvariant() == id).FirstOrDefault();
 
             if (log == null)
             {

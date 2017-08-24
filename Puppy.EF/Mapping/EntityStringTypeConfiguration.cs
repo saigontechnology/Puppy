@@ -25,6 +25,9 @@ namespace Puppy.EF.Mapping
     {
         public virtual void Map(EntityTypeBuilder<TEntity> builder)
         {
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Version).IsRowVersion();
+
             builder.HasIndex(x => x.Id);
             builder.HasIndex(x => x.DeletedTime);
         }

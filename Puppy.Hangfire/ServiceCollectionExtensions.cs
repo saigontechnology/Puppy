@@ -68,11 +68,17 @@ namespace Puppy.Hangfire
             // Add Hangfire Service
             if (string.IsNullOrWhiteSpace(databaseConnectionString))
             {
-                services.AddHangfire(config => config.UseMemoryStorage());
+                services.AddHangfire(config =>
+                {
+                    config.UseMemoryStorage();
+                });
             }
             else
             {
-                services.AddHangfire(config => config.UseSqlServerStorage(databaseConnectionString));
+                services.AddHangfire(config =>
+                {
+                    config.UseSqlServerStorage(databaseConnectionString);
+                });
             }
             return services;
         }
@@ -80,14 +86,23 @@ namespace Puppy.Hangfire
         /// <summary>
         ///     [Background Job] Hangfire 
         /// </summary>
-        /// <param name="app"></param>
-        public static IApplicationBuilder UseHangfire(this IApplicationBuilder app)
+        /// <param name="app">                 
+        ///     The path for the Back To Site link. Set to <see langword="null" /> in order to hide
+        ///     the Back To Site link. Default is "/"
+        /// </param>
+        /// <param name="appPath">             </param>
+        /// <param name="statsPollingInterval">
+        ///     The interval the /stats endpoint should be polled with (milliseconds). Default is 2000
+        /// </param>
+        public static IApplicationBuilder UseHangfire(this IApplicationBuilder app, string appPath = "/", int statsPollingInterval = 2000)
         {
             if (!string.IsNullOrWhiteSpace(HangfireConfig.DashboardUrl))
             {
                 app.UseHangfireDashboard(HangfireConfig.DashboardUrl, new DashboardOptions
                 {
-                    Authorization = new[] { new CustomAuthorizeFilter() }
+                    Authorization = new[] { new CustomAuthorizeFilter() },
+                    AppPath = appPath,
+                    StatsPollingInterval = statsPollingInterval
                 });
             }
 

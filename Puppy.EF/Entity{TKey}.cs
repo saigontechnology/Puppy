@@ -23,47 +23,49 @@ using Puppy.EF.Interfaces.Entity;
 
 namespace Puppy.EF
 {
-    /// <summary>
-    ///     Entity for Entity Framework
-    /// </summary>
-    /// <typeparam name="TKey">Id type of this entity</typeparam>
-    public abstract class Entity<TKey> :
-        ISoftDeletableEntity<TKey>,
-        IAuditableEntity<TKey>,
-        IVersionEntity,
-        IGlobalIdentityEntity where TKey : struct
+    public class EntityBase
     {
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
-
-        [Key]
-        public virtual TKey Id { get; set; }
 
         [Timestamp]
         public virtual byte[] Version { get; set; }
 
-
-        // Create Info
-
-        public virtual TKey? CreatedBy { get; set; }
-
         public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
 
-        // Update Info
-
-        public virtual TKey? LastUpdatedBy { get; set; }
-
         public virtual DateTimeOffset? LastUpdatedTime { get; set; }
-
-        // Delete Info
-
-        public bool IsDeleted => DeletedTime != null;
-
-        public virtual TKey? DeletedBy { get; set; }
 
         public virtual DateTimeOffset? DeletedTime { get; set; }
     }
 
+    /// <summary>
+    ///     Entity for Entity Framework
+    /// </summary>
+    /// <typeparam name="TKey">Id type of this entity</typeparam>
+    public abstract class Entity<TKey> : EntityBase, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey>, IVersionEntity, IGlobalIdentityEntity where TKey : struct
+    {
+        [Key]
+        public virtual TKey Id { get; set; }
+
+        public virtual TKey? CreatedBy { get; set; }
+
+        public virtual TKey? LastUpdatedBy { get; set; }
+
+        public virtual TKey? DeletedBy { get; set; }
+    }
+
     public abstract class Entity : Entity<int>
     {
+    }
+
+    public class EntityString : EntityBase, ISoftDeletableEntityString, IAuditableEntityString, IVersionEntity, IGlobalIdentityEntity
+    {
+        [Key]
+        public virtual string Id { get; set; }
+
+        public virtual string CreatedBy { get; set; }
+
+        public virtual string LastUpdatedBy { get; set; }
+
+        public virtual string DeletedBy { get; set; }
     }
 }

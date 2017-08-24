@@ -20,6 +20,7 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
+using Puppy.EF.Extensions;
 using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Entity;
 using Puppy.EF.Interfaces.Repository;
@@ -32,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF
 {
-    public abstract class EntityRepository<TEntity, TKey> : IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct
+    public abstract class EntityRepositoryBase<TEntity> where TEntity : class, ISoftDeletableEntity, IAuditableEntity
     {
         protected readonly IBaseDbContext DbContext;
 
@@ -49,7 +50,7 @@ namespace Puppy.EF
             }
         }
 
-        protected EntityRepository(IBaseDbContext dbContext)
+        protected EntityRepositoryBase(IBaseDbContext dbContext)
         {
             DbContext = dbContext;
         }
@@ -69,7 +70,7 @@ namespace Puppy.EF
 
             query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
-            return isIncludeDeleted ? query : query.Where(x => !x.IsDeleted);
+            return isIncludeDeleted ? query : query.Where(x => !x.IsDeleted());
         }
 
         public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -115,7 +116,7 @@ namespace Puppy.EF
                     entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset)
                         ? DateTimeOffset.UtcNow
                         : entity.DeletedTime;
-                    Update(entity, x => x.IsDeleted, x => x.DeletedTime);
+                    Update(entity, x => x.DeletedTime);
                 }
                 else
                 {
@@ -191,7 +192,7 @@ namespace Puppy.EF
                 }
                 else
                 {
-                    if (entity.IsDeleted)
+                    if (entity.IsDeleted())
                         entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset)
                             ? DateTimeOffset.UtcNow
                             : entity.DeletedTime;
@@ -201,6 +202,20 @@ namespace Puppy.EF
                             : entity.LastUpdatedTime;
                 }
             }
+        }
+    }
+
+    public abstract class EntityRepository<TEntity, TKey> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct
+    {
+        protected EntityRepository(IBaseDbContext dbContext) : base(dbContext)
+        {
+        }
+    }
+
+    public abstract class EntityRepositoryString<TEntity> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntityString, IAuditableEntityString
+    {
+        protected EntityRepositoryString(IBaseDbContext dbContext) : base(dbContext)
+        {
         }
     }
 }

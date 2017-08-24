@@ -28,7 +28,6 @@ namespace Puppy.EF.Mapping
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Version).IsRowVersion();
             builder.HasIndex(x => x.Id);
-            builder.Ignore(x => x.IsDeleted);
             builder.HasIndex(x => x.DeletedTime);
         }
     }

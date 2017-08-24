@@ -21,16 +21,25 @@ using System;
 
 namespace Puppy.EF.Interfaces.Entity
 {
+    public interface ISoftDeletableEntity
+    {
+        DateTimeOffset? DeletedTime { get; set; }
+    }
+
     /// <summary>
     ///     Soft Deletable Entity by IsDeleted as marker and Nullable DateTimeOffset as audit log 
     /// </summary>
     /// <typeparam name="TKey"> User Id </typeparam>
-    public interface ISoftDeletableEntity<TKey> where TKey : struct
+    public interface ISoftDeletableEntity<TKey> : ISoftDeletableEntity where TKey : struct
     {
-        bool IsDeleted { get; }
-
-        DateTimeOffset? DeletedTime { get; set; }
-
         TKey? DeletedBy { get; set; }
+    }
+
+    /// <summary>
+    ///     Soft Deletable Entity by IsDeleted as marker and Nullable DateTimeOffset as audit log 
+    /// </summary>
+    public interface ISoftDeletableEntityString : ISoftDeletableEntity
+    {
+        string DeletedBy { get; set; }
     }
 }

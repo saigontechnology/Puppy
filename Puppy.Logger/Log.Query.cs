@@ -85,10 +85,9 @@ namespace Puppy.Logger
         /// <param name="skip">              </param>
         /// <param name="take">              </param>
         /// <param name="terms">             
-        ///     terms do contains search for <see cref="LogEntity.Id" />,
-        ///     <see cref="LogEntity.Message" />, <see cref="LogEntity.Level" />,
-        ///     <see cref="LogEntity.CreatedTime" /> (with string format is
-        ///     "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK", ex: "2017-08-24T00:56:29.6271125+07:00")
+        ///     Search for <see cref="LogEntity.Id" />, <see cref="LogEntity.Message" />,
+        ///     <see cref="LogEntity.Level" />, <see cref="LogEntity.CreatedTime" /> (with string
+        ///     format is <c> "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" </c>, ex: "2017-08-24T00:56:29.6271125+07:00")
         /// </param>
         /// <returns></returns>
         /// <remarks>

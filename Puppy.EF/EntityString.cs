@@ -47,9 +47,9 @@ namespace Puppy.EF
 
         // Delete Info
 
-        public virtual bool IsDeleted { get; set; }
-
         public virtual string DeletedBy { get; set; }
+
+        public bool IsDeleted => DeletedTime != null;
 
         public virtual DateTimeOffset? DeletedTime { get; set; }
     }

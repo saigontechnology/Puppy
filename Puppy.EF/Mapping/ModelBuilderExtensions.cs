@@ -19,7 +19,6 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -39,7 +38,7 @@ namespace Puppy.EF.Mapping
             var mappingTypes = assembly.GetTypes()
                 .Where(x => x.GetInterfaces()
                     .Any(y => y.GetTypeInfo().IsGenericType
-                              && y.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
+                              && y.GetGenericTypeDefinition() == typeof(ITypeConfiguration<>)));
 
             // Get the generic Entity method of the ModelBuilder type
             var entityMethod = typeof(ModelBuilder).GetMethods()
@@ -64,7 +63,7 @@ namespace Puppy.EF.Mapping
             }
         }
 
-        public static void AddConfiguration<TEntity>(this ModelBuilder modelBuilder, EntityTypeConfiguration<TEntity> configuration) where TEntity : class
+        public static void AddConfiguration<TEntity>(this ModelBuilder modelBuilder, TypeConfiguration<TEntity> configuration) where TEntity : class
         {
             configuration.Map(modelBuilder.Entity<TEntity>());
         }

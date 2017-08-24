@@ -36,28 +36,6 @@ dotnet ef database update  -v
     <!-- END -->
   </ItemGroup>
 ```
-# Templates
-
-## Export
-1. Export Template
-- VS < 2017
-> - Click on "File" > Export Template
-
-- VS >= 2017
-> - Click on "Project" > Export Template
-
-2. Select Item Template
-3. Select Solution have template
-4. Give Name, Icon
-5. Copy Export Zip file and use it like Import steps below.
-
-## Import
-- Copy .Zip file to visual studio item Templates Without Unzip, Just keep .Zip file!
-> - %userprofile%\documents\Visual Studio 2017\Templates\ItemTemplates
-> - %userprofile%\documents\Visual Studio 2015\Templates\ItemTemplates
-
-- Then Restart Visual Studio, try to use Add New Item.
-- Done
 
 # DbContext
 
@@ -87,13 +65,18 @@ public partial class DbContext : BaseDbContext, IDbContext
     {
         base.OnModelCreating(builder);
 
-        foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-        {
-            relationship.DeleteBehavior = DeleteBehavior.Restrict;
-        }
+        // [Important] Keep Under Base For Override And Make End Result
 
-        // Keep under base for override and make end result
-        builder.AddConfigFromAssembly(typeof(IDataModule).GetTypeInfo().Assembly);
+        // Scan and apply Config/Mapping for Tables/Entities (from folder "Map")
+        builder.AddConfigFromAssembly(DbContextFactory.GetMigrationAssembly());
+
+        // Set Delete Behavior as Restrict in Relationship
+        builder.DisableCascadingDelete();
+
+        // Convention for Table name
+        builder.RemovePluralizingTableNameConvention();
+
+        builder.ReplaceTableNameConvention("Entity", string.Empty);
     }
 }
 ```
@@ -132,5 +115,18 @@ public class DbContextFactory : IDbContextFactory<DbContext>
 ```csharp
 public interface IDataModule
 {
+}
+```
+
+# Mapping
+- Sample Entity Map
+```csharp
+public class UserMap : EntityTypeConfiguration<UserEntity>
+{
+    public override void Map(EntityTypeBuilder<UserEntity> builder)
+    {
+        base.Map(builder);
+        builder.ToTable(nameof(UserEntity));
+    }
 }
 ```

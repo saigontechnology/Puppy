@@ -56,7 +56,7 @@ namespace Puppy.EF
 
         // Delete Info
 
-        public virtual bool IsDeleted { get; set; }
+        public bool IsDeleted => DeletedTime != null;
 
         public virtual TKey? DeletedBy { get; set; }
 

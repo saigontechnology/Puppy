@@ -26,7 +26,7 @@ namespace Puppy.EF.Interfaces.Entity
     /// </summary>
     public interface ISoftDeletableEntityString
     {
-        bool IsDeleted { get; set; }
+        bool IsDeleted { get; }
 
         DateTimeOffset? DeletedTime { get; set; }
 

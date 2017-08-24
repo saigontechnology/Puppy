@@ -24,7 +24,7 @@ using Puppy.Logger.Core.Models;
 
 namespace Puppy.Logger.SQLite.Map
 {
-    public class LogEntityMap : IEntityTypeConfiguration<LogEntity>
+    public class LogMap : ITypeConfiguration<LogEntity>
     {
         public void Map(EntityTypeBuilder<LogEntity> builder)
         {

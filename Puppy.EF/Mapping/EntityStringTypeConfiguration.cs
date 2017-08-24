@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> EntityTypeConfiguration.cs </Name>
-//         <Created> 24/08/17 4:36:20 PM </Created>
-//         <Key> 0040d619-71b4-4f7d-9913-0f9a080831de </Key>
+//         <Name> EntityStringTypeConfiguration.cs </Name>
+//         <Created> 24/08/17 5:02:32 PM </Created>
+//         <Key> 1c6e63f1-0f6d-4cb2-8ba0-fc423354adf0 </Key>
 //     </File>
 //     <Summary>
-//         EntityTypeConfiguration.cs
+//         EntityStringTypeConfiguration.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -21,19 +21,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Puppy.EF.Mapping
 {
-    public abstract class EntityTypeConfiguration<TEntity, TKey> : ITypeConfiguration<TEntity> where TEntity : Entity<TKey> where TKey : struct
+    public abstract class EntityStringTypeConfiguration<TEntity> : ITypeConfiguration<TEntity> where TEntity : EntityString
     {
         public virtual void Map(EntityTypeBuilder<TEntity> builder)
         {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Version).IsRowVersion();
-
             builder.HasIndex(x => x.Id);
             builder.HasIndex(x => x.DeletedTime);
         }
-    }
-
-    public abstract class EntityTypeConfiguration<TEntity> : EntityTypeConfiguration<TEntity, int> where TEntity : Entity
-    {
     }
 }

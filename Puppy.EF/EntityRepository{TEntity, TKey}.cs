@@ -79,7 +79,6 @@ namespace Puppy.EF
 
         public virtual TEntity Add(TEntity entity)
         {
-            entity.IsDeleted = false;
             entity.LastUpdatedTime = null;
             entity.CreatedTime = entity.CreatedTime == default(DateTimeOffset)
                 ? DateTimeOffset.UtcNow
@@ -113,7 +112,6 @@ namespace Puppy.EF
 
                 if (!isPhysicalDelete)
                 {
-                    entity.IsDeleted = true;
                     entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset)
                         ? DateTimeOffset.UtcNow
                         : entity.DeletedTime;
@@ -186,7 +184,6 @@ namespace Puppy.EF
 
                 if (entry.State == EntityState.Added)
                 {
-                    entity.IsDeleted = false;
                     entity.LastUpdatedTime = null;
                     entity.CreatedTime = entity.CreatedTime == default(DateTimeOffset)
                         ? DateTimeOffset.UtcNow

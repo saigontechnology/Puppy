@@ -27,7 +27,7 @@ namespace Puppy.EF.Interfaces.Entity
     /// <typeparam name="TKey"> User Id </typeparam>
     public interface ISoftDeletableEntity<TKey> where TKey : struct
     {
-        bool IsDeleted { get; set; }
+        bool IsDeleted { get; }
 
         DateTimeOffset? DeletedTime { get; set; }
 

@@ -5,12 +5,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy.EF </Project>
 //     <File>
-//         <Name> IEntityTypeConfiguration </Name>
+//         <Name> ITypeConfiguration </Name>
 //         <Created> 15/04/2017 08:47:13 AM </Created>
 //         <Key> c6eb49ec-b589-49e5-84c0-a6726e200c08 </Key>
 //     </File>
 //     <Summary>
-//         IEntityTypeConfiguration
+//         ITypeConfiguration
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -21,8 +21,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Puppy.EF.Mapping
 {
-    public interface IEntityTypeConfiguration<TEntity> where TEntity : class
+    public interface ITypeConfiguration<T> where T : class
     {
-        void Map(EntityTypeBuilder<TEntity> builder);
+        void Map(EntityTypeBuilder<T> builder);
     }
 }

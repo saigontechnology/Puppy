@@ -19,6 +19,7 @@
 
 using System;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace Puppy.Logger.Core.Models
 {
@@ -42,6 +43,7 @@ namespace Puppy.Logger.Core.Models
 
         public ExceptionInfo InternalException { get; set; }
 
+        [JsonIgnore]
         public string RootExceptionMessage => InternalException != null ? InternalException.RootExceptionMessage : Message;
 
         public ExceptionInfo()

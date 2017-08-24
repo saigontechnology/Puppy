@@ -78,7 +78,9 @@ namespace Puppy.Logger
             return isCanAccess;
         }
 
-        /// <summary> Create Content Result with response type is <see cref="PagedCollectionViewModel{LogEntity}" /> </summary>
+        /// <summary>
+        ///     Create Content Result with response type is <see cref="PagedCollectionViewModel{LogEntity}" /> 
+        /// </summary>
         /// <param name="httpContext">       </param>
         /// <param name="logEndpointPattern"></param>
         /// <param name="skip">              </param>
@@ -90,9 +92,14 @@ namespace Puppy.Logger
         /// </param>
         /// <returns></returns>
         /// <remarks>
-        ///     Base on <paramref name="httpContext"> </paramref> will return <c> ContentType XML
-        ///     </c> when Request Header Accept or ContentType is XML, else return <c> ContentType
-        ///     Json </c>
+        ///     <para>
+        ///         Logger write Log with **message queue** so when create a log it *near real-time log*
+        ///     </para>
+        ///     <para>
+        ///         Base on <paramref name="httpContext"> </paramref> will return <c> ContentType XML
+        ///         </c> when Request Header Accept or ContentType is XML, else return <c>
+        ///         ContentType Json </c>
+        ///     </para>
         /// </remarks>
         public static ContentResult GetLogsContentResult(HttpContext httpContext, string logEndpointPattern, int skip, int take, string terms)
         {
@@ -154,14 +161,21 @@ namespace Puppy.Logger
             return contentResult;
         }
 
-        /// <summary> Create Content Result with response type is <see cref="LogEntity" /> </summary>
+        /// <summary>
+        ///     Create Content Result with response type is <see cref="LogEntity" /> 
+        /// </summary>
         /// <param name="httpContext"></param>
         /// <param name="id">         </param>
         /// <returns></returns>
         /// <remarks>
-        ///     Base on <paramref name="httpContext"> </paramref> will return <c> ContentType XML
-        ///     </c> when Request Header Accept or ContentType is XML, else return <c> ContentType
-        ///     Json </c>
+        ///     <para>
+        ///         Logger write Log with **message queue** so when create a log it *near real-time log*
+        ///     </para>
+        ///     <para>
+        ///         Base on <paramref name="httpContext"> </paramref> will return <c> ContentType XML
+        ///         </c> when Request Header Accept or ContentType is XML, else return <c>
+        ///         ContentType Json </c>
+        ///     </para>
         /// </remarks>
         public static ContentResult GetLogContentResult(HttpContext httpContext, string id)
         {

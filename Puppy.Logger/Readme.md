@@ -5,7 +5,7 @@
 
 - Puppy Logger log into 3 places: **Sqlite** (Force), **Rolling File** (Optional) and **Console** with Color (Only in Development Environment).
 
-- I already apply **message queue** and use Entity Framework to write logs to SQLite. Therefore, When log writes to SQLite it **nearly realtime, not realtime**.
+- Logger write Log with `message queue` so when create a log, it **near real-time log**.
 
 ## Config
 - Add config section to `appsettings.json`
@@ -119,6 +119,8 @@ var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedT
 - View Log Via URL: The sample below use Puppy.Web.Models.Api to create http collection response.
 
 ```csharp
+#region Log
+
 public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
 
 /// <summary>
@@ -127,35 +129,40 @@ public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
 /// <param name="skip"> </param>
 /// <param name="take"> </param>
 /// <param name="terms">
-///     terms do contains search for Id, Message, Level, CreatedTime (with string format is "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK")
+///     Search for `Id`, `Message`, `Level`, `CreatedTime` (with format
+///     **"yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK"**, ex: "2017-08-24T00:56:29.6271125+07:00")
 /// </param>
 /// <returns></returns>
+/// <remarks>
+///     <para>
+///         Logger write Log with `message queue` so when create a log, it **near real-time log**
+///     </para>
+/// </remarks>
 [ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
 [HttpGet]
 [Route(LogsEndpointPattern)]
 [Produces(ContentType.Json, ContentType.Xml)]
-public IActionResult Logs([FromRoute]int skip, [FromRoute]int take, [FromQuery]string terms)
-{
-    // Base on "httpContext" will return ContentType XML when Request Header Accept or
-    // ContentType is XML, else return ContentType Json
-    return Log.GetLogsContentResult(HttpContext, LogsEndpointPattern, skip, take, terms);
-}
+[SwaggerResponse((int)HttpStatusCode.OK, typeof(ICollection<LogEntity>))]
+public IActionResult Logs([FromRoute] int skip, [FromRoute] int take, [FromQuery] string terms) => Log.GetLogsContentResult(HttpContext, LogsEndpointPattern, skip, take, terms);
 
 /// <summary>
 ///     Log 
 /// </summary>
-/// <param name="id"> Id should be a guid string with format "N" </param>
+/// <param name="id"> Id should be a `guid string` with format [**"N"**](https://goo.gl/pYVXKd) </param>
 /// <returns></returns>
+/// <remarks>
+///     <para>
+///         Logger write Log with `message queue` so when create a log, it **near real-time log**
+///     </para>
+/// </remarks>
 [ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
 [HttpGet]
 [Route("logs/{id}")]
 [Produces(ContentType.Json, ContentType.Xml)]
-public IActionResult SingleLog([FromRoute]string id)
-{
-    // Base on "httpContext" will return ContentType XML when Request Header Accept or
-    // ContentType is XML, else return ContentType Json
-    return Log.GetLogContentResult(HttpContext, id);
-}
+[SwaggerResponse((int)HttpStatusCode.OK, typeof(LogEntity))]
+public IActionResult SingleLog([FromRoute]string id) => Log.GetLogContentResult(HttpContext, id);
+
+#endregion Log
 ```
 
 - OR manual implement with Log.Get()
@@ -165,31 +172,50 @@ public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
 /// <summary>
 ///     Logs 
 /// </summary>
+/// <param name="skip"> </param>
+/// <param name="take"> </param>
+/// <param name="terms">
+///     Search for `Id`, `Message`, `Level`, `CreatedTime` (with format
+///     **"yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK"**, ex: "2017-08-24T00:56:29.6271125+07:00")
+/// </param>
 /// <returns></returns>
+/// <remarks>
+///     <para>
+///         Logger write Log with `message queue` so when create a log, it **near real-time log**
+///     </para>
+/// </remarks>
 [ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
 [HttpGet]
 [Route(LogsEndpointPattern)]
 [Produces(ContentType.Json, ContentType.Xml)]
+[SwaggerResponse((int)HttpStatusCode.OK, typeof(ICollection<LogEntity>))]
 public IActionResult GetLogs([FromRoute]int skip, [FromRoute]int take, [FromQuery]string terms)
 {
     Expression<Func<LogEntity, bool>> predicate = null;
 
-    if (!string.IsNullOrWhiteSpace(terms))
+    var termsNormalize = StringHelper.Normalize(terms);
+
+    if (!string.IsNullOrWhiteSpace(termsNormalize))
     {
-        predicate = x => x.Id.Contains(terms) || x.Message.Contains(terms) || x.Level.ToString().Contains(terms) || x.CreatedTime.ToString().Contains(terms);
+        predicate = x => x.Id.ToUpperInvariant().Contains(termsNormalize)
+        || x.Message.ToUpperInvariant().Contains(termsNormalize)
+        || x.Level.ToString().ToUpperInvariant().Contains(termsNormalize)
+        || x.CreatedTime.ToString(Core.Constant.DateTimeOffSetFormat).Contains(termsNormalize);
     }
 
-    var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
+    var logs = Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
+
+    ContentResult contentResult;
 
     if (total <= 0)
     {
-        // Return 204 for No Data Case
         return NoContent();
     }
 
-    var placeholderLinkView = PlaceholderLinkViewModel.ToCollection(LogsEndpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
-    var collectionFactoryViewModel = new PagedCollectionFactoryViewModel<LogEntity>(placeholderLinkView, LogsEndpointPattern);
+    var placeholderLinkView = PlaceholderLinkViewModel.ToCollection(logEndpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
+    var collectionFactoryViewModel = new PagedCollectionFactoryViewModel<LogEntity>(placeholderLinkView, logEndpointPattern);
     var collectionViewModel = collectionFactoryViewModel.CreateFrom(logs, skip, take, total);
+
     return Ok(collectionViewModel);
 }
 ```

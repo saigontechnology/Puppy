@@ -21,12 +21,6 @@ namespace Puppy.Logger.SQLite
         /// <exception cref="ArgumentNullException"> A required parameter is null. </exception>
         public static LoggerConfiguration SQLite(this LoggerSinkConfiguration loggerConfiguration)
         {
-            if (loggerConfiguration == null)
-            {
-                SelfLog.WriteLine("Logger configuration is null");
-                throw new ArgumentNullException(nameof(loggerConfiguration));
-            }
-
             if (string.IsNullOrWhiteSpace(LoggerConfig.SQLiteConnectionString))
             {
                 SelfLog.WriteLine($"Invalid {nameof(LoggerConfig.SQLiteConnectionString)}");

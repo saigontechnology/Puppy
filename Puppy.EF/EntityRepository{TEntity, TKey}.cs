@@ -33,32 +33,13 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF
 {
-    public abstract class EntityRepositoryBase<TEntity> where TEntity : class, ISoftDeletableEntity, IAuditableEntity
+    public abstract class EntityRepositoryBase<TEntity> : Repository<TEntity> where TEntity : class, ISoftDeletableEntity, IAuditableEntity
     {
         protected readonly IBaseDbContext DbContext;
 
-        private DbSet<TEntity> _dbSet;
-
-        protected DbSet<TEntity> DbSet
-        {
-            get
-            {
-                if (_dbSet != null)
-                    return _dbSet;
-                _dbSet = DbContext.Set<TEntity>();
-                return _dbSet;
-            }
-        }
-
-        protected EntityRepositoryBase(IBaseDbContext dbContext)
+        protected EntityRepositoryBase(IBaseDbContext dbContext) : base(dbContext)
         {
             DbContext = dbContext;
-        }
-
-        public virtual IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            var query = DbSet.AsNoTracking();
-            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
 
         public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -78,7 +59,7 @@ namespace Puppy.EF
             return Get(predicate, isIncludeDeleted, includeProperties).FirstOrDefault();
         }
 
-        public virtual TEntity Add(TEntity entity)
+        public override TEntity Add(TEntity entity)
         {
             entity.DeletedTime = null;
             entity.LastUpdatedTime = null;
@@ -92,7 +73,7 @@ namespace Puppy.EF
             return entity;
         }
 
-        public virtual void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
+        public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
             entity.LastUpdatedTime =
                 entity.LastUpdatedTime == default(DateTimeOffset)
@@ -144,34 +125,29 @@ namespace Puppy.EF
                 Delete(entity, isPhysicalDelete);
         }
 
-        public virtual void RefreshEntity(TEntity entity)
-        {
-            DbContext.Entry(entity).Reload();
-        }
-
         [DebuggerStepThrough]
-        public virtual int SaveChanges()
+        public override int SaveChanges()
         {
             StandardizeEntities();
             return DbContext.SaveChanges();
         }
 
         [DebuggerStepThrough]
-        public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             StandardizeEntities();
             return DbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         [DebuggerStepThrough]
-        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             StandardizeEntities();
             return DbContext.SaveChangesAsync(cancellationToken);
         }
 
         [DebuggerStepThrough]
-        public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
             StandardizeEntities();
             return DbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

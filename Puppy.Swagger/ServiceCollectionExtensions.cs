@@ -259,9 +259,9 @@ namespace Puppy.Swagger
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
             if (isHaveConfig)
             {
-                SwaggerConfig.ApiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}", SwaggerConfig.ApiDocumentUrl);
+                SwaggerConfig.ApiDocumentHtmlTitle = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}", SwaggerConfig.ApiDocumentHtmlTitle);
 
-                SwaggerConfig.ApiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}", SwaggerConfig.ApiDocumentUrl);
+                SwaggerConfig.ApiDocumentUrl = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}", SwaggerConfig.ApiDocumentUrl);
 
                 SwaggerConfig.ApiDocumentName = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}", SwaggerConfig.ApiDocumentName);
 
@@ -277,7 +277,7 @@ namespace Puppy.Swagger
 
                 SwaggerConfig.IsDescribeAllEnumsAsString = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllEnumsAsString)}", SwaggerConfig.IsDescribeAllEnumsAsString);
 
-                SwaggerConfig.IsDescribeAllParametersInCamelCase = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllEnumsAsString)}", SwaggerConfig.IsDescribeAllParametersInCamelCase);
+                SwaggerConfig.IsDescribeAllParametersInCamelCase = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllParametersInCamelCase)}", SwaggerConfig.IsDescribeAllParametersInCamelCase);
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

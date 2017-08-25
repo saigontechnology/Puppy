@@ -14,7 +14,13 @@
 
     // Access Key: access key to check with AccessKeyQueryParam - empty is allow annonymous
     // Default is empty
-    "AccessKey": ""
+    "AccessKey": "",
+
+    // The path for the Back To Site link. Set to <see langword="null" /> in order to hide the Back To Site link. Default is "/"
+    "BackToSiteUrl": "/developers",
+
+    // The interval the /stats endpoint should be polled with (milliseconds). Default is 2000
+    "StatsPollingInterval": 2000
   },
 ```
 

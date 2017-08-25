@@ -83,26 +83,15 @@ namespace Puppy.Hangfire
             return services;
         }
 
-        /// <summary>
-        ///     [Background Job] Hangfire 
-        /// </summary>
-        /// <param name="app">                 
-        ///     The path for the Back To Site link. Set to <see langword="null" /> in order to hide
-        ///     the Back To Site link. Default is "/"
-        /// </param>
-        /// <param name="appPath">             </param>
-        /// <param name="statsPollingInterval">
-        ///     The interval the /stats endpoint should be polled with (milliseconds). Default is 2000
-        /// </param>
-        public static IApplicationBuilder UseHangfire(this IApplicationBuilder app, string appPath = "/", int statsPollingInterval = 2000)
+        public static IApplicationBuilder UseHangfire(this IApplicationBuilder app)
         {
             if (!string.IsNullOrWhiteSpace(HangfireConfig.DashboardUrl))
             {
                 app.UseHangfireDashboard(HangfireConfig.DashboardUrl, new DashboardOptions
                 {
                     Authorization = new[] { new CustomAuthorizeFilter() },
-                    AppPath = appPath,
-                    StatsPollingInterval = statsPollingInterval
+                    AppPath = HangfireConfig.BackToSiteUrl,
+                    StatsPollingInterval = HangfireConfig.StatsPollingInterval
                 });
             }
 
@@ -126,6 +115,8 @@ namespace Puppy.Hangfire
             HangfireConfig.DashboardUrl = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.DashboardUrl)}", HangfireConfig.DashboardUrl);
             HangfireConfig.AccessKey = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.AccessKey)}", HangfireConfig.AccessKey);
             HangfireConfig.AccessKeyQueryParam = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.AccessKeyQueryParam)}", HangfireConfig.AccessKeyQueryParam);
+            HangfireConfig.BackToSiteUrl = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.BackToSiteUrl)}", HangfireConfig.BackToSiteUrl);
+            HangfireConfig.StatsPollingInterval = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.StatsPollingInterval)}", HangfireConfig.StatsPollingInterval);
 
             if (!EnvironmentHelper.IsDevelopment()) return;
 

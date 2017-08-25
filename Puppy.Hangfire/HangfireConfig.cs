@@ -38,5 +38,16 @@ namespace Puppy.Hangfire
         /// </summary>
         /// <remarks> Empty is allow <c> Anonymous </c> </remarks>
         public static string AccessKeyQueryParam { get; set; } = "key";
+
+        /// <summary>
+        ///     The path for the Back To Site link. Set to <see langword="null" /> in order to hide
+        ///     the Back To Site link. Default is "/"
+        /// </summary>
+        public static string BackToSiteUrl { get; set; } = "/";
+
+        /// <summary>
+        ///     The interval the /stats endpoint should be polled with (milliseconds). Default is 2000
+        /// </summary>
+        public static int StatsPollingInterval { get; set; } = 2000;
     }
 }

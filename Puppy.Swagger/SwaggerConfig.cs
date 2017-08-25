@@ -19,8 +19,9 @@
 
 using Newtonsoft.Json;
 using Puppy.Core.StringUtils;
+using Puppy.Swagger.Models;
 
-namespace Puppy.Swagger.Models
+namespace Puppy.Swagger
 {
     /// <summary>
     ///     Swagger Config 

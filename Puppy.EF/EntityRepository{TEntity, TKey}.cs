@@ -80,19 +80,25 @@ namespace Puppy.EF
 
         public virtual TEntity Add(TEntity entity)
         {
+            entity.DeletedTime = null;
             entity.LastUpdatedTime = null;
-            entity.CreatedTime = entity.CreatedTime == default(DateTimeOffset)
-                ? DateTimeOffset.UtcNow
-                : entity.CreatedTime;
+
+            entity.CreatedTime =
+                entity.CreatedTime == default(DateTimeOffset)
+                    ? DateTimeOffset.UtcNow
+                    : entity.CreatedTime;
+
             entity = DbSet.Add(entity).Entity;
             return entity;
         }
 
         public virtual void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
-            entity.LastUpdatedTime = entity.LastUpdatedTime == default(DateTimeOffset)
-                ? DateTimeOffset.UtcNow
-                : entity.LastUpdatedTime;
+            entity.LastUpdatedTime =
+                entity.LastUpdatedTime == default(DateTimeOffset)
+                    ? DateTimeOffset.UtcNow
+                    : entity.LastUpdatedTime;
+
             DbSet.Attach(entity);
 
             if (changedProperties != null && changedProperties.Any())
@@ -116,6 +122,7 @@ namespace Puppy.EF
                     entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset)
                         ? DateTimeOffset.UtcNow
                         : entity.DeletedTime;
+
                     Update(entity, x => x.DeletedTime);
                 }
                 else
@@ -205,17 +212,37 @@ namespace Puppy.EF
         }
     }
 
-    public abstract class EntityRepository<TEntity, TKey> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct
+    public abstract class EntityRepository<TEntity, TKey> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : Entity<TKey>, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey>, new() where TKey : struct
     {
         protected EntityRepository(IBaseDbContext dbContext) : base(dbContext)
         {
         }
+
+        public override void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            var entityIds = Get(predicate).Select(x => x.Id).AsEnumerable();
+            var entities = entityIds.Select(x => new TEntity { Id = x, DeletedTime = utcNow }).AsEnumerable();
+            foreach (var entity in entities)
+                Delete(entity, isPhysicalDelete);
+        }
     }
 
-    public abstract class EntityRepositoryString<TEntity> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : class, ISoftDeletableEntityString, IAuditableEntityString
+    public abstract class EntityRepositoryString<TEntity> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : EntityString, ISoftDeletableEntityString, IAuditableEntityString, new()
     {
         protected EntityRepositoryString(IBaseDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public override void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            var entityIds = Get(predicate).Select(x => x.Id).AsEnumerable();
+            var entities = entityIds.Select(x => new TEntity { Id = x, DeletedTime = utcNow }).AsEnumerable();
+            foreach (var entity in entities)
+                Delete(entity, isPhysicalDelete);
         }
     }
 }

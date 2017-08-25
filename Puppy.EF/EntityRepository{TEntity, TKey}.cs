@@ -49,6 +49,7 @@ namespace Puppy.EF
             if (predicate != null)
                 query = query.Where(predicate);
 
+            includeProperties = includeProperties?.Distinct().ToArray();
             query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
             return isIncludeDeleted ? query : query.Where(x => !x.IsDeleted());
@@ -63,11 +64,8 @@ namespace Puppy.EF
         {
             entity.DeletedTime = null;
             entity.LastUpdatedTime = null;
-
             entity.CreatedTime =
-                entity.CreatedTime == default(DateTimeOffset)
-                    ? DateTimeOffset.UtcNow
-                    : entity.CreatedTime;
+                entity.CreatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.CreatedTime;
 
             entity = DbSet.Add(entity).Entity;
             return entity;
@@ -75,18 +73,23 @@ namespace Puppy.EF
 
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
+            if (DbContext.Entry(entity).State == EntityState.Detached)
+                DbSet.Attach(entity);
+
             entity.LastUpdatedTime =
-                entity.LastUpdatedTime == default(DateTimeOffset)
-                    ? DateTimeOffset.UtcNow
-                    : entity.LastUpdatedTime;
+                entity.LastUpdatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.LastUpdatedTime;
 
-            DbSet.Attach(entity);
+            changedProperties = changedProperties?.Distinct().ToArray();
 
-            if (changedProperties != null && changedProperties.Any())
+            if (changedProperties?.Any() == true)
+            {
+                DbContext.Entry(entity).Property(x => x.LastUpdatedTime).IsModified = true;
+
                 foreach (var property in changedProperties)
                 {
                     DbContext.Entry(entity).Property(property).IsModified = true;
                 }
+            }
             else
                 DbContext.Entry(entity).State = EntityState.Modified;
         }
@@ -100,11 +103,8 @@ namespace Puppy.EF
 
                 if (!isPhysicalDelete)
                 {
-                    entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset)
-                        ? DateTimeOffset.UtcNow
-                        : entity.DeletedTime;
-
-                    Update(entity, x => x.DeletedTime);
+                    entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.DeletedTime;
+                    DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
                 }
                 else
                 {
@@ -198,8 +198,14 @@ namespace Puppy.EF
         {
             DateTimeOffset utcNow = DateTimeOffset.UtcNow;
 
-            var entityIds = Get(predicate).Select(x => x.Id).AsEnumerable();
-            var entities = entityIds.Select(x => new TEntity { Id = x, DeletedTime = utcNow }).AsEnumerable();
+            var entitiesIdVersion = Get(predicate).Select(x => new
+            {
+                Id = x.Id,
+                Version = x.Version
+            }).AsEnumerable();
+
+            var entities = entitiesIdVersion.Select(x => new TEntity { Id = x.Id, Version = x.Version, DeletedTime = utcNow }).AsEnumerable();
+
             foreach (var entity in entities)
                 Delete(entity, isPhysicalDelete);
         }

@@ -69,9 +69,9 @@ namespace Puppy.Swagger.Models
         public static SwaggerContactConfigModel Contact { get; set; }
 
         /// <summary>
-        ///     Default is <c> false </c> 
+        ///     Default is <c> true </c> 
         /// </summary>
-        public static bool IsDescribeAllEnumsAsString { get; set; } = false;
+        public static bool IsDescribeAllEnumsAsString { get; set; } = true;
 
         /// <summary>
         ///     Default is <c> true </c> 

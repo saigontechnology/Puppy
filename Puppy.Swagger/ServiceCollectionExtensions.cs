@@ -23,7 +23,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
-using Puppy.Core.ConfigUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Swagger.Filters;
 using Puppy.Swagger.Models;
@@ -260,37 +259,25 @@ namespace Puppy.Swagger
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
             if (isHaveConfig)
             {
-                var apiDocumentHtmlTitle = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}");
-                if (!string.IsNullOrWhiteSpace(apiDocumentHtmlTitle))
-                {
-                    SwaggerConfig.ApiDocumentHtmlTitle = apiDocumentHtmlTitle;
-                }
+                SwaggerConfig.ApiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}", SwaggerConfig.ApiDocumentUrl);
 
-                var apiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}");
-                if (!string.IsNullOrWhiteSpace(apiDocumentUrl))
-                {
-                    SwaggerConfig.ApiDocumentUrl = apiDocumentUrl;
-                }
+                SwaggerConfig.ApiDocumentUrl = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}", SwaggerConfig.ApiDocumentUrl);
 
-                var apiDocumentName = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}");
-                if (!string.IsNullOrWhiteSpace(apiDocumentName))
-                {
-                    SwaggerConfig.ApiDocumentName = apiDocumentName;
-                }
+                SwaggerConfig.ApiDocumentName = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}", SwaggerConfig.ApiDocumentName);
 
-                var apiDocumentJsonFile = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.ApiDocumentJsonFile)}");
-                if (!string.IsNullOrWhiteSpace(apiDocumentJsonFile))
-                {
-                    SwaggerConfig.ApiDocumentJsonFile = apiDocumentJsonFile;
-                }
+                SwaggerConfig.ApiDocumentJsonFile = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentJsonFile)}", SwaggerConfig.ApiDocumentJsonFile);
 
-                SwaggerConfig.AccessKey = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKey)}");
+                SwaggerConfig.AccessKey = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.AccessKey)}", SwaggerConfig.AccessKey);
 
-                SwaggerConfig.AccessKeyQueryParam = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AccessKeyQueryParam)}");
+                SwaggerConfig.AccessKeyQueryParam = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.AccessKeyQueryParam)}", SwaggerConfig.AccessKeyQueryParam);
 
-                SwaggerConfig.AuthTokenKeyName = configuration.GetValue<string>($"{configSection}:{nameof(SwaggerConfig.AuthTokenKeyName)}");
+                SwaggerConfig.AuthTokenKeyName = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.AuthTokenKeyName)}", SwaggerConfig.AuthTokenKeyName);
 
-                SwaggerConfig.Contact = configuration.GetSection<SwaggerContactConfigModel>($"{configSection}:{nameof(SwaggerConfig.Contact)}");
+                SwaggerConfig.Contact = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.Contact)}", SwaggerConfig.Contact);
+
+                SwaggerConfig.IsDescribeAllEnumsAsString = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllEnumsAsString)}", SwaggerConfig.IsDescribeAllEnumsAsString);
+
+                SwaggerConfig.IsDescribeAllParametersInCamelCase = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllEnumsAsString)}", SwaggerConfig.IsDescribeAllParametersInCamelCase);
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

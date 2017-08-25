@@ -14,40 +14,41 @@
 
 **Other way is copy code below and put into your `.cspoj`**
 ```xml
-  <!-- Generate Documentation XML -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile><your aseembly name>.xml</DocumentationFile>
-    <OutputPath>.\bin\</OutputPath>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
+    <!-- Generate Documentation XML -->
 
-  <!-- Propert Group Config in Visual Studio < 15.3 -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>.\bin\</OutputPath>
-    <DocumentationFile><your aseembly name>.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-  </PropertyGroup>
+    <!-- Propert Group Config in Visual Studio < 15.3 -->
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DocumentationFile><your aseembly name>.xml</DocumentationFile>
+        <OutputPath>.\bin\</OutputPath>
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
 
-  <!-- Propert Group Config in Visual Studio >= 15.3 -->
-	<PropertyGroup>
-		<Configurations>Debug;Release</Configurations>
-		<Platforms>AnyCPU;x86;x64</Platforms>
-		<PlatformTarget>x64</PlatformTarget>
-		<OutputPath>.\bin\</OutputPath>
-		<DocumentationFile>Monkey.xml</DocumentationFile>
-		<NoWarn>1701;1702;1705;1591</NoWarn>
-	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <PlatformTarget>x64</PlatformTarget>
+        <OutputPath>.\bin\</OutputPath>
+        <DocumentationFile><your aseembly name>.xml</DocumentationFile>
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+    </PropertyGroup>
 
-  <!-- Copy Output folder -->
-  <!--<CopyToOutputDirectory>Always/PreserveNewest</CopyToOutputDirectory>-->
-  <ItemGroup>
-    <!-- Documentation XML -->
-    <Content Update="Monkey.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+    <!-- Propert Group Config in Visual Studio >= 15.3 -->
+    <PropertyGroup>
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU;x86;x64</Platforms>
+        <PlatformTarget>x64</PlatformTarget>
+        <OutputPath>.\bin\</OutputPath>
+        <DocumentationFile><your aseembly name>.xml</DocumentationFile>
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+    </PropertyGroup>
+
+    <!-- Copy Output folder -->
+    <!--<CopyToOutputDirectory>Always/PreserveNewest</CopyToOutputDirectory>-->
+    <ItemGroup>
+        <!-- Documentation XML -->
+        <Content Update="<your aseembly name>.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 ```
 
 ## Config

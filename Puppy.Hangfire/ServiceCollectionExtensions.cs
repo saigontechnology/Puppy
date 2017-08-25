@@ -123,9 +123,9 @@ namespace Puppy.Hangfire
 
         public static void BuildHangfireConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
-            HangfireConfig.DashboardUrl = configuration.GetValue<string>($"{configSection}:{nameof(HangfireConfig.DashboardUrl)}");
-            HangfireConfig.AccessKey = configuration.GetValue<string>($"{configSection}:{nameof(HangfireConfig.AccessKey)}");
-            HangfireConfig.AccessKeyQueryParam = configuration.GetValue<string>($"{configSection}:{nameof(HangfireConfig.AccessKeyQueryParam)}");
+            HangfireConfig.DashboardUrl = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.DashboardUrl)}", HangfireConfig.DashboardUrl);
+            HangfireConfig.AccessKey = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.AccessKey)}", HangfireConfig.AccessKey);
+            HangfireConfig.AccessKeyQueryParam = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.AccessKeyQueryParam)}", HangfireConfig.AccessKeyQueryParam);
 
             if (!EnvironmentHelper.IsDevelopment()) return;
 

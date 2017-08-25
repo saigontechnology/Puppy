@@ -9,9 +9,16 @@ Help to enbale and config Cros for API.
 
 ```json
 "Cros": {
+    // Default is "PolicyAllowAll"
     "PolicyAllowAllName": "PolicyAllowAll",
+
+    // Default is "*"
     "AccessControlAllowOrigin": "*",
+
+    // Default is "Authorization, Content-Type
     "AccessControlAllowHeaders": "Authorization, Content-Type",
+
+    // Default is "GET, POST, PUT, HEAD"
     "AccessControlAllowMethods": "GET, POST, PUT, HEAD"
 }
 ```

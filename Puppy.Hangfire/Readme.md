@@ -5,12 +5,15 @@
 ```json
   "Hangfire": {
     // Dashboard URL, Set empty to disable dashboard feature
+    // Start with "/" but end with "<empty>", default is "/developers/job"
     "DashboardUrl": "/developers/job",
 
     // Access Key Query Param: name of parameter to check can access api document or not
+    // Default is "key"
     "AccessKeyQueryParam": "key",
 
     // Access Key: access key to check with AccessKeyQueryParam - empty is allow annonymous
+    // Default is empty
     "AccessKey": ""
   },
 ```

@@ -102,8 +102,8 @@ namespace Puppy.Redis
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
             if (isHaveConfig)
             {
-                RedisCacheConfig.ConnectionString = configuration.GetValue<string>($"{configSection}:{nameof(RedisCacheConfig.ConnectionString)}");
-                RedisCacheConfig.InstanceName = configuration.GetValue<string>($"{configSection}:{nameof(RedisCacheConfig.InstanceName)}");
+                RedisCacheConfig.ConnectionString = configuration.GetValue($"{configSection}:{nameof(RedisCacheConfig.ConnectionString)}", RedisCacheConfig.ConnectionString);
+                RedisCacheConfig.InstanceName = configuration.GetValue($"{configSection}:{nameof(RedisCacheConfig.InstanceName)}", RedisCacheConfig.InstanceName);
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

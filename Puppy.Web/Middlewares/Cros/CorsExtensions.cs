@@ -108,29 +108,13 @@ namespace Puppy.Web.Middlewares.Cros
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
             if (isHaveConfig)
             {
-                var policyAllowAllName = configuration.GetValue<string>($"{configSection}:{nameof(CrosConfig.PolicyAllowAllName)}");
-                if (!string.IsNullOrWhiteSpace(policyAllowAllName))
-                {
-                    CrosConfig.PolicyAllowAllName = policyAllowAllName;
-                }
+                CrosConfig.PolicyAllowAllName = configuration.GetValue($"{configSection}:{nameof(CrosConfig.PolicyAllowAllName)}", CrosConfig.PolicyAllowAllName);
 
-                var accessControlAllowOrigin = configuration.GetValue<string>($"{configSection}:{nameof(CrosConfig.AccessControlAllowOrigin)}");
-                if (!string.IsNullOrWhiteSpace(accessControlAllowOrigin))
-                {
-                    CrosConfig.AccessControlAllowOrigin = accessControlAllowOrigin;
-                }
+                CrosConfig.AccessControlAllowOrigin = configuration.GetValue($"{configSection}:{nameof(CrosConfig.AccessControlAllowOrigin)}", CrosConfig.AccessControlAllowOrigin);
 
-                var accessControlAllowHeaders = configuration.GetValue<string>($"{configSection}:{nameof(CrosConfig.AccessControlAllowHeaders)}");
-                if (!string.IsNullOrWhiteSpace(accessControlAllowHeaders))
-                {
-                    CrosConfig.AccessControlAllowHeaders = accessControlAllowOrigin;
-                }
+                CrosConfig.AccessControlAllowHeaders = configuration.GetValue($"{configSection}:{nameof(CrosConfig.AccessControlAllowHeaders)}", CrosConfig.AccessControlAllowHeaders);
 
-                var accessControlAllowMethods = configuration.GetValue<string>($"{configSection}:{nameof(CrosConfig.AccessControlAllowMethods)}");
-                if (!string.IsNullOrWhiteSpace(accessControlAllowMethods))
-                {
-                    CrosConfig.AccessControlAllowMethods = accessControlAllowMethods;
-                }
+                CrosConfig.AccessControlAllowMethods = configuration.GetValue($"{configSection}:{nameof(CrosConfig.AccessControlAllowMethods)}", CrosConfig.AccessControlAllowMethods);
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

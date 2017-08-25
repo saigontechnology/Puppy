@@ -8,15 +8,28 @@ Use server info to let client app know about server author and server time zone
 - If you not have custom setting in appsettings.json, `default setting` will be apply.
 
 ```json
-  "ServerInfo": {
+"ServerInfo": {
+    // Default is "Top Nguyen"
     "AuthorName": "Top Nguyen",
+
+    // Default is "http://topnguyen.net"
     "AuthorWebsite": "http://topnguyen.net",
+
+    // Default is "topnguyen92@gmail.com"
     "AuthorEmail": "topnguyen92@gmail.com",
+    
+    // Default is "PHP/5.6.30"
+    // Security Purpose
     "PoweredBy": "PHP/5.6.30",
+    
+    // Default is "cloudflare-nginx"
+    // Security Purpose
     "Name": "cloudflare-nginx",
+
+    // Default is "Co-ordinated Universal Time"
     "TimeZoneId": "Co-ordinated Universal Time", // "SE Asia Standard Time" for VietNam
     "CookieSchemaName": "Puppy_Cookie"
-  },
+},
 ```
 
 ## Use Application Builder

@@ -7,8 +7,10 @@
 
 ```json
 "Redis": {
-"ConnectionString": "localhost:<redis server port>", // default port is 6379
-"InstanceName": "Puppy"
+    // Default is "localhost:6379"
+    "ConnectionString": "localhost:6379", // default port is 6379
+    // Default is "Default"
+    "InstanceName": "Default"
 }
 ```
 

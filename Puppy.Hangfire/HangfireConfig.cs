@@ -24,8 +24,8 @@ namespace Puppy.Hangfire
         /// <summary>
         ///     Hangfire Dashboard Url. Ex: /developers/job, if this is <c> empty </c> then disable dashboard
         /// </summary>
-        /// <remarks> Start with <c> "/" </c> but end with <c> empty </c> </remarks>
-        public static string DashboardUrl { get; set; }
+        /// <remarks> Start with <c> "/" </c> but end with <c> empty </c>, default is "/developers/job" </remarks>
+        public static string DashboardUrl { get; set; } = "/developers/job";
 
         /// <summary>
         ///     Access Key read from URI 

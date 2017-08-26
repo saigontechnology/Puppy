@@ -45,7 +45,7 @@ namespace Puppy.EF.Extensions
         /// <returns></returns>
         public static IEnumerable<T> WhereNotDeleted<T>(this IEnumerable<T> iEnumerable) where T : class, ISoftDeletableEntity
         {
-            iEnumerable = iEnumerable.Where(x => x.DeletedTime != null);
+            iEnumerable = iEnumerable.AsQueryable().WhereNotDeleted();
             return iEnumerable;
         }
     }

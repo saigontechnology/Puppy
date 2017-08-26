@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
@@ -6,143 +6,119 @@ namespace Puppy.Web.Models.Api
 {
     public class PagedCollectionFactoryModel<T> where T : class, new()
     {
-        public const string TakeParam = "take";
-        public const string SkipParam = "skip";
-        public const string TermsParam = "terms";
-
+        private readonly string _endpoint;
         private readonly ILinkViewModel _meta;
+        private readonly int _skip;
+        private readonly int _take;
+        private readonly string _terms;
+        private readonly long _total;
+        private readonly IEnumerable<T> _items;
 
-        public PagedCollectionFactoryModel(ILinkViewModel meta)
+        public PagedCollectionFactoryModel(IUrlHelper urlHelper, int skip, int take, string terms, long total, IEnumerable<T> items, string method = "GET")
         {
-            _meta = meta;
+            _endpoint = urlHelper.ActionContext.HttpContext.Request.Path.Value;
+            _endpoint = urlHelper.AbsoluteContent(_endpoint);
+            _meta = PlaceholderLinkModel.ToCollection(_endpoint, method, new { skip, take, terms });
+            _skip = skip;
+            _take = take;
+            _terms = terms;
+            _total = total;
+            _items = items;
         }
 
-        public PagedCollectionModel<T> Generate(ICollection<T> items, int skip, int take, string terms, long total)
+        public PagedCollectionFactoryModel(string endpoint, int skip, int take, string terms, long total, IEnumerable<T> items, string method = "GET")
         {
-            if (total <= 0)
+            _endpoint = endpoint;
+            _meta = PlaceholderLinkModel.ToCollection(_endpoint, method, new { skip, take, terms });
+            _skip = skip;
+            _take = take;
+            _terms = terms;
+            _total = total;
+            _items = items;
+        }
+
+        public PagedCollectionModel<T> Generate()
+        {
+            if (_total <= 0)
             {
                 return new PagedCollectionModel<T>
                 {
-                    Meta = _meta,
+                    Meta = _meta
                 };
             }
 
             var pagedCollectionViewModel = new PagedCollectionModel<T>
             {
                 Meta = _meta,
-                Total = total,
-                Items = items,
-                First = GetFirstLink(skip, take, terms),
-                Last = GetLastLink(total, skip, take, terms),
-                Next = GetNextLink(total, skip, take, terms),
-                Previous = GetPreviousLink(total, skip, take, terms)
+                Total = _total,
+                Items = _items,
+                First = GetFirstLink(),
+                Last = GetLastLink(),
+                Next = GetNextLink(),
+                Previous = GetPreviousLink()
             };
 
             return pagedCollectionViewModel;
         }
 
-        private ILinkViewModel GetFirstLink(int skip, int take, string terms)
+        private ILinkViewModel GetFirstLink()
         {
-            if (skip == 0)
+            if (_skip == 0)
                 return null;
 
-            var newLink = new PlaceholderLinkModel(_meta);
-            SafeSetValue(newLink.Values, SkipParam, 0);
-            SafeSetValue(newLink.Values, TakeParam, take);
-            SafeSetValue(newLink.Values, TermsParam, terms);
-            newLink.Href = GetNewHrefByValues(newLink.Values);
-            return newLink;
+            var firstPlaceHolderLink = GetPlaceholderLinkModel(0);
+            return firstPlaceHolderLink;
         }
 
-        private ILinkViewModel GetLastLink(long total, int skip, int take, string terms)
+        private ILinkViewModel GetLastLink()
         {
-            if (total <= take)
+            if (_total <= _take)
                 return null;
 
-            var skipToNext = skip + take;
+            var skipToNext = _skip + _take;
 
-            if (skipToNext >= total)
+            if (skipToNext >= _total)
                 return null;
 
-            var skipToLast = Math.Ceiling((total - (double)take) / take) * take;
-            var newLink = new PlaceholderLinkModel(_meta);
-            SafeSetValue(newLink.Values, SkipParam, skipToLast);
-            SafeSetValue(newLink.Values, TakeParam, take);
-            SafeSetValue(newLink.Values, TermsParam, terms);
-
-            newLink.Href = GetNewHrefByValues(newLink.Values);
-
-            return newLink;
+            var skipToLast = (int)(Math.Ceiling((_total - (double)_take) / _take) * _take);
+            var nextPlaceHolderLink = GetPlaceholderLinkModel(skipToLast);
+            return nextPlaceHolderLink;
         }
 
-        private ILinkViewModel GetNextLink(long total, int skip, int take, string terms)
+        private ILinkViewModel GetNextLink()
         {
-            var skipToNext = skip + take;
+            var skipToNext = _skip + _take;
 
-            if (skipToNext >= total)
+            if (skipToNext >= _total)
                 return null;
 
-            var newLink = new PlaceholderLinkModel(_meta);
-            SafeSetValue(newLink.Values, SkipParam, take);
-            SafeSetValue(newLink.Values, TakeParam, skipToNext);
-            SafeSetValue(newLink.Values, TermsParam, terms);
-
-            newLink.Href = GetNewHrefByValues(newLink.Values);
-
-            return newLink;
+            var nextPlaceHolderLink = GetPlaceholderLinkModel(skipToNext);
+            return nextPlaceHolderLink;
         }
 
-        private ILinkViewModel GetPreviousLink(long total, int skip, int take, string terms)
+        private ILinkViewModel GetPreviousLink()
         {
-            if (skip == 0 || total <= skip)
+            if (_skip == 0 || _total <= _skip)
                 return null;
 
-            var skipToPrevious = Math.Max(skip - take, 0);
+            var skipToPrevious = Math.Max(_skip - _take, 0);
 
             if (skipToPrevious <= 0)
-                return GetFirstLink(skip, take, terms);
+                return GetFirstLink();
 
-            var newLink = new PlaceholderLinkModel(_meta);
-            SafeSetValue(newLink.Values, SkipParam, take);
-            SafeSetValue(newLink.Values, TakeParam, skipToPrevious);
-            SafeSetValue(newLink.Values, TermsParam, terms);
-
-            newLink.Href = GetNewHrefByValues(newLink.Values);
-
-            return newLink;
+            var previousPlaceHolderLink = GetPlaceholderLinkModel(skipToPrevious);
+            return previousPlaceHolderLink;
         }
 
-        private static void SafeSetValue(RouteValueDictionary routeValueDictionary, string key, object value)
+        private PlaceholderLinkModel GetPlaceholderLinkModel(int skip)
         {
-            if (routeValueDictionary.ContainsKey(key))
-                routeValueDictionary.Remove(key);
-            routeValueDictionary.Add(key, value);
-        }
+            var placeHolderLink = new PlaceholderLinkModel(_meta);
+            placeHolderLink.Values.SafeSetValue("skip", skip);
+            placeHolderLink.Values.SafeSetValue("take", _take);
+            placeHolderLink.Values.SafeSetValue("terms", _terms);
 
-        private string GetNewHrefByValues(RouteValueDictionary routeValueDictionary)
-        {
-            var href = _meta.Href;
-            foreach (var newLinkValue in routeValueDictionary)
-            {
-                var hrefKey = "{" + newLinkValue.Key + "}";
-                if (href.Contains(hrefKey))
-                {
-                    href = href.Replace(hrefKey, newLinkValue.Value?.ToString() ?? string.Empty);
-                }
-                else
-                {
-                    var hrefValue = newLinkValue.Value?.ToString();
-
-                    if (string.IsNullOrWhiteSpace(hrefValue))
-                        continue;
-
-                    href += href.Contains("?") ? "&" : "?";
-                    var hrefParam = $"{newLinkValue.Key}={hrefValue}";
-                    href += hrefParam;
-                }
-            }
-
-            return href;
+            placeHolderLink.Href = placeHolderLink.Values.GetUrlWithQueries(_endpoint);
+            return placeHolderLink;
         }
     }
 }

@@ -8,9 +8,6 @@ namespace Puppy.Web.Models.Api
         [JsonProperty(Order = -2)]
         public ILinkViewModel Meta { get; set; }
 
-        [JsonProperty(Order = -1)]
-        public long Total { get; set; }
-
         [JsonProperty(Order = 1, NullValueHandling = NullValueHandling.Ignore)]
         public ILinkViewModel First { get; set; }
 
@@ -23,7 +20,10 @@ namespace Puppy.Web.Models.Api
         [JsonProperty(Order = 4, NullValueHandling = NullValueHandling.Ignore)]
         public ILinkViewModel Last { get; set; }
 
-        [JsonProperty(Order = 5, NullValueHandling = NullValueHandling.Ignore)]
-        public ICollection<T> Items { get; set; }
+        [JsonProperty(Order = 5)]
+        public long Total { get; set; }
+
+        [JsonProperty(Order = 6, NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<T> Items { get; set; }
     }
 }

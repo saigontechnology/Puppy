@@ -5,35 +5,86 @@
 - For Paging: use search keyword by `terms`, page size and page number by `skip` and `take`
 - Response `Collection`, example response use in [Puppy.Logger](../../../Puppy.Logger/readme.md)
 ```csharp
-public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
-
 /// <summary>
-///     Logs 
+///     Create Content Result with response type is <see cref="PagedCollectionModel{LogEntity}" /> 
 /// </summary>
+/// <param name="httpContext">       </param>
+/// <param name="endpointPattern"></param>
+/// <param name="skip">              </param>
+/// <param name="take">              </param>
+/// <param name="terms">             
+///     Search for <see cref="LogEntity.Id" />, <see cref="LogEntity.Message" />,
+///     <see cref="LogEntity.Level" />, <see cref="LogEntity.CreatedTime" /> (with string
+///     format is <c> "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" </c>, ex: "2017-08-24T00:56:29.6271125+07:00")
+/// </param>
 /// <returns></returns>
-[ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
-[HttpGet]
-[Route(LogsEndpointPattern)]
-public IActionResult GetLogs([FromRoute]int skip, [FromRoute]int take, [FromQuery]string terms)
+/// <remarks>
+///     <para>
+///         Logger write Log with **message queue** so when create a log it *near real-time log*
+///     </para>
+///     <para>
+///         Base on <paramref name="httpContext"> </paramref> will return <c> ContentType XML
+///         </c> when Request Header Accept or ContentType is XML, else return <c>
+///         ContentType Json </c>
+///     </para>
+/// </remarks>
+public static ContentResult GetLogsContentResult(HttpContext httpContext, string endpointPattern, int skip, int take, string terms)
 {
     Expression<Func<LogEntity, bool>> predicate = null;
 
-    if (!string.IsNullOrWhiteSpace(terms))
+    var termsNormalize = StringHelper.Normalize(terms);
+
+    if (!string.IsNullOrWhiteSpace(termsNormalize))
     {
-        predicate = x => x.Message.Contains(terms);
+        predicate = x => x.Id.ToUpperInvariant().Contains(termsNormalize)
+        || x.Message.ToUpperInvariant().Contains(termsNormalize)
+        || x.Level.ToString().ToUpperInvariant().Contains(termsNormalize)
+        || x.CreatedTime.ToString(Core.Constant.DateTimeOffSetFormat).Contains(termsNormalize);
     }
 
-    var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
+    var logs = Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
+
+    ContentResult contentResult;
 
     if (total <= 0)
     {
         // Return 204 for No Data Case
-        return NoContent();
+        contentResult = new ContentResult
+        {
+            ContentType =
+                (httpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml || httpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
+                ? ContentType.Xml
+                : ContentType.Json,
+            StatusCode = (int)HttpStatusCode.NoContent,
+            Content = null
+        };
+
+        return contentResult;
     }
 
-    var placeholderLinkView = PlaceholderLinkViewModel.ToCollection(LogsEndpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
-    var collectionFactoryViewModel = new PagedCollectionFactoryViewModel<LogEntity>(placeholderLinkView, LogsEndpointPattern);
-    var collectionViewModel = collectionFactoryViewModel.CreateFrom(logs, skip, take, total);
-    return Ok(collectionViewModel);
+    var placeholderLink = PlaceholderLinkModel.ToCollection(endpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
+    var collectionFactoryModel = new PagedCollectionFactoryModel<LogEntity>(placeholderLink);
+    var collectionModel = collectionFactoryModel.CreateFrom(logs, skip, take, total);
+
+    if (httpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml || httpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
+    {
+        contentResult = new ContentResult
+        {
+            ContentType = ContentType.Xml,
+            StatusCode = (int)HttpStatusCode.OK,
+            Content = XmlHelper.ToXmlStringViaJson(collectionModel, "Logs")
+        };
+    }
+    else
+    {
+        contentResult = new ContentResult
+        {
+            ContentType = ContentType.Json,
+            StatusCode = (int)HttpStatusCode.OK,
+            Content = JsonConvert.SerializeObject(collectionModel, Core.Constant.JsonSerializerSettings)
+        };
+    }
+
+    return contentResult;
 }
 ```    

@@ -27,6 +27,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using Puppy.Web.Constants;
 
 namespace Puppy.Web.SEO.Sitemap
 {

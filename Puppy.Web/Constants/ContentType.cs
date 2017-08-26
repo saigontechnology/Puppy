@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-namespace Puppy.Web
+namespace Puppy.Web.Constants
 {
     /// <summary>
     ///     A list of internet media types, which are a standard identifier used on the Internet to

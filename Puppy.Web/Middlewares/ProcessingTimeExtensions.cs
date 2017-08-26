@@ -19,6 +19,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Puppy.Web.Constants;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -26,8 +27,6 @@ namespace Puppy.Web.Middlewares
 {
     public static class ProcessingTimeExtensions
     {
-        public const string ProcessingTimeResponseHeader = "X-Processing-Time-Milliseconds";
-
         /// <summary>
         ///     [Response] Information about executed time 
         /// </summary>
@@ -56,7 +55,7 @@ namespace Puppy.Web.Middlewares
                     var httpContext = (HttpContext)state;
                     watch.Stop();
                     var elapsedMilliseconds = watch.ElapsedMilliseconds.ToString();
-                    httpContext.Response.Headers.Add(ProcessingTimeResponseHeader, elapsedMilliseconds);
+                    httpContext.Response.Headers.Add(HeaderKey.XProcessingTimeMilliseconds, elapsedMilliseconds);
                     return Task.CompletedTask;
                 }, context);
 

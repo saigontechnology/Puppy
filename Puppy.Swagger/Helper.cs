@@ -26,6 +26,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using Puppy.Web;
+using Puppy.Web.Constants;
 
 namespace Puppy.Swagger
 {

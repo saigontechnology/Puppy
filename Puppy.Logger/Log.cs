@@ -19,27 +19,18 @@
 
 #endregion License
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
 using Puppy.Logger.SQLite;
-using Puppy.Web;
-using Puppy.Web.Models.Api;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Net.Http;
 
 namespace Puppy.Logger
 {

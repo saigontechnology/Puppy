@@ -25,9 +25,9 @@ using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.Web.Constants;
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Puppy.Web.Middlewares.Cros
@@ -84,17 +84,14 @@ namespace Puppy.Web.Middlewares.Cros
                 context.Response.OnStarting(state =>
                 {
                     var httpContext = (HttpContext)state;
-                    if (!httpContext.Response.Headers.ContainsKey("Access-Control-Allow-Origin"))
-                        httpContext.Response.Headers.Add("Access-Control-Allow-Origin", CrosConfig.AccessControlAllowOrigin);
+                    if (!httpContext.Response.Headers.ContainsKey(HeaderKey.AccessControlAllowOrigin))
+                        httpContext.Response.Headers.Add(HeaderKey.AccessControlAllowOrigin, CrosConfig.AccessControlAllowOrigin);
 
-                    if (!httpContext.Response.Headers.ContainsKey("Access-Control-Allow-Headers"))
-                        httpContext.Response.Headers.Add("Access-Control-Allow-Headers", CrosConfig.AccessControlAllowHeaders);
+                    if (!httpContext.Response.Headers.ContainsKey(HeaderKey.AccessControlAllowHeaders))
+                        httpContext.Response.Headers.Add(HeaderKey.AccessControlAllowHeaders, CrosConfig.AccessControlAllowHeaders);
 
-                    if (!httpContext.Response.Headers.ContainsKey("Access-Control-Allow-Methods"))
-                        httpContext.Response.Headers.Add("Access-Control-Allow-Methods", CrosConfig.AccessControlAllowMethods);
-
-                    if (httpContext.Request.Method.Equals("OPTIONS", StringComparison.Ordinal))
-                        httpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
+                    if (!httpContext.Response.Headers.ContainsKey(HeaderKey.AccessControlAllowMethods))
+                        httpContext.Response.Headers.Add(HeaderKey.AccessControlAllowMethods, CrosConfig.AccessControlAllowMethods);
 
                     return Task.CompletedTask;
                 }, context);

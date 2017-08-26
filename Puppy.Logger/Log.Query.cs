@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Puppy.Core.StringUtils;
 using Puppy.Core.XmlUtils;
 using Puppy.Logger.Core.Models;
-using Puppy.Web;
+using Puppy.Web.Constants;
 using Puppy.Web.Models.Api;
 using System;
 using System.Collections.Generic;
@@ -79,10 +79,10 @@ namespace Puppy.Logger
         }
 
         /// <summary>
-        ///     Create Content Result with response type is <see cref="PagedCollectionViewModel{LogEntity}" /> 
+        ///     Create Content Result with response type is <see cref="PagedCollectionModel{LogEntity}" /> 
         /// </summary>
         /// <param name="httpContext">       </param>
-        /// <param name="logEndpointPattern"></param>
+        /// <param name="endpointPattern"></param>
         /// <param name="skip">              </param>
         /// <param name="take">              </param>
         /// <param name="terms">             
@@ -101,7 +101,7 @@ namespace Puppy.Logger
         ///         ContentType Json </c>
         ///     </para>
         /// </remarks>
-        public static ContentResult GetLogsContentResult(HttpContext httpContext, string logEndpointPattern, int skip, int take, string terms)
+        public static ContentResult GetLogsContentResult(HttpContext httpContext, string endpointPattern, int skip, int take, string terms)
         {
             Expression<Func<LogEntity, bool>> predicate = null;
 
@@ -135,9 +135,9 @@ namespace Puppy.Logger
                 return contentResult;
             }
 
-            var placeholderLinkView = PlaceholderLinkViewModel.ToCollection(logEndpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
-            var collectionFactoryViewModel = new PagedCollectionFactoryViewModel<LogEntity>(placeholderLinkView, logEndpointPattern);
-            var collectionViewModel = collectionFactoryViewModel.CreateFrom(logs, skip, take, total);
+            var placeholderLink = PlaceholderLinkModel.ToCollection(endpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
+            var collectionFactoryModel = new PagedCollectionFactoryModel<LogEntity>(placeholderLink);
+            var collectionModel = collectionFactoryModel.Generate(logs, skip, take, terms, total);
 
             if (httpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml || httpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
             {
@@ -145,7 +145,7 @@ namespace Puppy.Logger
                 {
                     ContentType = ContentType.Xml,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Content = XmlHelper.ToXmlStringViaJson(collectionViewModel, "Logs")
+                    Content = XmlHelper.ToXmlStringViaJson(collectionModel, "Logs")
                 };
             }
             else
@@ -154,7 +154,7 @@ namespace Puppy.Logger
                 {
                     ContentType = ContentType.Json,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Content = JsonConvert.SerializeObject(collectionViewModel, Core.Constant.JsonSerializerSettings)
+                    Content = JsonConvert.SerializeObject(collectionModel, Core.Constant.JsonSerializerSettings)
                 };
             }
 

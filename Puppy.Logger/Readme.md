@@ -136,6 +136,8 @@ var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedT
 [Route("logs")]
 [Produces(ContentType.Json, ContentType.Xml)]
 [SwaggerResponse((int)HttpStatusCode.OK, typeof(ICollection<LogEntity>))]
+// public IActionResult Logs([FromQuery]int skip, [FromQuery] int take, [FromQuery] string terms)
+// => Log.GetLogsContentResult(Url, skip, take, terms);
 public IActionResult Logs([FromQuery]PagedCollectionParametersModel pagedCollectionParametersModel)
     => Log.GetLogsContentResult(Url, pagedCollectionParametersModel.Skip, pagedCollectionParametersModel.Take, pagedCollectionParametersModel.Terms);
 

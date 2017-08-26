@@ -52,7 +52,7 @@ namespace Puppy.EF
             includeProperties = includeProperties?.Distinct().ToArray();
             query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
-            return isIncludeDeleted ? query : query.Where(x => !x.IsDeleted());
+            return isIncludeDeleted ? query : query.WhereNotDeleted();
         }
 
         public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -168,6 +168,7 @@ namespace Puppy.EF
 
                 if (entry.State == EntityState.Added)
                 {
+                    entity.DeletedTime = null;
                     entity.LastUpdatedTime = null;
                     entity.CreatedTime = entity.CreatedTime == default(DateTimeOffset)
                         ? DateTimeOffset.UtcNow
@@ -175,7 +176,7 @@ namespace Puppy.EF
                 }
                 else
                 {
-                    if (entity.IsDeleted())
+                    if (entity.DeletedTime != null)
                         entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset)
                             ? DateTimeOffset.UtcNow
                             : entity.DeletedTime;

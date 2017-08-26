@@ -18,14 +18,22 @@
 #endregion License
 
 using Puppy.EF.Interfaces.Entity;
+using System.Linq;
 
 namespace Puppy.EF.Extensions
 {
     public static class ISoftDeletableEntityExtensions
     {
-        public static bool IsDeleted<T>(this T iSoftDeletableEntity) where T : class, ISoftDeletableEntity
+        /// <summary>
+        ///     Filter entities is not deleted by <c> DeletedTime != null </c> 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public static IQueryable<T> WhereNotDeleted<T>(this IQueryable<T> query) where T : class, ISoftDeletableEntity
         {
-            return iSoftDeletableEntity.DeletedTime != null;
+            query = query.Where(x => x.DeletedTime != null);
+            return query;
         }
     }
 }

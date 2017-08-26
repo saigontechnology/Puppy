@@ -33,7 +33,7 @@ namespace Puppy.EF.Extensions
         /// <returns></returns>
         public static IQueryable<T> WhereNotDeleted<T>(this IQueryable<T> query) where T : class, ISoftDeletableEntity
         {
-            query = query.Where(x => x.DeletedTime != null);
+            query = query.Where(x => x.DeletedTime == null);
             return query;
         }
 

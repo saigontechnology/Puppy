@@ -127,13 +127,9 @@ var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedT
 /// <param name="pagedCollectionParametersModel"></param>
 /// <returns></returns>
 /// <remarks>
-///     <para>
-///         Logger write Log with `message queue` so when create a log, it **near real-time log**
-///     </para>
-///     <para>
-///         Search for `Id`, `Message`, `Level`, `CreatedTime` (with string format is
-///         `yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK`, ex: "2017-08-24T00:56:29.6271125+07:00")
-///     </para>
+///     Logger write Log with `message queue` so when create a log, it **near real-time
+///     log**. Terms search for `Id`, `Message`, `Level`, `CreatedTime` (with string format
+///     is `yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK`, ex: "2017-08-24T00:56:29.6271125+07:00")
 /// </remarks>
 [ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
 [HttpGet]

@@ -26,47 +26,48 @@ namespace Puppy.Logger
 {
     public partial class Log
     {
-        public static void Verbose(string message, [CallerMemberName] string callerMemberName = "",
+        public static string Verbose(string message, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            JobLogMessage(LogLevel.Verbose, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(LogLevel.Verbose, message, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static void Debug(string message, [CallerMemberName] string callerMemberName = "",
+        public static string Debug(string message, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            JobLogMessage(LogLevel.Debug, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(LogLevel.Debug, message, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static void Information(string message, [CallerMemberName] string callerMemberName = "",
+        public static string Information(string message, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            JobLogMessage(LogLevel.Information, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(LogLevel.Information, message, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static void Warning(string message, [CallerMemberName] string callerMemberName = "",
+        public static string Warning(string message, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            JobLogMessage(LogLevel.Warning, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(LogLevel.Warning, message, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static void Error(string message, [CallerMemberName] string callerMemberName = "",
+        public static string Error(string message, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            JobLogMessage(LogLevel.Error, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(LogLevel.Error, message, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static void Fatal(string message, [CallerMemberName] string callerMemberName = "",
+        public static string Fatal(string message, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            JobLogMessage(LogLevel.Fatal, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(LogLevel.Fatal, message, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        private static void JobLogMessage(LogLevel logLevel, string message, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static string JobLogMessage(LogLevel logLevel, string message, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logInfo = new LogEntity(message, logLevel);
-            UpdateLogInfo(logInfo, callerMemberName, callerFilePath, callerLineNumber);
-            BackgroundJob.Enqueue(() => Write(logLevel, logInfo.ToString()));
+            var logEntity = new LogEntity(message, logLevel);
+            UpdateLogInfo(logEntity, callerMemberName, callerFilePath, callerLineNumber);
+            BackgroundJob.Enqueue(() => Write(logLevel, logEntity.ToString()));
+            return logEntity.Id;
         }
     }
 }

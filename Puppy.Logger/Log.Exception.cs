@@ -92,18 +92,18 @@ namespace Puppy.Logger
 
         private static string JobLogException(LogLevel logLevel, Exception ex, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logInfo = new LogEntity(ex, logLevel);
-            UpdateLogInfo(logInfo, callerMemberName, callerFilePath, callerLineNumber);
-            BackgroundJob.Enqueue(() => Write(logLevel, logInfo.ToString()));
-            return logInfo.Id;
+            var logEntity = new LogEntity(ex, logLevel);
+            UpdateLogInfo(logEntity, callerMemberName, callerFilePath, callerLineNumber);
+            BackgroundJob.Enqueue(() => Write(logLevel, logEntity.ToString()));
+            return logEntity.Id;
         }
 
         private static string JobLogExceptionContext(LogLevel logLevel, ExceptionContext context, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logInfo = new LogEntity(context, logLevel);
-            UpdateLogInfo(context, logInfo, callerMemberName, callerFilePath, callerLineNumber);
-            BackgroundJob.Enqueue(() => Write(logLevel, logInfo.ToString()));
-            return logInfo.Id;
+            var logEntity = new LogEntity(context, logLevel);
+            UpdateLogInfo(context, logEntity, callerMemberName, callerFilePath, callerLineNumber);
+            BackgroundJob.Enqueue(() => Write(logLevel, logEntity.ToString()));
+            return logEntity.Id;
         }
     }
 }

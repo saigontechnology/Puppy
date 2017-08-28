@@ -30,7 +30,7 @@ namespace Puppy.AutoMapper
         /// </summary>
         /// <typeparam name="TDestination"> Type of the destination object </typeparam>
         /// <param name="source"> Source object </param>
-        public static TDestination To<TDestination>(this object source)
+        public static TDestination MapTo<TDestination>(this object source) where TDestination : class, new()
         {
             return Mapper.Map<TDestination>(source);
         }
@@ -44,7 +44,7 @@ namespace Puppy.AutoMapper
         /// <param name="source">      Source object </param>
         /// <param name="destination"> Destination object </param>
         /// <returns></returns>
-        public static TDestination To<TSource, TDestination>(this TSource source, TDestination destination)
+        public static TDestination MapTo<TSource, TDestination>(this TSource source, TDestination destination) where TDestination : class, new()
         {
             return Mapper.Map(source, destination);
         }

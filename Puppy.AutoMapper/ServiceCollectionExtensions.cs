@@ -44,6 +44,7 @@ namespace Puppy.AutoMapper
         ///     Add AutoMapper with Profiles scan and Dependency Injection 
         /// </summary>
         /// <param name="services">                    </param>
+        /// <param name="mapperResolveType">           </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
@@ -56,9 +57,12 @@ namespace Puppy.AutoMapper
         ///     List of assembliesToScan contain AutoMapper Profile, <c> null </c> for scan current
         ///     loaded/reference in main project
         /// </param>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true, params Assembly[] assembliesToScan)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Enums.MapperResolveType mapperResolveType = Enums.MapperResolveType.PerRequest,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true, params Assembly[] assembliesToScan)
         {
-            return AddAutoMapperClasses(services, null, assembliesToScan, isAssertConfigurationIsValid, isCompileMappings);
+            return AddAutoMapperClasses(services, null, assembliesToScan, mapperResolveType,
+                isAssertConfigurationIsValid, isCompileMappings);
         }
 
         /// <summary>
@@ -74,7 +78,8 @@ namespace Puppy.AutoMapper
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
         /// </param>
         /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
         {
             return services.AddAutoMapper(null, DependencyContext.Default);
         }
@@ -93,7 +98,9 @@ namespace Puppy.AutoMapper
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
         /// </param>
         /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<IMapperConfigurationExpression> additionalInitAction, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Action<IMapperConfigurationExpression> additionalInitAction, bool isAssertConfigurationIsValid = true,
+            bool isCompileMappings = true)
         {
             return services.AddAutoMapper(additionalInitAction, DependencyContext.Default);
         }
@@ -113,7 +120,9 @@ namespace Puppy.AutoMapper
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
         /// </param>
         /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<IMapperConfigurationExpression> additionalInitAction, DependencyContext dependencyContext, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Action<IMapperConfigurationExpression> additionalInitAction, DependencyContext dependencyContext,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
         {
             return services.AddAutoMapper(additionalInitAction, GetCandidateAssemblies(dependencyContext));
         }
@@ -123,6 +132,7 @@ namespace Puppy.AutoMapper
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
+        /// <param name="mapperResolveType">           </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
@@ -133,9 +143,13 @@ namespace Puppy.AutoMapper
         /// </param>
         /// <param name="assemblies">                  </param>
         /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<IMapperConfigurationExpression> additionalInitAction, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true, params Assembly[] assemblies)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Action<IMapperConfigurationExpression> additionalInitAction,
+            Enums.MapperResolveType mapperResolveType = Enums.MapperResolveType.PerRequest,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true, params Assembly[] assemblies)
         {
-            return AddAutoMapperClasses(services, additionalInitAction, assemblies, isAssertConfigurationIsValid, isCompileMappings);
+            return AddAutoMapperClasses(services, additionalInitAction, assemblies, mapperResolveType,
+                isAssertConfigurationIsValid, isCompileMappings);
         }
 
         /// <summary>
@@ -144,6 +158,7 @@ namespace Puppy.AutoMapper
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
         /// <param name="assemblies">                  </param>
+        /// <param name="mapperResolveType">           </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
@@ -153,15 +168,20 @@ namespace Puppy.AutoMapper
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
         /// </param>
         /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<IMapperConfigurationExpression> additionalInitAction, IEnumerable<Assembly> assemblies, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Action<IMapperConfigurationExpression> additionalInitAction, IEnumerable<Assembly> assemblies,
+            Enums.MapperResolveType mapperResolveType = Enums.MapperResolveType.PerRequest,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
         {
-            return AddAutoMapperClasses(services, additionalInitAction, assemblies, isAssertConfigurationIsValid, isCompileMappings);
+            return AddAutoMapperClasses(services, additionalInitAction, assemblies, mapperResolveType,
+                isAssertConfigurationIsValid, isCompileMappings);
         }
 
         /// <summary>
         ///     Add AutoMapper with Profiles scan and Dependency Injection 
         /// </summary>
         /// <param name="services">                    </param>
+        /// <param name="mapperResolveType">           </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
@@ -172,29 +192,13 @@ namespace Puppy.AutoMapper
         /// </param>
         /// <param name="profileAssemblyMarkerTypes">  </param>
         /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true, params Type[] profileAssemblyMarkerTypes)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Enums.MapperResolveType mapperResolveType = Enums.MapperResolveType.PerRequest,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true,
+            params Type[] profileAssemblyMarkerTypes)
         {
-            return AddAutoMapperClasses(services, null, profileAssemblyMarkerTypes.GetAssemblies(), isAssertConfigurationIsValid, isCompileMappings);
-        }
-
-        /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
-        /// </summary>
-        /// <param name="services">                    </param>
-        /// <param name="additionalInitAction">        </param>
-        /// <param name="isAssertConfigurationIsValid">
-        ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
-        /// </param>
-        /// <param name="isCompileMappings">           
-        ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
-        ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
-        ///     <c> Mapper.Configuration.CompileMappings(); </c>
-        /// </param>
-        /// <param name="profileAssemblyMarkerTypes">  </param>
-        /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<IMapperConfigurationExpression> additionalInitAction, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true, params Type[] profileAssemblyMarkerTypes)
-        {
-            return AddAutoMapperClasses(services, additionalInitAction, profileAssemblyMarkerTypes.GetAssemblies(), isAssertConfigurationIsValid, isCompileMappings);
+            return AddAutoMapperClasses(services, null, profileAssemblyMarkerTypes.GetAssemblies(), mapperResolveType,
+                isAssertConfigurationIsValid, isCompileMappings);
         }
 
         /// <summary>
@@ -202,7 +206,34 @@ namespace Puppy.AutoMapper
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
+        /// <param name="mapperResolveType">           </param>
+        /// <param name="isAssertConfigurationIsValid">
+        ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
+        /// </param>
+        /// <param name="isCompileMappings">           
+        ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
+        ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
+        ///     <c> Mapper.Configuration.CompileMappings(); </c>
+        /// </param>
         /// <param name="profileAssemblyMarkerTypes">  </param>
+        /// <returns></returns>
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Action<IMapperConfigurationExpression> additionalInitAction,
+            Enums.MapperResolveType mapperResolveType = Enums.MapperResolveType.PerRequest,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true,
+            params Type[] profileAssemblyMarkerTypes)
+        {
+            return AddAutoMapperClasses(services, additionalInitAction, profileAssemblyMarkerTypes.GetAssemblies(),
+                mapperResolveType, isAssertConfigurationIsValid, isCompileMappings);
+        }
+
+        /// <summary>
+        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        /// </summary>
+        /// <param name="services">                    </param>
+        /// <param name="additionalInitAction">        </param>
+        /// <param name="profileAssemblyMarkerTypes">  </param>
+        /// <param name="mapperResolveType">           </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
@@ -212,12 +243,23 @@ namespace Puppy.AutoMapper
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
         /// </param>
         /// <returns></returns>
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<IMapperConfigurationExpression> additionalInitAction, IEnumerable<Type> profileAssemblyMarkerTypes, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services,
+            Action<IMapperConfigurationExpression> additionalInitAction, IEnumerable<Type> profileAssemblyMarkerTypes,
+            Enums.MapperResolveType mapperResolveType = Enums.MapperResolveType.PerRequest,
+            bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
         {
-            return AddAutoMapperClasses(services, additionalInitAction, profileAssemblyMarkerTypes.GetAssemblies(), isAssertConfigurationIsValid, isCompileMappings);
+            return AddAutoMapperClasses(services, additionalInitAction, profileAssemblyMarkerTypes.GetAssemblies(),
+                mapperResolveType, isAssertConfigurationIsValid, isCompileMappings);
         }
 
-        private static IServiceCollection AddAutoMapperClasses(IServiceCollection services, Action<IMapperConfigurationExpression> additionalInitAction, IEnumerable<Assembly> assembliesToScan, bool isAssertConfigurationIsValid = true, bool isCompileMappings = true)
+        #region Private Helper
+
+        private static IServiceCollection AddAutoMapperClasses(IServiceCollection services,
+            Action<IMapperConfigurationExpression> additionalInitAction,
+            IEnumerable<Assembly> assembliesToScan,
+            Enums.MapperResolveType mapperResolveType = Enums.MapperResolveType.PerRequest,
+            bool isAssertConfigurationIsValid = true,
+            bool isCompileMappings = true)
         {
             additionalInitAction = additionalInitAction ?? DefaultConfig;
             assembliesToScan = assembliesToScan as Assembly[] ?? assembliesToScan.ToArray();
@@ -238,9 +280,7 @@ namespace Puppy.AutoMapper
                 additionalInitAction(cfg);
 
                 foreach (var profile in profiles.Select(t => t.AsType()))
-                {
                     cfg.AddProfile(profile);
-                }
             });
 
             // Assert Config
@@ -258,16 +298,44 @@ namespace Puppy.AutoMapper
                 typeof(ITypeConverter<,>)
             };
 
-            var dependencyTypes = openTypes.SelectMany(openType => allTypes.Where(t => t.IsClass && !t.IsAbstract && t.AsType().IsImplementGenericInterface(openType)));
+            var dependencyTypes =
+                openTypes.SelectMany(
+                    openType => allTypes.Where(t => t.IsClass && !t.IsAbstract &&
+                                                    t.AsType().IsImplementGenericInterface(openType)));
 
             foreach (var type in dependencyTypes)
-            {
                 services.AddTransient(type.AsType());
+
+            // Add Mapper to DI
+
+            // Config is singleton
+            services.AddSingleton(Mapper.Configuration);
+
+            switch (mapperResolveType)
+            {
+                case Enums.MapperResolveType.PerRequest:
+                    {
+                        services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(),
+                            sp.GetService));
+                        break;
+                    }
+                case Enums.MapperResolveType.PreResolve:
+                    {
+                        services.AddTransient<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(),
+                            sp.GetService));
+                        break;
+                    }
+                case Enums.MapperResolveType.Singleton:
+                    {
+                        services.AddSingleton<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(),
+                            sp.GetService));
+                        break;
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mapperResolveType), mapperResolveType, null);
             }
 
-            services.AddSingleton(Mapper.Configuration);
-            return services.AddScoped<IMapper>(
-                sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
+            return services;
         }
 
         private static IEnumerable<Assembly> GetCandidateAssemblies(DependencyContext dependencyContext)
@@ -321,9 +389,7 @@ namespace Puppy.AutoMapper
             {
                 var candidateEntry = _dependencies[dependency];
                 if (candidateEntry.Classification != DependencyClassification.Unknown)
-                {
                     return candidateEntry.Classification;
-                }
                 var classification = DependencyClassification.NotCandidate;
                 foreach (var candidateDependency in candidateEntry.Library.Dependencies)
                 {
@@ -374,5 +440,7 @@ namespace Puppy.AutoMapper
                 AutoMapperReference = 3
             }
         }
+
+        #endregion
     }
 }

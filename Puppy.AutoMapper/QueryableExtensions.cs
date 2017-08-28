@@ -35,8 +35,10 @@ namespace Puppy.AutoMapper
         /// <typeparam name="TDestination"> Destination type </typeparam>
         /// <param name="source">          Queryable source </param>
         /// <param name="membersToExpand"> Explicit members to expand </param>
-        /// <returns> Expression to project into </returns>
-        public static IQueryable<TDestination> To<TDestination>(this IQueryable source, params Expression<Func<TDestination, object>>[] membersToExpand)
+        /// <returns>
+        ///     Queryable result, use queryable extension methods to project and execute result
+        /// </returns>
+        public static IQueryable<TDestination> QueryTo<TDestination>(this IQueryable source, params Expression<Func<TDestination, object>>[] membersToExpand)
         {
             return source.ProjectTo(Mapper.Configuration, null, membersToExpand);
         }
@@ -53,7 +55,7 @@ namespace Puppy.AutoMapper
         /// <returns>
         ///     Queryable result, use queryable extension methods to project and execute result
         /// </returns>
-        public static IQueryable<TDestination> To<TDestination>(this IQueryable source, IDictionary<string, object> parameters, params string[] membersToExpand)
+        public static IQueryable<TDestination> QueryTo<TDestination>(this IQueryable source, IDictionary<string, object> parameters, params string[] membersToExpand)
         {
             return source.ProjectTo<TDestination>(Mapper.Configuration, parameters, membersToExpand);
         }

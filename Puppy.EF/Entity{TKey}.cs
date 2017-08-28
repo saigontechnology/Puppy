@@ -27,7 +27,6 @@ namespace Puppy.EF
     {
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
-        [Timestamp]
         public virtual byte[] Version { get; set; }
 
         public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
@@ -43,7 +42,6 @@ namespace Puppy.EF
     /// <typeparam name="TKey">Id type of this entity</typeparam>
     public abstract class Entity<TKey> : EntityBase, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey>, IVersionEntity, IGlobalIdentityEntity where TKey : struct
     {
-        [Key]
         public virtual TKey Id { get; set; }
 
         public virtual TKey? CreatedBy { get; set; }
@@ -59,7 +57,6 @@ namespace Puppy.EF
 
     public class EntityString : EntityBase, ISoftDeletableEntityString, IAuditableEntityString, IVersionEntity, IGlobalIdentityEntity
     {
-        [Key]
         public virtual string Id { get; set; }
 
         public virtual string CreatedBy { get; set; }

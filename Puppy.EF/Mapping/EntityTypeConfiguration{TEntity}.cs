@@ -25,10 +25,15 @@ namespace Puppy.EF.Mapping
     {
         public virtual void Map(EntityTypeBuilder<TEntity> builder)
         {
+            // Key
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Version).IsRowVersion();
+
+            // Index
             builder.HasIndex(x => x.Id);
             builder.HasIndex(x => x.DeletedTime);
+
+            // Version
+            builder.Property(x => x.Version).IsRowVersion();
         }
     }
 

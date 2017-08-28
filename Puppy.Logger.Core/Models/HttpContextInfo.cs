@@ -62,6 +62,8 @@ namespace Puppy.Logger.Core.Models
 
         public HttpContextInfo(HttpContext context) : this()
         {
+            if (context == null) return;
+
             Headers = context.Request.Headers.ToDictionary(x => x.Key, x => x.Value.ToList());
             Protocol = context.Request.Protocol;
             Method = context.Request.Method;

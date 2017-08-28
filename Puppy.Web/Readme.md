@@ -93,3 +93,14 @@ app.UseRequestRewind()
 ### 5.CorsExtensions
 - Help to enbale and config Cros for API.
 - Please read the [Readme.md](Middlewares/Cros/Readme.md) file in Middlewares/Cros folder.
+
+### 6. HttpContextAccessor
+- Add service and use with application builder as the code block below.
+- Then just call `System.Web.HttpContext.Current`
+```csharp
+// [HttpContext]
+service.AddHttpContextAccessor()
+
+// [HttpContext]
+app.UseHttpContextAccessor()
+```

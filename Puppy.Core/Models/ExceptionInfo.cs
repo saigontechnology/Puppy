@@ -21,11 +21,11 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace Puppy.Logger.Core.Models
+namespace Puppy.Core.Models
 {
     [Serializable]
     [DesignerCategory(nameof(Puppy))]
-    public sealed class ExceptionInfo : Serializable
+    public class ExceptionInfo : SerializableModel
     {
         public string Id { get; set; } = Guid.NewGuid().ToString("N");
 

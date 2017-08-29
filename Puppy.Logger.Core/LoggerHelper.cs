@@ -34,7 +34,7 @@ namespace Puppy.Logger.Core
                     logEntity = null;
                     return false;
                 }
-                logEntity = JsonConvert.DeserializeObject<LogEntity>(value, Constant.JsonSerializerSettings);
+                logEntity = JsonConvert.DeserializeObject<LogEntity>(value, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings);
                 return logEntity != null;
             }
             catch (Exception)

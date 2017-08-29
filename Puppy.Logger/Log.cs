@@ -26,6 +26,7 @@ using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
 using Puppy.Logger.SQLite;
+using Puppy.Web.Models;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -89,12 +90,12 @@ namespace Puppy.Logger
                 logEntity.Id = context.HttpContext.Request.Headers[nameof(logEntity.Id)];
 
             // Get Request Time from Header
-            if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
+            if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextInfoModel.RequestTime)))
             {
-                string requestTimeStr = context.HttpContext.Request.Headers[nameof(HttpContextInfo.RequestTime)];
+                string requestTimeStr = context.HttpContext.Request.Headers[nameof(HttpContextInfoModel.RequestTime)];
                 DateTime requestTime;
                 var isCanGetRequestTime =
-                    DateTimeHelper.TryParse(requestTimeStr, Core.Constant.DateTimeOffSetFormat, out requestTime);
+                    DateTimeHelper.TryParse(requestTimeStr, Puppy.Core.Constants.StandardFormat.DateTimeOffSetFormat, out requestTime);
                 logEntity.HttpContext.RequestTime =
                     isCanGetRequestTime ? (DateTimeOffset?)requestTime : null;
             }

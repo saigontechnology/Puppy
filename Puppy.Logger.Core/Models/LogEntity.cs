@@ -20,14 +20,14 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Puppy.Core.Models;
+using Puppy.Web.Models;
 using System;
-using System.ComponentModel;
 
 namespace Puppy.Logger.Core.Models
 {
     [Serializable]
-    [DesignerCategory(nameof(Puppy))]
-    public sealed class LogEntity : Serializable
+    public sealed class LogEntity : SerializableModel
     {
         public string Id { get; set; } = Guid.NewGuid().ToString("N");
 
@@ -95,7 +95,7 @@ namespace Puppy.Logger.Core.Models
             get => _exceptionJson;
             set
             {
-                var exceptionEntity = JsonConvert.DeserializeObject<ExceptionInfo>(value, Constant.JsonSerializerSettings);
+                var exceptionEntity = JsonConvert.DeserializeObject<ExceptionInfo>(value, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings);
                 if (exceptionEntity == null) throw new NotSupportedException($"{value} is not {nameof(ExceptionInfo)} Json String");
                 _exceptionJson = value;
             }
@@ -105,13 +105,13 @@ namespace Puppy.Logger.Core.Models
 
         #region HttpContext
 
-        private HttpContextInfo _httpContext;
+        private HttpContextInfoModel _httpContext;
 
         /// <summary>
         ///     Http Context Info 
         /// </summary>
         /// <remarks> Set value for HttpContext auto update value for <see cref="HttpContextJson" /> </remarks>
-        public HttpContextInfo HttpContext
+        public HttpContextInfoModel HttpContext
         {
             get => _httpContext;
             set
@@ -127,7 +127,8 @@ namespace Puppy.Logger.Core.Models
         ///     Json String of <see cref="HttpContext" /> 
         /// </summary>
         /// <remarks>
-        ///     When set value for this, only accept json string can parse to <c> HttpContextInfo </c>
+        ///     When set value for this, only accept json string can parse to <c>
+        ///     HttpContextInfoModel </c>
         /// </remarks>
         [JsonIgnore]
         public string HttpContextJson
@@ -135,9 +136,9 @@ namespace Puppy.Logger.Core.Models
             get => _httpContextJson;
             set
             {
-                var httpContext = JsonConvert.DeserializeObject<HttpContextInfo>(value, Constant.JsonSerializerSettings);
+                var httpContext = JsonConvert.DeserializeObject<HttpContextInfoModel>(value, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings);
 
-                if (httpContext == null) throw new NotSupportedException($"{value} is not {nameof(HttpContextInfo)} Json String");
+                if (httpContext == null) throw new NotSupportedException($"{value} is not {nameof(HttpContextInfoModel)} Json String");
 
                 _httpContextJson = value;
             }
@@ -168,7 +169,7 @@ namespace Puppy.Logger.Core.Models
         public LogEntity(ExceptionContext context, LogLevel level, string message = null) : this(message, level)
         {
             Exception = new ExceptionInfo(context.Exception);
-            HttpContext = new HttpContextInfo(context.HttpContext);
+            HttpContext = new HttpContextInfoModel(context.HttpContext);
 
             if (string.IsNullOrWhiteSpace(Message))
             {
@@ -184,12 +185,12 @@ namespace Puppy.Logger.Core.Models
         {
             if (!string.IsNullOrWhiteSpace(ExceptionJson))
             {
-                Exception = JsonConvert.DeserializeObject<ExceptionInfo>(ExceptionJson, Constant.JsonSerializerSettings);
+                Exception = JsonConvert.DeserializeObject<ExceptionInfo>(ExceptionJson, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings);
             }
 
             if (!string.IsNullOrWhiteSpace(HttpContextJson))
             {
-                HttpContext = JsonConvert.DeserializeObject<HttpContextInfo>(HttpContextJson, Constant.JsonSerializerSettings);
+                HttpContext = JsonConvert.DeserializeObject<HttpContextInfoModel>(HttpContextJson, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings);
             }
 
             return this;

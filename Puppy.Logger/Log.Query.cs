@@ -110,7 +110,7 @@ namespace Puppy.Logger
                 predicate = x => x.Id.ToUpperInvariant().Contains(termsNormalize)
                 || x.Message.ToUpperInvariant().Contains(termsNormalize)
                 || x.Level.ToString().ToUpperInvariant().Contains(termsNormalize)
-                || x.CreatedTime.ToString(Core.Constant.DateTimeOffSetFormat).Contains(termsNormalize);
+                || x.CreatedTime.ToString(Puppy.Core.Constants.StandardFormat.DateTimeOffSetFormat).Contains(termsNormalize);
             }
 
             var logs = Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
@@ -152,7 +152,7 @@ namespace Puppy.Logger
                 {
                     ContentType = ContentType.Json,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Content = JsonConvert.SerializeObject(collectionModel, Core.Constant.JsonSerializerSettings)
+                    Content = JsonConvert.SerializeObject(collectionModel, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings)
                 };
             }
 
@@ -229,7 +229,7 @@ namespace Puppy.Logger
                 {
                     ContentType = ContentType.Json,
                     StatusCode = (int)HttpStatusCode.OK,
-                    Content = JsonConvert.SerializeObject(log, Core.Constant.JsonSerializerSettings)
+                    Content = JsonConvert.SerializeObject(log, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings)
                 };
             }
 

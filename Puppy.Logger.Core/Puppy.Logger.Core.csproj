@@ -14,20 +14,15 @@
     <OutputPath>.\bin\</OutputPath>
   </PropertyGroup>
 
+  <!-- Puppy -->
+  <ItemGroup>
+    <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
+    <ProjectReference Include="..\Puppy.Web\Puppy.Web.csproj" />
+  </ItemGroup>
+
   <!-- External Libraries -->
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Models\ExceptionInfo.cs">
-      <SubType>Puppy</SubType>
-    </Compile>
-    <Compile Update="Models\HttpContextInfo.cs">
-      <SubType>Puppy</SubType>
-    </Compile>
-    <Compile Update="Models\LogEntity.cs">
-      <SubType>Puppy</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

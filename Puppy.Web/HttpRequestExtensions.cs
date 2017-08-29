@@ -20,8 +20,11 @@
 #endregion License
 
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net;
+using System.Text;
 
 namespace Puppy.Web
 {
@@ -82,6 +85,33 @@ namespace Puppy.Web
                 return true;
 
             return false;
+        }
+
+        public static object GetBody(this HttpRequest request)
+        {
+            try
+            {
+                object requestBodyObj;
+
+                // Reset Body to Original Position
+                request.Body.Position = 0;
+
+                using (StreamReader reader = new StreamReader(request.Body, Encoding.UTF8, true, 1024, true))
+                {
+                    string requestBody = reader.ReadToEnd();
+
+                    // Reformat to have beautiful json string
+                    requestBodyObj = JsonConvert.DeserializeObject(requestBody);
+                }
+                // Reset Body to Original Position
+                request.Body.Position = 0;
+
+                return requestBodyObj;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

@@ -6,26 +6,27 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> Serializable.cs </Name>
+//         <Name> SerializableModel.cs </Name>
 //         <Created> 11/08/17 5:11:21 PM </Created>
 //         <Key> 08056cc7-81c9-49c9-a4a9-b62c131ff068 </Key>
 //     </File>
 //     <Summary>
-//         Serializable.cs
+//         SerializableModel.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
 using Newtonsoft.Json;
+using Puppy.Core.Constants;
 
-namespace Puppy.Logger.Core.Models
+namespace Puppy.Core.Models
 {
-    public abstract class Serializable
+    public abstract class SerializableModel
     {
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, Constant.JsonSerializerSettings);
+            return JsonConvert.SerializeObject(this, StandardFormat.JsonSerializerSettings);
         }
     }
 }

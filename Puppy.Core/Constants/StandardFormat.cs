@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> Constant.cs </Name>
+//         <Name> StandardFormat.cs </Name>
 //         <Created> 11/08/17 5:07:33 PM </Created>
 //         <Key> 1bf5b0fa-8b81-4083-a7ce-6b8aee7d62bb </Key>
 //     </File>
 //     <Summary>
-//         Constant.cs
+//         StandardFormat.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -19,10 +19,13 @@
 
 using Newtonsoft.Json;
 
-namespace Puppy.Logger.Core
+namespace Puppy.Core.Constants
 {
-    public static class Constant
+    public static class StandardFormat
     {
+        /// <summary>
+        ///     Isolate Datetime StandardFormat 
+        /// </summary>
         public const string DateTimeOffSetFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
 
         public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings

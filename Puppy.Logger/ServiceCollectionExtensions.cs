@@ -30,6 +30,7 @@ using Microsoft.Extensions.Primitives;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.Filters;
+using Puppy.Web.Models;
 using Serilog;
 using System;
 using System.Linq;
@@ -134,10 +135,10 @@ namespace Puppy.Logger
                     context.Request.Headers.Add(nameof(LogEntity.Id), id);
                 }
 
-                if (!context.Request.Headers.ContainsKey(nameof(HttpContextInfo.RequestTime)))
+                if (!context.Request.Headers.ContainsKey(nameof(HttpContextInfoModel.RequestTime)))
                 {
-                    var requestTime = DateTimeOffset.Now.ToString(Core.Constant.DateTimeOffSetFormat);
-                    context.Request.Headers.Add(nameof(HttpContextInfo.RequestTime), requestTime);
+                    var requestTime = DateTimeOffset.Now.ToString(Puppy.Core.Constants.StandardFormat.DateTimeOffSetFormat);
+                    context.Request.Headers.Add(nameof(HttpContextInfoModel.RequestTime), requestTime);
                 }
 
                 // Allows using several time the stream in ASP.Net Core. Enable Rewind for Request to

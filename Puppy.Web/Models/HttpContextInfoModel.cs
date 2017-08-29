@@ -18,19 +18,15 @@
 #endregion License
 
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using Puppy.Core.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace Puppy.Logger.Core.Models
+namespace Puppy.Web.Models
 {
     [Serializable]
-    [DesignerCategory(nameof(Puppy))]
-    public sealed class HttpContextInfo : Serializable
+    public sealed class HttpContextInfoModel : SerializableModel
     {
         public string Id { get; set; } = Guid.NewGuid().ToString("N");
 
@@ -56,11 +52,11 @@ namespace Puppy.Logger.Core.Models
         /// </summary>
         public object RequestBody { get; set; }
 
-        public HttpContextInfo()
+        public HttpContextInfoModel()
         {
         }
 
-        public HttpContextInfo(HttpContext context) : this()
+        public HttpContextInfoModel(HttpContext context) : this()
         {
             if (context == null) return;
 
@@ -70,34 +66,7 @@ namespace Puppy.Logger.Core.Models
             Endpoint = $"{context.Request.Scheme}://{context.Request.Host.Value}{context.Request.Path.Value}";
             QueryStrings = context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToList());
             DisplayUrl = $"[{Protocol}]({Method}){Endpoint}{context.Request.QueryString}";
-            RequestBody = GetRequestBody(context);
-        }
-
-        private static object GetRequestBody(HttpContext context)
-        {
-            try
-            {
-                object requestBodyObj;
-
-                // Reset Body to Original Position
-                context.Request.Body.Position = 0;
-
-                using (StreamReader reader = new StreamReader(context.Request.Body, Encoding.UTF8, true, 1024, true))
-                {
-                    string requestBody = reader.ReadToEnd();
-
-                    // Reformat to have beautiful json string
-                    requestBodyObj = JsonConvert.DeserializeObject(requestBody);
-                }
-                // Reset Body to Original Position
-                context.Request.Body.Position = 0;
-
-                return requestBodyObj;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            RequestBody = context.Request.GetBody();
         }
     }
 }

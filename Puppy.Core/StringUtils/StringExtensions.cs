@@ -129,7 +129,7 @@ namespace Puppy.Core.StringUtils
         {
             Uri pathUri;
 
-            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out pathUri) || (!Uri.IsWellFormedUriString(path, UriKind.RelativeOrAbsolute) && !File.Exists(path)))
+            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out pathUri))
                 throw new ArgumentException($"Invalid path {nameof(path)}");
 
             if (!pathUri.IsAbsoluteUri)

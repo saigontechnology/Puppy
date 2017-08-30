@@ -19,7 +19,10 @@
 
 #endregion License
 
+using System;
 using System.Drawing;
+using System.IO;
+using System.Text;
 
 namespace Puppy.Core.ImageUtils
 {
@@ -62,6 +65,64 @@ namespace Puppy.Core.ImageUtils
             b /= total;
 
             return Color.FromArgb(r, g, b);
+        }
+
+        public static bool IsSvgImage(MemoryStream imageStream)
+        {
+            try
+            {
+                imageStream.Position = 0;
+                byte[] bytes = imageStream.ToArray();
+                var text = Encoding.UTF8.GetString(bytes);
+                bool isSvgImage = text.StartsWith("<?xml ") || text.StartsWith("<svg ");
+                return isSvgImage;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///     Get image type/extension 
+        /// </summary>
+        /// <param name="imageStream"></param>
+        /// <returns></returns>
+        public static string GetImageType(MemoryStream imageStream)
+        {
+            try
+            {
+                // Check Vector image first
+                if (IsSvgImage(imageStream))
+                {
+                    return ".svg";
+                }
+
+                // Raster check (jpg, png, etc.)
+                using (Image image = Image.FromStream(imageStream))
+                {
+                    return image.RawFormat.ToString().ToLower();
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///     Get image type/extension 
+        /// </summary>
+        /// <param name="base64"></param>
+        /// <returns></returns>
+        public static string GetImageType(string base64)
+        {
+            byte[] bytes = Convert.FromBase64String(base64);
+
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                return GetImageType(stream);
+            }
         }
     }
 }

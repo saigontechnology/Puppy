@@ -30,19 +30,19 @@ namespace Puppy.Core.StringUtils
         [DebuggerStepThrough]
         public static bool IsMissing(this string value)
         {
-            return string.IsNullOrWhiteSpace(value);
+            return String.IsNullOrWhiteSpace(value);
         }
 
         [DebuggerStepThrough]
         public static bool IsMissingOrTooLong(this string value, int maxLength)
         {
-            return string.IsNullOrWhiteSpace(value) || value.Length > maxLength;
+            return String.IsNullOrWhiteSpace(value) || value.Length > maxLength;
         }
 
         [DebuggerStepThrough]
         public static bool IsPresent(this string value)
         {
-            return !string.IsNullOrWhiteSpace(value);
+            return !String.IsNullOrWhiteSpace(value);
         }
 
         [DebuggerStepThrough]
@@ -80,7 +80,7 @@ namespace Puppy.Core.StringUtils
         [DebuggerStepThrough]
         public static string CleanUrlPath(this string url)
         {
-            if (string.IsNullOrWhiteSpace(url))
+            if (String.IsNullOrWhiteSpace(url))
                 url = "/";
             if (url != "/" && url.EndsWith("/"))
                 url = url.Substring(0, url.Length - 1);
@@ -90,7 +90,7 @@ namespace Puppy.Core.StringUtils
         [DebuggerStepThrough]
         public static bool IsLocalUrl(this string url)
         {
-            if (string.IsNullOrEmpty(url))
+            if (String.IsNullOrEmpty(url))
                 return false;
             if (url[0] == 47 && (url.Length == 1 || url[1] != 47 && url[1] != 92))
                 return true;
@@ -128,7 +128,8 @@ namespace Puppy.Core.StringUtils
         public static string GetFullPath(this string path)
         {
             Uri pathUri;
-            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out pathUri))
+
+            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out pathUri) || (!Uri.IsWellFormedUriString(path, UriKind.RelativeOrAbsolute) && !File.Exists(path)))
                 throw new ArgumentException($"Invalid path {nameof(path)}");
 
             if (!pathUri.IsAbsoluteUri)
@@ -137,6 +138,23 @@ namespace Puppy.Core.StringUtils
             }
 
             return path;
+        }
+
+        public static bool IsBase64(this string value)
+        {
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+            try
+            {
+                var byteArray = Convert.FromBase64String(value);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

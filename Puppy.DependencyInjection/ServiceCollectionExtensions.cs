@@ -30,7 +30,9 @@ namespace Puppy.DependencyInjection
         ///     [Dependency Injection] 
         /// </summary>
         /// <param name="services">          </param>
-        /// <param name="systemName">         Ex: Monkey =&gt; scan for Monkey.dll and Monkey.*.dll </param>
+        /// <param name="systemName">        
+        ///     Ex: Monkey =&gt; scan for Monkey.dll and Monkey.*.dll
+        /// </param>
         /// <param name="assemblyFolderPath">
         ///     Default is null = current execute application folder
         /// </param>
@@ -44,12 +46,17 @@ namespace Puppy.DependencyInjection
             // Write out all dependency injection services
             services.WriteOut(systemName);
 
+            ServiceCollection.Services = services;
+
             return services;
         }
 
         public static IServiceCollection AddDependencyInjectionScanner(this IServiceCollection services)
         {
             services.AddSingleton<Scanner>();
+
+            ServiceCollection.Services = services;
+
             return services;
         }
 
@@ -62,6 +69,9 @@ namespace Puppy.DependencyInjection
         {
             var env = services.BuildServiceProvider().GetService<IHostingEnvironment>();
             services.ScanFromAssembly(new AssemblyName(env.ApplicationName));
+
+            ServiceCollection.Services = services;
+
             return services;
         }
 
@@ -74,6 +84,9 @@ namespace Puppy.DependencyInjection
         {
             var scanner = services.GetScanner();
             scanner.RegisterAssembly(services, assemblyName);
+
+            ServiceCollection.Services = services;
+
             return services;
         }
 
@@ -87,6 +100,9 @@ namespace Puppy.DependencyInjection
         {
             var scanner = services.GetScanner();
             scanner.RegisterAllAssemblies(services, searchPattern, folderFullPath);
+
+            ServiceCollection.Services = services;
+
             return services;
         }
 
@@ -99,6 +115,9 @@ namespace Puppy.DependencyInjection
         {
             var scanner = services.GetScanner();
             scanner.WriteOut(services, serviceTypeNameFilter);
+
+            ServiceCollection.Services = services;
+
             return services;
         }
 

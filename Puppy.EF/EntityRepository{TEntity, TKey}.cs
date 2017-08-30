@@ -22,7 +22,6 @@
 using Microsoft.EntityFrameworkCore;
 using Puppy.EF.Extensions;
 using Puppy.EF.Interfaces;
-using Puppy.EF.Interfaces.Entity;
 using Puppy.EF.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
@@ -34,11 +33,11 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF
 {
-    public abstract class EntityRepositoryBase<TEntity> : Repository<TEntity> where TEntity : class, ISoftDeletableEntity, IAuditableEntity
+    public abstract class EntityBaseRepository<TEntity> : Repository<TEntity> where TEntity : EntityBase
     {
         protected readonly IBaseDbContext DbContext;
 
-        protected EntityRepositoryBase(IBaseDbContext dbContext) : base(dbContext)
+        protected EntityBaseRepository(IBaseDbContext dbContext) : base(dbContext)
         {
             DbContext = dbContext;
         }
@@ -192,7 +191,7 @@ namespace Puppy.EF
         }
     }
 
-    public abstract class EntityRepository<TEntity, TKey> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : Entity<TKey>, new() where TKey : struct
+    public abstract class EntityRepository<TEntity, TKey> : EntityBaseRepository<TEntity>, IEntityRepository<TEntity> where TEntity : Entity<TKey>, new() where TKey : struct
     {
         protected EntityRepository(IBaseDbContext dbContext) : base(dbContext)
         {
@@ -248,9 +247,9 @@ namespace Puppy.EF
         }
     }
 
-    public abstract class EntityRepositoryString<TEntity> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : EntityString, new()
+    public abstract class EntityStringRepository<TEntity> : EntityBaseRepository<TEntity>, IEntityRepository<TEntity> where TEntity : EntityString, new()
     {
-        protected EntityRepositoryString(IBaseDbContext dbContext) : base(dbContext)
+        protected EntityStringRepository(IBaseDbContext dbContext) : base(dbContext)
         {
         }
 

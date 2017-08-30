@@ -18,12 +18,11 @@
 #endregion License
 
 using System;
-using System.ComponentModel.DataAnnotations;
 using Puppy.EF.Interfaces.Entity;
 
 namespace Puppy.EF
 {
-    public abstract class EntityBase : IGlobalIdentityEntity
+    public abstract class EntityBase : IGlobalIdentityEntity, ISoftDeletableEntity, IAuditableEntity
     {
         public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 

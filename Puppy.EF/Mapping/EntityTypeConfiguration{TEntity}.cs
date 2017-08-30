@@ -36,10 +36,6 @@ namespace Puppy.EF.Mapping
         }
     }
 
-    public abstract class EntityTypeConfiguration<TEntity> : EntityTypeConfiguration<TEntity, int> where TEntity : Entity
-    {
-    }
-
     public abstract class EntityVersionTypeConfiguration<TEntity, TKey> : EntityTypeConfiguration<TEntity, TKey> where TEntity : Entity<TKey>, IVersionEntity where TKey : struct
     {
         public override void Map(EntityTypeBuilder<TEntity> builder)
@@ -49,5 +45,13 @@ namespace Puppy.EF.Mapping
             // Version
             builder.Property(x => x.Version).IsRowVersion();
         }
+    }
+
+    public abstract class EntityTypeConfiguration<TEntity> : EntityTypeConfiguration<TEntity, int> where TEntity : Entity
+    {
+    }
+
+    public abstract class EntityVersionTypeConfiguration<TEntity> : EntityVersionTypeConfiguration<TEntity, int> where TEntity : Entity, IVersionEntity
+    {
     }
 }

@@ -30,10 +30,12 @@ namespace Puppy.Core.Constants
 
         public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
         {
-            NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Ignore,
             MissingMemberHandling = MissingMemberHandling.Error,
-            DateFormatHandling = DateFormatHandling.IsoDateFormat
+            DateFormatHandling = DateFormatHandling.IsoDateFormat,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            DateFormatString = DateTimeOffSetFormat
         };
     }
 }

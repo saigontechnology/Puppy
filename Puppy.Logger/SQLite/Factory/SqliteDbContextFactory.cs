@@ -20,6 +20,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Puppy.Core.StringUtils;
 using System.Reflection;
 
 namespace Puppy.Logger.SQLite.Factory

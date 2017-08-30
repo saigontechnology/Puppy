@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace Puppy.Core.StringUtils
 {
@@ -122,6 +123,20 @@ namespace Puppy.Core.StringUtils
                 }
             }
             return null;
+        }
+
+        public static string GetFullPath(this string path)
+        {
+            Uri pathUri;
+            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out pathUri))
+                throw new ArgumentException($"Invalid path {nameof(path)}");
+
+            if (!pathUri.IsAbsoluteUri)
+            {
+                path = Path.Combine(Directory.GetCurrentDirectory(), path);
+            }
+
+            return path;
         }
     }
 }

@@ -192,7 +192,7 @@ namespace Puppy.EF
         }
     }
 
-    public abstract class EntityRepository<TEntity, TKey> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : Entity<TKey>, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey>, new() where TKey : struct
+    public abstract class EntityRepository<TEntity, TKey> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : Entity<TKey>, new() where TKey : struct
     {
         protected EntityRepository(IBaseDbContext dbContext) : base(dbContext)
         {
@@ -202,20 +202,53 @@ namespace Puppy.EF
         {
             DateTimeOffset utcNow = DateTimeOffset.UtcNow;
 
-            var entitiesIdVersion = Get(predicate).Select(x => new
-            {
-                x.Id,
-                x.Version
-            }).AsEnumerable();
+            var entities = Get(predicate).Select(x => new TEntity { Id = x.Id }).ToList();
 
-            var entities = entitiesIdVersion.Select(x => new TEntity { Id = x.Id, Version = x.Version, DeletedTime = utcNow }).AsEnumerable();
+            entities.ForEach(x => x.DeletedTime = utcNow);
 
             foreach (var entity in entities)
+            {
+                entity.DeletedTime = utcNow;
                 Delete(entity, isPhysicalDelete);
+            }
+        }
+
+        public void DeleteWhere(TKey deletedBy, Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            var entities = Get(predicate).Select(x => new TEntity
+            {
+                Id = x.Id
+            }).ToList();
+
+            foreach (var entity in entities)
+            {
+                entity.DeletedTime = utcNow;
+                entity.DeletedBy = deletedBy;
+                Delete(entity, isPhysicalDelete);
+            }
+        }
+
+        public void DeleteWhere(TKey deletedBy, List<TKey> listId, bool isPhysicalDelete = false)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            foreach (var id in listId)
+            {
+                var entity = new TEntity
+                {
+                    Id = id,
+                    DeletedTime = utcNow,
+                    DeletedBy = deletedBy
+                };
+
+                Delete(entity, isPhysicalDelete);
+            }
         }
     }
 
-    public abstract class EntityRepositoryString<TEntity> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : EntityString, ISoftDeletableEntityString, IAuditableEntityString, new()
+    public abstract class EntityRepositoryString<TEntity> : EntityRepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity : EntityString, new()
     {
         protected EntityRepositoryString(IBaseDbContext dbContext) : base(dbContext)
         {
@@ -224,10 +257,50 @@ namespace Puppy.EF
         public override void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
         {
             DateTimeOffset utcNow = DateTimeOffset.UtcNow;
-            var entityIds = Get(predicate).Select(x => x.Id).AsEnumerable();
-            var entities = entityIds.Select(x => new TEntity { Id = x, DeletedTime = utcNow }).AsEnumerable();
+
+            var entities = Get(predicate).Select(x => new TEntity { Id = x.Id }).ToList();
+
+            entities.ForEach(x => x.DeletedTime = utcNow);
+
             foreach (var entity in entities)
+            {
+                entity.DeletedTime = utcNow;
                 Delete(entity, isPhysicalDelete);
+            }
+        }
+
+        public void DeleteWhere(string deletedBy, Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            var entities = Get(predicate).Select(x => new TEntity
+            {
+                Id = x.Id
+            }).ToList();
+
+            foreach (var entity in entities)
+            {
+                entity.DeletedTime = utcNow;
+                entity.DeletedBy = deletedBy;
+                Delete(entity, isPhysicalDelete);
+            }
+        }
+
+        public void DeleteWhere(string deletedBy, List<string> listId, bool isPhysicalDelete = false)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            foreach (var id in listId)
+            {
+                var entity = new TEntity
+                {
+                    Id = id,
+                    DeletedTime = utcNow,
+                    DeletedBy = deletedBy
+                };
+
+                Delete(entity, isPhysicalDelete);
+            }
         }
     }
 }

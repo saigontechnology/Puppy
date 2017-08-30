@@ -18,6 +18,7 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Puppy.EF.Interfaces.Entity;
 
 namespace Puppy.EF.Mapping
 {
@@ -30,14 +31,23 @@ namespace Puppy.EF.Mapping
 
             // Index
             builder.HasIndex(x => x.Id);
+            builder.HasIndex(x => x.GlobalId);
             builder.HasIndex(x => x.DeletedTime);
-
-            // Version
-            builder.Property(x => x.Version).IsRowVersion();
         }
     }
 
     public abstract class EntityTypeConfiguration<TEntity> : EntityTypeConfiguration<TEntity, int> where TEntity : Entity
     {
+    }
+
+    public abstract class EntityVersionTypeConfiguration<TEntity, TKey> : EntityTypeConfiguration<TEntity, TKey> where TEntity : Entity<TKey>, IVersionEntity where TKey : struct
+    {
+        public override void Map(EntityTypeBuilder<TEntity> builder)
+        {
+            base.Map(builder);
+
+            // Version
+            builder.Property(x => x.Version).IsRowVersion();
+        }
     }
 }

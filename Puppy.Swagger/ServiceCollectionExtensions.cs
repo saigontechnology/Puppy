@@ -25,7 +25,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Swagger.Filters;
-using Puppy.Swagger.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -63,7 +62,7 @@ namespace Puppy.Swagger
             services.AddScoped<ApiDocAccessFilter>();
 
             // Build Config
-            configuration.BuildSwaggerConfig(configSection);
+            configuration.BuildConfig(configSection);
 
             services.AddSwaggerGen(options =>
             {
@@ -127,7 +126,7 @@ namespace Puppy.Swagger
             services.AddScoped<ApiDocAccessFilter>();
 
             // Build Config
-            configuration.BuildSwaggerConfig(configSection);
+            configuration.BuildConfig(configSection);
 
             services.AddSwaggerGen(options =>
             {
@@ -234,7 +233,7 @@ namespace Puppy.Swagger
                 }
 
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                return Task.FromResult(0);
+                return Task.CompletedTask;
             }
 
             private static bool IsSwaggerUi(HttpContext httpContext)
@@ -254,9 +253,10 @@ namespace Puppy.Swagger
             }
         }
 
-        public static void BuildSwaggerConfig(this IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
+        public static void BuildConfig(this IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
         {
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
+
             if (isHaveConfig)
             {
                 SwaggerConfig.ApiDocumentHtmlTitle = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}", SwaggerConfig.ApiDocumentHtmlTitle);

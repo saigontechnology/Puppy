@@ -21,6 +21,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Puppy.Core.EnvironmentUtils;
+using System;
 
 namespace Puppy.Core.ConfigUtils
 {
@@ -54,12 +55,14 @@ namespace Puppy.Core.ConfigUtils
         /// </summary>
         /// <typeparam name="T"> The type to convert the value to. </typeparam>
         /// <param name="configuration"></param>
-        /// <param name="section">       The configuration section for the value to convert. </param>
+        /// <param name="section">      
+        ///     The configuration section for the value to convert.
+        /// </param>
         /// <returns></returns>
-        public static T GetValueByMachineAndEnv<T>(this IConfiguration configuration, string section = null)
+        public static T GetValueByMachineAndEnv<T>(this IConfiguration configuration, string section)
         {
             if (string.IsNullOrWhiteSpace(section))
-                section = typeof(T).Name;
+                throw new ArgumentException($"{nameof(section)} cannot be null or empty", nameof(section));
 
             var value =
                 configuration.GetValue<T>

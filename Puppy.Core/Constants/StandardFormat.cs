@@ -18,6 +18,7 @@
 #endregion License
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Puppy.Core.Constants
 {
@@ -35,7 +36,8 @@ namespace Puppy.Core.Constants
             MissingMemberHandling = MissingMemberHandling.Error,
             DateFormatHandling = DateFormatHandling.IsoDateFormat,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            DateFormatString = DateTimeOffSetFormat
+            DateFormatString = DateTimeOffSetFormat,
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
     }
 }

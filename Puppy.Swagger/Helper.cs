@@ -19,14 +19,12 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Puppy.Swagger.Models;
+using Puppy.Web.Constants;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using Puppy.Web;
-using Puppy.Web.Constants;
 
 namespace Puppy.Swagger
 {

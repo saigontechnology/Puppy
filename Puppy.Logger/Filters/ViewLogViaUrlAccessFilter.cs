@@ -29,7 +29,7 @@ namespace Puppy.Logger.Filters
         {
             if (!Log.IsCanAccessLogViaUrl(context.HttpContext))
             {
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 context.HttpContext.Response.Headers.Clear();
                 context.Result = new EmptyResult();
                 return;

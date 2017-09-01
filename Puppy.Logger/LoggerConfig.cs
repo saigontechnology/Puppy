@@ -18,11 +18,11 @@
 #endregion License
 
 using Newtonsoft.Json;
+using Puppy.Core.StringUtils;
 using Serilog.Events;
 using System;
 using System.IO;
 using System.Linq;
-using Puppy.Core.StringUtils;
 
 namespace Puppy.Logger
 {

@@ -20,6 +20,7 @@
 #endregion License
 
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
@@ -74,6 +75,30 @@ namespace Puppy.Core.StringUtils
             }
 
             return GetRandomString(length, characters);
+        }
+
+        [DebuggerStepThrough]
+        public static string GenerateSaltSHA256()
+        {
+            byte[] bytes = new byte[128 / 8];
+            using (var keyGenerator = RandomNumberGenerator.Create())
+            {
+                keyGenerator.GetBytes(bytes);
+                var salfString = BitConverter.ToString(bytes).Replace("-", "");
+                return salfString.GetSHA256();
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static string GenerateSaltSHA512()
+        {
+            byte[] bytes = new byte[128 / 8];
+            using (var keyGenerator = RandomNumberGenerator.Create())
+            {
+                keyGenerator.GetBytes(bytes);
+                var salfString = BitConverter.ToString(bytes).Replace("-", "");
+                return salfString.GetSHA512();
+            }
         }
 
         /// <summary>
@@ -236,14 +261,6 @@ namespace Puppy.Core.StringUtils
             return Regex.Replace(input, "<.*?>", string.Empty);
         }
 
-        public static bool IsGuid(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value)) return false;
-            Guid guid;
-            var isValid = Guid.TryParse(value, out guid);
-            return isValid;
-        }
-
         public static bool IsValidEmail(string value)
         {
             var regexUtilities = new RegexUtilities();
@@ -258,8 +275,7 @@ namespace Puppy.Core.StringUtils
         /// <param name="minLength">   Phone min length without first 0 or country code </param>
         /// <param name="maxLength">   Phone max length without first 0 or country code </param>
         /// <returns></returns>
-        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9,
-            int maxLength = 10)
+        public static bool IsValidPhoneNumber(string value, string countryCode = "84", int minLength = 9, int maxLength = 10)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return false;
@@ -284,6 +300,18 @@ namespace Puppy.Core.StringUtils
         public static string UriBuilder(params string[] uriPaths)
         {
             return uriPaths.Where(x => !string.IsNullOrWhiteSpace(x)).Aggregate((current, path) => $"{current.TrimEnd('/')}/{path.TrimStart('/')}");
+        }
+
+        /// <summary>
+        ///     Throw ArgumentNullException is value is Null or empty or whitespace 
+        /// </summary>
+        /// <param name="value"></param>
+        public static void CheckNullOrWhiteSpace(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
         }
     }
 

@@ -1,6 +1,4 @@
-﻿using Puppy.Web.SEO.OpenGraph.Enums;
-
-namespace Boilerplate.AspNetCore.TagHelpers.OpenGraph
+﻿namespace Puppy.Web.SEO.OpenGraph.Enums
 {
     /// <summary>
     ///     <see cref="OpenGraphType" /> extension methods. 
@@ -91,7 +89,6 @@ namespace Boilerplate.AspNetCore.TagHelpers.OpenGraph
                 case OpenGraphType.VideoTvShow:
                     return "video.tv_show";
 
-                case OpenGraphType.Website:
                 default:
                     return "website";
             }

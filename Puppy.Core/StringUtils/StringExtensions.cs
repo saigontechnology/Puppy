@@ -22,6 +22,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Puppy.Core.StringUtils
 {
@@ -100,6 +102,13 @@ namespace Puppy.Core.StringUtils
         }
 
         [DebuggerStepThrough]
+        public static bool IsUrl(this string value)
+        {
+            bool isUrl = Uri.TryCreate(value, UriKind.Absolute, out var uriResult) && (uriResult.Scheme.ToLower() == "http" || uriResult.Scheme.ToLower() == "https");
+            return isUrl;
+        }
+
+        [DebuggerStepThrough]
         public static string AddQueryString(this string url, string query)
         {
             if (!url.Contains("?"))
@@ -109,6 +118,7 @@ namespace Puppy.Core.StringUtils
             return url + query;
         }
 
+        [DebuggerStepThrough]
         public static string GetOrigin(this string url)
         {
             if (url != null && (url.StartsWith("http://") || url.StartsWith("https://")))
@@ -125,11 +135,10 @@ namespace Puppy.Core.StringUtils
             return null;
         }
 
+        [DebuggerStepThrough]
         public static string GetFullPath(this string path)
         {
-            Uri pathUri;
-
-            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out pathUri))
+            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var pathUri))
                 throw new ArgumentException($"Invalid path {nameof(path)}");
 
             if (!pathUri.IsAbsoluteUri)
@@ -140,20 +149,43 @@ namespace Puppy.Core.StringUtils
             return path;
         }
 
+        [DebuggerStepThrough]
         public static bool IsBase64(this string value)
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 return false;
             }
             try
             {
                 var byteArray = Convert.FromBase64String(value);
-                return true;
+                return byteArray != null;
             }
             catch
             {
                 return false;
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static string GetSHA256(this string value)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(value));
+                var hash = BitConverter.ToString(hashBytes).Replace("-", "");
+                return hash;
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static string GetSHA512(this string value)
+        {
+            using (var sha512 = SHA512.Create())
+            {
+                byte[] hashBytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(value));
+                var hash = BitConverter.ToString(hashBytes).Replace("-", "");
+                return hash;
             }
         }
     }

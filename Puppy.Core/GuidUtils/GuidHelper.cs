@@ -24,6 +24,7 @@ namespace Puppy.Core.GuidUtils
     public static class GuidHelper
     {
         private static readonly long BaseDateTicks = new DateTime(1900, 1, 1).Ticks;
+
         private static readonly DateTime Epoc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace Puppy.Core.GuidUtils
         ///     </para>
         /// </summary>
         /// <returns> A comb Guid. </returns>
-        public static Guid GuidCombGenerator()
+        public static Guid Generate()
         {
             var guidArray = Guid.NewGuid().ToByteArray();
 
@@ -60,6 +61,13 @@ namespace Puppy.Core.GuidUtils
             Array.Copy(msecsArray, msecsArray.Length - 4, guidArray, guidArray.Length - 4, 4);
 
             return new Guid(guidArray);
+        }
+
+        public static bool IsGuid(string value)
+        {
+            if (String.IsNullOrWhiteSpace(value)) return false;
+            var isValid = Guid.TryParse(value, out _);
+            return isValid;
         }
     }
 }

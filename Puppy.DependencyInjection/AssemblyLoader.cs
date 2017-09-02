@@ -45,6 +45,7 @@ namespace Puppy.DependencyInjection
 
         public List<AssemblyName> ListLoadedAssemblyName { get; } = new List<AssemblyName>();
 
+        /// <inheritdoc />
         /// <summary>
         ///     Load an assembly, if the assembly already loaded then return null 
         /// </summary>

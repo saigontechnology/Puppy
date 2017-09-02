@@ -63,6 +63,8 @@ namespace Puppy.Web.Constants
         public const string XCsrfToken = "X-Csrf-Token";
         public const string XRequestId = "XCsrfToken";
         public const string XCorrelationId = "X-Correlation-ID";
+        public const string XForwardedFor = "X-Forwarded-For";
+
         #endregion
 
         #region Response

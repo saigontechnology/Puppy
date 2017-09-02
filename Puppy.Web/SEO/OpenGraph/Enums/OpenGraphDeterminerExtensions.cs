@@ -1,6 +1,4 @@
-﻿using Puppy.Web.SEO.OpenGraph.Enums;
-
-namespace Boilerplate.AspNetCore.TagHelpers.OpenGraph
+﻿namespace Puppy.Web.SEO.OpenGraph.Enums
 {
     /// <summary>
     ///     <see cref="OpenGraphDeterminer" /> extension methods. 
@@ -28,7 +26,6 @@ namespace Boilerplate.AspNetCore.TagHelpers.OpenGraph
                 case OpenGraphDeterminer.The:
                     return "the";
 
-                case OpenGraphDeterminer.Blank:
                 default:
                     return string.Empty;
             }

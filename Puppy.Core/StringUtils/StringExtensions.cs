@@ -168,7 +168,7 @@ namespace Puppy.Core.StringUtils
         }
 
         [DebuggerStepThrough]
-        public static string GetSHA256(this string value)
+        public static string GetSha256(this string value)
         {
             using (var sha256 = SHA256.Create())
             {
@@ -179,7 +179,7 @@ namespace Puppy.Core.StringUtils
         }
 
         [DebuggerStepThrough]
-        public static string GetSHA512(this string value)
+        public static string GetSha512(this string value)
         {
             using (var sha512 = SHA512.Create())
             {

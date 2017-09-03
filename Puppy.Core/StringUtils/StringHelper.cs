@@ -78,26 +78,26 @@ namespace Puppy.Core.StringUtils
         }
 
         [DebuggerStepThrough]
-        public static string GenerateSaltSHA256()
+        public static string GenerateSaltSha256()
         {
             byte[] bytes = new byte[128 / 8];
             using (var keyGenerator = RandomNumberGenerator.Create())
             {
                 keyGenerator.GetBytes(bytes);
                 var salfString = BitConverter.ToString(bytes).Replace("-", "");
-                return salfString.GetSHA256();
+                return salfString.GetSha256();
             }
         }
 
         [DebuggerStepThrough]
-        public static string GenerateSaltSHA512()
+        public static string GenerateSaltSha512()
         {
             byte[] bytes = new byte[128 / 8];
             using (var keyGenerator = RandomNumberGenerator.Create())
             {
                 keyGenerator.GetBytes(bytes);
                 var salfString = BitConverter.ToString(bytes).Replace("-", "");
-                return salfString.GetSHA512();
+                return salfString.GetSha512();
             }
         }
 

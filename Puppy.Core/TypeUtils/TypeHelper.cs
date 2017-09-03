@@ -26,7 +26,7 @@ namespace Puppy.Core.TypeUtils
 {
     public static class TypeHelper
     {
-        private static IEnumerable<Type> GetTypes(IEnumerable<Assembly> assemblies, bool skipOnError = true)
+        public static IEnumerable<Type> GetTypes(IEnumerable<Assembly> assemblies, bool skipOnError = true)
         {
             return assemblies
                 .SelectMany(a =>

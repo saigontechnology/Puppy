@@ -19,6 +19,7 @@
 
 using Newtonsoft.Json;
 using Puppy.Core.ObjectUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -36,9 +37,15 @@ namespace Puppy.Core.DictionaryUtils
             foreach (var propertyname in properties)
             {
                 var propertyData = data.GetPropertyValue(propertyname);
-                var dataStr = propertyData as string;
-                var propertyDataStr = dataStr ?? JsonConvert.SerializeObject(propertyData, Constants.StandardFormat.JsonSerializerSettings);
-                dictionary.Add(propertyname, propertyDataStr);
+
+                var dataStr = Convert.GetTypeCode(propertyData) != TypeCode.Object
+                    ? propertyData as string
+                    : JsonConvert.SerializeObject(propertyData, Constants.StandardFormat.JsonSerializerSettings).Trim('"');
+
+                if (!string.IsNullOrEmpty(dataStr))
+                {
+                    dictionary.Add(propertyname, dataStr);
+                }
             }
 
             return dictionary;

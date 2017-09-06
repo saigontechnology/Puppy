@@ -33,17 +33,27 @@ namespace Puppy.EF.Mapping
             builder.HasIndex(x => x.Id);
             builder.HasIndex(x => x.GlobalId);
             builder.HasIndex(x => x.DeletedTime);
+
+            builder.Property(x => x.GlobalId).HasMaxLength(Constants.Maxlength.GlobalId).IsRequired();
         }
     }
 
-    public abstract class EntityVersionTypeConfiguration<TEntity, TKey> : EntityTypeConfiguration<TEntity, TKey> where TEntity : Entity<TKey>, IVersionEntity where TKey : struct
+    public abstract class EntityVersionTypeConfiguration<TEntity, TKey> : ITypeConfiguration<TEntity> where TEntity : Entity<TKey>, IVersionEntity where TKey : struct
     {
-        public override void Map(EntityTypeBuilder<TEntity> builder)
+        public virtual void Map(EntityTypeBuilder<TEntity> builder)
         {
-            base.Map(builder);
+            // Key
+            builder.HasKey(x => x.Id);
+
+            // Index
+            builder.HasIndex(x => x.Id);
+            builder.HasIndex(x => x.GlobalId);
+            builder.HasIndex(x => x.DeletedTime);
 
             // Version
             builder.Property(x => x.Version).IsRowVersion();
+
+            builder.Property(x => x.GlobalId).HasMaxLength(Constants.Maxlength.GlobalId).IsRequired();
         }
     }
 

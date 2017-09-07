@@ -64,8 +64,7 @@ namespace Puppy.EF
         {
             entity.DeletedTime = null;
             entity.LastUpdatedTime = null;
-            entity.CreatedTime =
-                entity.CreatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.CreatedTime;
+            entity.CreatedTime = entity.CreatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.CreatedTime;
 
             entity = DbSet.Add(entity).Entity;
             return entity;
@@ -197,6 +196,55 @@ namespace Puppy.EF
         {
         }
 
+        public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
+        {
+            if (DbContext.Entry(entity).State == EntityState.Detached)
+                DbSet.Attach(entity);
+
+            entity.LastUpdatedTime =
+                entity.LastUpdatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.LastUpdatedTime;
+
+            changedProperties = changedProperties?.Distinct().ToArray();
+
+            if (changedProperties?.Any() == true)
+            {
+                DbContext.Entry(entity).Property(x => x.LastUpdatedTime).IsModified = true;
+                DbContext.Entry(entity).Property(x => x.LastUpdatedBy).IsModified = true;
+
+                foreach (var property in changedProperties)
+                {
+                    DbContext.Entry(entity).Property(property).IsModified = true;
+                }
+            }
+            else
+                DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
+        public override void Delete(TEntity entity, bool isPhysicalDelete = false)
+        {
+            try
+            {
+                if (DbContext.Entry(entity).State == EntityState.Detached)
+                    DbSet.Attach(entity);
+
+                if (!isPhysicalDelete)
+                {
+                    entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.DeletedTime;
+                    DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
+                    DbContext.Entry(entity).Property(x => x.DeletedBy).IsModified = true;
+                }
+                else
+                {
+                    DbSet.Remove(entity);
+                }
+            }
+            catch (Exception)
+            {
+                RefreshEntity(entity);
+                throw;
+            }
+        }
+
         public override void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
         {
             DateTimeOffset utcNow = DateTimeOffset.UtcNow;
@@ -251,6 +299,55 @@ namespace Puppy.EF
     {
         protected EntityStringRepository(IBaseDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
+        {
+            if (DbContext.Entry(entity).State == EntityState.Detached)
+                DbSet.Attach(entity);
+
+            entity.LastUpdatedTime =
+                entity.LastUpdatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.LastUpdatedTime;
+
+            changedProperties = changedProperties?.Distinct().ToArray();
+
+            if (changedProperties?.Any() == true)
+            {
+                DbContext.Entry(entity).Property(x => x.LastUpdatedTime).IsModified = true;
+                DbContext.Entry(entity).Property(x => x.LastUpdatedBy).IsModified = true;
+
+                foreach (var property in changedProperties)
+                {
+                    DbContext.Entry(entity).Property(property).IsModified = true;
+                }
+            }
+            else
+                DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
+        public override void Delete(TEntity entity, bool isPhysicalDelete = false)
+        {
+            try
+            {
+                if (DbContext.Entry(entity).State == EntityState.Detached)
+                    DbSet.Attach(entity);
+
+                if (!isPhysicalDelete)
+                {
+                    entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.DeletedTime;
+                    DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
+                    DbContext.Entry(entity).Property(x => x.DeletedBy).IsModified = true;
+                }
+                else
+                {
+                    DbSet.Remove(entity);
+                }
+            }
+            catch (Exception)
+            {
+                RefreshEntity(entity);
+                throw;
+            }
         }
 
         public override void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)

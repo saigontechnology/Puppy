@@ -47,7 +47,7 @@ namespace Puppy.Web.HttpRequestDetection.Device
 
         private static DeviceType GetDeviceType(HttpRequest request)
         {
-            var agent = request.Headers[HeaderKey.UserAgent].ToString();
+            var agent = request.GetUserAgent();
 
             if (agent != null && HttpDetectionConstants.TabletAgents.Any(keyword => agent.Contains(keyword)))
                 return DeviceType.Tablet;

@@ -17,7 +17,6 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
 using System.IO;
 
 namespace Puppy.Core.FileUtils

@@ -20,6 +20,7 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
+using Puppy.Core.DateTimeUtils;
 using Puppy.EF.Extensions;
 using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Repository;
@@ -50,7 +51,12 @@ namespace Puppy.EF
                 query = query.Where(predicate);
 
             includeProperties = includeProperties?.Distinct().ToArray();
-            query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+
+            if (includeProperties?.Any() == true)
+            {
+                foreach (var includeProperty in includeProperties)
+                    query = query.Include(includeProperty);
+            }
 
             return isIncludeDeleted ? query : query.WhereNotDeleted();
         }
@@ -64,8 +70,7 @@ namespace Puppy.EF
         {
             entity.DeletedTime = null;
             entity.LastUpdatedTime = null;
-            entity.CreatedTime =
-                entity.CreatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.CreatedTime;
+            entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
 
             entity = DbSet.Add(entity).Entity;
             return entity;
@@ -73,11 +78,9 @@ namespace Puppy.EF
 
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
-            if (DbContext.Entry(entity).State == EntityState.Detached)
-                DbSet.Attach(entity);
+            TryToAttach(entity);
 
-            entity.LastUpdatedTime =
-                entity.LastUpdatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.LastUpdatedTime;
+            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
 
             changedProperties = changedProperties?.Distinct().ToArray();
 
@@ -98,12 +101,11 @@ namespace Puppy.EF
         {
             try
             {
-                if (DbContext.Entry(entity).State == EntityState.Detached)
-                    DbSet.Attach(entity);
+                TryToAttach(entity);
 
                 if (!isPhysicalDelete)
                 {
-                    entity.DeletedTime = entity.DeletedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.DeletedTime;
+                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
                     DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
                 }
                 else

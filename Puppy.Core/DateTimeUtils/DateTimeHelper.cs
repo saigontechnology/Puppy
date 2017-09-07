@@ -38,5 +38,29 @@ namespace Puppy.Core.DateTimeUtils
         {
             return DateTime.TryParseExact(value, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
         }
+
+        public static DateTime? ReplaceNullOrDefault(DateTime? value, DateTime? replace)
+        {
+            value = (value == default(DateTime) || value == null) ? replace : value;
+            return value;
+        }
+
+        public static DateTime ReplaceNullOrDefault(DateTime value, DateTime replace)
+        {
+            value = value == default(DateTime) ? replace : value;
+            return value;
+        }
+
+        public static DateTimeOffset? ReplaceNullOrDefault(DateTimeOffset? value, DateTimeOffset? replace)
+        {
+            value = (value == default(DateTimeOffset) || value == null) ? replace : value;
+            return value;
+        }
+
+        public static DateTimeOffset ReplaceNullOrDefault(DateTimeOffset value, DateTimeOffset replace)
+        {
+            value = value == default(DateTimeOffset) ? replace : value;
+            return value;
+        }
     }
 }

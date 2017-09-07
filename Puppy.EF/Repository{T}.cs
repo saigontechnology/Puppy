@@ -33,7 +33,7 @@ namespace Puppy.EF
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        private readonly IBaseDbContext _baseDbContext;
+        protected readonly IBaseDbContext BaseDbContext;
 
         private DbSet<T> _dbSet;
 
@@ -43,14 +43,14 @@ namespace Puppy.EF
             {
                 if (_dbSet != null)
                     return _dbSet;
-                _dbSet = _baseDbContext.Set<T>();
+                _dbSet = BaseDbContext.Set<T>();
                 return _dbSet;
             }
         }
 
         protected Repository(IBaseDbContext baseDbContext)
         {
-            _baseDbContext = baseDbContext;
+            BaseDbContext = baseDbContext;
         }
 
         public virtual IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
@@ -64,8 +64,15 @@ namespace Puppy.EF
         public virtual IQueryable<T> Get(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties)
         {
             var query = DbSet.AsNoTracking();
-            foreach (var includeProperty in includeProperties)
-                query = query.Include(includeProperty);
+
+            includeProperties = includeProperties?.Distinct().ToArray();
+
+            if (includeProperties?.Any() == true)
+            {
+                foreach (var includeProperty in includeProperties)
+                    query = query.Include(includeProperty);
+            }
+
             return predicate == null ? query : query.Where(predicate);
         }
 
@@ -82,23 +89,27 @@ namespace Puppy.EF
 
         public virtual void Update(T entity, params Expression<Func<T, object>>[] changedProperties)
         {
-            DbSet.Attach(entity);
+            TryToAttach(entity);
 
-            if (changedProperties != null && changedProperties.Any())
+            changedProperties = changedProperties?.Distinct().ToArray();
+
+            if (changedProperties?.Any() == true)
+            {
                 foreach (var property in changedProperties)
                 {
-                    _baseDbContext.Entry(entity).Property(property).IsModified = true;
+                    BaseDbContext.Entry(entity).Property(property).IsModified = true;
                 }
+            }
             else
-                _baseDbContext.Entry(entity).State = EntityState.Modified;
+                BaseDbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Delete(T entity)
         {
             try
             {
-                if (_baseDbContext.Entry(entity).State == EntityState.Detached)
-                    DbSet.Attach(entity);
+                TryToAttach(entity);
+
                 DbSet.Remove(entity);
             }
             catch (Exception)
@@ -118,31 +129,45 @@ namespace Puppy.EF
 
         public virtual void RefreshEntity(T entity)
         {
-            _baseDbContext.Entry(entity).Reload();
+            BaseDbContext.Entry(entity).Reload();
+        }
+
+        public virtual bool TryToAttach(T entity)
+        {
+            try
+            {
+                if (BaseDbContext.Entry(entity).State == EntityState.Detached)
+                    DbSet.Attach(entity);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         [DebuggerStepThrough]
         public virtual int SaveChanges()
         {
-            return _baseDbContext.SaveChanges();
+            return BaseDbContext.SaveChanges();
         }
 
         [DebuggerStepThrough]
         public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            return _baseDbContext.SaveChanges(acceptAllChangesOnSuccess);
+            return BaseDbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         [DebuggerStepThrough]
         public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            return _baseDbContext.SaveChangesAsync(cancellationToken);
+            return BaseDbContext.SaveChangesAsync(cancellationToken);
         }
 
         [DebuggerStepThrough]
         public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
-            return _baseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            return BaseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }

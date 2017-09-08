@@ -21,6 +21,7 @@
 
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 
@@ -28,6 +29,8 @@ namespace Puppy.Core.ImageUtils
 {
     public static class ImageHelper
     {
+        public const string ImageMimeTypeUnknown = "image/unknown";
+
         public static Color GetDominantColor(string imagePath)
         {
             using (var image = Image.FromFile(imagePath))
@@ -84,24 +87,31 @@ namespace Puppy.Core.ImageUtils
         }
 
         /// <summary>
-        ///     Get image type/extension 
+        ///     <para> Get image mime type. </para>
+        ///     <para> If not know mime type but valid image then return <see cref="ImageMimeTypeUnknown" /> </para>
+        ///     <para> Invalid image will be return <c> NULL </c> </para>
         /// </summary>
         /// <param name="imageStream"></param>
-        /// <returns></returns>
-        public static string GetImageType(MemoryStream imageStream)
+        public static string GetImageMimeType(MemoryStream imageStream)
         {
             try
             {
                 // Check Vector image first
                 if (IsSvgImage(imageStream))
                 {
-                    return ".svg";
+                    return "image/svg+xml";
                 }
 
                 // Raster check (jpg, png, etc.)
                 using (Image image = Image.FromStream(imageStream))
                 {
-                    return image.RawFormat.ToString().ToLower();
+                    foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
+                    {
+                        if (codec.FormatID == image.RawFormat.Guid)
+                            return codec.MimeType;
+                    }
+
+                    return ImageMimeTypeUnknown;
                 }
             }
             catch
@@ -111,17 +121,17 @@ namespace Puppy.Core.ImageUtils
         }
 
         /// <summary>
-        ///     Get image type/extension 
+        ///     <para> Get image mime type. </para>
+        ///     <para> If not know mime type but valid image then return <see cref="ImageMimeTypeUnknown" /> </para>
+        ///     <para> Invalid image will be return <c> NULL </c> </para>
         /// </summary>
-        /// <param name="base64"></param>
-        /// <returns></returns>
-        public static string GetImageType(string base64)
+        public static string GetImageMimeType(string base64)
         {
             byte[] bytes = Convert.FromBase64String(base64);
 
             using (MemoryStream stream = new MemoryStream(bytes))
             {
-                return GetImageType(stream);
+                return GetImageMimeType(stream);
             }
         }
     }

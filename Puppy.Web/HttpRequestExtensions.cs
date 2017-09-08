@@ -25,7 +25,6 @@ using Puppy.Web.Constants;
 using Puppy.Web.HttpRequestDetection.Device;
 using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -119,45 +118,6 @@ namespace Puppy.Web
             }
         }
 
-        public static string GetIp(this HttpRequest request)
-        {
-            var result = "";
-            if (request.Headers?.Any() == true)
-            {
-                //look for the X-Forwarded-For (XFF) HTTP header field
-                //it's used for identifying the originating IP address of a client connecting to a web server through an HTTP proxy or load balancer.
-                string xff = request.Headers
-                    .Where(x => HeaderKey.XForwardedFor.Equals(x.Value, StringComparison.OrdinalIgnoreCase))
-                    .Select(k => request.Headers[k.Key])
-                    .FirstOrDefault();
-
-                //if you want to exclude private IP addresses, then see http://stackoverflow.com/questions/2577496/how-can-i-get-the-clients-ip-address-in-asp-net-mvc
-                if (!string.IsNullOrWhiteSpace(xff))
-                {
-                    var lastIp = xff.Split(',').FirstOrDefault();
-                    result = lastIp;
-                }
-            }
-
-            // Standalize
-            if (result == "::1")
-            {
-                result = "127.0.0.1";
-            }
-
-            if (string.IsNullOrEmpty(result)) return result;
-
-            // Remove port
-            int index = result.IndexOf(":", StringComparison.OrdinalIgnoreCase);
-
-            if (index > 0)
-            {
-                result = result.Substring(0, index);
-            }
-
-            return result;
-        }
-
         /// <summary>
         ///     Gets a value indicating whether current connection is secured 
         /// </summary>
@@ -170,12 +130,6 @@ namespace Puppy.Web
         public static DeviceModel GetDeviceInfo(this HttpRequest request)
         {
             return new DeviceModel(request);
-        }
-
-        public static string GetUserAgent(this HttpRequest request)
-        {
-            var agent = request.Headers[HeaderKey.UserAgent].ToString();
-            return agent;
         }
     }
 }

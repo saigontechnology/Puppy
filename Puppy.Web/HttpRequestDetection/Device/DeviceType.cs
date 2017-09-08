@@ -21,6 +21,7 @@ namespace Puppy.Web.HttpRequestDetection.Device
 {
     public enum DeviceType
     {
+        Unknown,
         Desktop,
         Tablet,
         Mobile

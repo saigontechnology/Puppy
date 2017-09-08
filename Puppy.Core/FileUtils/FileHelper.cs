@@ -18,6 +18,7 @@
 #endregion License
 
 using Puppy.Core.StringUtils;
+using System;
 using System.IO;
 
 namespace Puppy.Core.FileUtils
@@ -42,6 +43,19 @@ namespace Puppy.Core.FileUtils
             StringHelper.CheckNullOrWhiteSpace(path);
             var fileInfo = new FileInfo(path);
             return fileInfo.IsLocked();
+        }
+
+        public static bool IsValidBase64(string value)
+        {
+            try
+            {
+                byte[] bytes = Convert.FromBase64String(value);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

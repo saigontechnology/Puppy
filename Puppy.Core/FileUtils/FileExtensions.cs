@@ -40,16 +40,20 @@ namespace Puppy.Core.FileUtils
         /// <summary>
         ///     Save File from Base 64 Data 
         /// </summary>
-        /// <param name="base64"></param>
-        /// <param name="path">  </param>
+        /// <param name="base64">       </param>
+        /// <param name="path">         </param>
+        /// <param name="contentLength"></param>
         /// <returns> Relative New File Path </returns>
-        public static void Save(this string base64, string path)
+        public static void Save(this string base64, string path, out int contentLength)
         {
             StringHelper.CheckNullOrWhiteSpace(path);
 
             path = path.GetFullPath();
 
             byte[] bytes = Convert.FromBase64String(base64);
+
+            contentLength = bytes.Length;
+
             bytes.Save(path);
         }
 

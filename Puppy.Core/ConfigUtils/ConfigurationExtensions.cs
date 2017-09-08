@@ -55,9 +55,7 @@ namespace Puppy.Core.ConfigUtils
         /// </summary>
         /// <typeparam name="T"> The type to convert the value to. </typeparam>
         /// <param name="configuration"></param>
-        /// <param name="section">      
-        ///     The configuration section for the value to convert.
-        /// </param>
+        /// <param name="section">       The configuration section for the value to convert. </param>
         /// <returns></returns>
         public static T GetValueByMachineAndEnv<T>(this IConfiguration configuration, string section)
         {

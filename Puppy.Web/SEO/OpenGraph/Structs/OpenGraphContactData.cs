@@ -19,7 +19,9 @@ namespace Puppy.Web.SEO.OpenGraph.Structs
         /// <param name="postalCode">   
         ///     The postcode (or ZIP code) of the postal address for this business
         /// </param>
-        /// <param name="country">       The country of the postal address for this business. </param>
+        /// <param name="country">      
+        ///     The country of the postal address for this business.
+        /// </param>
         /// <exception cref="System.ArgumentNullException">
         ///     streetAddress or locality or postalCode or country is <c> null. </c>.
         /// </exception>

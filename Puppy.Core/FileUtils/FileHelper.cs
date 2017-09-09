@@ -57,5 +57,27 @@ namespace Puppy.Core.FileUtils
                 return false;
             }
         }
+
+        /// <summary>
+        ///     Delete file if exist and can delete 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns> return true if success delete file, else is fail </returns>
+        public static bool SafeDelete(string path)
+        {
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

@@ -6,25 +6,27 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> Repository.cs </Name>
-//         <Created> 23/08/17 5:58:04 PM </Created>
-//         <Key> eaeaf865-5a0a-4de4-b8c4-ed035e2b0500 </Key>
+//         <Name> EntityStringVersion.cs </Name>
+//         <Created> 09/09/17 6:11:20 PM </Created>
+//         <Key> 9e92fb48-c9b1-4820-bea1-5fac1d2aa7de </Key>
 //     </File>
 //     <Summary>
-//         Repository.cs
+//         EntityStringVersion.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Puppy.EF.Interfaces;
+using Puppy.EF.Interfaces.Entity;
 
-namespace Puppy.Logger.SQLite
+namespace Puppy.EF
 {
-    public class Repository<T> : EF.Repository.Repository<T> where T : class
+    /// <inheritdoc cref="EntityString" />
+    /// <summary>
+    ///     Entity Version String 
+    /// </summary>
+    public class EntityVersionString : EntityString, IVersionEntity
     {
-        public Repository(IBaseDbContext baseDbContext) : base(baseDbContext)
-        {
-        }
+        public byte[] Version { get; set; }
     }
 }

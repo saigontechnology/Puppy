@@ -22,22 +22,7 @@ using Puppy.EF.Interfaces.Entity;
 
 namespace Puppy.EF
 {
-    public abstract class EntityBase : IGlobalIdentityEntity, ISoftDeletableEntity, IAuditableEntity
-    {
-        public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
-
-        public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
-
-        public virtual DateTimeOffset? LastUpdatedTime { get; set; }
-
-        public virtual DateTimeOffset? DeletedTime { get; set; }
-    }
-
-    public abstract class EntityVersionBase : EntityBase, IVersionEntity
-    {
-        public byte[] Version { get; set; }
-    }
-
+    /// <inheritdoc cref="EntityBase" />
     /// <summary>
     ///     Entity for Entity Framework
     /// </summary>
@@ -55,16 +40,5 @@ namespace Puppy.EF
 
     public abstract class Entity : Entity<int>
     {
-    }
-
-    public class EntityString : EntityBase, ISoftDeletableEntityString, IAuditableEntityString
-    {
-        public virtual string Id { get; set; }
-
-        public virtual string CreatedBy { get; set; }
-
-        public virtual string LastUpdatedBy { get; set; }
-
-        public virtual string DeletedBy { get; set; }
     }
 }

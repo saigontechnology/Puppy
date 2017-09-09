@@ -1,61 +1,38 @@
 ﻿#region	License
-
 //------------------------------------------------------------------------------------------------
 // <License>
-//     <Copyright> 2017 © Top Nguyen → AspNetCore → TopCore </Copyright>
+//     <Copyright> 2017 © Top Nguyen → AspNetCore → Puppy </Copyright>
 //     <Url> http://topnguyen.net/ </Url>
 //     <Author> Top </Author>
 //     <Project> Puppy → Interface </Project>
 //     <File>
-//         <Name> IEntityRepository.cs </Name>
-//         <Created> 23 Apr 17 3:55:08 PM </Created>
-//         <Key> b47adcbd-ac4a-4f10-8be1-e391588aafe4 </Key>
+//         <Name> IEntity.cs </Name>
+//         <Created> 09/09/17 5:53:30 PM </Created>
+//         <Key> d0c44f3a-557f-4191-aba4-14f06371c54a </Key>
 //     </File>
 //     <Summary>
-//         IEntityRepository.cs
+//         IEntity.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
-
 #endregion License
 
 using System;
-using System.Diagnostics;
-using System.Linq;
+using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Puppy.EF.Interfaces.Repository
 {
-    public interface IEntityRepository<TEntity> where TEntity : EntityBase
+    public interface IEntityRepository<TEntity, TKey> : IEntityBaseRepository<TEntity> where TEntity : Entity<TKey>, new() where TKey : struct
     {
-        IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
+        TEntity Add(TEntity entity, TKey? createdBy = null);
 
-        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
+        List<TEntity> AddRange(TKey? createdBy = null, params TEntity[] listEntity);
 
-        TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
+        void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, TKey? updatedBy = null, params Expression<Func<TEntity, object>>[] changedProperties);
 
-        TEntity Add(TEntity entity);
+        void DeleteWhere(Expression<Func<TEntity, bool>> predicate, TKey? deletedBy = null, bool isPhysicalDelete = false);
 
-        void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties);
-
-        void Delete(TEntity entity, bool isPhysicalDelete = false);
-
-        void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);
-
-        void RefreshEntity(TEntity entity);
-
-        [DebuggerStepThrough]
-        int SaveChanges();
-
-        [DebuggerStepThrough]
-        int SaveChanges(bool acceptAllChangesOnSuccess);
-
-        [DebuggerStepThrough]
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        [DebuggerStepThrough]
-        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
+        void DeleteWhere(List<TKey> listId, TKey? deletedBy = null, bool isPhysicalDelete = false);
     }
 }

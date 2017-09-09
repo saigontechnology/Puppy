@@ -300,17 +300,19 @@ namespace Puppy.Web.HttpRequestDetection.Device
         // Other
         private static string GetIpAddress(HttpRequest request)
         {
-            var result = "";
+            var result = string.Empty;
+
             if (request.Headers?.Any() == true)
             {
-                //look for the X-Forwarded-For (XFF) HTTP header field
-                //it's used for identifying the originating IP address of a client connecting to a web server through an HTTP proxy or load balancer.
+                // look for the X-Forwarded-For (XFF) HTTP header field it's used for identifying the
+                // originating IP address of a client connecting to a web server through an HTTP
+                // proxy or load balancer.
                 string xff = request.Headers
                     .Where(x => HeaderKey.XForwardedFor.Equals(x.Value, StringComparison.OrdinalIgnoreCase))
                     .Select(k => request.Headers[k.Key])
                     .FirstOrDefault();
 
-                //if you want to exclude private IP addresses, then see http://stackoverflow.com/questions/2577496/how-can-i-get-the-clients-ip-address-in-asp-net-mvc
+                // if you want to exclude private IP addresses, then see http://stackoverflow.com/questions/2577496/how-can-i-get-the-clients-ip-address-in-asp-net-mvc
                 if (!string.IsNullOrWhiteSpace(xff))
                 {
                     var lastIp = xff.Split(',').FirstOrDefault();
@@ -318,13 +320,21 @@ namespace Puppy.Web.HttpRequestDetection.Device
                 }
             }
 
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                result = request.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+            }
+
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                return null;
+            }
+
             // Standardize
             if (result == "::1")
             {
                 result = "127.0.0.1";
             }
-
-            if (string.IsNullOrEmpty(result)) return result;
 
             // Remove port
             int index = result.IndexOf(":", StringComparison.OrdinalIgnoreCase);

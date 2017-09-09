@@ -67,6 +67,8 @@ namespace Puppy.Web.HttpRequestDetection.Device
 
         public string IpAddress { get; set; }
 
+        public string Location { get; set; }
+
         public string UserAgent { get; set; }
 
         public string DeviceHash { get; set; }
@@ -102,6 +104,9 @@ namespace Puppy.Web.HttpRequestDetection.Device
 
             // Others
             IpAddress = HttpDetectionHelper.GetIpAddress(request);
+
+            Location = HttpDetectionHelper.GetLocation(request);
+
             UserAgent = HttpDetectionHelper.GetUserAgent(request);
 
             DeviceHash = GetDeviceHash(this);

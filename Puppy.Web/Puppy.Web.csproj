@@ -14,6 +14,16 @@
     <OutputPath>.\bin\</OutputPath>
   </PropertyGroup>
 
+
+  <!-- Copy Output folder -->
+  <!-- <CopyToOutputDirectory>Always/PreserveNewest</CopyToOutputDirectory> -->
+  <ItemGroup>
+    <!-- GEO -->
+    <Content Include="HttpRequestDetection\GeoCity.mmdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
@@ -35,6 +45,9 @@
     <!-- Markup Min -->
     <PackageReference Include="WebMarkupMin.AspNetCore1" Version="2.4.0" />
     <PackageReference Include="WebMarkupMin.NUglify" Version="2.4.2" />
+
+    <!-- GEO -->
+    <PackageReference Include="MaxMind.GeoIP2" Version="2.8.0" />
   </ItemGroup>
 
 </Project>

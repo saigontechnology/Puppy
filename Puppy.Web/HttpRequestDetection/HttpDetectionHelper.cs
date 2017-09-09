@@ -17,11 +17,14 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
 using Puppy.Core.LinqUtils;
 using Puppy.Web.Constants;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Puppy.Web.HttpRequestDetection
 {
@@ -222,6 +225,37 @@ namespace Puppy.Web.HttpRequestDetection
             }
 
             return ipAddress;
+        }
+
+        public static string GetLocation(HttpRequest request)
+        {
+            string geoDbRelativePath = Path.Combine(nameof(HttpRequestDetection), "GeoCity.mmdb");
+
+            string geoDbAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), geoDbRelativePath);
+
+            if (!File.Exists(geoDbAbsolutePath))
+            {
+                string executedAssemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+                // Try to get folder in executed assembly
+                geoDbAbsolutePath = Path.Combine(executedAssemblyDirectory, geoDbRelativePath);
+            }
+
+            if (!File.Exists(geoDbAbsolutePath)) return null;
+
+            using (var reader = new DatabaseReader(geoDbAbsolutePath))
+            {
+                var ipAddress = GetIpAddress(request);
+
+                string requestLocation = null;
+
+                if (reader.TryCity(ipAddress, out var city))
+                {
+                    requestLocation = city?.ToString();
+                }
+
+                return requestLocation;
+            }
         }
 
         public static string GetUserAgent(HttpRequest request, bool isLowerCase = false)

@@ -16,6 +16,7 @@
 
   <!-- Puppy -->
   <ItemGroup>
+    <ProjectReference Include="..\Puppy.AutoMapper\Puppy.AutoMapper.csproj" />
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
   </ItemGroup>
 

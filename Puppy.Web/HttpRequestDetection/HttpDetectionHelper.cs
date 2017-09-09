@@ -184,8 +184,8 @@ namespace Puppy.Web.HttpRequestDetection
             var ipAddress = string.Empty;
 
             // Look for the X-Forwarded-For (XFF) HTTP header field it's used for identifying the
-            // originating IP address of a client connecting to a web server through an HTTP
-            // proxy or load balancer.
+            // originating IP address of a client connecting to a web server through an HTTP proxy or
+            // load balancer.
             string xff = request.Headers?
                 .Where(x => HeaderKey.XForwardedFor.Equals(x.Value, StringComparison.OrdinalIgnoreCase))
                 .Select(k => request.Headers[k.Key]).FirstOrDefault();
@@ -197,7 +197,7 @@ namespace Puppy.Web.HttpRequestDetection
                 ipAddress = lastIp;
             }
 
-            if (string.IsNullOrWhiteSpace(ipAddress))
+            if (string.IsNullOrWhiteSpace(ipAddress) || ipAddress == "::1" || ipAddress == "127.0.0.1")
             {
                 ipAddress = request.HttpContext?.Connection?.RemoteIpAddress?.ToString();
             }

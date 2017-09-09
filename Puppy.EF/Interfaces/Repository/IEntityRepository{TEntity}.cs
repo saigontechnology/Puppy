@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF.Interfaces.Repository
 {
-    public interface IEntityRepository<TEntity> where TEntity : class
+    public interface IEntityRepository<TEntity> where TEntity : EntityBase
     {
         IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
 

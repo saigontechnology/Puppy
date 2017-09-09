@@ -44,29 +44,6 @@ namespace Puppy.EF
             DbContext = dbContext;
         }
 
-        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            var query = DbSet.AsNoTracking();
-
-            if (predicate != null)
-                query = query.Where(predicate);
-
-            includeProperties = includeProperties?.Distinct().ToArray();
-
-            if (includeProperties?.Any() == true)
-            {
-                foreach (var includeProperty in includeProperties)
-                    query = query.Include(includeProperty);
-            }
-
-            return isIncludeDeleted ? query : query.WhereNotDeleted();
-        }
-
-        public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            return Get(predicate, isIncludeDeleted, includeProperties).FirstOrDefault();
-        }
-
         public override TEntity Add(TEntity entity)
         {
             entity.DeletedTime = null;
@@ -95,36 +72,6 @@ namespace Puppy.EF
             }
             else
                 DbContext.Entry(entity).State = EntityState.Modified;
-        }
-
-        public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
-        {
-            try
-            {
-                TryToAttach(entity);
-
-                if (!isPhysicalDelete)
-                {
-                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
-                    DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
-                }
-                else
-                {
-                    DbSet.Remove(entity);
-                }
-            }
-            catch (Exception)
-            {
-                RefreshEntity(entity);
-                throw;
-            }
-        }
-
-        public virtual void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
-        {
-            var entities = Get(predicate).AsEnumerable();
-            foreach (var entity in entities)
-                Delete(entity, isPhysicalDelete);
         }
 
         [DebuggerStepThrough]
@@ -191,40 +138,65 @@ namespace Puppy.EF
                 }
             }
         }
+
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            var query = DbSet.AsNoTracking();
+
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            includeProperties = includeProperties?.Distinct().ToArray();
+
+            if (includeProperties?.Any() == true)
+            {
+                foreach (var includeProperty in includeProperties)
+                    query = query.Include(includeProperty);
+            }
+
+            return isIncludeDeleted ? query : query.WhereNotDeleted();
+        }
+
+        public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return Get(predicate, isIncludeDeleted, includeProperties).FirstOrDefault();
+        }
+
+        public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
+        {
+            try
+            {
+                TryToAttach(entity);
+
+                if (!isPhysicalDelete)
+                {
+                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
+                    DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
+                }
+                else
+                {
+                    DbSet.Remove(entity);
+                }
+            }
+            catch (Exception)
+            {
+                RefreshEntity(entity);
+                throw;
+            }
+        }
+
+        public virtual void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
+        {
+            var entities = Get(predicate).AsEnumerable();
+            foreach (var entity in entities)
+                Delete(entity, isPhysicalDelete);
+        }
     }
 
     public abstract class EntityRepository<TEntity, TKey> : EntityBaseRepository<TEntity>, IEntityRepository<TEntity> where TEntity : Entity<TKey>, new() where TKey : struct
     {
         protected EntityRepository(IBaseDbContext dbContext) : base(dbContext)
         {
-        }
-
-        public TEntity Add(TEntity entity, TKey? createdBy = null)
-        {
-            entity.DeletedTime = null;
-            entity.LastUpdatedTime = null;
-            entity.CreatedBy = createdBy;
-            entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
-            entity = DbSet.Add(entity).Entity;
-            return entity;
-        }
-
-        public List<TEntity> AddRange(TKey? createdBy = null, params TEntity[] listEntity)
-        {
-            var dateTimeUtcNow = DateTimeOffset.UtcNow;
-
-            List<TEntity> listAddedEntity = new List<TEntity>();
-
-            foreach (var entity in listEntity)
-            {
-                entity.CreatedTime = dateTimeUtcNow;
-
-                var addedEntity = Add(entity, createdBy);
-
-                listAddedEntity.Add(addedEntity);
-            }
-
-            return listAddedEntity;
         }
 
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
@@ -249,24 +221,6 @@ namespace Puppy.EF
             }
             else
                 DbContext.Entry(entity).State = EntityState.Modified;
-        }
-
-        public void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityData, TKey? updatedBy = null, params Expression<Func<TEntity, object>>[] changedProperties)
-        {
-            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
-
-            var entities = Get(predicate).Select(x => new TEntity { Id = x.Id }).ToList();
-
-            entities.ForEach(x => x.DeletedTime = utcNow);
-
-            foreach (var entity in entities)
-            {
-                var oldEntity = entityData.Clone();
-                oldEntity.Id = entity.Id;
-                oldEntity.LastUpdatedTime = utcNow;
-                oldEntity.LastUpdatedBy = updatedBy;
-                Update(oldEntity, changedProperties);
-            }
         }
 
         public override void Delete(TEntity entity, bool isPhysicalDelete = false)
@@ -305,6 +259,52 @@ namespace Puppy.EF
                 x.DeletedTime = utcNow;
                 Delete(x, isPhysicalDelete);
             });
+        }
+
+        public TEntity Add(TEntity entity, TKey? createdBy = null)
+        {
+            entity.DeletedTime = null;
+            entity.LastUpdatedTime = null;
+            entity.CreatedBy = createdBy;
+            entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
+            entity = DbSet.Add(entity).Entity;
+            return entity;
+        }
+
+        public List<TEntity> AddRange(TKey? createdBy = null, params TEntity[] listEntity)
+        {
+            var dateTimeUtcNow = DateTimeOffset.UtcNow;
+
+            List<TEntity> listAddedEntity = new List<TEntity>();
+
+            foreach (var entity in listEntity)
+            {
+                entity.CreatedTime = dateTimeUtcNow;
+
+                var addedEntity = Add(entity, createdBy);
+
+                listAddedEntity.Add(addedEntity);
+            }
+
+            return listAddedEntity;
+        }
+
+        public void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityData, TKey? updatedBy = null, params Expression<Func<TEntity, object>>[] changedProperties)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            var entities = Get(predicate).Select(x => new TEntity { Id = x.Id }).ToList();
+
+            entities.ForEach(x => x.DeletedTime = utcNow);
+
+            foreach (var entity in entities)
+            {
+                var oldEntity = entityData.Clone();
+                oldEntity.Id = entity.Id;
+                oldEntity.LastUpdatedTime = utcNow;
+                oldEntity.LastUpdatedBy = updatedBy;
+                Update(oldEntity, changedProperties);
+            }
         }
 
         public void DeleteWhere(Expression<Func<TEntity, bool>> predicate, TKey? deletedBy = null, bool isPhysicalDelete = false)
@@ -348,34 +348,6 @@ namespace Puppy.EF
         {
         }
 
-        public TEntity Add(TEntity entity, string createdBy = null)
-        {
-            entity.DeletedTime = null;
-            entity.LastUpdatedTime = null;
-            entity.CreatedBy = createdBy;
-            entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
-            entity = DbSet.Add(entity).Entity;
-            return entity;
-        }
-
-        public List<TEntity> AddRange(string createdBy = null, params TEntity[] listEntity)
-        {
-            var dateTimeUtcNow = DateTimeOffset.UtcNow;
-
-            List<TEntity> listAddedEntity = new List<TEntity>();
-
-            foreach (var entity in listEntity)
-            {
-                entity.CreatedTime = dateTimeUtcNow;
-
-                var addedEntity = Add(entity, createdBy);
-
-                listAddedEntity.Add(addedEntity);
-            }
-
-            return listAddedEntity;
-        }
-
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
             if (DbContext.Entry(entity).State == EntityState.Detached)
@@ -398,21 +370,6 @@ namespace Puppy.EF
             }
             else
                 DbContext.Entry(entity).State = EntityState.Modified;
-        }
-
-        public void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, params Expression<Func<TEntity, object>>[] changedProperties)
-        {
-            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
-
-            var entities = Get(predicate).Select(x => new TEntity { Id = x.Id }).ToList();
-
-            foreach (var entity in entities)
-            {
-                var oldEntity = entityNewData.Clone();
-                oldEntity.Id = entity.Id;
-                oldEntity.LastUpdatedTime = utcNow;
-                Update(oldEntity, changedProperties);
-            }
         }
 
         public override void Delete(TEntity entity, bool isPhysicalDelete = false)
@@ -451,6 +408,49 @@ namespace Puppy.EF
                 x.DeletedTime = utcNow;
                 Delete(x, isPhysicalDelete);
             });
+        }
+
+        public TEntity Add(TEntity entity, string createdBy = null)
+        {
+            entity.DeletedTime = null;
+            entity.LastUpdatedTime = null;
+            entity.CreatedBy = createdBy;
+            entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
+            entity = DbSet.Add(entity).Entity;
+            return entity;
+        }
+
+        public List<TEntity> AddRange(string createdBy = null, params TEntity[] listEntity)
+        {
+            var dateTimeUtcNow = DateTimeOffset.UtcNow;
+
+            List<TEntity> listAddedEntity = new List<TEntity>();
+
+            foreach (var entity in listEntity)
+            {
+                entity.CreatedTime = dateTimeUtcNow;
+
+                var addedEntity = Add(entity, createdBy);
+
+                listAddedEntity.Add(addedEntity);
+            }
+
+            return listAddedEntity;
+        }
+
+        public void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, params Expression<Func<TEntity, object>>[] changedProperties)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            var entities = Get(predicate).Select(x => new TEntity { Id = x.Id }).ToList();
+
+            foreach (var entity in entities)
+            {
+                var oldEntity = entityNewData.Clone();
+                oldEntity.Id = entity.Id;
+                oldEntity.LastUpdatedTime = utcNow;
+                Update(oldEntity, changedProperties);
+            }
         }
 
         public void DeleteWhere(Expression<Func<TEntity, bool>> predicate, string deletedBy = null, bool isPhysicalDelete = false)

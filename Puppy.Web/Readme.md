@@ -104,3 +104,11 @@ service.AddHttpContextAccessor()
 // [HttpContext]
 app.UseHttpContextAccessor()
 ```
+
+### 7. HttpDetection
+- Use with application builder as the code block below.
+- Then just call `HttpContext.Connection.RemoteIpAddress;` to get IpAddress even local request.
+```csharp
+// [Http Detection] Ip Address detection enhance for local request
+app.UseHttpDetection()
+```

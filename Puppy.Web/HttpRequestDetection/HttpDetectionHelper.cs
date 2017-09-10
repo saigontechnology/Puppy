@@ -19,6 +19,8 @@
 
 using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Puppy.Core.Constants;
 using Puppy.Core.LinqUtils;
 using Puppy.Web.Constants;
 using System;
@@ -251,7 +253,7 @@ namespace Puppy.Web.HttpRequestDetection
 
                 if (reader.TryCity(ipAddress, out var city))
                 {
-                    requestLocation = city?.ToString();
+                    requestLocation = city == null ? null : JsonConvert.SerializeObject(city, StandardFormat.JsonSerializerSettings);
                 }
 
                 return requestLocation;

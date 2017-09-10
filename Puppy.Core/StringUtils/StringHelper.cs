@@ -305,12 +305,15 @@ namespace Puppy.Core.StringUtils
         /// <summary>
         ///     Throw ArgumentNullException is value is Null or empty or whitespace 
         /// </summary>
-        /// <param name="value"></param>
-        public static void CheckNullOrWhiteSpace(string value)
+        /// <param name="values"></param>
+        public static void CheckNullOrWhiteSpace(params string[] values)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            foreach (var value in values)
             {
-                throw new ArgumentNullException(nameof(value));
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
             }
         }
     }

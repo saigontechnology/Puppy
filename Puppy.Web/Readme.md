@@ -53,6 +53,22 @@ You can use a library like [HighlightJS](http://highlightjs.org) to sytnax highl
 }
 ```
 
+## Response Utils
+- In your controller, you can create response file with `FileModel` from `Puppy.Core.FileUtils.FileModel` and `Puppy.Core.FileUtils.FileHttpRequestMode` - support view (image only) and download.
+```csharp
+return Response.CreateResponseFile(fileModel, mode);
+```
+
+- Use can save file from `Base 64` format by method `FileModel Save(string base64, string originalFileName, string savePath)` in `Puppy.Core.FileUtils.FileHelper` namespace.
+
+- Then get `FileModel` object to save in your database, after that when client request a file, you can load from your database, map again to `FileModel` and make a response with `FileHttpRequestMode` to user can view (image only) or download by `Response.CreateResponseFile` method as above.
+
+```csharp
+using Puppy.Core.FileUtils
+...
+FileModel fileModel = FileHelper.Save(base64String, fileOriginalName, savePath);
+```
+
 ## ServiceCollections Extensions
 
 ### 1. MinResponseExtensions

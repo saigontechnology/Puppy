@@ -79,5 +79,63 @@ namespace Puppy.Core.FileUtils
                 return false;
             }
         }
+
+        /// <summary>
+        ///     Save file with content base on <see cref="base64" />, save file as
+        ///     <see cref="savePath" /> and store info include <see cref="originalFileName" /> in <see cref="FileModel" />
+        /// </summary>
+        /// <param name="base64">          
+        ///     File content as base 64 format, can not be empty/null
+        /// </param>
+        /// <param name="originalFileName"> File original name, can be empty/null </param>
+        /// <param name="savePath">        
+        ///     File save path, if relative path auto combine with
+        ///     <see cref="Directory.GetCurrentDirectory" />, can not be empty/null
+        /// </param>
+        /// <returns></returns>
+        public static FileModel Save(string base64, string originalFileName, string savePath)
+        {
+            StringHelper.CheckNullOrWhiteSpace(base64, savePath);
+
+            FileModel fileModel = new FileModel
+            {
+                Base64 = base64,
+                Location = savePath,
+                OriginalFileName = originalFileName
+            };
+
+            // Check base 64 is image or not
+            var imageInfo = ImageUtils.ImageHelper.GetImageInfo(base64);
+
+            if (imageInfo != null)
+            {
+                // Basic info
+                fileModel.FileType = FileType.Image;
+                fileModel.MimeType = imageInfo.MimeType;
+                fileModel.Extension = MimeTypeHelper.GetExtension(fileModel.MimeType);
+
+                // Image info
+                fileModel.ImageWidthPx = imageInfo.WidthPx;
+                fileModel.ImageHeightPx = imageInfo.HeightPx;
+                fileModel.ImageDominantHexColor = imageInfo.DominantHexColor;
+            }
+            else
+            {
+                // Basic info
+                fileModel.FileType = FileType.UnKnown;
+                fileModel.Extension = Path.GetExtension(fileModel.Location);
+                fileModel.MimeType = fileModel.Extension != null ? MimeTypeHelper.GetMimeType(fileModel.Extension) : null;
+            }
+
+            fileModel.Location = string.IsNullOrWhiteSpace(Path.GetExtension(fileModel.Location)) ? (fileModel.Location + fileModel.Extension) : fileModel.Location;
+
+            var physicalPath = fileModel.Location.GetFullPath();
+
+            // Save/Write file and get content length
+            base64.Save(physicalPath, out var contentLength);
+            fileModel.ContentLength = contentLength;
+
+            return fileModel;
+        }
     }
 }

@@ -17,6 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
 using System.Collections.Generic;
 
 namespace Puppy.Core.DictionaryUtils

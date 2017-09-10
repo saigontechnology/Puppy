@@ -19,15 +19,15 @@
 
 #endregion License
 
+using Microsoft.EntityFrameworkCore;
+using Puppy.EF.Interfaces;
+using Puppy.EF.Interfaces.Repository;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Puppy.EF.Interfaces;
-using Puppy.EF.Interfaces.Repository;
 
 namespace Puppy.EF.Repository
 {

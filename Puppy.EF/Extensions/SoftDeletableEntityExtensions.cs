@@ -6,24 +6,24 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> ISoftDeletableEntityExtensions.cs </Name>
+//         <Name> SoftDeletableEntityExtensions.cs </Name>
 //         <Created> 25/08/17 1:06:00 AM </Created>
 //         <Key> 466d138e-5754-4a36-b7c9-b47a12f27f19 </Key>
 //     </File>
 //     <Summary>
-//         ISoftDeletableEntityExtensions.cs
+//         SoftDeletableEntityExtensions.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Puppy.EF.Interfaces.Entity;
+using Puppy.EF.Interfaces.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Puppy.EF.Extensions
 {
-    public static class ISoftDeletableEntityExtensions
+    public static class SoftDeletableEntityExtensions
     {
         /// <summary>
         ///     Filter entities is not deleted by <c> DeletedTime != null </c> 

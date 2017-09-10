@@ -19,7 +19,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Puppy.EF.Interfaces.Entity
+namespace Puppy.EF.Interfaces.Entities
 {
     /// <summary>
     ///     Use version as <c> byte[] </c> with database type is <c> Timestamp </c> to resolve

@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Puppy.EF.Interfaces.Repository
+namespace Puppy.EF.Interfaces.Repositories
 {
     public interface IEntityStringRepository<TEntity> : IEntityBaseRepository<TEntity> where TEntity : EntityString, new()
     {

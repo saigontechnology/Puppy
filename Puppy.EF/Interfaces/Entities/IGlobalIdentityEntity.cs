@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-namespace Puppy.EF.Interfaces.Entity
+namespace Puppy.EF.Interfaces.Entities
 {
     /// <summary>
     ///     Refer use <c> Guid.NewGuid().ToString("N") </c> to generate <c> GlobalId </c> in constructor 

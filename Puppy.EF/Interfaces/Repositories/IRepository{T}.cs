@@ -26,7 +26,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Puppy.EF.Interfaces.Repository
+namespace Puppy.EF.Interfaces.Repositories
 {
     public interface IRepository<T> where T : class
     {

@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Puppy.Core.DateTimeUtils;
 using Puppy.EF.Extensions;
 using Puppy.EF.Interfaces;
-using Puppy.EF.Interfaces.Repository;
+using Puppy.EF.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +30,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Puppy.EF.Repository
+namespace Puppy.EF.Repositories
 {
     public abstract class EntityBaseRepository<TEntity> : Repository<TEntity>, IEntityBaseRepository<TEntity> where TEntity : EntityBase
     {

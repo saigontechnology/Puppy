@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Puppy.EF.Interfaces.Entity
+namespace Puppy.EF.Interfaces.Entities
 {
     public interface IAuditableEntity
     {

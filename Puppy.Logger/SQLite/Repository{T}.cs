@@ -21,7 +21,7 @@ using Puppy.EF.Interfaces;
 
 namespace Puppy.Logger.SQLite
 {
-    public class Repository<T> : EF.Repository.Repository<T> where T : class
+    public class Repository<T> : EF.Repositories.Repository<T> where T : class
     {
         public Repository(IBaseDbContext baseDbContext) : base(baseDbContext)
         {

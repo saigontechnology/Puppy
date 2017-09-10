@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Puppy.EF.Interfaces.Entity;
+using Puppy.EF.Interfaces.Entities;
 using System;
 
 namespace Puppy.EF

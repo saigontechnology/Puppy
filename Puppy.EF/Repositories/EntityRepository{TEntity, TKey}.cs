@@ -21,13 +21,13 @@ using Microsoft.EntityFrameworkCore;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.ObjectUtils;
 using Puppy.EF.Interfaces;
-using Puppy.EF.Interfaces.Repository;
+using Puppy.EF.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Puppy.EF.Repository
+namespace Puppy.EF.Repositories
 {
     public abstract class EntityRepository<TEntity, TKey> : EntityBaseRepository<TEntity>, IEntityRepository<TEntity, TKey> where TEntity : Entity<TKey>, new() where TKey : struct
     {

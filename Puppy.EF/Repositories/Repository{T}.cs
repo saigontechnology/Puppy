@@ -21,7 +21,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Puppy.EF.Interfaces;
-using Puppy.EF.Interfaces.Repository;
+using Puppy.EF.Interfaces.Repositories;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -29,7 +29,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Puppy.EF.Repository
+namespace Puppy.EF.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {

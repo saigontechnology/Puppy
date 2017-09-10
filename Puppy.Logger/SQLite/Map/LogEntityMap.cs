@@ -19,7 +19,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Puppy.EF.Mapping;
+using Puppy.EF.Maps;
 using Puppy.Logger.Core.Models;
 
 namespace Puppy.Logger.SQLite.Map

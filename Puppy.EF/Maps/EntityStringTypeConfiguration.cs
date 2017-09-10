@@ -6,23 +6,23 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> EntityTypeConfiguration.cs </Name>
-//         <Created> 24/08/17 4:36:20 PM </Created>
-//         <Key> 0040d619-71b4-4f7d-9913-0f9a080831de </Key>
+//         <Name> EntityStringTypeConfiguration.cs </Name>
+//         <Created> 24/08/17 5:02:32 PM </Created>
+//         <Key> 1c6e63f1-0f6d-4cb2-8ba0-fc423354adf0 </Key>
 //     </File>
 //     <Summary>
-//         EntityTypeConfiguration.cs
+//         EntityStringTypeConfiguration.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Puppy.EF.Interfaces.Entity;
+using Puppy.EF.Interfaces.Entities;
 
-namespace Puppy.EF.Mapping
+namespace Puppy.EF.Maps
 {
-    public abstract class EntityTypeConfiguration<TEntity, TKey> : ITypeConfiguration<TEntity> where TEntity : Entity<TKey> where TKey : struct
+    public abstract class EntityStringTypeConfiguration<TEntity> : ITypeConfiguration<TEntity> where TEntity : EntityString
     {
         public virtual void Map(EntityTypeBuilder<TEntity> builder)
         {
@@ -38,7 +38,7 @@ namespace Puppy.EF.Mapping
         }
     }
 
-    public abstract class EntityVersionTypeConfiguration<TEntity, TKey> : ITypeConfiguration<TEntity> where TEntity : Entity<TKey>, IVersionEntity where TKey : struct
+    public abstract class EntityStringVersionTypeConfiguration<TEntity> : ITypeConfiguration<TEntity> where TEntity : EntityString, IVersionEntity
     {
         public virtual void Map(EntityTypeBuilder<TEntity> builder)
         {
@@ -55,13 +55,5 @@ namespace Puppy.EF.Mapping
 
             builder.Property(x => x.GlobalId).HasMaxLength(Constants.Maxlength.GlobalId).IsRequired();
         }
-    }
-
-    public abstract class EntityTypeConfiguration<TEntity> : EntityTypeConfiguration<TEntity, int> where TEntity : Entity
-    {
-    }
-
-    public abstract class EntityVersionTypeConfiguration<TEntity> : EntityVersionTypeConfiguration<TEntity, int> where TEntity : Entity, IVersionEntity
-    {
     }
 }

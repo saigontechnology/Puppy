@@ -19,7 +19,7 @@
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Puppy.EF.Mapping
+namespace Puppy.EF.Maps
 {
     public abstract class TypeConfiguration<T> : ITypeConfiguration<T> where T : class
     {

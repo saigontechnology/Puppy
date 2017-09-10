@@ -19,11 +19,12 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.EF.Mapping
+namespace Puppy.EF.Maps
 {
     public static class ModelBuilderExtensions
     {
@@ -42,9 +43,9 @@ namespace Puppy.EF.Mapping
 
             // Get the generic Entity method of the ModelBuilder type
             var entityMethod = typeof(ModelBuilder).GetMethods()
-                .Single(x => x.Name == "Entity" &&
+                .Single(x => x.Name == nameof(Entity) &&
                              x.IsGenericMethod &&
-                             x.ReturnType.Name == "EntityTypeBuilder`1");
+                             x.ReturnType.Name == $"{nameof(EntityTypeBuilder)}`1");
 
             foreach (var mappingType in mappingTypes)
             {

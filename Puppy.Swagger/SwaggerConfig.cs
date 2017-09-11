@@ -99,7 +99,7 @@ namespace Puppy.Swagger
         public static string RouteTemplateEndpoint => StringHelper.UriBuilder(RoutePrefix, "{documentName}", ApiDocumentJsonFile);
 
         [JsonIgnore]
-        public static string ViewerUrl { get; set; }
+        public static string JsonViewerUrl { get; set; }
 
         /// <summary>
         ///     Flag to mark Api Doc (index.html) is already updated by first http request 

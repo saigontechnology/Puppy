@@ -44,14 +44,14 @@ namespace Puppy.Swagger
         /// <returns></returns>
         public static ContentResult GetApiDocHtml(IUrlHelper urlHelper, string jsonViewerUrl)
         {
-            if (SwaggerConfig.ViewerUrl != jsonViewerUrl)
+            if (SwaggerConfig.JsonViewerUrl != jsonViewerUrl)
             {
                 UpdateIndexHtml(new Dictionary<string, string>
                 {
                     { "@JsonViewerUrl", jsonViewerUrl }
                 });
 
-                SwaggerConfig.ViewerUrl = jsonViewerUrl;
+                SwaggerConfig.JsonViewerUrl = jsonViewerUrl;
             }
 
             if (!SwaggerConfig.IsApiDocUpdated)

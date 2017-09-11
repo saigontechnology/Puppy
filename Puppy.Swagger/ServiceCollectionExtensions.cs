@@ -37,8 +37,6 @@ namespace Puppy.Swagger
 {
     public static class ServiceCollectionExtensions
     {
-        private static Stream _apiDocumentCacheFullContent = null;
-
         /// <summary>
         ///     Add Swagger API Document 
         ///     <para> Xml documentation file full path generate by build main project </para>
@@ -225,32 +223,21 @@ namespace Puppy.Swagger
                 _next = next;
             }
 
-            public Task Invoke(HttpContext context)
+            public async Task Invoke(HttpContext context)
             {
                 if (!IsSwaggerUi(context) && !IsSwaggerEndpoint(context))
                 {
-                    return _next.Invoke(context);
+                    await _next.Invoke(context).ConfigureAwait(true);
+                    return;
                 }
 
                 if (Helper.IsCanAccessSwagger(context))
                 {
-                    if (_apiDocumentCacheFullContent == null)
-                    {
-                        context.Response.OnStarting(state =>
-                        {
-                            var httpContext = (HttpContext)state;
-                            _apiDocumentCacheFullContent = httpContext.Response.Body;
-                            return Task.CompletedTask;
-                        }, context);
-
-                        return _next.Invoke(context);
-                    }
-                    context.Response.Body = _apiDocumentCacheFullContent;
-                    return Task.CompletedTask;
+                    await _next.Invoke(context).ConfigureAwait(true);
+                    return;
                 }
 
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                return Task.CompletedTask;
             }
 
             private static bool IsSwaggerUi(HttpContext httpContext)

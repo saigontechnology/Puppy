@@ -108,6 +108,11 @@ namespace Puppy.Swagger
             return contentResult;
         }
 
+        /// <summary>
+        ///     Case sensitive compare for key access 
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         public static bool IsCanAccessSwagger(HttpContext httpContext)
         {
             if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
@@ -127,6 +132,7 @@ namespace Puppy.Swagger
                 return true;
             }
 
+            // Case sensitive compare
             var isCanAccess = SwaggerConfig.AccessKey == paramKeyValue;
             return isCanAccess;
         }

@@ -37,6 +37,8 @@ namespace Puppy.Swagger
 {
     public static class ServiceCollectionExtensions
     {
+        private static Stream _apiDocumentCacheFullContent = null;
+
         /// <summary>
         ///     Add Swagger API Document 
         ///     <para> Xml documentation file full path generate by build main project </para>
@@ -167,6 +169,8 @@ namespace Puppy.Swagger
 
         public static IApplicationBuilder UseApiDocument(this IApplicationBuilder app)
         {
+            app.UseMiddleware<SwaggerAccessMiddleware>();
+
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = SwaggerConfig.RouteTemplateEndpoint;
@@ -178,8 +182,6 @@ namespace Puppy.Swagger
                 c.RoutePrefix = SwaggerConfig.RoutePrefix;
                 c.SwaggerEndpoint(SwaggerConfig.SwaggerEndpoint, SwaggerConfig.ApiDocumentHtmlTitle);
             });
-
-            app.UseMiddleware<SwaggerAccessMiddleware>();
 
             // Path and GZip for Statics Content
             string currentDirectory = Directory.GetCurrentDirectory();
@@ -211,6 +213,9 @@ namespace Puppy.Swagger
             return app;
         }
 
+        /// <summary>
+        ///     Keep swagger access middleware before UseSwagger and UseSwaggerUI to wrap a request 
+        /// </summary>
         public class SwaggerAccessMiddleware
         {
             private readonly RequestDelegate _next;
@@ -229,7 +234,19 @@ namespace Puppy.Swagger
 
                 if (Helper.IsCanAccessSwagger(context))
                 {
-                    return _next.Invoke(context);
+                    if (_apiDocumentCacheFullContent == null)
+                    {
+                        context.Response.OnStarting(state =>
+                        {
+                            var httpContext = (HttpContext)state;
+                            _apiDocumentCacheFullContent = httpContext.Response.Body;
+                            return Task.CompletedTask;
+                        }, context);
+
+                        return _next.Invoke(context);
+                    }
+                    context.Response.Body = _apiDocumentCacheFullContent;
+                    return Task.CompletedTask;
                 }
 
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -239,16 +256,31 @@ namespace Puppy.Swagger
             private static bool IsSwaggerUi(HttpContext httpContext)
             {
                 var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? string.Empty;
+                pathQuery = pathQuery.ToLowerInvariant();
+
                 var documentApiBaseUrl = SwaggerConfig.RoutePrefix ?? string.Empty;
+                documentApiBaseUrl = documentApiBaseUrl.ToLowerInvariant();
+
                 var isSwaggerUi = pathQuery == documentApiBaseUrl || pathQuery == $"{documentApiBaseUrl}/index.html";
                 return isSwaggerUi;
             }
 
             private static bool IsSwaggerEndpoint(HttpContext httpContext)
             {
+                // get path query with out query param string
                 var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? string.Empty;
+                var iPathQueryWithoutParam = pathQuery.IndexOf('?');
+                pathQuery = iPathQueryWithoutParam > 0 ? pathQuery.Substring(iPathQueryWithoutParam) : pathQuery;
+                pathQuery = pathQuery.ToLowerInvariant();
+
+                // get swagger endpoint without query param string
                 var swaggerEndpoint = SwaggerConfig.SwaggerEndpoint.Trim('/');
-                var isSwaggerEndPoint = pathQuery.StartsWith(swaggerEndpoint);
+                var iSwaggerEndpointWithoutParam = swaggerEndpoint.IndexOf('?');
+                swaggerEndpoint = iSwaggerEndpointWithoutParam > 0 ? swaggerEndpoint.Substring(0, iSwaggerEndpointWithoutParam) : swaggerEndpoint;
+                swaggerEndpoint = swaggerEndpoint.ToLowerInvariant();
+
+                // check quest is swagger endpoint
+                var isSwaggerEndPoint = pathQuery == swaggerEndpoint;
                 return isSwaggerEndPoint;
             }
         }

@@ -148,7 +148,7 @@ This sample below is use `Developers` area as route for Api Document.
 [ServiceFilter(typeof(ApiDocAccessFilter))]
 [HttpGet]
 // You can use response cache, remember to AddResponseCache and UseResponseCache in Startup.cs
-// [ResponseCache(Duration = int.MaxValue, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "*" })]
+// [ResponseCache(Duration = int.MaxValue)]
 public IActionResult Index() => Helper.GetApiDocHtml(Url, Url.AbsoluteAction("json-viewer", "Developers", new { area = "Developers" }));
 
 [HideInDocs]
@@ -156,7 +156,7 @@ public IActionResult Index() => Helper.GetApiDocHtml(Url, Url.AbsoluteAction("js
 [ServiceFilter(typeof(ApiDocAccessFilter))]
 [HttpGet]
 // You can use response cache, remember to AddResponseCache and UseResponseCache in Startup.cs
-// [ResponseCache(Duration = int.MaxValue, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "*" })]
+// [ResponseCache(Duration = int.MaxValue)]
 public IActionResult JsonViewer() => Helper.GetApiJsonViewerHtml(Url);
 ```
 

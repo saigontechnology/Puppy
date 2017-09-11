@@ -147,14 +147,12 @@ This sample below is use `Developers` area as route for Api Document.
 [Route("")]
 [ServiceFilter(typeof(ApiDocAccessFilter))]
 [HttpGet]
-[ResponseCache(Duration = int.MaxValue, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "*" })]
 public IActionResult Index() => Helper.GetApiDocHtml(Url, Url.AbsoluteAction("json-viewer", "Developers", new { area = "Developers" }));
 
 [HideInDocs]
 [Route("json-viewer")]
 [ServiceFilter(typeof(ApiDocAccessFilter))]
 [HttpGet]
-[ResponseCache(Duration = int.MaxValue, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "*" })]
 public IActionResult JsonViewer() => Helper.GetApiJsonViewerHtml(Url);
 ```
 

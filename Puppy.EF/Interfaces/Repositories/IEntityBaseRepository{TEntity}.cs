@@ -20,7 +20,6 @@
 #endregion License
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -46,16 +45,12 @@ namespace Puppy.EF.Interfaces.Repositories
 
         void RefreshEntity(TEntity entity);
 
-        [DebuggerStepThrough]
         int SaveChanges();
 
-        [DebuggerStepThrough]
         int SaveChanges(bool acceptAllChangesOnSuccess);
 
-        [DebuggerStepThrough]
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        [DebuggerStepThrough]
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

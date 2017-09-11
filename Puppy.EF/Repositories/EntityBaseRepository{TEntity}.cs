@@ -24,7 +24,6 @@ using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -71,28 +70,24 @@ namespace Puppy.EF.Repositories
                 DbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        [DebuggerStepThrough]
         public override int SaveChanges()
         {
             StandardizeEntities();
             return DbContext.SaveChanges();
         }
 
-        [DebuggerStepThrough]
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             StandardizeEntities();
             return DbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        [DebuggerStepThrough]
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             StandardizeEntities();
             return DbContext.SaveChangesAsync(cancellationToken);
         }
 
-        [DebuggerStepThrough]
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
             StandardizeEntities();

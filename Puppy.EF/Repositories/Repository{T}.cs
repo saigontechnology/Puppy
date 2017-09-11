@@ -23,7 +23,6 @@ using Microsoft.EntityFrameworkCore;
 using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Repositories;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -146,25 +145,21 @@ namespace Puppy.EF.Repositories
             }
         }
 
-        [DebuggerStepThrough]
         public virtual int SaveChanges()
         {
             return BaseDbContext.SaveChanges();
         }
 
-        [DebuggerStepThrough]
         public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             return BaseDbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        [DebuggerStepThrough]
         public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             return BaseDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        [DebuggerStepThrough]
         public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
             return BaseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

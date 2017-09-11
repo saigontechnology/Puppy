@@ -20,7 +20,6 @@
 #endregion License
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -29,25 +28,21 @@ namespace Puppy.Core.StringUtils
 {
     public static class StringExtensions
     {
-        [DebuggerStepThrough]
         public static bool IsMissing(this string value)
         {
             return String.IsNullOrWhiteSpace(value);
         }
 
-        [DebuggerStepThrough]
         public static bool IsMissingOrTooLong(this string value, int maxLength)
         {
             return String.IsNullOrWhiteSpace(value) || value.Length > maxLength;
         }
 
-        [DebuggerStepThrough]
         public static bool IsPresent(this string value)
         {
             return !String.IsNullOrWhiteSpace(value);
         }
 
-        [DebuggerStepThrough]
         public static string EnsureLeadingSlash(this string url)
         {
             if (!url.StartsWith("/"))
@@ -55,7 +50,6 @@ namespace Puppy.Core.StringUtils
             return url;
         }
 
-        [DebuggerStepThrough]
         public static string EnsureTrailingSlash(this string url)
         {
             if (!url.EndsWith("/"))
@@ -63,7 +57,6 @@ namespace Puppy.Core.StringUtils
             return url;
         }
 
-        [DebuggerStepThrough]
         public static string RemoveLeadingSlash(this string url)
         {
             if (url != null && url.StartsWith("/"))
@@ -71,7 +64,6 @@ namespace Puppy.Core.StringUtils
             return url;
         }
 
-        [DebuggerStepThrough]
         public static string RemoveTrailingSlash(this string url)
         {
             if (url != null && url.EndsWith("/"))
@@ -79,7 +71,6 @@ namespace Puppy.Core.StringUtils
             return url;
         }
 
-        [DebuggerStepThrough]
         public static string CleanUrlPath(this string url)
         {
             if (String.IsNullOrWhiteSpace(url))
@@ -89,7 +80,6 @@ namespace Puppy.Core.StringUtils
             return url;
         }
 
-        [DebuggerStepThrough]
         public static bool IsLocalUrl(this string url)
         {
             if (String.IsNullOrEmpty(url))
@@ -101,14 +91,12 @@ namespace Puppy.Core.StringUtils
             return false;
         }
 
-        [DebuggerStepThrough]
         public static bool IsUrl(this string value)
         {
             bool isUrl = Uri.TryCreate(value, UriKind.Absolute, out var uriResult) && (uriResult.Scheme.ToLower() == "http" || uriResult.Scheme.ToLower() == "https");
             return isUrl;
         }
 
-        [DebuggerStepThrough]
         public static string AddQueryString(this string url, string query)
         {
             if (!url.Contains("?"))
@@ -118,7 +106,6 @@ namespace Puppy.Core.StringUtils
             return url + query;
         }
 
-        [DebuggerStepThrough]
         public static string GetOrigin(this string url)
         {
             if (url != null && (url.StartsWith("http://") || url.StartsWith("https://")))
@@ -135,7 +122,6 @@ namespace Puppy.Core.StringUtils
             return null;
         }
 
-        [DebuggerStepThrough]
         public static string GetFullPath(this string path)
         {
             if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var pathUri))
@@ -149,7 +135,6 @@ namespace Puppy.Core.StringUtils
             return path;
         }
 
-        [DebuggerStepThrough]
         public static bool IsBase64(this string value)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -167,7 +152,6 @@ namespace Puppy.Core.StringUtils
             }
         }
 
-        [DebuggerStepThrough]
         public static string GetSha256(this string value)
         {
             using (var sha256 = SHA256.Create())
@@ -178,7 +162,6 @@ namespace Puppy.Core.StringUtils
             }
         }
 
-        [DebuggerStepThrough]
         public static string GetSha512(this string value)
         {
             using (var sha512 = SHA512.Create())

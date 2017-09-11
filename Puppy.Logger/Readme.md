@@ -165,11 +165,14 @@ public IActionResult SingleLog([FromRoute]string id) => Log.GetLogContentResult(
 [Validator(typeof(PagedCollectionParametersModelValidator))]
 public class PagedCollectionParametersModel
 {
-    public int Skip { get; set; } = SystemConfigs.PagedCollectionParameters.Skip;
+    public int Skip { get; set; } = 0;
+    // public int Skip { get; set; } = SystemConfigs.PagedCollectionParameters.Skip;
 
-    public int Take { get; set; } = SystemConfigs.PagedCollectionParameters.Take;
+    public int Take { get; set; } = 1000;
+    // public int Take { get; set; } = SystemConfigs.PagedCollectionParameters.Take;
 
-    public string Terms { get; set; } = SystemConfigs.PagedCollectionParameters.Terms;
+    public string Terms { get; set; } = null;
+    // public string Terms { get; set; } = SystemConfigs.PagedCollectionParameters.Terms;
 }
 
 public class PagedCollectionParametersModelValidator : AbstractValidator<PagedCollectionParametersModel>

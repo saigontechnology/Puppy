@@ -171,5 +171,29 @@ namespace Puppy.Core.StringUtils
                 return hash;
             }
         }
+
+        public static string GetHmacSha256(this string value, string key)
+        {
+            var keyBytes = Convert.FromBase64String(key);
+            var valueBytes = Encoding.UTF8.GetBytes(value);
+            using (var shaAlgorithm = new HMACSHA256(keyBytes))
+            {
+                var hashBytes = shaAlgorithm.ComputeHash(valueBytes);
+                var hash = BitConverter.ToString(hashBytes).Replace("-", "");
+                return hash;
+            }
+        }
+
+        public static string GetHmacSha512(this string value, string key)
+        {
+            var keyBytes = Convert.FromBase64String(key);
+            var valueBytes = Encoding.UTF8.GetBytes(value);
+            using (var shaAlgorithm = new HMACSHA512(keyBytes))
+            {
+                var hashBytes = shaAlgorithm.ComputeHash(valueBytes);
+                var hash = BitConverter.ToString(hashBytes).Replace("-", "");
+                return hash;
+            }
+        }
     }
 }

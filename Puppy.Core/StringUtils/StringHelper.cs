@@ -20,7 +20,6 @@
 #endregion License
 
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
@@ -77,27 +76,47 @@ namespace Puppy.Core.StringUtils
             return GetRandomString(length, characters);
         }
 
-        [DebuggerStepThrough]
         public static string GenerateSaltSha256()
         {
             byte[] bytes = new byte[128 / 8];
             using (var keyGenerator = RandomNumberGenerator.Create())
             {
                 keyGenerator.GetBytes(bytes);
-                var salfString = BitConverter.ToString(bytes).Replace("-", "");
-                return salfString.GetSha256();
+                var saltString = BitConverter.ToString(bytes).Replace("-", "");
+                return saltString.GetSha256();
             }
         }
 
-        [DebuggerStepThrough]
         public static string GenerateSaltSha512()
         {
             byte[] bytes = new byte[128 / 8];
             using (var keyGenerator = RandomNumberGenerator.Create())
             {
                 keyGenerator.GetBytes(bytes);
-                var salfString = BitConverter.ToString(bytes).Replace("-", "");
-                return salfString.GetSha512();
+                var saltString = BitConverter.ToString(bytes).Replace("-", "");
+                return saltString.GetSha512();
+            }
+        }
+
+        public static string GenerateSaltHmacSha256(string key)
+        {
+            byte[] bytes = new byte[128 / 8];
+            using (var keyGenerator = RandomNumberGenerator.Create())
+            {
+                keyGenerator.GetBytes(bytes);
+                var saltString = BitConverter.ToString(bytes).Replace("-", "");
+                return saltString.GetHmacSha256(key);
+            }
+        }
+
+        public static string GenerateSaltHmacSha512(string key)
+        {
+            byte[] bytes = new byte[128 / 8];
+            using (var keyGenerator = RandomNumberGenerator.Create())
+            {
+                keyGenerator.GetBytes(bytes);
+                var saltString = BitConverter.ToString(bytes).Replace("-", "");
+                return saltString.GetHmacSha512(key);
             }
         }
 

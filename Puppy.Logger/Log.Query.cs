@@ -122,23 +122,6 @@ namespace Puppy.Logger
 
             ContentResult contentResult;
 
-            if (total <= 0)
-            {
-                // Return 204 for No Data Case
-                contentResult = new ContentResult
-                {
-                    ContentType =
-                    (context.Request.Headers[HeaderKey.Accept] == ContentType.Xml ||
-                     context.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
-                        ? ContentType.Xml
-                        : ContentType.Json,
-                    StatusCode = (int)HttpStatusCode.NoContent,
-                    Content = null
-                };
-
-                return contentResult;
-            }
-
             string endpoint = context.Request.Host.Value + LoggerConfig.ViewLogUrl;
 
             var collectionModel = new PagedCollectionFactoryModel<LogEntity>(endpoint, skip, take, terms, total, logs, HttpMethod.Get.Method).Generate();

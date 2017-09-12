@@ -26,11 +26,14 @@ using Hangfire.MemoryStorage;
 using Hangfire.Server;
 using Hangfire.States;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Core.ServiceCollectionUtils;
+using Puppy.Web;
 using System;
+using System.Threading.Tasks;
 
 namespace Puppy.Hangfire
 {
@@ -87,6 +90,8 @@ namespace Puppy.Hangfire
         {
             if (!string.IsNullOrWhiteSpace(HangfireConfig.DashboardUrl))
             {
+                app.UseMiddleware<HangfireDashboardAccessMiddleware>();
+
                 app.UseHangfireDashboard(HangfireConfig.DashboardUrl, new DashboardOptions
                 {
                     Authorization = new[] { new CustomAuthorizeFilter() },
@@ -105,16 +110,44 @@ namespace Puppy.Hangfire
             public bool Authorize([NotNull] DashboardContext context)
             {
                 var httpContext = context.GetHttpContext();
-                Helper.IsCanAccessHangfireDashboard(httpContext);
-                return true;
+                return Helper.IsCanAccessHangfireDashboard(httpContext);
+            }
+        }
+
+        public class HangfireDashboardAccessMiddleware
+        {
+            private readonly RequestDelegate _next;
+
+            public HangfireDashboardAccessMiddleware(RequestDelegate next)
+            {
+                _next = next;
+            }
+
+            public async Task Invoke(HttpContext context)
+            {
+                if (context.Request.IsRequestFor(HangfireConfig.DashboardUrl) && !Helper.IsCanAccessHangfireDashboard(context))
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    context.Response.Headers.Clear();
+                    await context.Response.WriteAsync(HangfireConfig.UnAuthorizeMessage).ConfigureAwait(true);
+                    return;
+                }
+
+                await _next.Invoke(context).ConfigureAwait(true);
             }
         }
 
         public static void BuildHangfireConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
             HangfireConfig.DashboardUrl = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.DashboardUrl)}", HangfireConfig.DashboardUrl);
+            if (!HangfireConfig.DashboardUrl.StartsWith("/"))
+            {
+                throw new ArgumentException($"{nameof(HangfireConfig.DashboardUrl)} must start by /", nameof(HangfireConfig.DashboardUrl));
+            }
+
             HangfireConfig.AccessKey = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.AccessKey)}", HangfireConfig.AccessKey);
             HangfireConfig.AccessKeyQueryParam = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.AccessKeyQueryParam)}", HangfireConfig.AccessKeyQueryParam);
+            HangfireConfig.UnAuthorizeMessage = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.UnAuthorizeMessage)}", HangfireConfig.UnAuthorizeMessage);
             HangfireConfig.BackToSiteUrl = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.BackToSiteUrl)}", HangfireConfig.BackToSiteUrl);
             HangfireConfig.StatsPollingInterval = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.StatsPollingInterval)}", HangfireConfig.StatsPollingInterval);
 

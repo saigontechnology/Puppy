@@ -16,12 +16,16 @@
     // Default is empty
     "AccessKey": "",
 
+    // Un-authorize message when user access api document with not correct key.
+    // Default is "You don't have permission to Job Dashboard, please contact your administrator."
+    "UnAuthorizeMessage": "You don't have permission to view Job Dashboard, please contact your administrator.",
+
     // The path for the Back To Site link. Set to <see langword="null" /> in order to hide the Back To Site link. Default is "/"
     "BackToSiteUrl": "/developers",
 
     // The interval the /stats endpoint should be polled with (milliseconds). Default is 2000
     "StatsPollingInterval": 2000
-  },
+  }
 ```
 
 - Add Service

@@ -40,6 +40,12 @@ namespace Puppy.Hangfire
         public static string AccessKeyQueryParam { get; set; } = "key";
 
         /// <summary>
+        ///     Un-authorize message when user access api document with not correct key. Default is
+        ///     "You don't have permission to Job Dashboard, please contact your administrator."
+        /// </summary>
+        public static string UnAuthorizeMessage { get; set; } = "You don't have permission to Job Dashboard, please contact your administrator.";
+
+        /// <summary>
         ///     The path for the Back To Site link. Set to <see langword="null" /> in order to hide
         ///     the Back To Site link. Default is "/"
         /// </summary>

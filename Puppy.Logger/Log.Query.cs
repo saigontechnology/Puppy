@@ -66,29 +66,14 @@ namespace Puppy.Logger
             return result;
         }
 
-        public static bool IsCanAccessLogViaUrl(HttpContext httpContext)
-        {
-            if (string.IsNullOrWhiteSpace(LoggerConfig.AccessKeyQueryParam))
-            {
-                return true;
-            }
-
-            string requestKey = httpContext.Request.Query[LoggerConfig.AccessKeyQueryParam];
-            var isCanAccess = string.IsNullOrWhiteSpace(LoggerConfig.AccessKey) || LoggerConfig.AccessKey == requestKey;
-            return isCanAccess;
-        }
-
         /// <summary>
-        ///     Create Content Result with response type is <see cref="PagedCollectionModel{LogEntity}" /> 
+        ///     <para> Create Content Result with response type is <see cref="PagedCollectionModel{LogEntity}" /> </para>
+        ///     <para>
+        ///         Search for <see cref="LogEntity.Id" />, <see cref="LogEntity.Message" />,
+        ///         <see cref="LogEntity.Level" />, <see cref="LogEntity.CreatedTime" /> (with string
+        ///         format is <c> "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" </c>, ex: "2017-08-24T00:56:29.6271125+07:00")
+        ///     </para>
         /// </summary>
-        /// <param name="urlHelper"></param>
-        /// <param name="skip">     </param>
-        /// <param name="take">     </param>
-        /// <param name="terms">    
-        ///     Search for <see cref="LogEntity.Id" />, <see cref="LogEntity.Message" />,
-        ///     <see cref="LogEntity.Level" />, <see cref="LogEntity.CreatedTime" /> (with string
-        ///     format is <c> "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" </c>, ex: "2017-08-24T00:56:29.6271125+07:00")
-        /// </param>
         /// <returns></returns>
         /// <remarks>
         ///     <para>
@@ -99,8 +84,28 @@ namespace Puppy.Logger
         ///         Accept or ContentType is XML, else return <c> ContentType Json </c>
         ///     </para>
         /// </remarks>
-        public static ContentResult GetLogsContentResult(IUrlHelper urlHelper, int skip, int take, string terms)
+        internal static ContentResult GetLogsContentResult(HttpContext context)
         {
+            int skip = 0;
+            if (context.Request.Query.TryGetValue("skip", out var skipStr))
+            {
+                if (int.TryParse(skipStr, out var skipInt))
+                {
+                    skip = skipInt;
+                }
+            }
+
+            int take = 1000;
+            if (context.Request.Query.TryGetValue("take", out var takeStr))
+            {
+                if (int.TryParse(takeStr, out var takeInt))
+                {
+                    take = takeInt;
+                }
+            }
+
+            context.Request.Query.TryGetValue("terms", out var terms);
+
             Expression<Func<LogEntity, bool>> predicate = null;
 
             var termsNormalize = StringHelper.Normalize(terms);
@@ -123,8 +128,8 @@ namespace Puppy.Logger
                 contentResult = new ContentResult
                 {
                     ContentType =
-                    (urlHelper.ActionContext.HttpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml ||
-                     urlHelper.ActionContext.HttpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
+                    (context.Request.Headers[HeaderKey.Accept] == ContentType.Xml ||
+                     context.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
                         ? ContentType.Xml
                         : ContentType.Json,
                     StatusCode = (int)HttpStatusCode.NoContent,
@@ -134,10 +139,12 @@ namespace Puppy.Logger
                 return contentResult;
             }
 
-            var collectionModel = new PagedCollectionFactoryModel<LogEntity>(urlHelper, skip, take, terms, total, logs, HttpMethod.Get.Method).Generate();
+            string endpoint = context.Request.Host.Value + LoggerConfig.ViewLogUrl;
 
-            if (urlHelper.ActionContext.HttpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml ||
-                urlHelper.ActionContext.HttpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
+            var collectionModel = new PagedCollectionFactoryModel<LogEntity>(endpoint, skip, take, terms, total, logs, HttpMethod.Get.Method).Generate();
+
+            if (context.Request.Headers[HeaderKey.Accept] == ContentType.Xml ||
+                context.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
             {
                 contentResult = new ContentResult
                 {
@@ -153,83 +160,6 @@ namespace Puppy.Logger
                     ContentType = ContentType.Json,
                     StatusCode = (int)HttpStatusCode.OK,
                     Content = JsonConvert.SerializeObject(collectionModel, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings)
-                };
-            }
-
-            return contentResult;
-        }
-
-        /// <summary>
-        ///     Create Content Result with response type is <see cref="LogEntity" /> 
-        /// </summary>
-        /// <param name="httpContext"></param>
-        /// <param name="id">         </param>
-        /// <returns></returns>
-        /// <remarks>
-        ///     <para>
-        ///         Logger write Log with **message queue** so when create a log it *near real-time log*
-        ///     </para>
-        ///     <para>
-        ///         Base on <paramref name="httpContext"> </paramref> will return <c> ContentType XML
-        ///         </c> when Request Header Accept or ContentType is XML, else return <c>
-        ///         ContentType Json </c>
-        ///     </para>
-        /// </remarks>
-        public static ContentResult GetLogContentResult(HttpContext httpContext, string id)
-        {
-            ContentResult contentResult;
-
-            id = StringHelper.Normalize(id);
-
-            if (string.IsNullOrWhiteSpace(id))
-            {
-                // Return 204 for No Data Case
-                contentResult = new ContentResult
-                {
-                    ContentType =
-                        (httpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml || httpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
-                            ? ContentType.Xml
-                            : ContentType.Json,
-                    StatusCode = (int)HttpStatusCode.NoContent,
-                    Content = null
-                };
-
-                return contentResult;
-            }
-            var log = Get(out long _, x => x.Id.ToUpperInvariant() == id).FirstOrDefault();
-
-            if (log == null)
-            {
-                // Return 204 for No Data Case
-                contentResult = new ContentResult
-                {
-                    ContentType =
-                        (httpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml || httpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
-                            ? ContentType.Xml
-                            : ContentType.Json,
-                    StatusCode = (int)HttpStatusCode.NoContent,
-                    Content = null
-                };
-
-                return contentResult;
-            }
-
-            if (httpContext.Request.Headers[HeaderKey.Accept] == ContentType.Xml || httpContext.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)
-            {
-                contentResult = new ContentResult
-                {
-                    ContentType = ContentType.Xml,
-                    StatusCode = (int)HttpStatusCode.OK,
-                    Content = XmlHelper.ToXmlStringViaJson(log, "Log")
-                };
-            }
-            else
-            {
-                contentResult = new ContentResult
-                {
-                    ContentType = ContentType.Json,
-                    StatusCode = (int)HttpStatusCode.OK,
-                    Content = JsonConvert.SerializeObject(log, Puppy.Core.Constants.StandardFormat.JsonSerializerSettings)
                 };
             }
 

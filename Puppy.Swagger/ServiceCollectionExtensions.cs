@@ -25,11 +25,11 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Swagger.Filters;
+using Puppy.Web;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -222,9 +222,9 @@ namespace Puppy.Swagger
             public async Task Invoke(HttpContext context)
             {
                 if (!Helper.IsSwaggerUi(context)
-                    && !Helper.IsRequestTheEndpoint(context, SwaggerConfig.SwaggerEndpoint)
-                    && !Helper.IsRequestTheEndpoint(context, SwaggerConfig.JsonViewerUiUrl)
-                    && !Helper.IsRequestTheEndpoint(context, SwaggerConfig.ApiDocumentUiUrl))
+                    && !context.Request.IsRequestFor(SwaggerConfig.SwaggerEndpoint)
+                    && !context.Request.IsRequestFor(SwaggerConfig.JsonViewerUiUrl)
+                    && !context.Request.IsRequestFor(SwaggerConfig.ApiDocumentUiUrl))
                 {
                     await _next.Invoke(context).ConfigureAwait(true);
                     return;
@@ -232,14 +232,14 @@ namespace Puppy.Swagger
 
                 if (!Helper.IsCanAccessSwagger(context))
                 {
-                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
                     context.Response.Headers.Clear();
-                    await context.Response.WriteAsync("Unauthorized to access API Document, please contact Administrator for more detail.").ConfigureAwait(true);
+                    await context.Response.WriteAsync(SwaggerConfig.UnAuthorizeMessage).ConfigureAwait(true);
                     return;
                 }
 
                 // Json Viewer Ui
-                if (Helper.IsRequestTheEndpoint(context, SwaggerConfig.JsonViewerUiUrl))
+                if (context.Request.IsRequestFor(SwaggerConfig.JsonViewerUiUrl))
                 {
                     var jsonViewerContentResult = Helper.GetApiJsonViewerHtml();
                     context.Response.ContentType = jsonViewerContentResult.ContentType;
@@ -249,7 +249,7 @@ namespace Puppy.Swagger
                 }
 
                 // API Document custom UI or Default UI
-                if (Helper.IsRequestTheEndpoint(context, SwaggerConfig.ApiDocumentUiUrl) || Helper.IsSwaggerUi(context))
+                if (context.Request.IsRequestFor(SwaggerConfig.ApiDocumentUiUrl) || Helper.IsSwaggerUi(context))
                 {
                     var apiDocContentResult = Helper.GetApiDocHtml();
                     context.Response.ContentType = apiDocContentResult.ContentType;
@@ -263,7 +263,7 @@ namespace Puppy.Swagger
             }
         }
 
-        public static void BuildConfig(this IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
+        internal static void BuildConfig(this IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
         {
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
 
@@ -282,6 +282,16 @@ namespace Puppy.Swagger
                 SwaggerConfig.Contact = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.Contact)}", SwaggerConfig.Contact);
                 SwaggerConfig.IsDescribeAllEnumsAsString = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllEnumsAsString)}", SwaggerConfig.IsDescribeAllEnumsAsString);
                 SwaggerConfig.IsDescribeAllParametersInCamelCase = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllParametersInCamelCase)}", SwaggerConfig.IsDescribeAllParametersInCamelCase);
+
+                if (!SwaggerConfig.ApiDocumentUiUrl.StartsWith("/"))
+                {
+                    throw new ArgumentException($"{nameof(SwaggerConfig.ApiDocumentUiUrl)} must start by /", nameof(SwaggerConfig.ApiDocumentUiUrl));
+                }
+
+                if (!SwaggerConfig.JsonViewerUiUrl.StartsWith("/"))
+                {
+                    throw new ArgumentException($"{nameof(SwaggerConfig.JsonViewerUiUrl)} must start by /", nameof(SwaggerConfig.JsonViewerUiUrl));
+                }
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

@@ -28,13 +28,13 @@ using System.Text;
 
 namespace Puppy.Swagger
 {
-    public static class Helper
+    internal static class Helper
     {
         /// <summary>
         ///     Get API DOC Html 
         /// </summary>
         /// <returns></returns>
-        public static ContentResult GetApiDocHtml()
+        internal static ContentResult GetApiDocHtml()
         {
             if (!SwaggerConfig.IsApiDocumentUiUpdated)
             {
@@ -64,7 +64,7 @@ namespace Puppy.Swagger
             return contentResult;
         }
 
-        public static ContentResult GetApiJsonViewerHtml()
+        internal static ContentResult GetApiJsonViewerHtml()
         {
             if (!SwaggerConfig.IsJsonViewerUrlUpdated)
             {
@@ -96,7 +96,7 @@ namespace Puppy.Swagger
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public static bool IsCanAccessSwagger(HttpContext httpContext)
+        internal static bool IsCanAccessSwagger(HttpContext httpContext)
         {
             if (String.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
             {
@@ -120,7 +120,7 @@ namespace Puppy.Swagger
             return isCanAccess;
         }
 
-        public static bool IsSwaggerUi(HttpContext httpContext)
+        internal static bool IsSwaggerUi(HttpContext httpContext)
         {
             var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? String.Empty;
             pathQuery = pathQuery.ToLowerInvariant();
@@ -132,26 +132,7 @@ namespace Puppy.Swagger
             return isSwaggerUi;
         }
 
-        public static bool IsRequestTheEndpoint(HttpContext httpContext, string endpoint)
-        {
-            // get path query with out query param string
-            var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? String.Empty;
-            var iPathQueryWithoutParam = pathQuery.IndexOf('?');
-            pathQuery = iPathQueryWithoutParam > 0 ? pathQuery.Substring(iPathQueryWithoutParam) : pathQuery;
-            pathQuery = pathQuery.ToLowerInvariant();
-
-            // get endpoint without query param string
-            endpoint = endpoint.Trim('/');
-            var iEndpointWithoutParam = endpoint.IndexOf('?');
-            endpoint = iEndpointWithoutParam > 0 ? endpoint.Substring(0, iEndpointWithoutParam) : endpoint;
-            endpoint = endpoint.ToLowerInvariant();
-
-            // check quest is swagger endpoint
-            var isSwaggerEndPoint = pathQuery == endpoint;
-            return isSwaggerEndPoint;
-        }
-
-        public static void UpdateFileContent(Dictionary<string, string> replaceDictionary, string filePath)
+        internal static void UpdateFileContent(Dictionary<string, string> replaceDictionary, string filePath)
         {
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 

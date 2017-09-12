@@ -29,11 +29,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
-using Puppy.Logger.Filters;
+using Puppy.Web;
 using Puppy.Web.Models;
 using Serilog;
 using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Puppy.Logger
@@ -55,9 +56,6 @@ namespace Puppy.Logger
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _configSection = configSection;
 
-            // Add Filter Service
-            services.AddScoped<ViewLogViaUrlAccessFilter>();
-
             // Check if don't have hangfire service, let add to run background job.
             if (services.All(x => x.ServiceType != typeof(JobStorage)))
             {
@@ -68,9 +66,17 @@ namespace Puppy.Logger
         }
 
         /// <summary>
-        ///     Use Puppy Logger, remember to <see cref="AddLogger" /> before <c> UseLogger </c>. In
-        ///     Configure of Application Builder, you need inject "IApplicationLifetime appLifetime"
-        ///     to use Logger.
+        ///     <para>
+        ///         Use Puppy Logger, remember to <see cref="AddLogger" /> before <c> UseLogger </c>.
+        ///         In Configure of Application Builder, you need inject "IApplicationLifetime
+        ///         appLifetime" to use Logger.
+        ///     </para>
+        ///     <para>
+        ///         You can access log via URL config by <see cref="LoggerConfig.ViewLogUrl" /> and
+        ///         Search for <see cref="LogEntity.Id" />, <see cref="LogEntity.Message" />,
+        ///         <see cref="LogEntity.Level" />, <see cref="LogEntity.CreatedTime" /> (with string
+        ///         format is <c> "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK" </c>, ex: "2017-08-24T00:56:29.6271125+07:00")
+        ///     </para>
         /// </summary>
         /// <param name="app">          </param>
         /// <param name="loggerFactory"></param>
@@ -126,7 +132,7 @@ namespace Puppy.Logger
                 _next = next;
             }
 
-            public Task Invoke(HttpContext context)
+            public async Task Invoke(HttpContext context)
             {
                 // Add Request Id if not have already.
                 if (!context.Request.Headers.ContainsKey(nameof(LogEntity.Id)))
@@ -145,8 +151,37 @@ namespace Puppy.Logger
                 // get Request Body when logging
                 context.Request.EnableRewind();
 
-                return _next.Invoke(context);
+                if (!context.Request.IsRequestFor(LoggerConfig.ViewLogUrl))
+                {
+                    await _next.Invoke(context).ConfigureAwait(true);
+                    return;
+                }
+
+                if (!IsCanAccessLogViaUrl(context))
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    context.Response.Headers.Clear();
+                    await context.Response.WriteAsync(LoggerConfig.UnAuthorizeMessage).ConfigureAwait(true);
+                    return;
+                }
+
+                var logsContentResult = Log.GetLogsContentResult(context);
+                context.Response.ContentType = logsContentResult.ContentType;
+                context.Response.StatusCode = logsContentResult.StatusCode ?? StatusCodes.Status200OK;
+                await context.Response.WriteAsync(logsContentResult.Content, Encoding.UTF8).ConfigureAwait(true);
             }
+        }
+
+        internal static bool IsCanAccessLogViaUrl(HttpContext httpContext)
+        {
+            if (string.IsNullOrWhiteSpace(LoggerConfig.AccessKeyQueryParam))
+            {
+                return true;
+            }
+
+            string requestKey = httpContext.Request.Query[LoggerConfig.AccessKeyQueryParam];
+            var isCanAccess = string.IsNullOrWhiteSpace(LoggerConfig.AccessKey) || LoggerConfig.AccessKey == requestKey;
+            return isCanAccess;
         }
 
         /// <summary>
@@ -154,7 +189,7 @@ namespace Puppy.Logger
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="configSection"></param>
-        public static void BuildLoggerConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
+        internal static void BuildLoggerConfig(this IConfiguration configuration, string configSection = Constant.DefaultConfigSection)
         {
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
 
@@ -182,8 +217,15 @@ namespace Puppy.Logger
                 LoggerConfig.SQLiteConnectionString = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteConnectionString)}", LoggerConfig.SQLiteConnectionString);
                 LoggerConfig.SQLiteLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteLogMinimumLevel)}", LoggerConfig.SQLiteLogMinimumLevel);
 
+                LoggerConfig.ViewLogUrl = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.ViewLogUrl)}", LoggerConfig.ViewLogUrl);
                 LoggerConfig.AccessKey = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.AccessKey)}", LoggerConfig.AccessKey);
                 LoggerConfig.AccessKeyQueryParam = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.AccessKeyQueryParam)}", LoggerConfig.AccessKeyQueryParam);
+                LoggerConfig.UnAuthorizeMessage = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.UnAuthorizeMessage)}", LoggerConfig.UnAuthorizeMessage);
+
+                if (!LoggerConfig.ViewLogUrl.StartsWith("/"))
+                {
+                    throw new ArgumentException($"{nameof(LoggerConfig.ViewLogUrl)} must start by /", nameof(LoggerConfig.ViewLogUrl));
+                }
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;

@@ -14,44 +14,51 @@
 
 ```json
 "Logger": {
-//------------------ Rolling File ------------------
-// Default Puppy Logger always log in SQLite file and also in Rolling File with config, so you can enable or disable rolling file option
-"IsEnableRollingFileLog": true,
-    
-// PathFormat
-// {Date} Creates a file per day. Filenames use the DateFormat format.
-// {Hour} Creates a file per hour. Filenames use the yyyy-MM-dd HH format.
-// {HalfHour} Creates a file per half hour. Filenames use the yyyy-MM-dd HH_mm format.
-// {Level} use run time level when you call Write Log method: Verbose, Debug, Information, Warning, Error, Fatal
-"PathFormat": "Logs\\{Level}\\LOG_{Level}_{Date}.json",
-    
-// Format Date Time config for PathFormat
-// {Date} date format, default is "yyyy-MM-dd"
-"DateFormat": "yyyy-MM-dd",
-// {Hour} time format, default is "yyyy-MM-dd HH"
-"HourFormat": "yyyy-MM-dd HH",
-// {HalfHour} time format, default is "yyyy-MM-dd HH_mm"
-"HalfHourFormat": "yyyy-MM-dd HH_mm",
+    //------------------ Rolling File ------------------
+    // Default Puppy Logger always log in SQLite file and also in Rolling File with config, so you can enable or disable rolling file option
+    "IsEnableRollingFileLog": true,
 
-"RetainedFileCountLimit": 365,
-"FileSizeLimitBytes": 1048576,
-"FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
-    
-//------------------ Console ------------------
+    // PathFormat
+    // {Date} Creates a file per day. Filenames use the DateFormat format.
+    // {Hour} Creates a file per hour. Filenames use the yyyy-MM-dd HH format.
+    // {HalfHour} Creates a file per half hour. Filenames use the yyyy-MM-dd HH_mm format.
+    // {Level} use run time level when you call Write Log method: Verbose, Debug, Information, Warning, Error, Fatal
+    "PathFormat": "Logs\\{Level}\\LOG_{Level}_{Date}.json",
 
-// Puppy Logger do log in Console only in Development Environment
-"ConsoleLogMinimumLevel": "Information" // Verbose, Debug, Information, Warning, Error, Fatal.
-    
-//------------------ Database ------------------
-"SQLiteConnectionString": "Logs\\Puppy.Logger.db",
-"SQLiteLogMinimumLevel": "Warning" // Verbose, Debug, Information, Warning, Error, Fatal.
-    
-// Access Key read from URI, empty is allow anonymous, default is empty.
-"AccessKey" : "",
+    // Format Date Time config for PathFormat
+    // {Date} date format, default is "yyyy-MM-dd"
+    "DateFormat": "yyyy-MM-dd",
+    // {Hour} time format, default is "yyyy-MM-dd HH"
+    "HourFormat": "yyyy-MM-dd HH",
+    // {HalfHour} time format, default is "yyyy-MM-dd HH_mm"
+    "HalfHourFormat": "yyyy-MM-dd HH_mm",
 
-// Query parameter via http request, empty is allow anonymous, default is "key"
-"AccessKeyQueryParam": "key"
-}
+    "RetainedFileCountLimit": 365,
+    "FileSizeLimitBytes": 1048576,
+    "FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
+
+    //------------------ Console ------------------
+
+    // Puppy Logger do log in Console only in Development Environment
+    "ConsoleLogMinimumLevel": "Information", // Verbose, Debug, Information, Warning, Error, Fatal.
+
+    //------------------ Database ------------------
+    "SQLiteConnectionString": "Logs\\Puppy.Logger.db",
+    "SQLiteLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
+
+    // Log API endpoint, start by "/". Default is "/developers/logs"
+    "ViewLogUrl": "/developers/logs",
+
+    // Access Key read from URI, empty is allow anonymous, default is empty.
+    "AccessKey": "",
+
+    // Query parameter via http request, empty is allow anonymous, default is "key"
+    "AccessKeyQueryParam": "key",
+
+    // Un-authorize message when user access api document with not correct key.
+    // Default is "You don't have permission to view Logs, please contact your administrator."
+    "UnAuthorizeMessage": "You don't have permission to view Logs, please contact your administrator."
+  }
 ```
 
 ## Add Service
@@ -115,135 +122,6 @@ public class LogInfoFilter : ExceptionFilterAttribute
 ```csharp
 var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
 ```
-
-- View Log Via URL: The sample below use Puppy.Web.Models.Api to create http collection response.
-
-```csharp
-#region Log
-
-/// <summary>
-///     Logs 
-/// </summary>
-/// <param name="pagedCollectionParametersModel"></param>
-/// <returns></returns>
-/// <remarks>
-///     Logger write Log with `message queue` so when create a log, it **near real-time
-///     log**. Terms search for `Id`, `Message`, `Level`, `CreatedTime` (with string format
-///     is `yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK`, ex: "2017-08-24T00:56:29.6271125+07:00")
-/// </remarks>
-[ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
-[HttpGet]
-[Route("logs")]
-[Produces(ContentType.Json, ContentType.Xml)]
-[SwaggerResponse((int)HttpStatusCode.OK, typeof(ICollection<LogEntity>))]
-// public IActionResult Logs([FromQuery]int skip, [FromQuery] int take, [FromQuery] string terms)
-// => Log.GetLogsContentResult(Url, skip, take, terms);
-public IActionResult Logs([FromQuery]PagedCollectionParametersModel pagedCollectionParametersModel)
-    => Log.GetLogsContentResult(Url, pagedCollectionParametersModel.Skip, pagedCollectionParametersModel.Take, pagedCollectionParametersModel.Terms);
-
-/// <summary>
-///     Log 
-/// </summary>
-/// <param name="id"> Id should be a `guid string` with format [**"N"**](https://goo.gl/pYVXKd) </param>
-/// <returns></returns>
-/// <remarks>
-///     <para>
-///         Logger write Log with `message queue` so when create a log, it **near real-time log**
-///     </para>
-/// </remarks>
-[ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
-[HttpGet]
-[Route("logs/{id}")]
-[Produces(ContentType.Json, ContentType.Xml)]
-[SwaggerResponse((int)HttpStatusCode.OK, typeof(LogEntity))]
-public IActionResult SingleLog([FromRoute]string id) => Log.GetLogContentResult(HttpContext, id);
-
-#endregion Log
-
-#region Model
-
-[Validator(typeof(PagedCollectionParametersModelValidator))]
-public class PagedCollectionParametersModel
-{
-    public int Skip { get; set; } = 0;
-    // public int Skip { get; set; } = SystemConfigs.PagedCollectionParameters.Skip;
-
-    public int Take { get; set; } = 1000;
-    // public int Take { get; set; } = SystemConfigs.PagedCollectionParameters.Take;
-
-    public string Terms { get; set; } = null;
-    // public string Terms { get; set; } = SystemConfigs.PagedCollectionParameters.Terms;
-}
-
-public class PagedCollectionParametersModelValidator : AbstractValidator<PagedCollectionParametersModel>
-{
-    public PagedCollectionParametersModelValidator()
-    {
-        RuleFor(reg => reg.Skip).GreaterThanOrEqualTo(0);
-        RuleFor(reg => reg.Take).LessThanOrEqualTo(10000);
-    }
-}
-
-#endregion
-
-```
-
-- OR manual implement with Log.Get()
-```csharp
-public const string LogsEndpointPattern = "logs/{skip:int}/{take:int}";
-
-/// <summary>
-///     Logs 
-/// </summary>
-/// <param name="skip"> </param>
-/// <param name="take"> </param>
-/// <param name="terms">
-///     Search for `Id`, `Message`, `Level`, `CreatedTime` (with format
-///     **"yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK"**, ex: "2017-08-24T00:56:29.6271125+07:00")
-/// </param>
-/// <returns></returns>
-/// <remarks>
-///     <para>
-///         Logger write Log with `message queue` so when create a log, it **near real-time log**
-///     </para>
-/// </remarks>
-[ServiceFilter(typeof(ViewLogViaUrlAccessFilter))]
-[HttpGet]
-[Route(LogsEndpointPattern)]
-[Produces(ContentType.Json, ContentType.Xml)]
-[SwaggerResponse((int)HttpStatusCode.OK, typeof(ICollection<LogEntity>))]
-public IActionResult GetLogs([FromRoute]int skip, [FromRoute]int take, [FromQuery]string terms)
-{
-    Expression<Func<LogEntity, bool>> predicate = null;
-
-    var termsNormalize = StringHelper.Normalize(terms);
-
-    if (!string.IsNullOrWhiteSpace(termsNormalize))
-    {
-        predicate = x => x.Id.ToUpperInvariant().Contains(termsNormalize)
-        || x.Message.ToUpperInvariant().Contains(termsNormalize)
-        || x.Level.ToString().ToUpperInvariant().Contains(termsNormalize)
-        || x.CreatedTime.ToString(Core.Constant.DateTimeOffSetFormat).Contains(termsNormalize);
-    }
-
-    var logs = Get(out long total, predicate: predicate, orders: x => x.CreatedTime, isOrderByDescending: true, skip: skip, take: take);
-
-    ContentResult contentResult;
-
-    if (total <= 0)
-    {
-        return NoContent();
-    }
-
-    var placeholderLinkView = PlaceholderLinkViewModel.ToCollection(logEndpointPattern, HttpMethod.Get.Method, new { skip, take, terms });
-    var collectionFactoryViewModel = new PagedCollectionFactoryViewModel<LogEntity>(placeholderLinkView, logEndpointPattern);
-    var collectionViewModel = collectionFactoryViewModel.CreateFrom(logs, skip, take, total);
-
-    return Ok(collectionViewModel);
-}
-```
-
-- Use can write your **custom filter** with check `AccessKey` query param with name `AccessKeyQueryParam` from a request by method `Log.IsCanAccessLogViaUrl(HttpContext httpContext)`
 
 ## Sample Log File
 

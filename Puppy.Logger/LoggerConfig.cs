@@ -151,6 +151,11 @@ namespace Puppy.Logger
         }
 
         /// <summary>
+        ///     Log API endpoint, start by "/". Default is "/developers/logs" 
+        /// </summary>
+        public static string ViewLogUrl { get; set; } = "/developers/logs";
+
+        /// <summary>
         ///     Access Key read from URI, default is empty 
         /// </summary>
         /// <remarks> Empty is allow <c> anonymous </c> </remarks>
@@ -161,6 +166,12 @@ namespace Puppy.Logger
         /// </summary>
         /// <remarks> Empty is allow <c> anonymous </c> </remarks>
         public static string AccessKeyQueryParam { get; set; } = "key";
+
+        /// <summary>
+        ///     Un-authorize message when user access api document with not correct key. Default is
+        ///     "You don't have permission to view Logs, please contact your administrator."
+        /// </summary>
+        public static string UnAuthorizeMessage { get; set; } = "You don't have permission to view Logs, please contact your administrator.";
 
         #endregion
     }

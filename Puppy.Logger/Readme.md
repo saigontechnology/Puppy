@@ -47,6 +47,7 @@
     "SQLiteLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
 
     // Log API endpoint, start by "/". Default is "/developers/logs"
+    // Use query string "skip", "take", "terms" (have 's', multiple search for 'Id', 'Message', 'Level' and 'DateTime' - format "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK")
     "ViewLogUrl": "/developers/logs",
 
     // Access Key read from URI, empty is allow anonymous, default is empty.

@@ -151,7 +151,11 @@ namespace Puppy.Logger
         }
 
         /// <summary>
-        ///     Log API endpoint, start by "/". Default is "/developers/logs" 
+        ///     <para> Log API endpoint, start by "/". Default is "/developers/logs" </para>
+        ///     <para>
+        ///         Use query string "skip", "take", "terms" (have 's', multiple search for 'Id',
+        ///         'Message', 'Level' and 'DateTime' - format "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK")
+        ///     </para>
         /// </summary>
         public static string ViewLogUrl { get; set; } = "/developers/logs";
 

@@ -19,7 +19,7 @@
   <ItemGroup>
     <Folder Include="Assets\" />
     <Content Include="apidoc\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

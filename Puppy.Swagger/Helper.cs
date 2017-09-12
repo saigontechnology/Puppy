@@ -23,8 +23,8 @@ using Puppy.Web.Constants;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Reflection;
+using System.Text;
 
 namespace Puppy.Swagger
 {
@@ -33,38 +33,21 @@ namespace Puppy.Swagger
         /// <summary>
         ///     Get API DOC Html 
         /// </summary>
-        /// <param name="urlHelper">    
-        ///     Serve for update asset URL in Api Doc at first time, check by <c>
-        ///     SwaggerConfig.IsApiDocUpdated </c>
-        /// </param>
-        /// <param name="jsonViewerUrl">
-        ///     Update Json Viewer by AspNetCore project route config at first time, check by <c>
-        ///     SwaggerConfig.ViewerUrl </c>
-        /// </param>
         /// <returns></returns>
-        public static ContentResult GetApiDocHtml(IUrlHelper urlHelper, string jsonViewerUrl)
+        public static ContentResult GetApiDocHtml()
         {
-            if (SwaggerConfig.JsonViewerUrl != jsonViewerUrl)
+            if (!SwaggerConfig.IsApiDocumentUiUpdated)
             {
-                UpdateIndexHtml(new Dictionary<string, string>
+                UpdateFileContent(new Dictionary<string, string>
                 {
-                    { "@JsonViewerUrl", jsonViewerUrl }
-                });
-
-                SwaggerConfig.JsonViewerUrl = jsonViewerUrl;
-            }
-
-            if (!SwaggerConfig.IsApiDocUpdated)
-            {
-                UpdateIndexHtml(new Dictionary<string, string>
-                {
-                    {"@AssetPath", urlHelper.AbsoluteContent(Constants.ApiDocAssetRequestPath)},
+                    {"@AssetPath", Constants.ApiDocAssetRequestPath},
                     {"@ApiDocumentHtmlTitle", SwaggerConfig.ApiDocumentHtmlTitle},
                     {"@SwaggerEndpoint", SwaggerConfig.SwaggerEndpoint},
-                    {"@AuthTokenKeyPrefix", SwaggerConfig.AuthTokenKeyName}
-                });
+                    {"@AuthTokenKeyPrefix", SwaggerConfig.AuthTokenKeyName},
+                    { "@JsonViewerUrl", SwaggerConfig.JsonViewerUiUrl }
+                }, Constants.IndexHtmlPath);
 
-                SwaggerConfig.IsApiDocUpdated = true;
+                SwaggerConfig.IsApiDocumentUiUpdated = true;
             }
 
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -74,24 +57,24 @@ namespace Puppy.Swagger
             ContentResult contentResult = new ContentResult
             {
                 ContentType = ContentType.Html,
-                StatusCode = (int)HttpStatusCode.OK,
+                StatusCode = StatusCodes.Status200OK,
                 Content = indexFileContent
             };
 
             return contentResult;
         }
 
-        public static ContentResult GetApiJsonViewerHtml(IUrlHelper urlHelper)
+        public static ContentResult GetApiJsonViewerHtml()
         {
-            if (!SwaggerConfig.IsViewerUpdated)
+            if (!SwaggerConfig.IsJsonViewerUrlUpdated)
             {
-                UpdateJsonViewerHtml(new Dictionary<string, string>
+                UpdateFileContent(new Dictionary<string, string>
                 {
-                    {"@AssetPath", urlHelper.AbsoluteContent(Constants.ApiDocAssetRequestPath)},
+                    {"@AssetPath", Constants.ApiDocAssetRequestPath},
                     {"@ApiDocumentHtmlTitle", SwaggerConfig.ApiDocumentHtmlTitle}
-                });
+                }, Constants.ViewerHtmlPath);
 
-                SwaggerConfig.IsViewerUpdated = true;
+                SwaggerConfig.IsJsonViewerUrlUpdated = true;
             }
 
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -101,7 +84,7 @@ namespace Puppy.Swagger
             ContentResult contentResult = new ContentResult
             {
                 ContentType = ContentType.Html,
-                StatusCode = (int)HttpStatusCode.OK,
+                StatusCode = StatusCodes.Status200OK,
                 Content = jsonViewerFileContent
             };
 
@@ -115,19 +98,19 @@ namespace Puppy.Swagger
         /// <returns></returns>
         public static bool IsCanAccessSwagger(HttpContext httpContext)
         {
-            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
+            if (String.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
             {
                 return true;
             }
 
             string paramKeyValue = httpContext.Request.Query[SwaggerConfig.AccessKeyQueryParam];
 
-            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKey))
+            if (String.IsNullOrWhiteSpace(SwaggerConfig.AccessKey))
             {
                 return true;
             }
 
-            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKey) && string.IsNullOrWhiteSpace(paramKeyValue))
+            if (String.IsNullOrWhiteSpace(SwaggerConfig.AccessKey) && String.IsNullOrWhiteSpace(paramKeyValue))
             {
                 return true;
             }
@@ -137,38 +120,51 @@ namespace Puppy.Swagger
             return isCanAccess;
         }
 
-        public static void UpdateIndexHtml(Dictionary<string, string> replaceDictionary)
+        public static bool IsSwaggerUi(HttpContext httpContext)
         {
-            string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string indexFileFullPath = Path.Combine(executedFolder, Constants.IndexHtmlPath);
+            var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? String.Empty;
+            pathQuery = pathQuery.ToLowerInvariant();
 
-            var indexFileContent = File.ReadAllText(indexFileFullPath);
+            var documentApiBaseUrl = SwaggerConfig.RoutePrefix ?? String.Empty;
+            documentApiBaseUrl = documentApiBaseUrl.ToLowerInvariant();
 
-            foreach (var key in replaceDictionary.Keys)
-            {
-                indexFileContent = indexFileContent.Replace(key, replaceDictionary[key]);
-            }
-
-            File.WriteAllText(indexFileFullPath, indexFileContent);
+            var isSwaggerUi = pathQuery == documentApiBaseUrl || pathQuery == $"{documentApiBaseUrl}/index.html";
+            return isSwaggerUi;
         }
 
-        public static void UpdateJsonViewerHtml(Dictionary<string, string> replaceDictionary)
+        public static bool IsRequestTheEndpoint(HttpContext httpContext, string endpoint)
+        {
+            // get path query with out query param string
+            var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? String.Empty;
+            var iPathQueryWithoutParam = pathQuery.IndexOf('?');
+            pathQuery = iPathQueryWithoutParam > 0 ? pathQuery.Substring(iPathQueryWithoutParam) : pathQuery;
+            pathQuery = pathQuery.ToLowerInvariant();
+
+            // get endpoint without query param string
+            endpoint = endpoint.Trim('/');
+            var iEndpointWithoutParam = endpoint.IndexOf('?');
+            endpoint = iEndpointWithoutParam > 0 ? endpoint.Substring(0, iEndpointWithoutParam) : endpoint;
+            endpoint = endpoint.ToLowerInvariant();
+
+            // check quest is swagger endpoint
+            var isSwaggerEndPoint = pathQuery == endpoint;
+            return isSwaggerEndPoint;
+        }
+
+        public static void UpdateFileContent(Dictionary<string, string> replaceDictionary, string filePath)
         {
             string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string viewerFileFullPath = Path.Combine(executedFolder, Constants.ViewerHtmlPath);
-            var viewerFileContent = File.ReadAllText(viewerFileFullPath);
+
+            string fileFullPath = Path.Combine(executedFolder, filePath);
+
+            var viewerFileContent = File.ReadAllText(fileFullPath);
 
             foreach (var key in replaceDictionary.Keys)
             {
                 viewerFileContent = viewerFileContent.Replace(key, replaceDictionary[key]);
             }
-            File.WriteAllText(viewerFileFullPath, viewerFileContent);
-        }
 
-        private static string AbsoluteContent(this IUrlHelper url, string contentPath)
-        {
-            var request = url.ActionContext.HttpContext.Request;
-            return new Uri(new Uri(request.Scheme + "://" + request.Host.Value), url.Content(contentPath)).ToString();
+            File.WriteAllText(fileFullPath, viewerFileContent, Encoding.UTF8);
         }
     }
 }

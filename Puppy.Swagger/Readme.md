@@ -57,6 +57,12 @@
 
 ```json
 "ApiDocument": {
+    // Api Document User Interface endpoint, start by "/". Default is "/developers"
+    "ApiDocumentUiUrl": "/developers",
+
+    // Json Viewer User Interface endpoint, start by "/". Default is "/developers/json-viewer"
+    "JsonViewerUiUrl": "/developers/json-viewer",
+
     // Api Document Html Title: Name of API Document in HTML
     "ApiDocumentHtmlTitle": "API Document",
 
@@ -65,6 +71,10 @@
 
     // Access Key: access key to check with AccessKeyQueryParam - empty is allow annonymous
     "AccessKey": "",
+
+    // Un-authorize message when user access api document with not correct key.
+    // Default is "You don't have permission to view API Document, please contact your administrator."
+    "UnAuthorizeMessage": "You don't have permission to view API Document, please contact your administrator.",
 
     // Authenticate Token Prefix
     "AuthTokenKeyPrefix": "Bearer",
@@ -82,9 +92,9 @@
 
     // Api Contact Information
     "Contact": {
-        "Name": "Top Nguyen",
-        "Url": "http://topnguyen.net",
-        "Email": "topnguyen92@gmail.com"
+      "Name": "",
+      "Url": "",
+      "Email": ""
     },
 
     // Enable describe all enums as string - default is true
@@ -92,7 +102,7 @@
 
     // Enable discribe all parameter in camel case - default is true
     "IsDescribeAllParametersInCamelCase": true
-}
+  }
 ```
 
 ---
@@ -134,30 +144,3 @@ services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documenta
 // [API Document] Api Document
 app.UseApiDocument();
 ```
-
----
-
-## Enable Api Document UI
-
-Now you have Api Document Service, let add route for Api Document.
-This sample below is use `Developers` area as route for Api Document.
-
-```csharp
-[HideInDocs]
-[Route("")]
-[ServiceFilter(typeof(ApiDocAccessFilter))]
-[HttpGet]
-// You can use response cache, remember to AddResponseCache and UseResponseCache in Startup.cs
-// [ResponseCache(Duration = int.MaxValue)]
-public IActionResult Index() => Helper.GetApiDocHtml(Url, Url.AbsoluteAction("json-viewer", "Developers", new { area = "Developers" }));
-
-[HideInDocs]
-[Route("json-viewer")]
-[ServiceFilter(typeof(ApiDocAccessFilter))]
-[HttpGet]
-// You can use response cache, remember to AddResponseCache and UseResponseCache in Startup.cs
-// [ResponseCache(Duration = int.MaxValue)]
-public IActionResult JsonViewer() => Helper.GetApiJsonViewerHtml(Url);
-```
-
-`GetApiDocHtml()` and `GetApiJsonViewerHtml()` already have css, js and html inside configuration depend on `Config` object.

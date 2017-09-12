@@ -31,6 +31,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Puppy.Swagger
@@ -55,14 +56,7 @@ namespace Puppy.Swagger
         /// <returns></returns>
         public static IServiceCollection AddApiDocument(this IServiceCollection services, string xmlDocumentFileFullPath, IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
         {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
-            // Add Filter Service
-            services.AddScoped<ApiDocAccessFilter>();
-
-            // Build Config
-            configuration.BuildConfig(configSection);
+            ConfigService(configuration, configSection);
 
             services.AddSwaggerGen(options =>
             {
@@ -119,14 +113,7 @@ namespace Puppy.Swagger
         /// <returns></returns>
         public static IServiceCollection AddApiDocument(this IServiceCollection services, Assembly assembly, IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
         {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
-            // Add Filter Service
-            services.AddScoped<ApiDocAccessFilter>();
-
-            // Build Config
-            configuration.BuildConfig(configSection);
+            ConfigService(configuration, configSection);
 
             services.AddSwaggerGen(options =>
             {
@@ -163,6 +150,15 @@ namespace Puppy.Swagger
             });
 
             return services;
+        }
+
+        private static void ConfigService(IConfiguration configuration, string configSection)
+        {
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
+            // Build Config
+            configuration.BuildConfig(configSection);
         }
 
         public static IApplicationBuilder UseApiDocument(this IApplicationBuilder app)
@@ -225,50 +221,45 @@ namespace Puppy.Swagger
 
             public async Task Invoke(HttpContext context)
             {
-                if (!IsSwaggerUi(context) && !IsSwaggerEndpoint(context))
+                if (!Helper.IsSwaggerUi(context)
+                    && !Helper.IsRequestTheEndpoint(context, SwaggerConfig.SwaggerEndpoint)
+                    && !Helper.IsRequestTheEndpoint(context, SwaggerConfig.JsonViewerUiUrl)
+                    && !Helper.IsRequestTheEndpoint(context, SwaggerConfig.ApiDocumentUiUrl))
                 {
                     await _next.Invoke(context).ConfigureAwait(true);
                     return;
                 }
 
-                if (Helper.IsCanAccessSwagger(context))
+                if (!Helper.IsCanAccessSwagger(context))
                 {
-                    await _next.Invoke(context).ConfigureAwait(true);
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    context.Response.Headers.Clear();
+                    await context.Response.WriteAsync("Unauthorized to access API Document, please contact Administrator for more detail.").ConfigureAwait(true);
                     return;
                 }
 
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            }
+                // Json Viewer Ui
+                if (Helper.IsRequestTheEndpoint(context, SwaggerConfig.JsonViewerUiUrl))
+                {
+                    var jsonViewerContentResult = Helper.GetApiJsonViewerHtml();
+                    context.Response.ContentType = jsonViewerContentResult.ContentType;
+                    context.Response.StatusCode = jsonViewerContentResult.StatusCode ?? StatusCodes.Status200OK;
+                    await context.Response.WriteAsync(jsonViewerContentResult.Content, Encoding.UTF8).ConfigureAwait(true);
+                    return;
+                }
 
-            private static bool IsSwaggerUi(HttpContext httpContext)
-            {
-                var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? string.Empty;
-                pathQuery = pathQuery.ToLowerInvariant();
+                // API Document custom UI or Default UI
+                if (Helper.IsRequestTheEndpoint(context, SwaggerConfig.ApiDocumentUiUrl) || Helper.IsSwaggerUi(context))
+                {
+                    var apiDocContentResult = Helper.GetApiDocHtml();
+                    context.Response.ContentType = apiDocContentResult.ContentType;
+                    context.Response.StatusCode = apiDocContentResult.StatusCode ?? StatusCodes.Status200OK;
+                    await context.Response.WriteAsync(apiDocContentResult.Content, Encoding.UTF8).ConfigureAwait(true);
+                    return;
+                }
 
-                var documentApiBaseUrl = SwaggerConfig.RoutePrefix ?? string.Empty;
-                documentApiBaseUrl = documentApiBaseUrl.ToLowerInvariant();
-
-                var isSwaggerUi = pathQuery == documentApiBaseUrl || pathQuery == $"{documentApiBaseUrl}/index.html";
-                return isSwaggerUi;
-            }
-
-            private static bool IsSwaggerEndpoint(HttpContext httpContext)
-            {
-                // get path query with out query param string
-                var pathQuery = httpContext.Request.Path.Value?.Trim('/').ToLower() ?? string.Empty;
-                var iPathQueryWithoutParam = pathQuery.IndexOf('?');
-                pathQuery = iPathQueryWithoutParam > 0 ? pathQuery.Substring(iPathQueryWithoutParam) : pathQuery;
-                pathQuery = pathQuery.ToLowerInvariant();
-
-                // get swagger endpoint without query param string
-                var swaggerEndpoint = SwaggerConfig.SwaggerEndpoint.Trim('/');
-                var iSwaggerEndpointWithoutParam = swaggerEndpoint.IndexOf('?');
-                swaggerEndpoint = iSwaggerEndpointWithoutParam > 0 ? swaggerEndpoint.Substring(0, iSwaggerEndpointWithoutParam) : swaggerEndpoint;
-                swaggerEndpoint = swaggerEndpoint.ToLowerInvariant();
-
-                // check quest is swagger endpoint
-                var isSwaggerEndPoint = pathQuery == swaggerEndpoint;
-                return isSwaggerEndPoint;
+                // Return next middleware for swagger generate document
+                await _next.Invoke(context).ConfigureAwait(true);
             }
         }
 
@@ -278,24 +269,18 @@ namespace Puppy.Swagger
 
             if (isHaveConfig)
             {
+                SwaggerConfig.ApiDocumentUiUrl = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUiUrl)}", SwaggerConfig.ApiDocumentUiUrl);
+                SwaggerConfig.JsonViewerUiUrl = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.JsonViewerUiUrl)}", SwaggerConfig.JsonViewerUiUrl);
                 SwaggerConfig.ApiDocumentHtmlTitle = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentHtmlTitle)}", SwaggerConfig.ApiDocumentHtmlTitle);
-
                 SwaggerConfig.ApiDocumentUrl = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentUrl)}", SwaggerConfig.ApiDocumentUrl);
-
                 SwaggerConfig.ApiDocumentName = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentName)}", SwaggerConfig.ApiDocumentName);
-
                 SwaggerConfig.ApiDocumentJsonFile = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.ApiDocumentJsonFile)}", SwaggerConfig.ApiDocumentJsonFile);
-
                 SwaggerConfig.AccessKey = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.AccessKey)}", SwaggerConfig.AccessKey);
-
                 SwaggerConfig.AccessKeyQueryParam = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.AccessKeyQueryParam)}", SwaggerConfig.AccessKeyQueryParam);
-
+                SwaggerConfig.UnAuthorizeMessage = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.UnAuthorizeMessage)}", SwaggerConfig.UnAuthorizeMessage);
                 SwaggerConfig.AuthTokenKeyName = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.AuthTokenKeyName)}", SwaggerConfig.AuthTokenKeyName);
-
                 SwaggerConfig.Contact = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.Contact)}", SwaggerConfig.Contact);
-
                 SwaggerConfig.IsDescribeAllEnumsAsString = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllEnumsAsString)}", SwaggerConfig.IsDescribeAllEnumsAsString);
-
                 SwaggerConfig.IsDescribeAllParametersInCamelCase = configuration.GetValue($"{configSection}:{nameof(SwaggerConfig.IsDescribeAllParametersInCamelCase)}", SwaggerConfig.IsDescribeAllParametersInCamelCase);
             }
 

@@ -29,6 +29,16 @@ namespace Puppy.Swagger
     public static class SwaggerConfig
     {
         /// <summary>
+        ///     Api Document User Interface endpoint, start by "/". Default is "/developers" 
+        /// </summary>
+        public static string ApiDocumentUiUrl { get; set; } = "/developers";
+
+        /// <summary>
+        ///     Json Viewer User Interface endpoint, start by "/". Default is "/developers/json-viewer" 
+        /// </summary>
+        public static string JsonViewerUiUrl { get; set; } = "/developers/json-viewer";
+
+        /// <summary>
         ///     Api Document Title. Default is <c> API Document </c> 
         /// </summary>
         public static string ApiDocumentHtmlTitle { get; set; } = "API Document";
@@ -60,6 +70,12 @@ namespace Puppy.Swagger
         /// </summary>
         /// <remarks> Empty is allow <c> Anonymous </c> </remarks>
         public static string AccessKeyQueryParam { get; set; } = "key";
+
+        /// <summary>
+        ///     Un-authorize message when user access api document with not correct key. Default is
+        ///     "You don't have permission to view API Document, please contact your administrator."
+        /// </summary>
+        public static string UnAuthorizeMessage { get; set; } = "You don't have permission to view API Document, please contact your administrator.";
 
         /// <summary>
         ///     Authenticate Token Key. Ex: Bearer. Default is <c> Bearer </c> 
@@ -98,18 +114,16 @@ namespace Puppy.Swagger
         [JsonIgnore]
         public static string RouteTemplateEndpoint => StringHelper.UriBuilder(RoutePrefix, "{documentName}", ApiDocumentJsonFile);
 
-        [JsonIgnore]
-        public static string JsonViewerUrl { get; set; }
-
         /// <summary>
         ///     Flag to mark Api Doc (index.html) is already updated by first http request 
         /// </summary>
         [JsonIgnore]
-        public static bool IsApiDocUpdated { get; set; }
+        public static bool IsApiDocumentUiUpdated { get; set; }
 
+        [JsonIgnore]
         /// <summary>
         ///     Flag to mark Json Viewer (viewer.html) is already updated by first http request 
         /// </summary>
-        public static bool IsViewerUpdated { get; set; }
+        public static bool IsJsonViewerUrlUpdated { get; set; }
     }
 }

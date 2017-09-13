@@ -63,11 +63,37 @@ namespace Puppy.Web.HttpRequestDetection.Device
 
         public string BrowserVersion { get; set; }
 
-        // Others
+        // Location
 
         public string IpAddress { get; set; }
 
-        public string Location { get; set; }
+        public string CityName { get; set; }
+
+        public int? CityGeoNameId { get; set; }
+
+        public string CountryName { get; set; }
+
+        public int? CountryGeoNameId { get; set; }
+
+        public string CountryIsoCode { get; set; }
+
+        public string ContinentName { get; set; }
+
+        public int? ContinentGeoNameId { get; set; }
+
+        public string ContinentCode { get; set; }
+
+        public string TimeZone { get; set; }
+
+        public double? Latitude { get; set; }
+
+        public double? Longitude { get; set; }
+
+        public int? AccuracyRadius { get; set; }
+
+        public string PostalCode { get; set; }
+
+        // Others
 
         public string UserAgent { get; set; }
 
@@ -102,13 +128,11 @@ namespace Puppy.Web.HttpRequestDetection.Device
             BrowserName = HttpDetectionHelper.GetBrowserName(request);
             BrowserVersion = HttpDetectionHelper.GetBrowserVersion(request);
 
+            // Location
+            HttpDetectionHelper.GetLocation(request, this);
+
             // Others
-            IpAddress = HttpDetectionHelper.GetIpAddress(request);
-
-            Location = HttpDetectionHelper.GetLocation(request);
-
             UserAgent = HttpDetectionHelper.GetUserAgent(request);
-
             DeviceHash = GetDeviceHash(this);
         }
 

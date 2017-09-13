@@ -27,6 +27,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Puppy.Web.HttpRequestDetection.Device;
 
 namespace Puppy.Web.HttpRequestDetection
 {
@@ -229,7 +230,7 @@ namespace Puppy.Web.HttpRequestDetection
             return ipAddress;
         }
 
-        public static string GetLocation(HttpRequest request)
+        public static DeviceModel GetLocation(HttpRequest request, DeviceModel device)
         {
             string geoDbRelativePath = Path.Combine(nameof(HttpRequestDetection), "GeoCity.mmdb");
 
@@ -249,14 +250,45 @@ namespace Puppy.Web.HttpRequestDetection
             {
                 var ipAddress = GetIpAddress(request);
 
-                string requestLocation = null;
-
                 if (reader.TryCity(ipAddress, out var city))
                 {
-                    requestLocation = city == null ? null : JsonConvert.SerializeObject(city, StandardFormat.JsonSerializerSettings);
+                    if (city != null)
+                    {
+                        device.IpAddress = city.Traits.IPAddress;
+
+                        // City
+                        device.CityName = city.City.Names.TryGetValue("en", out var cityName)
+                            ? cityName
+                            : city.City.Name;
+                        device.CityGeoNameId = city.City.GeoNameId;
+
+                        // Country
+                        device.CountryName = city.Country.Names.TryGetValue("en", out var countryName)
+                            ? countryName
+                            : city.Country.Name;
+                        device.CountryGeoNameId = city.Country.GeoNameId;
+                        device.CountryIsoCode = city.Country.IsoCode;
+
+                        // Continent
+                        device.ContinentName = city.Continent.Names.TryGetValue("en", out var continentName)
+                            ? continentName
+                            : city.Continent.Name;
+                        device.ContinentGeoNameId = city.Continent.GeoNameId;
+                        device.ContinentCode = city.Continent.Code;
+
+                        // Location
+                        device.Latitude = city.Location.Latitude;
+                        device.Longitude = city.Location.Longitude;
+                        device.AccuracyRadius = city.Location.AccuracyRadius;
+
+                        device.PostalCode = city.Postal.Code;
+
+                        // Time Zone
+                        device.TimeZone = city.Location.TimeZone;
+                    }
                 }
 
-                return requestLocation;
+                return device;
             }
         }
 

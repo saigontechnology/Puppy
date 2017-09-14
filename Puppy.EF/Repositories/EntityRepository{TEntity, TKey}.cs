@@ -38,7 +38,7 @@ namespace Puppy.EF.Repositories
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
             if (DbContext.Entry(entity).State == EntityState.Detached)
-                DbSet.Attach(entity);
+                TryToAttach(entity);
 
             entity.LastUpdatedTime =
                 entity.LastUpdatedTime == default(DateTimeOffset) ? DateTimeOffset.UtcNow : entity.LastUpdatedTime;
@@ -64,7 +64,7 @@ namespace Puppy.EF.Repositories
             try
             {
                 if (DbContext.Entry(entity).State == EntityState.Detached)
-                    DbSet.Attach(entity);
+                    TryToAttach(entity);
 
                 if (!isPhysicalDelete)
                 {

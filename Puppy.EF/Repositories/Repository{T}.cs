@@ -88,7 +88,7 @@ namespace Puppy.EF.Repositories
 
         public virtual void Update(T entity, params Expression<Func<T, object>>[] changedProperties)
         {
-            TryToAttach(entity);
+            TryAttach(entity);
 
             changedProperties = changedProperties?.Distinct().ToArray();
 
@@ -107,7 +107,7 @@ namespace Puppy.EF.Repositories
         {
             try
             {
-                TryToAttach(entity);
+                TryAttach(entity);
 
                 DbSet.Remove(entity);
             }
@@ -131,7 +131,7 @@ namespace Puppy.EF.Repositories
             BaseDbContext.Entry(entity).Reload();
         }
 
-        public virtual bool TryToAttach(T entity)
+        public virtual bool TryAttach(T entity)
         {
             try
             {

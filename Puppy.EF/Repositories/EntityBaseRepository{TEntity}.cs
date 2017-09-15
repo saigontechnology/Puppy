@@ -51,7 +51,7 @@ namespace Puppy.EF.Repositories
 
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
-            TryToAttach(entity);
+            TryAttach(entity);
 
             entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
 
@@ -158,7 +158,7 @@ namespace Puppy.EF.Repositories
         {
             try
             {
-                TryToAttach(entity);
+                TryAttach(entity);
 
                 if (!isPhysicalDelete)
                 {

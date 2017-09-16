@@ -49,12 +49,13 @@ namespace Puppy.Swagger
         /// <param name="xmlDocumentFileFullPath"></param>
         /// <param name="configuration">          </param>
         /// <param name="configSection">          </param>
+        /// <param name="isFullSchemaForType">    </param>
         /// <remarks>
         ///     Example for Xml Document File Full Path: <c>
         ///     Path.Combine(Directory.GetCurrentDirectory(), "Puppy.xml") </c>
         /// </remarks>
         /// <returns></returns>
-        public static IServiceCollection AddApiDocument(this IServiceCollection services, string xmlDocumentFileFullPath, IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
+        public static IServiceCollection AddApiDocument(this IServiceCollection services, string xmlDocumentFileFullPath, IConfiguration configuration, string configSection = Constants.DefaultConfigSection, bool isFullSchemaForType = true)
         {
             ConfigService(configuration, configSection);
 
@@ -81,6 +82,12 @@ namespace Puppy.Swagger
                 options.IgnoreObsoleteProperties();
                 options.IgnoreObsoleteActions();
 
+                if (isFullSchemaForType)
+                {
+                    // Use UseFullTypeNameInSchemaIds. HOT FIX in https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/145
+                    options.CustomSchemaIds(type => type.FullName);
+                }
+
                 if (SwaggerConfig.IsDescribeAllEnumsAsString)
                 {
                     options.DescribeAllEnumsAsStrings();
@@ -102,19 +109,19 @@ namespace Puppy.Swagger
         ///         File Path follow config from <c> .csproj </c>, not from <c> appsettings.json </c>
         ///     </para>
         /// </summary>
-        /// <param name="services">     </param>
-        /// <param name="assembly">     </param>
-        /// <param name="configuration"></param>
-        /// <param name="configSection"></param>
+        /// <param name="services">           </param>
+        /// <param name="assembly">           </param>
+        /// <param name="configuration">      </param>
+        /// <param name="configSection">      </param>
+        /// <param name="isFullSchemaForType"></param>
         /// <remarks>
         ///     Example for Xml Document File Full Path: <c>
         ///     Path.Combine(Directory.GetCurrentDirectory(), "Puppy.xml") </c>
         /// </remarks>
         /// <returns></returns>
-        public static IServiceCollection AddApiDocument(this IServiceCollection services, Assembly assembly, IConfiguration configuration, string configSection = Constants.DefaultConfigSection)
+        public static IServiceCollection AddApiDocument(this IServiceCollection services, Assembly assembly, IConfiguration configuration, string configSection = Constants.DefaultConfigSection, bool isFullSchemaForType = true)
         {
             ConfigService(configuration, configSection);
-
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(SwaggerConfig.ApiDocumentName, new Info
@@ -137,6 +144,12 @@ namespace Puppy.Swagger
                 // Ignore Obsolete
                 options.IgnoreObsoleteProperties();
                 options.IgnoreObsoleteActions();
+
+                if (isFullSchemaForType)
+                {
+                    // Use UseFullTypeNameInSchemaIds. HOT FIX in https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/145
+                    options.CustomSchemaIds(type => type.FullName);
+                }
 
                 if (SwaggerConfig.IsDescribeAllEnumsAsString)
                 {

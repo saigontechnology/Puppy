@@ -31,7 +31,7 @@ namespace Puppy.Core.Constants
 
         public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
         {
-            Formatting = Formatting.Indented,
+            Formatting = Formatting.None,
             NullValueHandling = NullValueHandling.Ignore,
             MissingMemberHandling = MissingMemberHandling.Ignore,
             DateFormatHandling = DateFormatHandling.IsoDateFormat,

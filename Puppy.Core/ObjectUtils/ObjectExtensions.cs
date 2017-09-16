@@ -116,5 +116,25 @@ namespace Puppy.Core.ObjectUtils
             var deSerializeSettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deSerializeSettings);
         }
+
+        public static T ConvertTo<T>(this object obj)
+        {
+            try
+            {
+                Type t = typeof(T);
+
+                Type u = Nullable.GetUnderlyingType(t);
+
+                if (u != null)
+                {
+                    return (obj == null) ? default(T) : (T)Convert.ChangeType(obj, u);
+                }
+                return (T)Convert.ChangeType(obj, t);
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
     }
 }

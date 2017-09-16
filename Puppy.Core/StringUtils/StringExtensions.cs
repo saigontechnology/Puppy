@@ -28,21 +28,6 @@ namespace Puppy.Core.StringUtils
 {
     public static class StringExtensions
     {
-        public static bool IsMissing(this string value)
-        {
-            return String.IsNullOrWhiteSpace(value);
-        }
-
-        public static bool IsMissingOrTooLong(this string value, int maxLength)
-        {
-            return String.IsNullOrWhiteSpace(value) || value.Length > maxLength;
-        }
-
-        public static bool IsPresent(this string value)
-        {
-            return !String.IsNullOrWhiteSpace(value);
-        }
-
         public static string EnsureLeadingSlash(this string url)
         {
             if (!url.StartsWith("/"))
@@ -152,6 +137,13 @@ namespace Puppy.Core.StringUtils
             }
         }
 
+        public static string ToBase64(this string value)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(value);
+            string base64 = Convert.ToBase64String(bytes);
+            return base64;
+        }
+
         public static string GetSha256(this string value)
         {
             using (var sha256 = SHA256.Create())
@@ -193,6 +185,82 @@ namespace Puppy.Core.StringUtils
                 var hashBytes = shaAlgorithm.ComputeHash(valueBytes);
                 var hash = BitConverter.ToString(hashBytes).Replace("-", "");
                 return hash;
+            }
+        }
+
+        public static string HashPassword(this string value, string salt, int iterations = 100000)
+        {
+            byte[] valueBytes = Encoding.UTF8.GetBytes(value);
+            byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+            using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(valueBytes, saltBytes, iterations))
+            {
+                var hashBytes = rfc2898DeriveBytes.GetBytes(32);
+                var hashString = Convert.ToBase64String(hashBytes);
+                return hashString;
+            }
+        }
+
+        public static string HashPassword(this string value, out string salt, int iterations = 100000)
+        {
+            salt = StringHelper.GenerateSalt();
+            return value.HashPassword(salt, iterations);
+        }
+
+        public static string Encrypt(this string value, string key)
+        {
+            byte[] clearBytes = Encoding.Unicode.GetBytes(value);
+            using (var encrypt = Aes.Create())
+            {
+                var pdb = new Rfc2898DeriveBytes(key, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encrypt.Key = pdb.GetBytes(32);
+                encrypt.IV = pdb.GetBytes(16);
+                using (var ms = new MemoryStream())
+                {
+                    using (var cs = new CryptoStream(ms, encrypt.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                    }
+                    value = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return value;
+        }
+
+        public static string Decrypt(this string value, string key)
+        {
+            value = value.Replace(" ", "+");
+            byte[] cipherBytes = Convert.FromBase64String(value);
+            using (var encrypt = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(key, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+
+                encrypt.Key = pdb.GetBytes(32);
+                encrypt.IV = pdb.GetBytes(16);
+
+                using (var ms = new MemoryStream())
+                {
+                    using (var cs = new CryptoStream(ms, encrypt.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Dispose();
+                    }
+                    value = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return value;
+        }
+
+        public static bool TryDecrypt(this string value, string key, out string result)
+        {
+            try
+            {
+                result = value.Decrypt(key);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
             }
         }
     }

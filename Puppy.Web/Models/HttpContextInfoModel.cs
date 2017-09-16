@@ -63,9 +63,9 @@ namespace Puppy.Web.Models
             Headers = context.Request.Headers.ToDictionary(x => x.Key, x => x.Value.ToList());
             Protocol = context.Request.Protocol;
             Method = context.Request.Method;
-            Endpoint = $"{context.Request.Scheme}://{context.Request.Host.Value}{context.Request.Path.Value}";
             QueryStrings = context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToList());
-            DisplayUrl = $"[{Protocol}]({Method}){Endpoint}{context.Request.QueryString}";
+            Endpoint = context.Request.GetEndpoint();
+            DisplayUrl = context.Request.GetDisplayUrl();
             RequestBody = context.Request.GetBody();
         }
     }

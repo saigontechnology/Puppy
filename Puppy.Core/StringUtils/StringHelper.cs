@@ -109,6 +109,18 @@ namespace Puppy.Core.StringUtils
             }
         }
 
+        public static string GenerateSalt(int byteLength = 32)
+        {
+            // 32 Bytes will give 256 bits.
+            using (var randomNumberGenerator = RandomNumberGenerator.Create())
+            {
+                var randomNumber = new byte[byteLength];
+                randomNumberGenerator.GetBytes(randomNumber);
+
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
         public static string GenerateSaltHmacSha512(string key)
         {
             byte[] bytes = new byte[128 / 8];

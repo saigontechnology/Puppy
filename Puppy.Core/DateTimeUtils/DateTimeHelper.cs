@@ -26,7 +26,7 @@ namespace Puppy.Core.DateTimeUtils
 {
     public static class DateTimeHelper
     {
-        public static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        public static readonly DateTime EpochTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         public static DateTime Parse(string value, string format)
         {
@@ -66,23 +66,13 @@ namespace Puppy.Core.DateTimeUtils
         }
 
         /// <summary>
-        ///     Return number of seconds from value - 1/1/1970 00:00:00 with UTC date time kind 
+        ///     Return a Date Time from Epoch Time plus value as total seconds 
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static double GetEpochTime(DateTime value)
+        public static DateTimeOffset GetDateTimeFromEpoch(double value)
         {
-            return value.Subtract(Epoch).TotalSeconds;
-        }
-
-        /// <summary>
-        ///     Return number of seconds from value - 1/1/1970 00:00:00 with UTC date time kind 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static double GetEpochTime(DateTimeOffset value)
-        {
-            return value.Subtract(Epoch).TotalSeconds;
+            return EpochTime.AddSeconds(value);
         }
     }
 }

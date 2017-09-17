@@ -71,6 +71,26 @@ namespace Puppy.Core.DateTimeUtils
         {
             return TruncateTo(dateTime, Enums.DateTruncate.Second);
         }
+
+        /// <summary>
+        ///     Return number of seconds from value - 1/1/1970 00:00:00 with UTC date time kind 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double GetEpochTime(this DateTime value)
+        {
+            return value.Subtract(DateTimeHelper.EpochTime).TotalSeconds;
+        }
+
+        /// <summary>
+        ///     Return number of seconds from value - 1/1/1970 00:00:00 with UTC date time kind 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double GetEpochTime(this DateTimeOffset value)
+        {
+            return value.Subtract(DateTimeHelper.EpochTime).TotalSeconds;
+        }
     }
 
     public class Enums

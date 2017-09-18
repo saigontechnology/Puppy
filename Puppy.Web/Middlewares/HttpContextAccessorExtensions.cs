@@ -20,6 +20,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Puppy.Core.ServiceCollectionUtils;
 using Puppy.DependencyInjection;
 
 namespace System.Web
@@ -41,9 +42,13 @@ namespace Puppy.Web.Middlewares
 {
     public static class HttpContextAccessorExtensions
     {
+        public static bool IsAlreadySetup;
+
         public static IServiceCollection AddHttpContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            IsAlreadySetup = true;
+
+            services.AddSingletonIfNotExist<IHttpContextAccessor, HttpContextAccessor>();
             return services;
         }
 

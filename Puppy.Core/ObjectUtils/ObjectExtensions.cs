@@ -105,7 +105,7 @@ namespace Puppy.Core.ObjectUtils
         public static T Clone<T>(this T source)
         {
             // Don't serialize a null object, simply return the default for that object
-            if (object.ReferenceEquals(source, null))
+            if (ReferenceEquals(source, null))
             {
                 return default(T);
             }

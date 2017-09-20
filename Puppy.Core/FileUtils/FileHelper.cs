@@ -20,6 +20,7 @@
 using Puppy.Core.StringUtils;
 using System;
 using System.IO;
+using System.Text;
 
 namespace Puppy.Core.FileUtils
 {
@@ -136,6 +137,42 @@ namespace Puppy.Core.FileUtils
             fileModel.ContentLength = contentLength;
 
             return fileModel;
+        }
+
+        /// <summary>
+        ///     Get file size from string, convert to bytes in case string is Base64 format, else get
+        ///     size with encoding format.
+        /// </summary>
+        /// <param name="value">   </param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static int GetByteSize(string value, Encoding encoding)
+        {
+            if (encoding == null)
+            {
+                encoding = Encoding.Unicode;
+            }
+
+            int fileSize;
+
+            if (IsValidBase64(value))
+            {
+                byte[] bytes = Convert.FromBase64String(value);
+                fileSize = bytes.Length;
+            }
+            else
+            {
+                fileSize = encoding.GetByteCount(value);
+            }
+
+            return fileSize;
+        }
+
+        public static long GetByteSize(string filePath)
+        {
+            filePath = filePath.GetFullPath();
+            var fileInfo = new FileInfo(filePath);
+            return fileInfo.Length;
         }
     }
 }

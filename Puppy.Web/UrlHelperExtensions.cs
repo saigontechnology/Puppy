@@ -20,6 +20,7 @@
 #endregion License
 
 using Microsoft.AspNetCore.Mvc;
+using Puppy.Web.Models.Api;
 using System;
 
 namespace Puppy.Web
@@ -76,6 +77,16 @@ namespace Puppy.Web
             object routeValues = null)
         {
             return url.RouteUrl(routeName, routeValues, url.ActionContext.HttpContext.Request.Scheme);
+        }
+
+        public static PagedCollectionModel<T> GeneratePagedCollectionResult<T>(this IUrlHelper urlHelper, PagedCollectionResultModel<T> pagedCollectionResult, string method = "GET") where T : class, new()
+        {
+            var responseData = new PagedCollectionFactoryModel<T>(urlHelper, pagedCollectionResult.Skip,
+                    pagedCollectionResult.Take, pagedCollectionResult.Terms, pagedCollectionResult.Total,
+                    pagedCollectionResult.Items, method)
+                .Generate();
+
+            return responseData;
         }
     }
 }

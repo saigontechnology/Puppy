@@ -18,6 +18,7 @@
 #endregion License
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Puppy.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Puppy.Web.Models
         public Dictionary<string, List<string>> QueryStrings { get; set; } = new Dictionary<string, List<string>>();
 
         /// <summary>
-        ///     DisplayUrl is combine protocol, method, endpoint and query string 
+        ///     DisplayUrl is combine [protocol]{display url} 
         /// </summary>
         public string DisplayUrl { get; set; }
 
@@ -65,7 +66,7 @@ namespace Puppy.Web.Models
             Method = context.Request.Method;
             QueryStrings = context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToList());
             Endpoint = context.Request.GetEndpoint();
-            DisplayUrl = context.Request.GetDisplayUrl();
+            DisplayUrl = $"[{context.Request.Protocol}]({context.Request.GetDisplayUrl()})";
             RequestBody = context.Request.GetBody();
         }
     }

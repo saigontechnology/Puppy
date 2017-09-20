@@ -160,13 +160,5 @@ namespace Puppy.Web
         {
             return $"{request.Scheme}://{request.Host.Value}{request.Path.Value}";
         }
-
-        /// <summary>
-        ///     DisplayUrl is combine protocol, method, endpoint and query string 
-        /// </summary>
-        public static string GetDisplayUrl(this HttpRequest request)
-        {
-            return $"[{request.Protocol}]({request.Method}){request.GetEndpoint()}{request.QueryString}";
-        }
     }
 }

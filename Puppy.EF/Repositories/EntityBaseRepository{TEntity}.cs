@@ -40,6 +40,29 @@ namespace Puppy.EF.Repositories
             DbContext = dbContext;
         }
 
+        public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return Get(predicate, isIncludeDeleted, includeProperties).FirstOrDefault();
+        }
+
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            var query = DbSet.AsNoTracking();
+
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            includeProperties = includeProperties?.Distinct().ToArray();
+
+            if (includeProperties?.Any() == true)
+            {
+                foreach (var includeProperty in includeProperties)
+                    query = query.Include(includeProperty);
+            }
+
+            return isIncludeDeleted ? query : query.WhereNotDeleted();
+        }
+
         public override TEntity Add(TEntity entity)
         {
             entity.DeletedTime = null;
@@ -47,6 +70,24 @@ namespace Puppy.EF.Repositories
             entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
             entity = DbSet.Add(entity).Entity;
             return entity;
+        }
+
+        public List<TEntity> AddRange(params TEntity[] listEntity)
+        {
+            var dateTimeUtcNow = DateTimeOffset.UtcNow;
+
+            List<TEntity> listAddedEntity = new List<TEntity>();
+
+            foreach (var entity in listEntity)
+            {
+                entity.CreatedTime = dateTimeUtcNow;
+
+                var addedEntity = Add(entity);
+
+                listAddedEntity.Add(addedEntity);
+            }
+
+            return listAddedEntity;
         }
 
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
@@ -68,6 +109,36 @@ namespace Puppy.EF.Repositories
             }
             else
                 DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
+        public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
+        {
+            try
+            {
+                TryAttach(entity);
+
+                if (!isPhysicalDelete)
+                {
+                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
+                    DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
+                }
+                else
+                {
+                    DbSet.Remove(entity);
+                }
+            }
+            catch (Exception)
+            {
+                RefreshEntity(entity);
+                throw;
+            }
+        }
+
+        public virtual void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
+        {
+            var entities = Get(predicate).AsEnumerable();
+            foreach (var entity in entities)
+                Delete(entity, isPhysicalDelete);
         }
 
         public override int SaveChanges()
@@ -129,59 +200,6 @@ namespace Puppy.EF.Repositories
                         entity.LastUpdatedTime = dateTimeNow;
                 }
             }
-        }
-
-        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            var query = DbSet.AsNoTracking();
-
-            if (predicate != null)
-                query = query.Where(predicate);
-
-            includeProperties = includeProperties?.Distinct().ToArray();
-
-            if (includeProperties?.Any() == true)
-            {
-                foreach (var includeProperty in includeProperties)
-                    query = query.Include(includeProperty);
-            }
-
-            return isIncludeDeleted ? query : query.WhereNotDeleted();
-        }
-
-        public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            return Get(predicate, isIncludeDeleted, includeProperties).FirstOrDefault();
-        }
-
-        public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
-        {
-            try
-            {
-                TryAttach(entity);
-
-                if (!isPhysicalDelete)
-                {
-                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
-                    DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
-                }
-                else
-                {
-                    DbSet.Remove(entity);
-                }
-            }
-            catch (Exception)
-            {
-                RefreshEntity(entity);
-                throw;
-            }
-        }
-
-        public virtual void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
-        {
-            var entities = Get(predicate).AsEnumerable();
-            foreach (var entity in entities)
-                Delete(entity, isPhysicalDelete);
         }
     }
 }

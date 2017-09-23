@@ -25,14 +25,8 @@ namespace Puppy.EF.Interfaces.Repositories
 {
     public interface IEntityRepository<TEntity, TKey> : IEntityBaseRepository<TEntity> where TEntity : Entity<TKey>, new() where TKey : struct
     {
-        TEntity Add(TEntity entity, TKey? createdBy = null);
+        void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, params Expression<Func<TEntity, object>>[] changedProperties);
 
-        List<TEntity> AddRange(TKey? createdBy = null, params TEntity[] listEntity);
-
-        void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, TKey? updatedBy = null, params Expression<Func<TEntity, object>>[] changedProperties);
-
-        void DeleteWhere(Expression<Func<TEntity, bool>> predicate, TKey? deletedBy = null, bool isPhysicalDelete = false);
-
-        void DeleteWhere(List<TKey> listId, TKey? deletedBy = null, bool isPhysicalDelete = false);
+        void DeleteWhere(List<TKey> listId, bool isPhysicalDelete = false);
     }
 }

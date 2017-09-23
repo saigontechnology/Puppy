@@ -20,6 +20,7 @@
 #endregion License
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -36,6 +37,8 @@ namespace Puppy.EF.Interfaces.Repositories
         TEntity GetSingle(Expression<Func<TEntity, bool>> predicate = null, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties);
 
         TEntity Add(TEntity entity);
+
+        List<TEntity> AddRange(params TEntity[] listEntity);
 
         void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties);
 

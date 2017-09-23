@@ -43,18 +43,45 @@ namespace Puppy.Core.ImageUtils
             }
         }
 
+        /// <summary>
+        ///     Try get dominant color, return true if get dominant color success, else is fail 
+        /// </summary>
+        /// <param name="imagePath">    </param>
+        /// <param name="dominantColor"></param>
+        /// <returns></returns>
+        /// <remarks> return <see cref="Color.LightGray" /> in case fail </remarks>
+        public static bool TryGetDominantColor(string imagePath, out Color dominantColor)
+        {
+            try
+            {
+                dominantColor = GetDominantColor(imagePath);
+                return true;
+            }
+            catch
+            {
+                dominantColor = Color.LightGray;
+                return false;
+            }
+        }
+
         public static Color GetDominantColor(Bitmap bmp)
         {
+            // Scale image to standard size (Max width is 1024, max height is 768)
+            float width = Math.Min(bmp.Width, 1024);
+            float height = Math.Min(bmp.Height, 768);
+            int scale = (int)Math.Min(bmp.Width / width, bmp.Height / height);
+            Bitmap bmpResize = new Bitmap(bmp, new Size(bmp.Width / scale, bmp.Height / scale));
+
             var r = 0;
             var g = 0;
             var b = 0;
 
             var total = 0;
 
-            for (var x = 0; x < bmp.Width; x++)
-                for (var y = 0; y < bmp.Height; y++)
+            for (var x = 0; x < bmpResize.Width; x++)
+                for (var y = 0; y < bmpResize.Height; y++)
                 {
-                    var clr = bmp.GetPixel(x, y);
+                    var clr = bmpResize.GetPixel(x, y);
 
                     r += clr.R;
                     g += clr.G;
@@ -68,7 +95,29 @@ namespace Puppy.Core.ImageUtils
             g /= total;
             b /= total;
 
-            return Color.FromArgb(r, g, b);
+            Color color = Color.FromArgb(r, g, b);
+            return color;
+        }
+
+        /// <summary>
+        ///     Try get dominant color, return true if get dominant color success, else is fail 
+        /// </summary>
+        /// <param name="bmp">          </param>
+        /// <param name="dominantColor"></param>
+        /// <returns></returns>
+        /// <remarks> return <see cref="Color.LightGray" /> in case fail </remarks>
+        public static bool TryGetDominantColor(Bitmap bmp, out Color dominantColor)
+        {
+            try
+            {
+                dominantColor = GetDominantColor(bmp);
+                return true;
+            }
+            catch
+            {
+                dominantColor = Color.LightGray;
+                return false;
+            }
         }
 
         public static bool IsSvgImage(MemoryStream imageStream)

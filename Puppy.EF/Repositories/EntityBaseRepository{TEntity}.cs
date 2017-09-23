@@ -94,8 +94,6 @@ namespace Puppy.EF.Repositories
         {
             TryAttach(entity);
 
-            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
-
             changedProperties = changedProperties?.Distinct().ToArray();
 
             if (changedProperties?.Any() == true)
@@ -119,7 +117,6 @@ namespace Puppy.EF.Repositories
 
                 if (!isPhysicalDelete)
                 {
-                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
                     DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
                 }
                 else
@@ -190,14 +187,14 @@ namespace Puppy.EF.Repositories
                 {
                     entity.DeletedTime = null;
                     entity.LastUpdatedTime = null;
-                    entity.CreatedTime = dateTimeNow;
+                    entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, dateTimeNow);
                 }
                 else
                 {
                     if (entity.DeletedTime != null)
-                        entity.DeletedTime = dateTimeNow;
+                        entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, dateTimeNow);
                     else
-                        entity.LastUpdatedTime = dateTimeNow;
+                        entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, dateTimeNow);
                 }
             }
         }

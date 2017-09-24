@@ -24,11 +24,7 @@ Use server info to let client app know about server author and server time zone
     
     // Default is "cloudflare-nginx"
     // Security Purpose
-    "Name": "cloudflare-nginx",
-
-    // Default is "Co-ordinated Universal Time"
-    "TimeZoneId": "Co-ordinated Universal Time", // "SE Asia Standard Time" for VietNam
-    "CookieSchemaName": "Puppy_Cookie"
+    "Name": "cloudflare-nginx"
 },
 ```
 

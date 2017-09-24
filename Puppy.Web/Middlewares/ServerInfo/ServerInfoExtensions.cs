@@ -20,7 +20,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Puppy.Core.DictionaryUtils;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.Web.Constants;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,40 +62,11 @@ namespace Puppy.Web.Middlewares.ServerInfo
                 {
                     var httpContext = (HttpContext)state;
 
-                    // Server
-                    if (httpContext.Response.Headers.ContainsKey(ServerInfoConfig.NameHeader))
-                    {
-                        httpContext.Response.Headers.Remove(ServerInfoConfig.NameHeader);
-                    }
-                    httpContext.Response.Headers.Add(ServerInfoConfig.NameHeader, ServerInfoConfig.Name);
-
-                    // X-Powered-By
-                    if (httpContext.Response.Headers.ContainsKey(ServerInfoConfig.PoweredByHeader))
-                    {
-                        httpContext.Response.Headers.Remove(ServerInfoConfig.PoweredByHeader);
-                    }
-                    httpContext.Response.Headers.Add(ServerInfoConfig.PoweredByHeader, ServerInfoConfig.PoweredBy);
-
-                    // X-Author-Name
-                    if (httpContext.Response.Headers.ContainsKey(ServerInfoConfig.AuthorNameHeader))
-                    {
-                        httpContext.Response.Headers.Remove(ServerInfoConfig.AuthorNameHeader);
-                    }
-                    httpContext.Response.Headers.Add(ServerInfoConfig.AuthorNameHeader, ServerInfoConfig.AuthorName);
-
-                    // X-Author-Website
-                    if (httpContext.Response.Headers.ContainsKey(ServerInfoConfig.AuthorWebsiteHeader))
-                    {
-                        httpContext.Response.Headers.Remove(ServerInfoConfig.AuthorWebsiteHeader);
-                    }
-                    httpContext.Response.Headers.Add(ServerInfoConfig.AuthorWebsiteHeader, ServerInfoConfig.AuthorWebsite);
-
-                    // X-Author-Email
-                    if (httpContext.Response.Headers.ContainsKey(ServerInfoConfig.AuthorEmailHeader))
-                    {
-                        httpContext.Response.Headers.Remove(ServerInfoConfig.AuthorEmailHeader);
-                    }
-                    httpContext.Response.Headers.Add(ServerInfoConfig.AuthorEmailHeader, ServerInfoConfig.AuthorEmail);
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.Server, ServerInfoConfig.Name);
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.XPoweredBy, ServerInfoConfig.PoweredBy);
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.XAuthorName, ServerInfoConfig.AuthorName);
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.XAuthorWebsite, ServerInfoConfig.AuthorWebsite);
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.XAuthorEmail, ServerInfoConfig.AuthorEmail);
 
                     return Task.CompletedTask;
                 }, context);
@@ -108,6 +81,7 @@ namespace Puppy.Web.Middlewares.ServerInfo
             if (isHaveConfig)
             {
                 var name = configuration.GetValue<string>($"{configSection}:{nameof(ServerInfoConfig.Name)}");
+
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     ServerInfoConfig.Name = name;
@@ -136,31 +110,17 @@ namespace Puppy.Web.Middlewares.ServerInfo
                 {
                     ServerInfoConfig.AuthorEmail = authorEmail;
                 }
-
-                var cookieSchemaName = configuration.GetValue<string>($"{configSection}:{nameof(ServerInfoConfig.CookieSchemaName)}");
-                if (!string.IsNullOrWhiteSpace(cookieSchemaName))
-                {
-                    ServerInfoConfig.CookieSchemaName = cookieSchemaName;
-                }
-
-                var timeZoneId = configuration.GetValue<string>($"{configSection}:{nameof(ServerInfoConfig.TimeZoneId)}");
-                if (!string.IsNullOrWhiteSpace(timeZoneId))
-                {
-                    ServerInfoConfig.TimeZoneId = timeZoneId;
-                }
             }
 
             if (!EnvironmentHelper.IsDevelopment()) return;
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"System Info Response: {ServerInfoConfig.NameHeader}: {ServerInfoConfig.Name}," +
-                              $" {ServerInfoConfig.PoweredByHeader}: {ServerInfoConfig.PoweredBy}," +
-                              $" {ServerInfoConfig.AuthorNameHeader}: {ServerInfoConfig.AuthorName}," +
-                              $" {ServerInfoConfig.AuthorWebsiteHeader}: {ServerInfoConfig.AuthorWebsite}," +
-                              $" {ServerInfoConfig.AuthorEmailHeader}: {ServerInfoConfig.AuthorEmail}," +
-                              $" {nameof(ServerInfoConfig.CookieSchemaName)}: {ServerInfoConfig.CookieSchemaName}," +
-                              $" {nameof(ServerInfoConfig.TimeZoneId)}: {ServerInfoConfig.TimeZoneId}");
+            Console.WriteLine($"System Info Response: {HeaderKey.Server}: {ServerInfoConfig.Name}," +
+                              $" {HeaderKey.XPoweredBy}: {ServerInfoConfig.PoweredBy}," +
+                              $" {HeaderKey.XAuthorName}: {ServerInfoConfig.AuthorName}," +
+                              $" {HeaderKey.XAuthorWebsite}: {ServerInfoConfig.AuthorWebsite}," +
+                              $" {HeaderKey.XAuthorEmail}: {ServerInfoConfig.AuthorEmail}");
             Console.ResetColor();
         }
     }

@@ -104,6 +104,11 @@ namespace Puppy.Web.Constants
         public const string XuaCompatible = "X-UA-Compatible";
         public const string XxssProtection = "X-XSS-Protection";
 
+        // Author
+        public const string XAuthorWebsite  = "X-Author-Website";
+        public const string XAuthorEmail = "X-Author-Email";
+        public const string XAuthorName = "X-Author-Name";
+
         #endregion
     }
 }

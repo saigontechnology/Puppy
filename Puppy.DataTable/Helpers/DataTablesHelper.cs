@@ -15,7 +15,7 @@ namespace Puppy.DataTable.Helpers
         public static DataTableConfigModel DataTableModel<TController, TResult>(this IHtmlHelper html, string id,
             Expression<Func<TController, DataTablesResult<TResult>>> exp, IEnumerable<ColDefModel> columns = null)
         {
-            if (columns?.Any() != null)
+            if (columns?.Any() != true)
             {
                 columns = typeof(TResult).ColDefs();
             }

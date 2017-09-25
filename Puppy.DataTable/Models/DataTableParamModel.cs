@@ -83,17 +83,19 @@ namespace Puppy.DataTable
             var outputProperties = DataTablesTypeInfo<TSource>.Properties;
 
             var filteredData = filters.ApplyFiltersAndSort(this, data, outputProperties);
+
             var totalDisplayRecords = filteredData.Count();
 
-            var skipped = filteredData.Skip(this.iDisplayStart);
-            var page = (this.iDisplayLength <= 0 ? skipped : skipped.Take(this.iDisplayLength)).ToArray();
+            var skipped = filteredData.Skip(iDisplayStart);
+
+            var page = (iDisplayLength <= 0 ? skipped : skipped.Take(iDisplayLength)).ToArray();
 
             var result = new DataTablesResponseDataModel()
             {
                 iTotalRecords = totalRecords,
                 iTotalDisplayRecords = totalDisplayRecords,
-                sEcho = this.sEcho,
-                aaData = page.Cast<object>().ToArray(),
+                sEcho = sEcho,
+                aaData = page.Cast<object>().ToArray()
             };
 
             return result;

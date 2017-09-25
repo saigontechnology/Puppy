@@ -52,7 +52,7 @@ namespace Puppy.DataTable
 
             var dictionaryTransform = DataTablesTypeInfo<TSource>.ToDictionary(responseOptions);
             result.Data = result.Data
-                .Transform<TSource, Dictionary<string, object>>(dictionaryTransform)
+                .Transform(dictionaryTransform)
                 .Transform<Dictionary<string, object>, Dictionary<string, object>>(StringTransformers.StringifyValues);
 
             result.Data = ApplyOutputRules(result.Data, responseOptions);
@@ -62,7 +62,7 @@ namespace Puppy.DataTable
 
         private static DataTablesResponseDataModel ApplyOutputRules<TSource>(DataTablesResponseDataModel sourceData, ResponseOptionModel<TSource> responseOptions)
         {
-            responseOptions = responseOptions ?? new ResponseOptionModel<TSource>() { ArrayOutputType = ArrayOutputType.BiDimensionalArray };
+            responseOptions = responseOptions ?? new ResponseOptionModel<TSource> { ArrayOutputType = ArrayOutputType.BiDimensionalArray };
             DataTablesResponseDataModel outputData = sourceData;
 
             switch (responseOptions.ArrayOutputType)
@@ -80,15 +80,19 @@ namespace Puppy.DataTable
             return outputData;
         }
 
-        /// <param name="transform">Should be a Func<T, TTransform></param>
-        public static DataTablesResult Create(IQueryable queryable, DataTableParamModel dataTableParamModel, object transform,
-            ResponseOptionModel responseOptions = null)
+        /// <summary>
+        ///     <param name="dataTableParamModel"> </param><param name="transform"> Should be a
+        ///     Func{T, TTransform} </param><param name="queryable">
+        ///     </param><param name="responseOptions"> </param>
+        /// </summary>
+        /// <returns></returns>
+        public static DataTablesResult Create(IQueryable queryable, DataTableParamModel dataTableParamModel, object transform, ResponseOptionModel responseOptions = null)
         {
             var s = "Create";
             var openCreateMethod = typeof(DataTablesResult).GetMethods().Single(x => x.Name == s && x.GetGenericArguments().Count() == 1);
             var queryableType = queryable.GetType().GetGenericArguments()[0];
             var closedCreateMethod = openCreateMethod.MakeGenericMethod(queryableType, typeof(object));
-            return (DataTablesResult)closedCreateMethod.Invoke(null, new object[] { queryable, dataTableParamModel, transform, responseOptions });
+            return (DataTablesResult)closedCreateMethod.Invoke(null, new[] { queryable, dataTableParamModel, transform, responseOptions });
         }
     }
 
@@ -98,12 +102,12 @@ namespace Puppy.DataTable
 
         public DataTablesResult(IQueryable<TSource> q, DataTableParamModel dataTableParamModel)
         {
-            this.Data = dataTableParamModel.GetDataTablesResponse(q);
+            Data = dataTableParamModel.GetDataTablesResponse(q);
         }
 
         public DataTablesResult(DataTablesResponseDataModel data)
         {
-            this.Data = data;
+            Data = data;
         }
 
         public override Task ExecuteResultAsync(ActionContext context)
@@ -113,7 +117,7 @@ namespace Puppy.DataTable
 
             HttpResponse response = context.HttpContext.Response;
 
-            return response.WriteAsync(JsonConvert.SerializeObject(this.Data));
+            return response.WriteAsync(JsonConvert.SerializeObject(Data));
         }
     }
 }

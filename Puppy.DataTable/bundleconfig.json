@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Assets/jquery.dataTables.columnFilter.min.js",
+    "inputFiles": [
+      "Assets/jquery.dataTables.columnFilter.js"
+    ]
+  },
+  {
+    "outputFileName": "Assets/dataTables.colVis.min.css",
+    "inputFiles": [
+      "Assets/dataTables.colVis.css"
+    ]
+  },
+  {
+    "outputFileName": "Assets/dataTables.colVis.min.js",
+    "inputFiles": [
+      "Assets/dataTables.colVis.js"
+    ]
+  }
+]

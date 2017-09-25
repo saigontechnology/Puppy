@@ -13,6 +13,22 @@
     <Platforms>AnyCPU;x86;x64</Platforms>
     <OutputPath>.\bin\</OutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Assets\dataTables.colVis.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\dataTables.colVis.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\dataTables.colVis.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>dataTables.colVis.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\dataTables.colVis.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>dataTables.colVis.js</DependentUpon>
+    </Content>
+  </ItemGroup>
 
   <!-- Copy Output folder -->
   <!-- <CopyToOutputDirectory>Always/PreserveNewest</CopyToOutputDirectory> -->
@@ -39,9 +55,6 @@
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.6.8" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Assets\jquery.dataTables.columnFilter.min.css">
-      <DependentUpon>jquery.dataTables.columnFilter.css</DependentUpon>
-    </None>
     <None Update="Assets\jquery.dataTables.columnFilter.min.js">
       <DependentUpon>jquery.dataTables.columnFilter.js</DependentUpon>
     </None>

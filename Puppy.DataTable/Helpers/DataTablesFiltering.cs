@@ -1,4 +1,5 @@
 using Puppy.DataTable.Helpers.Reflection;
+using Puppy.DataTable.Models;
 using Puppy.DataTable.Processing;
 using System;
 using System.Collections.Generic;

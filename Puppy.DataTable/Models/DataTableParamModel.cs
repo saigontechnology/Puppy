@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Puppy.DataTable.Helpers;
 using Puppy.DataTable.Helpers.Reflection;
-using Puppy.DataTable.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.DataTable
+namespace Puppy.DataTable.Models
 {
     public class DataTableParamModel
     {

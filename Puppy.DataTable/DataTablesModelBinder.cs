@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Puppy.DataTable.Models;
 using System;
 using System.Threading.Tasks;
 

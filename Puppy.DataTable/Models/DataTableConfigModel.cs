@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Helpers;
 using Puppy.DataTable.Serialization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Puppy.DataTable.Models
 {
@@ -14,9 +14,9 @@ namespace Puppy.DataTable.Models
     {
         public bool IsDevelopMode { get; set; } = false;
 
-        public bool IsShowVisibleColumnPicker { get; set; } = true;
+        public bool IsAutoWidthColumn { get; set; } = false;
 
-        public bool IsAutoWidthColumn { get; set; }
+        public bool IsResponsive { get; set; } = true;
 
         public bool IsEnableColVis { get; set; } = true;
 
@@ -24,15 +24,17 @@ namespace Puppy.DataTable.Models
 
         public bool IsShowGlobalSearchInput { get; set; } = true;
 
-        public bool IsUseTableTools { get; set; }
+        public bool IsUseTableTools { get; set; } = true;
 
-        public bool IsUseColumnFilter { get; set; }
+        public bool IsHideHeader { get; set; } = false;
+
+        public bool IsUseColumnFilter { get; set; } = true;
+
+        public bool IsStateSave { get; set; } = true;
 
         public string TableClass { get; set; } = "table table-hover dataTable table-striped";
 
         public string DrawCallback { get; set; }
-
-        public bool IsStateSave { get; set; }
 
         public string Id { get; set; }
 
@@ -65,16 +67,14 @@ namespace Puppy.DataTable.Models
                 if (!string.IsNullOrEmpty(_dom))
                     return _dom;
 
-                string str = "";
-                if (IsShowVisibleColumnPicker)
-                    str += "C";
-                if (IsUseTableTools)
-                    str += "T<\"clear\">";
+                string str = "<\"dt-panelmenu clearfix\"";
                 if (IsShowPageSize)
                     str += "l";
                 if (IsShowGlobalSearchInput)
                     str += "f";
-                return str + "tipr";
+                if (IsUseTableTools)
+                    str += "B";
+                return str + ">t<\"dt-panelfooter clearfix\"rip>";
             }
 
             set => _dom = value;

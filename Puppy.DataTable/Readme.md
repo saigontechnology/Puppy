@@ -9,6 +9,8 @@
     + Improve query performance
     + Support for real cases
 
+- Example: http://aspdatatables.azurewebsites.net/
+
 ### Changing case sensitivity
 
 ```csharp
@@ -112,13 +114,13 @@ ActionResult GetMessagesDataRows(DataTablesParam param)
 # _DataTable.cshtml
 ```html
 @using Newtonsoft.Json.Linq
-@using Puppy.DataTable
+@using Puppy.DataTable.Models
 @model DataTableConfigModel
 
 <table id="@Model.Id" class="@(Model.TableClass ?? string.Empty)">
     <thead>
-        @if (Model.IsUseColumnFilterPlugin)
-            {
+        @if (Model.IsUseColumnFilter)
+        {
             <tr>
                 @foreach (var column in Model.Columns)
                 {
@@ -127,7 +129,7 @@ ActionResult GetMessagesDataRows(DataTablesParam param)
             </tr>
         }
         @if (!Model.IsHideHeader)
-            {
+        {
             <tr>
                 @foreach (var column in Model.Columns)
                 {
@@ -157,11 +159,12 @@ ActionResult GetMessagesDataRows(DataTablesParam param)
             {
                 ["aaSorting"] = new JRaw(Model.ColumnSortingString),
                 ["bProcessing"] = true,
-                ["bStateSave"] = Model.IsStateSave,
+                ["stateSave"] = Model.IsStateSave,
+                ["stateDuration"] = -1,
                 ["bServerSide"] = true,
                 ["bFilter"] = Model.IsShowGlobalSearchInput,
                 ["sDom"] = Model.Dom,
-                ["responsive"] = true,
+                ["responsive"] = Model.IsResponsive,
                 ["language"] = new JObject
                 {
                     ["search"] = "_INPUT_",
@@ -205,9 +208,11 @@ ActionResult GetMessagesDataRows(DataTablesParam param)
             // Tools
             if (Model.IsUseTableTools)
             {
-                // TODO table tool not working
                 options["oTableTools"] = new JRaw("{ 'sSwfPath': '" + Url.AbsoluteContent("~/portal/vendor/datatables-tabletools/swf/copy_csv_xls_pdf.swf") + "' }");
-                options["buttons"] = new JRaw("['copy', 'excel', 'csv', 'pdf', 'print']");
+
+                string tools = Model.IsEnableColVis ? "{extend: 'colvis', text: 'Columns'}," : string.Empty;
+                tools += "'copy', 'excel', 'csv', 'pdf', 'print'";
+                options["buttons"] = new JRaw($"[{tools}]");
             }
 
             // Additional Option
@@ -220,26 +225,25 @@ ActionResult GetMessagesDataRows(DataTablesParam param)
             }
         }
 
-        var dtOptions = @Html.Raw(options.ToString(Formatting.Indented));
+        var dataTableOptions = @Html.Raw(options.ToString(Formatting.Indented));
 
         @if (Model.IsDevelopMode)
         {
-            @Html.Raw("console.log(dtOptions);")
+            @Html.Raw("console.log(dataTableOptions);")
         }
-        var dt = $table.DataTable(dtOptions);
+
+        var $dataTable = $table.dataTable(dataTableOptions);
 
         // Col filters
-        @if (Model.IsUseColumnFilterPlugin)
+        @if (Model.IsUseColumnFilter)
         {
-            // TODO handle case dt.filterColumns
-            // @Html.Raw("dt.columnFilter(" + Model.ColumnFilterVm + ");")
-
+            @Html.Raw("$dataTable.columnFilter(" + Model.ColumnFilterVm + ");")
         }
 
         // Global Variable
         @if (!string.IsNullOrWhiteSpace(Model.GlobalJsVariableName))
         {
-            @Html.Raw("window['" + Model.GlobalJsVariableName + "'] = dt;")
+            @Html.Raw("window['" + Model.GlobalJsVariableName + "'] = $dataTable;")
         }
     })();
 </script>

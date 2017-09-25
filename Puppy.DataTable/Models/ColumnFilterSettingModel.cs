@@ -2,9 +2,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Linq;
-using Puppy.DataTable.Models;
 
-namespace Puppy.DataTable
+namespace Puppy.DataTable.Models
 {
     public class ColumnFilterSettingModel : Hashtable
     {

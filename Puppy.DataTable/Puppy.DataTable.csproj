@@ -38,4 +38,12 @@
     <!-- Linq Dynamic -->
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.6.8" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\jquery.dataTables.columnFilter.min.css">
+      <DependentUpon>jquery.dataTables.columnFilter.css</DependentUpon>
+    </None>
+    <None Update="Assets\jquery.dataTables.columnFilter.min.js">
+      <DependentUpon>jquery.dataTables.columnFilter.js</DependentUpon>
+    </None>
+  </ItemGroup>
 </Project>

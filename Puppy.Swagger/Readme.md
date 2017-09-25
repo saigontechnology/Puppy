@@ -1,5 +1,5 @@
 ﻿![Logo](favicon.ico)
-# Puppy.Api Document
+# Puppy.Swagger
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
 ## Enable Project Documentation xml file.

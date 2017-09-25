@@ -18,10 +18,13 @@
 #endregion License
 
 using Newtonsoft.Json;
+using Puppy.Core.Constants;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
 
 namespace Puppy.Core.ObjectUtils
 {
@@ -135,6 +138,20 @@ namespace Puppy.Core.ObjectUtils
             {
                 return default(T);
             }
+        }
+
+        public static string ToJsonString(this object obj)
+        {
+            if (obj is JObject jObject)
+            {
+                return jObject.ToString(StandardFormat.JsonSerializerSettings.Formatting);
+            }
+            return JsonConvert.SerializeObject(obj, StandardFormat.JsonSerializerSettings);
+        }
+
+        public static JObject ToJson(this object obj)
+        {
+            return JObject.FromObject(obj);
         }
     }
 }

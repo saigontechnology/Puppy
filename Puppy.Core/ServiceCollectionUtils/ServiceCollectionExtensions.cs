@@ -30,10 +30,21 @@ namespace Puppy.Core.ServiceCollectionUtils
             foreach (var removeType in removeTypes)
             {
                 var removeTypeFound = services.FirstOrDefault(x => x.ServiceType == removeType);
-                if (removeTypeFound != null) services.Remove(removeTypeFound);
+
+                if (removeTypeFound != null)
+                {
+                    services.Remove(removeTypeFound);
+                }
             }
 
             return services;
+        }
+
+        // Is Exist
+        public static bool IsAdded<TService>(this IServiceCollection services) where TService : class
+        {
+            bool isExist = services.All(x => x.ServiceType == typeof(TService));
+            return isExist;
         }
 
         // If Any

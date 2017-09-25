@@ -3,7 +3,7 @@ using System;
 
 namespace Puppy.DataTable.Serialization
 {
-    public class RawConverter : Newtonsoft.Json.JsonConverter
+    public class RawConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

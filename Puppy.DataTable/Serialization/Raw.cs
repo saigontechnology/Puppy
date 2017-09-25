@@ -2,7 +2,7 @@
 {
     public class Raw
     {
-        private string _value;
+        private readonly string _value;
 
         public Raw(string value)
         {

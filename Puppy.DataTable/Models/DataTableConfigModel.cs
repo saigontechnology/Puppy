@@ -1,21 +1,18 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Puppy.DataTable.Constants;
-using Puppy.DataTable.Helpers;
-using Puppy.DataTable.Models;
-using Puppy.DataTable.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Puppy.DataTable.Constants;
+using Puppy.DataTable.Helpers;
+using Puppy.DataTable.Serialization;
 
-namespace Puppy.DataTable
+namespace Puppy.DataTable.Models
 {
     public class DataTableConfigModel
     {
         public bool IsDevelopMode { get; set; } = false;
-
-        public bool IsHideHeader { get; set; } = true;
 
         public bool IsShowVisibleColumnPicker { get; set; } = true;
 
@@ -29,7 +26,7 @@ namespace Puppy.DataTable
 
         public bool IsUseTableTools { get; set; }
 
-        public bool IsUseColumnFilterPlugin { get; set; }
+        public bool IsUseColumnFilter { get; set; }
 
         public string TableClass { get; set; } = "table table-hover dataTable table-striped";
 

@@ -10,8 +10,7 @@ namespace Puppy.DataTable.Attributes
         {
         }
 
-        public DataTablesFilterAttribute(DataTablesFilterType filterType)
-            : this(GetFilterTypeString(filterType))
+        public DataTablesFilterAttribute(DataTablesFilterType filterType) : this(GetFilterTypeString(filterType))
         {
         }
 

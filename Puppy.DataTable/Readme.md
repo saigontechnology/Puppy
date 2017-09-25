@@ -75,3 +75,172 @@ ActionResult GetMessagesDataRows(DataTablesParam param)
 
     vm.StateSave = false;
 ```
+
+# Main.cshtml
+```html
+@using Monkey.Controllers.Api
+@using Puppy.DataTable
+@using Puppy.DataTable.Helpers
+@using Constants = Monkey.Constants
+@{
+    ViewData[Constants.ViewDataKey.Title] = "Portal";
+}
+
+<div class="page-header">
+    <h1 class="page-title">DataTables</h1>
+</div>
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-body">
+
+            @{
+                var model = Html.DataTableModel(Guid.NewGuid().ToString("N"), (TestApiController controller) => controller.GetFacetedUsers(null));
+                model.IsStateSave = false;
+                model.IsUseTableTools = true;
+                model.IsUseColumnFilterPlugin = true;
+                model.IsDevelopMode = true;
+                model.TableClass = "table table-hover dataTable table-striped w-full";
+            }
+
+            @await Html.PartialAsync("/Areas/Portal/Views/Shared/_DataTable.cshtml", model).ConfigureAwait(true)
+        </div>
+    </div>
+</div>
+```
+
+
+# _DataTable.cshtml
+```html
+@using Newtonsoft.Json.Linq
+@using Puppy.DataTable
+@model DataTableConfigModel
+
+<table id="@Model.Id" class="@(Model.TableClass ?? string.Empty)">
+    <thead>
+        @if (Model.IsUseColumnFilterPlugin)
+            {
+            <tr>
+                @foreach (var column in Model.Columns)
+                {
+                    <th>@column.DisplayName</th>
+                }
+            </tr>
+        }
+        @if (!Model.IsHideHeader)
+            {
+            <tr>
+                @foreach (var column in Model.Columns)
+                {
+                    <th class="@column.CssClassHeader">@column.DisplayName</th>
+                }
+            </tr>
+        }
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="@Model.Columns.Count()" class="dataTables_empty">
+                Loading...
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    (function initDataTable() {
+        if (!window.jQuery || !$.fn.DataTable) {
+            setTimeout(initDataTable, 100);
+            return;
+        }
+        var $table = $('#@Model.Id');
+        @{
+            var options = new JObject
+            {
+                ["aaSorting"] = new JRaw(Model.ColumnSortingString),
+                ["bProcessing"] = true,
+                ["bStateSave"] = Model.IsStateSave,
+                ["bServerSide"] = true,
+                ["bFilter"] = Model.IsShowGlobalSearchInput,
+                ["sDom"] = Model.Dom,
+                ["responsive"] = true,
+                ["language"] = new JObject
+                {
+                    ["search"] = "_INPUT_",
+                    ["lengthMenu"] = "_MENU_",
+                    ["sSearchPlaceholder"] = "Search...",
+                },
+                ["bAutoWidth"] = Model.IsAutoWidthColumn,
+                ["sAjaxSource"] = Model.AjaxUrl,
+                ["aoColumnDefs"] = new JRaw(Model.ColumnDefsString),
+                ["aoSearchCols"] = Model.SearchCols,
+                // Size List
+                ["aLengthMenu"] = Model.LengthMenu != null ? new JRaw(Model.LengthMenu) : new JRaw(string.Empty)
+            };
+
+            // Default Size
+            if (Model.PageSize.HasValue)
+            {
+                options["iDisplayLength"] = Model.PageSize;
+            }
+
+            // Language Code
+            if (!string.IsNullOrWhiteSpace(Model.LanguageCode))
+            {
+                options["oLanguage"] = new JRaw(Model.LanguageCode);
+            }
+
+            // Draw Call back function
+            if (!string.IsNullOrWhiteSpace(Model.DrawCallback))
+            {
+                options["fnDrawCallback"] = new JRaw(Model.DrawCallback);
+            }
+
+            // Server Request
+            options["fnServerData"] = new JRaw(
+                "function(sSource, aoData, fnCallback) { " +
+                "    var ajaxOptions = { 'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback }; " +
+                (Model.AjaxErrorHandler == null ? "" : ("ajaxOptions['error'] = " + Model.AjaxErrorHandler) + "; ") +
+                "    $.ajax(ajaxOptions);" +
+                "}");
+
+            // Tools
+            if (Model.IsUseTableTools)
+            {
+                // TODO table tool not working
+                options["oTableTools"] = new JRaw("{ 'sSwfPath': '" + Url.AbsoluteContent("~/portal/vendor/datatables-tabletools/swf/copy_csv_xls_pdf.swf") + "' }");
+                options["buttons"] = new JRaw("['copy', 'excel', 'csv', 'pdf', 'print']");
+            }
+
+            // Additional Option
+            if (Model.AdditionalOptions.Any())
+            {
+                foreach (var jsOption in Model.AdditionalOptions)
+                {
+                    options[jsOption.Key] = new JRaw(jsOption.Value);
+                }
+            }
+        }
+
+        var dtOptions = @Html.Raw(options.ToString(Formatting.Indented));
+
+        @if (Model.IsDevelopMode)
+        {
+            @Html.Raw("console.log(dtOptions);")
+        }
+        var dt = $table.DataTable(dtOptions);
+
+        // Col filters
+        @if (Model.IsUseColumnFilterPlugin)
+        {
+            // TODO handle case dt.filterColumns
+            // @Html.Raw("dt.columnFilter(" + Model.ColumnFilterVm + ");")
+
+        }
+
+        // Global Variable
+        @if (!string.IsNullOrWhiteSpace(Model.GlobalJsVariableName))
+        {
+            @Html.Raw("window['" + Model.GlobalJsVariableName + "'] = dt;")
+        }
+    })();
+</script>
+```

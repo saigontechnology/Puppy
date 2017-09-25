@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Puppy.DataTable.Constants;
+using Puppy.DataTable.Helpers;
 using Puppy.DataTable.Helpers.Reflection;
 using Puppy.DataTable.Models;
 using Puppy.DataTable.Processing;
-using Puppy.DataTable.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace Puppy.DataTable
             var result = new DataTablesResult<TSource>(q, dataTableParamModel);
 
             result.Data = result.Data
-                .Transform<TSource, Dictionary<string, object>>(row => TransformTypeInfo.MergeTransformValuesIntoDictionary(transform, row))
+                .Transform<TSource, Dictionary<string, object>>(row => TransformTypeInfoHelper.MergeTransformValuesIntoDictionary(transform, row))
                 .Transform<Dictionary<string, object>, Dictionary<string, object>>(StringTransformers.StringifyValues);
 
             result.Data = ApplyOutputRules(result.Data, responseOptions);
@@ -88,7 +88,7 @@ namespace Puppy.DataTable
         /// <returns></returns>
         public static DataTablesResult Create(IQueryable queryable, DataTableParamModel dataTableParamModel, object transform, ResponseOptionModel responseOptions = null)
         {
-            var s = "Create";
+            const string s = "Create";
             var openCreateMethod = typeof(DataTablesResult).GetMethods().Single(x => x.Name == s && x.GetGenericArguments().Count() == 1);
             var queryableType = queryable.GetType().GetGenericArguments()[0];
             var closedCreateMethod = openCreateMethod.MakeGenericMethod(queryableType, typeof(object));

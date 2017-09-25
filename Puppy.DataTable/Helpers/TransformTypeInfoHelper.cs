@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Puppy.DataTable.Util
+namespace Puppy.DataTable.Helpers
 {
-    public class TransformTypeInfo
+    public class TransformTypeInfoHelper
     {
         public static Dictionary<string, object> MergeTransformValuesIntoDictionary<TInput, TTransform>(Func<TInput, TTransform> transformInput, TInput tInput)
         {

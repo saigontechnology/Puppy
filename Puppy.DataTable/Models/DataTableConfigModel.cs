@@ -191,10 +191,11 @@ namespace Puppy.DataTable.Models
             return FilterOn<T>(optionsDict);
         }
 
-        ////public _FilterOn<DataTableConfigVm> FilterOn<T>(IDictionary<string, object> filterOptions)
-        ////{
-        ////    return new _FilterOn<DataTableConfigVm>(this, this.FilterTypeRules, (c, t) => t == typeof(T), filterOptions);
-        ////}
+        //public _FilterOn<DataTableConfigVm> FilterOn<T>(IDictionary<string, object> filterOptions)
+        //{
+        //    return new _FilterOn<DataTableConfigVm>(this, this.FilterTypeRules, (c, t) => t == typeof(T), filterOptions);
+        //}
+
         public _FilterOn<DataTableConfigModel> FilterOn(string columnName)
         {
             return FilterOn(columnName, null);
@@ -220,7 +221,7 @@ namespace Puppy.DataTable.Models
 
         public _FilterOn<DataTableConfigModel> FilterOn(string columnName, IDictionary<string, object> filterOptions, IDictionary<string, object> jsInitialSearchCols)
         {
-            var colDef = this.Columns.Single(c => c.Name == columnName);
+            var colDef = Columns.Single(c => c.Name == columnName);
             if (filterOptions != null)
             {
                 foreach (var jsOption in filterOptions)
@@ -244,7 +245,7 @@ namespace Puppy.DataTable.Models
             // Converting to System.Collections.Generic.Dictionary<> to ensure Dictionary will be
             // converted to Json in correct format
             var dictSystem = new Dictionary<string, object>(dict);
-            var json = JsonConvert.SerializeObject((object)dictSystem, Formatting.None, new RawConverter());
+            var json = JsonConvert.SerializeObject(dictSystem, Formatting.None, new RawConverter());
             return json.Substring(1, json.Length - 2);
         }
 

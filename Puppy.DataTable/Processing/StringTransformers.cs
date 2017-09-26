@@ -11,14 +11,13 @@ namespace Puppy.DataTable.Processing
         {
             if (Transformers.ContainsKey(propertyType))
                 return Transformers[propertyType](propertyType, value);
-            return (value ?? "").ToString();
+            return (value ?? string.Empty).ToString();
         }
 
         static StringTransformers()
         {
             RegisterFilter<DateTimeOffset>(dateTimeOffset => dateTimeOffset.ToLocalTime().ToString("g"));
             RegisterFilter<DateTime>(dateTime => dateTime.ToLocalTime().ToString("g"));
-            //TODO: Upgeade work RegisterFilter<IHtmlString>(s => s.ToHtmlString());
             RegisterFilter<IEnumerable<string>>(s => s.ToArray());
             RegisterFilter<IEnumerable<int>>(s => s.ToArray());
             RegisterFilter<IEnumerable<long>>(s => s.ToArray());
@@ -27,12 +26,12 @@ namespace Puppy.DataTable.Processing
             RegisterFilter<IEnumerable<double>>(s => s.ToArray());
             RegisterFilter<IEnumerable<object>>(s => s.Select(o => GetStringedValue(o.GetType(), o)).ToArray());
             RegisterFilter<bool>(s => s);
-            RegisterFilter<object>(o => (o ?? "").ToString());
+            RegisterFilter<object>(o => (o ?? string.Empty).ToString());
         }
 
         private static readonly Dictionary<Type, StringTransformer> Transformers = new Dictionary<Type, StringTransformer>();
 
-        public delegate object GuardedValueTransformer<TVal>(TVal value);
+        public delegate object GuardedValueTransformer<in TVal>(TVal value);
 
         public delegate object StringTransformer(Type type, object value);
 
@@ -61,7 +60,7 @@ namespace Puppy.DataTable.Processing
             var output = new Dictionary<string, object>();
             foreach (var row in dict)
             {
-                output[row.Key] = row.Value == null ? "" : GetStringedValue(row.Value.GetType(), row.Value);
+                output[row.Key] = row.Value == null ? string.Empty : GetStringedValue(row.Value.GetType(), row.Value);
             }
             return output;
         }

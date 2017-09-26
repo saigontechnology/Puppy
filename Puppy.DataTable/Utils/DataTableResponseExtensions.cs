@@ -53,15 +53,12 @@ namespace Puppy.DataTable.Utils
             return result;
         }
 
-        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTablesResponseDataModel responseData,
-                                                                                        Func<TSource, object> transform,
-                                                                                        ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTablesResponseDataModel responseData, Func<TSource, object> transform, ResponseOptionModel<TSource> responseOption = null)
         {
             return DataTableActionResult.Create(responseData, transform, responseOption);
         }
 
-        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTablesResponseDataModel responseData,
-                                                                                        ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTablesResponseDataModel responseData, ResponseOptionModel<TSource> responseOption = null)
         {
             return DataTableActionResult.Create(responseData, responseOption);
         }

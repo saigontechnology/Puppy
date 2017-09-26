@@ -18,22 +18,21 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
+    
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="1.1.2" />
+    
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.1" />
+    
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="1.1.2" />
 
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="1.1.2" />
-    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="1.1.2" />
 
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
 
+    <PackageReference Include="Enums.NET" Version="2.2.0" />
     <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Models\ExceptionInfo.cs">
-      <SubType>Puppy</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

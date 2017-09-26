@@ -19,12 +19,10 @@
 
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel;
 
 namespace Puppy.Core.Models
 {
     [Serializable]
-    [DesignerCategory(nameof(Puppy))]
     public class ExceptionInfo : SerializableModel
     {
         public string Id { get; set; } = Guid.NewGuid().ToString("N");

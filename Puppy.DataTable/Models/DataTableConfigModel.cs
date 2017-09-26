@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Puppy.DataTable.Utils.Reflection;
 
 namespace Puppy.DataTable.Models
 {
@@ -133,7 +134,7 @@ namespace Puppy.DataTable.Models
                 _colDefModel.Filter.values = options.Cast<object>().ToArray();
                 if (_colDefModel.Type.GetTypeInfo().IsEnum)
                 {
-                    _colDefModel.Filter.values = _colDefModel.Type.EnumValLabPairs();
+                    _colDefModel.Filter.values = _colDefModel.Type.GetEnumValueLabelPair();
                 }
                 return _target;
             }
@@ -162,7 +163,7 @@ namespace Puppy.DataTable.Models
                 _colDefModel.Filter.values = options.Cast<object>().ToArray();
                 if (_colDefModel.Type.GetTypeInfo().IsEnum)
                 {
-                    _colDefModel.Filter.values = _colDefModel.Type.EnumValLabPairs();
+                    _colDefModel.Filter.values = _colDefModel.Type.GetEnumValueLabelPair();
                 }
                 return _target;
             }

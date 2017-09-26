@@ -27,7 +27,7 @@ namespace Puppy.DataTable
         /// </param>
         /// <param name="responseOption"></param>
         /// <returns></returns>
-        public static DataTableActionResult<TSource> Create<TSource>(DataTablesResponseDataModel responseData, Func<TSource, object> transform, ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<TSource> Create<TSource>(DataTableResponseDataModel responseData, Func<TSource, object> transform, ResponseOptionModel<TSource> responseOption = null)
         {
             transform = transform ?? (s => s);
 
@@ -47,7 +47,7 @@ namespace Puppy.DataTable
             return result;
         }
 
-        public static DataTableActionResult<TSource> Create<TSource>(DataTablesResponseDataModel responseData, ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<TSource> Create<TSource>(DataTableResponseDataModel responseData, ResponseOptionModel<TSource> responseOption = null)
         {
             var result = new DataTableActionResult<TSource>(responseData);
 
@@ -64,7 +64,7 @@ namespace Puppy.DataTable
             return result;
         }
 
-        private static DataTablesResponseDataModel ApplyOutputRules<TSource>(DataTablesResponseDataModel responseData, ResponseOptionModel<TSource> responseOption)
+        private static DataTableResponseDataModel ApplyOutputRules<TSource>(DataTableResponseDataModel responseData, ResponseOptionModel<TSource> responseOption)
         {
             responseOption = responseOption
                              ?? new ResponseOptionModel<TSource>
@@ -72,7 +72,7 @@ namespace Puppy.DataTable
                                  ArrayOutputType = ArrayOutputType.BiDimensionalArray
                              };
 
-            DataTablesResponseDataModel outputData = responseData;
+            DataTableResponseDataModel outputData = responseData;
 
             switch (responseOption.ArrayOutputType)
             {
@@ -92,14 +92,14 @@ namespace Puppy.DataTable
 
     public class DataTableActionResult<TSource> : DataTableActionResult
     {
-        public DataTablesResponseDataModel Data { get; set; }
+        public DataTableResponseDataModel Data { get; set; }
 
         public DataTableActionResult(IQueryable<TSource> queryable, DataTableParamModel paramModel)
         {
             Data = queryable.GetDataTableResponse(paramModel);
         }
 
-        public DataTableActionResult(DataTablesResponseDataModel data)
+        public DataTableActionResult(DataTableResponseDataModel data)
         {
             Data = data;
         }

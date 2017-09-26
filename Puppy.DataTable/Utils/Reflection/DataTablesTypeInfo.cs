@@ -10,17 +10,17 @@ namespace Puppy.DataTable.Utils.Reflection
 {
     internal static class DataTablesTypeInfo
     {
-        private static readonly ConcurrentDictionary<Type, DataTablesPropertyInfo[]> PropertiesCache = new ConcurrentDictionary<Type, DataTablesPropertyInfo[]>();
+        private static readonly ConcurrentDictionary<Type, DataTablePropertyInfo[]> PropertiesCache = new ConcurrentDictionary<Type, DataTablePropertyInfo[]>();
 
-        internal static DataTablesPropertyInfo[] Properties(Type type)
+        internal static DataTablePropertyInfo[] Properties(Type type)
         {
             return PropertiesCache.GetOrAdd(type, t =>
             {
                 var infos = from pi in t.GetProperties()
                             where pi.GetCustomAttribute<DataTablesExcludeAttribute>() == null
-                            let attributes = (pi.GetCustomAttributes()).OfType<DataTablesAttributeBase>().ToArray()
-                            orderby attributes.OfType<DataTablesAttribute>().Select(a => a.Order as int?).SingleOrDefault() ?? int.MaxValue
-                            select new DataTablesPropertyInfo(pi, attributes);
+                            let attributes = (pi.GetCustomAttributes()).OfType<DataTableAttributeBase>().ToArray()
+                            orderby attributes.OfType<DataTableAttribute>().Select(a => a.Order as int?).SingleOrDefault() ?? int.MaxValue
+                            select new DataTablePropertyInfo(pi, attributes);
                 return infos.ToArray();
             });
         }
@@ -28,14 +28,14 @@ namespace Puppy.DataTable.Utils.Reflection
 
     public static class DataTablesTypeInfo<T>
     {
-        public static DataTablesPropertyInfo[] Properties { get; }
+        public static DataTablePropertyInfo[] Properties { get; }
 
-        internal static DataTablesPropertyInfo RowId { get; }
+        internal static DataTablePropertyInfo RowId { get; }
 
         static DataTablesTypeInfo()
         {
             Properties = DataTablesTypeInfo.Properties(typeof(T));
-            RowId = Properties.SingleOrDefault(x => x.Attributes.Any(y => y is DataTablesRowIdAttribute));
+            RowId = Properties.SingleOrDefault(x => x.Attributes.Any(y => y is DataTableRowIdAttribute));
         }
 
         public static Dictionary<string, object> ToDictionary(T row)
@@ -48,7 +48,7 @@ namespace Puppy.DataTable.Utils.Reflection
             if (RowId != null)
             {
                 dictionary["DT_RowID"] = RowId.PropertyInfo.GetValue(row, null);
-                if (!RowId.Attributes.OfType<DataTablesRowIdAttribute>().First().EmitAsColumnName)
+                if (!RowId.Attributes.OfType<DataTableRowIdAttribute>().First().EmitAsColumnName)
                 {
                     dictionary.Remove(RowId.PropertyInfo.Name);
                 }

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Puppy.DataTable.Attributes
 {
-    public class DataTablesAttribute : DataTablesAttributeBase
+    public class DataTableAttribute : DataTableAttributeBase
     {
         public string DisplayName { get; set; }
 
@@ -23,15 +23,15 @@ namespace Puppy.DataTable.Attributes
 
         public string MRenderFunction { get; set; }
 
-        public String CssClass { get; set; }
+        public string CssClass { get; set; }
 
-        public String CssClassHeader { get; set; }
+        public string CssClassHeader { get; set; }
 
         public string Width { get; set; }
 
         public bool IsVisible { get; set; } = true;
 
-        public override void ApplyTo(ColDefModel colDefModel, PropertyInfo pi)
+        public override void ApplyTo(ColDefModel colDefModel, PropertyInfo propertyInfo)
         {
             colDefModel.DisplayName = this.ToDisplayName() ?? colDefModel.Name;
             colDefModel.IsSortable = IsSortable;
@@ -41,7 +41,7 @@ namespace Puppy.DataTable.Attributes
             colDefModel.MRenderFunction = MRenderFunction;
             colDefModel.CssClass = CssClass;
             colDefModel.CssClassHeader = CssClassHeader;
-            colDefModel.CustomAttributes = pi.GetCustomAttributes().ToArray();
+            colDefModel.CustomAttributes = propertyInfo.GetCustomAttributes().ToArray();
             colDefModel.Width = Width;
         }
     }

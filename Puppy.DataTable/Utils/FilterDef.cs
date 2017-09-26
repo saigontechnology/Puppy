@@ -1,7 +1,8 @@
+using Puppy.Core.TypeUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
+using Puppy.DataTable.Utils.Reflection;
 
 namespace Puppy.DataTable.Utils
 {
@@ -38,10 +39,10 @@ namespace Puppy.DataTable.Utils
                 type = "select";
                 values = new object[] { "True", "False", "null" };
             }
-            else if (t.GetTypeInfo().IsEnum)
+            else if (t.IsEnumType() || t.IsNullableEnumType())
             {
                 type = "checkbox";
-                values = t.EnumValLabPairs();
+                values = t.GetEnumValueLabelPair();
             }
             else
             {

@@ -3,36 +3,37 @@ using Puppy.DataTable.Utils;
 
 namespace Puppy.DataTable.Attributes
 {
-    public class DataTablesFilterAttribute : DataTablesAttributeBase
+    public class DataTableFilterAttribute : DataTableAttributeBase
     {
         private readonly string _filterType;
-
-        public DataTablesFilterAttribute()
-        {
-        }
-
-        public DataTablesFilterAttribute(DataTablesFilterType filterType) : this(GetFilterTypeString(filterType))
-        {
-        }
 
         /// <summary>
         ///     Sets sSelector on the column (i.e. selector for custom positioning) 
         /// </summary>
         public string Selector { get; set; }
 
+        public DataTableFilterAttribute()
+        {
+        }
+
+        public DataTableFilterAttribute(string filterType) : this()
+        {
+            _filterType = filterType;
+        }
+
+        public DataTableFilterAttribute(DataTablesFilterType filterType) : this(GetFilterTypeString(filterType))
+        {
+        }
+
         private static string GetFilterTypeString(DataTablesFilterType filterType)
         {
             return filterType.ToString().ToLower().Replace("range", "-range");
         }
 
-        public DataTablesFilterAttribute(string filterType)
+        public override void ApplyTo(ColDefModel colDefModel, System.Reflection.PropertyInfo propertyInfo)
         {
-            _filterType = filterType;
-        }
+            colDefModel.Filter = new FilterDef(propertyInfo.PropertyType);
 
-        public override void ApplyTo(ColDefModel colDefModel, System.Reflection.PropertyInfo pi)
-        {
-            colDefModel.Filter = new FilterDef(pi.PropertyType);
             if (Selector != null)
             {
                 colDefModel.Filter["sSelector"] = Selector;
@@ -52,10 +53,10 @@ namespace Puppy.DataTable.Attributes
     {
         None,
         Select,
-        NumberRange,
-        DateRange,
-        Checkbox,
         Text,
-        DateTimeRange
+        //Checkbox,
+        //NumberRange,
+        //DateRange,
+        //DateTimeRange
     }
 }

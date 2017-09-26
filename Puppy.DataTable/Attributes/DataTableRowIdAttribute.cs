@@ -3,16 +3,16 @@ using System.Reflection;
 
 namespace Puppy.DataTable.Attributes
 {
-    public class DataTablesRowIdAttribute : DataTablesAttributeBase
+    public class DataTableRowIdAttribute : DataTableAttributeBase
     {
         public bool EmitAsColumnName { get; set; }
 
-        public override void ApplyTo(ColDefModel colDefModel, PropertyInfo pi)
+        public override void ApplyTo(ColDefModel colDefModel, PropertyInfo propertyInfo)
         {
             // This attribute does not affect rendering
         }
 
-        public DataTablesRowIdAttribute()
+        public DataTableRowIdAttribute()
         {
             EmitAsColumnName = true;
         }

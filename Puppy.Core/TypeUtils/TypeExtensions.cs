@@ -82,5 +82,15 @@ namespace Puppy.Core.TypeUtils
             }
             return false;
         }
+
+        /// <summary>
+        ///     Return a Type must not nullable type 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Type GetNotNullableType(this Type type)
+        {
+            return Nullable.GetUnderlyingType(type) ?? type;
+        }
     }
 }

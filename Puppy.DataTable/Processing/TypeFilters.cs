@@ -35,7 +35,7 @@ namespace Puppy.DataTable.Processing
             return makeClause("Contains", q);
         }
 
-        public static string NumericFilter(string query, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string NumericFilter(string query, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (query.StartsWith("^")) query = query.TrimStart('^');
 
@@ -78,7 +78,7 @@ namespace Puppy.DataTable.Processing
             return null;
         }
 
-        private static object ChangeType(DataTablesPropertyInfo propertyInfo, string query)
+        private static object ChangeType(DataTablePropertyInfo propertyInfo, string query)
         {
             if (propertyInfo.PropertyInfo.PropertyType.GetTypeInfo().IsGenericType && propertyInfo.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
@@ -89,7 +89,7 @@ namespace Puppy.DataTable.Processing
             return Convert.ChangeType(query, propertyInfo.Type);
         }
 
-        public static string DateTimeOffsetFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string DateTimeOffsetFilter(string keyword, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (keyword == "~") return string.Empty;
 
@@ -135,7 +135,7 @@ namespace Puppy.DataTable.Processing
             return filterString;
         }
 
-        public static string DateTimeFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string DateTimeFilter(string keyword, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (keyword == "~") return string.Empty;
             var filterString = null as string;
@@ -178,7 +178,7 @@ namespace Puppy.DataTable.Processing
             return filterString;
         }
 
-        public static string BoolFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string BoolFilter(string keyword, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             keyword = keyword?.TrimStart('^').TrimEnd('$');
             var lowerCaseQuery = keyword?.ToLowerInvariant();
@@ -194,7 +194,7 @@ namespace Puppy.DataTable.Processing
             return null;
         }
 
-        public static string StringFilter(string keyword, string columnName, DataTablesPropertyInfo columnType, List<object> parametersForLinqQuery)
+        public static string StringFilter(string keyword, string columnName, DataTablePropertyInfo columnType, List<object> parametersForLinqQuery)
         {
             if (keyword == ".*") return "";
 
@@ -221,7 +221,7 @@ namespace Puppy.DataTable.Processing
             return $"({columnName} != null && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.StartsWith({parameterArg}) || {columnName}.Contains({parameterArg})))";
         }
 
-        public static string EnumFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string EnumFilter(string keyword, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (keyword.StartsWith("^")) keyword = keyword.Substring(1);
 

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Puppy.DataTable.Serialization
+namespace Puppy.DataTable.Utils.Serialization
 {
     public class RawConverter : JsonConverter
     {

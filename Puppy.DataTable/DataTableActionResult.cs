@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Puppy.DataTable.Constants;
-using Puppy.DataTable.Models;
-using Puppy.DataTable.Processing;
+using Puppy.DataTable.Models.Request;
+using Puppy.DataTable.Models.Response;
+using Puppy.DataTable.Processing.Response;
 using Puppy.DataTable.Utils;
 using Puppy.DataTable.Utils.Reflection;
 using System;
@@ -51,7 +52,7 @@ namespace Puppy.DataTable
         {
             var result = new DataTableActionResult<TSource>(responseData);
 
-            var dictionaryTransform = DataTablesTypeInfo<TSource>.ToDictionary(responseOption);
+            var dictionaryTransform = DataTableTypeInfo<TSource>.ToDictionary(responseOption);
 
             result.Data =
                 result
@@ -77,10 +78,10 @@ namespace Puppy.DataTable
             switch (responseOption.ArrayOutputType)
             {
                 case ArrayOutputType.ArrayOfObjects:
-                    // Nothing is needed
-                    break;
-
-                case ArrayOutputType.BiDimensionalArray:
+                    {
+                        // Nothing is needed
+                        break;
+                    }
                 default:
                     outputData = responseData.Transform<Dictionary<string, object>, object[]>(d => d.Values.ToArray());
                     break;

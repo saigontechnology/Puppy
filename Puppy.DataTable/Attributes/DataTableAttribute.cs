@@ -1,5 +1,5 @@
 using Puppy.DataTable.Constants;
-using Puppy.DataTable.Models;
+using Puppy.DataTable.Models.Config.Column;
 using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Linq;
@@ -31,18 +31,18 @@ namespace Puppy.DataTable.Attributes
 
         public bool IsVisible { get; set; } = true;
 
-        public override void ApplyTo(ColDefModel colDefModel, PropertyInfo propertyInfo)
+        public override void ApplyTo(ColumnModel columnModel, PropertyInfo propertyInfo)
         {
-            colDefModel.DisplayName = this.ToDisplayName() ?? colDefModel.Name;
-            colDefModel.IsSortable = IsSortable;
-            colDefModel.IsVisible = IsVisible;
-            colDefModel.IsSearchable = IsSearchable;
-            colDefModel.SortDirection = SortDirection;
-            colDefModel.MRenderFunction = MRenderFunction;
-            colDefModel.CssClass = CssClass;
-            colDefModel.CssClassHeader = CssClassHeader;
-            colDefModel.CustomAttributes = propertyInfo.GetCustomAttributes().ToArray();
-            colDefModel.Width = Width;
+            columnModel.DisplayName = this.ToDisplayName() ?? columnModel.Name;
+            columnModel.IsSortable = IsSortable;
+            columnModel.IsVisible = IsVisible;
+            columnModel.IsSearchable = IsSearchable;
+            columnModel.SortDirection = SortDirection;
+            columnModel.MRenderFunction = MRenderFunction;
+            columnModel.CssClass = CssClass;
+            columnModel.CssClassHeader = CssClassHeader;
+            columnModel.CustomAttributes = propertyInfo.GetCustomAttributes().ToArray();
+            columnModel.Width = Width;
         }
     }
 }

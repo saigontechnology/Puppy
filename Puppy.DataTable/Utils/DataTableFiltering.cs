@@ -1,6 +1,6 @@
 using Puppy.Core.TypeUtils;
-using Puppy.DataTable.Models;
-using Puppy.DataTable.Processing;
+using Puppy.DataTable.Models.Request;
+using Puppy.DataTable.Processing.Request;
 using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
@@ -13,19 +13,19 @@ namespace Puppy.DataTable.Utils
     {
         public IQueryable<T> ApplyFiltersAndSort<T>(DataTableParamModel dtParameters, IQueryable<T> data, DataTablePropertyInfo[] columns)
         {
-            if (!string.IsNullOrEmpty(dtParameters.sSearch))
+            if (!string.IsNullOrEmpty(dtParameters.Search))
             {
                 var parts = new List<string>();
 
                 var parameters = new List<object>();
 
-                for (var i = 0; i < dtParameters.iColumns; i++)
+                for (var i = 0; i < dtParameters.Columns; i++)
                 {
-                    if (dtParameters.bSearchable[i])
+                    if (dtParameters.ListIsSearchable[i])
                     {
                         try
                         {
-                            parts.Add(GetFilterClause(dtParameters.sSearch, columns[i], parameters));
+                            parts.Add(GetFilterClause(dtParameters.Search, columns[i], parameters));
                         }
                         catch (Exception)
                         {
@@ -37,11 +37,11 @@ namespace Puppy.DataTable.Utils
                 var values = parts.Where(p => p != null);
                 data = data.Where(string.Join(" or ", values), parameters.ToArray());
             }
-            for (int i = 0; i < dtParameters.sSearchValues.Count; i++)
+            for (int i = 0; i < dtParameters.SearchValues.Count; i++)
             {
-                if (dtParameters.bSearchable[i])
+                if (dtParameters.ListIsSearchable[i])
                 {
-                    var searchColumn = dtParameters.sSearchValues[i];
+                    var searchColumn = dtParameters.SearchValues[i];
                     if (!string.IsNullOrWhiteSpace(searchColumn))
                     {
                         DataTablePropertyInfo column = FindColumn(dtParameters, columns, i);
@@ -55,12 +55,12 @@ namespace Puppy.DataTable.Utils
                 }
             }
             string sortString = "";
-            for (int i = 0; i < dtParameters.iSortingCols; i++)
+            for (int i = 0; i < dtParameters.SortingCols; i++)
             {
-                int columnNumber = dtParameters.iSortCol[i];
+                int columnNumber = dtParameters.SortCol[i];
                 DataTablePropertyInfo column = FindColumn(dtParameters, columns, columnNumber);
                 string columnName = column.PropertyInfo.Name;
-                string sortDir = dtParameters.sSortDir[i];
+                string sortDir = dtParameters.SortDir[i];
                 if (i != 0)
                     sortString += ", ";
                 sortString += columnName + " " + sortDir;
@@ -76,9 +76,9 @@ namespace Puppy.DataTable.Utils
 
         private static DataTablePropertyInfo FindColumn(DataTableParamModel dtParameters, DataTablePropertyInfo[] columns, int i)
         {
-            if (dtParameters.sColumnNames.Any())
+            if (dtParameters.ColumnNames.Any())
             {
-                return columns.First(x => x.PropertyInfo.Name == dtParameters.sColumnNames[i]);
+                return columns.First(x => x.PropertyInfo.Name == dtParameters.ColumnNames[i]);
             }
 
             return columns[i];
@@ -95,12 +95,12 @@ namespace Puppy.DataTable.Utils
 
         private static readonly List<ReturnedFilteredQueryForType> Filters = new List<ReturnedFilteredQueryForType>
         {
-            Guard(IsBoolType, TypeFilters.BoolFilter),
-            Guard(IsDateTimeType, TypeFilters.DateTimeFilter),
-            Guard(IsDateTimeOffsetType, TypeFilters.DateTimeOffsetFilter),
-            Guard(IsNumericType, TypeFilters.NumericFilter),
-            Guard(IsEnumType, TypeFilters.EnumFilter),
-            Guard(arg => arg.Type == typeof (string), TypeFilters.StringFilter),
+            Guard(IsBoolType, TypeFilter.BoolFilter),
+            Guard(IsDateTimeType, TypeFilter.DateTimeFilter),
+            Guard(IsDateTimeOffsetType, TypeFilter.DateTimeOffsetFilter),
+            Guard(IsNumericType, TypeFilter.NumericFilter),
+            Guard(IsEnumType, TypeFilter.EnumFilter),
+            Guard(arg => arg.Type == typeof (string), TypeFilter.StringFilter),
         };
 
         private static ReturnedFilteredQueryForType Guard(Func<DataTablePropertyInfo, bool> guard, GuardedFilter filter)

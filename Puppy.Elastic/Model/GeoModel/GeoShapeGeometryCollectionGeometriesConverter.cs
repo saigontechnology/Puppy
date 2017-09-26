@@ -17,18 +17,19 @@ namespace Puppy.Elastic.Model.GeoModel
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
-            // it is the Geometries list
+            // The Geometries list
             if (objectType.GetTypeInfo().IsGenericType)
             {
                 var list = new List<object>();
+
                 // It is a collection
-                var ienumerable = (JArray)serializer.Deserialize(reader);
-                foreach (var item in ienumerable)
+                var enumerable = (JArray)serializer.Deserialize(reader);
+                foreach (var item in enumerable)
                 {
                     var itemVal = item.ToString().Replace(Environment.NewLine, "").Replace(" ", "");
-                    var mygeoType = Regex.Match(itemVal, @"type\W+(?<type>\w+)\W+");
-                    var mygeoTypeString = mygeoType.Groups["type"].Value.ToLowerInvariant();
-                    switch (mygeoTypeString)
+                    var geoType = Regex.Match(itemVal, @"type\W+(?<type>\w+)\W+");
+                    var geoTypeString = geoType.Groups["type"].Value.ToLowerInvariant();
+                    switch (geoTypeString)
                     {
                         case DefaultGeoShapes.MultiLineString:
                             list.Add(JsonConvert.DeserializeObject<GeoShapeMultiLineString>(itemVal));

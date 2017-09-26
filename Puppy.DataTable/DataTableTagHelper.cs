@@ -1,51 +1,59 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Puppy.DataTable.Models;
+using Puppy.DataTable.Models.Config;
+using Puppy.DataTable.Models.Config.Column;
+using Puppy.DataTable.Utils.Extensions;
 using Puppy.DataTable.Utils.Reflection;
 using Puppy.Web;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Puppy.DataTable
 {
     public static class DataTableTagHelper
     {
-        public static DataTableConfigModel DataTableModel<TController, TResult>(this IHtmlHelper html, string id,
-            Expression<Func<TController, DataTableActionResult<TResult>>> exp, params ColDefModel[] columns)
+        public static DataTableModel DataTableModel<TController, TResult>(
+            this IHtmlHelper html,
+            string id,
+            Expression<Func<TController, DataTableActionResult<TResult>>> exp,
+            params ColumnModel[] columns)
         {
             if (columns?.Any() != true)
             {
-                columns = typeof(TResult).ColDefs();
+                columns = typeof(TResult).GetColumns();
             }
 
-            var mi = exp.MethodInfo();
+            var methodInfo = exp.MethodInfo();
+
             var controllerName = typeof(TController).Name;
-            controllerName = controllerName.Substring(0, controllerName.LastIndexOf("Controller", StringComparison.CurrentCultureIgnoreCase));
+            controllerName = controllerName.Substring(0, controllerName.LastIndexOf(nameof(Controller), StringComparison.CurrentCultureIgnoreCase));
+
             var urlHelper = new UrlHelper(html.ViewContext);
-            var ajaxUrl = urlHelper.AbsoluteAction(mi.Name, controllerName);
-            return new DataTableConfigModel(id, ajaxUrl, columns);
+            var ajaxUrl = urlHelper.AbsoluteAction(methodInfo.Name, controllerName);
+            return new DataTableModel(id, ajaxUrl, columns);
         }
 
-        public static DataTableConfigModel DataTableModel(this IHtmlHelper html, Type t, string id, string uri)
+        public static DataTableModel DataTableModel(this IHtmlHelper html, Type t, string id, string uri)
         {
-            return new DataTableConfigModel(id, uri, t.ColDefs());
+            return new DataTableModel(id, uri, t.GetColumns());
         }
 
-        public static DataTableConfigModel DataTableModel<T>(string id, string uri)
+        public static DataTableModel DataTableModel<T>(string id, string uri)
         {
-            return new DataTableConfigModel(id, uri, typeof(T).ColDefs());
+            return new DataTableModel(id, uri, typeof(T).GetColumns());
         }
 
-        public static DataTableConfigModel DataTableModel<TResult>(this IHtmlHelper html, string id, string uri)
+        public static DataTableModel DataTableModel<TResult>(this IHtmlHelper html, string id, string uri)
         {
             return DataTableModel(html, typeof(TResult), id, uri);
         }
 
-        public static DataTableConfigModel DataTableModel(this IHtmlHelper html, string id, string ajaxUrl, params string[] columns)
+        public static DataTableModel DataTableModel(this IHtmlHelper html, string id, string ajaxUrl, params string[] columns)
         {
-            var columnDefs = columns.Select(c => new ColDefModel(c, typeof(string))).ToArray();
-            return new DataTableConfigModel(id, ajaxUrl, columnDefs);
+            var columnDefs = columns.Select(c => new ColumnModel(c, typeof(string))).ToArray();
+            return new DataTableModel(id, ajaxUrl, columnDefs);
         }
     }
 }

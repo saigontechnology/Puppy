@@ -9,4 +9,10 @@
         Ascending,
         Descending
     }
+
+    public class SortDirectionConst
+    {
+        public const string Ascending = "asc";
+        public const string Descending = "desc";
+    }
 }

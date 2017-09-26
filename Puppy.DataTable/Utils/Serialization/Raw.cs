@@ -1,4 +1,4 @@
-﻿namespace Puppy.DataTable.Serialization
+﻿namespace Puppy.DataTable.Utils.Serialization
 {
     public class Raw
     {

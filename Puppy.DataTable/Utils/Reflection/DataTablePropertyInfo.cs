@@ -8,6 +8,7 @@ namespace Puppy.DataTable.Utils.Reflection
         public DataTablePropertyInfo(System.Reflection.PropertyInfo propertyInfo, DataTableAttributeBase[] attributes)
         {
             PropertyInfo = propertyInfo;
+
             Attributes = attributes;
         }
 

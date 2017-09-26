@@ -9,18 +9,22 @@ namespace Puppy.DataTable.Utils
     {
         public static Dictionary<string, object> MergeTransformValuesIntoDictionary<TInput, TTransform>(Func<TInput, TTransform> transformInput, TInput tInput)
         {
-            //get the the properties from the input as a dictionary
-            var dict = DataTablesTypeInfo<TInput>.ToDictionary(tInput);
+            // Get the the properties from the input as a dictionary
+            var dict = DataTableTypeInfo<TInput>.ToDictionary(tInput);
 
-            //get the transform object
+            // Get the transform object
             var transform = transformInput(tInput);
-            if (transform != null)
+
+            if (transform == null)
             {
-                foreach (var propertyInfo in transform.GetType().GetTypeInfo().GetProperties())
-                {
-                    dict[propertyInfo.Name] = propertyInfo.GetValue(transform, null);
-                }
+                return dict;
             }
+
+            foreach (var propertyInfo in transform.GetType().GetTypeInfo().GetProperties())
+            {
+                dict[propertyInfo.Name] = propertyInfo.GetValue(transform, null);
+            }
+
             return dict;
         }
     }

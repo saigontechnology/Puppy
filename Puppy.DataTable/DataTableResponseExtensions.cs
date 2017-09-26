@@ -17,11 +17,12 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
-using System.Linq;
-using Puppy.DataTable.Models;
+using Puppy.DataTable.Models.Request;
+using Puppy.DataTable.Models.Response;
 using Puppy.DataTable.Utils;
 using Puppy.DataTable.Utils.Reflection;
+using System;
+using System.Linq;
 
 namespace Puppy.DataTable
 {
@@ -33,22 +34,22 @@ namespace Puppy.DataTable
 
             var filters = new DataTableFiltering();
 
-            var outputProperties = DataTablesTypeInfo<TSource>.Properties;
+            var outputProperties = DataTableTypeInfo<TSource>.Properties;
 
             var filteredData = filters.ApplyFiltersAndSort(dataTableParamModel, data, outputProperties);
 
             var totalDisplayRecords = filteredData.Count();
 
-            var skipped = filteredData.Skip(dataTableParamModel.iDisplayStart);
+            var skipped = filteredData.Skip(dataTableParamModel.DisplayStart);
 
-            var page = (dataTableParamModel.iDisplayLength <= 0 ? skipped : skipped.Take(dataTableParamModel.iDisplayLength)).ToArray();
+            var page = (dataTableParamModel.DisplayLength <= 0 ? skipped : skipped.Take(dataTableParamModel.DisplayLength)).ToArray();
 
             var result = new DataTableResponseDataModel
             {
-                iTotalRecords = totalRecords,
-                iTotalDisplayRecords = totalDisplayRecords,
-                sEcho = dataTableParamModel.sEcho,
-                aaData = page.Cast<object>().ToArray()
+                TotalRecord = totalRecords,
+                TotalDisplayRecord = totalDisplayRecords,
+                Echo = dataTableParamModel.Echo,
+                Data = page.Cast<object>().ToArray()
             };
 
             return result;

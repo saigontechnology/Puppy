@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.DataTable.Processing
+namespace Puppy.DataTable.Processing.Response
 {
     public static class StringTransformers
     {
         internal static object GetStringedValue(Type propertyType, object value)
         {
-            if (Transformers.ContainsKey(propertyType))
-                return Transformers[propertyType](propertyType, value);
-            return (value ?? string.Empty).ToString();
+            return Transformers.ContainsKey(propertyType)
+                ? Transformers[propertyType](propertyType, value)
+                : (value ?? string.Empty).ToString();
         }
 
         static StringTransformers()
         {
+            // TODO Config DateTime Format in Config Object with appsetting.json
             RegisterFilter<DateTimeOffset>(dateTimeOffset => dateTimeOffset.ToLocalTime().ToString("g"));
             RegisterFilter<DateTime>(dateTime => dateTime.ToLocalTime().ToString("g"));
             RegisterFilter<IEnumerable<string>>(s => s.ToArray());
@@ -45,14 +46,7 @@ namespace Puppy.DataTable.Processing
 
         private static StringTransformer Guard<TVal>(GuardedValueTransformer<TVal> transformer)
         {
-            return (t, v) =>
-            {
-                if (!typeof(TVal).GetTypeInfo().IsAssignableFrom(t))
-                {
-                    return null;
-                }
-                return transformer((TVal)v);
-            };
+            return (t, v) => !typeof(TVal).GetTypeInfo().IsAssignableFrom(t) ? null : transformer((TVal)v);
         }
 
         public static Dictionary<string, object> StringifyValues(Dictionary<string, object> dict)

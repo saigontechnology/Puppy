@@ -1,4 +1,4 @@
-﻿using Puppy.DataTable.Models;
+﻿using Puppy.DataTable.Models.Config.Column;
 using System.Reflection;
 
 namespace Puppy.DataTable.Attributes
@@ -7,7 +7,7 @@ namespace Puppy.DataTable.Attributes
     {
         public bool EmitAsColumnName { get; set; }
 
-        public override void ApplyTo(ColDefModel colDefModel, PropertyInfo propertyInfo)
+        public override void ApplyTo(ColumnModel columnModel, PropertyInfo propertyInfo)
         {
             // This attribute does not affect rendering
         }

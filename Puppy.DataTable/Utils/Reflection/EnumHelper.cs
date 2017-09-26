@@ -17,51 +17,67 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Puppy.Core.StringUtils;
+using Puppy.Core.TypeUtils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using Puppy.Core.StringUtils;
-using Puppy.Core.TypeUtils;
 
 namespace Puppy.DataTable.Utils.Reflection
 {
     public static class EnumHelper
     {
-        public static string GetDisplayNameOrDescription(this Enum value)
+        public static string GetDisplayName(this Enum value)
         {
             Type enumType = value.GetType();
 
             var enumValue = Enum.GetName(enumType, value);
 
-            MemberInfo member = enumType.GetMember(enumValue)[0];
+            MemberInfo member = enumType.GetMember(enumValue).FirstOrDefault();
 
-            if (member.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() is DisplayAttribute displayAttribute)
+            if (!(member.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() is DisplayAttribute displayAttribute))
             {
-                var displayName = displayAttribute.ResourceType != null ? displayAttribute.GetName() : displayAttribute.Name;
-
-                if (!string.IsNullOrWhiteSpace(displayName))
-                {
-                    return displayName;
-                }
+                return null;
             }
 
-            if (member.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() is DescriptionAttribute descriptionAttribute)
-            {
-                var description = descriptionAttribute.Description;
+            var displayName = displayAttribute.ResourceType != null ? displayAttribute.GetName() : displayAttribute.Name;
 
-                if (!string.IsNullOrWhiteSpace(description))
-                {
-                    return description;
-                }
-            }
-
-            return member.Name;
+            return !string.IsNullOrWhiteSpace(displayName) ? displayName : null;
         }
 
-        public static List<string> GetListDisplayNameOrDescriptions(this Type type)
+        public static string GetDescription(this Enum value)
+        {
+            Type enumType = value.GetType();
+
+            var enumValue = Enum.GetName(enumType, value);
+
+            MemberInfo member = enumType.GetMember(enumValue).FirstOrDefault();
+
+            if (!(member.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() is DescriptionAttribute descriptionAttribute))
+            {
+                return null;
+            }
+
+            var description = descriptionAttribute.Description;
+
+            return !string.IsNullOrWhiteSpace(description) ? description : null;
+        }
+
+        public static string GetName(this Enum value)
+        {
+            Type enumType = value.GetType();
+
+            var enumValue = Enum.GetName(enumType, value);
+
+            MemberInfo member = enumType.GetMember(enumValue).FirstOrDefault();
+
+            return member?.Name;
+        }
+
+        public static List<string> GetListLabel(this Type type)
         {
             var t = type.GetNotNullableType();
 
@@ -69,7 +85,11 @@ namespace Puppy.DataTable.Utils.Reflection
 
             foreach (string enumName in Enum.GetNames(t))
             {
-                exitList.Add(((Enum)enumName.ParseTo(t)).GetDisplayNameOrDescription());
+                Enum enumObj = ((Enum)enumName.ParseTo(t));
+
+                var label = enumObj.GetDisplayName() ?? enumObj.GetDescription() ?? enumObj.GetName();
+
+                exitList.Add(label);
             }
 
             return exitList;
@@ -88,7 +108,7 @@ namespace Puppy.DataTable.Utils.Reflection
 
             var values = Enum.GetNames(t).Cast<object>().ToArray();
 
-            var labels = t.GetListDisplayNameOrDescriptions().Cast<object>().ToArray();
+            var labels = t.GetListLabel().Cast<object>().ToArray();
 
             var result = new List<object>();
 

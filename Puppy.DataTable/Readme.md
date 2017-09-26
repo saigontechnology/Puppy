@@ -109,8 +109,9 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 
 ```html
 @using Newtonsoft.Json.Linq
-@using Puppy.DataTable.Models
-@model DataTableConfigModel
+@using Puppy.DataTable.Models.Config
+@using Puppy.DataTable.Utils.Extensions
+@model DataTableModel
 
 <table id="@Model.Id" class="@(Model.TableClass ?? string.Empty)">
     <thead>
@@ -135,7 +136,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
     </thead>
     <tbody>
         <tr>
-            <td colspan="@Model.Columns.Count()" class="dataTables_empty">
+            <td colspan="@Model.Columns.Count" class="dataTables_empty">
                 Loading...
             </td>
         </tr>
@@ -152,7 +153,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
         @{
             var options = new JObject
             {
-                ["aaSorting"] = new JRaw(Model.ColumnSortingString),
+                ["aaSorting"] = new JRaw(Model.GetColumnSortingString()),
                 ["bProcessing"] = true,
                 ["stateSave"] = Model.IsStateSave,
                 ["stateDuration"] = -1,
@@ -168,8 +169,8 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
                 },
                 ["bAutoWidth"] = Model.IsAutoWidthColumn,
                 ["sAjaxSource"] = Model.AjaxUrl,
-                ["aoColumnDefs"] = new JRaw(Model.ColumnDefsString),
-                ["aoSearchCols"] = Model.SearchCols,
+                ["aoColumnDefs"] = new JRaw(Model.GetColumnsJsonString()),
+                ["aoSearchCols"] = Model.GetSearchColumns(),
                 // Size List
                 ["aLengthMenu"] = Model.LengthMenu != null ? new JRaw(Model.LengthMenu) : new JRaw(string.Empty)
             };
@@ -205,7 +206,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
             {
                 options["oTableTools"] = new JRaw("{ 'sSwfPath': '" + Url.AbsoluteContent("~/portal/vendor/datatables-tabletools/swf/copy_csv_xls_pdf.swf") + "' }");
 
-                string tools = Model.IsEnableColVis ? "{extend: 'colvis', text: 'Columns'}," : string.Empty;
+                var tools = Model.IsEnableColVis ? "{extend: 'colvis', text: 'Columns'}," : string.Empty;
                 tools += "'copy', 'excel', 'csv', 'pdf', 'print'";
                 options["buttons"] = new JRaw($"[{tools}]");
             }
@@ -232,7 +233,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
         // Col filters
         @if (Model.IsUseColumnFilter)
         {
-            @Html.Raw("$dataTable.columnFilter(" + Model.ColumnFilterVm + ");")
+            @Html.Raw("$dataTable.columnFilter(" + Model.ColumnFilter + ");")
         }
 
         // Global Variable

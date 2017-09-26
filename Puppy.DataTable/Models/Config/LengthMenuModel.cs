@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.DataTable.Models
+namespace Puppy.DataTable.Models.Config
 {
     public class LengthMenuModel : List<Tuple<string, int>>
     {

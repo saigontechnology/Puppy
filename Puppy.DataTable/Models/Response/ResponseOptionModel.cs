@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Puppy.DataTable.Models
+namespace Puppy.DataTable.Models.Response
 {
     public class ResponseOptionModel
     {
@@ -11,7 +11,9 @@ namespace Puppy.DataTable.Models
         public static ResponseOptionModel<TSource> For<TSource>(IQueryable<TSource> data, Action<ResponseOptionModel<TSource>> setOptions) where TSource : class
         {
             var responseOptions = new ResponseOptionModel<TSource>();
+
             setOptions(responseOptions);
+
             return responseOptions;
         }
     }

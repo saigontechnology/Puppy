@@ -18,14 +18,12 @@
 #endregion License
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Puppy.Core.Constants;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Newtonsoft.Json.Linq;
-using Puppy.Core.TypeUtils;
 
 namespace Puppy.Core.ObjectUtils
 {
@@ -153,6 +151,17 @@ namespace Puppy.Core.ObjectUtils
         public static JObject ToJson(this object obj)
         {
             return JObject.FromObject(obj);
+        }
+
+        public static IDictionary<string, object> ToDictionary(this object obj)
+        {
+            var directory = new Dictionary<string, object>();
+
+            foreach (var propertyInfo in obj.GetType().GetProperties())
+            {
+                directory[propertyInfo.Name] = propertyInfo.GetValue(obj);
+            }
+            return directory;
         }
     }
 }

@@ -1,18 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
 using Puppy.DataTable.Constants;
-using Puppy.DataTable.Utils;
+using Puppy.DataTable.Processing.Response;
 using System;
 
-namespace Puppy.DataTable.Models
+namespace Puppy.DataTable.Models.Config.Column
 {
-    public class ColDefModel
+    public class ColumnModel
     {
-        public ColDefModel(string name, Type type)
+        public ColumnModel(string name, Type type)
         {
             Name = name;
             DisplayName = name;
             Type = type;
-            Filter = new FilterDef(Type);
+            ColumnFilter = new ColumnFilter(Type);
         }
 
         public string Name { get; set; }
@@ -42,9 +42,9 @@ namespace Puppy.DataTable.Models
         /// </remarks>
         public string MRenderFunction { get; set; }
 
-        public FilterDef Filter { get; set; }
+        public ColumnFilter ColumnFilter { get; set; }
 
-        public JObject SearchCols { get; set; }
+        public JObject SearchColumns { get; set; }
 
         public Attribute[] CustomAttributes { get; set; }
 

@@ -1,4 +1,7 @@
-using Puppy.DataTable.Models;
+using EnumsNET;
+using Puppy.DataTable.Constants;
+using Puppy.DataTable.Models.Config.Column;
+using Puppy.DataTable.Processing.Response;
 using Puppy.DataTable.Utils;
 
 namespace Puppy.DataTable.Attributes
@@ -21,42 +24,34 @@ namespace Puppy.DataTable.Attributes
             _filterType = filterType;
         }
 
-        public DataTableFilterAttribute(DataTablesFilterType filterType) : this(GetFilterTypeString(filterType))
+        public DataTableFilterAttribute(FilterType filterType) : this(GetFilterTypeString(filterType))
         {
         }
 
-        private static string GetFilterTypeString(DataTablesFilterType filterType)
+        private static string GetFilterTypeString(FilterType filterType)
         {
-            return filterType.ToString().ToLower().Replace("range", "-range");
+            return filterType.AsString(EnumFormat.DisplayName);
         }
 
-        public override void ApplyTo(ColDefModel colDefModel, System.Reflection.PropertyInfo propertyInfo)
+        public override void ApplyTo(ColumnModel columnModel, System.Reflection.PropertyInfo propertyInfo)
         {
-            colDefModel.Filter = new FilterDef(propertyInfo.PropertyType);
+            columnModel.ColumnFilter = new ColumnFilter(propertyInfo.PropertyType);
 
             if (Selector != null)
             {
-                colDefModel.Filter["sSelector"] = Selector;
+                columnModel.ColumnFilter[PropertyConst.Selector] = Selector;
             }
-            if (_filterType == "none")
+            if (_filterType == FilterConst.None)
             {
-                colDefModel.Filter = null;
+                columnModel.ColumnFilter = null;
             }
             else
             {
-                if (_filterType != null) colDefModel.Filter.type = _filterType;
+                if (_filterType != null)
+                {
+                    columnModel.ColumnFilter.FilterType = _filterType;
+                }
             }
         }
-    }
-
-    public enum DataTablesFilterType
-    {
-        None,
-        Select,
-        Text,
-        //Checkbox,
-        //NumberRange,
-        //DateRange,
-        //DateTimeRange
     }
 }

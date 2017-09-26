@@ -1,4 +1,5 @@
 using Puppy.DataTable.Models;
+using Puppy.DataTable.Utils;
 
 namespace Puppy.DataTable.Attributes
 {

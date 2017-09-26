@@ -1,11 +1,11 @@
-using Puppy.DataTable.Helpers.Reflection;
 using Puppy.DataTable.Models;
+using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
 
-namespace Puppy.DataTable.Helpers
+namespace Puppy.DataTable.Utils
 {
-    public static class DataTablesColumnsReflectionHelper
+    public static class DataTablesColumnsReflectionExtensions
     {
         public static ColDefModel[] ColDefs(this Type t)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Puppy.DataTable
 {
     /// <inheritdoc />
-    public class DataTablesModelBinder : IModelBinder
+    public class DataTableModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
@@ -28,12 +28,14 @@ namespace Puppy.DataTable
 
         private object BindV10Model(IValueProvider valueProvider)
         {
-            DataTableParamModel obj = new DataTableParamModel();
-            obj.iDisplayStart = GetValue<int>(valueProvider, "start");
-            obj.iDisplayLength = GetValue<int>(valueProvider, "length");
-            obj.sSearch = GetValue<string>(valueProvider, "search[value]");
-            obj.bEscapeRegex = GetValue<bool>(valueProvider, "search[regex]");
-            obj.sEcho = GetValue<int>(valueProvider, "draw");
+            DataTableParamModel obj = new DataTableParamModel
+            {
+                iDisplayStart = GetValue<int>(valueProvider, "start"),
+                iDisplayLength = GetValue<int>(valueProvider, "length"),
+                sSearch = GetValue<string>(valueProvider, "search[value]"),
+                bEscapeRegex = GetValue<bool>(valueProvider, "search[regex]"),
+                sEcho = GetValue<int>(valueProvider, "draw")
+            };
 
             int colIdx = 0;
             while (true)
@@ -53,6 +55,7 @@ namespace Puppy.DataTable
             }
             obj.iColumns = colIdx;
             colIdx = 0;
+
             while (true)
             {
                 string colPrefix = String.Format("order[{0}]", colIdx);
@@ -74,14 +77,15 @@ namespace Puppy.DataTable
 
         private DataTableParamModel BindLegacyModel(IValueProvider valueProvider, int columns)
         {
-            DataTableParamModel obj = new DataTableParamModel(columns);
-
-            obj.iDisplayStart = GetValue<int>(valueProvider, "iDisplayStart");
-            obj.iDisplayLength = GetValue<int>(valueProvider, "iDisplayLength");
-            obj.sSearch = GetValue<string>(valueProvider, "sSearch");
-            obj.bEscapeRegex = GetValue<bool>(valueProvider, "bEscapeRegex");
-            obj.iSortingCols = GetValue<int>(valueProvider, "iSortingCols");
-            obj.sEcho = GetValue<int>(valueProvider, "sEcho");
+            DataTableParamModel obj = new DataTableParamModel(columns)
+            {
+                iDisplayStart = GetValue<int>(valueProvider, "iDisplayStart"),
+                iDisplayLength = GetValue<int>(valueProvider, "iDisplayLength"),
+                sSearch = GetValue<string>(valueProvider, "sSearch"),
+                bEscapeRegex = GetValue<bool>(valueProvider, "bEscapeRegex"),
+                iSortingCols = GetValue<int>(valueProvider, "iSortingCols"),
+                sEcho = GetValue<int>(valueProvider, "sEcho")
+            };
 
             for (int i = 0; i < obj.iColumns; i++)
             {
@@ -113,7 +117,7 @@ namespace Puppy.DataTable
 
             if (context.Metadata.ModelType == typeof(DataTableParamModel)) // only encode string types
             {
-                return new DataTablesModelBinder();
+                return new DataTableModelBinder();
             }
 
             return null;

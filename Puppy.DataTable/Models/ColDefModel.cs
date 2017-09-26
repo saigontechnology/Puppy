@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Puppy.DataTable.Constants;
+using Puppy.DataTable.Utils;
 using System;
 
 namespace Puppy.DataTable.Models
@@ -32,6 +33,13 @@ namespace Puppy.DataTable.Models
 
         public SortDirection SortDirection { get; set; } = SortDirection.None;
 
+        /// <summary>
+        ///     Define javascript function name to render data - mRender function name in JQuery DataTable)
+        /// </summary>
+        /// <remarks>
+        ///     Function follow params: function &lt;your function name&gt;(data, type, row). Param
+        ///     row: is a array column data
+        /// </remarks>
         public string MRenderFunction { get; set; }
 
         public FilterDef Filter { get; set; }

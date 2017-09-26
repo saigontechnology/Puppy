@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.DataTable.Helpers.Reflection
+namespace Puppy.DataTable.Utils.Reflection
 {
     internal static class DataTablesTypeInfo
     {

@@ -1,7 +1,7 @@
 using Puppy.DataTable.Attributes;
 using System;
 
-namespace Puppy.DataTable.Helpers.Reflection
+namespace Puppy.DataTable.Utils.Reflection
 {
     public class DataTablesPropertyInfo
     {

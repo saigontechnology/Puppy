@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Puppy.DataTable.Helpers.Reflection
+namespace Puppy.DataTable.Utils.Reflection
 {
     public static class StaticReflectionHelper
     {

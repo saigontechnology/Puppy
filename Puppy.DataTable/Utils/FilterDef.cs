@@ -1,28 +1,28 @@
-using Puppy.DataTable.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Puppy.DataTable
+namespace Puppy.DataTable.Utils
 {
     public class FilterDef : Hashtable
     {
-        internal object[] values { set { this["values"] = value; } }
-        internal string type { set { this["type"] = value; } }
+        internal object[] values { set => this["values"] = value; }
+
+        internal string type { set => this["type"] = value; }
 
         public FilterDef(Type t)
         {
             SetDefaultValuesAccordingToColumnType(t);
         }
 
-        private static List<Type> DateTypes = new List<Type> { typeof(DateTime), typeof(DateTime?), typeof(DateTimeOffset), typeof(DateTimeOffset?) };
+        private static readonly List<Type> DateTypes = new List<Type> { typeof(DateTime), typeof(DateTime?), typeof(DateTimeOffset), typeof(DateTimeOffset?) };
 
         private void SetDefaultValuesAccordingToColumnType(Type t)
         {
             if (t == null)
             {
-                this.Remove("type");
+                Remove("type");
             }
             else if (DateTypes.Contains(t))
             {
@@ -41,7 +41,6 @@ namespace Puppy.DataTable
             else if (t.GetTypeInfo().IsEnum)
             {
                 type = "checkbox";
-                //values = Enum.GetNames(t).Cast<object>().ToArray();
                 values = t.EnumValLabPairs();
             }
             else

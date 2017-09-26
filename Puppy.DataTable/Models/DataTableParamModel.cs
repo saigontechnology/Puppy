@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Puppy.DataTable.Helpers;
-using Puppy.DataTable.Helpers.Reflection;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Puppy.DataTable.Models
 {
@@ -71,33 +68,6 @@ namespace Puppy.DataTable.Models
             iSortCol = new List<int>(iColumns);
             sSortDir = new List<string>(iColumns);
             bEscapeRegexColumns = new List<bool>(iColumns);
-        }
-
-        public DataTablesResponseDataModel GetDataTablesResponse<TSource>(IQueryable<TSource> data)
-        {
-            var totalRecords = data.Count(); // annoying this, as it causes an extra evaluation..
-
-            var filters = new DataTablesFiltering();
-
-            var outputProperties = DataTablesTypeInfo<TSource>.Properties;
-
-            var filteredData = filters.ApplyFiltersAndSort(this, data, outputProperties);
-
-            var totalDisplayRecords = filteredData.Count();
-
-            var skipped = filteredData.Skip(iDisplayStart);
-
-            var page = (iDisplayLength <= 0 ? skipped : skipped.Take(iDisplayLength)).ToArray();
-
-            var result = new DataTablesResponseDataModel()
-            {
-                iTotalRecords = totalRecords,
-                iTotalDisplayRecords = totalDisplayRecords,
-                sEcho = sEcho,
-                aaData = page.Cast<object>().ToArray()
-            };
-
-            return result;
         }
     }
 }

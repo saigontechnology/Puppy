@@ -1,6 +1,6 @@
 using Puppy.DataTable.Attributes;
 
-namespace Puppy.DataTable.Helpers.Reflection
+namespace Puppy.DataTable.Utils.Reflection
 {
     internal static class DataTablesTypeInfoHelper
     {

@@ -5,11 +5,11 @@ namespace Puppy.DataTable
 {
     public static class MvcOptionExtensions
     {
-        public static void UseHtmlEncodeModelBinding(this MvcOptions opts)
+        public static void AddDataTableModelBinderProvider(this MvcOptions opts)
         {
-            var binderToFind = opts.ModelBinderProviders.FirstOrDefault(x => x.GetType() == typeof(DataTablesModelBinderProvider));
+            var isProviderAdded = opts.ModelBinderProviders.Any(x => x.GetType() == typeof(DataTablesModelBinderProvider));
 
-            if (binderToFind != null) return;
+            if (isProviderAdded) return;
 
             opts.ModelBinderProviders.Insert(0, new DataTablesModelBinderProvider());
         }

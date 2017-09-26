@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Puppy.DataTable.Constants;
-using Puppy.DataTable.Helpers;
 using Puppy.DataTable.Serialization;
+using Puppy.DataTable.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace Puppy.DataTable.Models
 
         public bool IsHideHeader { get; set; } = false;
 
-        public bool IsUseColumnFilter { get; set; } = true;
+        public bool IsUseColumnFilter { get; set; } = false;
 
         public bool IsStateSave { get; set; } = true;
 
@@ -40,7 +40,7 @@ namespace Puppy.DataTable.Models
 
         public string AjaxUrl { get; set; }
 
-        public IEnumerable<ColDefModel> Columns { get; set; }
+        public List<ColDefModel> Columns { get; set; }
 
         public IDictionary<string, object> AdditionalOptions { get; } = new Dictionary<string, object>();
 
@@ -84,7 +84,7 @@ namespace Puppy.DataTable.Models
 
         public string LanguageCode { get; set; }
 
-        public LengthMenuVm LengthMenu { get; set; } = new LengthMenuVm
+        public LengthMenuModel LengthMenu { get; set; } = new LengthMenuModel
         {
             Tuple.Create("5", 5),
             Tuple.Create("10", 10),
@@ -101,11 +101,11 @@ namespace Puppy.DataTable.Models
 
         public string AjaxErrorHandler { get; set; }
 
-        public DataTableConfigModel(string id, string ajaxUrl, IEnumerable<ColDefModel> columns)
+        public DataTableConfigModel(string id, string ajaxUrl, params ColDefModel[] columns)
         {
             AjaxUrl = ajaxUrl;
             Id = id;
-            Columns = columns;
+            Columns = columns.ToList();
             ColumnFilterVm = new ColumnFilterSettingModel(this);
             AjaxErrorHandler =
                 "function(jqXHR, textStatus, errorThrown)" +
@@ -249,7 +249,7 @@ namespace Puppy.DataTable.Models
             return json.Substring(1, json.Length - 2);
         }
 
-        private static string ConvertColumnDefsToJson(ColDefModel[] columns)
+        private static string ConvertColumnDefsToJson(params ColDefModel[] columns)
         {
             Func<bool, bool> isFalse = x => x == false;
             Func<string, bool> isNonEmptyString = x => !string.IsNullOrEmpty(x);

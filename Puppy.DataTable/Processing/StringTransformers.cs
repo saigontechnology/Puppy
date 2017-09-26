@@ -22,7 +22,7 @@ namespace Puppy.DataTable.Processing
             RegisterFilter<IEnumerable<string>>(s => s.ToArray());
             RegisterFilter<IEnumerable<int>>(s => s.ToArray());
             RegisterFilter<IEnumerable<long>>(s => s.ToArray());
-            RegisterFilter<IEnumerable<decimal>>(s => s.ToArray()); 
+            RegisterFilter<IEnumerable<decimal>>(s => s.ToArray());
             RegisterFilter<IEnumerable<bool>>(s => s.ToArray());
             RegisterFilter<IEnumerable<double>>(s => s.ToArray());
             RegisterFilter<IEnumerable<object>>(s => s.Select(o => GetStringedValue(o.GetType(), o)).ToArray());

@@ -1,13 +1,13 @@
-using Puppy.DataTable.Helpers.Reflection;
 using Puppy.DataTable.Models;
 using Puppy.DataTable.Processing;
+using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 
-namespace Puppy.DataTable.Helpers
+namespace Puppy.DataTable.Utils
 {
     internal class DataTablesFiltering
     {

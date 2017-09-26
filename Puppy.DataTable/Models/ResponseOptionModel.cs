@@ -40,7 +40,7 @@ namespace Puppy.DataTable.Models
             {
                 if (DtRowId != null && value != Constants.ArrayOutputType.ArrayOfObjects)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(ArrayOutputType), $"{nameof(ArrayOutputType)} must be ArrayOfObjects when DT_RowID is set");
+                    throw new ArgumentOutOfRangeException(nameof(ArrayOutputType), $"{nameof(ArrayOutputType)} must be {nameof(Constants.ArrayOutputType.ArrayOfObjects)} when {nameof(DtRowId)} is set");
                 }
                 base.ArrayOutputType = value;
             }

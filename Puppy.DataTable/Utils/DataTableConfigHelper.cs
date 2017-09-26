@@ -1,19 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Puppy.DataTable.Helpers.Reflection;
 using Puppy.DataTable.Models;
+using Puppy.DataTable.Utils.Reflection;
 using Puppy.Web;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Puppy.DataTable.Helpers
+namespace Puppy.DataTable.Utils
 {
-    public static class DataTablesHelper
+    public static class DataTableConfigHelper
     {
         public static DataTableConfigModel DataTableModel<TController, TResult>(this IHtmlHelper html, string id,
-            Expression<Func<TController, DataTablesResult<TResult>>> exp, IEnumerable<ColDefModel> columns = null)
+            Expression<Func<TController, DataTableActionResult<TResult>>> exp, params ColDefModel[] columns)
         {
             if (columns?.Any() != true)
             {
@@ -45,7 +44,8 @@ namespace Puppy.DataTable.Helpers
 
         public static DataTableConfigModel DataTableModel(this IHtmlHelper html, string id, string ajaxUrl, params string[] columns)
         {
-            return new DataTableConfigModel(id, ajaxUrl, columns.Select(c => new ColDefModel(c, typeof(string))));
+            var columnDefs = columns.Select(c => new ColDefModel(c, typeof(string))).ToArray();
+            return new DataTableConfigModel(id, ajaxUrl, columnDefs);
         }
     }
 }

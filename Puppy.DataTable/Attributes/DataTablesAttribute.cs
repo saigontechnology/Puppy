@@ -1,6 +1,6 @@
 using Puppy.DataTable.Constants;
-using Puppy.DataTable.Helpers.Reflection;
 using Puppy.DataTable.Models;
+using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Linq;
 using System.Reflection;

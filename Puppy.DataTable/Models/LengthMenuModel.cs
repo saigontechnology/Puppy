@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.DataTable
+namespace Puppy.DataTable.Models
 {
-    public class LengthMenuVm : List<Tuple<string, int>>
+    public class LengthMenuModel : List<Tuple<string, int>>
     {
         public override string ToString()
         {

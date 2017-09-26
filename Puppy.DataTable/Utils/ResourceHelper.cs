@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.DataTable.Helpers
+namespace Puppy.DataTable.Utils
 {
     public class ResourceHelper
     {
@@ -64,7 +64,9 @@ namespace Puppy.DataTable.Helpers
         public static object[] EnumValLabPairs(this Type type)
         {
             var vals = Enum.GetNames(type).Cast<object>().ToArray();
+
             var lbls = type.AllDisplayNames().Cast<object>().ToArray();
+
             var result = new List<object>();
 
             for (var x = 0; x <= vals.Length - 1; x++) { result.Add(new { value = vals[x], label = lbls[x] }); }

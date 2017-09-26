@@ -19,6 +19,7 @@
 
 using Puppy.Core.StringUtils;
 using Puppy.Core.TypeUtils;
+using Puppy.DataTable.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -111,6 +112,15 @@ namespace Puppy.DataTable.Utils.Reflection
             var labels = t.GetListLabel().Cast<object>().ToArray();
 
             var result = new List<object>();
+
+            if (type.IsNullableEnumType())
+            {
+                result.Add(new
+                {
+                    value = DataConst.Null,
+                    label = string.Empty
+                });
+            }
 
             for (var x = 0; x <= values.Length - 1; x++)
             {

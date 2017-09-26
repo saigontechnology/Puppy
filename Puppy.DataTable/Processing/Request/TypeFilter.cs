@@ -1,4 +1,5 @@
 using Puppy.Core.StringUtils;
+using Puppy.Core.TypeUtils;
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Utils.Reflection;
 using System;
@@ -188,9 +189,9 @@ namespace Puppy.DataTable.Processing.Request
         {
             terms = terms?.TrimStart('^').TrimEnd('$');
 
-            var lowerCaseQuery = terms?.ToLowerInvariant();
+            var termsLowerCase = terms?.ToLowerInvariant();
 
-            if (lowerCaseQuery == DataConst.FalseLower || lowerCaseQuery == DataConst.TrueLower)
+            if (termsLowerCase == DataConst.FalseLower || termsLowerCase == DataConst.TrueLower)
             {
                 return terms.ToLower() == DataConst.TrueLower
                     ? $"{columnName} == {DataConst.TrueLower}"
@@ -202,7 +203,7 @@ namespace Puppy.DataTable.Processing.Request
                 return null;
             }
 
-            return lowerCaseQuery == DataConst.Null
+            return DataConst.Null.Equals(terms, StringComparison.CurrentCultureIgnoreCase)
                 ? $"{columnName} == {DataConst.Null}"
                 : null;
         }
@@ -240,8 +241,15 @@ namespace Puppy.DataTable.Processing.Request
 
             if (terms.EndsWith("$")) terms = terms.Substring(0, terms.Length - 1);
 
-            parametersForLinqQuery.Add(terms.ParseTo(propertyInfo.Type));
+            if (propertyInfo.Type.IsNullableEnumType())
+            {
+                if (DataConst.Null.Equals(terms, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return $"{columnName} == {DataConst.Null}";
+                }
+            }
 
+            parametersForLinqQuery.Add(terms.ParseTo(propertyInfo.Type));
             return $"{columnName} == @{parametersForLinqQuery.Count - 1}";
         }
     }

@@ -1,12 +1,12 @@
+using Puppy.Core.TypeUtils;
+using Puppy.DataTable.Constants;
+using Puppy.DataTable.Models.Config.Column;
+using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Puppy.Core.TypeUtils;
-using Puppy.DataTable.Constants;
-using Puppy.DataTable.Models.Config.Column;
-using Puppy.DataTable.Utils.Reflection;
 
 namespace Puppy.DataTable.Processing.Response
 {
@@ -31,8 +31,8 @@ namespace Puppy.DataTable.Processing.Response
             }
             else if (DateTypes.Contains(type))
             {
-                // TODO, Currently not support for DateRange and DateTimeRange, because I not support date-range in columnsFilter plugin yet.
-                // FilterType = FilterConst.DateRange;
+                // TODO, Currently not support for DateRange and DateTimeRange, because I not support
+                // date-range in columnsFilter plugin yet. FilterType = FilterConst.DateRange;
                 FilterType = FilterConst.Text;
             }
             else if (type == typeof(bool))
@@ -48,7 +48,7 @@ namespace Puppy.DataTable.Processing.Response
                 FilterType = FilterConst.Select;
                 FilterValues = new object[]
                 {
-                    DataConst.True, DataConst.False, DataConst.Null
+                    DataConst.Null, DataConst.True, DataConst.False
                 };
             }
             else if (type.IsEnumType() || type.IsNullableEnumType())

@@ -41,7 +41,7 @@ namespace Puppy.DataTable.Utils
             }
             else if (t.IsEnumType() || t.IsNullableEnumType())
             {
-                type = "checkbox";
+                type = "select";
                 values = t.GetEnumValueLabelPair();
             }
             else

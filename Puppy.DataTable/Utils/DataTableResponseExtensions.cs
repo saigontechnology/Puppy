@@ -17,9 +17,9 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
 using Puppy.DataTable.Models;
 using Puppy.DataTable.Utils.Reflection;
+using System;
 using System.Linq;
 
 namespace Puppy.DataTable.Utils
@@ -60,7 +60,7 @@ namespace Puppy.DataTable.Utils
             return DataTableActionResult.Create(responseData, transform, responseOption);
         }
 
-        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTablesResponseDataModel responseData, 
+        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTablesResponseDataModel responseData,
                                                                                         ResponseOptionModel<TSource> responseOption = null)
         {
             return DataTableActionResult.Create(responseData, responseOption);

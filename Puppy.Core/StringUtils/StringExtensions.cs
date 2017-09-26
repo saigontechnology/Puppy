@@ -20,6 +20,7 @@
 #endregion License
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -262,6 +263,12 @@ namespace Puppy.Core.StringUtils
                 result = null;
                 return false;
             }
+        }
+
+        public static object ParseTo(this string value, Type type)
+        {
+            TypeConverter converter = TypeDescriptor.GetConverter(type);
+            return converter.ConvertFrom(value);
         }
     }
 }

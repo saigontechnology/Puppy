@@ -1,3 +1,4 @@
+using Puppy.Core.StringUtils;
 using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
@@ -7,73 +8,69 @@ namespace Puppy.DataTable.Processing
 {
     internal static class TypeFilters
     {
-        private static readonly Func<string, Type, object> ParseValue =
-            (input, t) => t.GetTypeInfo().IsEnum ? Enum.Parse(t, input) : Convert.ChangeType(input, t);
-
         internal static string FilterMethod(string q, List<object> parametersForLinqQuery, Type type)
         {
-            Func<string, string, string> makeClause = (method, query) =>
+            Func<string, string, string> makeClause = (method, keyword) =>
             {
-                parametersForLinqQuery.Add(ParseValue(query, type));
+                parametersForLinqQuery.Add(keyword.ParseTo(type));
                 var indexOfParameter = parametersForLinqQuery.Count - 1;
-                return string.Format("{0}(@{1})", method, indexOfParameter);
+                return $"{method}(@{indexOfParameter})";
             };
+
             if (q.StartsWith("^"))
             {
                 if (q.EndsWith("$"))
                 {
-                    parametersForLinqQuery.Add(ParseValue(q.Substring(1, q.Length - 2), type));
+                    parametersForLinqQuery.Add(q.Substring(1, q.Length - 2).ParseTo(type));
                     var indexOfParameter = parametersForLinqQuery.Count - 1;
-                    return string.Format("Equals((object)@{0})", indexOfParameter);
+                    return $"Equals((object)@{indexOfParameter})";
                 }
                 return makeClause("StartsWith", q.Substring(1));
             }
-            else
+
+            if (q.EndsWith("$"))
             {
-                if (q.EndsWith("$"))
-                {
-                    return makeClause("EndsWith", q.Substring(0, q.Length - 1));
-                }
-                return makeClause("Contains", q);
+                return makeClause("EndsWith", q.Substring(0, q.Length - 1));
             }
+            return makeClause("Contains", q);
         }
 
         public static string NumericFilter(string query, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (query.StartsWith("^")) query = query.TrimStart('^');
+
             if (query.EndsWith("$")) query = query.TrimEnd('$');
 
             if (query == "~") return string.Empty;
 
+            string clause = null;
+
             if (query.Contains("~"))
             {
                 var parts = query.Split('~');
-                var clause = null as string;
                 try
                 {
                     parametersForLinqQuery.Add(ChangeType(propertyInfo, parts[0]));
-                    clause = string.Format("{0} >= @{1}", columnName, parametersForLinqQuery.Count - 1);
+                    clause = $"{columnName} >= @{parametersForLinqQuery.Count - 1}";
                 }
                 catch (FormatException)
                 {
                 }
-
                 try
                 {
                     parametersForLinqQuery.Add(ChangeType(propertyInfo, parts[1]));
                     if (clause != null) clause += " and ";
-                    clause += string.Format("{0} <= @{1}", columnName, parametersForLinqQuery.Count - 1);
+                    clause += $"{columnName} <= @{parametersForLinqQuery.Count - 1}";
                 }
                 catch (FormatException)
                 {
                 }
                 return clause ?? "true";
             }
-
             try
             {
                 parametersForLinqQuery.Add(ChangeType(propertyInfo, query));
-                return string.Format("{0} == @{1}", columnName, parametersForLinqQuery.Count - 1);
+                return $"{columnName} == @{parametersForLinqQuery.Count - 1}";
             }
             catch (FormatException)
             {
@@ -92,14 +89,15 @@ namespace Puppy.DataTable.Processing
             return Convert.ChangeType(query, propertyInfo.Type);
         }
 
-        public static string DateTimeOffsetFilter(string query, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string DateTimeOffsetFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
-            if (query == "~") return string.Empty;
+            if (keyword == "~") return string.Empty;
+
             var filterString = null as string;
 
-            if (query.Contains("~"))
+            if (keyword.Contains("~"))
             {
-                var parts = query.Split('~');
+                var parts = keyword.Split('~');
 
                 if (DateTimeOffset.TryParse(parts[0] ?? "", out var start))
                 {
@@ -115,82 +113,78 @@ namespace Puppy.DataTable.Processing
 
                 return filterString ?? "";
             }
-            else
+
+            if (DateTimeOffset.TryParse(keyword, out var dateTime))
             {
-                if (DateTimeOffset.TryParse(query, out var dateTime))
+                if (dateTime.Date == dateTime)
                 {
-                    if (dateTime.Date == dateTime)
-                    {
-                        dateTime = dateTime.ToUniversalTime();
+                    dateTime = dateTime.ToUniversalTime();
 
-                        parametersForLinqQuery.Add(dateTime);
-                        parametersForLinqQuery.Add(dateTime.AddDays(1));
-                        filterString = string.Format("{0} >= @{1} and {0} < @{2}", columnName, parametersForLinqQuery.Count - 2, parametersForLinqQuery.Count - 1);
-                    }
-                    else
-                    {
-                        dateTime = dateTime.ToUniversalTime();
-
-                        filterString = string.Format("{0} == @" + parametersForLinqQuery.Count, columnName);
-                        parametersForLinqQuery.Add(dateTime);
-                    }
+                    parametersForLinqQuery.Add(dateTime);
+                    parametersForLinqQuery.Add(dateTime.AddDays(1));
+                    filterString = string.Format("{0} >= @{1} and {0} < @{2}", columnName, parametersForLinqQuery.Count - 2, parametersForLinqQuery.Count - 1);
                 }
-                return filterString;
+                else
+                {
+                    dateTime = dateTime.ToUniversalTime();
+
+                    filterString = string.Format("{0} == @" + parametersForLinqQuery.Count, columnName);
+                    parametersForLinqQuery.Add(dateTime);
+                }
             }
+            return filterString;
         }
 
-        public static string DateTimeFilter(string query, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string DateTimeFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
-            if (query == "~") return string.Empty;
+            if (keyword == "~") return string.Empty;
             var filterString = null as string;
 
-            if (query.Contains("~"))
+            if (keyword.Contains("~"))
             {
-                var parts = query.Split('~');
+                var parts = keyword.Split('~');
 
-                if (DateTime.TryParse(parts[0] ?? "", out var start))
+                if (DateTime.TryParse(parts[0] ?? string.Empty, out var start))
                 {
                     filterString = columnName + " >= @" + parametersForLinqQuery.Count;
                     parametersForLinqQuery.Add(start);
                 }
 
-                if (DateTime.TryParse(parts[1] ?? "", out var end))
+                if (DateTime.TryParse(parts[1] ?? string.Empty, out var end))
                 {
-                    filterString = (filterString == null ? null : filterString + " and ") + columnName + " <= @" + parametersForLinqQuery.Count;
+                    filterString = (filterString == null ? null : filterString + " and ") + columnName + $" <= @{parametersForLinqQuery.Count}";
                     parametersForLinqQuery.Add(end);
                 }
 
-                return filterString ?? "";
+                return filterString ?? string.Empty;
             }
-            else
+
+            if (DateTime.TryParse(keyword, out var dateTime))
             {
-                if (DateTime.TryParse(query, out var dateTime))
+                if (dateTime.Date == dateTime)
                 {
-                    if (dateTime.Date == dateTime)
-                    {
-                        dateTime = dateTime.ToUniversalTime();
-                        parametersForLinqQuery.Add(dateTime);
-                        parametersForLinqQuery.Add(dateTime.AddDays(1));
-                        filterString = string.Format("({0} >= @{1} and {0} < @{2})", columnName, parametersForLinqQuery.Count - 2, parametersForLinqQuery.Count - 1);
-                    }
-                    else
-                    {
-                        dateTime = dateTime.ToUniversalTime();
-                        filterString = string.Format("{0} == @" + parametersForLinqQuery.Count, columnName);
-                        parametersForLinqQuery.Add(dateTime);
-                    }
+                    dateTime = dateTime.ToUniversalTime();
+                    parametersForLinqQuery.Add(dateTime);
+                    parametersForLinqQuery.Add(dateTime.AddDays(1));
+                    filterString = $"({columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1})";
                 }
-                return filterString;
+                else
+                {
+                    dateTime = dateTime.ToUniversalTime();
+                    filterString = $"{columnName} == @{parametersForLinqQuery.Count}";
+                    parametersForLinqQuery.Add(dateTime);
+                }
             }
+            return filterString;
         }
 
-        public static string BoolFilter(string query, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string BoolFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
-            query = query?.TrimStart('^').TrimEnd('$');
-            var lowerCaseQuery = query?.ToLowerInvariant();
+            keyword = keyword?.TrimStart('^').TrimEnd('$');
+            var lowerCaseQuery = keyword?.ToLowerInvariant();
             if (lowerCaseQuery == "false" || lowerCaseQuery == "true")
             {
-                if (query.ToLower() == "true") return columnName + " == true";
+                if (keyword.ToLower() == "true") return columnName + " == true";
                 return columnName + " == false";
             }
             if (propertyInfo.Type == typeof(bool?))
@@ -200,41 +194,41 @@ namespace Puppy.DataTable.Processing
             return null;
         }
 
-        public static string StringFilter(string q, string columnName, DataTablesPropertyInfo columnType, List<object> parametersForLinqQuery)
+        public static string StringFilter(string keyword, string columnName, DataTablesPropertyInfo columnType, List<object> parametersForLinqQuery)
         {
-            if (q == ".*") return "";
-            if (q.StartsWith("^"))
+            if (keyword == ".*") return "";
+
+            string parameterArg;
+
+            if (keyword.StartsWith("^"))
             {
-                if (q.EndsWith("$"))
+                if (keyword.EndsWith("$"))
                 {
-                    parametersForLinqQuery.Add(q.Substring(1, q.Length - 2));
-                    var parameterArg = "@" + (parametersForLinqQuery.Count - 1);
-                    return string.Format("{0} ==  {1}", columnName, parameterArg);
+                    parametersForLinqQuery.Add(keyword.Substring(1, keyword.Length - 2));
+                    parameterArg = "@" + (parametersForLinqQuery.Count - 1);
+                    return $"{columnName} ==  {parameterArg}";
                 }
-                else
-                {
-                    parametersForLinqQuery.Add(q.Substring(1));
-                    var parameterArg = "@" + (parametersForLinqQuery.Count - 1);
-                    return string.Format("({0} != null && {0} != \"\" && ({0} ==  {1} || {0}.StartsWith({1})))", columnName, parameterArg);
-                }
+
+                parametersForLinqQuery.Add(keyword.Substring(1));
+                parameterArg = "@" + (parametersForLinqQuery.Count - 1);
+                return $"({columnName} != null && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.StartsWith({parameterArg})))";
             }
-            else
-            {
-                parametersForLinqQuery.Add(q);
-                var parameterArg = "@" + (parametersForLinqQuery.Count - 1);
-                //return string.Format("{0} ==  {1}", columnName, parameterArg);
-                return
-                    string.Format(
-                        "({0} != null && {0} != \"\" && ({0} ==  {1} || {0}.StartsWith({1}) || {0}.Contains({1})))",
-                        columnName, parameterArg);
-            }
+
+            parametersForLinqQuery.Add(keyword);
+
+            parameterArg = "@" + (parametersForLinqQuery.Count - 1);
+
+            return $"({columnName} != null && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.StartsWith({parameterArg}) || {columnName}.Contains({parameterArg})))";
         }
 
-        public static string EnumFilter(string q, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string EnumFilter(string keyword, string columnName, DataTablesPropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
-            if (q.StartsWith("^")) q = q.Substring(1);
-            if (q.EndsWith("$")) q = q.Substring(0, q.Length - 1);
-            parametersForLinqQuery.Add(ParseValue(q, propertyInfo.Type));
+            if (keyword.StartsWith("^")) keyword = keyword.Substring(1);
+
+            if (keyword.EndsWith("$")) keyword = keyword.Substring(0, keyword.Length - 1);
+
+            parametersForLinqQuery.Add(keyword.ParseTo(propertyInfo.Type));
+
             return columnName + " == @" + (parametersForLinqQuery.Count - 1);
         }
     }

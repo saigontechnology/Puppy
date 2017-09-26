@@ -1,3 +1,4 @@
+using Puppy.Core.TypeUtils;
 using Puppy.DataTable.Models;
 using Puppy.DataTable.Processing;
 using Puppy.DataTable.Utils.Reflection;
@@ -5,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Reflection;
 
 namespace Puppy.DataTable.Utils
 {
@@ -30,6 +30,7 @@ namespace Puppy.DataTable.Utils
                         catch (Exception)
                         {
                             // if the clause doesn't work, skip it!
+                            // ex: can't parse a string to enum or datetime type
                         }
                     }
                 }
@@ -79,15 +80,20 @@ namespace Puppy.DataTable.Utils
             {
                 return columns.First(x => x.PropertyInfo.Name == dtParameters.sColumnNames[i]);
             }
-            else
-            {
-                return columns[i];
-            }
+
+            return columns[i];
         }
 
-        public delegate string ReturnedFilteredQueryForType(string query, string columnName, DataTablesPropertyInfo columnType, List<object> parametersForLinqQuery);
+        public static void RegisterFilter<T>(GuardedFilter filter)
+        {
+            Filters.Add(Guard(arg => arg is T, filter));
+        }
 
-        private static readonly List<ReturnedFilteredQueryForType> Filters = new List<ReturnedFilteredQueryForType>()
+        public delegate string GuardedFilter(string query, string columnName, DataTablesPropertyInfo columnType, List<object> parametersForLinqQuery);
+
+        private delegate string ReturnedFilteredQueryForType(string query, string columnName, DataTablesPropertyInfo columnType, List<object> parametersForLinqQuery);
+
+        private static readonly List<ReturnedFilteredQueryForType> Filters = new List<ReturnedFilteredQueryForType>
         {
             Guard(IsBoolType, TypeFilters.BoolFilter),
             Guard(IsDateTimeType, TypeFilters.DateTimeFilter),
@@ -97,90 +103,57 @@ namespace Puppy.DataTable.Utils
             Guard(arg => arg.Type == typeof (string), TypeFilters.StringFilter),
         };
 
-        public delegate string GuardedFilter(
-            string query, string columnName, DataTablesPropertyInfo columnType, List<object> parametersForLinqQuery);
-
         private static ReturnedFilteredQueryForType Guard(Func<DataTablesPropertyInfo, bool> guard, GuardedFilter filter)
         {
             return (q, c, t, p) => !guard(t) ? null : filter(q, c, t, p);
         }
 
-        public static void RegisterFilter<T>(GuardedFilter filter)
-        {
-            Filters.Add(Guard(arg => arg is T, filter));
-        }
-
         private static string GetFilterClause(string query, DataTablesPropertyInfo column, List<object> parametersForLinqQuery)
         {
-            Func<string, string> filterClause = (queryPart) =>
-                                                Filters.Select(
-                                                    f => f(queryPart, column.PropertyInfo.Name, column, parametersForLinqQuery))
-                                                       .FirstOrDefault(filterPart => filterPart != null) ?? "";
+            Func<string, string> filterClause =
+                queryPart =>
+                    Filters
+                        .Select(f => f(queryPart, column.PropertyInfo.Name, column, parametersForLinqQuery))
+                        .FirstOrDefault(filterPart => filterPart != null) ?? string.Empty;
 
             var queryParts = query.Split('|').Select(filterClause).Where(fc => fc != "").ToArray();
+
             if (queryParts.Any())
             {
                 return "(" + string.Join(") OR (", queryParts) + ")";
             }
+
             return null;
         }
 
-        public static bool IsNumericType(DataTablesPropertyInfo propertyInfo)
+        private static bool IsNumericType(DataTablesPropertyInfo propertyInfo)
         {
-            var type = propertyInfo.Type;
-            return IsNumericType(type);
+            bool isNumericType = propertyInfo.Type.IsNumericType();
+            return isNumericType;
         }
 
-        private static bool IsNumericType(Type type)
+        private static bool IsEnumType(DataTablesPropertyInfo propertyInfo)
         {
-            if (type == null || type.GetTypeInfo().IsEnum)
-            {
-                return false;
-            }
-
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.Byte:
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.SByte:
-                case TypeCode.Single:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                    return true;
-
-                case TypeCode.Object:
-                    if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-                    {
-                        return IsNumericType(Nullable.GetUnderlyingType(type));
-                    }
-                    return false;
-            }
-            return false;
+            bool isEnumType = propertyInfo.Type.IsEnumType() || propertyInfo.Type.IsNullableEnumType();
+            return isEnumType;
         }
 
-        public static bool IsEnumType(DataTablesPropertyInfo propertyInfo)
+        private static bool IsBoolType(DataTablesPropertyInfo propertyInfo)
         {
-            return propertyInfo.Type.GetTypeInfo().IsEnum;
+            bool isBoolType = propertyInfo.Type == typeof(bool) || propertyInfo.Type == typeof(bool?);
+            return isBoolType;
         }
 
-        public static bool IsBoolType(DataTablesPropertyInfo propertyInfo)
+        private static bool IsDateTimeType(DataTablesPropertyInfo propertyInfo)
         {
-            return propertyInfo.Type == typeof(bool) || propertyInfo.Type == typeof(bool?);
+            bool isDateTimeType = propertyInfo.Type == typeof(DateTime) || propertyInfo.Type == typeof(DateTime?);
+            return isDateTimeType;
         }
 
-        public static bool IsDateTimeType(DataTablesPropertyInfo propertyInfo)
+        private static bool IsDateTimeOffsetType(DataTablesPropertyInfo propertyInfo)
         {
-            return propertyInfo.Type == typeof(DateTime) || propertyInfo.Type == typeof(DateTime?);
-        }
-
-        public static bool IsDateTimeOffsetType(DataTablesPropertyInfo propertyInfo)
-        {
-            return propertyInfo.Type == typeof(DateTimeOffset) || propertyInfo.Type == typeof(DateTimeOffset?);
+            bool isDateTimeOffsetType = propertyInfo.Type == typeof(DateTimeOffset) || propertyInfo.Type == typeof(DateTimeOffset?);
+            return isDateTimeOffsetType;
         }
     }
 }

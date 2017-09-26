@@ -39,5 +39,48 @@ namespace Puppy.Core.TypeUtils
         public static IEnumerable<Assembly> GetAssemblies(this ICollection<Type> types) => types.Select(x => x.GetAssembly());
 
         public static IEnumerable<Assembly> GetAssemblies(this IEnumerable<Type> types) => types.Select(x => x.GetAssembly());
+
+        public static bool IsEnumType(this Type type)
+        {
+            return type.GetTypeInfo().IsEnum;
+        }
+
+        public static bool IsNullableEnumType(this Type type)
+        {
+            Type u = Nullable.GetUnderlyingType(type);
+            return u != null && u.IsEnumType();
+        }
+
+        public static bool IsNumericType(this Type type)
+        {
+            if (type == null || type.IsEnumType() || type.IsNullableEnumType())
+            {
+                return false;
+            }
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Byte:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.SByte:
+                case TypeCode.Single:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    return true;
+
+                case TypeCode.Object:
+                    if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        return Nullable.GetUnderlyingType(type).IsNumericType();
+                    }
+                    return false;
+            }
+            return false;
+        }
     }
 }

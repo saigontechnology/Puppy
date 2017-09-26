@@ -244,22 +244,6 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 </script>
 ```
 
-### Changing case sensitivity
-
-```csharp
-@using QueryInterceptor
-
-...
-
-public DataTablesResult<TDataTableRow> GetDataTableData(DataTablesParam dataTableParam)
-{
-    var originalQueryable = ... some code to get your IQueryable<TDataTableRow> ...;
-    var caseInsenstitiveQueryable = originalQueryable.InterceptWith(new SetComparerExpressionVisitor(StringComparison.CurrentCultureIgnoreCase));
-
-    return DataTablesResult.Create(caseInsenstitiveQueryable, dataTableParam);
-}
-```
-
 ### Customising column rendering
 ```csharp
 public class Message

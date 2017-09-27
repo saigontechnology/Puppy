@@ -110,6 +110,7 @@ namespace Puppy.DataTable.Constants
     {
         public const string StartsWith = "StartsWith";
         public const string EndsWith = "EndsWith";
-        public const string Contains = "Contains";
+        public const string Contain = "Contains";
+        public const string Equal = "Equals";
     }
 }

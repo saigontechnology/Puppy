@@ -86,7 +86,7 @@ namespace Puppy.DataTable.Utils.Reflection
 
             foreach (string enumName in Enum.GetNames(t))
             {
-                Enum enumObj = ((Enum)enumName.ParseTo(t));
+                Enum enumObj = (Enum)enumName.ParseTo(t);
 
                 var label = enumObj.GetDisplayName() ?? enumObj.GetDescription() ?? enumObj.GetName();
 

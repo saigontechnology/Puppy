@@ -28,15 +28,16 @@ namespace Puppy.DataTable.Processing.Request
 
                 parametersForLinqQuery.Add(terms.Substring(1, terms.Length - 2).ParseTo(type));
                 var indexOfParameter = parametersForLinqQuery.Count - 1;
-                return $"Equals((object)@{indexOfParameter})";
+                return $"{ConditionalCost.Equal}((object)@{indexOfParameter})";
             }
 
             return terms.EndsWith("$")
                 ? Clause(ConditionalCost.EndsWith, terms.Substring(0, terms.Length - 1))
-                : Clause(ConditionalCost.Contains, terms);
+                : Clause(ConditionalCost.Contain, terms);
         }
 
-        public static string NumericFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string NumericFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
+            List<object> parametersForLinqQuery)
         {
             if (terms.StartsWith("^")) terms = terms.TrimStart('^');
 
@@ -81,7 +82,8 @@ namespace Puppy.DataTable.Processing.Request
 
         private static object ChangeType(string terms, DataTablePropertyInfo propertyInfo)
         {
-            if (propertyInfo.PropertyInfo.PropertyType.GetTypeInfo().IsGenericType && propertyInfo.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (propertyInfo.PropertyInfo.PropertyType.GetTypeInfo().IsGenericType &&
+                propertyInfo.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 var u = Nullable.GetUnderlyingType(propertyInfo.Type);
                 return Convert.ChangeType(terms, u);
@@ -90,7 +92,8 @@ namespace Puppy.DataTable.Processing.Request
             return Convert.ChangeType(terms, propertyInfo.Type);
         }
 
-        public static string DateTimeOffsetFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string DateTimeOffsetFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
+            List<object> parametersForLinqQuery)
         {
             if (terms == "~") return string.Empty;
 
@@ -111,7 +114,8 @@ namespace Puppy.DataTable.Processing.Request
                     return filterString ?? string.Empty;
                 }
 
-                filterString = (filterString == null ? null : $"{filterString} and ") + columnName + $" <= @{parametersForLinqQuery.Count}";
+                filterString = (filterString == null ? null : $"{filterString} and ") + columnName +
+                               $" <= @{parametersForLinqQuery.Count}";
 
                 parametersForLinqQuery.Add(end);
 
@@ -128,7 +132,8 @@ namespace Puppy.DataTable.Processing.Request
                 dateTime = dateTime.ToUniversalTime();
                 parametersForLinqQuery.Add(dateTime);
                 parametersForLinqQuery.Add(dateTime.AddDays(1));
-                filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
+                filterString =
+                    $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
             }
             else
             {
@@ -139,7 +144,8 @@ namespace Puppy.DataTable.Processing.Request
             return filterString;
         }
 
-        public static string DateTimeFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string DateTimeFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
+            List<object> parametersForLinqQuery)
         {
             if (terms == "~") return string.Empty;
 
@@ -160,7 +166,8 @@ namespace Puppy.DataTable.Processing.Request
                     return filterString ?? string.Empty;
                 }
 
-                filterString = (filterString == null ? null : $"{filterString} and ") + columnName + $" <= @{parametersForLinqQuery.Count}";
+                filterString = (filterString == null ? null : $"{filterString} and ") + columnName +
+                               $" <= @{parametersForLinqQuery.Count}";
                 parametersForLinqQuery.Add(end);
 
                 return filterString;
@@ -173,7 +180,8 @@ namespace Puppy.DataTable.Processing.Request
                     dateTime = dateTime.ToUniversalTime();
                     parametersForLinqQuery.Add(dateTime);
                     parametersForLinqQuery.Add(dateTime.AddDays(1));
-                    filterString = $"({columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1})";
+                    filterString =
+                        $"({columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1})";
                 }
                 else
                 {
@@ -185,7 +193,8 @@ namespace Puppy.DataTable.Processing.Request
             return filterString;
         }
 
-        public static string BoolFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string BoolFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
+            List<object> parametersForLinqQuery)
         {
             terms = terms?.TrimStart('^').TrimEnd('$');
 
@@ -208,7 +217,8 @@ namespace Puppy.DataTable.Processing.Request
                 : null;
         }
 
-        public static string StringFilter(string terms, string columnName, DataTablePropertyInfo columnType, List<object> parametersForLinqQuery)
+        public static string StringFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
+            List<object> parametersForLinqQuery)
         {
             if (terms == ".*") return "";
 
@@ -225,17 +235,20 @@ namespace Puppy.DataTable.Processing.Request
 
                 parametersForLinqQuery.Add(terms.Substring(1));
                 parameterArg = "@" + (parametersForLinqQuery.Count - 1);
-                return $"({columnName} != {DataConst.Null} && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.{ConditionalCost.StartsWith}({parameterArg})))";
+                return
+                    $"({columnName} != {DataConst.Null} && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.{ConditionalCost.StartsWith}({parameterArg})))";
             }
 
             parametersForLinqQuery.Add(terms);
 
             parameterArg = "@" + (parametersForLinqQuery.Count - 1);
 
-            return $"({columnName} != {DataConst.Null} && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.{ConditionalCost.StartsWith}({parameterArg}) || {columnName}.{ConditionalCost.Contains}({parameterArg})))";
+            return
+                $"({columnName} != {DataConst.Null} && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.{ConditionalCost.StartsWith}({parameterArg}) || {columnName}.{ConditionalCost.Contain}({parameterArg})))";
         }
 
-        public static string EnumFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
+        public static string EnumFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
+            List<object> parametersForLinqQuery)
         {
             if (terms.StartsWith("^")) terms = terms.Substring(1);
 
@@ -243,13 +256,51 @@ namespace Puppy.DataTable.Processing.Request
 
             if (propertyInfo.Type.IsNullableEnumType())
             {
-                if (DataConst.Null.Equals(terms, StringComparison.CurrentCultureIgnoreCase))
+                // Enum Nullable type, handle for "null" case ("null" string as null obj)
+                if (DataConst.Null.Equals(terms, StringComparison.OrdinalIgnoreCase)
+                    || string.IsNullOrWhiteSpace(terms))
                 {
                     return $"{columnName} == {DataConst.Null}";
                 }
             }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(terms))
+                {
+                    return null;
+                }
+            }
 
-            parametersForLinqQuery.Add(terms.ParseTo(propertyInfo.Type));
+            Type type = propertyInfo.Type.GetNotNullableType();
+
+            object enumObject = null;
+
+            string termsLowerCase = terms.ToLowerInvariant();
+
+            // Search condition for Enum
+            foreach (string enumName in Enum.GetNames(type))
+            {
+                Enum enumObj = (Enum)enumName.ParseTo(type);
+
+                var label = enumObj.GetDisplayName() ?? enumObj.GetDescription() ?? enumObj.GetName();
+                var labelLowerCase = label.ToLowerInvariant();
+
+                if (labelLowerCase.Equals(termsLowerCase, StringComparison.OrdinalIgnoreCase) || labelLowerCase.StartsWith(termsLowerCase) || labelLowerCase.Contains(termsLowerCase))
+                {
+                    enumObject = enumObj;
+
+                    // Found, return first found item
+                    break;
+                }
+            }
+
+            // Can't parse string to enum, return null
+            if (enumObject == null)
+            {
+                return null;
+            }
+
+            parametersForLinqQuery.Add(enumObject);
             return $"{columnName} == @{parametersForLinqQuery.Count - 1}";
         }
     }

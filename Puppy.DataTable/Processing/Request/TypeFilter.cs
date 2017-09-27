@@ -10,34 +10,7 @@ namespace Puppy.DataTable.Processing.Request
 {
     internal static class TypeFilter
     {
-        internal static string FilterMethod(string terms, List<object> parametersForLinqQuery, Type type)
-        {
-            string Clause(string conditional, string query)
-            {
-                parametersForLinqQuery.Add(query.ParseTo(type));
-                var indexOfParameter = parametersForLinqQuery.Count - 1;
-                return $"{conditional}(@{indexOfParameter})";
-            }
-
-            if (terms.StartsWith("^"))
-            {
-                if (!terms.EndsWith("$"))
-                {
-                    return Clause(ConditionalCost.StartsWith, terms.Substring(1));
-                }
-
-                parametersForLinqQuery.Add(terms.Substring(1, terms.Length - 2).ParseTo(type));
-                var indexOfParameter = parametersForLinqQuery.Count - 1;
-                return $"{ConditionalCost.Equal}((object)@{indexOfParameter})";
-            }
-
-            return terms.EndsWith("$")
-                ? Clause(ConditionalCost.EndsWith, terms.Substring(0, terms.Length - 1))
-                : Clause(ConditionalCost.Contain, terms);
-        }
-
-        public static string NumericFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
-            List<object> parametersForLinqQuery)
+        public static string NumericFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (terms.StartsWith("^")) terms = terms.TrimStart('^');
 
@@ -80,20 +53,7 @@ namespace Puppy.DataTable.Processing.Request
             return null;
         }
 
-        private static object ChangeType(string terms, DataTablePropertyInfo propertyInfo)
-        {
-            if (propertyInfo.PropertyInfo.PropertyType.GetTypeInfo().IsGenericType &&
-                propertyInfo.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                var u = Nullable.GetUnderlyingType(propertyInfo.Type);
-                return Convert.ChangeType(terms, u);
-            }
-
-            return Convert.ChangeType(terms, propertyInfo.Type);
-        }
-
-        public static string DateTimeOffsetFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
-            List<object> parametersForLinqQuery)
+        public static string DateTimeOffsetFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (terms == "~") return string.Empty;
 
@@ -103,21 +63,20 @@ namespace Puppy.DataTable.Processing.Request
             {
                 var parts = terms.Split('~');
 
-                if (DateTimeOffset.TryParse(parts[0] ?? string.Empty, out var start))
+                if (DateTimeOffset.TryParse(parts[0] ?? string.Empty, out var fromDateTime))
                 {
                     filterString = $"{columnName} >= @{parametersForLinqQuery.Count}";
-                    parametersForLinqQuery.Add(start);
+                    parametersForLinqQuery.Add(fromDateTime);
                 }
 
-                if (!DateTimeOffset.TryParse(parts[1] ?? string.Empty, out var end))
+                if (!DateTimeOffset.TryParse(parts[1] ?? string.Empty, out var toDateTime))
                 {
                     return filterString ?? string.Empty;
                 }
 
-                filterString = (filterString == null ? null : $"{filterString} and ") + columnName +
-                               $" <= @{parametersForLinqQuery.Count}";
+                filterString = (filterString == null ? null : $"{filterString} and ") + columnName + $" <= @{parametersForLinqQuery.Count}";
 
-                parametersForLinqQuery.Add(end);
+                parametersForLinqQuery.Add(toDateTime);
 
                 return filterString;
             }
@@ -130,10 +89,11 @@ namespace Puppy.DataTable.Processing.Request
             if (dateTime.Date == dateTime)
             {
                 dateTime = dateTime.ToUniversalTime();
+
                 parametersForLinqQuery.Add(dateTime);
                 parametersForLinqQuery.Add(dateTime.AddDays(1));
-                filterString =
-                    $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
+
+                filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
             }
             else
             {
@@ -144,8 +104,7 @@ namespace Puppy.DataTable.Processing.Request
             return filterString;
         }
 
-        public static string DateTimeFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
-            List<object> parametersForLinqQuery)
+        public static string DateTimeFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (terms == "~") return string.Empty;
 
@@ -193,8 +152,7 @@ namespace Puppy.DataTable.Processing.Request
             return filterString;
         }
 
-        public static string BoolFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
-            List<object> parametersForLinqQuery)
+        public static string BoolFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             terms = terms?.TrimStart('^').TrimEnd('$');
 
@@ -217,8 +175,7 @@ namespace Puppy.DataTable.Processing.Request
                 : null;
         }
 
-        public static string StringFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
-            List<object> parametersForLinqQuery)
+        public static string StringFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (terms == ".*") return "";
 
@@ -259,8 +216,7 @@ namespace Puppy.DataTable.Processing.Request
         /// <remarks>
         ///     terms is "null" with Type is Nullable Enum work as search null value
         /// </remarks>
-        public static string EnumFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
-            List<object> parametersForLinqQuery)
+        public static string EnumFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo, List<object> parametersForLinqQuery)
         {
             if (terms.StartsWith("^")) terms = terms.Substring(1);
 
@@ -314,6 +270,44 @@ namespace Puppy.DataTable.Processing.Request
 
             parametersForLinqQuery.Add(enumObject);
             return $"{columnName} == @{parametersForLinqQuery.Count - 1}";
+        }
+
+        internal static string FilterMethod(string terms, List<object> parametersForLinqQuery, Type type)
+        {
+            string Clause(string conditional, string query)
+            {
+                parametersForLinqQuery.Add(query.ParseTo(type));
+                var indexOfParameter = parametersForLinqQuery.Count - 1;
+                return $"{conditional}(@{indexOfParameter})";
+            }
+
+            if (terms.StartsWith("^"))
+            {
+                if (!terms.EndsWith("$"))
+                {
+                    return Clause(ConditionalCost.StartsWith, terms.Substring(1));
+                }
+
+                parametersForLinqQuery.Add(terms.Substring(1, terms.Length - 2).ParseTo(type));
+                var indexOfParameter = parametersForLinqQuery.Count - 1;
+                return $"{ConditionalCost.Equal}((object)@{indexOfParameter})";
+            }
+
+            return terms.EndsWith("$")
+                ? Clause(ConditionalCost.EndsWith, terms.Substring(0, terms.Length - 1))
+                : Clause(ConditionalCost.Contain, terms);
+        }
+
+        private static object ChangeType(string terms, DataTablePropertyInfo propertyInfo)
+        {
+            if (propertyInfo.PropertyInfo.PropertyType.GetTypeInfo().IsGenericType &&
+                propertyInfo.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                var u = Nullable.GetUnderlyingType(propertyInfo.Type);
+                return Convert.ChangeType(terms, u);
+            }
+
+            return Convert.ChangeType(terms, propertyInfo.Type);
         }
     }
 }

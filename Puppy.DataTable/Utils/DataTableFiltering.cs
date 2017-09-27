@@ -47,7 +47,7 @@ namespace Puppy.DataTable.Utils
                         DataTablePropertyInfo column = FindColumn(dtParameters, columns, i);
                         var parameters = new List<object>();
                         var filterClause = GetFilterClause(searchColumn, column, parameters);
-                        if (string.IsNullOrWhiteSpace(filterClause) == false)
+                        if (!string.IsNullOrWhiteSpace(filterClause))
                         {
                             data = data.Where(filterClause, parameters.ToArray());
                         }
@@ -110,13 +110,11 @@ namespace Puppy.DataTable.Utils
 
         private static string GetFilterClause(string query, DataTablePropertyInfo column, List<object> parametersForLinqQuery)
         {
-            Func<string, string> filterClause =
-                queryPart =>
-                    Filters
-                        .Select(f => f(queryPart, column.PropertyInfo.Name, column, parametersForLinqQuery))
-                        .FirstOrDefault(filterPart => filterPart != null) ?? string.Empty;
+            string Clause(string queryPart) => Filters
+                                                   .Select(f => f(queryPart, column.PropertyInfo.Name, column, parametersForLinqQuery))
+                                                   .FirstOrDefault(filterPart => filterPart != null) ?? string.Empty;
 
-            var queryParts = query.Split('|').Select(filterClause).Where(fc => fc != "").ToArray();
+            var queryParts = query.Split('|').Select(Clause).Where(clause => clause != string.Empty).ToArray();
 
             if (queryParts.Any())
             {

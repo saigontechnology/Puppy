@@ -1,3 +1,6 @@
+using Puppy.Core.StringUtils;
+using Puppy.Core.TypeUtils;
+using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +10,30 @@ namespace Puppy.DataTable.Processing.Response
 {
     public static class StringTransformers
     {
-        internal static object GetStringedValue(Type propertyType, object value)
+        internal static object GetStringedValue(Type type, object value)
         {
-            return Transformers.ContainsKey(propertyType)
-                ? Transformers[propertyType](propertyType, value)
-                : (value ?? string.Empty).ToString();
+            object stringedValue;
+
+            if (Transformers.ContainsKey(type))
+            {
+                stringedValue = Transformers[type](type, value);
+            }
+            else
+            {
+                if (type.IsEnumType() || type.IsNullableEnumType())
+                {
+                    var t = type.GetNotNullableType();
+                    Enum enumObj = (Enum)value.ToString().ParseTo(t);
+                    stringedValue = enumObj.GetDisplayName() ?? enumObj.GetDescription() ?? enumObj.GetName();
+                }
+                else
+                {
+                    stringedValue = value?.ToString();
+                }
+            }
+
+            stringedValue = stringedValue ?? string.Empty;
+            return stringedValue;
         }
 
         static StringTransformers()
@@ -52,10 +74,12 @@ namespace Puppy.DataTable.Processing.Response
         public static Dictionary<string, object> StringifyValues(Dictionary<string, object> dict)
         {
             var output = new Dictionary<string, object>();
+
             foreach (var row in dict)
             {
                 output[row.Key] = row.Value == null ? string.Empty : GetStringedValue(row.Value.GetType(), row.Value);
             }
+
             return output;
         }
     }

@@ -83,7 +83,7 @@ namespace Puppy.DataTable.Models.Config
         public string AjaxErrorHandler { get; set; }
 
         /// <summary>
-        ///     Function name of Draw Call Back. DataTable will pass "setting" to the function. Ex: drawCallBackHandle(oSettings). 
+        ///     Function name of Draw Call Back. DataTable will pass "setting" to the function. Ex: drawCallBackHandle(oSettings).
         /// </summary>
         public string DrawCallbackFunctionName { get; set; }
 

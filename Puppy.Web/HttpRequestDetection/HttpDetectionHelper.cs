@@ -19,15 +19,13 @@
 
 using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using Puppy.Core.Constants;
 using Puppy.Core.LinqUtils;
 using Puppy.Web.Constants;
+using Puppy.Web.HttpRequestDetection.Device;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Puppy.Web.HttpRequestDetection.Device;
 
 namespace Puppy.Web.HttpRequestDetection
 {

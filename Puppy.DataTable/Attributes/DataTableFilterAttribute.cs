@@ -2,7 +2,6 @@ using EnumsNET;
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Models.Config.Column;
 using Puppy.DataTable.Processing.Response;
-using Puppy.DataTable.Utils;
 
 namespace Puppy.DataTable.Attributes
 {

@@ -73,6 +73,7 @@ namespace Puppy.DataTable.Constants
 
         // Language
         public const string Language = "language";
+
         public const string LanguageCode = "oLanguage";
         public const string SearchSelector = "search";
         public const string SearchPlaceholder = "sSearchPlaceholder";

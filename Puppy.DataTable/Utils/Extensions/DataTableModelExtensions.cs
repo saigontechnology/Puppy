@@ -23,10 +23,10 @@ using Puppy.Core.ObjectUtils;
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Models.Config;
 using Puppy.DataTable.Models.Config.Column;
+using Puppy.DataTable.Processing.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Puppy.DataTable.Processing.Response;
 
 namespace Puppy.DataTable.Utils.Extensions
 {

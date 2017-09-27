@@ -89,7 +89,7 @@ namespace Puppy.DataTable.Models.Config
 
         /// <summary>
         ///     Function name of before send handler, you can modified data before submit by this
-        ///     way. DataTable will pass "list key-value" submit to server as params to the function.
+        ///     way. DataTable will pass "list name-value" submit to server as params to the function.
         ///     Ex: beforeSendHandle(aoData).
         /// </summary>
         public string BeforeSendFunctionName { get; set; }

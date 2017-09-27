@@ -78,6 +78,16 @@ namespace Puppy.DataTable.Utils.Reflection
             return member?.Name;
         }
 
+        /// <summary>
+        ///     Get Enum Label (Display Name ?? Description ?? Name) 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string GetLabel(this Enum value)
+        {
+            return value.GetDisplayName() ?? value.GetDescription() ?? value.GetName();
+        }
+
         public static List<string> GetListLabel(this Type type)
         {
             var t = type.GetNotNullableType();
@@ -86,9 +96,9 @@ namespace Puppy.DataTable.Utils.Reflection
 
             foreach (string enumName in Enum.GetNames(t))
             {
-                Enum enumObj = (Enum)enumName.ParseTo(t);
+                Enum enumValue = (Enum)enumName.ParseTo(t);
 
-                var label = enumObj.GetDisplayName() ?? enumObj.GetDescription() ?? enumObj.GetName();
+                var label = enumValue.GetLabel();
 
                 exitList.Add(label);
             }

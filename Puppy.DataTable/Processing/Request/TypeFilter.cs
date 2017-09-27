@@ -247,6 +247,18 @@ namespace Puppy.DataTable.Processing.Request
                 $"({columnName} != {DataConst.Null} && {columnName} != \"\" && ({columnName} ==  {parameterArg} || {columnName}.{ConditionalCost.StartsWith}({parameterArg}) || {columnName}.{ConditionalCost.Contain}({parameterArg})))";
         }
 
+        /// <summary>
+        ///     Filter Enum by Label (Display Name ?? Description ?? Name) with conditional Equals,
+        ///     StartsWith, Contains
+        /// </summary>
+        /// <param name="terms">                 </param>
+        /// <param name="columnName">            </param>
+        /// <param name="propertyInfo">          </param>
+        /// <param name="parametersForLinqQuery"></param>
+        /// <returns></returns>
+        /// <remarks>
+        ///     terms is "null" with Type is Nullable Enum work as search null value
+        /// </remarks>
         public static string EnumFilter(string terms, string columnName, DataTablePropertyInfo propertyInfo,
             List<object> parametersForLinqQuery)
         {
@@ -277,17 +289,17 @@ namespace Puppy.DataTable.Processing.Request
 
             string termsLowerCase = terms.ToLowerInvariant();
 
-            // Search condition for Enum
+            // Search condition for Enum: Equals, StartsWith, Contains
             foreach (string enumName in Enum.GetNames(type))
             {
-                Enum enumObj = (Enum)enumName.ParseTo(type);
+                Enum enumValue = (Enum)enumName.ParseTo(type);
 
-                var label = enumObj.GetDisplayName() ?? enumObj.GetDescription() ?? enumObj.GetName();
+                var label = enumValue.GetLabel();
                 var labelLowerCase = label.ToLowerInvariant();
 
                 if (labelLowerCase.Equals(termsLowerCase, StringComparison.OrdinalIgnoreCase) || labelLowerCase.StartsWith(termsLowerCase) || labelLowerCase.Contains(termsLowerCase))
                 {
-                    enumObject = enumObj;
+                    enumObject = enumValue;
 
                     // Found, return first found item
                     break;

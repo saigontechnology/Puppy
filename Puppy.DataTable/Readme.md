@@ -2,14 +2,12 @@
 # Puppy.DataTable Document
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
-- This is a flork and continue develop of project [mvc.jquery.datatables]("https://github.com/mcintyre321/mvc.jquery.datatables")
-- Improve things:
-    + Coding smell
-    + Coding Convention
-    + Improve query performance
-    + Support for real cases
-
-- Example: http://aspdatatables.azurewebsites.net/
+- Support response and request/search Enum as Display Name ?? Description ?? Name
+- Support Search Number Range
+- Support Search Date Time Range
+- Support Filter Type: Select, Text, None
+- Support Additional Data
+- Support Develop Mode: for debug purpose.
 
 # How To Use
 
@@ -65,8 +63,8 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 
 ```html
 @using Monkey.Controllers.Api
-@using Puppy.DataTable.Models
-@using Puppy.DataTable.Utils
+@using Puppy.DataTable
+@using Puppy.DataTable.Models.Config.Column
 @using Constants = Monkey.Constants
 @{
     ViewData[Constants.ViewDataKey.Title] = "Portal";
@@ -81,23 +79,33 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 
             @{
                 var model = Html.DataTableModel(Guid.NewGuid().ToString("N"), (TestApiController controller) => controller.GetFacetedUsers(null));
-                model.IsDevelopMode = true;
+                model.IsDevelopMode = false;
                 model.IsUseColumnFilter = true;
 
-                model.Columns.Add(new ColDefModel("Action", typeof(string))
+                model.Columns.Add(new ColumnModel("Action", typeof(string))
                 {
                     DisplayName = "Action Col",
                     IsSearchable = false,
                     IsSortable = false,
                     MRenderFunction = "actionColRender"
                 });
+
+                model.BeforeSendFunctionName = "beforeSendHandle";
             }
 
             @await Html.PartialAsync("/Areas/Portal/Views/Shared/_DataTable.cshtml", model).ConfigureAwait(true)
 
             <script>
+                function beforeSendHandle(data) {
+                    data.push({
+                        name: "newData",
+                        value: "test modify data before send"
+                    });
+
+                    console.log("before send handle: ", data);
+                }
                 function actionColRender(data, type, row) {
-                    return "<button class='btn btn-primary'>" + row[1] + "</button>";
+                    return "<button class='btn btn-primary'>" + row[2] + "</button>";
                 }
             </script>
         </div>
@@ -109,6 +117,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 
 ```html
 @using Newtonsoft.Json.Linq
+@using Puppy.DataTable.Constants
 @using Puppy.DataTable.Models.Config
 @using Puppy.DataTable.Utils.Extensions
 @model DataTableModel
@@ -153,62 +162,71 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
         @{
             var options = new JObject
             {
-                ["aaSorting"] = new JRaw(Model.GetColumnSortingString()),
-                ["bProcessing"] = true,
-                ["stateSave"] = Model.IsStateSave,
-                ["stateDuration"] = -1,
-                ["bServerSide"] = true,
-                ["bFilter"] = Model.IsShowGlobalSearchInput,
-                ["sDom"] = Model.Dom,
-                ["responsive"] = Model.IsResponsive,
-                ["language"] = new JObject
+                [PropertyConst.Sorting] = new JRaw(Model.GetColumnSortingString()),
+                [PropertyConst.IsProcessing] = true,
+                [PropertyConst.IsStateSave] = Model.IsStateSave,
+                [PropertyConst.StateDuration] = -1,
+                [PropertyConst.IsServerSide] = true,
+                [PropertyConst.IsFilter] = Model.IsShowGlobalSearchInput,
+                [PropertyConst.Dom] = Model.Dom,
+                [PropertyConst.IsResponsive] = Model.IsResponsive,
+                [PropertyConst.IsAutoWidth] = Model.IsAutoWidthColumn,
+                [PropertyConst.AjaxSource] = Model.AjaxUrl,
+                [PropertyConst.ColumnDefine] = new JRaw(Model.GetColumnsJsonString()),
+                [PropertyConst.SearchCols] = Model.GetSearchColumns(),
+                [PropertyConst.LengthMenuDefine] = Model.LengthMenu != null ? new JRaw(Model.LengthMenu) : new JRaw(string.Empty),
+                [PropertyConst.Language] = new JObject
                 {
-                    ["search"] = "_INPUT_",
-                    ["lengthMenu"] = "_MENU_",
-                    ["sSearchPlaceholder"] = "Search...",
-                },
-                ["bAutoWidth"] = Model.IsAutoWidthColumn,
-                ["sAjaxSource"] = Model.AjaxUrl,
-                ["aoColumnDefs"] = new JRaw(Model.GetColumnsJsonString()),
-                ["aoSearchCols"] = Model.GetSearchColumns(),
-                // Size List
-                ["aLengthMenu"] = Model.LengthMenu != null ? new JRaw(Model.LengthMenu) : new JRaw(string.Empty)
+                    [PropertyConst.SearchSelector] = "_INPUT_",
+                    [PropertyConst.LengthMenuSelector] = "_MENU_",
+                    [PropertyConst.SearchPlaceholder] = "Search...",
+                }
             };
 
             // Default Size
             if (Model.PageSize.HasValue)
             {
-                options["iDisplayLength"] = Model.PageSize;
+                options[PropertyConst.DisplayLength] = Model.PageSize;
             }
 
             // Language Code
             if (!string.IsNullOrWhiteSpace(Model.LanguageCode))
             {
-                options["oLanguage"] = new JRaw(Model.LanguageCode);
+                options[PropertyConst.LanguageCode] = new JRaw(Model.LanguageCode);
             }
 
             // Draw Call back function
-            if (!string.IsNullOrWhiteSpace(Model.DrawCallback))
+            if (!string.IsNullOrWhiteSpace(Model.DrawCallbackFunctionName))
             {
-                options["fnDrawCallback"] = new JRaw(Model.DrawCallback);
+                options[PropertyConst.FnDrawCallback] = new JRaw(Model.DrawCallbackFunctionName);
             }
 
             // Server Request
-            options["fnServerData"] = new JRaw(
-                "function(sSource, aoData, fnCallback) { " +
-                "    var ajaxOptions = { 'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback }; " +
-                (Model.AjaxErrorHandler == null ? "" : ("ajaxOptions['error'] = " + Model.AjaxErrorHandler) + "; ") +
-                "    $.ajax(ajaxOptions);" +
+            options[PropertyConst.FnServerData] = new JRaw(
+                "function(sSource, aoData, fnCallback) { "
+                + (Model.IsDevelopMode ? "    console.log('[DataTable] URL: ', sSource);" : string.Empty)
+                + (Model.IsDevelopMode ? "    console.log('[DataTable] Request: ', aoData);" : string.Empty)
+                + "    var ajaxOptions = { 'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback};"
+                + (Model.IsDevelopMode ? "ajaxOptions['success'] = function(data){"
+                                              + "    console.log('[DataTable] Response', data);"
+                                              + "    if(fnCallback && typeof fnCallback === 'function'){"
+                                              + "        fnCallback(data)"
+                                              + "    }"
+                                              + "};"
+                                       : string.Empty)
+                + (string.IsNullOrWhiteSpace(Model.BeforeSendFunctionName) ? string.Empty : $"{Model.BeforeSendFunctionName}(aoData);")
+                + (string.IsNullOrWhiteSpace(Model.AjaxErrorHandler) ? string.Empty : "ajaxOptions['error'] = " + Model.AjaxErrorHandler + "; ")
+                + "    $.ajax(ajaxOptions);" +
                 "}");
 
             // Tools
             if (Model.IsUseTableTools)
             {
-                options["oTableTools"] = new JRaw("{ 'sSwfPath': '" + Url.AbsoluteContent("~/portal/vendor/datatables-tabletools/swf/copy_csv_xls_pdf.swf") + "' }");
+                options[PropertyConst.TableTools] = new JRaw("{ 'sSwfPath': '" + Url.AbsoluteContent("~/portal/vendor/datatables-tabletools/swf/copy_csv_xls_pdf.swf") + "' }");
 
                 var tools = Model.IsEnableColVis ? "{extend: 'colvis', text: 'Columns'}," : string.Empty;
                 tools += "'copy', 'excel', 'csv', 'pdf', 'print'";
-                options["buttons"] = new JRaw($"[{tools}]");
+                options[PropertyConst.Buttons] = new JRaw($"[{tools}]");
             }
 
             // Additional Option
@@ -225,7 +243,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 
         @if (Model.IsDevelopMode)
         {
-            @Html.Raw("console.log(dataTableOptions);")
+            @Html.Raw("console.log('[DataTable] Config', dataTableOptions);")
         }
 
         var $dataTable = $table.dataTable(dataTableOptions);

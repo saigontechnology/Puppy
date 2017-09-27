@@ -29,8 +29,6 @@ namespace Puppy.DataTable.Models.Config
 
         public string TableClass { get; set; } = "table table-hover dataTable table-striped";
 
-        public string DrawCallback { get; set; }
-
         public string Id { get; set; }
 
         public string AjaxUrl { get; set; }
@@ -78,7 +76,23 @@ namespace Puppy.DataTable.Models.Config
 
         public string GlobalJsVariableName { get; set; }
 
+        /// <summary>
+        ///     Your javascript function as string with params: jqXHR, textStatus, errorThrown. Ex:
+        ///     "function(jqXHR, textStatus, errorThrown){console.log(textStatus)}"
+        /// </summary>
         public string AjaxErrorHandler { get; set; }
+
+        /// <summary>
+        ///     Function name of Draw Call Back. DataTable will pass "setting" to the function. Ex: drawCallBackHandle(oSettings). 
+        /// </summary>
+        public string DrawCallbackFunctionName { get; set; }
+
+        /// <summary>
+        ///     Function name of before send handler, you can modified data before submit by this
+        ///     way. DataTable will pass "list key-value" submit to server as params to the function.
+        ///     Ex: beforeSendHandle(aoData).
+        /// </summary>
+        public string BeforeSendFunctionName { get; set; }
 
         public DataTableModel(string id, string ajaxUrl, params ColumnModel[] columns)
         {

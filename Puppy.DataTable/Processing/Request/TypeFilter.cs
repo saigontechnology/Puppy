@@ -125,8 +125,7 @@ namespace Puppy.DataTable.Processing.Request
                     return filterString ?? string.Empty;
                 }
 
-                filterString = (filterString == null ? null : $"{filterString} and ") + columnName +
-                               $" <= @{parametersForLinqQuery.Count}";
+                filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count}";
                 parametersForLinqQuery.Add(end);
 
                 return filterString;
@@ -136,7 +135,6 @@ namespace Puppy.DataTable.Processing.Request
             {
                 if (dateTime.Date == dateTime)
                 {
-                    dateTime = dateTime.ToUniversalTime();
                     parametersForLinqQuery.Add(dateTime);
                     parametersForLinqQuery.Add(dateTime.AddDays(1));
                     filterString =
@@ -144,7 +142,6 @@ namespace Puppy.DataTable.Processing.Request
                 }
                 else
                 {
-                    dateTime = dateTime.ToUniversalTime();
                     filterString = $"{columnName} == @{parametersForLinqQuery.Count}";
                     parametersForLinqQuery.Add(dateTime);
                 }

@@ -32,6 +32,23 @@ namespace Puppy.DataTable.Constants
         public const string ClassName = "className";
         public const string Width = "width";
         public const string Targets = "aTargets";
+        public const string Sorting = "aaSorting";
+        public const string IsProcessing = "bProcessing";
+        public const string IsStateSave = "stateSave";
+        public const string StateDuration = "stateDuration";
+        public const string IsServerSide = "bServerSide";
+        public const string IsFilter = "bFilter";
+        public const string Dom = "sDom";
+        public const string IsResponsive = "responsive";
+        public const string IsAutoWidth = "bAutoWidth";
+        public const string AjaxSource = "sAjaxSource";
+        public const string ColumnDefine = "aoColumnDefs";
+        public const string SearchCols = "aoSearchCols";
+        public const string LengthMenuDefine = "aLengthMenu";
+        public const string FnDrawCallback = "fnDrawCallback";
+        public const string FnServerData = "fnServerData";
+        public const string TableTools = "oTableTools";
+        public const string Buttons = "buttons";
 
         // Request
         public const string DisplayStart = "iDisplayStart";
@@ -55,9 +72,13 @@ namespace Puppy.DataTable.Constants
         public const string Data = "aaData";
 
         // Language
+        public const string Language = "language";
+        public const string LanguageCode = "oLanguage";
+        public const string SearchSelector = "search";
+        public const string SearchPlaceholder = "sSearchPlaceholder";
         public const string Processing = "sProcessing";
-
         public const string LengthMenu = "sLengthMenu";
+        public const string LengthMenuSelector = "lengthMenu";
         public const string ZeroRecords = "sZeroRecords";
         public const string Info = "sInfo";
         public const string InfoEmpty = "sInfoEmpty";

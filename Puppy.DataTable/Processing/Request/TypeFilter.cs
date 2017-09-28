@@ -4,6 +4,7 @@ using Puppy.DataTable.Constants;
 using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 
 namespace Puppy.DataTable.Processing.Request
@@ -57,31 +58,40 @@ namespace Puppy.DataTable.Processing.Request
         {
             if (terms == "~") return string.Empty;
 
-            var filterString = null as string;
+            string filterString = null;
 
+            // Range Case
             if (terms.Contains("~"))
             {
                 var parts = terms.Split('~');
 
-                if (DateTimeOffset.TryParse(parts[0] ?? string.Empty, out var fromDateTime))
+                // FROM DATE TIME
+                bool isValidFromDateTime = TryParse(parts[0], out DateTimeOffset fromDateTime);
+
+                if (isValidFromDateTime)
                 {
                     filterString = $"{columnName} >= @{parametersForLinqQuery.Count}";
                     parametersForLinqQuery.Add(fromDateTime);
                 }
 
-                if (!DateTimeOffset.TryParse(parts[1] ?? string.Empty, out var toDateTime))
+                // TO DATE TIME
+                bool isValidToDateTime = TryParse(parts[1], out DateTimeOffset toDateTime);
+
+                if (!isValidToDateTime)
                 {
                     return filterString ?? string.Empty;
                 }
 
-                filterString = (filterString == null ? null : $"{filterString} and ") + columnName + $" <= @{parametersForLinqQuery.Count}";
+                filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count}";
 
                 parametersForLinqQuery.Add(toDateTime);
 
                 return filterString;
             }
 
-            if (!DateTimeOffset.TryParse(terms, out var dateTime))
+            // Single Case
+            bool isValidDateTime = TryParse(terms, out DateTimeOffset dateTime);
+            if (!isValidDateTime)
             {
                 return null;
             }
@@ -110,41 +120,52 @@ namespace Puppy.DataTable.Processing.Request
 
             string filterString = null;
 
+            // Range Case
             if (terms.Contains("~"))
             {
                 var parts = terms.Split('~');
 
-                if (DateTime.TryParse(parts[0] ?? string.Empty, out var start))
+                // FROM DATE TIME
+                bool isValidFromDateTime = TryParse(parts[0], out DateTime fromDateTime);
+
+                if (isValidFromDateTime)
                 {
                     filterString = $"{columnName} >= @{parametersForLinqQuery.Count}";
-                    parametersForLinqQuery.Add(start);
+                    parametersForLinqQuery.Add(fromDateTime);
                 }
 
-                if (!DateTime.TryParse(parts[1] ?? string.Empty, out var end))
+                // TO DATE TIME
+                bool isValidToDateTime = TryParse(parts[1], out DateTime toDateTime);
+
+                if (!isValidToDateTime)
                 {
                     return filterString ?? string.Empty;
                 }
 
                 filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count}";
-                parametersForLinqQuery.Add(end);
+                parametersForLinqQuery.Add(toDateTime);
 
                 return filterString;
             }
 
-            if (DateTime.TryParse(terms, out var dateTime))
+            // Single Case
+            bool isValidDateTime = TryParse(terms, out DateTime dateTime);
+            if (!isValidDateTime)
             {
-                if (dateTime.Date == dateTime)
-                {
-                    parametersForLinqQuery.Add(dateTime);
-                    parametersForLinqQuery.Add(dateTime.AddDays(1));
-                    filterString =
-                        $"({columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1})";
-                }
-                else
-                {
-                    filterString = $"{columnName} == @{parametersForLinqQuery.Count}";
-                    parametersForLinqQuery.Add(dateTime);
-                }
+                return null;
+            }
+
+            if (dateTime.Date == dateTime)
+            {
+                parametersForLinqQuery.Add(dateTime);
+                parametersForLinqQuery.Add(dateTime.AddDays(1));
+
+                filterString = $"({columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1})";
+            }
+            else
+            {
+                filterString = $"{columnName} == @{parametersForLinqQuery.Count}";
+                parametersForLinqQuery.Add(dateTime);
             }
             return filterString;
         }
@@ -269,6 +290,8 @@ namespace Puppy.DataTable.Processing.Request
             return $"{columnName} == @{parametersForLinqQuery.Count - 1}";
         }
 
+        #region Internal Methods
+
         internal static string FilterMethod(string terms, List<object> parametersForLinqQuery, Type type)
         {
             string Clause(string conditional, string query)
@@ -295,7 +318,7 @@ namespace Puppy.DataTable.Processing.Request
                 : Clause(ConditionalCost.Contain, terms);
         }
 
-        private static object ChangeType(string terms, DataTablePropertyInfo propertyInfo)
+        internal static object ChangeType(string terms, DataTablePropertyInfo propertyInfo)
         {
             if (propertyInfo.PropertyInfo.PropertyType.GetTypeInfo().IsGenericType &&
                 propertyInfo.Type.GetGenericTypeDefinition() == typeof(Nullable<>))
@@ -306,5 +329,51 @@ namespace Puppy.DataTable.Processing.Request
 
             return Convert.ChangeType(terms, propertyInfo.Type);
         }
+
+        internal static bool TryParse(string value, out DateTimeOffset dateTimeOffset)
+        {
+            value = string.IsNullOrWhiteSpace(value) ? string.Empty : value;
+
+            if (DataTableGlobalConfig.RequestDateTimeFormatMode == DateTimeFormatMode.Auto)
+            {
+                if (DateTimeOffset.TryParse(value, out dateTimeOffset))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (DateTimeOffset.TryParseExact(value, DataTableGlobalConfig.DateTimeFormat, null, DateTimeStyles.None, out dateTimeOffset))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        internal static bool TryParse(string value, out DateTime dateTime)
+        {
+            value = string.IsNullOrWhiteSpace(value) ? string.Empty : value;
+
+            if (DataTableGlobalConfig.RequestDateTimeFormatMode == DateTimeFormatMode.Auto)
+            {
+                if (DateTime.TryParse(value, out dateTime))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (DateTime.TryParseExact(value, DataTableGlobalConfig.DateTimeFormat, null, DateTimeStyles.None, out dateTime))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Internal Methods
     }
 }

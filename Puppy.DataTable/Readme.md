@@ -6,21 +6,47 @@
 - Support Search: Free Text, DateTime, Enum, Number.
   > Support response and search Enum data as `Display Name` ?? `Description` ?? `Name`
 - Support Custom and transform response data. Ex: Difference DateTime format for each endpoint.
-- Support set global or specific format for DateTime property. If global and specific is not set, auto parse mode will be applied. 
+- Support set global format for DateTime property.
+  > If RequestDateTimeFormatMode is Auto, the string will auto parse to DateTime by any format, else will use global DateTimeFormat.
 - Support Filter Type: Select, Text, None
 - Support submit `Additional Data` for each request, you can access all data including additional in server-side via `Data` property.
 - Support Develop Mode: for debug purpose: `console.log` request, response and config of DataTable.
 
 # How To Use
 
-- Add `DataTable Model Binder Provider` to `Mvc Options`
-
+- Add DataTable to Service Collection
 ```csharp
-  services
-        .AddMvc(options =>
-        {
-            options.AddDataTableModelBinderProvider();
-        })
+	// [DataTable]
+	services.AddDataTable(ConfigurationRoot);
+```
+
+- Add `DataTable Model Binder Provider` to `Mvc Options`
+```csharp
+	services
+		.AddMvc(options =>
+		{
+			// [DataTable]
+			options.AddDataTableModelBinderProvider();
+		})
+```
+
+- Use DataTable for ApplicationBuidler
+```csharp
+	// [DataTable]
+	app.UseDataTable();
+```
+
+- Add "DataTable" section in appsettings.json to config the DateTimeFormat
+```json
+	"DataTable": {
+	// Response DateTime as string by format, default is "dd/MM/yyyy hh:mm".
+	// If RequestDateTimeFormatMode is Specific, every request will use the format to parse to DateTime.
+	"DateTimeFormat": "dd/MM/yyyy hh:mm",
+
+	// Control the way to parse string to DateTime every request.
+	// Value can be Auto or Specific, default is Auto.
+	"RequestDateTimeFormatMode": "Auto"
+	}
 ```
 
 - In Business, return `DataTablesResponseDataModel` to Controller by `{IQueryable}.GetDataTableResponse({dataTableParamModel})`

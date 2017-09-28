@@ -31,8 +31,6 @@ namespace Puppy.DataTable.Processing.Response
             }
             else if (DateTypes.Contains(type))
             {
-                // TODO, Currently not support for DateRange and DateTimeRange, because I not support
-                // date-range in columnsFilter plugin yet. FilterType = FilterConst.DateRange;
                 FilterType = FilterConst.Text;
             }
             else if (type == typeof(bool))

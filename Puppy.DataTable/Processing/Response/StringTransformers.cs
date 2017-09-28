@@ -38,9 +38,8 @@ namespace Puppy.DataTable.Processing.Response
 
         static StringTransformers()
         {
-            // TODO Config DateTime Format in Config Object with appsetting.json
-            RegisterFilter<DateTimeOffset>(dateTimeOffset => dateTimeOffset.ToLocalTime().ToString("g"));
-            RegisterFilter<DateTime>(dateTime => dateTime.ToLocalTime().ToString("g"));
+            RegisterFilter<DateTimeOffset>(dateTimeOffset => dateTimeOffset.ToString(DataTableGlobalConfig.DateTimeFormat));
+            RegisterFilter<DateTime>(dateTime => dateTime.ToString(DataTableGlobalConfig.DateTimeFormat));
             RegisterFilter<IEnumerable<string>>(s => s.ToArray());
             RegisterFilter<IEnumerable<int>>(s => s.ToArray());
             RegisterFilter<IEnumerable<long>>(s => s.ToArray());

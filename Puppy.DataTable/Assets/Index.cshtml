@@ -1,0 +1,44 @@
+﻿@using Puppy.DataTable
+@using Puppy.DataTable.Models.Config.Column
+
+<div class="page-header">
+    <h1 class="page-title">DataTables</h1>
+</div>
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-body">
+
+            @{
+                var model = Html.DataTableModel(Guid.NewGuid().ToString("N"), (TestController controller) => controller.GetTestAction(null));
+                model.IsDevelopMode = false;
+                model.IsUseColumnFilter = true;
+
+                model.Columns.Add(new ColumnModel("Action", typeof(string))
+                {
+                    DisplayName = "Action Col",
+                    IsSearchable = false,
+                    IsSortable = false,
+                    MRenderFunction = "actionColRender"
+                });
+
+                model.BeforeSendFunctionName = "beforeSendHandle";
+            }
+
+            @await Html.PartialAsync("_DataTable.cshtml", model).ConfigureAwait(true)
+
+            <script>
+                function beforeSendHandle(data) {
+                    data.push({
+                        name: "newData",
+                        value: "test modify data before send"
+                    });
+
+                    console.log("before send handle: ", data);
+                }
+                function actionColRender(data, type, row) {
+                    return "<button class='btn btn-primary'>" + row[2] + "</button>";
+                }
+            </script>
+        </div>
+    </div>
+</div>

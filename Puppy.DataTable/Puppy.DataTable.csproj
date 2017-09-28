@@ -22,6 +22,12 @@
     <None Update="Assets\dataTables.colVis.min.js">
       <DependentUpon>dataTables.colVis.js</DependentUpon>
     </None>
+    <None Update="Assets\Index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Index.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\jquery.dataTables.columnFilter.min.js">
       <DependentUpon>jquery.dataTables.columnFilter.js</DependentUpon>
     </None>

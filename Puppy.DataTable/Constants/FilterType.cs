@@ -17,32 +17,45 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Puppy.DataTable.Constants
 {
     public enum FilterType
     {
+        /// <summary>
+        ///     Not show any input in Column Filter 
+        /// </summary>
         [Display(Name = FilterConst.None)]
         None,
 
+        /// <summary>
+        ///     Display as Dropdown list in Column Filter 
+        /// </summary>
         [Display(Name = FilterConst.Select)]
         Select,
 
+        /// <summary>
+        ///     Display as Free Text input in Column Filter 
+        /// </summary>
         [Display(Name = FilterConst.Text)]
         Text,
 
+        [Obsolete("I'm not support for this filter type by default, you need self implement UI for checkbox type in the columnFilter.js")]
         [Display(Name = FilterConst.Checkbox)]
         Checkbox,
 
+        [Obsolete("I'm not support for this filter type by default, you need self implement UI for number-range type in the columnFilter.js")]
         [Display(Name = FilterConst.NumberRange)]
-        NumberRange
+        NumberRange,
 
-        // TODO, Currently not support for DateRange and DateTimeRange, because I not support date-range in columnsFilter plugin yet.
-        //[Display(Name = FilterConst.DateRange)]
-        //DateRange,
+        [Obsolete("I'm not support for this filter type by default, you need self implement UI for date-range type in the columnFilter.js")]
+        [Display(Name = FilterConst.DateRange)]
+        DateRange,
 
-        //[Display(Name = FilterConst.DateTimeRange)]
-        //DateTimeRange
+        [Obsolete("I'm not support for this filter type by default, you need self implement UI for datetime-range type in the columnFilter.js")]
+        [Display(Name = FilterConst.DateTimeRange)]
+        DateTimeRange
     }
 }

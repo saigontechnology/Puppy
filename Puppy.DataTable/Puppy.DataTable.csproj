@@ -14,6 +14,19 @@
     <OutputPath>.\bin\</OutputPath>
   </PropertyGroup>
 
+  <!-- Nested Item -->
+  <ItemGroup>
+    <None Update="Assets\dataTables.colVis.min.css">
+      <DependentUpon>dataTables.colVis.css</DependentUpon>
+    </None>
+    <None Update="Assets\dataTables.colVis.min.js">
+      <DependentUpon>dataTables.colVis.js</DependentUpon>
+    </None>
+    <None Update="Assets\jquery.dataTables.columnFilter.min.js">
+      <DependentUpon>jquery.dataTables.columnFilter.js</DependentUpon>
+    </None>
+  </ItemGroup>
+
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
@@ -31,21 +44,10 @@
 
     <!-- Embedded -->
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="1.1.0" />
-    
+
     <!-- Linq Dynamic -->
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.6.8" />
 
     <PackageReference Include="Enums.NET" Version="2.2.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Assets\dataTables.colVis.min.css">
-      <DependentUpon>dataTables.colVis.css</DependentUpon>
-    </None>
-    <None Update="Assets\dataTables.colVis.min.js">
-      <DependentUpon>dataTables.colVis.js</DependentUpon>
-    </None>
-    <None Update="Assets\jquery.dataTables.columnFilter.min.js">
-      <DependentUpon>jquery.dataTables.columnFilter.js</DependentUpon>
-    </None>
   </ItemGroup>
 </Project>

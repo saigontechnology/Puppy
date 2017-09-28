@@ -49,7 +49,7 @@ namespace Puppy.DataTable.Models.Request
         public List<bool> ListIsEscapeRegexColumn { get; set; }
 
         /// <summary>
-        ///     Store all information by key/name-value from client side
+        ///     Store all information by key/name-value from client side 
         /// </summary>
         [JsonIgnore]
         public Dictionary<string, object> Data { get; set; }

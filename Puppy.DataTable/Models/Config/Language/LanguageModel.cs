@@ -34,10 +34,5 @@ namespace Puppy.DataTable.Models.Config.Language
 
         [JsonProperty(PropertyName = PropertyConst.Paginate)]
         public PaginateModel Paginate { get; set; }
-
-        public string ToJsonString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

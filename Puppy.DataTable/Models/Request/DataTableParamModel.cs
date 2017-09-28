@@ -48,6 +48,12 @@ namespace Puppy.DataTable.Models.Request
         [JsonProperty(PropertyName = PropertyConst.EscapeRegexColumns)]
         public List<bool> ListIsEscapeRegexColumn { get; set; }
 
+        /// <summary>
+        ///     Store all information by key/name-value from client side
+        /// </summary>
+        [JsonIgnore]
+        public Dictionary<string, object> Data { get; set; }
+
         public DataTableParamModel()
         {
             ColumnNames = new List<string>();

@@ -123,17 +123,22 @@ namespace Puppy.Core.ObjectUtils
         {
             try
             {
-                Type t = typeof(T);
+                if (obj == null)
+                {
+                    return default(T);
+                }
 
+                Type t = typeof(T);
                 Type u = Nullable.GetUnderlyingType(t);
 
                 if (u != null)
                 {
-                    return (obj == null) ? default(T) : (T)Convert.ChangeType(obj, u);
+                    return (T)Convert.ChangeType(obj, u);
                 }
+
                 return (T)Convert.ChangeType(obj, t);
             }
-            catch
+            catch (Exception)
             {
                 return default(T);
             }

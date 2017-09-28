@@ -22,8 +22,12 @@
 ```
 
 - In Business, return `DataTablesResponseDataModel` to Controller by `{IQueryable}.GetDataTableResponse({dataTableParamModel})`
+
 - In Controller, response ActionResult by `{DataTablesResponseDataModel}.GetDataTableActionResult<T>()`
-- The below is sample code
+
+## Best Practive
+
+### Server Side
 ```csharp
 [HttpPost]
 [Route("users")]
@@ -59,7 +63,8 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 ```
 
 - Then initial datatable in View by Model
-- Main.cshtml
+
+### Main View: Main.cshtml
 
 ```html
 @using Monkey.Controllers.Api
@@ -113,7 +118,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 </div>
 ```
 
-- _DataTable.cshtml
+### DataTable Partial View: _DataTable.cshtml
 
 ```html
 @using Newtonsoft.Json.Linq
@@ -263,7 +268,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
 </script>
 ```
 
-### Customising column rendering
+### Sample Customising column rendering
 ```csharp
 public class Message
 {
@@ -282,34 +287,19 @@ public class MessageViewModel
     public User UserEntity {get;set;} 
     public string Text {get;set;}
 }
-
-[HttpPost]
-ActionResult GetMessagesDataRows(DataTablesParam param)
-{
-    IQueryable<Message> messages = db.Query<Message>();
-    IQueryable<MessageViewModel> messageViewModels = messages.Select(m => new MessageViewModel {
-        CreatedDate = m.CreatedDate,
-        User = m.User.Name,
-        Text = m.Text
-    });
-
-    return DataTablesResult.Create(messages, param, x => new  {
-        CreatedDate = x.CreatedDate.ToFriendlyTimeString(), 
-        User = string.Format("<a href='/users/{0}'>{1}</a>", r.UserEnt.Id, r.UserEnt.Name)
-    });
-});
 ```
 
 ### Specifying Initial Search Values
+- Use can define data for `DataTableModel` in both `.cs` file and `.cshtml` file (via Razor code)
 ```csharp
 model
-	.FilterOn("Position", new { sSelector = "#custom-filter-placeholder-position" }, new { sSearch = "Tester" }).Select("Engineer", "Tester", "Manager")
+    .FilterOn("Position", new { sSelector = "#custom-filter-placeholder-position" }, new { sSearch = "Tester" }).Select("Engineer", "Tester", "Manager")
 
-	.FilterOn("Id", null, new { sSearch = "2~4", bEscapeRegex = false }).NumberRange()
+    .FilterOn("Id", null, new { sSearch = "2~4", bEscapeRegex = false }).NumberRange()
 
-	.FilterOn("IsAdmin", null, new { sSearch = "False" }).Select("True","False")
+    .FilterOn("IsAdmin", null, new { sSearch = "False" }).Select("True","False")
 
-	.FilterOn("Salary", new { sSelector = "#custom-filter-placeholder-salary" }, new { sSearch = "1000~100000" }).NumberRange();
+    .FilterOn("Salary", new { sSelector = "#custom-filter-placeholder-salary" }, new { sSearch = "1000~100000" }).NumberRange();
 
 model.StateSave = false;
 

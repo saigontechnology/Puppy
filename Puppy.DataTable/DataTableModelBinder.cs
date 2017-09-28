@@ -2,6 +2,7 @@
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Models.Request;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Puppy.DataTable
@@ -13,25 +14,21 @@ namespace Puppy.DataTable
         {
             var valueProvider = bindingContext.ValueProvider;
 
+            // Depend on "iColumns" property is have or not, we will known this is legacy model or
+            // latest style model. Binding the value to model by the legacy or new style mapping.
             int columns = GetValue<int>(valueProvider, PropertyConst.Columns);
+            DataTableParamModel dataTableParam = columns <= 0 ? BindModel(valueProvider) : BindLegacyModel(valueProvider, columns);
 
-            if (columns <= 0)
-            {
-                var bindModel = BindModel(valueProvider);
+            // Keep all data to Data Property
+            dataTableParam.Data = GetDataDictionary(bindingContext);
 
-                bindingContext.Result = ModelBindingResult.Success(bindModel);
+            // Bind data to result
+            bindingContext.Result = ModelBindingResult.Success(dataTableParam);
 
-                return Task.FromResult(bindModel);
-            }
-
-            var bindLegacyModel = BindLegacyModel(valueProvider, columns);
-
-            bindingContext.Result = ModelBindingResult.Success(bindLegacyModel);
-
-            return Task.FromResult(bindLegacyModel);
+            return Task.FromResult(dataTableParam);
         }
 
-        private static object BindModel(IValueProvider valueProvider)
+        private static DataTableParamModel BindModel(IValueProvider valueProvider)
         {
             DataTableParamModel obj = new DataTableParamModel
             {
@@ -107,6 +104,21 @@ namespace Puppy.DataTable
                 obj.SortDir.Add(GetValue<string>(valueProvider, $"{PropertyConst.SortDir}_{i}"));
             }
             return obj;
+        }
+
+        private static Dictionary<string, object> GetDataDictionary(ModelBindingContext bindingContext)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+
+            var form = bindingContext.HttpContext.Request.Form;
+            var valueProvider = bindingContext.ValueProvider;
+
+            foreach (var key in form.Keys)
+            {
+                data.Add(key, valueProvider.GetValue(key));
+            }
+
+            return data;
         }
 
         private static T GetValue<T>(IValueProvider valueProvider, string key)

@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
+using Puppy.Core.ObjectUtils;
 using System.Collections.Generic;
 
 namespace Puppy.Core.DictionaryUtils
@@ -27,8 +29,8 @@ namespace Puppy.Core.DictionaryUtils
         ///     Safe set value to dictionary 
         /// </summary>
         /// <remarks> Update value if already exists, else is add </remarks>
-        /// <typeparam name="T1"></typeparam>
-        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
         /// <param name="source"></param>
         /// <param name="key">   </param>
         /// <param name="data">  </param>
@@ -43,7 +45,7 @@ namespace Puppy.Core.DictionaryUtils
         /// <exception cref="ArgumentException">
         ///     An element with the same key already exists in the <see cref="T:System.Collections.Generic.IDictionary`2" />.
         /// </exception>
-        public static void AddOrUpdate<T1, T2>(this IDictionary<T1, T2> source, T1 key, T2 data) where T1 : class
+        public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue data) where TKey : class
         {
             if (source.ContainsKey(key))
             {
@@ -53,6 +55,23 @@ namespace Puppy.Core.DictionaryUtils
             {
                 source.Add(key, data);
             }
+        }
+
+        public static T GetValue<T>(this IDictionary<string, object> source, string key)
+        {
+            return source.TryGetValue(key, out var data) ? data.ConvertTo<T>() : default(T);
+        }
+
+        public static T GetValue<T>(this IDictionary<string, object> source, string key, T defaultValue)
+        {
+            if (!source.TryGetValue(key, out var data))
+            {
+                return defaultValue;
+            }
+
+            var result = data.ConvertTo<T>();
+
+            return Equals(result, default(T)) ? defaultValue : result;
         }
     }
 }

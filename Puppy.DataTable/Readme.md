@@ -38,10 +38,11 @@
 
 - Add "DataTable" section in appsettings.json to config the DateTimeFormat
 ```json
+	// [Auto Reload]
 	"DataTable": {
-	// Response DateTime as string by format, default is "dd/MM/yyyy hh:mm".
+	// Response DateTime as string by format, default is "dd/MM/yyyy hh:mm tt".
 	// If RequestDateTimeFormatMode is Specific, every request will use the format to parse to DateTime.
-	"DateTimeFormat": "dd/MM/yyyy hh:mm",
+	"DateTimeFormat": "dd/MM/yyyy hh:mm tt",
 
 	// Control the way to parse string to DateTime every request.
 	// Value can be Auto or Specific, default is Auto.

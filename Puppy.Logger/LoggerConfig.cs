@@ -27,7 +27,7 @@ using System.Linq;
 namespace Puppy.Logger
 {
     /// <summary>
-    ///     Logger Configuration 
+    ///     [Auto Reload] Logger Configuration 
     /// </summary>
     /// <remarks>
     ///     <c> Not allow config format/template </c> of rolling file because it must use Puppy

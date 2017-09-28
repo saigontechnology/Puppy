@@ -23,6 +23,9 @@ using Puppy.DataTable.Constants;
 
 namespace Puppy.DataTable
 {
+    /// <summary>
+    ///     [Auto Reload] DataTable Global Config 
+    /// </summary>
     public static class DataTableGlobalConfig
     {
         /// <summary>
@@ -31,8 +34,8 @@ namespace Puppy.DataTable
         ///     <see cref="DateTimeFormatMode.Specific" />, every request will use the format to
         ///     parse string to DateTime. Else will try parse string to DateTime by any format.
         /// </summary>
-        /// <remarks> Format "dd/MM/yyyy hh:mm" by default </remarks>
-        public static string DateTimeFormat { get; set; } = "dd/MM/yyyy hh:mm";
+        /// <remarks> Format "dd/MM/yyyy hh:mm tt" by default </remarks>
+        public static string DateTimeFormat { get; set; } = "dd/MM/yyyy hh:mm tt";
 
         /// <summary>
         ///     Control the way to parse string to DateTime every request. If value is

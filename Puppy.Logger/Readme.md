@@ -13,6 +13,7 @@
 - Puppy Logger auto add a watcher to `appsettings.json`, when you change the config in `appsettings.json` new logger config applies immediately.
 
 ```json
+// [Auto Reload]
 "Logger": {
     //------------------ Rolling File ------------------
     // Default Puppy Logger always log in SQLite file and also in Rolling File with config, so you can enable or disable rolling file option

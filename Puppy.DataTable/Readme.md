@@ -2,12 +2,14 @@
 # Puppy.DataTable Document
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
-- Support response and request/search Enum as Display Name ?? Description ?? Name
-- Support Search Number Range
-- Support Search Date Time Range
+- Configurable for DataTable from Server Side.
+- Support Search: Number Range, Date Time Range, Enum
+- Support response and search Enum data as `Display Name` ?? `Description` ?? `Name`
+- Support Custom and transform response data. Ex: Difference DateTime format for each endpoint.
+- Support set global or specific format for DateTime property. If global and specific is not set, auto parse mode will be applied. 
 - Support Filter Type: Select, Text, None
-- Support Additional Data
-- Support Develop Mode: for debug purpose.
+- Support submit `Additional Data` for each request, you can access all data including additional in server-side via `Data` property.
+- Support Develop Mode: for debug purpose: `console.log` request, response and config of DataTable.
 
 # How To Use
 

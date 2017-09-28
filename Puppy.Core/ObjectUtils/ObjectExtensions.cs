@@ -133,7 +133,17 @@ namespace Puppy.Core.ObjectUtils
 
                 if (u != null)
                 {
+                    if (u == typeof(string))
+                    {
+                        return (T)(object)obj.ToString();
+                    }
+
                     return (T)Convert.ChangeType(obj, u);
+                }
+
+                if (t == typeof(string))
+                {
+                    return (T)(object)obj.ToString();
                 }
 
                 return (T)Convert.ChangeType(obj, t);

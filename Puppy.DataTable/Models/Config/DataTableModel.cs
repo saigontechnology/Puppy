@@ -25,7 +25,7 @@ namespace Puppy.DataTable.Models.Config
 
         public bool IsUseColumnFilter { get; set; } = false;
 
-        public bool IsStateSave { get; set; } = true;
+        public bool IsStateSave { get; set; } = false;
 
         public string TableClass { get; set; } = "table table-hover dataTable table-striped";
 

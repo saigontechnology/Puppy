@@ -23,6 +23,16 @@
     </Content>
   </ItemGroup>
 
+  <!-- Nested Item -->
+  <ItemGroup>
+    <Content Update="apidoc\JsonViewer\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
+    <Content Update="apidoc\JsonViewer\main.min.js">
+      <DependentUpon>main.js</DependentUpon>
+    </Content>
+  </ItemGroup>
+
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />

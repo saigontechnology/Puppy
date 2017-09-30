@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "apidoc/JsonViewer/main.min.js",
+    "inputFiles": [
+      "apidoc/JsonViewer/main.js"
+    ]
+  },
+  {
+    "outputFileName": "apidoc/JsonViewer/main.min.css",
+    "inputFiles": [
+      "apidoc/JsonViewer/main.css"
+    ]
+  },
+  {
+    "outputFileName": "apidoc/index.min.html",
+    "inputFiles": [
+      "apidoc/index.html"
+    ]
+  }
+]

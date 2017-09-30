@@ -1,34 +1,51 @@
+var jsonViewerSessionStorageKey = "JsonViewer";
+var defaultData = '{"message": "Welcome to Json Viewer","author": "Top Nguyen", "website": "http://topnguyen.net"}'
+
+
 ! function (t) {
     function e(r) { if (n[r]) return n[r].exports; var o = n[r] = { exports: {}, id: r, loaded: !1 }; return t[r].call(o.exports, o, o.exports, e), o.loaded = !0, o.exports }
     var n = {};
     return e.m = t, e.c = n, e.p = "/", e(0)
 }(function (t) {
-    var localStorageKey = "jsonViewerData";
-    var localStroageData = localStorage.getItem(localStorageKey);
 
-    if (localStroageData == "undefined") {
-        localStroageData = '{"success": {"message": "Welcome to Top Nguyen Json Viewer.","status_code": 200}}';
+    var sessionStroageData = sessionStorage.getItem(jsonViewerSessionStorageKey);
+    if (!sessionStroageData || sessionStroageData == "undefined") {
+        sessionStroageData = defaultData;
     }
 
-    var preElement = document.createElement("pre");
-    preElement.innerHTML = localStroageData;
-    document.body.insertBefore(preElement, document.body.firstChild)
+    try {
+        // try parse to check data is actual json string
+        var jsonData = JSON.parse(sessionStroageData);
+        sessionStroageData = JSON.stringify(jsonData, null, 4);
+        sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStroageData);
+    } catch (exception) {
+        var jsonData = { "data": sessionStroageData };
+        sessionStroageData = JSON.stringify(jsonData, null, 4);
+        sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStroageData);
+        console.log('The data is wrong json string format, Json Viewer try parse to new data.');
+        console.log('JsonViewerData', jsonData);
+    } finally {
+        var sessionStroageData = sessionStorage.getItem(jsonViewerSessionStorageKey);
+        var preElement = document.createElement("pre");
+        preElement.innerHTML = sessionStroageData;
+        document.body.insertBefore(preElement, document.body.firstChild)
 
-    for (var e in t)
-        if (Object.prototype.hasOwnProperty.call(t, e)) switch (typeof t[e]) {
-            case "function":
-                break;
-            case "object":
-                t[e] = function (e) {
-                    var n = e.slice(1),
-                        r = t[e[0]];
-                    return function (t, e, o) { r.apply(this, [t, e, o].concat(n)) }
-                }(t[e]);
-                break;
-            default:
-                t[e] = t[t[e]]
-        }
-    return t
+        for (var e in t)
+            if (Object.prototype.hasOwnProperty.call(t, e)) switch (typeof t[e]) {
+                case "function":
+                    break;
+                case "object":
+                    t[e] = function (e) {
+                        var n = e.slice(1),
+                            r = t[e[0]];
+                        return function (t, e, o) { r.apply(this, [t, e, o].concat(n)) }
+                    }(t[e]);
+                    break;
+                default:
+                    t[e] = t[t[e]]
+            }
+        return t
+    }
 }([function (t, e, n) { n(276), t.exports = n(121) }, function (t, e, n) {
     "use strict";
 
@@ -3119,11 +3136,21 @@ function (t, e, n) {
                     var t = this.refs.rawJSON.value.trim();
                     if (this.resetErrors(), !t) return void this.setState({ errors: Object.assign({}, this.state.errors, Object.assign({}, this.state.errors, { rawJSON: Object.assign({}, this.state.errors.rawJSON, { status: !0 }) })) });
                     try {
-                        var e = JSON.parse(t);
-                        this.props.changeJSON(e)
+                        // try parse to check data is actual json string
+                        var jsonData = JSON.parse(t);
+                        var sessionStorageData = JSON.stringify(jsonData, null, 4);
+                        sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStorageData);
+                        this.props.changeJSON(jsonData)
                     } catch (t) { this.setState({ errors: Object.assign({}, this.state.errors, Object.assign({}, this.state.errors, { jsonParseFailed: Object.assign({}, this.state.errors.jsonParseFailed, { status: !0 }) })) }) }
                 }
-            }, { key: "resetErrors", value: function () { this.setState({ errors: Object.assign({}, this.state.errors, Object.assign({}, this.state.errors, { jsonParseFailed: Object.assign({}, this.state.errors.jsonParseFailed, { status: !1 }), rawJSON: Object.assign({}, this.state.errors.rawJSON, { status: !1 }) })) }) } }, { key: "render", value: function () { return c.default.createElement("div", { className: "json-input-section" }, c.default.createElement("div", { className: "json-logo" }, c.default.createElement("img", { src: faviconUrl, style: { marginTop: "8px", width: "60px" } }, null)), c.default.createElement("h1", null, "Top Nguyen Json Viewer"), this.state.errors.jsonParseFailed.status && c.default.createElement("div", { className: "json-input-error-msg" }, this.state.errors.jsonParseFailed.message), this.state.errors.rawJSON.status && c.default.createElement("div", { className: "json-input-error-msg" }, this.state.errors.rawJSON.message), c.default.createElement("div", { className: "form-input" }, c.default.createElement("textarea", { ref: "rawJSON", defaultValue: this.state.json, className: "json-input" })), c.default.createElement("div", { className: "form-input save-btn-area" }, c.default.createElement("button", { type: "button", className: "btn btn-big btn-white", onClick: this.parseJSON.bind(this) }, "Parse JSON"))) } }]), e
+            }, { key: "resetErrors", value: function () { this.setState({ errors: Object.assign({}, this.state.errors, Object.assign({}, this.state.errors, { jsonParseFailed: Object.assign({}, this.state.errors.jsonParseFailed, { status: !1 }), rawJSON: Object.assign({}, this.state.errors.rawJSON, { status: !1 }) })) }) } }, {
+                key: "render", value: function () {
+                    return c.default.createElement("div", { className: "json-input-section" }, c.default.createElement("div", { className: "json-logo" }, c.default.createElement("img", { src: faviconUrl, style: { marginTop: "8px", width: "60px" } }, null)), c.default.createElement("h1", null, "Json Viewer"), this.state.errors.jsonParseFailed.status && c.default.createElement("div", { className: "json-input-error-msg" }, this.state.errors.jsonParseFailed.message), this.state.errors.rawJSON.status && c.default.createElement("div", { className: "json-input-error-msg" }, this.state.errors.rawJSON.message), c.default.createElement("div", { className: "form-input" }, c.default.createElement("textarea", { ref: "rawJSON", defaultValue: this.state.json, className: "json-input" })), c.default.createElement("div", { className: "form-input save-btn-area" }, c.default.createElement("button", {
+                        type: "button", className: "btn btn-big btn-white", onClick: this.parseJSON
+                            .bind(this)
+                    }, "Parse JSON")))
+                }
+            }]), e
         }(s.Component));
     e.default = l
 },

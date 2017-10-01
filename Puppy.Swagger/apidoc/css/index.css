@@ -19372,6 +19372,7 @@ a.btn.btn-success:hover {
     .btn.btn-pink,
     a.btn.btn-pink {
         background-color: #f46c93;
+        color: #fff;
         border-color: transparent;
     }
 

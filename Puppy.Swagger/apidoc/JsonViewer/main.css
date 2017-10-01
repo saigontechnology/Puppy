@@ -6,13 +6,13 @@ body {
 }
 
 ::-moz-selection {
-    background: #2f2442;
-    background: rgba(225, 196, 52, 0.5);
+    color: #f7f7f7;
+    background: #f46c93;
 }
 
 ::selection {
-    background: #2f2442;
-    background: rgba(225, 196, 52, 0.5);
+    color: #f7f7f7;
+    background: #f46c93;
 }
 
 .tab-container {
@@ -139,7 +139,8 @@ ul.json-dict li {
 }
 
 .json-literal-boolean {
-    color: #ff9a57
+    /*color: #ff9a57*/
+    color: #f46c93;
 }
 
 .nodeCircle {
@@ -207,7 +208,7 @@ textarea:focus {
 }
 
 .btn:hover {
-    background-color: #e6d169;
+    background-color: #281f38;
     -webkit-transition: background-color .4s ease-in;
     transition: background-color .4s ease-in
 }
@@ -238,14 +239,14 @@ textarea:focus {
 .json-input-error-msg {
     color: #fff;
     padding: 20px;
-    background-color: #de1509;
+    background-color: #e63b6c;
     margin: 0 auto;
     margin-bottom: 20px;
     box-shadow: 0 7px 7px 0 #111
 }
 
 .copier {
-    background: #2f2442;
+    background: #f46c93;
     padding: 5px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAADdAAAA3QFwU6IHAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAJBQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUIf2wAAAC90Uk5TAAwWFxgfICIqLi8wND5AS09QXWBwe32Ijo+Qk5WlpqitrrW6wMjO1ejw9/j6+/zuA4QFAAAAuElEQVQ4y8XU2Q6CMBBA0SJSN0SKKIrgvuHC/P/fiU2nlnR4MRLvCwmchGlZGOOCymcYL4EsQiDo65AaIA6s6iBgVt+A7sgMIJdHR4MJvZjCRbBsWEyIIIXn1CoBEB9wt0cNWgBetsEWHQqsjPlnFBhfrth52M6Q/wNJ9VwOEvS3R2ztKRDixrxBZmzUXAG3UCduFRjsT9iupwBz5LuVN86gSn8AHvbnE9cAnQYRfb3k+n4++Rfg7AWA7U1SIacFjQAAAABJRU5ErkJggg==);
     background-repeat: no-repeat;
@@ -283,26 +284,27 @@ ul.copyMenu:before {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-    background: #111;
+    background: #f46c93;
     position: absolute;
     top: 4px;
     left: -10px;
     z-index: -100;
-    border: 1px solid #222
+    border: 1px solid #f46c93
 }
 
 ul.copyMenu {
-    box-shadow: 0 5px 10px 0 rgba(6, 6, 6, .8)
+    box-shadow: 0 5px 10px 0 #f46c93;
+    box-shadow: 0 5px 10px 0 rgba(244, 108, 147, 0.6)
 }
 
     ul.copyMenu > li > a {
-        background: #111;
-        color: #2f2442;
+        background: #f46c93;
+        color: #fff;
         font-size: 12px;
         font-weight: 700;
         width: 100px;
         padding: 6px 8px;
-        border-bottom: 1px solid #222;
+        border-bottom: 1px solid #f46c93;
         display: block;
         cursor: pointer
     }
@@ -320,8 +322,8 @@ ul.copyMenu {
         }
 
     ul.copyMenu > li > a:hover {
-        background: #2f2442;
-        color: #111
+        background: #fff;
+        color: #2f2442
     }
 
 ol.json-array,

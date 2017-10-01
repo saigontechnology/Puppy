@@ -7,13 +7,13 @@
 }
 
 ::-moz-selection {
+    color: #f7f7f7;
     background: #f46c93;
-    background: rgba(244, 108, 147, 0.5)
 }
 
 ::selection {
+    color: #f7f7f7;
     background: #f46c93;
-    background: rgba(244, 108, 147, 0.5)
 }
 
 .swagger-section pre .markdown .emphasis {

@@ -2,6 +2,52 @@
 # Puppy.Swagger
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
+- Support use `[Description]` attribute to make description for response object property.
+- Support custom example for Request and Response
+	+ [SwaggerRequestExample]: 
+	[SwaggerRequestExample(typeof(TestModel), typeof(TestRequestModelExample))]. TestModelExample is class implement IExamplesProvider.
+	```csharp
+	public class TestRequestModelExample : IExamplesProvider
+	{
+		public object GetExamples()
+		{
+			return new TestModel
+			{
+				Lang = "en-GB",
+				Currency = "GBP",
+				Address = new AddressModel
+				{
+					Address1 = "1 Gwalior Road",
+					Locality = "London",
+					Country = "GB",
+					PostalCode = "SW15 1NP"
+				},
+				Items = new[]
+				{
+					new ItemModel
+					{
+						ItemId = "ABCD",
+						ItemType = ItemType.Product,
+						Price = 20,
+						Quantity = 1,
+						RestrictedCountries = new[] { "US" }
+					}
+				}
+			};
+		}
+	}
+	```
+	+ [SwaggerResponseExample]: Need use both [SwaggerResponse] and [SwaggerResponseExample], they use `StatusCodes` to map sample and response object type.
+		* [SwaggerResponse(StatusCodes.Status200OK, typeof(TestResponseModel))]
+		* [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TestResponseModelExample))].TestResponseModelExample is class implement IExamplesProvider.
+	```csharp
+	[SwaggerResponse(StatusCodes.Status200OK, Type = typeof(AccessTokenModel))]
+    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(AccessTokenSample))]
+	```
+- See more [how to generate request and response example](https://github.com/mattfrear/Swashbuckle.AspNetCore.Examples)
+
+# How to Setup
+
 ## Enable Project Documentation xml file.
 ![Project Property](Assets/ProjectProperty.png)
 1. Right click on your Web API web project, select `Properties` or use can use shortcut `Alt + Enter`
@@ -55,7 +101,7 @@
 - Add config section to `appsettings.json`
 - If you not have custom setting in appsettings.json, `default setting` will be apply.
 
-```json
+```javascript
 "ApiDocument": {
     // Api Document User Interface endpoint, start by "/". Default is "/developers"
     "ApiDocumentUiUrl": "/developers",
@@ -131,9 +177,9 @@ services.AddApiDocument(Path.Combine(Directory.GetCurrentDirectory(), "Documenta
 - This below is sample to config **copy always** to output folder.
 
 ```xml
-    <None Update="<your documentation file relative path>.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+<None Update="<your documentation file relative path>.xml">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+</None>
 ```
 
 ---

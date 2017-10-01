@@ -33,6 +33,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.Examples;
 
 namespace Puppy.Swagger
 {
@@ -76,7 +77,13 @@ namespace Puppy.Swagger
                 });
 
                 options.IncludeXmlCommentsIfExists(xmlDocumentFileFullPath);
+
                 options.DocumentFilter<HideInDocsFilter>();
+
+                // Examples and Description
+                options.OperationFilter<ExamplesOperationFilter>(); // [SwaggerRequestExample] & [SwaggerResponseExample]
+                options.OperationFilter<DescriptionOperationFilter>(); // [Description] on Response properties
+                //options.OperationFilter<AuthorizationInputOperationFilter>(); // Adds an Authorization input box to every endpoint
 
                 // Ignore Obsolete
                 options.IgnoreObsoleteProperties();
@@ -139,9 +146,14 @@ namespace Puppy.Swagger
                 });
 
                 options.IncludeXmlCommentsIfExists(assembly);
+
                 options.DocumentFilter<HideInDocsFilter>();
 
-                // Ignore Obsolete
+                // Examples and Description
+                options.OperationFilter<ExamplesOperationFilter>(); // [SwaggerRequestExample] & [SwaggerResponseExample]
+                options.OperationFilter<DescriptionOperationFilter>(); // [Description] on Response properties
+                //options.OperationFilter<AuthorizationInputOperationFilter>(); // Adds an Authorization input box to every endpoint
+                                                                       // Ignore Obsolete
                 options.IgnoreObsoleteProperties();
                 options.IgnoreObsoleteActions();
 

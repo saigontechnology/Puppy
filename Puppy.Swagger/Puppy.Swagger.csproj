@@ -50,5 +50,6 @@
 
     <!-- Swagger -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Examples" Version="2.3.0" />
   </ItemGroup>
 </Project>

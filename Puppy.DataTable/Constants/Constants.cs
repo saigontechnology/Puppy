@@ -54,6 +54,7 @@ namespace Puppy.DataTable.Constants
         public const string FnServerData = "fnServerData";
         public const string TableTools = "oTableTools";
         public const string Buttons = "buttons";
+        public const string DeferRender = "deferRender";
 
         // Request
         public const string DisplayStart = "iDisplayStart";

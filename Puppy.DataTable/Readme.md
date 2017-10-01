@@ -13,6 +13,21 @@
 - Support Develop Mode: for debug purpose: `console.log` request, response and config of DataTable.
 
 # How To Use
+- Add jQuery DataTable to your master page.
+```html
+<!-- Jquery + DataTable -->
+<script type="text/javascript" rc="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css" />
+
+<!-- You can find resources in folder "Assets"-->
+<script type="text/javascript" src="jquery.dataTables.columnFilter.js"></script>
+
+<!-- ColVis -->
+<script type="text/javascript" src="//cdn.datatables.net/colvis/1.1.2/js/dataTables.colVis.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/colvis/1.1.2/css/dataTables.colVis.min.css" />
+```
 
 - Add DataTable to Service Collection
 ```csharp
@@ -208,6 +223,7 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
                 [PropertyConst.AjaxSource] = Model.AjaxUrl,
                 [PropertyConst.ColumnDefine] = new JRaw(Model.GetColumnsJsonString()),
                 [PropertyConst.SearchCols] = Model.GetSearchColumns(),
+                [PropertyConst.DeferRender] = Model.IsDeferRender,
                 [PropertyConst.LengthMenuDefine] = Model.LengthMenu != null ? new JRaw(Model.LengthMenu) : new JRaw(string.Empty),
                 [PropertyConst.Language] = new JObject
                 {

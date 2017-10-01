@@ -18863,10 +18863,10 @@ header.site-header.site-header nav {
         header.site-header.site-header nav .navbar-brand a {
             background: url("../images/logo.png") center left no-repeat;
             /*background-size: 76%;*/
-            width: 130px;
-            height: 40px;
+            width: 110px;
+            height: 50px;
             display: block;
-            margin-top: 5px;
+            margin-top: 0px;
             background-size: 48%;
         }
 

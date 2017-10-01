@@ -6,12 +6,12 @@ body {
 }
 
 ::-moz-selection {
-    background: #e1c434;
+    background: #2f2442;
     background: rgba(225, 196, 52, 0.5);
 }
 
 ::selection {
-    background: #e1c434;
+    background: #2f2442;
     background: rgba(225, 196, 52, 0.5);
 }
 
@@ -64,7 +64,7 @@ body {
 
             .breadcumb > ul > li > a:after {
                 content: "\25B6";
-                color: #e1c434;
+                color: #2f2442;
                 cursor: auto
             }
 
@@ -103,7 +103,7 @@ body {
             }
 
             .action-area > ul.menus > li.active > a {
-                background-color: #e1c434
+                background-color: #2f2442
             }
 
 ul.json-dict li {
@@ -113,10 +113,10 @@ ul.json-dict li {
 }
 
 .copyable {
-    background: #e1c434;
+    background: #2f2442;
     background: rgba(225, 196, 52, 0.1);
     width: auto;
-    border: 1px dotted #e1c434
+    border: 1px dotted #2f2442
 }
 
 .copyable > ol.json-array,
@@ -174,7 +174,7 @@ ul.json-dict li {
     height: 250px;
     background-color: #17202a;
     border: none;
-    border-bottom: 2px solid #e1c434;
+    border-bottom: 2px solid #2f2442;
     color: #ccc;
     padding: 20px
 }
@@ -197,13 +197,13 @@ ul.json-dict li {
     font-weight: 700;
     font-size: 18px;
     padding: 15px 20px;
-    background-color: #e1c434
+    background-color: #2f2442
 }
 
 textarea:focus {
     border: none;
     outline: none;
-    border-bottom: 2px solid #e1c434
+    border-bottom: 2px solid #2f2442
 }
 
 .btn:hover {
@@ -245,7 +245,7 @@ textarea:focus {
 }
 
 .copier {
-    background: #e1c434;
+    background: #2f2442;
     padding: 5px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAADdAAAA3QFwU6IHAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAJBQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUIf2wAAAC90Uk5TAAwWFxgfICIqLi8wND5AS09QXWBwe32Ijo+Qk5WlpqitrrW6wMjO1ejw9/j6+/zuA4QFAAAAuElEQVQ4y8XU2Q6CMBBA0SJSN0SKKIrgvuHC/P/fiU2nlnR4MRLvCwmchGlZGOOCymcYL4EsQiDo65AaIA6s6iBgVt+A7sgMIJdHR4MJvZjCRbBsWEyIIIXn1CoBEB9wt0cNWgBetsEWHQqsjPlnFBhfrth52M6Q/wNJ9VwOEvS3R2ztKRDixrxBZmzUXAG3UCduFRjsT9iupwBz5LuVN86gSn8AHvbnE9cAnQYRfb3k+n4++Rfg7AWA7U1SIacFjQAAAABJRU5ErkJggg==);
     background-repeat: no-repeat;
@@ -254,7 +254,7 @@ textarea:focus {
     width: 10px;
     height: 10px;
     background-size: contain;
-    border: 3px solid #e1c434
+    border: 3px solid #2f2442
 }
 
 .copier,
@@ -297,7 +297,7 @@ ul.copyMenu {
 
     ul.copyMenu > li > a {
         background: #111;
-        color: #e1c434;
+        color: #2f2442;
         font-size: 12px;
         font-weight: 700;
         width: 100px;
@@ -320,7 +320,7 @@ ul.copyMenu {
         }
 
     ul.copyMenu > li > a:hover {
-        background: #e1c434;
+        background: #2f2442;
         color: #111
     }
 

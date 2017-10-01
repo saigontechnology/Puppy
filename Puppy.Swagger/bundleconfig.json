@@ -16,5 +16,19 @@
     "inputFiles": [
       "apidoc/index.html"
     ]
+  },
+  {
+    "outputFileName": "apidoc/lib/swagger-ui.min.js",
+    "inputFiles": [
+      "apidoc/lib/swagger-ui.js"
+    ]
+  },
+  {
+    "outputFileName": "apidoc/css/master.min.css",
+    "inputFiles": [
+      "apidoc/css/api-explorer.css",
+      "apidoc/css/index.css",
+      "apidoc/css/standalone.css"
+    ]
   }
 ]

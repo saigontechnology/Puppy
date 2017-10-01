@@ -3095,7 +3095,7 @@ function (t, e, n) {
                             widthBetweenNodesCoeff: 1.5,
                             heightBetweenNodesCoeff: 2,
                             style: { node: { colors: { collapsed: "#e2777a", parent: "#00fcd4", default: "#44c7f4" }, stroke: "white" }, text: { colors: { default: "#ccc", hover: "#f08d49" }, "font-size": "12px" }, link: { stroke: "#188E3F", fill: "none" } },
-                            tooltipOptions: { offset: { left: 50, top: 10 }, indentationSize: 2, style: { background: "#222", padding: "8px", color: "#e1c434", "border-radius": "2px", "box-shadow": "0 7px 7px 0 #111", "font-size": "13px", "line-height": "1.3" } }
+                            tooltipOptions: { offset: { left: 50, top: 10 }, indentationSize: 2, style: { background: "#222", padding: "8px", color: "#2f2442", "border-radius": "2px", "box-shadow": "0 7px 7px 0 #111", "font-size": "13px", "line-height": "1.3" } }
                         };
                     this.renderChart = (0, p.tree)((0, f.findDOMNode)(this), e), this.renderChart()
                 }

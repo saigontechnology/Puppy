@@ -95,15 +95,15 @@ body {
                 text-decoration: none;
                 color: #fff;
                 width: auto;
-                border: 1px solid #111;
+                border: 1px solid #2f2442;
                 border-right: none;
                 font-size: 14px;
-                background-color: #17202a;
+                background-color: #2f2442;
                 font-weight: 700
             }
 
             .action-area > ul.menus > li.active > a {
-                background-color: #2f2442
+                background-color: #f46c93
             }
 
 ul.json-dict li {
@@ -113,8 +113,8 @@ ul.json-dict li {
 }
 
 .copyable {
-    background: #2f2442;
-    background: rgba(225, 196, 52, 0.1);
+    background: #f46c93;
+    background: rgba(244, 108, 147,0.2);
     width: auto;
     border: 1px dotted #2f2442
 }
@@ -242,12 +242,13 @@ textarea:focus {
     background-color: #e63b6c;
     margin: 0 auto;
     margin-bottom: 20px;
-    box-shadow: 0 7px 7px 0 #111
+    box-shadow: 0 7px 7px 0 #2f2442
 }
 
 .copier {
-    background: #f46c93;
+    background: #fff;
     padding: 5px;
+    border-radius: 2px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAADdAAAA3QFwU6IHAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAJBQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUIf2wAAAC90Uk5TAAwWFxgfICIqLi8wND5AS09QXWBwe32Ijo+Qk5WlpqitrrW6wMjO1ejw9/j6+/zuA4QFAAAAuElEQVQ4y8XU2Q6CMBBA0SJSN0SKKIrgvuHC/P/fiU2nlnR4MRLvCwmchGlZGOOCymcYL4EsQiDo65AaIA6s6iBgVt+A7sgMIJdHR4MJvZjCRbBsWEyIIIXn1CoBEB9wt0cNWgBetsEWHQqsjPlnFBhfrth52M6Q/wNJ9VwOEvS3R2ztKRDixrxBZmzUXAG3UCduFRjsT9iupwBz5LuVN86gSn8AHvbnE9cAnQYRfb3k+n4++Rfg7AWA7U1SIacFjQAAAABJRU5ErkJggg==);
     background-repeat: no-repeat;
     top: 10px;
@@ -255,7 +256,7 @@ textarea:focus {
     width: 10px;
     height: 10px;
     background-size: contain;
-    border: 3px solid #2f2442
+    border: 3px solid #fff
 }
 
 .copier,

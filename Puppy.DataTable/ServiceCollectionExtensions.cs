@@ -44,6 +44,7 @@ namespace Puppy.DataTable
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _configSection = configSection;
+            configuration.BuildConfig(configSection);
             return services;
         }
 

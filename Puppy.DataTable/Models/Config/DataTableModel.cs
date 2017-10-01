@@ -25,8 +25,7 @@ namespace Puppy.DataTable.Models.Config
 
         public bool IsUseColumnFilter { get; set; } = false;
 
-        public bool IsStateSave { get; set; } = true;
-
+        
         /// <summary>
         ///     Enable to make the search fast and helpful for UI render
         /// </summary>

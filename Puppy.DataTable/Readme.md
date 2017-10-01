@@ -213,8 +213,6 @@ public DataTableActionResult<UserFacetRowViewModel> GetFacetedUsers([FromBody]Da
             {
                 [PropertyConst.Sorting] = new JRaw(Model.GetColumnSortingString()),
                 [PropertyConst.IsProcessing] = true,
-                [PropertyConst.IsStateSave] = Model.IsStateSave,
-                [PropertyConst.StateDuration] = -1,
                 [PropertyConst.IsServerSide] = true,
                 [PropertyConst.IsFilter] = Model.IsShowGlobalSearchInput,
                 [PropertyConst.Dom] = Model.Dom,

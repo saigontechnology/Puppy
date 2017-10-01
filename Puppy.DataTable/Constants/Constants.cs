@@ -39,8 +39,6 @@ namespace Puppy.DataTable.Constants
         public const string Targets = "aTargets";
         public const string Sorting = "aaSorting";
         public const string IsProcessing = "bProcessing";
-        public const string IsStateSave = "stateSave";
-        public const string StateDuration = "stateDuration";
         public const string IsServerSide = "bServerSide";
         public const string IsFilter = "bFilter";
         public const string Dom = "sDom";

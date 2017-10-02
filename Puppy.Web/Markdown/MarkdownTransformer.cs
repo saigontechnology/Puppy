@@ -293,7 +293,7 @@ namespace Puppy.Web.Markdown
         private int _listLevel;
 
         /// <summary>
-        ///     In the static constuctor we'll initialize what stays the same across all transforms. 
+        ///     In the static constructor we'll initialize what stays the same across all transforms. 
         /// </summary>
         static MarkdownTransformer()
         {

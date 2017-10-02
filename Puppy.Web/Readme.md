@@ -7,7 +7,8 @@
 Go to _ViewImports.cshtml then add `@addTagHelper "*, Puppy.Web"`
 
 ## Markdown Tag Helper
-Write text in html with tag `<markdown>` or `<p markdown>`
+- Write text in html with tag `<markdown>` or `<p markdown>`
+- Note: "---" (3x) in markdown syntax need use as "----" (4x)
 
 ```markup
 <markdown>

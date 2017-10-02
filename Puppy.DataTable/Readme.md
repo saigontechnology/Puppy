@@ -17,17 +17,17 @@
 ```html
 <!-- Jquery + DataTable -->
 <script type="text/javascript" rc="//code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
 <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css" />
 
 <!-- You can find resources in folder "Assets"-->
 <script type="text/javascript" src="jquery.dataTables.columnFilter.js"></script>
 
 <!-- ColVis -->
 <script type="text/javascript" src="//cdn.datatables.net/colvis/1.1.2/js/dataTables.colVis.min.js"></script>
-<link rel="stylesheet" href="//cdn.datatables.net/colvis/1.1.2/css/dataTables.colVis.min.css" />
 ```
+
+- Copy `_DataTable.cshtml` to your master page folder.
 
 - Add DataTable to Service Collection
 ```csharp

@@ -26,7 +26,8 @@
 <script type="text/javascript" src="//cdn.datatables.net/colvis/1.1.2/js/dataTables.colVis.min.js"></script>
 ```
 
-- Copy `_DataTable.cshtml` to your master page folder.
+- Copy `_DataTable.cshtml` to your master page folder, remember to `Right Click` > `Properties` > `Build Action`: `Content`, `Copy To Output Directory`: `Copy if newer`.
+- Example to use `_DataTable.cshtml` is `Index.cshtml`.
 
 - Add DataTable to Service Collection
 ```csharp

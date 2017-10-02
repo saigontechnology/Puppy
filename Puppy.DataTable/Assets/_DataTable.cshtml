@@ -1,9 +1,7 @@
-﻿@using Newtonsoft.Json
-@using Newtonsoft.Json.Linq
+﻿@using Newtonsoft.Json.Linq
 @using Puppy.DataTable.Constants
 @using Puppy.DataTable.Models.Config
 @using Puppy.DataTable.Utils.Extensions
-@using Puppy.Web
 @model DataTableModel
 
 <table id="@Model.Id" class="@(Model.TableClass ?? string.Empty)">
@@ -48,8 +46,6 @@
             {
                 [PropertyConst.Sorting] = new JRaw(Model.GetColumnSortingString()),
                 [PropertyConst.IsProcessing] = true,
-                [PropertyConst.IsStateSave] = Model.IsStateSave,
-                [PropertyConst.StateDuration] = -1,
                 [PropertyConst.IsServerSide] = true,
                 [PropertyConst.IsFilter] = Model.IsShowGlobalSearchInput,
                 [PropertyConst.Dom] = Model.Dom,
@@ -58,6 +54,7 @@
                 [PropertyConst.AjaxSource] = Model.AjaxUrl,
                 [PropertyConst.ColumnDefine] = new JRaw(Model.GetColumnsJsonString()),
                 [PropertyConst.SearchCols] = Model.GetSearchColumns(),
+                [PropertyConst.DeferRender] = Model.IsDeferRender,
                 [PropertyConst.LengthMenuDefine] = Model.LengthMenu != null ? new JRaw(Model.LengthMenu) : new JRaw(string.Empty),
                 [PropertyConst.Language] = new JObject
                 {

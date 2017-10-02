@@ -17,11 +17,10 @@
 ```html
 <!-- Jquery + DataTable -->
 <script type="text/javascript" rc="//code.jquery.com/jquery-1.12.4.min.js"></script>
-
-<script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
 
 <!-- You can find resources in folder "Assets"-->
-<script type="text/javascript" src="jquery.dataTables.columnFilter.js"></script>
+<script type="text/javascript" src="jquery.dataTables.columnFilter.min.js"></script>
 
 <!-- ColVis -->
 <script type="text/javascript" src="//cdn.datatables.net/colvis/1.1.2/js/dataTables.colVis.min.js"></script>

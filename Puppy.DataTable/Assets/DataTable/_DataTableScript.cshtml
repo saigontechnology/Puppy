@@ -4,42 +4,8 @@
 @using Puppy.DataTable.Utils.Extensions
 @model DataTableModel
 
-<table id="@Model.Id" class="@(Model.TableClass ?? string.Empty)">
-    <thead>
-        @if (Model.IsUseColumnFilter)
-        {
-            <tr>
-                @foreach (var column in Model.Columns)
-                {
-                    <th>@column.DisplayName</th>
-                }
-            </tr>
-        }
-        @if (!Model.IsHideHeader)
-        {
-            <tr>
-                @foreach (var column in Model.Columns)
-                {
-                    <th class="@column.CssClassHeader">@column.DisplayName</th>
-                }
-            </tr>
-        }
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="@Model.Columns.Count" class="dataTables_empty">
-                Loading...
-            </td>
-        </tr>
-    </tbody>
-</table>
-
 <script type="text/javascript">
-    (function initDataTable() {
-        if (!window.jQuery || !$.fn.DataTable) {
-            setTimeout(initDataTable, 100);
-            return;
-        }
+    $(function() {
         var $table = $('#@Model.Id');
         @{
             var options = new JObject
@@ -140,5 +106,5 @@
         {
             @Html.Raw("window['" + Model.GlobalJsVariableName + "'] = $dataTable;")
         }
-    })();
+    });
 </script>

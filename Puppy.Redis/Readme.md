@@ -5,7 +5,7 @@
 - Add config section to `appsettings.json`
 - If you not have custom setting in appsettings.json, `default setting` will be apply.
 
-```json
+```javascript
 "Redis": {
     // Default is "localhost:6379"
     "ConnectionString": "localhost:6379", // default port is 6379

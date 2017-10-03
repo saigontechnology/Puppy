@@ -10,7 +10,7 @@ Go to _ViewImports.cshtml then add `@addTagHelper "*, Puppy.Web"`
 - Write text in html with tag `<markdown>` or `<p markdown>`
 - Note: "---" (3x) in markdown syntax need use as "----" (4x)
 
-```markup
+```html
 <markdown>
 
 ```csharp
@@ -30,7 +30,7 @@ Go to _ViewImports.cshtml then add `@addTagHelper "*, Puppy.Web"`
 ```
 
 It will transform to
-```markup
+```html
 <pre><code class='language-cs'>
 	public void Main()
 	{
@@ -43,7 +43,7 @@ It will transform to
 
 You can use a library like [HighlightJS](http://highlightjs.org) to sytnax highlight that code block!
 
-```markup
+```html
 @section Styles
 {
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">

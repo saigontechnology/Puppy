@@ -12,7 +12,7 @@
 - If you do not have custom setting in `appsettings.json`, **default setting will be apply**.
 - Puppy Logger auto add a watcher to `appsettings.json`, when you change the config in `appsettings.json` new logger config applies immediately.
 
-```json
+```javascript
 // [Auto Reload]
 "Logger": {
     //------------------ Rolling File ------------------
@@ -127,7 +127,7 @@ var logs = Log.Get(out long total, predicate: predicate, orders: x => x.CreatedT
 
 ## Sample Log File
 
-```json
+```javascript
 {
   "Id": "7f0634e4677d4fb49b6f63b6f410a01d",
   "CallerMemberName": "OnException",

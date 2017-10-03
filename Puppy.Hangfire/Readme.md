@@ -2,7 +2,7 @@
 > Created by **Top Nguyen** (http://topnguyen.net)
 
 - use appsettings.json to config redis connection and instance name
-```json
+```javascript
   "Hangfire": {
     // Dashboard URL, Set empty to disable dashboard feature
     // Start with "/" but end with "<empty>", default is "/developers/job"

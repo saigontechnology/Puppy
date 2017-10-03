@@ -9,8 +9,8 @@
         <div class="panel-body">
 
             @{
-                var model = Html.DataTableModel(Guid.NewGuid().ToString("N"), (TestController controller) => controller.GetTestAction(null));
-                model.IsDevelopMode = false;
+                var model = Html.DataTableModel(Guid.NewGuid().ToString("N"), (TestApiController controller) => controller.GetFacetedUsers(null));
+                model.IsDevelopMode = true;
                 model.IsUseColumnFilter = true;
 
                 model.Columns.Add(new ColumnModel("Action", typeof(string))
@@ -24,21 +24,25 @@
                 model.BeforeSendFunctionName = "beforeSendHandle";
             }
 
-            @await Html.PartialAsync("_DataTable.cshtml", model).ConfigureAwait(true)
-
-            <script>
-                function beforeSendHandle(data) {
-                    data.push({
-                        name: "newData",
-                        value: "test modify data before send"
-                    });
-
-                    console.log("before send handle: ", data);
-                }
-                function actionColRender(data, type, row) {
-                    return "<button class='btn btn-primary'>" + row[2] + "</button>";
-                }
-            </script>
+            @await Html.PartialAsync("/DataTable/_DataTableHtml.cshtml", model).ConfigureAwait(true)
         </div>
     </div>
 </div>
+
+@section Scripts{
+    @await Html.PartialAsync("/DataTable/_DataTableScript.cshtml", model).ConfigureAwait(true)
+
+    <script type="text/javascript">
+        function beforeSendHandle(data) {
+            data.push({
+                name: "newData",
+                value: "test modify data before send"
+            });
+
+            console.log("before send handle: ", data);
+        }
+        function actionColRender(data, type, row) {
+            return "<button class='btn btn-primary'>" + row[2] + "</button>";
+        }
+    </script>s
+}

@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> ConnectionHelper.cs </Name>
+//         <Name> ActiveDirectoryConfig.cs </Name>
 //         <Created> 03/10/17 8:59:24 PM </Created>
 //         <Key> 17f7d29e-24f6-4e07-8c41-6f3d3c20bd5d </Key>
 //     </File>
 //     <Summary>
-//         ConnectionHelper.cs
+//         ActiveDirectoryConfig.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -21,11 +21,11 @@ using Novell.Directory.Ldap;
 
 namespace Puppy.ActiveDirectory
 {
-    public class Configuration
+    public class ActiveDirectoryConfig
     {
         public static string Host { get; set; }
 
-        public static int Port { get; set; } = 389;
+        public static int Port { get; set; } = LdapConnection.DEFAULT_PORT;
 
         public static bool IsSecure { get; set; }
 

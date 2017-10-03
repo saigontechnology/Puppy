@@ -28,9 +28,9 @@ namespace Puppy.ActiveDirectory
         {
             try
             {
-                var connection = Configuration.GetConnection();
+                var connection = ActiveDirectoryConfig.GetConnection();
 
-                var entities = connection.Search(Configuration.BaseDc, LdapConnection.SCOPE_SUB, $"(sAMAccountName={userName})", new[] { "sAMAccountName" }, false);
+                var entities = connection.Search(ActiveDirectoryConfig.BaseDc, LdapConnection.SCOPE_SUB, $"(sAMAccountName={userName})", new[] { "sAMAccountName" }, false);
 
                 string userDn = null;
 

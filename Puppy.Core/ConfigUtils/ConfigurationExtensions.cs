@@ -51,26 +51,34 @@ namespace Puppy.Core.ConfigUtils
         }
 
         /// <summary>
-        ///     Production, Staging will read from key Environment Name, else by MachineName 
+        ///     Production, Staging will read from section:"Environment Name", else by MachineName
+        ///     (if not have data read from section:"Environment Name" key)
         /// </summary>
         /// <typeparam name="T"> The type to convert the value to. </typeparam>
         /// <param name="configuration"></param>
-        /// <param name="section">      
-        ///     The configuration section for the value to convert.
-        /// </param>
+        /// <param name="section">       The configuration section for the value to convert. </param>
         /// <returns></returns>
         public static T GetValueByMachineAndEnv<T>(this IConfiguration configuration, string section)
         {
             if (string.IsNullOrWhiteSpace(section))
                 throw new ArgumentException($"{nameof(section)} cannot be null or empty", nameof(section));
 
-            var value =
-                configuration.GetValue<T>
-                (
-                    (EnvironmentHelper.IsProduction() || EnvironmentHelper.IsStaging())
-                        ? $"{section}:{EnvironmentHelper.Name}"
-                        : $"{section}:{EnvironmentHelper.MachineName}"
-                );
+            T value;
+
+            if ((EnvironmentHelper.IsProduction() || EnvironmentHelper.IsStaging()))
+            {
+                value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
+            }
+            else
+            {
+                value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.MachineName}");
+
+                // If get by machine name is null, then try get by environment name
+                if (value == null || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
+                {
+                    value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
+                }
+            }
 
             return value;
         }

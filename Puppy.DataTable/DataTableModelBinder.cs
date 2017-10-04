@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Puppy.Core.ObjectUtils;
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Models.Request;
+using Puppy.Web;
+using Puppy.Web.Constants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -109,15 +112,30 @@ namespace Puppy.DataTable
         private static Dictionary<string, object> GetDataDictionary(ModelBindingContext bindingContext)
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
-
-            var form = bindingContext.HttpContext.Request.Form;
-            var valueProvider = bindingContext.ValueProvider;
-
-            foreach (var key in form.Keys)
+            try
             {
-                data.Add(key, valueProvider.GetValue(key));
-            }
+                // Submit Form Request
+                if (bindingContext.HttpContext.Request.ContentType?.Contains(ContentType.FormUrlEncoded) == true)
+                {
+                    var form = bindingContext.HttpContext.Request.Form;
 
+                    var valueProvider = bindingContext.ValueProvider;
+
+                    foreach (var key in form.Keys)
+                    {
+                        data.Add(key, valueProvider.GetValue(key));
+                    }
+                }
+                else
+                {
+                    object submitData = bindingContext.HttpContext.Request.GetBody();
+                    data = submitData?.ToDictionary() ?? new Dictionary<string, object>();
+                }
+            }
+            catch
+            {
+                data = new Dictionary<string, object>();
+            }
             return data;
         }
 

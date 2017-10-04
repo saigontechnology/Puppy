@@ -168,14 +168,18 @@ namespace Puppy.Core.ObjectUtils
             return JObject.FromObject(obj);
         }
 
-        public static IDictionary<string, object> ToDictionary(this object obj)
+        public static Dictionary<string, object> ToDictionary(this object obj)
         {
+            JObject json = JObject.FromObject(obj);
+            var properties = json.Properties();
+
             var directory = new Dictionary<string, object>();
 
-            foreach (var propertyInfo in obj.GetType().GetProperties())
+            foreach (var property in properties)
             {
-                directory[propertyInfo.Name] = propertyInfo.GetValue(obj);
+                directory[property.Name] = property.Value;
             }
+
             return directory;
         }
     }

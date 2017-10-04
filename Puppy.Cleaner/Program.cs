@@ -15,13 +15,13 @@ namespace Puppy.Cleaner
             "bin",
             "obj",
             "bld",
-            "Backup",
-            "_UpgradeReport_Files",
             "ipch",
-            "Debug",
-            "Release",
             "*.suo",
             "*.user"
+            //"Debug",
+            //"Release",
+            //"Backup",
+            //"_UpgradeReport_Files"
         };
 
         private static void Main()

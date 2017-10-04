@@ -15,52 +15,53 @@
 ```javascript
 // [Auto Reload]
 "Logger": {
-    //------------------ Rolling File ------------------
-    // Default Puppy Logger always log in SQLite file and also in Rolling File with config, so you can enable or disable rolling file option
-    "IsEnableRollingFileLog": true,
+//------------------ Rolling File ------------------
+// Default Puppy Logger always log in SQLite file and also in Rolling File with config, so you can enable or disable rolling file option
+"IsEnableRollingFileLog": true,
 
-    // PathFormat
-    // {Date} Creates a file per day. Filenames use the DateFormat format.
-    // {Hour} Creates a file per hour. Filenames use the yyyy-MM-dd HH format.
-    // {HalfHour} Creates a file per half hour. Filenames use the yyyy-MM-dd HH_mm format.
-    // {Level} use run time level when you call Write Log method: Verbose, Debug, Information, Warning, Error, Fatal
-    "PathFormat": "Logs\\{Level}\\LOG_{Level}_{Date}.json",
+// PathFormat
+// {Date} Creates a file per day. Filenames use the DateFormat format.
+// {Hour} Creates a file per hour. Filenames use the yyyy-MM-dd HH format.
+// {HalfHour} Creates a file per half hour. Filenames use the yyyy-MM-dd HH_mm format.
+// {Level} use run time level when you call Write Log method: Verbose, Debug, Information, Warning, Error, Fatal
+"PathFormat": "Logs\\{Level}\\LOG_{Level}_{Date}.json",
 
-    // Format Date Time config for PathFormat
-    // {Date} date format, default is "yyyy-MM-dd"
-    "DateFormat": "yyyy-MM-dd",
-    // {Hour} time format, default is "yyyy-MM-dd HH"
-    "HourFormat": "yyyy-MM-dd HH",
-    // {HalfHour} time format, default is "yyyy-MM-dd HH_mm"
-    "HalfHourFormat": "yyyy-MM-dd HH_mm",
+// Format Date Time config for PathFormat
+// {Date} date format, default is "yyyy-MM-dd"
+"DateFormat": "yyyy-MM-dd",
+// {Hour} time format, default is "yyyy-MM-dd HH"
+"HourFormat": "yyyy-MM-dd HH",
+// {HalfHour} time format, default is "yyyy-MM-dd HH_mm"
+"HalfHourFormat": "yyyy-MM-dd HH_mm",
 
-    "RetainedFileCountLimit": 365,
-    "FileSizeLimitBytes": 1048576,
-    "FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
+"RetainedFileCountLimit": 365,
+"FileSizeLimitBytes": 1048576,
+"FileLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
 
-    //------------------ Console ------------------
+//------------------ Console ------------------
 
-    // Puppy Logger do log in Console only in Development Environment
-    "ConsoleLogMinimumLevel": "Information", // Verbose, Debug, Information, Warning, Error, Fatal.
+// Puppy Logger do log in Console only in Development Environment
+"ConsoleLogMinimumLevel": "Information", // Verbose, Debug, Information, Warning, Error, Fatal.
 
-    //------------------ Database ------------------
-    "SQLiteConnectionString": "Logs\\Puppy.Logger.db",
-    "SQLiteLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
+//------------------ Database ------------------
+"SQLiteFilePath": "Logs\\Puppy.Logger.db",
 
-    // Log API endpoint, start by "/". Default is "/developers/logs"
-    // Use query string "skip", "take", "terms" (have 's', multiple search for 'Id', 'Message', 'Level' and 'DateTime' - format "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK")
-    "ViewLogUrl": "/developers/logs",
+"SQLiteLogMinimumLevel": "Warning", // Verbose, Debug, Information, Warning, Error, Fatal.
 
-    // Access Key read from URI, empty is allow anonymous, default is empty.
-    "AccessKey": "",
+// Log API endpoint, start by "/". Default is "/developers/logs"
+// Use query string "skip", "take", "terms" (have 's', multiple search for 'Id', 'Message', 'Level' and 'DateTime' - format "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK")
+"ViewLogUrl": "/developers/logs",
 
-    // Query parameter via http request, empty is allow anonymous, default is "key"
-    "AccessKeyQueryParam": "key",
+// Access Key read from URI, empty is allow anonymous, default is empty.
+"AccessKey": "",
 
-    // Un-authorize message when user access api document with not correct key.
-    // Default is "You don't have permission to view Logs, please contact your administrator."
-    "UnAuthorizeMessage": "You don't have permission to view Logs, please contact your administrator."
-  }
+// Query parameter via http request, empty is allow anonymous, default is "key"
+"AccessKeyQueryParam": "key",
+
+// Un-authorize message when user access api document with not correct key.
+// Default is "You don't have permission to view Logs, please contact your administrator."
+"UnAuthorizeMessage": "You don't have permission to view Logs, please contact your administrator."
+},
 ```
 
 ## Add Service

@@ -214,7 +214,7 @@ namespace Puppy.Logger
                 LoggerConfig.ConsoleLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.ConsoleLogMinimumLevel)}", LoggerConfig.ConsoleLogMinimumLevel);
 
                 // Database
-                LoggerConfig.SQLiteConnectionString = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteConnectionString)}", LoggerConfig.SQLiteConnectionString);
+                LoggerConfig.SQLiteFilePath = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteFilePath)}", LoggerConfig.SQLiteFilePath);
                 LoggerConfig.SQLiteLogMinimumLevel = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.SQLiteLogMinimumLevel)}", LoggerConfig.SQLiteLogMinimumLevel);
 
                 LoggerConfig.ViewLogUrl = configuration.GetValue($"{configSection}:{nameof(LoggerConfig.ViewLogUrl)}", LoggerConfig.ViewLogUrl);
@@ -243,7 +243,7 @@ namespace Puppy.Logger
                               $"| Full Path: {LoggerConfig.FullPath}, Folder Full Path: {LoggerConfig.FolderFullPath}");
 
             Console.WriteLine("[Puppy.Logger] SQLite File Path" +
-                              $": {LoggerConfig.SQLiteConnectionString}" +
+                              $": {LoggerConfig.SQLiteFilePath}" +
                               $", SQLite Minimum Level: {LoggerConfig.SQLiteLogMinimumLevel}");
 
             Console.ResetColor();

@@ -124,7 +124,7 @@ namespace Puppy.Logger
 
         #region SQLite
 
-        public static string SQLiteConnectionString { get; set; } = @"Logs\Puppy.Logger.db";
+        public static string SQLiteFilePath { get; set; } = @"Logs\Puppy.Logger.db";
 
         [JsonIgnore]
         internal static LogEventLevel SQLiteLogMinimumLevelEnum = LogEventLevel.Warning;

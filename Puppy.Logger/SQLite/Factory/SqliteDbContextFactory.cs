@@ -34,7 +34,11 @@ namespace Puppy.Logger.SQLite.Factory
 
         public static string GetConnectionString()
         {
-            return new SqliteConnectionStringBuilder { DataSource = LoggerConfig.SQLiteConnectionString.GetFullPath() }.ConnectionString;
+            return new SqliteConnectionStringBuilder
+            {
+                DataSource = LoggerConfig.SQLiteFilePath.GetFullPath(),
+                Mode = SqliteOpenMode.ReadWriteCreate
+            }.ConnectionString;
         }
 
         public static DbContext CreateCoreContext()

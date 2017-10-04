@@ -20,16 +20,16 @@ namespace Puppy.Logger.SQLite
         /// <exception cref="ArgumentNullException"> A required parameter is null. </exception>
         public static LoggerConfiguration SQLite(this LoggerSinkConfiguration loggerConfiguration)
         {
-            if (string.IsNullOrWhiteSpace(LoggerConfig.SQLiteConnectionString))
+            if (string.IsNullOrWhiteSpace(LoggerConfig.SQLiteFilePath))
             {
-                SelfLog.WriteLine($"Invalid {nameof(LoggerConfig.SQLiteConnectionString)}");
-                throw new ArgumentNullException(nameof(LoggerConfig.SQLiteConnectionString));
+                SelfLog.WriteLine($"Invalid {nameof(LoggerConfig.SQLiteFilePath)}");
+                throw new ArgumentNullException(nameof(LoggerConfig.SQLiteFilePath));
             }
 
             try
             {
                 // Make sure folder is created
-                var sqliteDbFile = new FileInfo(LoggerConfig.SQLiteConnectionString.GetFullPath());
+                var sqliteDbFile = new FileInfo(LoggerConfig.SQLiteFilePath.GetFullPath());
                 sqliteDbFile.Directory?.Create();
 
                 return loggerConfiguration.Sink(new SQLiteSink(), LoggerConfig.SQLiteLogMinimumLevelEnum);

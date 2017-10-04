@@ -35,7 +35,7 @@ namespace Puppy.Core.Constants
             NullValueHandling = NullValueHandling.Ignore,
             MissingMemberHandling = MissingMemberHandling.Ignore,
             DateFormatHandling = DateFormatHandling.IsoDateFormat,
-            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             DateFormatString = DateTimeOffSetFormat,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };

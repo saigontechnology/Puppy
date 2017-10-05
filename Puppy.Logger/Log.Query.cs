@@ -84,7 +84,7 @@ namespace Puppy.Logger
         ///         Accept or ContentType is XML, else return <c> ContentType Json </c>
         ///     </para>
         /// </remarks>
-        internal static ContentResult GetLogsContentResult(HttpContext context)
+        public static ContentResult GetLogsContentResult(HttpContext context)
         {
             int skip = 0;
             if (context.Request.Query.TryGetValue("skip", out var skipStr))

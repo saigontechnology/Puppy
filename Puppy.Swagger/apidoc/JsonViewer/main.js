@@ -1,6 +1,14 @@
 var jsonViewerSessionStorageKey = "JsonViewer";
 var defaultData = '{"message": "Welcome to Json Viewer","author": "Top Nguyen", "website": "http://topnguyen.net"}'
 
+function trim(s, c) {
+    if (c === "]") c = "\\]";
+    if (c === "\\") c = "\\\\";
+    return s.replace(new RegExp(
+        "^[" + c + "]+|[" + c + "]+$", "g"
+    ), "");
+}
+
 
 ! function (t) {
     function e(r) { if (n[r]) return n[r].exports; var o = n[r] = { exports: {}, id: r, loaded: !1 }; return t[r].call(o.exports, o, o.exports, e), o.loaded = !0, o.exports }
@@ -8,26 +16,27 @@ var defaultData = '{"message": "Welcome to Json Viewer","author": "Top Nguyen", 
     return e.m = t, e.c = n, e.p = "/", e(0)
 }(function (t) {
 
-    var sessionStroageData = sessionStorage.getItem(jsonViewerSessionStorageKey);
-    if (!sessionStroageData || sessionStroageData == "undefined") {
-        sessionStroageData = defaultData;
+    var sessionStorageData = sessionStorage.getItem(jsonViewerSessionStorageKey);
+    if (!sessionStorageData || sessionStorageData == "undefined") {
+        sessionStorageData = defaultData;
     }
 
     try {
         // try parse to check data is actual json string
-        var jsonData = JSON.parse(sessionStroageData);
-        sessionStroageData = JSON.stringify(jsonData, null, 4);
-        sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStroageData);
+        sessionStorageData = trim(sessionStorageData, "\"").trim();
+        var jsonData = JSON.parse(sessionStorageData);
+        sessionStorageData = JSON.stringify(jsonData, null, 4);
+        sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStorageData);
     } catch (exception) {
-        var jsonData = { "data": sessionStroageData };
-        sessionStroageData = JSON.stringify(jsonData, null, 4);
-        sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStroageData);
+        var jsonData = { "data": sessionStorageData };
+        sessionStorageData = JSON.stringify(jsonData, null, 4);
+        sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStorageData);
         console.log('The data is wrong json string format, Json Viewer try parse to new data.');
         console.log('JsonViewerData', jsonData);
     } finally {
-        var sessionStroageData = sessionStorage.getItem(jsonViewerSessionStorageKey);
+        var sessionStorageData = sessionStorage.getItem(jsonViewerSessionStorageKey);
         var preElement = document.createElement("pre");
-        preElement.innerHTML = sessionStroageData;
+        preElement.innerHTML = sessionStorageData;
         document.body.insertBefore(preElement, document.body.firstChild)
 
         for (var e in t)
@@ -3134,6 +3143,7 @@ function (t, e, n) {
                 key: "parseJSON",
                 value: function () {
                     var t = this.refs.rawJSON.value.trim();
+                    t = trim(t, "\"").trim();
                     if (this.resetErrors(), !t) return void this.setState({ errors: Object.assign({}, this.state.errors, Object.assign({}, this.state.errors, { rawJSON: Object.assign({}, this.state.errors.rawJSON, { status: !0 }) })) });
                     try {
                         // try parse to check data is actual json string

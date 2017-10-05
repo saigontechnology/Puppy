@@ -23,8 +23,10 @@ function trim(s, c) {
 
     try {
         // try parse to check data is actual json string
-        sessionStorageData = trim(sessionStorageData, "\"").replace(/\\"/g, '"').trim();
-        var jsonData = JSON.parse(sessionStorageData);
+        if (sessionStorageData.startsWith("\"{")) {
+            sessionStorageData = trim(sessionStorageData, "\"").replace(/\\"/g, '"');
+        }
+        var jsonData = JSON.parse(sessionStorageData.trim());
         sessionStorageData = JSON.stringify(jsonData, null, 4);
         sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStorageData);
     } catch (exception) {
@@ -3143,7 +3145,9 @@ function (t, e, n) {
                 key: "parseJSON",
                 value: function () {
                     var t = this.refs.rawJSON.value.trim();
-                    t = trim(t, "\"").replace(/\\"/g, '"').trim();
+                    if (t.startsWith("\"{")) {
+                        t = trim(t, "\"").replace(/\\"/g, '"');
+                    }
                     if (this.resetErrors(), !t) return void this.setState({ errors: Object.assign({}, this.state.errors, Object.assign({}, this.state.errors, { rawJSON: Object.assign({}, this.state.errors.rawJSON, { status: !0 }) })) });
                     try {
                         // try parse to check data is actual json string

@@ -23,7 +23,7 @@ function trim(s, c) {
 
     try {
         // try parse to check data is actual json string
-        sessionStorageData = trim(sessionStorageData, "\"").trim();
+        sessionStorageData = trim(sessionStorageData, "\"").replace(/\\"/g, '"').trim();
         var jsonData = JSON.parse(sessionStorageData);
         sessionStorageData = JSON.stringify(jsonData, null, 4);
         sessionStorage.setItem(jsonViewerSessionStorageKey, sessionStorageData);
@@ -3143,7 +3143,7 @@ function (t, e, n) {
                 key: "parseJSON",
                 value: function () {
                     var t = this.refs.rawJSON.value.trim();
-                    t = trim(t, "\"").trim();
+                    t = trim(t, "\"").replace(/\\"/g, '"').trim();
                     if (this.resetErrors(), !t) return void this.setState({ errors: Object.assign({}, this.state.errors, Object.assign({}, this.state.errors, { rawJSON: Object.assign({}, this.state.errors.rawJSON, { status: !0 }) })) });
                     try {
                         // try parse to check data is actual json string

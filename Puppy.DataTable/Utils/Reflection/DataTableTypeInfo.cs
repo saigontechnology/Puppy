@@ -19,7 +19,7 @@ namespace Puppy.DataTable.Utils.Reflection
             return PropertiesCache.GetOrAdd(type, t =>
             {
                 var infos = from propertyInfo in t.GetProperties()
-                            where propertyInfo.GetCustomAttribute<DataTablesExcludeAttribute>() == null
+                            where propertyInfo.GetCustomAttribute<DataTableIgnoreAttribute>() == null
                             let attributes = propertyInfo.GetCustomAttributes().OfType<DataTableAttributeBase>().ToArray()
                             orderby attributes.OfType<DataTableAttribute>().Select(a => a.Order as int?).SingleOrDefault() ?? int.MaxValue
                             select new DataTablePropertyInfo(propertyInfo, attributes);

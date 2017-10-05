@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
+using Puppy.Core.EnumUtils;
 
 namespace Puppy.DataTable.Processing.Request
 {
@@ -243,8 +244,7 @@ namespace Puppy.DataTable.Processing.Request
             if (propertyInfo.Type.IsNullableEnumType())
             {
                 // Enum Nullable type, handle for "null" case ("null" string as null obj)
-                if (DataConst.Null.Equals(terms, StringComparison.OrdinalIgnoreCase)
-                    || string.IsNullOrWhiteSpace(terms))
+                if (DataConst.Null.Equals(terms, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(terms))
                 {
                     return $"{columnName} == {DataConst.Null}";
                 }

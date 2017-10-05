@@ -1,7 +1,7 @@
+using Puppy.Core.EnumUtils;
 using Puppy.Core.TypeUtils;
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Models.Config.Column;
-using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -52,7 +52,11 @@ namespace Puppy.DataTable.Processing.Response
             else if (type.IsEnumType() || type.IsNullableEnumType())
             {
                 FilterType = FilterConst.Select;
-                FilterValues = type.GetEnumValueLabelPair();
+                FilterValues = type.GetEnumValueLabelPair().Select(x => new
+                {
+                    value = string.IsNullOrWhiteSpace(x.Value) ? DataConst.Null : x.Value,
+                    label = x.Label
+                }).ToArray<object>();
             }
             else
             {
@@ -85,7 +89,11 @@ namespace Puppy.DataTable.Processing.Response
             _columnModel.ColumnFilter.FilterValues = options.Cast<object>().ToArray();
             if (_columnModel.Type.GetTypeInfo().IsEnum)
             {
-                _columnModel.ColumnFilter.FilterValues = _columnModel.Type.GetEnumValueLabelPair();
+                _columnModel.ColumnFilter.FilterValues = _columnModel.Type.GetEnumValueLabelPair().Select(x => new
+                {
+                    value = string.IsNullOrWhiteSpace(x.Value) ? DataConst.Null : x.Value,
+                    label = x.Label
+                }).ToArray<object>();
             }
             return _target;
         }
@@ -96,7 +104,11 @@ namespace Puppy.DataTable.Processing.Response
             _columnModel.ColumnFilter.FilterValues = options.Cast<object>().ToArray();
             if (_columnModel.Type.GetTypeInfo().IsEnum)
             {
-                _columnModel.ColumnFilter.FilterValues = _columnModel.Type.GetEnumValueLabelPair();
+                _columnModel.ColumnFilter.FilterValues = _columnModel.Type.GetEnumValueLabelPair().Select(x => new
+                {
+                    value = string.IsNullOrWhiteSpace(x.Value) ? DataConst.Null : x.Value,
+                    label = x.Label
+                }).ToArray<object>();
             }
             return _target;
         }

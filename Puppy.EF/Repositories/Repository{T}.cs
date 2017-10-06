@@ -135,7 +135,8 @@ namespace Puppy.EF.Repositories
         {
             try
             {
-                TryAttach(entity);
+                if (BaseDbContext.Entry(entity).State == EntityState.Detached)
+                    DbSet.Attach(entity);
                 return true;
             }
             catch

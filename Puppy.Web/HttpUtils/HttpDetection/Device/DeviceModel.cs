@@ -26,7 +26,7 @@ using Puppy.Web.Constants;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Puppy.Web.HttpRequestDetection.Device
+namespace Puppy.Web.HttpUtils.HttpDetection.Device
 {
     public class DeviceModel : SerializableModel
     {

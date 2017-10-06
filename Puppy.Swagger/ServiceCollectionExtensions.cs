@@ -33,6 +33,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Puppy.Web.HttpUtils;
 using Swashbuckle.AspNetCore.Examples;
 
 namespace Puppy.Swagger

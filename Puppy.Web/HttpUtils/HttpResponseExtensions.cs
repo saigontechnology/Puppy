@@ -25,7 +25,7 @@ using Puppy.Core.StringUtils;
 using Puppy.Web.Constants;
 using System;
 
-namespace Puppy.Web
+namespace Puppy.Web.HttpUtils
 {
     public static class HttpResponseExtensions
     {

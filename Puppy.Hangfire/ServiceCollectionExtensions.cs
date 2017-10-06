@@ -34,6 +34,7 @@ using Puppy.Core.ServiceCollectionUtils;
 using Puppy.Web;
 using System;
 using System.Threading.Tasks;
+using Puppy.Web.HttpUtils;
 
 namespace Puppy.Hangfire
 {

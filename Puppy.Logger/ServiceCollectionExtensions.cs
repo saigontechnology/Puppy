@@ -36,6 +36,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Puppy.Web.HttpUtils;
 
 namespace Puppy.Logger
 {

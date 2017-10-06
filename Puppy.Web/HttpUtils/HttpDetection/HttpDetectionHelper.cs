@@ -21,13 +21,13 @@ using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
 using Puppy.Core.LinqUtils;
 using Puppy.Web.Constants;
-using Puppy.Web.HttpRequestDetection.Device;
+using Puppy.Web.HttpUtils.HttpDetection.Device;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.Web.HttpRequestDetection
+namespace Puppy.Web.HttpUtils.HttpDetection
 {
     public static class HttpDetectionHelper
     {
@@ -230,7 +230,7 @@ namespace Puppy.Web.HttpRequestDetection
 
         public static DeviceModel GetLocation(HttpRequest request, DeviceModel device)
         {
-            string geoDbRelativePath = Path.Combine(nameof(HttpRequestDetection), "GeoCity.mmdb");
+            string geoDbRelativePath = Path.Combine(nameof(HttpDetection), "GeoCity.mmdb");
 
             string geoDbAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), geoDbRelativePath);
 

@@ -20,7 +20,7 @@
 using Microsoft.AspNetCore.Routing;
 using Puppy.Core.StringUtils;
 
-namespace Puppy.Web
+namespace Puppy.Web.RouteUtils
 {
     public static class RouteValueDictionaryExtensions
     {

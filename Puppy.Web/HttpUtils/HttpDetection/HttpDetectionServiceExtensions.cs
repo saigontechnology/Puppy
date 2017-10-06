@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Puppy.Core.EnvironmentUtils;
 
-namespace Puppy.Web.HttpRequestDetection
+namespace Puppy.Web.HttpUtils.HttpDetection
 {
     public static class HttpDetectionServiceExtensions
     {

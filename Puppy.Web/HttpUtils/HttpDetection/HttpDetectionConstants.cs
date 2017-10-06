@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-namespace Puppy.Web.HttpRequestDetection
+namespace Puppy.Web.HttpUtils.HttpDetection
 {
     public static class HttpDetectionConstants
     {

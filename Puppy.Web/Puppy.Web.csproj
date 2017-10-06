@@ -19,7 +19,7 @@
   <!-- <CopyToOutputDirectory>Always/PreserveNewest</CopyToOutputDirectory> -->
   <ItemGroup>
     <!-- GEO -->
-    <Content Include="HttpRequestDetection\GeoCity.mmdb">
+    <Content Include="HttpUtils\HttpDetection\GeoCity.mmdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

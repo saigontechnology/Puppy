@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-namespace Puppy.Web.HttpRequestDetection.Device
+namespace Puppy.Web.HttpUtils.HttpDetection.Device
 {
     public enum DeviceType
     {

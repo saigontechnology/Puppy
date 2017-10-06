@@ -26,7 +26,7 @@ namespace Puppy.Web
     /// </summary>
     /// <seealso cref="TagHelper" />
     [HtmlTargetElement(Attributes = IsVisibleAttributeName)]
-    public class VisibilityTagHelper : TagHelper
+    public class VisibilityTagHelper : Microsoft.AspNetCore.Razor.TagHelpers.TagHelper
     {
         private const string IsVisibleAttributeName = "asp-is-visible";
 

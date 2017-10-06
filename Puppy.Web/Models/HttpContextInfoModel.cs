@@ -20,6 +20,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Puppy.Core.Models;
+using Puppy.Web.HttpUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

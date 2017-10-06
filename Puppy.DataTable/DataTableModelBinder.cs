@@ -7,6 +7,7 @@ using Puppy.Web.Constants;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Puppy.Web.HttpUtils;
 
 namespace Puppy.DataTable
 {

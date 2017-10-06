@@ -22,13 +22,13 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Puppy.Web.Constants;
-using Puppy.Web.HttpRequestDetection.Device;
+using Puppy.Web.HttpUtils.HttpDetection.Device;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
 
-namespace Puppy.Web
+namespace Puppy.Web.HttpUtils
 {
     /// <summary>
     ///     <see cref="HttpRequest" /> extension methods. 

@@ -96,6 +96,8 @@ namespace Puppy.EF.Repositories
 
             changedProperties = changedProperties?.Distinct().ToArray();
 
+            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
+
             if (changedProperties?.Any() == true)
             {
                 DbContext.Entry(entity).Property(x => x.LastUpdatedTime).IsModified = true;
@@ -114,6 +116,8 @@ namespace Puppy.EF.Repositories
             try
             {
                 TryAttach(entity);
+
+                entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
 
                 if (!isPhysicalDelete)
                 {

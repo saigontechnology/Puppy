@@ -37,12 +37,11 @@ namespace Puppy.EF.Repositories
 
         public override void Update(TEntity entity, params Expression<Func<TEntity, object>>[] changedProperties)
         {
-            if (DbContext.Entry(entity).State == EntityState.Detached)
-                TryAttach(entity);
-
-            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
+            TryAttach(entity);
 
             changedProperties = changedProperties?.Distinct().ToArray();
+
+            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
 
             if (changedProperties?.Any() == true)
             {
@@ -77,12 +76,12 @@ namespace Puppy.EF.Repositories
         {
             try
             {
-                if (DbContext.Entry(entity).State == EntityState.Detached)
-                    TryAttach(entity);
+                TryAttach(entity);
+
+                entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
 
                 if (!isPhysicalDelete)
                 {
-                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
                     DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
                     DbContext.Entry(entity).Property(x => x.DeletedBy).IsModified = true;
                 }

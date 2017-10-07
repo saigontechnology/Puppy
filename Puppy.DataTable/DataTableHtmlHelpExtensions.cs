@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 
 namespace Puppy.DataTable
 {
-    public static class DataTableTagHelper
+    public static class DataTableHtmlHelpExtensions
     {
         public static DataTableModel DataTableModel<TController, TResult>(
             this IHtmlHelper html,

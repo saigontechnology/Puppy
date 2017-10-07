@@ -1,11 +1,10 @@
+using Puppy.Core.EnumUtils;
 using Puppy.Core.StringUtils;
 using Puppy.Core.TypeUtils;
-using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Puppy.Core.EnumUtils;
 
 namespace Puppy.DataTable.Processing.Response
 {

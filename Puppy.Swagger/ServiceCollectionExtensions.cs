@@ -25,7 +25,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Swagger.Filters;
-using Puppy.Web;
+using Puppy.Web.HttpUtils;
+using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -33,8 +34,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Puppy.Web.HttpUtils;
-using Swashbuckle.AspNetCore.Examples;
 
 namespace Puppy.Swagger
 {
@@ -153,7 +152,7 @@ namespace Puppy.Swagger
                 // Examples and Description
                 options.OperationFilter<ExamplesOperationFilter>(); // [SwaggerRequestExample] & [SwaggerResponseExample]
                 options.OperationFilter<DescriptionOperationFilter>(); // [Description] on Response properties
-                //options.OperationFilter<AuthorizationInputOperationFilter>(); // Adds an Authorization input box to every endpoint
+                                                                       //options.OperationFilter<AuthorizationInputOperationFilter>(); // Adds an Authorization input box to every endpoint
                                                                        // Ignore Obsolete
                 options.IgnoreObsoleteProperties();
                 options.IgnoreObsoleteActions();

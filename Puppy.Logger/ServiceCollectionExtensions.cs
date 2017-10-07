@@ -29,14 +29,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Logger.Core.Models;
-using Puppy.Web;
+using Puppy.Web.HttpUtils;
 using Puppy.Web.Models;
 using Serilog;
 using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Puppy.Web.HttpUtils;
 
 namespace Puppy.Logger
 {

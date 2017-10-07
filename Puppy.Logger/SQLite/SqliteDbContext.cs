@@ -17,7 +17,6 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Puppy.EF;
 using Puppy.EF.Maps;

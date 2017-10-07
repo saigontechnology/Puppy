@@ -1,3 +1,4 @@
+using Puppy.Core.EnumUtils;
 using Puppy.Core.StringUtils;
 using Puppy.Core.TypeUtils;
 using Puppy.DataTable.Constants;
@@ -6,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using Puppy.Core.EnumUtils;
 
 namespace Puppy.DataTable.Processing.Request
 {

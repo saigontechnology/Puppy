@@ -25,9 +25,8 @@ namespace Puppy.DataTable.Models.Config
 
         public bool IsUseColumnFilter { get; set; } = false;
 
-        
         /// <summary>
-        ///     Enable to make the search fast and helpful for UI render
+        ///     Enable to make the search fast and helpful for UI render 
         /// </summary>
         public bool IsDeferRender { get; set; } = true;
 

@@ -2,12 +2,11 @@
 using Puppy.Core.ObjectUtils;
 using Puppy.DataTable.Constants;
 using Puppy.DataTable.Models.Request;
-using Puppy.Web;
 using Puppy.Web.Constants;
+using Puppy.Web.HttpUtils;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Puppy.Web.HttpUtils;
 
 namespace Puppy.DataTable
 {

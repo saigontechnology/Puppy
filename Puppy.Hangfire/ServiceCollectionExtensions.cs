@@ -31,10 +31,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Core.ServiceCollectionUtils;
-using Puppy.Web;
+using Puppy.Web.HttpUtils;
 using System;
 using System.Threading.Tasks;
-using Puppy.Web.HttpUtils;
 
 namespace Puppy.Hangfire
 {

@@ -65,6 +65,13 @@ namespace Puppy.Web.Constants
         public const string XCorrelationId = "X-Correlation-ID";
         public const string XForwardedFor = "X-Forwarded-For";
 
+        /// <summary>
+        ///     Rename the Anti-Forgery HTTP header from RequestVerificationToken to X-XSRF-TOKEN.
+        ///     X-XSRF-TOKEN is not a standard but a common name given to this HTTP header
+        ///     popularized by Angular.
+        /// </summary>
+        public const string XAntiforgeryToken = "X-XSRF-TOKEN";
+
         #endregion
 
         #region Response

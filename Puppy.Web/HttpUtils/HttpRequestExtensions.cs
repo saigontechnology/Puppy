@@ -158,7 +158,17 @@ namespace Puppy.Web.HttpUtils
         /// <returns></returns>
         public static string GetEndpoint(this HttpRequest request)
         {
-            return $"{request.Scheme}://{request.Host.Value}{request.Path.Value}";
+            return $"{request.GetDomain()}{request.Path.Value}";
+        }
+
+        /// <summary>
+        ///     Endpoint of current request domain schema://host with port
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static string GetDomain(this HttpRequest request)
+        {
+            return $"{request.Scheme}://{request.Host.Value}";
         }
     }
 }

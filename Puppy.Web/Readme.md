@@ -54,6 +54,8 @@ You can use a library like [HighlightJS](http://highlightjs.org) to sytnax highl
 }
 ```
 
+- Please view [markdown.html](Markdown/markdown.html) for sample
+
 ## Response Utils
 - In your controller, you can create response file with `FileModel` from `Puppy.Core.FileUtils.FileModel` and `Puppy.Core.FileUtils.FileHttpRequestMode` - support view (image only) and download.
 ```csharp

@@ -81,9 +81,17 @@ namespace Puppy.Swagger
                 options.DocumentFilter<HideInDocsFilter>();
 
                 // Examples and Description
-                options.OperationFilter<ExamplesOperationFilter>(); // [SwaggerRequestExample] & [SwaggerResponseExample]
-                options.OperationFilter<DescriptionOperationFilter>(); // [Description] on Response properties
-                //options.OperationFilter<AuthorizationInputOperationFilter>(); // Adds an Authorization input box to every endpoint
+                // [SwaggerRequestExample] & [SwaggerResponseExample]
+                options.OperationFilter<ExamplesOperationFilter>();
+
+                // [Description] on Response properties
+                options.OperationFilter<DescriptionOperationFilter>();
+
+                // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use custom Attribute inheritance from [SwaggerResponse]
+                options.OperationFilter<MultipleResponsesOperationFilter>();
+
+                // Adds an Authorization input box to every endpoint
+                //options.OperationFilter<AuthorizationInputOperationFilter>();
 
                 // Ignore Obsolete
                 options.IgnoreObsoleteProperties();
@@ -150,10 +158,18 @@ namespace Puppy.Swagger
                 options.DocumentFilter<HideInDocsFilter>();
 
                 // Examples and Description
-                options.OperationFilter<ExamplesOperationFilter>(); // [SwaggerRequestExample] & [SwaggerResponseExample]
-                options.OperationFilter<DescriptionOperationFilter>(); // [Description] on Response properties
-                                                                       //options.OperationFilter<AuthorizationInputOperationFilter>(); // Adds an Authorization input box to every endpoint
-                                                                       // Ignore Obsolete
+                // [SwaggerRequestExample] & [SwaggerResponseExample]
+                options.OperationFilter<ExamplesOperationFilter>();
+
+                // [Description] on Response properties
+                options.OperationFilter<DescriptionOperationFilter>();
+
+                // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use custom Attribute inheritance from [SwaggerResponse]
+                options.OperationFilter<MultipleResponsesOperationFilter>();
+
+                // Adds an Authorization input box to every endpoint
+                //options.OperationFilter<AuthorizationInputOperationFilter>();
+
                 options.IgnoreObsoleteProperties();
                 options.IgnoreObsoleteActions();
 

@@ -32,6 +32,7 @@ using Serilog.Core;
 using Serilog.Events;
 using System;
 using System.IO;
+using Puppy.Core.StringUtils;
 
 namespace Puppy.Logger
 {
@@ -93,11 +94,8 @@ namespace Puppy.Logger
             if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextInfoModel.RequestTime)))
             {
                 string requestTimeStr = context.HttpContext.Request.Headers[nameof(HttpContextInfoModel.RequestTime)];
-                DateTime requestTime;
-                var isCanGetRequestTime =
-                    DateTimeHelper.TryParse(requestTimeStr, Puppy.Core.Constants.StandardFormat.DateTimeOffSetFormat, out requestTime);
-                logEntity.HttpContext.RequestTime =
-                    isCanGetRequestTime ? (DateTimeOffset?)requestTime : null;
+                var isCanGetRequestTime = DateTimeHelper.TryParse(requestTimeStr, Puppy.Core.Constants.StandardFormat.DateTimeOffSetFormat, out var requestTime);
+                logEntity.HttpContext.RequestTime = isCanGetRequestTime ? (DateTimeOffset?)requestTime : null;
             }
         }
 
@@ -111,8 +109,7 @@ namespace Puppy.Logger
 
         private static string GetCallerRelativePath(string callerFilePath)
         {
-            if (string.IsNullOrWhiteSpace(callerFilePath))
-                throw new ArgumentNullException(nameof(callerFilePath));
+            StringHelper.CheckNullOrWhiteSpace(callerFilePath);
 
             var workingDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo workingDirectoryInfo = new DirectoryInfo(workingDirectory);

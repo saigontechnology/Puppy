@@ -32,9 +32,11 @@ namespace Puppy.Core.FileUtils
             {
                 StringHelper.CheckNullOrWhiteSpace(path);
 
-                if (!File.Exists(path))
+                var fullPath = path.GetFullPath();
+
+                if (!File.Exists(fullPath))
                 {
-                    File.Create(path);
+                    File.Create(fullPath);
                 }
             }
         }

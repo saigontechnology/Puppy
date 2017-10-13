@@ -58,6 +58,15 @@ namespace Puppy.Core.ServiceCollectionUtils
             return services;
         }
 
+        public static IServiceCollection AddScopedIfAny<TService>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class
+        {
+            if (services.Any(predicate))
+            {
+                services.AddScoped<TService>();
+            }
+            return services;
+        }
+
         public static IServiceCollection AddTransientIfAny<TService, TImplementation>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class where TImplementation : class, TService
         {
             if (services.Any(predicate))
@@ -67,11 +76,29 @@ namespace Puppy.Core.ServiceCollectionUtils
             return services;
         }
 
+        public static IServiceCollection AddTransientIfAny<TService>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class
+        {
+            if (services.Any(predicate))
+            {
+                services.AddTransient<TService>();
+            }
+            return services;
+        }
+
         public static IServiceCollection AddSingletonIfAny<TService, TImplementation>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class where TImplementation : class, TService
         {
             if (services.Any(predicate))
             {
                 services.AddSingleton<TService, TImplementation>();
+            }
+            return services;
+        }
+
+        public static IServiceCollection AddSingletonIfAny<TService>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class
+        {
+            if (services.Any(predicate))
+            {
+                services.AddSingleton<TService>();
             }
             return services;
         }
@@ -87,11 +114,29 @@ namespace Puppy.Core.ServiceCollectionUtils
             return services;
         }
 
+        public static IServiceCollection AddScopedIfAll<TService>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class
+        {
+            if (services.All(predicate))
+            {
+                services.AddScoped<TService>();
+            }
+            return services;
+        }
+
         public static IServiceCollection AddTransientIfAll<TService, TImplementation>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class where TImplementation : class, TService
         {
             if (services.All(predicate))
             {
                 services.AddTransient<TService, TImplementation>();
+            }
+            return services;
+        }
+
+        public static IServiceCollection AddTransientIfAll<TService>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class
+        {
+            if (services.All(predicate))
+            {
+                services.AddTransient<TService>();
             }
             return services;
         }
@@ -105,11 +150,26 @@ namespace Puppy.Core.ServiceCollectionUtils
             return services;
         }
 
+        public static IServiceCollection AddSingletonIfAll<TService>(this IServiceCollection services, Func<ServiceDescriptor, bool> predicate) where TService : class
+        {
+            if (services.All(predicate))
+            {
+                services.AddSingleton<TService>();
+            }
+            return services;
+        }
+
         // If Not Exist
 
         public static IServiceCollection AddScopedIfNotExist<TService, TImplementation>(this IServiceCollection services) where TService : class where TImplementation : class, TService
         {
             services.AddScopedIfAll<TService, TImplementation>(x => x.ServiceType != typeof(TService));
+            return services;
+        }
+
+        public static IServiceCollection AddScopedIfNotExist<TService>(this IServiceCollection services) where TService : class
+        {
+            services.AddScopedIfAll<TService>(x => x.ServiceType != typeof(TService));
             return services;
         }
 
@@ -119,9 +179,21 @@ namespace Puppy.Core.ServiceCollectionUtils
             return services;
         }
 
+        public static IServiceCollection AddTransientIfNotExist<TService>(this IServiceCollection services) where TService : class
+        {
+            services.AddTransientIfAll<TService>(x => x.ServiceType != typeof(TService));
+            return services;
+        }
+
         public static IServiceCollection AddSingletonIfNotExist<TService, TImplementation>(this IServiceCollection services) where TService : class where TImplementation : class, TService
         {
             services.AddSingletonIfAll<TService, TImplementation>(x => x.ServiceType != typeof(TService));
+            return services;
+        }
+
+        public static IServiceCollection AddSingletonIfNotExist<TService>(this IServiceCollection services) where TService : class
+        {
+            services.AddSingletonIfAll<TService>(x => x.ServiceType != typeof(TService));
             return services;
         }
     }

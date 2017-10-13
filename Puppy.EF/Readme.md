@@ -2,6 +2,8 @@
 # Puppy.EF
 > Project Created by [**Top Nguyen**](http://topnguyen.net)
 
+- Don't query or save change async because EF have issue [5816](https://github.com/aspnet/EntityFrameworkCore/issues/5816)
+
 ## Initial Database
 Setup by Command Windows of current project 
 

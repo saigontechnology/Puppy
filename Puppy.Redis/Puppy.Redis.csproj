@@ -21,7 +21,7 @@
 
   <!-- External Libraries -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.4" />
 
     <!-- Configuration -->
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />

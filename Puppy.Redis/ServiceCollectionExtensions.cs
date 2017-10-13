@@ -64,20 +64,28 @@ namespace Puppy.Redis
         public static IServiceCollection AddRedisCache(this IServiceCollection services, string connectionString, string instanceName)
         {
             if (string.IsNullOrWhiteSpace(RedisCacheConfig.ConnectionString))
+            {
                 throw new ArgumentNullException(nameof(RedisCacheConfig.ConnectionString), $"{nameof(RedisCacheConfig.ConnectionString)} Is Null Or WhiteSpace");
+            }
 
             if (string.IsNullOrWhiteSpace(RedisCacheConfig.InstanceName))
+            {
                 throw new ArgumentNullException(nameof(RedisCacheConfig.InstanceName), $"{nameof(RedisCacheConfig.InstanceName)} Is Null Or WhiteSpace");
+            }
 
             // Build Config
             RedisCacheConfig.ConnectionString = connectionString;
             RedisCacheConfig.InstanceName = instanceName;
 
             if (string.IsNullOrWhiteSpace(connectionString))
+            {
                 throw new ArgumentException($"{nameof(connectionString)} Is Null Or WhiteSpace", nameof(connectionString));
+            }
 
             if (string.IsNullOrWhiteSpace(instanceName))
+            {
                 throw new ArgumentException($"{nameof(instanceName)} Is Null Or WhiteSpace", nameof(instanceName));
+            }
 
             // Register Dependency for DistributedCache
             services.AddSingleton<IDistributedCache>(factory =>
@@ -85,7 +93,7 @@ namespace Puppy.Redis
                 var cache = new RedisCache(new RedisCacheOptions
                 {
                     Configuration = connectionString,
-                    InstanceName = instanceName
+                    InstanceName = instanceName,
                 });
 
                 return cache;
@@ -106,7 +114,10 @@ namespace Puppy.Redis
                 RedisCacheConfig.InstanceName = configuration.GetValue($"{configSection}:{nameof(RedisCacheConfig.InstanceName)}", RedisCacheConfig.InstanceName);
             }
 
-            if (!EnvironmentHelper.IsDevelopment()) return;
+            if (!EnvironmentHelper.IsDevelopment())
+            {
+                return;
+            }
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;

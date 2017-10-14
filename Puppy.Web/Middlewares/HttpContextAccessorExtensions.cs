@@ -42,8 +42,6 @@ namespace Puppy.Web.Middlewares
 {
     public static class HttpContextAccessorExtensions
     {
-        public static bool IsAlreadySetup;
-
         public static IServiceCollection AddHttpContextAccessor(this IServiceCollection services)
         {
             services.AddSingletonIfNotExist<IHttpContextAccessor, HttpContextAccessor>();

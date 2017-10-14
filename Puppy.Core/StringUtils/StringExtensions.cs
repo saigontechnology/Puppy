@@ -19,10 +19,10 @@
 
 #endregion License
 
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -139,11 +139,32 @@ namespace Puppy.Core.StringUtils
             }
         }
 
-        public static string ToBase64(this string value)
+        public static string EncodeBase64(this string value)
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(value);
-            string base64 = Convert.ToBase64String(bytes);
-            return base64;
+            byte[] bytes = Encoding.ASCII.GetBytes(value);
+            string base64Encode = Convert.ToBase64String(bytes);
+            return base64Encode;
+        }
+
+        public static string EncodeBase64Url(this string value)
+        {
+            byte[] bytes = Encoding.ASCII.GetBytes(value);
+            string base64Encode = WebEncoders.Base64UrlEncode(bytes);
+            return base64Encode;
+        }
+
+        public static string DecodeBase64(this string value)
+        {
+            byte[] bytes = Convert.FromBase64String(value);
+            string base64Decode = Encoding.ASCII.GetString(bytes);
+            return base64Decode;
+        }
+
+        public static string DecodeBase64Url(this string value)
+        {
+            byte[] bytes = WebEncoders.Base64UrlDecode(value);
+            string base64Decode = Encoding.ASCII.GetString(bytes);
+            return base64Decode;
         }
 
         public static string GetSha256(this string value)
@@ -210,7 +231,7 @@ namespace Puppy.Core.StringUtils
 
         public static string Encrypt(this string value, string key)
         {
-            byte[] clearBytes = Encoding.Unicode.GetBytes(value);
+            byte[] clearBytes = Encoding.ASCII.GetBytes(value);
             using (var encrypt = Aes.Create())
             {
                 var pdb = new Rfc2898DeriveBytes(key, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
@@ -222,7 +243,7 @@ namespace Puppy.Core.StringUtils
                     {
                         cs.Write(clearBytes, 0, clearBytes.Length);
                     }
-                    value = Convert.ToBase64String(ms.ToArray());
+                    value = Safe64Encoding.EncodeBytes(ms.ToArray());
                 }
             }
             return value;
@@ -230,8 +251,7 @@ namespace Puppy.Core.StringUtils
 
         public static string Decrypt(this string value, string key)
         {
-            value = value.Replace(" ", "+");
-            byte[] cipherBytes = Convert.FromBase64String(value);
+            byte[] cipherBytes = Safe64Encoding.DecodeBytes(value);
             using (var encrypt = Aes.Create())
             {
                 Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(key, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
@@ -246,7 +266,7 @@ namespace Puppy.Core.StringUtils
                         cs.Write(cipherBytes, 0, cipherBytes.Length);
                         cs.Dispose();
                     }
-                    value = Encoding.Unicode.GetString(ms.ToArray());
+                    value = Encoding.ASCII.GetString(ms.ToArray());
                 }
             }
             return value;

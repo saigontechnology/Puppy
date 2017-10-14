@@ -103,12 +103,6 @@ namespace Puppy.DataTable.Models.Config
             Id = id;
             Columns = columns.ToList();
             ColumnFilter = new ColumnFilterModel(this);
-            AjaxErrorHandler =
-                "function(jqXHR, textStatus, errorThrown)" +
-                "{ " +
-                    "console.log('error loading data: ' + textStatus + ' - ' + errorThrown); " +
-                    "console.log(arguments);" +
-                "}";
         }
     }
 }

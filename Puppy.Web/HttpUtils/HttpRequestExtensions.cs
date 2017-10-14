@@ -51,7 +51,12 @@ namespace Puppy.Web.HttpUtils
                 throw new ArgumentNullException(nameof(request));
 
             if (request.Headers != null)
-                return request.Headers[HeaderKey.XRequestedWith] == "XmlHttpRequest";
+            {
+                if (request.Headers.TryGetValue(HeaderKey.XRequestedWith, out var value))
+                {
+                    return string.Equals(value, "XMLHttpRequest", StringComparison.OrdinalIgnoreCase);
+                }
+            };
 
             return false;
         }
@@ -162,7 +167,7 @@ namespace Puppy.Web.HttpUtils
         }
 
         /// <summary>
-        ///     Endpoint of current request domain schema://host with port
+        ///     Endpoint of current request domain schema://host with port 
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>

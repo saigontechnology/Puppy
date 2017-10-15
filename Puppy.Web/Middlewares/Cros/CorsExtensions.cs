@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Puppy.Core.DictionaryUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.Web.Constants;
 using System;
@@ -41,9 +42,9 @@ namespace Puppy.Web.Middlewares.Cros
             configuration.BuildCrosConfig(configSection);
 
             var corsBuilder = new CorsPolicyBuilder();
-            corsBuilder.AllowAnyOrigin();
-            corsBuilder.AllowAnyHeader();
-            corsBuilder.AllowAnyMethod();
+            corsBuilder.WithOrigins(CrosConfig.AccessControlAllowOrigin.Split(',').Select(x => x?.Trim()).ToArray());
+            corsBuilder.WithHeaders(CrosConfig.AccessControlAllowHeaders.Split(',').Select(x => x?.Trim()).ToArray());
+            corsBuilder.WithMethods(CrosConfig.AccessControlAllowMethods.Split(',').Select(x => x?.Trim()).ToArray());
             corsBuilder.AllowCredentials();
 
             services.AddCors(options =>
@@ -84,14 +85,12 @@ namespace Puppy.Web.Middlewares.Cros
                 context.Response.OnStarting(state =>
                 {
                     var httpContext = (HttpContext)state;
-                    if (!httpContext.Response.Headers.ContainsKey(HeaderKey.AccessControlAllowOrigin))
-                        httpContext.Response.Headers.Add(HeaderKey.AccessControlAllowOrigin, CrosConfig.AccessControlAllowOrigin);
 
-                    if (!httpContext.Response.Headers.ContainsKey(HeaderKey.AccessControlAllowHeaders))
-                        httpContext.Response.Headers.Add(HeaderKey.AccessControlAllowHeaders, CrosConfig.AccessControlAllowHeaders);
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.AccessControlAllowOrigin, CrosConfig.AccessControlAllowOrigin);
 
-                    if (!httpContext.Response.Headers.ContainsKey(HeaderKey.AccessControlAllowMethods))
-                        httpContext.Response.Headers.Add(HeaderKey.AccessControlAllowMethods, CrosConfig.AccessControlAllowMethods);
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.AccessControlAllowHeaders, CrosConfig.AccessControlAllowHeaders);
+
+                    httpContext.Response.Headers.AddOrUpdate(HeaderKey.AccessControlAllowMethods, CrosConfig.AccessControlAllowMethods);
 
                     return Task.CompletedTask;
                 }, context);
@@ -103,6 +102,7 @@ namespace Puppy.Web.Middlewares.Cros
         public static void BuildCrosConfig(this IConfiguration configuration, string configSection = DefaultConfigSection)
         {
             var isHaveConfig = configuration.GetChildren().Any(x => x.Key == configSection);
+
             if (isHaveConfig)
             {
                 CrosConfig.PolicyAllowAllName = configuration.GetValue($"{configSection}:{nameof(CrosConfig.PolicyAllowAllName)}", CrosConfig.PolicyAllowAllName);
@@ -119,9 +119,9 @@ namespace Puppy.Web.Middlewares.Cros
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(
-                $"API Cros Config: {nameof(CrosConfig.PolicyAllowAllName)}: {CrosConfig.PolicyAllowAllName}," +
-                $" {nameof(CrosConfig.AccessControlAllowOrigin)}: {CrosConfig.AccessControlAllowOrigin}," +
-                $" {nameof(CrosConfig.AccessControlAllowHeaders)}: {CrosConfig.AccessControlAllowHeaders}," +
+                $"API Cros Config: {nameof(CrosConfig.PolicyAllowAllName)}: {CrosConfig.PolicyAllowAllName} |" +
+                $" {nameof(CrosConfig.AccessControlAllowOrigin)}: {CrosConfig.AccessControlAllowOrigin} |" +
+                $" {nameof(CrosConfig.AccessControlAllowHeaders)}: {CrosConfig.AccessControlAllowHeaders} |" +
                 $" {nameof(CrosConfig.AccessControlAllowMethods)}: {CrosConfig.AccessControlAllowMethods}");
             Console.ResetColor();
         }

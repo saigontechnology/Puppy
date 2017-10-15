@@ -44,16 +44,6 @@
 services.AddDataTable(ConfigurationRoot);
 ```
 
-- Add `DataTable Model Binder Provider` to `Mvc Options`
-```csharp
-services
-	.AddMvc(options =>
-	{
-		// [DataTable]
-		options.AddDataTableModelBinderProvider();
-	})
-```
-
 - Use DataTable for ApplicationBuidler
 ```csharp
 // [DataTable]

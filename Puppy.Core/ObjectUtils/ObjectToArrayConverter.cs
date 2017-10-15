@@ -19,11 +19,11 @@
 
 #endregion License
 
-using System;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using System;
+using System.Linq;
 
 namespace Puppy.Core.ObjectUtils
 {
@@ -71,10 +71,10 @@ namespace Puppy.Core.ObjectUtils
             {
                 throw new JsonSerializationException("invalid type " + objectType.FullName);
             }
-            
+
             var value = existingValue ?? contract.DefaultCreator();
 
-            foreach (var pair in contract.Properties.Where(p => !ShouldSkip(p)).Zip(token, (p, v) => new {Value = v, Property = p}))
+            foreach (var pair in contract.Properties.Where(p => !ShouldSkip(p)).Zip(token, (p, v) => new { Value = v, Property = p }))
             {
                 var propertyValue = pair.Value.ToObject(pair.Property.PropertyType, serializer);
 

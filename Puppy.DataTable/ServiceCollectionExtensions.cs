@@ -25,6 +25,7 @@ using Puppy.Core.EnvironmentUtils;
 using Puppy.DataTable.Constants;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Puppy.DataTable
 {
@@ -43,8 +44,17 @@ namespace Puppy.DataTable
         public static IServiceCollection AddDataTable(this IServiceCollection services, IConfiguration configuration, string configSection = ConfigConst.DefaultConfigSection)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
             _configSection = configSection;
+
             configuration.BuildConfig(configSection);
+
+            services.Configure<MvcOptions>(options =>
+            {
+                // [DataTable]
+                options.AddDataTableModelBinderProvider();
+            });
+
             return services;
         }
 

@@ -71,8 +71,14 @@ namespace Puppy.DataTable.Processing.Request
 
                 if (isValidFromDateTime)
                 {
-                    filterString = $"{columnName} >= @{parametersForLinqQuery.Count}";
+                    if (DataTableGlobalConfig.IsUseDateTimeUtc)
+                    {
+                        fromDateTime = fromDateTime.ToUniversalTime();
+                    }
+
                     parametersForLinqQuery.Add(fromDateTime);
+
+                    filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 1}";
                 }
 
                 // TO DATE TIME
@@ -83,35 +89,58 @@ namespace Puppy.DataTable.Processing.Request
                     return filterString ?? string.Empty;
                 }
 
-                filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count}";
+                if (DataTableGlobalConfig.IsUseDateTimeUtc)
+                {
+                    toDateTime = toDateTime.ToUniversalTime();
+                }
 
                 parametersForLinqQuery.Add(toDateTime);
+
+                filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count - 1}";
 
                 return filterString;
             }
 
             // Single Case
             bool isValidDateTime = TryParse(terms, out DateTimeOffset dateTime);
+
             if (!isValidDateTime)
             {
                 return null;
             }
 
+            // DateTime only have Date value => search value in same Date
             if (dateTime.Date == dateTime)
             {
-                dateTime = dateTime.ToUniversalTime();
+                if (DataTableGlobalConfig.IsUseDateTimeUtc)
+                {
+                    dateTime = dateTime.ToUniversalTime();
+                }
 
                 parametersForLinqQuery.Add(dateTime);
+
                 parametersForLinqQuery.Add(dateTime.AddDays(1));
 
                 filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
+
+                return filterString;
             }
-            else
+
+            // DateTime have Date and Time value => search value in same Date and Time.
+
+            if (DataTableGlobalConfig.IsUseDateTimeUtc)
             {
                 dateTime = dateTime.ToUniversalTime();
-                filterString = $"{columnName} == @{parametersForLinqQuery.Count}";
-                parametersForLinqQuery.Add(dateTime);
             }
+
+            parametersForLinqQuery.Add(dateTime);
+
+            // If you store DateTime in database include milliseconds => no result match. Ex: in
+            // Database "2017-10-16 10:51:09.9761005 +00:00" so user search "2017-10-16 10:51" will
+            // return 0 result, because not exactly same (even user give full datetime with
+            // milliseconds exactly - this is Linq2SQL issue).
+            filterString = $"{columnName} == @{parametersForLinqQuery.Count - 1}";
+
             return filterString;
         }
 
@@ -131,8 +160,14 @@ namespace Puppy.DataTable.Processing.Request
 
                 if (isValidFromDateTime)
                 {
-                    filterString = $"{columnName} >= @{parametersForLinqQuery.Count}";
+                    if (DataTableGlobalConfig.IsUseDateTimeUtc)
+                    {
+                        fromDateTime = fromDateTime.ToUniversalTime();
+                    }
+
                     parametersForLinqQuery.Add(fromDateTime);
+
+                    filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 1}";
                 }
 
                 // TO DATE TIME
@@ -143,31 +178,58 @@ namespace Puppy.DataTable.Processing.Request
                     return filterString ?? string.Empty;
                 }
 
-                filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count}";
+                if (DataTableGlobalConfig.IsUseDateTimeUtc)
+                {
+                    toDateTime = toDateTime.ToUniversalTime();
+                }
+
                 parametersForLinqQuery.Add(toDateTime);
+
+                filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count - 1}";
 
                 return filterString;
             }
 
             // Single Case
             bool isValidDateTime = TryParse(terms, out DateTime dateTime);
+
             if (!isValidDateTime)
             {
                 return null;
             }
 
+            // DateTime only have Date value => search value in same Date
             if (dateTime.Date == dateTime)
             {
+                if (DataTableGlobalConfig.IsUseDateTimeUtc)
+                {
+                    dateTime = dateTime.ToUniversalTime();
+                }
+
                 parametersForLinqQuery.Add(dateTime);
+
                 parametersForLinqQuery.Add(dateTime.AddDays(1));
 
-                filterString = $"({columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1})";
+                filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
+
+                return filterString;
             }
-            else
+
+            // DateTime have Date and Time value => search value in same Date and Time.
+
+            if (DataTableGlobalConfig.IsUseDateTimeUtc)
             {
-                filterString = $"{columnName} == @{parametersForLinqQuery.Count}";
-                parametersForLinqQuery.Add(dateTime);
+                dateTime = dateTime.ToUniversalTime();
             }
+
+            parametersForLinqQuery.Add(dateTime);
+
+            // If you store DateTime in database include milliseconds => no result match. Ex: in
+            // Database "2017-10-16 10:51:09.9761005 +00:00" so user search "2017-10-16 10:51" will
+            // return 0 result, because not exactly same (even user give full datetime with
+            // milliseconds exactly - this is Linq2SQL issue).
+            filterString = $"{columnName} == @{parametersForLinqQuery.Count - 1}";
+
             return filterString;
         }
 

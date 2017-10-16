@@ -38,6 +38,12 @@ namespace Puppy.DataTable
         public static string DateTimeFormat { get; set; } = "dd/MM/yyyy hh:mm tt";
 
         /// <summary>
+        ///     Config use datetime with Utc TimeZone or Local. Default is "True" - use UTC TimeZone,
+        ///     "False" for Local TimeZone. This is helpful for case column search
+        /// </summary>
+        public static bool IsUseDateTimeUtc { get; set; } = true;
+
+        /// <summary>
         ///     Control the way to parse string to DateTime every request. If value is
         ///     <see cref="DateTimeFormatMode.Specific" />, every request will use the
         ///     <see cref="DateTimeFormat" /> to parse string to DateTime. Else, will try parse
@@ -45,6 +51,6 @@ namespace Puppy.DataTable
         /// </summary>
         /// <remarks> Value is "Auto" by default </remarks>
         [JsonConverter(typeof(StringEnumConverter))]
-        internal static DateTimeFormatMode RequestDateTimeFormatMode { get; set; } = DateTimeFormatMode.Auto;
+        public static DateTimeFormatMode RequestDateTimeFormatMode { get; set; } = DateTimeFormatMode.Auto;
     }
 }

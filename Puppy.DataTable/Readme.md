@@ -58,6 +58,10 @@ app.UseDataTable();
 // If RequestDateTimeFormatMode is Specific, every request will use the format to parse to DateTime.
 "DateTimeFormat": "dd/MM/yyyy hh:mm tt",
 
+// Config use datetime with Utc TimeZone or Local. Default is "True" - use UTC TimeZone,
+// "False" for Local TimeZone. This is helpful for case column search
+"IsUseDateTimeUtc": "True",
+        
 // Control the way to parse string to DateTime every request.
 // Value can be Auto or Specific, default is Auto.
 "RequestDateTimeFormatMode": "Auto"

@@ -18,6 +18,7 @@
 #endregion License
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
@@ -25,7 +26,6 @@ using Puppy.Core.EnvironmentUtils;
 using Puppy.DataTable.Constants;
 using System;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Puppy.DataTable
 {
@@ -95,6 +95,9 @@ namespace Puppy.DataTable
                 {
                     throw new ArgumentException($"{nameof(DataTableGlobalConfig.DateTimeFormat)} must correct DateTime format. {ex.Message}");
                 }
+
+                DataTableGlobalConfig.IsUseDateTimeUtc = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.IsUseDateTimeUtc)}", DataTableGlobalConfig.IsUseDateTimeUtc);
+
                 DataTableGlobalConfig.RequestDateTimeFormatMode = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.RequestDateTimeFormatMode)}", DataTableGlobalConfig.RequestDateTimeFormatMode);
             }
 

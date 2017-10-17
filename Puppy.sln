@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26228.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Coordinate", "Puppy.Coordinate\Puppy.Coordinate.csproj", "{F678E428-13D5-4C03-9065-8D067353405D}"
 EndProject
@@ -44,6 +44,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.Cleaner", "Puppy.Cleaner\Puppy.Cleaner.csproj", "{B351070B-C3C0-44B4-8C6F-98D03630BBF0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.Cloner", "Puppy.Cloner\Puppy.Cloner.csproj", "{79ED2AB5-6B4C-4854-9C3A-49321916C49A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.ConsoleTest", "Puppy.ConsoleTest\Puppy.ConsoleTest.csproj", "{BF0981AD-4223-4399-9449-4D9024D06F7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Swagger", "Puppy.Swagger\Puppy.Swagger.csproj", "{9B16A3D1-7E60-4516-8F28-AEEC5C739840}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.DataTable", "Puppy.DataTable\Puppy.DataTable.csproj", "{2B838CC3-E934-46B1-8FD4-B375B45652CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +105,18 @@ Global
 		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF0981AD-4223-4399-9449-4D9024D06F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF0981AD-4223-4399-9449-4D9024D06F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF0981AD-4223-4399-9449-4D9024D06F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF0981AD-4223-4399-9449-4D9024D06F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B16A3D1-7E60-4516-8F28-AEEC5C739840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B16A3D1-7E60-4516-8F28-AEEC5C739840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B16A3D1-7E60-4516-8F28-AEEC5C739840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B16A3D1-7E60-4516-8F28-AEEC5C739840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B838CC3-E934-46B1-8FD4-B375B45652CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B838CC3-E934-46B1-8FD4-B375B45652CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B838CC3-E934-46B1-8FD4-B375B45652CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B838CC3-E934-46B1-8FD4-B375B45652CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,5 +133,7 @@ Global
 		{A0D37EFF-2CDC-4D0C-B648-9BD35D1073E1} = {8444200A-A502-4503-B49E-801AE3CC781B}
 		{B351070B-C3C0-44B4-8C6F-98D03630BBF0} = {4BCD1F87-606C-4CE0-9537-6A645FECE77E}
 		{79ED2AB5-6B4C-4854-9C3A-49321916C49A} = {4BCD1F87-606C-4CE0-9537-6A645FECE77E}
+		{9B16A3D1-7E60-4516-8F28-AEEC5C739840} = {05DEF65A-26C5-49D8-B28C-324549F7A3DB}
+		{2B838CC3-E934-46B1-8FD4-B375B45652CC} = {05DEF65A-26C5-49D8-B28C-324549F7A3DB}
 	EndGlobalSection
 EndGlobal

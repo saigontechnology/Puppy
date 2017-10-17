@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
+    <ProjectReference Include="..\Puppy.Web\Puppy.Web.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -22,6 +22,10 @@
     <Content Include="HttpUtils\HttpDetection\GeoCity.mmdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <!-- WKHTML -->
+    <Content Include="HtmlUtils\wkhtml\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   
   <!-- Puppy -->

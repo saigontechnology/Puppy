@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -109,12 +110,24 @@ namespace Puppy.Core.StringUtils
             return null;
         }
 
+        /// <summary>
+        ///     Get full physical path, if absolute path then return. Else combine with Executed
+        ///     Location, if not exist, will return combine with Current Directory
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string GetFullPath(this string path)
         {
             if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var pathUri))
                 throw new ArgumentException($"Invalid path {nameof(path)}");
 
-            if (!pathUri.IsAbsoluteUri)
+            if (pathUri.IsAbsoluteUri) return path;
+
+            string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            path = Path.Combine(executedFolder, path);
+
+            if (!File.Exists(path))
             {
                 path = Path.Combine(Directory.GetCurrentDirectory(), path);
             }

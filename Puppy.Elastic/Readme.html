@@ -810,10 +810,48 @@ MathJax.Hub.Config({
   onReady(function(){convertUML('uml-sequence-diagram', Diagram, {theme: 'simple'});});
 })(window, document)
 </script>
-<title>Readme</title></head><body><article class="markdown-body"><p><a href="///E://Dropbox/Github/Monkey/Puppy/Puppy.Elastic/favicon.ico" target="_blank"><img src="///E://Dropbox/Github/Monkey/Puppy/Puppy.Elastic/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
+<title>Readme</title></head><body><article class="markdown-body"><p><a href="///D://Projects/TOP/AspNetCore/eatup/Puppy/Puppy.Elastic/favicon.ico" target="_blank"><img src="///D://Projects/TOP/AspNetCore/eatup/Puppy/Puppy.Elastic/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
 <h1>
 <a id="user-content-puppyelastic" class="anchor" href="#puppyelastic" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.Elastic</h1>
 <blockquote>
 <p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
 </blockquote>
+<ul>
+<li>Add Elastic Search to Service Collection</li>
+</ul>
+<div class="highlight highlight-source-cs"><pre><span class="pl-c">// [Elastic Search]</span>
+<span class="pl-en">services.AddElastic</span>(ConfigurationRoot);</pre></div>
+<ul>
+<li>Use Elastic Search for ApplicationBuidler</li>
+</ul>
+<div class="highlight highlight-source-cs"><pre><span class="pl-c">// [Elastic Search]</span>
+<span class="pl-en">app.UseElastic</span>();</pre></div>
+<ul>
+<li>Add "Elastic" section in appsettings.json to config the Connection String</li>
+</ul>
+<div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> [Auto Reload]</span>
+<span class="pl-s"><span class="pl-pds">"</span>Elastic<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+    <span class="pl-c"><span class="pl-c">//</span> Elastic connection string. Default is "http://127.0.0.1:9200" </span>
+    <span class="pl-s"><span class="pl-pds">"</span>ConnectionString<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http://127.0.0.1:9200<span class="pl-pds">"</span></span>,
+}</pre></div>
+<h1>
+<a id="user-content-use" class="anchor" href="#use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use</h1>
+<ul>
+<li>Inject <code>IElasticContext</code> and call method insite interface.</li>
+</ul>
+<h1>
+<a id="user-content-note" class="anchor" href="#note" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Note</h1>
+<ul>
+<li>
+<strong>Security</strong> issue (Elastic Search Engine) not provice anything to protect data.
+<blockquote>
+<p>So be careful: just index and "elastic" what is publish for end-user.</p>
+</blockquote>
+</li>
+<li><strong>No Transaction</strong></li>
+<li>
+<strong>Nearly realtime, not realtime</strong>. =&gt; need call elastic <strong>refresh to make it real time</strong>
+</li>
+<li>Elasticsearch is a great tool, but it is designed for search not to serve as a database</li>
+</ul>
 </article></body></html>

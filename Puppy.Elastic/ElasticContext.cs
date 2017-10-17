@@ -203,14 +203,14 @@ namespace Puppy.Elastic
         {
             return _elasticContextIndexMapping.IndexOptimize(index, optimizeParameters);
         }
-      
+
         /// <inheritdoc />
         public async Task<ResultDetails<OptimizeResult>> IndexOptimizeAsync(string index = null,
             OptimizeParameters optimizeParameters = null)
         {
             return await _elasticContextIndexMapping.IndexOptimizeAsync(index, optimizeParameters);
         }
-   
+
         /// <inheritdoc />
         public ResultDetails<bool> IndexClose(string index)
         {
@@ -240,7 +240,7 @@ namespace Puppy.Elastic
         {
             return _elasticContextIndexMapping.UpdateIndexSettings(indexUpdateSettings, index);
         }
-       
+
         /// <inheritdoc />
         public async Task<ResultDetails<string>> IndexUpdateSettingsAsync(IndexUpdateSettings indexUpdateSettings,
             string index = null)

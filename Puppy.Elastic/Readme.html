@@ -816,6 +816,51 @@ MathJax.Hub.Config({
 <blockquote>
 <p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
 </blockquote>
+<h1>
+<a id="user-content-install-elastic" class="anchor" href="#install-elastic" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install Elastic</h1>
+<ul>
+<li>
+<p>Support Elastic Search version 2.4.6</p>
+</li>
+<li>
+<p><a href="https://www.elastic.co/downloads/past-releases/elasticsearch-2-4-6">Download Elastic 2.4.6</a></p>
+</li>
+<li>
+<p>After download elastic search - unzup the zip file</p>
+</li>
+<li>
+<p>Go to <code>config</code> &gt; <code>elasticsearch.yml</code> to edit config if you want, the config below is sample.</p>
+<ul>
+<li>cluster.name puppy.elastic</li>
+<li>node.name: puppy.elastic-primary</li>
+<li>network.host: 127.0.0.1</li>
+<li>http.port: 9200</li>
+</ul>
+<blockquote>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/setup.html">Setup Guide</a></p>
+</blockquote>
+</li>
+<li>
+<p><a href="https://java.com/en/download/manual.jsp">Download Java Machine</a></p>
+</li>
+<li>
+<p><a href="https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html">Setting JAVA_HOME variable</a></p>
+</li>
+<li>
+<p>Go to <code>bin</code> and open cmd at the directory</p>
+</li>
+<li>
+<p>Use cmd <code>service install</code></p>
+</li>
+<li>
+<p>Then cmd <code>service manager</code> then setting <code>start</code> service and <code>start mode</code> is <code>automatic</code></p>
+<blockquote>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/setup-service-win.html">Run as Service</a></p>
+</blockquote>
+</li>
+</ul>
+<h1>
+<a id="user-content-use-elastic" class="anchor" href="#use-elastic" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use Elastic</h1>
 <ul>
 <li>Add Elastic Search to Service Collection</li>
 </ul>
@@ -834,8 +879,6 @@ MathJax.Hub.Config({
     <span class="pl-c"><span class="pl-c">//</span> Elastic connection string. Default is "http://127.0.0.1:9200" </span>
     <span class="pl-s"><span class="pl-pds">"</span>ConnectionString<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http://127.0.0.1:9200<span class="pl-pds">"</span></span>,
 }</pre></div>
-<h1>
-<a id="user-content-use" class="anchor" href="#use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use</h1>
 <ul>
 <li>Inject <code>IElasticContext</code> and call method insite interface.</li>
 </ul>

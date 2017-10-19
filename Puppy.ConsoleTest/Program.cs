@@ -1,4 +1,6 @@
-﻿using Puppy.Web.HtmlUtils;
+﻿using Puppy.Core.FileUtils;
+using Puppy.Web.HtmlUtils;
+using System.Text;
 
 namespace Puppy.ConsoleTest
 {
@@ -6,7 +8,9 @@ namespace Puppy.ConsoleTest
     {
         private static void Main()
         {
-            HtmlHelper.ToPdfFromHtml("<html><body>Top Nguyen</body></html>", @"E:\Top Nguyen.pdf");
+            byte[] htmlBytes = HtmlHelper.FromDocx("E:\\SampleConvert.docx");
+            HtmlHelper.ToPdfFromHtml(Encoding.UTF8.GetString(htmlBytes), @"E:\SampleConvert.pdf");
+            PdfHelper.SetPassword(@"E:\SampleConvert.pdf", "topnguyen");
         }
     }
 }

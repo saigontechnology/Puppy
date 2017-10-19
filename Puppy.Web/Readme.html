@@ -881,6 +881,14 @@ MathJax.Hub.Config({
 ...
 FileModel fileModel = FileHelper.<span class="pl-en">Save</span>(base64String, fileOriginalName, savePath);</pre></div>
 <h2>
+<a id="user-content-html-utils" class="anchor" href="#html-utils" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Html Utils</h2>
+<ul>
+<li>Support Convert Docx to HTML</li>
+<li>Support Convert HTML to PDF</li>
+</ul>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">byte</span>[] <span class="pl-en">htmlBytes</span> = <span class="pl-en">HtmlHelper.FromDocx</span>("E:\\SampleConvert.docx");
+<span class="pl-en">HtmlHelper.ToPdfFromHtml</span>(Encoding.UTF8.<span class="pl-en">GetString</span>(htmlBytes), @"E:\SampleConvert.pdf");</pre></div>
+<h2>
 <a id="user-content-servicecollections-extensions" class="anchor" href="#servicecollections-extensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ServiceCollections Extensions</h2>
 <h3>
 <a id="user-content-1-minresponseextensions" class="anchor" href="#1-minresponseextensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. MinResponseExtensions</h3>

@@ -26,6 +26,13 @@
     <Content Include="HtmlUtils\wkhtml\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <!-- Docx2Html -->
+    <Content Include="HtmlUtils\docx2html\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="HtmlUtils\HtmlToPdf.cs" />
   </ItemGroup>
   
   <!-- Puppy -->

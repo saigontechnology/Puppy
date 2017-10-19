@@ -72,6 +72,14 @@ using Puppy.Core.FileUtils
 FileModel fileModel = FileHelper.Save(base64String, fileOriginalName, savePath);
 ```
 
+## Html Utils
+- Support Convert Docx to HTML
+- Support Convert HTML to PDF
+```csharp
+byte[] htmlBytes = HtmlHelper.FromDocx("E:\\SampleConvert.docx");
+HtmlHelper.ToPdfFromHtml(Encoding.UTF8.GetString(htmlBytes), @"E:\SampleConvert.pdf");
+```
+
 ## ServiceCollections Extensions
 
 ### 1. MinResponseExtensions

@@ -28,138 +28,121 @@ using System.Threading;
 
 namespace Puppy.Web.HtmlUtils
 {
-    public static class PaperTypes
-    {
-        public static string A0 = "A0";
-        public static string A1 = "A1";
-        public static string A2 = "A2";
-        public static string A3 = "A3";
-        public static string A4 = "A4";
-        public static string A5 = "A5";
-        public static string A6 = "A6";
-        public static string A7 = "A7";
-        public static string A8 = "A8";
-        public static string A9 = "A9";
-        public static string B0 = "B0";
-        public static string B1 = "B1";
-        public static string B10 = "B10";
-        public static string B2 = "B2";
-        public static string B3 = "B3";
-        public static string B4 = "B4";
-        public static string B5 = "B5";
-        public static string B6 = "B6";
-        public static string B7 = "B7";
-        public static string B8 = "B8";
-        public static string B9 = "B9";
-        public static string C5E = "C5E";
-        public static string Comm10E = "Comm10E";
-        public static string Dle = "DLE";
-        public static string Executive = "Executive";
-        public static string Folio = "Folio";
-        public static string Ledger = "Ledger";
-        public static string Legal = "Legal";
-        public static string Letter = "Letter";
-        public static string Tabloid = "Tabloid";
-    }
-
-    public class PdfConvertException : Exception
-    {
-        public PdfConvertException(string msg) : base(msg)
-        {
-        }
-    }
-
-    public class PdfConvertTimeoutException : PdfConvertException
-    {
-        public PdfConvertTimeoutException() : base("HTML to PDF conversion process has not finished in the given period.")
-        {
-        }
-    }
-
-    public class PdfOutput
-    {
-        /// <summary>
-        ///     Store in temp folder if this blank 
-        /// </summary>
-        public string OutputFilePath { get; set; }
-
-        public Stream OutputStream { get; set; }
-
-        public Action<PdfDocument, byte[]> OutputCallback { get; set; }
-    }
-
-    public class PdfDocument
-    {
-        public string PaperType { get; set; } = PaperTypes.A4;
-
-        /// <summary>
-        ///     File path or HTTP URL 
-        /// </summary>
-        public string Url { get; set; }
-
-        public string HeaderUrl { get; set; }
-
-        public string FooterUrl { get; set; }
-
-        public string HeaderLeft { get; set; }
-
-        public string HeaderCenter { get; set; }
-
-        public string HeaderRight { get; set; }
-
-        public string FooterLeft { get; set; }
-
-        public string FooterCenter { get; set; }
-
-        public string FooterRight { get; set; }
-
-        public object State { get; set; }
-
-        public Dictionary<string, string> Cookies { get; set; }
-
-        public Dictionary<string, string> ExtraParams { get; set; }
-
-        public string HeaderFontSize { get; set; }
-
-        public string FooterFontSize { get; set; }
-
-        public string HeaderFontName { get; set; }
-
-        public string FooterFontName { get; set; }
-    }
-
-    internal class PdfConvertEnvironment
-    {
-        public string TempFolderPath { get; set; }
-
-        public string WkHtmlToPdfPath { get; set; }
-
-        public int Timeout { get; set; }
-
-        public bool Debug { get; set; }
-    }
-
     public class HtmlHelper
     {
-        private static PdfConvertEnvironment _e;
-
-        private static PdfConvertEnvironment Environment => _e ?? (_e = new PdfConvertEnvironment
+        internal class ToolEnvironment
         {
-            TempFolderPath = Path.GetTempPath(),
-            WkHtmlToPdfPath = GetWkhtmlToPdfExeLocation(),
-            Timeout = 60000
-        });
+            public string TempFolderPath { get; set; }
 
-        private static string GetWkhtmlToPdfExeLocation()
-        {
-            string wkhtmlPath = $"{nameof(HtmlUtils)}/wkhtml/wkhtmltopdf.exe".GetFullPath();
+            public string ToolPath { get; set; }
 
-            return wkhtmlPath;
+            public int Timeout { get; set; }
+
+            public bool Debug { get; set; }
         }
 
-        public static void ToPdf(PdfDocument document, PdfOutput pdfOutput)
+        #region Exception
+
+        public class HtmlConvertException : Exception
         {
-            var environment = Environment;
+            public HtmlConvertException(string msg) : base(msg)
+            {
+            }
+        }
+
+        public class HtmlConvertTimeoutException : HtmlConvertException
+        {
+            public HtmlConvertTimeoutException() : base("HTML to PDF conversion process has not finished in the given period.")
+            {
+            }
+        }
+
+        #endregion
+
+        #region Html to PDF
+
+        /// <summary>
+        ///     Convert Html to Pdf 
+        /// </summary>
+        /// <param name="url">     File path or HTTP URL </param>
+        /// <param name="pdfPath"></param>
+        public static void ToPdf(string url, string pdfPath)
+        {
+            var pdfOutput = new HtmlToPdf.PdfOutput { OutputFilePath = pdfPath };
+
+            ToPdf(new HtmlToPdf.PdfDocument { Url = url }, pdfOutput);
+        }
+
+        public static void ToPdfFromHtml(string html, string pdfPath)
+        {
+            // Generate Temp File from Html Content
+            string temp = Path.GetTempFileName();
+            var url = Path.ChangeExtension(temp, ".html");
+            File.Move(temp, url);
+            File.WriteAllText(url, html);
+
+            try
+            {
+                // Convert
+                ToPdf(url, pdfPath);
+            }
+            finally
+            {
+                // Remove Temp
+                FileHelper.SafeDelete(url);
+            }
+        }
+
+        /// <summary>
+        ///     Convert Html to Pdf 
+        /// </summary>
+        /// <param name="url"> File path or HTTP URL </param>
+        public static byte[] ToPdf(string url)
+        {
+            byte[] fileBytes = null;
+
+            var pdfOutput = new HtmlToPdf.PdfOutput
+            {
+                OutputCallback = (document, bytes) =>
+                {
+                    fileBytes = bytes;
+                }
+            };
+
+            ToPdf(new HtmlToPdf.PdfDocument { Url = url }, pdfOutput);
+
+            return fileBytes;
+        }
+
+        public static byte[] ToPdfFromHtml(string html)
+        {
+            // Generate Temp File from Html Content
+            string temp = Path.GetTempFileName();
+            var url = Path.ChangeExtension(temp, ".html");
+            File.Move(temp, url);
+            File.WriteAllText(url, html);
+
+            try
+            {
+                // Convert
+                var bytes = ToPdf(url);
+                return bytes;
+            }
+            finally
+            {
+                // Remove Temp
+                FileHelper.SafeDelete(url);
+            }
+        }
+
+        public static void ToPdf(HtmlToPdf.PdfDocument document, HtmlToPdf.PdfOutput pdfOutput)
+        {
+            var environment = new ToolEnvironment
+            {
+                TempFolderPath = Path.GetTempPath(),
+                ToolPath = $"{nameof(HtmlUtils)}/wkhtml/wkhtmltopdf.exe".GetFullPath(),
+                Timeout = 60000
+            };
 
             string outputPdfFilePath;
             bool delete;
@@ -174,9 +157,9 @@ namespace Puppy.Web.HtmlUtils
                 delete = true;
             }
 
-            if (!File.Exists(environment.WkHtmlToPdfPath))
+            if (!File.Exists(environment.ToolPath))
             {
-                throw new PdfConvertException($"File '{environment.WkHtmlToPdfPath}' not found. Check if wkhtmltopdf application is installed.");
+                throw new HtmlConvertException($"File '{environment.ToolPath}' not found. Check if wkhtmltopdf application is installed.");
             }
 
             var paramsBuilder = new StringBuilder();
@@ -270,7 +253,7 @@ namespace Puppy.Web.HtmlUtils
 
                 using (Process process = new Process())
                 {
-                    process.StartInfo.FileName = environment.WkHtmlToPdfPath;
+                    process.StartInfo.FileName = environment.ToolPath;
                     process.StartInfo.Arguments = paramsBuilder.ToString();
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.RedirectStandardOutput = true;
@@ -317,7 +300,7 @@ namespace Puppy.Web.HtmlUtils
                             {
                                 if (process.ExitCode != 0 && !File.Exists(outputPdfFilePath))
                                 {
-                                    throw new PdfConvertException(string.Format("Html to PDF conversion of '{0}' failed. Wkhtmltopdf output: \r\n{1}", document.Url, error));
+                                    throw new HtmlConvertException($"Html to PDF conversion of '{document.Url}' failed. Wkhtmltopdf output: \r\n{error}");
                                 }
                             }
                             else
@@ -327,7 +310,7 @@ namespace Puppy.Web.HtmlUtils
                                     process.Kill();
                                 }
 
-                                throw new PdfConvertTimeoutException();
+                                throw new HtmlConvertTimeoutException();
                             }
                         }
                         finally
@@ -365,68 +348,221 @@ namespace Puppy.Web.HtmlUtils
             }
         }
 
-        /// <summary>
-        ///     Convert Html to Pdf 
-        /// </summary>
-        /// <param name="url">            File path or HTTP URL </param>
-        /// <param name="outputFilePath"></param>
-        public static void ToPdf(string url, string outputFilePath)
+        public class HtmlToPdf
         {
-            var pdfOutput = new PdfOutput { OutputFilePath = outputFilePath };
-
-            ToPdf(new PdfDocument { Url = url }, pdfOutput);
-        }
-
-        public static void ToPdfFromHtml(string htmlContent, string outputFilePath)
-        {
-            // Generate Temp File from Html Content
-            string temp = Path.GetTempFileName();
-            var url = Path.ChangeExtension(temp, ".html");
-            File.Move(temp, url);
-            File.WriteAllText(url, htmlContent);
-
-            // Convert
-            ToPdf(url, outputFilePath);
-
-            // Remove Temp
-            FileHelper.SafeDelete(url);
-        }
-
-        /// <summary>
-        ///     Convert Html to Pdf 
-        /// </summary>
-        /// <param name="url"> File path or HTTP URL </param>
-        public static byte[] ToPdf(string url)
-        {
-            byte[] fileBytes = null;
-            var pdfOutput = new PdfOutput
+            public static class PaperTypes
             {
-                OutputCallback = (document, bytes) =>
-                {
-                    fileBytes = bytes;
-                }
+                public static string A0 = "A0";
+                public static string A1 = "A1";
+                public static string A2 = "A2";
+                public static string A3 = "A3";
+                public static string A4 = "A4";
+                public static string A5 = "A5";
+                public static string A6 = "A6";
+                public static string A7 = "A7";
+                public static string A8 = "A8";
+                public static string A9 = "A9";
+                public static string B0 = "B0";
+                public static string B1 = "B1";
+                public static string B10 = "B10";
+                public static string B2 = "B2";
+                public static string B3 = "B3";
+                public static string B4 = "B4";
+                public static string B5 = "B5";
+                public static string B6 = "B6";
+                public static string B7 = "B7";
+                public static string B8 = "B8";
+                public static string B9 = "B9";
+                public static string C5E = "C5E";
+                public static string Comm10E = "Comm10E";
+                public static string Dle = "DLE";
+                public static string Executive = "Executive";
+                public static string Folio = "Folio";
+                public static string Ledger = "Ledger";
+                public static string Legal = "Legal";
+                public static string Letter = "Letter";
+                public static string Tabloid = "Tabloid";
+            }
+
+            public class PdfOutput
+            {
+                /// <summary>
+                ///     Store in temp folder if this blank 
+                /// </summary>
+                public string OutputFilePath { get; set; }
+
+                public Stream OutputStream { get; set; }
+
+                public Action<PdfDocument, byte[]> OutputCallback { get; set; }
+            }
+
+            public class PdfDocument
+            {
+                public string PaperType { get; set; } = PaperTypes.A4;
+
+                /// <summary>
+                ///     File path or HTTP URL 
+                /// </summary>
+                public string Url { get; set; }
+
+                public string HeaderUrl { get; set; }
+
+                public string FooterUrl { get; set; }
+
+                public string HeaderLeft { get; set; }
+
+                public string HeaderCenter { get; set; }
+
+                public string HeaderRight { get; set; }
+
+                public string FooterLeft { get; set; }
+
+                public string FooterCenter { get; set; }
+
+                public string FooterRight { get; set; }
+
+                public object State { get; set; }
+
+                public Dictionary<string, string> Cookies { get; set; }
+
+                public Dictionary<string, string> ExtraParams { get; set; }
+
+                public string HeaderFontSize { get; set; }
+
+                public string FooterFontSize { get; set; }
+
+                public string HeaderFontName { get; set; }
+
+                public string FooterFontName { get; set; }
+            }
+        }
+
+        #endregion
+
+        #region Docx to Html
+
+        public static byte[] FromDocx(string docxPath)
+        {
+            // Generate Temp File for Html
+            string temp = Path.GetTempFileName();
+            var htmlPath = Path.ChangeExtension(temp, ".html");
+            File.Move(temp, htmlPath);
+
+            try
+            {
+                // Convert
+                FromDocx(docxPath, htmlPath);
+
+                // Result
+                var bytes = File.ReadAllBytes(htmlPath);
+                return bytes;
+            }
+            finally
+            {
+                // Remove Temp
+                FileHelper.SafeDelete(htmlPath);
+            }
+        }
+
+        public static void FromDocx(string docxPath, string htmlPath)
+        {
+            var environment = new ToolEnvironment
+            {
+                TempFolderPath = Path.GetTempPath(),
+                ToolPath = $"{nameof(HtmlUtils)}/docx2html/Puppy.DocxToHtml.exe".GetFullPath(),
+                Timeout = 60000
             };
 
-            ToPdf(new PdfDocument { Url = url }, pdfOutput);
+            var paramsBuilder = new StringBuilder();
 
-            return fileBytes;
+            docxPath = docxPath?.GetFullPath();
+            htmlPath = htmlPath?.GetFullPath();
+
+            paramsBuilder.Append($"{docxPath} {htmlPath}");
+
+            try
+            {
+                StringBuilder output = new StringBuilder();
+                StringBuilder error = new StringBuilder();
+
+                using (Process process = new Process())
+                {
+                    process.StartInfo.FileName = environment.ToolPath;
+                    process.StartInfo.Arguments = paramsBuilder.ToString();
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.RedirectStandardError = true;
+                    process.StartInfo.RedirectStandardInput = true;
+
+                    using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+                    using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
+                    {
+                        DataReceivedEventHandler outputHandler = (sender, e) =>
+                        {
+                            if (e.Data == null)
+                            {
+                                outputWaitHandle.Set();
+                            }
+                            else
+                            {
+                                output.AppendLine(e.Data);
+                            }
+                        };
+
+                        DataReceivedEventHandler errorHandler = (sender, e) =>
+                        {
+                            if (e.Data == null)
+                            {
+                                errorWaitHandle.Set();
+                            }
+                            else
+                            {
+                                error.AppendLine(e.Data);
+                            }
+                        };
+
+                        process.OutputDataReceived += outputHandler;
+                        process.ErrorDataReceived += errorHandler;
+
+                        try
+                        {
+                            process.Start();
+                            process.BeginOutputReadLine();
+                            process.BeginErrorReadLine();
+
+                            if (process.WaitForExit(environment.Timeout) &&
+                                outputWaitHandle.WaitOne(environment.Timeout) &&
+                                errorWaitHandle.WaitOne(environment.Timeout))
+                            {
+                                if (process.ExitCode != 0 && !File.Exists(htmlPath))
+                                {
+                                    throw new HtmlConvertException($"Html to PDF conversion of '{docxPath}' failed. Puppy.DocxToHtml output: \r\n{error}");
+                                }
+                            }
+                            else
+                            {
+                                if (!process.HasExited)
+                                {
+                                    process.Kill();
+                                }
+
+                                throw new HtmlConvertTimeoutException();
+                            }
+                        }
+                        finally
+                        {
+                            process.OutputDataReceived -= outputHandler;
+                            process.ErrorDataReceived -= errorHandler;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
-        public static byte[] ToPdfFromHtml(string htmlContent)
-        {
-            // Generate Temp File from Html Content
-            string temp = Path.GetTempFileName();
-            var url = Path.ChangeExtension(temp, ".html");
-            File.Move(temp, url);
-            File.WriteAllText(url, htmlContent);
-
-            // Convert
-            var bytes = ToPdf(url);
-
-            // Remove Temp
-            FileHelper.SafeDelete(url);
-
-            return bytes;
-        }
+        #endregion
     }
 }

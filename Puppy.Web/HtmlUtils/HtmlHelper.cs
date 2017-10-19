@@ -76,9 +76,7 @@ namespace Puppy.Web.HtmlUtils
         public static void ToPdfFromHtml(string html, string pdfPath)
         {
             // Generate Temp File from Html Content
-            string temp = Path.GetTempFileName();
-            var url = Path.ChangeExtension(temp, ".html");
-            File.Move(temp, url);
+            var url = FileHelper.CreateTempFile(".html");
             File.WriteAllText(url, html);
 
             try
@@ -117,9 +115,7 @@ namespace Puppy.Web.HtmlUtils
         public static byte[] ToPdfFromHtml(string html)
         {
             // Generate Temp File from Html Content
-            string temp = Path.GetTempFileName();
-            var url = Path.ChangeExtension(temp, ".html");
-            File.Move(temp, url);
+            var url = FileHelper.CreateTempFile(".html");
             File.WriteAllText(url, html);
 
             try
@@ -444,9 +440,7 @@ namespace Puppy.Web.HtmlUtils
         public static byte[] FromDocx(string docxPath)
         {
             // Generate Temp File for Html
-            string temp = Path.GetTempFileName();
-            var htmlPath = Path.ChangeExtension(temp, ".html");
-            File.Move(temp, htmlPath);
+            var htmlPath = FileHelper.CreateTempFile(".html");
 
             try
             {

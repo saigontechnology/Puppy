@@ -41,6 +41,15 @@ namespace Puppy.Core.FileUtils
             }
         }
 
+        public static string CreateTempFile(string extension)
+        {
+            string temp = Path.GetTempFileName();
+            extension = extension.StartsWith(".") ? extension : $".{extension}";
+            var path = Path.ChangeExtension(temp, extension);
+            File.Move(temp, path);
+            return path;
+        }
+
         public static bool IsLocked(string path)
         {
             StringHelper.CheckNullOrWhiteSpace(path);

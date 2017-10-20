@@ -2,6 +2,7 @@
 using Puppy.Core.StringUtils;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Puppy.Core.FileUtils
 {
@@ -20,15 +21,16 @@ namespace Puppy.Core.FileUtils
                     docText = sr.ReadToEnd();
                 }
 
+                StringBuilder builder = new StringBuilder(docText);
+
                 foreach (var key in data.Keys)
                 {
-                    // docText = new Regex(key, RegexOptions.IgnoreCase).Replace(docText, data[key]);
-                    docText = docText.Replace(docText, data[key]);
+                    builder = builder.Replace(key, data[key]);
                 }
 
                 using (var sw = new StreamWriter(doc.MainDocumentPart.GetStream(FileMode.Create)))
                 {
-                    sw.Write(docText);
+                    sw.Write(builder);
                 }
             }
         }

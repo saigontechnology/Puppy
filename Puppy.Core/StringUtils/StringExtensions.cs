@@ -23,7 +23,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -123,14 +122,7 @@ namespace Puppy.Core.StringUtils
 
             if (pathUri.IsAbsoluteUri) return path;
 
-            string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
-            path = Path.Combine(executedFolder, path);
-
-            if (!File.Exists(path))
-            {
-                path = Path.Combine(Directory.GetCurrentDirectory(), path);
-            }
+            path = Path.Combine(Directory.GetCurrentDirectory(), path);
 
             return path;
         }

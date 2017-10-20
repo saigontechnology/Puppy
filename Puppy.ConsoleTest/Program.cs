@@ -1,4 +1,5 @@
-﻿using Puppy.Core.FileUtils;
+﻿using System;
+using Puppy.Core.FileUtils;
 using Puppy.Web.HtmlUtils;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Puppy.ConsoleTest
             WordHelper.Replace(docxPath, new Dictionary<string, string>
             {
                 {"{ContactName}", "Top Nguyen"},
+                {"{GeneratedTime}", DateTimeOffset.UtcNow.ToString("F")},
                 {"{FinancialYear}", "2017"},
             });
 

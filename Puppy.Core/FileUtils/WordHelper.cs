@@ -2,7 +2,6 @@
 using Puppy.Core.StringUtils;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace Puppy.Core.FileUtils
 {
@@ -23,7 +22,8 @@ namespace Puppy.Core.FileUtils
 
                 foreach (var key in data.Keys)
                 {
-                    docText = new Regex(key, RegexOptions.IgnoreCase).Replace(docText, data[key]);
+                    // docText = new Regex(key, RegexOptions.IgnoreCase).Replace(docText, data[key]);
+                    docText = docText.Replace(docText, data[key]);
                 }
 
                 using (var sw = new StreamWriter(doc.MainDocumentPart.GetStream(FileMode.Create)))

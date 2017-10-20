@@ -2,6 +2,7 @@
 using Puppy.Web.HtmlUtils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Puppy.ConsoleTest
@@ -10,9 +11,12 @@ namespace Puppy.ConsoleTest
     {
         private static void Main()
         {
+            string docxSrcPath = "E:\\SampleConvert - Standard.docx";
             string docxPath = "E:\\SampleConvert.docx";
             string pdfPath = @"E:\SampleConvert.pdf";
-            string pdfPassword = "topnguyen";
+            string pdfPassword = "";
+
+            File.Copy(docxSrcPath, docxPath, true);
 
             WordHelper.Replace(docxPath, new Dictionary<string, string>
             {

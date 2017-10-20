@@ -16,9 +16,9 @@ namespace Puppy.ConsoleTest
 
             WordHelper.Replace(docxPath, new Dictionary<string, string>
             {
-                {"{{ContactName}}", "Top Nguyen"},
-                {"{{GeneratedTime}}", DateTimeOffset.UtcNow.ToString("F")},
-                {"{{FinancialYear}}", "2017"},
+                {"{ContactName}", "Top Nguyen"},
+                {"{GeneratedTime}", DateTimeOffset.UtcNow.ToString("F")},
+                {"{FinancialYear}", "2017"},
             });
 
             byte[] htmlBytes = HtmlHelper.FromDocx(docxPath);

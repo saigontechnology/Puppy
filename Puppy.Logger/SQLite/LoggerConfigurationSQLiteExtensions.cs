@@ -22,7 +22,7 @@ namespace Puppy.Logger.SQLite
         {
             if (string.IsNullOrWhiteSpace(LoggerConfig.SQLiteFilePath))
             {
-                SelfLog.WriteLine($"Invalid {nameof(LoggerConfig.SQLiteFilePath)}");
+                SelfLog.WriteLine($"Invalid {LoggerConfig.SQLiteFilePath}");
                 throw new ArgumentNullException(nameof(LoggerConfig.SQLiteFilePath));
             }
 

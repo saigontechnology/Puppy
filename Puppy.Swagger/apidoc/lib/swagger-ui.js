@@ -2460,24 +2460,15 @@
                         var jsonType = this.toJsonSchema({ type: innerType });
                         return { type: 'array', items: jsonType };
                     }
-                    else if (lcType === 'int' || (lcType === 'integer' && format === 'int32'))
-                    { return { type: 'integer', format: 'int32' }; }
-                    else if (lcType === 'long' || (lcType === 'integer' && format === 'int64'))
-                    { return { type: 'integer', format: 'int64' }; }
-                    else if (lcType === 'integer')
-                    { return { type: 'integer', format: 'int64' }; }
-                    else if (lcType === 'float' || (lcType === 'number' && format === 'float'))
-                    { return { type: 'number', format: 'float' }; }
-                    else if (lcType === 'double' || (lcType === 'number' && format === 'double'))
-                    { return { type: 'number', format: 'double' }; }
-                    else if ((lcType === 'string' && format === 'date-time') || (lcType === 'date'))
-                    { return { type: 'string', format: 'date-time' }; }
-                    else if (lcType === 'string')
-                    { return { type: 'string' }; }
-                    else if (lcType === 'file')
-                    { return { type: 'file' }; }
-                    else if (lcType === 'boolean')
-                    { return { type: 'boolean' }; }
+                    else if (lcType === 'int' || (lcType === 'integer' && format === 'int32')) { return { type: 'integer', format: 'int32' }; }
+                    else if (lcType === 'long' || (lcType === 'integer' && format === 'int64')) { return { type: 'integer', format: 'int64' }; }
+                    else if (lcType === 'integer') { return { type: 'integer', format: 'int64' }; }
+                    else if (lcType === 'float' || (lcType === 'number' && format === 'float')) { return { type: 'number', format: 'float' }; }
+                    else if (lcType === 'double' || (lcType === 'number' && format === 'double')) { return { type: 'number', format: 'double' }; }
+                    else if ((lcType === 'string' && format === 'date-time') || (lcType === 'date')) { return { type: 'string', format: 'date-time' }; }
+                    else if (lcType === 'string') { return { type: 'string' }; }
+                    else if (lcType === 'file') { return { type: 'file' }; }
+                    else if (lcType === 'boolean') { return { type: 'boolean' }; }
                     else if (lcType === 'array' || lcType === 'list') {
                         if (source.items) {
                             var it = this.toJsonSchema(source.items);
@@ -2490,8 +2481,7 @@
                     else if (source.$ref) {
                         return { $ref: '#/definitions/' + this.modelMap[source.$ref] || source.$ref };
                     }
-                    else if (lcType === 'void' || lcType === '')
-                    { return {}; }
+                    else if (lcType === 'void' || lcType === '') { return {}; }
                     else {
                         return { $ref: '#/definitions/' + this.modelMap[source.type] || source.type };
                     }

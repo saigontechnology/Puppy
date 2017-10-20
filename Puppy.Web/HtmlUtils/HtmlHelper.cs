@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -137,7 +136,7 @@ namespace Puppy.Web.HtmlUtils
             var environment = new ToolEnvironment
             {
                 TempFolderPath = Path.GetTempPath(),
-                ToolPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), $"{nameof(HtmlUtils)}/wkhtml/wkhtmltopdf.exe"),
+                ToolPath = $"{nameof(HtmlUtils)}/wkhtml/wkhtmltopdf.exe".GetFullPath(null),
                 Timeout = 60000
             };
 
@@ -464,7 +463,7 @@ namespace Puppy.Web.HtmlUtils
             var environment = new ToolEnvironment
             {
                 TempFolderPath = Path.GetTempPath(),
-                ToolPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), $"{nameof(HtmlUtils)}/docx2html/Puppy.DocxToHtml.exe"),
+                ToolPath = $"{nameof(HtmlUtils)}/docx2html/Puppy.DocxToHtml.exe".GetFullPath(null),
                 Timeout = 60000
             };
 

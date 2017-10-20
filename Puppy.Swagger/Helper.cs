@@ -19,11 +19,11 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Puppy.Core.StringUtils;
 using Puppy.Web.Constants;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Text;
 
 namespace Puppy.Swagger
@@ -50,8 +50,7 @@ namespace Puppy.Swagger
                 SwaggerConfig.IsApiDocumentUiUpdated = true;
             }
 
-            string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string indexFileFullPath = Path.Combine(executedFolder, Constants.IndexHtmlPath);
+            string indexFileFullPath = Constants.IndexHtmlPath.GetFullPath(null);
             var indexFileContent = File.ReadAllText(indexFileFullPath);
 
             ContentResult contentResult = new ContentResult
@@ -77,8 +76,7 @@ namespace Puppy.Swagger
                 SwaggerConfig.IsJsonViewerUrlUpdated = true;
             }
 
-            string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string jsonViewerFileFullPath = Path.Combine(executedFolder, Constants.ViewerHtmlPath);
+            string jsonViewerFileFullPath = Constants.ViewerHtmlPath.GetFullPath(null);
             var jsonViewerFileContent = File.ReadAllText(jsonViewerFileFullPath);
 
             ContentResult contentResult = new ContentResult
@@ -134,9 +132,7 @@ namespace Puppy.Swagger
 
         internal static void UpdateFileContent(Dictionary<string, string> replaceDictionary, string filePath)
         {
-            string executedFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
-            string fileFullPath = Path.Combine(executedFolder, filePath);
+            string fileFullPath = filePath.GetFullPath(null);
 
             var viewerFileContent = File.ReadAllText(fileFullPath);
 

@@ -20,9 +20,11 @@
 #endregion License
 
 using Microsoft.AspNetCore.WebUtilities;
+using Puppy.Core.AssemblyUtils;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -110,19 +112,53 @@ namespace Puppy.Core.StringUtils
         }
 
         /// <summary>
-        ///     Get full physical path, if absolute path then return. Else combine with Executed
-        ///     Location, if not exist, will return combine with Current Directory
+        ///     Get full physical path, if absolute path then return. Else combine with Current
+        ///     Directory of Application.
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
         public static string GetFullPath(this string path)
         {
             if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var pathUri))
-                throw new ArgumentException($"Invalid path {nameof(path)}");
+            {
+                throw new ArgumentException($"Invalid path {path}");
+            }
 
             if (pathUri.IsAbsoluteUri) return path;
 
             path = Path.Combine(Directory.GetCurrentDirectory(), path);
+
+            return path;
+        }
+
+        /// <summary>
+        ///     <para> Get full physical path, if absolute path then return. </para>
+        ///     <para>
+        ///         Else combine with Assembly Directory - use <c> typeof({class}).GetAssembly() </c>
+        ///         to get Assembly you want.
+        ///     </para>
+        ///     <para>
+        ///         if null data, will use root caller assembly - by <c> Assembly.GetEntryAssembly() </c>.
+        ///     </para>
+        /// </summary>
+        /// <param name="path">     Relative or absolute path </param>
+        /// <param name="assembly">
+        ///     use <c> typeof({class}).GetAssembly() </c> to get Assembly you want. If null data,
+        ///     will use root caller assembly - by <c> Assembly.GetEntryAssembly() </c>.
+        /// </param>
+        /// <returns></returns>
+        public static string GetFullPath(this string path, Assembly assembly)
+        {
+            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var pathUri))
+            {
+                throw new ArgumentException($"Invalid path {path}");
+            }
+
+            if (pathUri.IsAbsoluteUri) return path;
+
+            string assemblyDirectory = assembly?.GetDirectoryPath() ?? Assembly.GetEntryAssembly().GetDirectoryPath();
+
+            path = Path.Combine(assemblyDirectory, path);
 
             return path;
         }

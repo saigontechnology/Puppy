@@ -20,12 +20,12 @@
 using MaxMind.GeoIP2;
 using Microsoft.AspNetCore.Http;
 using Puppy.Core.LinqUtils;
+using Puppy.Core.StringUtils;
 using Puppy.Web.Constants;
 using Puppy.Web.HttpUtils.HttpDetection.Device;
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace Puppy.Web.HttpUtils.HttpDetection
 {
@@ -236,10 +236,8 @@ namespace Puppy.Web.HttpUtils.HttpDetection
 
             if (!File.Exists(geoDbAbsolutePath))
             {
-                string executedAssemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
                 // Try to get folder in executed assembly
-                geoDbAbsolutePath = Path.Combine(executedAssemblyDirectory, geoDbRelativePath);
+                geoDbAbsolutePath = geoDbRelativePath.GetFullPath(null);
             }
 
             if (!File.Exists(geoDbAbsolutePath)) return null;

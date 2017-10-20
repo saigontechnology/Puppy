@@ -24,8 +24,9 @@ using System.Linq;
 namespace Puppy.Swagger.Filters
 {
     /// <summary>
-    ///     Enable multiple SwaggerResponseAttribute with same <see cref="Microsoft.AspNetCore.Http.StatusCodes" /> and Support
-    ///     to create and use custom attribute inheritance <see cref="SwaggerResponseAttribute" />
+    ///     Enable multiple SwaggerResponseAttribute with same
+    ///     <see cref="Microsoft.AspNetCore.Http.StatusCodes" /> and Support to create and use custom
+    ///     attribute inheritance <see cref="SwaggerResponseAttribute" />
     /// </summary>
     public class MultipleResponsesOperationFilter : IOperationFilter
     {

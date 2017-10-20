@@ -24,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.Core.StringUtils;
 using Puppy.Swagger.Filters;
 using Puppy.Web.HttpUtils;
 using Swashbuckle.AspNetCore.Examples;
@@ -80,14 +81,14 @@ namespace Puppy.Swagger
 
                 options.DocumentFilter<HideInDocsFilter>();
 
-                // Examples and Description
-                // [SwaggerRequestExample] & [SwaggerResponseExample]
+                // Examples and Description [SwaggerRequestExample] & [SwaggerResponseExample]
                 options.OperationFilter<ExamplesOperationFilter>();
 
                 // [Description] on Response properties
                 options.OperationFilter<DescriptionOperationFilter>();
 
-                // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use custom Attribute inheritance from [SwaggerResponse]
+                // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use
+                // custom Attribute inheritance from [SwaggerResponse]
                 options.OperationFilter<MultipleResponsesOperationFilter>();
 
                 // Adds an Authorization input box to every endpoint
@@ -157,14 +158,14 @@ namespace Puppy.Swagger
 
                 options.DocumentFilter<HideInDocsFilter>();
 
-                // Examples and Description
-                // [SwaggerRequestExample] & [SwaggerResponseExample]
+                // Examples and Description [SwaggerRequestExample] & [SwaggerResponseExample]
                 options.OperationFilter<ExamplesOperationFilter>();
 
                 // [Description] on Response properties
                 options.OperationFilter<DescriptionOperationFilter>();
 
-                // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use custom Attribute inheritance from [SwaggerResponse]
+                // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use
+                // custom Attribute inheritance from [SwaggerResponse]
                 options.OperationFilter<MultipleResponsesOperationFilter>();
 
                 // Adds an Authorization input box to every endpoint
@@ -219,14 +220,12 @@ namespace Puppy.Swagger
             });
 
             // Path and GZip for Statics Content
-            string currentDirectory = Directory.GetCurrentDirectory();
-            string executedAssemblyDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string fileProviderPath = Path.Combine(currentDirectory, Constants.ApiDocAssetFolderPath);
+            string fileProviderPath = Constants.ApiDocAssetFolderPath.GetFullPath();
 
             if (!Directory.Exists(fileProviderPath))
             {
                 // Try to get folder in executed assembly
-                fileProviderPath = Path.Combine(executedAssemblyDirectory, Constants.ApiDocAssetFolderPath);
+                fileProviderPath = Constants.ApiDocAssetFolderPath.GetFullPath(null);
             }
 
             if (!Directory.Exists(fileProviderPath)) return app;

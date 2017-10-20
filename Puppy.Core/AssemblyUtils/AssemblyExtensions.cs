@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -45,6 +46,13 @@ namespace Puppy.Core.AssemblyUtils
             }
 
             return result;
+        }
+
+        public static string GetDirectoryPath(this Assembly assembly)
+        {
+            UriBuilder uri = new UriBuilder(assembly.CodeBase);
+            string path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
         }
     }
 }

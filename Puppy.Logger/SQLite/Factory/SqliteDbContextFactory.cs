@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Puppy.Core.StringUtils;
 using System.Reflection;
+using Puppy.Core.TypeUtils;
 
 namespace Puppy.Logger.SQLite.Factory
 {
@@ -50,12 +51,12 @@ namespace Puppy.Logger.SQLite.Factory
 
         public static Assembly GetMigrationAssembly()
         {
-            return typeof(ISqliteDatabase).GetTypeInfo().Assembly;
+            return typeof(ISqliteDatabase).GetAssembly();
         }
 
         public static string GetMigrationAssemblyName()
         {
-            return typeof(ISqliteDatabase).GetTypeInfo().Assembly.GetName().Name;
+            return typeof(ISqliteDatabase).GetAssemblySimpleName();
         }
     }
 }

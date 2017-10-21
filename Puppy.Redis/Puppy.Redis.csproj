@@ -17,6 +17,7 @@
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
+    <ProjectReference Include="..\Puppy.DependencyInjection\Puppy.DependencyInjection.csproj" />
   </ItemGroup>
 
   <!-- External Libraries -->

@@ -24,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.EnvironmentUtils;
 using System;
 using System.Linq;
+using Puppy.DependencyInjection;
 
 namespace Puppy.Redis
 {

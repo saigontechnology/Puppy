@@ -45,7 +45,7 @@ namespace Puppy.Elastic
         ///     set to true. The document is then saved with the parent routing. It will also be
         ///     saved even if the parent does not exist.
         /// </param>
-        void AddUpdateDocument(object document, object id, RoutingDefinition routingDefinition = null);
+        void UpsertDocument(object document, object id, RoutingDefinition routingDefinition = null);
 
         /// <summary>
         ///     Adds a document to the pending changes list to be deleted. Nor HTTP request is sent

@@ -111,10 +111,10 @@ namespace Puppy.Elastic
                 {
                     indexProccessed++;
                     if (getRoutingDefinition != null)
-                        _context.AddUpdateDocument(convertMethod(item.Source), getKeyMethod(item.Source),
+                        _context.UpsertDocument(convertMethod(item.Source), getKeyMethod(item.Source),
                             getRoutingDefinition(item.Source));
                     else
-                        _context.AddUpdateDocument(convertMethod(item.Source), getKeyMethod(item.Source));
+                        _context.UpsertDocument(convertMethod(item.Source), getKeyMethod(item.Source));
                 }
                 _context.SaveChanges();
             }

@@ -151,7 +151,7 @@ namespace Puppy.Elastic
         }
 
         /// <inheritdoc />
-        public void AddUpdateDocument(object document, object id, RoutingDefinition routingDefinition = null)
+        public void UpsertDocument(object document, object id, RoutingDefinition routingDefinition = null)
         {
             TraceProvider.Trace(TraceEventType.Verbose, "{2}: Adding document: {0}, {1} to pending list",
                 document.GetType().Name, id, "ElasticContext");

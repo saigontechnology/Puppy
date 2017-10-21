@@ -58,6 +58,10 @@ namespace Puppy.Redis
             // Register Dependency for RedisCacheManager
             services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
 
+            // Verify Redis Setting is Fine
+            IRedisCacheManager redisCacheManager = services.Resolve<IRedisCacheManager>();
+            redisCacheManager.VerifySetup();
+
             return services;
         }
 
@@ -101,6 +105,10 @@ namespace Puppy.Redis
 
             // Register Dependency for RedisCacheManager
             services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
+
+            // Verify Redis Setting is Fine
+            IRedisCacheManager redisCacheManager = services.Resolve<IRedisCacheManager>();
+            redisCacheManager.VerifySetup();
 
             return services;
         }

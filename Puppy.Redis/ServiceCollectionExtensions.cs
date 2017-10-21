@@ -24,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.EnvironmentUtils;
 using System;
 using System.Linq;
+using Puppy.Core.ServiceCollectionUtils;
 using Puppy.DependencyInjection;
 
 namespace Puppy.Redis
@@ -57,11 +58,10 @@ namespace Puppy.Redis
             });
 
             // Register Dependency for RedisCacheManager
-            services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
+            services.AddSingletonIfNotExist<IRedisCacheManager, RedisCacheManager>();
 
             // Verify Redis Setting is Fine
-            IRedisCacheManager redisCacheManager = services.Resolve<IRedisCacheManager>();
-            redisCacheManager.VerifySetup();
+            services.Resolve<IRedisCacheManager>().VerifySetup();
 
             return services;
         }
@@ -105,11 +105,10 @@ namespace Puppy.Redis
             });
 
             // Register Dependency for RedisCacheManager
-            services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
+            services.AddSingletonIfNotExist<IRedisCacheManager, RedisCacheManager>();
 
             // Verify Redis Setting is Fine
-            IRedisCacheManager redisCacheManager = services.Resolve<IRedisCacheManager>();
-            redisCacheManager.VerifySetup();
+            services.Resolve<IRedisCacheManager>().VerifySetup();
 
             return services;
         }

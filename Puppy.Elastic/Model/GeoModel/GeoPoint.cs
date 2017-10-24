@@ -25,19 +25,14 @@ namespace Puppy.Elastic.Model.GeoModel
     /// </summary>
     public class GeoPoint : List<double>, IGeoType
     {
-        private double _latitude;
-        private double _longitude;
-
         public GeoPoint()
         {
         }
 
         public GeoPoint(double longitude, double latitude)
         {
-            _longitude = longitude;
-            _latitude = latitude;
-            base.Add(_longitude);
-            base.Add(_latitude);
+            base.Add(longitude);
+            base.Add(latitude);
         }
 
         /// <summary>
@@ -45,12 +40,11 @@ namespace Puppy.Elastic.Model.GeoModel
         /// </summary>
         public double Latitude
         {
-            get => _latitude;
+            get => this[1];
             set
             {
                 GuardLatitude(value);
-                _latitude = value;
-                this[1] = _latitude;
+                this[1] = value;
             }
         }
 
@@ -59,12 +53,11 @@ namespace Puppy.Elastic.Model.GeoModel
         /// </summary>
         public double Longitude
         {
-            get => _longitude;
+            get => this[0];
             set
             {
                 GuardLongitude(value);
-                _longitude = value;
-                this[0] = _latitude;
+                this[0] = value;
             }
         }
 
@@ -73,8 +66,8 @@ namespace Puppy.Elastic.Model.GeoModel
         public void WriteJson(ElasticJsonWriter elasticCrudJsonWriter)
         {
             elasticCrudJsonWriter.JsonWriter.WriteStartArray();
-            elasticCrudJsonWriter.JsonWriter.WriteValue(_longitude);
-            elasticCrudJsonWriter.JsonWriter.WriteValue(_latitude);
+            elasticCrudJsonWriter.JsonWriter.WriteValue(Longitude);
+            elasticCrudJsonWriter.JsonWriter.WriteValue(Latitude);
             elasticCrudJsonWriter.JsonWriter.WriteEndArray();
         }
 

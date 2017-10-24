@@ -29,10 +29,6 @@ namespace Puppy.Core.ObjectUtils
 {
     public static class ObjectExtensions
     {
-        private const string ExpressionCannotBeNullMessage = "The expression cannot be null.";
-
-        private const string InvalidExpressionMessage = "Invalid expression.";
-
         public static object GetPropertyValue<T>(this T instance, string propertyName)
         {
             var targetProperty = instance.GetType().GetProperty(propertyName);
@@ -47,55 +43,22 @@ namespace Puppy.Core.ObjectUtils
 
         public static string GetMemberName<T>(this T instance, Expression<Func<T, object>> expression)
         {
-            return GetMemberName(expression.Body);
+            return ObjectHelper.GetMemberName(expression);
         }
 
         public static List<string> GetMemberNames<T>(this T instance, params Expression<Func<T, object>>[] expressions)
         {
             List<string> memberNames = new List<string>();
-            foreach (var cExpression in expressions)
+            foreach (var expression in expressions)
             {
-                memberNames.Add(GetMemberName(cExpression.Body));
+                memberNames.Add(ObjectHelper.GetMemberName(expression));
             }
             return memberNames;
         }
 
         public static string GetMemberName<T>(this T instance, Expression<Action<T>> expression)
         {
-            return GetMemberName(expression.Body);
-        }
-
-        private static string GetMemberName(Expression expression)
-        {
-            if (expression == null)
-            {
-                throw new ArgumentException(ExpressionCannotBeNullMessage);
-            }
-            if (expression is MemberExpression memberExpression)
-            {
-                // Reference type property or field
-                return memberExpression.Member.Name;
-            }
-            if (expression is MethodCallExpression methodCallExpression)
-            {
-                // Reference type method
-                return methodCallExpression.Method.Name;
-            }
-            if (expression is UnaryExpression unaryExpression)
-            {
-                // Property, field of method returning value type
-                return GetMemberName(unaryExpression);
-            }
-            throw new ArgumentException(InvalidExpressionMessage);
-        }
-
-        private static string GetMemberName(UnaryExpression unaryExpression)
-        {
-            if (unaryExpression.Operand is MethodCallExpression methodExpression)
-            {
-                return methodExpression.Method.Name;
-            }
-            return ((MemberExpression)unaryExpression.Operand).Member.Name;
+            return ObjectHelper.GetMemberName(expression);
         }
 
         /// <summary>

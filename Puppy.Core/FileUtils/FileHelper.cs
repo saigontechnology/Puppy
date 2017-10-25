@@ -80,6 +80,8 @@ namespace Puppy.Core.FileUtils
         {
             try
             {
+                path = path.GetFullPath();
+
                 if (File.Exists(path))
                 {
                     File.Delete(path);

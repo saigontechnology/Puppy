@@ -20,6 +20,7 @@
 using Puppy.Core.StringUtils;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Puppy.Core.FileUtils
@@ -184,6 +185,76 @@ namespace Puppy.Core.FileUtils
             filePath = filePath.GetFullPath();
             var fileInfo = new FileInfo(filePath);
             return fileInfo.Length;
+        }
+
+        /// <summary>
+        ///     Replaces characters in <c> text </c> that are not allowed in file names with the
+        ///     specified replacement character.
+        /// </summary>
+        /// <param name="text">       
+        ///     Text to make into a valid filename. The same string is returned if it is valid already.
+        /// </param>
+        /// <param name="replacement">
+        ///     Replacement character, or null to simply remove bad characters.
+        /// </param>
+        /// <param name="fancy">      
+        ///     Whether to replace quotes and slashes with the non-ASCII characters ” and ⁄.
+        /// </param>
+        /// <returns>
+        ///     A string that can be used as a filename. If the output string would otherwise be
+        ///     empty, returns <see cref="replacement" /> as string.
+        /// </returns>
+        /// <remarks>
+        ///     Valid file name also follow maximum length is 260 characters rule (split from right
+        ///     to left if length &gt; 260)
+        /// </remarks>
+        public static string MakeValidFileName(string text, char? replacement = '_', bool fancy = true)
+        {
+            StringBuilder sb = new StringBuilder(text.Length);
+
+            var invalids = Path.GetInvalidFileNameChars();
+
+            bool changed = false;
+
+            foreach (var c in text)
+            {
+                if (invalids.Contains(c))
+                {
+                    changed = true;
+
+                    var replace = replacement ?? '\0';
+
+                    if (fancy)
+                    {
+                        if (c == '"') replace = '”'; // U+201D right double quotation mark
+                        else if (c == '\'') replace = '’'; // U+2019 right single quotation mark
+                        else if (c == '/') replace = '⁄'; // U+2044 fraction slash
+                    }
+
+                    if (replace != '\0')
+                    {
+                        sb.Append(replace);
+                    }
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+
+            if (sb.Length == 0)
+            {
+                return replacement?.ToString();
+            }
+
+            var fileName = changed ? sb.ToString() : text;
+
+            if (fileName?.Length > 260)
+            {
+                return fileName.Substring(fileName.Length - 260);
+            }
+
+            return fileName;
         }
     }
 }

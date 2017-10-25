@@ -99,25 +99,5 @@ namespace Puppy.Coordinate
             var dist = CoordinateConst.EarthRadiusMile * centralAngle;
             return unitOfLength.ConvertFromMiles(dist);
         }
-
-        public class UnitOfLength
-        {
-            public static UnitOfLength Meter = new UnitOfLength(CoordinateConst.MileToMeter);
-            public static UnitOfLength Kilometer = new UnitOfLength(CoordinateConst.MileToKilometer);
-            public static UnitOfLength NauticalMile = new UnitOfLength(CoordinateConst.NauticalMileToMile);
-            public static UnitOfLength Mile = new UnitOfLength(1);
-
-            private readonly double _fromMilesFactor;
-
-            private UnitOfLength(double fromMilesFactor)
-            {
-                _fromMilesFactor = fromMilesFactor;
-            }
-
-            public double ConvertFromMiles(double input)
-            {
-                return input * _fromMilesFactor;
-            }
-        }
     }
 }

@@ -49,7 +49,7 @@
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="1.1.0" />
 
     <!-- Linq Dynamic -->
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.7.9" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.7.10" />
 
     <PackageReference Include="Enums.NET" Version="2.2.0" />
   </ItemGroup>

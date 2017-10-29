@@ -58,7 +58,7 @@
     <PackageReference Include="WebMarkupMin.NUglify" Version="2.4.2" />
 
     <!-- GEO -->
-    <PackageReference Include="MaxMind.GeoIP2" Version="2.8.0" />
+    <PackageReference Include="MaxMind.GeoIP2" Version="2.9.0" />
   </ItemGroup>
 
 </Project>

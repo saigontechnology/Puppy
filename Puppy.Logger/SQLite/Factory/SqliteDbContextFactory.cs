@@ -56,7 +56,11 @@ namespace Puppy.Logger.SQLite.Factory
 
         public DbContext CreateDbContext(string[] args)
         {
-            return CreateCoreContext();
+            var builder = new DbContextOptionsBuilder<SqliteDbContext>();
+
+            builder.UseSqlServer(GetConnectionString());
+
+            return new SqliteDbContext(builder.Options);
         }
     }
 }

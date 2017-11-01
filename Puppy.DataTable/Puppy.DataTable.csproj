@@ -40,13 +40,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
 
-    <!-- Configuration -->
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.0" />
-
-    <!-- Embedded -->
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.0.0" />
-
     <!-- Linq Dynamic -->
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.7.10" />
 

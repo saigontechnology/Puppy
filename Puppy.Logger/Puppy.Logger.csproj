@@ -5,7 +5,7 @@
     <Authors>Top Nguyen</Authors>
     <Copyright>http://topnguyen.net</Copyright>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <OutputType>Library</OutputType>
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
@@ -26,31 +26,17 @@
 
   <!-- External Libraries -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
 
     <PackageReference Include="Hangfire" Version="1.6.17" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Enums.NET" Version="2.2.0" />
 
-    <!-- Configuration -->
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="1.1.2" />
-
     <!-- Write Log - Serilog -->
     <PackageReference Include="Serilog" Version="2.5.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-
-    <!-- EF Framework - SQLite -->
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.2" />
-
-    <!-- START Keep Runtime version is 1.0.0-* -->
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-*" />
   </ItemGroup>
 </Project>

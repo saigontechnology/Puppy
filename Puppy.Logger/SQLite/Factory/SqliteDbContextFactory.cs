@@ -19,20 +19,15 @@
 
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Design;
 using Puppy.Core.StringUtils;
-using System.Reflection;
 using Puppy.Core.TypeUtils;
+using System.Reflection;
 
 namespace Puppy.Logger.SQLite.Factory
 {
-    public class SqliteDbContextFactory : IDbContextFactory<DbContext>
+    public class SqliteDbContextFactory : IDesignTimeDbContextFactory<DbContext>
     {
-        public DbContext Create(DbContextFactoryOptions options)
-        {
-            return CreateCoreContext();
-        }
-
         public static string GetConnectionString()
         {
             return new SqliteConnectionStringBuilder
@@ -57,6 +52,11 @@ namespace Puppy.Logger.SQLite.Factory
         public static string GetMigrationAssemblyName()
         {
             return typeof(ISqliteDatabase).GetAssemblySimpleName();
+        }
+
+        public DbContext CreateDbContext(string[] args)
+        {
+            return CreateCoreContext();
         }
     }
 }

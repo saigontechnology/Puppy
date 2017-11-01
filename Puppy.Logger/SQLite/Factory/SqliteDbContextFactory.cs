@@ -37,13 +37,6 @@ namespace Puppy.Logger.SQLite.Factory
             }.ConnectionString;
         }
 
-        public static DbContext CreateCoreContext()
-        {
-            var builder = new DbContextOptionsBuilder<DbContext>();
-            builder.UseSqlite(GetConnectionString(), optionsBuilder => optionsBuilder.MigrationsAssembly(GetMigrationAssemblyName()));
-            return new DbContext(builder.Options);
-        }
-
         public static Assembly GetMigrationAssembly()
         {
             return typeof(ISqliteDatabase).GetAssembly();
@@ -58,7 +51,7 @@ namespace Puppy.Logger.SQLite.Factory
         {
             var builder = new DbContextOptionsBuilder<SqliteDbContext>();
 
-            builder.UseSqlServer(GetConnectionString());
+            builder.UseSqlite(GetConnectionString(), optionsBuilder => optionsBuilder.MigrationsAssembly(GetMigrationAssemblyName()));
 
             return new SqliteDbContext(builder.Options);
         }

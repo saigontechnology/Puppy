@@ -206,8 +206,7 @@ namespace Puppy.Logger.RollingFile
             const int maxAttempts = 3;
             for (var attempt = 0; attempt < maxAttempts; attempt++)
             {
-                string path;
-                _roller.GetLogFilePath(logEvent, sequence, out path);
+                _roller.GetLogFilePath(logEvent, sequence, out var path);
 
                 try
                 {

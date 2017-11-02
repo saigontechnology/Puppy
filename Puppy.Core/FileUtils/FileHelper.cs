@@ -120,27 +120,27 @@ namespace Puppy.Core.FileUtils
             };
 
             // Check base 64 is image or not
-            //var imageInfo = ImageUtils.ImageHelper.GetImageInfo(base64);
+            var imageInfo = ImageUtils.ImageHelper.GetImageInfo(base64);
 
-            //if (imageInfo != null)
-            //{
-            //    // Basic info
-            //    fileModel.FileType = FileType.Image;
-            //    fileModel.MimeType = imageInfo.MimeType;
-            //    fileModel.Extension = MimeTypeHelper.GetExtension(fileModel.MimeType);
+            if (imageInfo != null)
+            {
+                // Basic info
+                fileModel.FileType = FileType.Image;
+                fileModel.MimeType = imageInfo.MimeType;
+                fileModel.Extension = MimeTypeHelper.GetExtension(fileModel.MimeType);
 
-            //    // Image info
-            //    fileModel.ImageWidthPx = imageInfo.WidthPx;
-            //    fileModel.ImageHeightPx = imageInfo.HeightPx;
-            //    fileModel.ImageDominantHexColor = imageInfo.DominantHexColor;
-            //}
-            //else
-            //{
-            // Basic info
-            fileModel.FileType = FileType.UnKnown;
-            fileModel.Extension = Path.GetExtension(fileModel.Location);
-            fileModel.MimeType = fileModel.Extension != null ? MimeTypeHelper.GetMimeType(fileModel.Extension) : null;
-            //}
+                // Image info
+                fileModel.ImageWidthPx = imageInfo.WidthPx;
+                fileModel.ImageHeightPx = imageInfo.HeightPx;
+                fileModel.ImageDominantHexColor = imageInfo.DominantHexColor;
+            }
+            else
+            {
+                //Basic info
+                fileModel.FileType = FileType.UnKnown;
+                fileModel.Extension = Path.GetExtension(fileModel.Location);
+                fileModel.MimeType = fileModel.Extension != null ? MimeTypeHelper.GetMimeType(fileModel.Extension) : null;
+            }
 
             fileModel.Location = string.IsNullOrWhiteSpace(Path.GetExtension(fileModel.Location)) ? (fileModel.Location + fileModel.Extension) : fileModel.Location;
 

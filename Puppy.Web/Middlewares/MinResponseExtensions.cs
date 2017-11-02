@@ -22,7 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.IO.Compression;
 using WebMarkupMin.AspNet.Common.Compressors;
-using WebMarkupMin.AspNetCore1;
+using WebMarkupMin.AspNetCore2;
 using WebMarkupMin.NUglify;
 
 namespace Puppy.Web.Middlewares

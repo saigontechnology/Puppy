@@ -4,6 +4,8 @@
 
 - Don't query or save change async because EF have issue [5816](https://github.com/aspnet/EntityFrameworkCore/issues/5816)
 
+- Please view more detail at [Annoucing for AspNetCore 2](https://blogs.msdn.microsoft.com/dotnet/2017/05/12/announcing-ef-core-2-0-preview-1/)
+
 ## Initial Database
 Setup by Command Windows of current project 
 

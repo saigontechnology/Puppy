@@ -142,7 +142,8 @@ namespace Puppy.DataTable
         private static T GetValue<T>(IValueProvider valueProvider, string key)
         {
             ValueProviderResult valueResult = valueProvider.GetValue(key);
-            return valueResult.ConvertTo<T>();
+            var result = valueResult.FirstValue.ConvertTo<T>();
+            return result;
         }
     }
 

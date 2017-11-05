@@ -4,6 +4,8 @@
 
 - Don't query or save change async because EF have issue [5816](https://github.com/aspnet/EntityFrameworkCore/issues/5816)
 
+- AspNetCore 2 already support for `TransactionScope` but EF Core not yet. Please view more detail at [Stack OverFlow](https://stackoverflow.com/questions/46577551/ef-core-2-0-transactionscope-error)
+
 - Please view more detail at [Annoucing for AspNetCore 2](https://blogs.msdn.microsoft.com/dotnet/2017/05/12/announcing-ef-core-2-0-preview-1/)
 
 ## Initial Database

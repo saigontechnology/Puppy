@@ -91,6 +91,11 @@ namespace Puppy.Core.ObjectUtils
                     return default(T);
                 }
 
+                if (obj is T variable)
+                {
+                    return variable;
+                }
+
                 Type t = typeof(T);
                 Type u = Nullable.GetUnderlyingType(t);
 
@@ -106,12 +111,17 @@ namespace Puppy.Core.ObjectUtils
 
                 if (t == typeof(string))
                 {
-                    return (T)(object)obj.ToString();
+                    return (T)((object)obj.ToString());
+                }
+
+                if (t.IsPrimitive)
+                {
+                    return (T)Convert.ChangeType(obj.ToString(), t);
                 }
 
                 return (T)Convert.ChangeType(obj, t);
             }
-            catch (Exception)
+            catch (InvalidCastException)
             {
                 return default(T);
             }

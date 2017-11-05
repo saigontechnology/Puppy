@@ -26,7 +26,7 @@
 
     <!-- Hangfire Background Job -->
     <PackageReference Include="Hangfire" Version="1.6.17" />
-    <PackageReference Include="Hangfire.MemoryStorage" Version="1.5.1" />
+    <PackageReference Include="Hangfire.MemoryStorage" Version="1.5.2" />
 
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>

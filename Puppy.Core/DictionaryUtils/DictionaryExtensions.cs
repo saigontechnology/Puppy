@@ -17,6 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
 using Puppy.Core.ObjectUtils;
 using System.Collections.Generic;
 
@@ -44,7 +45,7 @@ namespace Puppy.Core.DictionaryUtils
         /// <exception cref="ArgumentException">
         ///     An element with the same key already exists in the <see cref="T:System.Collections.Generic.IDictionary`2" />.
         /// </exception>
-        public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue data) where TKey : class
+        public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, TValue data)
         {
             if (source.ContainsKey(key))
             {

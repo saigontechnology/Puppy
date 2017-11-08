@@ -39,36 +39,40 @@ namespace Puppy.Core.StringUtils
         /// <summary>
         ///     Get Random String 
         /// </summary>
-        /// <param name="length"> </param>
-        /// <param name="alpha">  </param>
-        /// <param name="upper">  </param>
-        /// <param name="lower">  </param>
-        /// <param name="numeric"></param>
-        /// <param name="special"></param>
+        /// <param name="length">               </param>
+        /// <param name="isIncludeChars">       </param>
+        /// <param name="isIncludeUpperChars">  </param>
+        /// <param name="isIncludeLowerChars">  </param>
+        /// <param name="isIncludeNumbers">     </param>
+        /// <param name="isIncludeSpecialChars"></param>
         /// <returns></returns>
-        public static string GetRandomString(int length, bool alpha = true, bool upper = true, bool lower = true,
-            bool numeric = true, bool special = false)
+        public static string GetRandomString(int length,
+            bool isIncludeChars = true,
+            bool isIncludeUpperChars = true,
+            bool isIncludeLowerChars = true,
+            bool isIncludeNumbers = true,
+            bool isIncludeSpecialChars = false)
         {
             var characters = string.Empty;
-            if (alpha)
+            if (isIncludeChars)
             {
-                if (upper)
+                if (isIncludeUpperChars)
                 {
                     characters += UpperChars;
                 }
 
-                if (lower)
+                if (isIncludeLowerChars)
                 {
                     characters += LowerChars;
                 }
             }
 
-            if (numeric)
+            if (isIncludeNumbers)
             {
                 characters += NumberChars;
             }
 
-            if (special)
+            if (isIncludeSpecialChars)
             {
                 characters += SpecialChars;
             }

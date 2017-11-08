@@ -36,9 +36,14 @@ namespace Puppy.Core.EnumUtils
 
             var enumValue = Enum.GetName(enumType, value);
 
+            if (!string.IsNullOrWhiteSpace(enumValue))
+            {
+                return enumValue;
+            }
+
             MemberInfo member = enumType.GetMember(enumValue).FirstOrDefault();
 
-            if (!(member.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() is DisplayAttribute displayAttribute))
+            if (!(member?.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() is DisplayAttribute displayAttribute))
             {
                 return null;
             }
@@ -54,9 +59,14 @@ namespace Puppy.Core.EnumUtils
 
             var enumValue = Enum.GetName(enumType, value);
 
+            if (!string.IsNullOrWhiteSpace(enumValue))
+            {
+                return enumValue;
+            }
+
             MemberInfo member = enumType.GetMember(enumValue).FirstOrDefault();
 
-            if (!(member.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() is DescriptionAttribute descriptionAttribute))
+            if (!(member?.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() is DescriptionAttribute descriptionAttribute))
             {
                 return null;
             }

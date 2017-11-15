@@ -100,7 +100,6 @@ namespace Puppy.Swagger
 
                 if (isFullSchemaForType)
                 {
-                    // Use UseFullTypeNameInSchemaIds. HOT FIX in https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/145
                     options.CustomSchemaIds(type => type.FullName);
                 }
 
@@ -112,7 +111,15 @@ namespace Puppy.Swagger
                 if (SwaggerConfig.IsDescribeAllParametersInCamelCase)
                 {
                     options.DescribeAllParametersInCamelCase();
+
+                    if (SwaggerConfig.IsDescribeAllEnumsAsString)
+                    {
+                        options.DescribeStringEnumsInCamelCase();
+                    }
                 }
+
+                // Order
+                options.OrderActionsBy(apiDesc => $"[{apiDesc.HttpMethod}]{apiDesc.RelativePath}");
             });
 
             return services;
@@ -176,7 +183,6 @@ namespace Puppy.Swagger
 
                 if (isFullSchemaForType)
                 {
-                    // Use UseFullTypeNameInSchemaIds. HOT FIX in https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/145
                     options.CustomSchemaIds(type => type.FullName);
                 }
 
@@ -188,7 +194,15 @@ namespace Puppy.Swagger
                 if (SwaggerConfig.IsDescribeAllParametersInCamelCase)
                 {
                     options.DescribeAllParametersInCamelCase();
+
+                    if (SwaggerConfig.IsDescribeAllEnumsAsString)
+                    {
+                        options.DescribeStringEnumsInCamelCase();
+                    }
                 }
+
+                // Order
+                options.OrderActionsBy(apiDesc => $"[{apiDesc.HttpMethod}]{apiDesc.RelativePath}");
             });
 
             return services;

@@ -20,6 +20,9 @@
 #endregion License
 
 using Puppy.Core.FileUtils;
+using Puppy.Core.StringUtils;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -32,9 +35,11 @@ namespace Puppy.Core.ImageUtils
     {
         public const string ImageMimeTypeUnknown = "image/unknown";
 
+        #region Dominant Color
+
         public static Color GetDominantColor(string imagePath)
         {
-            using (var image = Image.FromFile(imagePath))
+            using (var image = System.Drawing.Image.FromFile(imagePath))
             {
                 using (var bitmap = new Bitmap(image))
                 {
@@ -49,17 +54,19 @@ namespace Puppy.Core.ImageUtils
         /// <param name="imagePath">    </param>
         /// <param name="dominantColor"></param>
         /// <returns></returns>
-        /// <remarks> return <see cref="Color.LightGray" /> in case fail </remarks>
-        public static bool TryGetDominantColor(string imagePath, out Color dominantColor)
+        /// <remarks> return null in case fail </remarks>
+        public static bool TryGetDominantColor(string imagePath, out Color? dominantColor)
         {
             try
             {
                 dominantColor = GetDominantColor(imagePath);
+
                 return true;
             }
             catch
             {
-                dominantColor = Color.LightGray;
+                dominantColor = null;
+
                 return false;
             }
         }
@@ -105,8 +112,8 @@ namespace Puppy.Core.ImageUtils
         /// <param name="bmp">          </param>
         /// <param name="dominantColor"></param>
         /// <returns></returns>
-        /// <remarks> return <see cref="Color.LightGray" /> in case fail </remarks>
-        public static bool TryGetDominantColor(Bitmap bmp, out Color dominantColor)
+        /// <remarks> return null in case fail </remarks>
+        public static bool TryGetDominantColor(Bitmap bmp, out Color? dominantColor)
         {
             try
             {
@@ -115,24 +122,39 @@ namespace Puppy.Core.ImageUtils
             }
             catch
             {
-                dominantColor = Color.LightGray;
+                dominantColor = null;
                 return false;
             }
         }
 
-        public static bool IsSvgImage(MemoryStream imageStream)
+        #endregion
+
+        #region Image Info
+
+        /// <summary>
+        ///     <para> Get image info. </para>
+        ///     <para> If not know mime type but valid image then return <see cref="ImageMimeTypeUnknown" /> </para>
+        ///     <para> Invalid image will be return <c> NULL </c> </para>
+        /// </summary>
+        /// <param name="base64"></param>
+        public static ImageModel GetImageInfo(string base64)
         {
-            try
+            byte[] bytes = Convert.FromBase64String(base64);
+
+            return GetImageInfo(bytes);
+        }
+
+        /// <summary>
+        ///     <para> Get image info. </para>
+        ///     <para> If not know mime type but valid image then return <see cref="ImageMimeTypeUnknown" /> </para>
+        ///     <para> Invalid image will be return <c> NULL </c> </para>
+        /// </summary>
+        /// <param name="bytes"></param>
+        public static ImageModel GetImageInfo(byte[] bytes)
+        {
+            using (MemoryStream stream = new MemoryStream(bytes))
             {
-                imageStream.Position = 0;
-                byte[] bytes = imageStream.ToArray();
-                var text = Encoding.UTF8.GetString(bytes);
-                bool isSvgImage = text.StartsWith("<?xml ") || text.StartsWith("<svg ");
-                return isSvgImage;
-            }
-            catch
-            {
-                return false;
+                return GetImageInfo(stream);
             }
         }
 
@@ -156,7 +178,7 @@ namespace Puppy.Core.ImageUtils
                 else
                 {
                     // Raster check (jpg, png, etc.)
-                    using (Image image = Image.FromStream(imageStream))
+                    using (System.Drawing.Image image = System.Drawing.Image.FromStream(imageStream))
                     {
                         // Get image mime type
                         bool isUnknownMimeType = true;
@@ -198,20 +220,53 @@ namespace Puppy.Core.ImageUtils
             }
         }
 
-        /// <summary>
-        ///     <para> Get image info. </para>
-        ///     <para> If not know mime type but valid image then return <see cref="ImageMimeTypeUnknown" /> </para>
-        ///     <para> Invalid image will be return <c> NULL </c> </para>
-        /// </summary>
-        /// <param name="base64"></param>
-        public static ImageModel GetImageInfo(string base64)
+        public static bool IsSvgImage(MemoryStream imageStream)
         {
-            byte[] bytes = Convert.FromBase64String(base64);
-
-            using (MemoryStream stream = new MemoryStream(bytes))
+            try
             {
-                return GetImageInfo(stream);
+                imageStream.Position = 0;
+                byte[] bytes = imageStream.ToArray();
+                var text = Encoding.UTF8.GetString(bytes);
+                bool isSvgImage = text.StartsWith("<?xml ") || text.StartsWith("<svg ");
+                return isSvgImage;
+            }
+            catch
+            {
+                return false;
             }
         }
+
+        #endregion
+
+        #region Image Resize
+
+        public static byte[] Resize(string path, int newWidth, int newHeight)
+        {
+            path = path.GetFullPath();
+
+            byte[] imageBytes = File.ReadAllBytes(path);
+
+            return Resize(imageBytes, newWidth, newHeight);
+        }
+
+        public static byte[] Resize(byte[] imageBytes, int newWidth, int newHeight)
+        {
+            using (MemoryStream inStream = new MemoryStream(imageBytes))
+            {
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    using (Image<Rgba32> image = SixLabors.ImageSharp.Image.Load<Rgba32>(inStream, out IImageFormat format))
+                    {
+                        image.Mutate(x => x.Resize(newWidth, newHeight));
+
+                        image.Save(outStream, format);
+
+                        return outStream.ToArray();
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }

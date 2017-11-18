@@ -194,6 +194,28 @@ namespace Puppy.Core.StringUtils
             return base64Encode;
         }
 
+        /// <summary>
+        ///     Anti Javascript, Css, Html injection by encode html 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string AntiInjection(this string value)
+        {
+            return value.EncodeHtml();
+        }
+
+        public static string EncodeHtml(this string value)
+        {
+            value = System.Net.WebUtility.HtmlEncode(value);
+            return value;
+        }
+
+        public static string DecodeHtml(this string value)
+        {
+            value = System.Net.WebUtility.HtmlDecode(value);
+            return value;
+        }
+
         public static string DecodeBase64(this string value)
         {
             byte[] bytes = Convert.FromBase64String(value);

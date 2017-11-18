@@ -39,12 +39,12 @@ namespace Puppy.Web.Attributes
     ///           and Bing's at http://blogs.bing.com/webmaster/2012/01/26/moving-content-think-301-not-relcanonical).
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
-    public class RedirectToCanonicalUrlAttribute : System.Attribute, IResourceFilter
+    public class RedirectToCanonicalUrlAttribute : Attribute, IResourceFilter
     {
         private const char SlashCharacter = '/';
 
-        private readonly bool appendTrailingSlash;
-        private readonly bool lowercaseUrls;
+        private readonly bool _appendTrailingSlash;
+        private readonly bool _lowercaseUrls;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="RedirectToCanonicalUrlAttribute" /> class.
@@ -68,8 +68,8 @@ namespace Puppy.Web.Attributes
             bool appendTrailingSlash,
             bool lowercaseUrls)
         {
-            this.appendTrailingSlash = appendTrailingSlash;
-            this.lowercaseUrls = lowercaseUrls;
+            _appendTrailingSlash = appendTrailingSlash;
+            _lowercaseUrls = lowercaseUrls;
         }
 
         /// <summary>
@@ -78,13 +78,13 @@ namespace Puppy.Web.Attributes
         /// <value>
         ///     <c> true </c> if appending trailing slashes; otherwise, strip trailing slashes.
         /// </value>
-        public bool AppendTrailingSlash => this.appendTrailingSlash;
+        public bool AppendTrailingSlash => _appendTrailingSlash;
 
         /// <summary>
         ///     Gets a value indicating whether to lower-case all URL's. 
         /// </summary>
         /// <value> <c> true </c> if lower-casing URL's; otherwise, <c> false </c>. </value>
-        public bool LowercaseUrls => this.lowercaseUrls;
+        public bool LowercaseUrls => _lowercaseUrls;
 
         /// <summary>
         ///     Executes the resource filter. Called before execution of the remainder of the
@@ -97,9 +97,9 @@ namespace Puppy.Web.Attributes
         {
             if (string.Equals(context.HttpContext.Request.Method, "GET", StringComparison.Ordinal))
             {
-                if (!this.TryGetCanonicalUrl(context, out string canonicalUrl))
+                if (!TryGetCanonicalUrl(context, out string canonicalUrl))
                 {
-                    this.HandleNonCanonicalRequest(context, canonicalUrl);
+                    HandleNonCanonicalRequest(context, canonicalUrl);
                 }
             }
         }
@@ -132,10 +132,10 @@ namespace Puppy.Web.Attributes
             {
                 var hasTrailingSlash = request.Path.Value[request.Path.Value.Length - 1] == SlashCharacter;
 
-                if (this.appendTrailingSlash)
+                if (_appendTrailingSlash)
                 {
                     // Append a trailing slash to the end of the URL.
-                    if (!hasTrailingSlash && !this.HasAttribute<NoTrailingSlashAttribute>(context))
+                    if (!hasTrailingSlash && !HasAttribute<NoTrailingSlashAttribute>(context))
                     {
                         request.Path = new PathString(request.Path.Value + SlashCharacter);
                         isCanonical = false;
@@ -151,7 +151,7 @@ namespace Puppy.Web.Attributes
                     }
                 }
 
-                if (this.lowercaseUrls && !this.HasAttribute<NoTrailingSlashAttribute>(context))
+                if (_lowercaseUrls && !HasAttribute<NoTrailingSlashAttribute>(context))
                 {
                     foreach (var character in request.Path.Value)
                     {
@@ -163,7 +163,7 @@ namespace Puppy.Web.Attributes
                         }
                     }
 
-                    if (request.QueryString.HasValue && !this.HasAttribute<NoLowercaseQueryStringAttribute>(context))
+                    if (request.QueryString.HasValue && !HasAttribute<NoLowercaseQueryStringAttribute>(context))
                     {
                         foreach (var character in request.QueryString.Value)
                         {
@@ -178,14 +178,7 @@ namespace Puppy.Web.Attributes
                 }
             }
 
-            if (isCanonical)
-            {
-                canonicalUrl = null;
-            }
-            else
-            {
-                canonicalUrl = UriHelper.GetEncodedUrl(request);
-            }
+            canonicalUrl = isCanonical ? null : request.GetEncodedUrl();
 
             return isCanonical;
         }

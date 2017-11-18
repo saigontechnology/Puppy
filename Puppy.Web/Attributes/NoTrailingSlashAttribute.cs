@@ -33,7 +33,7 @@ namespace Puppy.Web.Attributes
     ///     this instance.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class NoTrailingSlashAttribute : System.Attribute, IResourceFilter
+    public class NoTrailingSlashAttribute : Attribute, IResourceFilter
     {
         private const char SlashCharacter = '/';
 

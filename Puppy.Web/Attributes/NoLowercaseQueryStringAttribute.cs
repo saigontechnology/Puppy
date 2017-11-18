@@ -27,7 +27,7 @@ namespace Puppy.Web.Attributes
     ///     and lower-case characters.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
-    public class NoLowercaseQueryStringAttribute : System.Attribute, IFilterMetadata
+    public class NoLowercaseQueryStringAttribute : Attribute, IFilterMetadata
     {
     }
 }

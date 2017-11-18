@@ -139,3 +139,35 @@ app.UseHttpContextAccessor()
 // [Http Detection] Ip Address detection enhance for local request
 app.UseHttpDetection()
 ```
+
+### 8. Http Client Flurl
+```csharp
+// [Http Client] Flurl, see more: https://github.com/tmenier/Flurl 
+service.AddFlurl()
+
+// Sample with Life time control
+public class MyService : IMyService
+{
+    private readonly IFlurlClient _flurlClient;
+    
+    public MyService(IFlurlClientFactory flurlClientFac) {
+        _flurlClient = flurlClientFac.Get(SERVICE_BASE_URL);
+        // configure _flurlClient as needed
+    }
+    
+    public Task<Thing> GetThingAsync(int id) {
+        return _flurlClient.Request("things", id).GetAsync<Thing>();
+    }
+}
+
+// Sample without Life time control (not need service.AddFlurl())
+var result = await "https://api.mysite.com"
+    .AppendPathSegment("person")
+    .SetQueryParams(new { api_key = "xyz" })
+    .WithOAuthBearerToken("my_oauth_token")
+    .PostJsonAsync(new { first_name = firstName, last_name = lastName })
+    .ReceiveJson<T>();
+
+
+
+```

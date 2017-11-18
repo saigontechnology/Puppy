@@ -32,6 +32,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="HttpClientUtils\**" />
+    <EmbeddedResource Remove="HttpClientUtils\**" />
+    <None Remove="HttpClientUtils\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="HtmlUtils\HtmlToPdf.cs" />
   </ItemGroup>
   
@@ -44,7 +49,7 @@
   <!-- External Libraries -->
   <ItemGroup>
     
-    <!-- AspNetCore and Razor -->
+    <!-- AspNetCore -->
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
 
     <!-- Markup Min -->
@@ -53,9 +58,9 @@
 
     <!-- GEO -->
     <PackageReference Include="MaxMind.GeoIP2" Version="2.9.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HttpClientUtils\" />
+
+    <!-- Http Client -->
+    <PackageReference Include="Flurl.Http" Version="2.0.1" />
   </ItemGroup>
 
 </Project>

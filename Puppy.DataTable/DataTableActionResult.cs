@@ -18,7 +18,7 @@ namespace Puppy.DataTable
     {
         public abstract Task ExecuteResultAsync(ActionContext context);
 
-        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="T"></typeparam>
         /// <param name="responseData">  
         ///     The properties of this can be marked up with [DataTablesAttribute] to control sorting/searchability/visibility
         /// </param>
@@ -28,16 +28,16 @@ namespace Puppy.DataTable
         /// </param>
         /// <param name="responseOption"></param>
         /// <returns></returns>
-        public static DataTableActionResult<TSource> Create<TSource>(DataTableResponseDataModel responseData, Func<TSource, object> transform, ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<T> Create<T>(DataTableResponseDataModel<T> responseData, Func<T, object> transform, ResponseOptionModel<T> responseOption = null)
         {
             transform = transform ?? (s => s);
 
-            var result = new DataTableActionResult<TSource>(responseData);
+            var result = new DataTableActionResult<T>(responseData);
 
             result.Data =
                 result
                     .Data
-                    .Transform<TSource, Dictionary<string, object>>
+                    .Transform<T, Dictionary<string, object>>
                     (
                         row => TransformTypeInfoHelper.MergeTransformValuesIntoDictionary(transform, row)
                     )
@@ -48,11 +48,11 @@ namespace Puppy.DataTable
             return result;
         }
 
-        public static DataTableActionResult<TSource> Create<TSource>(DataTableResponseDataModel responseData, ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<T> Create<T>(DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption = null)
         {
-            var result = new DataTableActionResult<TSource>(responseData);
+            var result = new DataTableActionResult<T>(responseData);
 
-            var dictionaryTransform = DataTableTypeInfo<TSource>.ToDictionary(responseOption);
+            var dictionaryTransform = DataTableTypeInfo<T>.ToDictionary(responseOption);
 
             result.Data =
                 result
@@ -65,15 +65,15 @@ namespace Puppy.DataTable
             return result;
         }
 
-        private static DataTableResponseDataModel ApplyOutputRules<TSource>(DataTableResponseDataModel responseData, ResponseOptionModel<TSource> responseOption)
+        private static DataTableResponseDataModel<T> ApplyOutputRules<T>(DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption)
         {
             responseOption = responseOption
-                             ?? new ResponseOptionModel<TSource>
+                             ?? new ResponseOptionModel<T>
                              {
                                  ArrayOutputType = ArrayOutputType.BiDimensionalArray
                              };
 
-            DataTableResponseDataModel outputData = responseData;
+            DataTableResponseDataModel<T> outputData = responseData;
 
             switch (responseOption.ArrayOutputType)
             {
@@ -91,16 +91,16 @@ namespace Puppy.DataTable
         }
     }
 
-    public class DataTableActionResult<TSource> : DataTableActionResult
+    public class DataTableActionResult<T> : DataTableActionResult
     {
-        public DataTableResponseDataModel Data { get; set; }
+        public DataTableResponseDataModel<T> Data { get; set; }
 
-        public DataTableActionResult(IQueryable<TSource> queryable, DataTableParamModel paramModel)
+        public DataTableActionResult(IQueryable<T> queryable, DataTableParamModel paramModel)
         {
             Data = queryable.GetDataTableResponse(paramModel);
         }
 
-        public DataTableActionResult(DataTableResponseDataModel data)
+        public DataTableActionResult(DataTableResponseDataModel<T> data)
         {
             Data = data;
         }

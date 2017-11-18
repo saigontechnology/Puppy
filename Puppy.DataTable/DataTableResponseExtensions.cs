@@ -28,13 +28,13 @@ namespace Puppy.DataTable
 {
     public static class DataTableResponseExtensions
     {
-        public static DataTableResponseDataModel GetDataTableResponse<TSource>(this IQueryable<TSource> data, DataTableParamModel dataTableParamModel)
+        public static DataTableResponseDataModel<T> GetDataTableResponse<T>(this IQueryable<T> data, DataTableParamModel dataTableParamModel)
         {
             var totalRecords = data.Count(); // annoying this, as it causes an extra evaluation..
 
             var filters = new DataTableFiltering();
 
-            var outputProperties = DataTableTypeInfo<TSource>.Properties;
+            var outputProperties = DataTableTypeInfo<T>.Properties;
 
             var filteredData = filters.ApplyFiltersAndSort(dataTableParamModel, data, outputProperties);
 
@@ -44,7 +44,7 @@ namespace Puppy.DataTable
 
             var page = (dataTableParamModel.DisplayLength <= 0 ? skipped : skipped.Take(dataTableParamModel.DisplayLength)).ToArray();
 
-            var result = new DataTableResponseDataModel
+            var result = new DataTableResponseDataModel<T>
             {
                 TotalRecord = totalRecords,
                 TotalDisplayRecord = totalDisplayRecords,
@@ -55,12 +55,12 @@ namespace Puppy.DataTable
             return result;
         }
 
-        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTableResponseDataModel responseData, Func<TSource, object> transform, ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<T> GetDataTableActionResult<T>(this DataTableResponseDataModel<T> responseData, Func<T, object> transform, ResponseOptionModel<T> responseOption = null)
         {
             return DataTableActionResult.Create(responseData, transform, responseOption);
         }
 
-        public static DataTableActionResult<TSource> GetDataTableActionResult<TSource>(this DataTableResponseDataModel responseData, ResponseOptionModel<TSource> responseOption = null)
+        public static DataTableActionResult<T> GetDataTableActionResult<T>(this DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption = null)
         {
             return DataTableActionResult.Create(responseData, responseOption);
         }

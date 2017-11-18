@@ -167,7 +167,4 @@ var result = await "https://api.mysite.com"
     .WithOAuthBearerToken("my_oauth_token")
     .PostJsonAsync(new { first_name = firstName, last_name = lastName })
     .ReceiveJson<T>();
-
-
-
 ```

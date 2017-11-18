@@ -19,9 +19,8 @@
 
 #endregion License
 
-using RestSharp;
-using System;
-using System.Net;
+using Flurl;
+using Flurl.Http;
 using System.Threading.Tasks;
 
 namespace Puppy.OneSignal.Notifications
@@ -29,17 +28,18 @@ namespace Puppy.OneSignal.Notifications
     /// <summary>
     ///     Class used to define resources needed for client to manage notifications. 
     /// </summary>
-    public class NotificationsResource : BaseResource, INotificationsResource
+    public class NotificationsResource : ResourceBase, INotificationsResource
     {
         /// <summary>
         ///     Default constructor 
         /// </summary>
         /// <param name="apiKey"> Your OneSignal API key </param>
-        /// <param name="apiUri"> API uri (https://onesignal.com/api/v1/notifications) </param>
-        public NotificationsResource(string apiKey, string apiUri) : base(apiKey, apiUri)
+        /// <param name="apiUri"> API uri (https://onesignal.com/api/v1) </param>
+        public NotificationsResource(string apiKey, string apiUri = "https://onesignal.com/api/v1") : base(apiKey, apiUri)
         {
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Creates new notification to be sent by OneSignal system. 
         /// </summary>
@@ -47,25 +47,17 @@ namespace Puppy.OneSignal.Notifications
         /// <returns></returns>
         public async Task<NotificationCreateResult> CreateAsync(NotificationCreateOptions options)
         {
-            var restRequest = new RestRequest("notifications", Method.POST);
+            var result =
+                await ApiUri.AppendPathSegment("notifications")
+                    .WithHeader("Authorization", $"Basic {ApiKey}")
+                    .PostJsonAsync(options)
+                    .ReceiveJson<NotificationCreateResult>()
+                    .ConfigureAwait(true);
 
-            restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
-
-            restRequest.RequestFormat = DataFormat.Json;
-            restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
-            restRequest.AddBody(options);
-
-            var restResponse = await RestClient.ExecuteAsync<NotificationCreateResult>(restRequest).ConfigureAwait(true);
-
-            if (!(restResponse.StatusCode != HttpStatusCode.Created || restResponse.StatusCode != HttpStatusCode.OK))
-                if (restResponse.ErrorException != null)
-                    throw restResponse.ErrorException;
-                else if (restResponse.StatusCode != HttpStatusCode.OK && restResponse.Content != null)
-                    throw new Exception(restResponse.Content);
-
-            return restResponse.Data;
+            return result;
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Get delivery and convert report about single notification. 
         /// </summary>
@@ -75,24 +67,14 @@ namespace Puppy.OneSignal.Notifications
         /// <returns></returns>
         public async Task<NotificationViewResult> ViewAsync(NotificationViewOptions options)
         {
-            var baseRequestPath = "notifications/{0}?app_id={1}";
+            var result =
+                await ApiUri.AppendPathSegment($"notifications/{options.Id}?app_id={options.AppId}")
+                    .WithHeader("Authorization", $"Basic {ApiKey}")
+                    .GetAsync()
+                    .ReceiveJson<NotificationViewResult>()
+                    .ConfigureAwait(true);
 
-            var restRequest = new RestRequest(string.Format(baseRequestPath, options.Id, options.AppId), Method.GET);
-
-            restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
-
-            restRequest.RequestFormat = DataFormat.Json;
-            restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
-
-            var restResponse = await RestClient.ExecuteAsync<NotificationViewResult>(restRequest).ConfigureAwait(true);
-
-            if (!(restResponse.StatusCode != HttpStatusCode.Created || restResponse.StatusCode != HttpStatusCode.OK))
-                if (restResponse.ErrorException != null)
-                    throw restResponse.ErrorException;
-                else if (restResponse.StatusCode != HttpStatusCode.OK && restResponse.Content != null)
-                    throw new Exception(restResponse.Content);
-
-            return restResponse.Data;
+            return result;
         }
 
         /// <summary>
@@ -102,22 +84,14 @@ namespace Puppy.OneSignal.Notifications
         /// <returns></returns>
         public async Task<NotificationCancelResult> CancelAsync(NotificationCancelOptions options)
         {
-            var restRequest = new RestRequest("notifications/" + options.Id, Method.DELETE);
+            var result =
+                await ApiUri.AppendPathSegment($"notifications/{options.Id}?app_id={options.AppId}")
+                    .WithHeader("Authorization", $"Basic {ApiKey}")
+                    .DeleteAsync()
+                    .ReceiveJson<NotificationCancelResult>()
+                    .ConfigureAwait(true);
 
-            restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
-
-            restRequest.AddParameter("app_id", options.AppId);
-
-            restRequest.RequestFormat = DataFormat.Json;
-
-            var restResponse = await RestClient.ExecuteAsync<NotificationCancelResult>(restRequest).ConfigureAwait(true);
-
-            if (restResponse.ErrorException != null)
-                throw restResponse.ErrorException;
-            if (restResponse.StatusCode != HttpStatusCode.OK && restResponse.Content != null)
-                throw new Exception(restResponse.Content);
-
-            return restResponse.Data;
+            return result;
         }
     }
 }

@@ -19,7 +19,7 @@
 
 #endregion License
 
-using RestSharp.Deserializers;
+using Newtonsoft.Json;
 
 namespace Puppy.OneSignal.Devices
 {
@@ -29,15 +29,15 @@ namespace Puppy.OneSignal.Devices
     public class DeviceAddResult
     {
         /// <summary>
-        ///     Returns true if operation is successfull. 
+        ///     Returns true if operation is successful. 
         /// </summary>
-        [DeserializeAs(Name = "success")]
+        [JsonProperty(PropertyName = "success")]
         public bool IsSuccess { get; set; }
 
         /// <summary>
         ///     Returns id of the result operation. 
         /// </summary>
-        [DeserializeAs(Name = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
     }
 }

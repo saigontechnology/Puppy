@@ -7,46 +7,55 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> BaseResource.cs </Name>
+//         <Name> ResourceBase.cs </Name>
 //         <Created> 30/05/2017 4:42:17 PM </Created>
 //         <Key> 4c31a1b0-aa83-4769-ba89-20660a875107 </Key>
 //     </File>
 //     <Summary>
-//         BaseResource.cs
+//         ResourceBase.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
-using RestSharp;
+using Flurl.Http;
+using Flurl.Http.Configuration;
+using Newtonsoft.Json;
 
 namespace Puppy.OneSignal
 {
     /// <summary>
     ///     Abstract class which helps easier implementation of new client resources. 
     /// </summary>
-    public abstract class BaseResource
+    public abstract class ResourceBase
     {
         /// <summary>
         ///     Default constructor. 
         /// </summary>
         /// <param name="apiKey"> Your OneSignal API key </param>
-        /// <param name="apiUri"> API uri (https://onesignal.com/api/v1/notifications) </param>
-        protected BaseResource(string apiKey, string apiUri)
+        /// <param name="apiUri"> API uri </param>
+        protected ResourceBase(string apiKey, string apiUri = "https://onesignal.com/api/v1")
         {
             ApiKey = apiKey;
-            RestClient = new RestClient(apiUri);
+
+            ApiUri = apiUri;
+
+            FlurlHttp.Configure(config =>
+            {
+                config.JsonSerializer = new NewtonsoftJsonSerializer(
+                    new JsonSerializerSettings
+                    {
+                        MissingMemberHandling = MissingMemberHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore,
+                        DefaultValueHandling = DefaultValueHandling.Include
+                    }
+                );
+            });
         }
 
-        /// <summary>
-        ///     Rest client reference. 
-        /// </summary>
-        protected RestClient RestClient { get; set; }
-
-        /// <summary>
-        ///     Your OneSignal Api key. 
-        /// </summary>
         protected string ApiKey { get; set; }
+
+        protected string ApiUri { get; set; }
     }
 }

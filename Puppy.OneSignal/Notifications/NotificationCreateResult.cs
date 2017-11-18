@@ -19,7 +19,7 @@
 
 #endregion License
 
-using RestSharp.Deserializers;
+using Newtonsoft.Json;
 
 namespace Puppy.OneSignal.Notifications
 {
@@ -29,15 +29,15 @@ namespace Puppy.OneSignal.Notifications
     public class NotificationCreateResult
     {
         /// <summary>
-        ///     Returns the number of recepients who received the message. 
+        ///     Returns the number of recipients who received the message. 
         /// </summary>
-        [DeserializeAs(Name = "recipients")]
+        [JsonProperty("recipients")]
         public int Recipients { get; set; }
 
         /// <summary>
         ///     Returns the id of the result. 
         /// </summary>
-        [DeserializeAs(Name = "id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
     }
 }

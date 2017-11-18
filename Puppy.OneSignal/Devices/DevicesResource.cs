@@ -19,22 +19,24 @@
 
 #endregion License
 
-using RestSharp;
+using System;
+using Flurl;
+using Flurl.Http;
 using System.Threading.Tasks;
 
 namespace Puppy.OneSignal.Devices
 {
     /// <summary>
-    ///     Implementation of BaseResource, used to help client add or edit device. 
+    ///     Implementation of ResourceBase, used to help client add or edit device. 
     /// </summary>
-    public class DevicesResource : BaseResource, IDevicesResource
+    public class DevicesResource : ResourceBase, IDevicesResource
     {
         /// <summary>
         ///     Default constructor 
         /// </summary>
         /// <param name="apiKey"> Your OneSignal API key </param>
-        /// <param name="apiUri"> API uri (https://onesignal.com/api/v1/notifications) </param>
-        public DevicesResource(string apiKey, string apiUri) : base(apiKey, apiUri)
+        /// <param name="apiUri"> API uri (https://onesignal.com/api/v1) </param>
+        public DevicesResource(string apiKey, string apiUri = "https://onesignal.com/api/v1") : base(apiKey, apiUri)
         {
         }
 
@@ -45,20 +47,14 @@ namespace Puppy.OneSignal.Devices
         /// <returns> Result of device add operation. </returns>
         public async Task<DeviceAddResult> AddAsync(DeviceAddOptions options)
         {
-            var restRequest = new RestRequest("players", Method.POST);
+            var result =
+                await ApiUri.AppendPathSegment("players")
+                    .WithHeader("Authorization", $"Basic {ApiKey}")
+                    .PostJsonAsync(options)
+                    .ReceiveJson<DeviceAddResult>()
+                    .ConfigureAwait(true);
 
-            restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
-
-            restRequest.RequestFormat = DataFormat.Json;
-            restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
-            restRequest.AddBody(options);
-
-            var restResponse = await RestClient.ExecuteAsync<DeviceAddResult>(restRequest).ConfigureAwait(true);
-
-            if (restResponse.ErrorException != null)
-                throw restResponse.ErrorException;
-
-            return restResponse.Data;
+            return result;
         }
 
         /// <summary>
@@ -69,20 +65,11 @@ namespace Puppy.OneSignal.Devices
         /// <exception cref="Exception"></exception>
         public async Task EditAsync(string id, DeviceEditOptions options)
         {
-            var restRequest = new RestRequest("players/{id}", Method.PUT);
-
-            restRequest.AddHeader("Authorization", string.Format("Basic {0}", ApiKey));
-
-            restRequest.AddUrlSegment("id", id);
-
-            restRequest.RequestFormat = DataFormat.Json;
-            restRequest.JsonSerializer = new NewtonsoftJsonSerializer();
-            restRequest.AddBody(options);
-
-            var restResponse = await RestClient.ExecuteAsync(restRequest).ConfigureAwait(true);
-
-            if (restResponse.ErrorException != null)
-                throw restResponse.ErrorException;
+            var result =
+                await ApiUri.AppendPathSegment($"players/{id}")
+                    .WithHeader("Authorization", $"Basic {ApiKey}")
+                    .PutJsonAsync(options)
+                    .ConfigureAwait(true);
         }
     }
 }

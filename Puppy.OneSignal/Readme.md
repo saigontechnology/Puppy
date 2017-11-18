@@ -9,13 +9,14 @@
 ```csharp
 var client = new OneSignalClient("<api key>");
 
-var options = new NotificationCreateOptions();
+var options = new NotificationCreateOptions
+{
+    AppId = new Guid("<app id>"),
+    IncludedSegments = new List<string> {"All"}
+};
 
-options.AppId = "<app id>";
-
-options.IncludedSegments = new List<string> { "All" };
 
 options.Contents.Add(LanguageCodes.English, "Hello World");
 
-client.Notifications.Create(options);
+var result = await client.Notifications.CreateAsync(options).ConfigureAwait(true);
 ```

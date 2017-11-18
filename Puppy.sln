@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Coordinate", "Puppy.Coordinate\Puppy.Coordinate.csproj", "{F678E428-13D5-4C03-9065-8D067353405D}"
 EndProject
@@ -56,6 +56,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Logger.Core", "Puppy.Logger.Core\Puppy.Logger.Core.csproj", "{A1C43E14-EB6B-41BC-AF99-BA2E9C0A5CCB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Logger", "Puppy.Logger\Puppy.Logger.csproj", "{ED8A761A-C7F9-4FFF-8B2D-7CC21640D230}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.Testing", "Puppy.Testing\Puppy.Testing.csproj", "{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -259,6 +261,18 @@ Global
 		{ED8A761A-C7F9-4FFF-8B2D-7CC21640D230}.Release|x64.Build.0 = Release|x64
 		{ED8A761A-C7F9-4FFF-8B2D-7CC21640D230}.Release|x86.ActiveCfg = Release|x86
 		{ED8A761A-C7F9-4FFF-8B2D-7CC21640D230}.Release|x86.Build.0 = Release|x86
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Debug|x64.Build.0 = Debug|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|x64.ActiveCfg = Release|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|x64.Build.0 = Release|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

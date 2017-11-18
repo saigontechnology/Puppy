@@ -19,7 +19,7 @@
 
 #endregion License
 
-using RestSharp.Deserializers;
+using Newtonsoft.Json;
 
 namespace Puppy.OneSignal.Notifications
 {
@@ -31,7 +31,7 @@ namespace Puppy.OneSignal.Notifications
         /// <summary>
         ///     Returns whether the message was canceled or not {'success': "true"} 
         /// </summary>
-        [DeserializeAs(Name = "success")]
+        [JsonProperty(PropertyName = "success")]
         public string Success { get; set; }
     }
 }

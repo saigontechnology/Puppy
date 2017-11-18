@@ -16,8 +16,10 @@
 
   <!-- External Libraries -->
   <ItemGroup>
+    <!-- Http Client -->
     <PackageReference Include="Flurl.Http" Version="2.0.1" />
+
+    <!-- Json -->
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <!--<PackageReference Include="RestSharp.NetCore" Version="105.2.4-rc4-24214-01" />-->
   </ItemGroup>
 </Project>

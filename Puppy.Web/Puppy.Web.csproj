@@ -54,5 +54,8 @@
     <!-- GEO -->
     <PackageReference Include="MaxMind.GeoIP2" Version="2.9.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HttpClientUtils\" />
+  </ItemGroup>
 
 </Project>

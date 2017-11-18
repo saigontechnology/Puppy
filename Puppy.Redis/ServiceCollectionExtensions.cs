@@ -22,10 +22,10 @@ using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.EnvironmentUtils;
-using System;
-using System.Linq;
 using Puppy.Core.ServiceCollectionUtils;
 using Puppy.DependencyInjection;
+using System;
+using System.Linq;
 
 namespace Puppy.Redis
 {

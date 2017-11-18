@@ -17,8 +17,8 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 
 namespace Puppy.DependencyInjection.Attributes
 {

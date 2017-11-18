@@ -19,7 +19,6 @@
 
 #endregion License
 
-using System;
 using Flurl;
 using Flurl.Http;
 using System.Threading.Tasks;

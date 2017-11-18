@@ -22,6 +22,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
+using Puppy.Core.StringUtils;
 using Puppy.Logger.Core;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.RollingFile;
@@ -32,7 +33,6 @@ using Serilog.Core;
 using Serilog.Events;
 using System;
 using System.IO;
-using Puppy.Core.StringUtils;
 
 namespace Puppy.Logger
 {

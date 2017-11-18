@@ -28,7 +28,7 @@ namespace Puppy.DataTable
 {
     public static class DataTableResponseExtensions
     {
-        public static DataTableResponseDataModel<T> GetDataTableResponse<T>(this IQueryable<T> data, DataTableParamModel dataTableParamModel)
+        public static DataTableResponseDataModel<T> GetDataTableResponse<T>(this IQueryable<T> data, DataTableParamModel dataTableParamModel) where T : class, new()
         {
             var totalRecords = data.Count(); // annoying this, as it causes an extra evaluation..
 
@@ -55,12 +55,12 @@ namespace Puppy.DataTable
             return result;
         }
 
-        public static DataTableActionResult<T> GetDataTableActionResult<T>(this DataTableResponseDataModel<T> responseData, Func<T, object> transform, ResponseOptionModel<T> responseOption = null)
+        public static DataTableActionResult<T> GetDataTableActionResult<T>(this DataTableResponseDataModel<T> responseData, Func<T, object> transform, ResponseOptionModel<T> responseOption = null) where T : class, new()
         {
             return DataTableActionResult.Create(responseData, transform, responseOption);
         }
 
-        public static DataTableActionResult<T> GetDataTableActionResult<T>(this DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption = null)
+        public static DataTableActionResult<T> GetDataTableActionResult<T>(this DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption = null) where T : class, new()
         {
             return DataTableActionResult.Create(responseData, responseOption);
         }

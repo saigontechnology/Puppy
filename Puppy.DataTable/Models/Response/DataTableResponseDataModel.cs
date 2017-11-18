@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Puppy.DataTable.Models.Response
 {
-    public class DataTableResponseDataModel<T>
+    public class DataTableResponseDataModel<T> where T : class, new()
     {
         [JsonProperty(PropertyName = PropertyConst.TotalRecords)]
         public int TotalRecord { get; set; }

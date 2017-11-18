@@ -28,7 +28,7 @@ namespace Puppy.DataTable
         /// </param>
         /// <param name="responseOption"></param>
         /// <returns></returns>
-        public static DataTableActionResult<T> Create<T>(DataTableResponseDataModel<T> responseData, Func<T, object> transform, ResponseOptionModel<T> responseOption = null)
+        public static DataTableActionResult<T> Create<T>(DataTableResponseDataModel<T> responseData, Func<T, object> transform, ResponseOptionModel<T> responseOption = null) where T : class, new()
         {
             transform = transform ?? (s => s);
 
@@ -48,7 +48,7 @@ namespace Puppy.DataTable
             return result;
         }
 
-        public static DataTableActionResult<T> Create<T>(DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption = null)
+        public static DataTableActionResult<T> Create<T>(DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption = null) where T : class, new()
         {
             var result = new DataTableActionResult<T>(responseData);
 
@@ -65,7 +65,7 @@ namespace Puppy.DataTable
             return result;
         }
 
-        private static DataTableResponseDataModel<T> ApplyOutputRules<T>(DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption)
+        private static DataTableResponseDataModel<T> ApplyOutputRules<T>(DataTableResponseDataModel<T> responseData, ResponseOptionModel<T> responseOption) where T : class, new()
         {
             responseOption = responseOption
                              ?? new ResponseOptionModel<T>
@@ -91,7 +91,7 @@ namespace Puppy.DataTable
         }
     }
 
-    public class DataTableActionResult<T> : DataTableActionResult
+    public class DataTableActionResult<T> : DataTableActionResult where T : class, new()
     {
         public DataTableResponseDataModel<T> Data { get; set; }
 

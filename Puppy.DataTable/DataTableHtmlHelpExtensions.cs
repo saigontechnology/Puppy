@@ -14,21 +14,24 @@ namespace Puppy.DataTable
 {
     public static class DataTableHtmlHelpExtensions
     {
-        public static DataTableModel DataTableModel<TController, TResult>(
+        public static DataTableModel DataTableModel<TController, T>
+        (
             this IHtmlHelper html,
             string id,
-            Expression<Func<TController, DataTableActionResult<TResult>>> exp,
-            params ColumnModel[] columns)
+            Expression<Func<TController, DataTableActionResult<T>>> exp,
+            params ColumnModel[] columns
+        ) where T : class, new()
         {
             if (columns?.Any() != true)
             {
-                columns = typeof(TResult).GetColumns();
+                columns = typeof(T).GetColumns();
             }
 
             var methodInfo = exp.MethodInfo();
 
             var controllerName = typeof(TController).Name;
-            controllerName = controllerName.Substring(0, controllerName.LastIndexOf(nameof(Controller), StringComparison.CurrentCultureIgnoreCase));
+            controllerName = controllerName.Substring(0,
+                controllerName.LastIndexOf(nameof(Controller), StringComparison.CurrentCultureIgnoreCase));
 
             var urlHelper = new UrlHelper(html.ViewContext);
             var ajaxUrl = urlHelper.AbsoluteAction(methodInfo.Name, controllerName);

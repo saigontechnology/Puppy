@@ -230,9 +230,9 @@ namespace Puppy.Web.HttpUtils.HttpDetection
 
         public static DeviceModel GetLocation(HttpRequest request, DeviceModel device)
         {
-            string geoDbRelativePath = Path.Combine(nameof(HttpDetection), "GeoCity.mmdb");
+            string geoDbRelativePath = Path.Combine(nameof(HttpUtils), nameof(HttpDetection), "GeoCity.mmdb");
 
-            string geoDbAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), geoDbRelativePath);
+            string geoDbAbsolutePath = geoDbRelativePath.GetFullPath();
 
             if (!File.Exists(geoDbAbsolutePath))
             {

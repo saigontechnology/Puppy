@@ -57,6 +57,28 @@ namespace Puppy.EF.Repositories
                 DbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public override void Update(TEntity entity, params string[] changedProperties)
+        {
+            TryAttach(entity);
+
+            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
+
+            changedProperties = changedProperties?.Distinct().ToArray();
+
+            if (changedProperties?.Any() == true)
+            {
+                DbContext.Entry(entity).Property(x => x.LastUpdatedTime).IsModified = true;
+                DbContext.Entry(entity).Property(x => x.LastUpdatedBy).IsModified = true;
+
+                foreach (var property in changedProperties)
+                {
+                    DbContext.Entry(entity).Property(property).IsModified = true;
+                }
+            }
+            else
+                DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         public void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, params Expression<Func<TEntity, object>>[] changedProperties)
         {
             DateTimeOffset utcNow = DateTimeOffset.UtcNow;

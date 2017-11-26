@@ -111,6 +111,27 @@ namespace Puppy.EF.Repositories
                 DbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public override void Update(TEntity entity, params string[] changedProperties)
+        {
+            TryAttach(entity);
+
+            changedProperties = changedProperties?.Distinct().ToArray();
+
+            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
+
+            if (changedProperties?.Any() == true)
+            {
+                DbContext.Entry(entity).Property(x => x.LastUpdatedTime).IsModified = true;
+
+                foreach (var property in changedProperties)
+                {
+                    DbContext.Entry(entity).Property(property).IsModified = true;
+                }
+            }
+            else
+                DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
         {
             try

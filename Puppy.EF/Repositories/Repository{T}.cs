@@ -103,6 +103,23 @@ namespace Puppy.EF.Repositories
                 BaseDbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public virtual void Update(T entity, params string[] changedProperties)
+        {
+            TryAttach(entity);
+
+            changedProperties = changedProperties?.Distinct().ToArray();
+
+            if (changedProperties?.Any() == true)
+            {
+                foreach (var property in changedProperties)
+                {
+                    BaseDbContext.Entry(entity).Property(property).IsModified = true;
+                }
+            }
+            else
+                BaseDbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         public virtual void Delete(T entity)
         {
             try

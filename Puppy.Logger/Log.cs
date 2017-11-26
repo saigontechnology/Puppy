@@ -52,8 +52,7 @@ namespace Puppy.Logger
                     fileSizeLimitBytes: LoggerConfig.FileSizeLimitBytes,
                     retainedFileCountLimit: LoggerConfig.RetainedFileCountLimit,
                     restrictedToMinimumLevel: LoggerConfig.FileLogMinimumLevelEnum,
-                    formatter: new LoggerTextFormatter(),
-                    shared: true
+                    formatter: new LoggerTextFormatter()
                 );
             }
 

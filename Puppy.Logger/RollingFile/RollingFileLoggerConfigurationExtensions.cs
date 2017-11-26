@@ -97,7 +97,7 @@ namespace Puppy.Logger.RollingFile
         {
             var formatter = new MessageTemplateTextFormatter(outputTemplate, formatProvider);
             return RollingFile(sinkConfiguration, formatter, pathFormat, restrictedToMinimumLevel, fileSizeLimitBytes,
-                retainedFileCountLimit, levelSwitch, buffered, shared, flushToDiskInterval);
+                retainedFileCountLimit, levelSwitch, flushToDiskInterval);
         }
 
         /// <summary>
@@ -129,12 +129,6 @@ namespace Puppy.Logger.RollingFile
         ///     The maximum number of log files that will be retained, including the current log
         ///     file. For unlimited retention, pass null. The default is 31.
         /// </param>
-        /// <param name="buffered">                
-        ///     Indicates if flushing to the output file can be buffered or not. The default is false.
-        /// </param>
-        /// <param name="shared">                  
-        ///     Allow the log files to be shared by multiple processes. The default is false.
-        /// </param>
         /// <param name="flushToDiskInterval">     
         ///     If provided, a full disk flush will be performed periodically at the specified interval.
         /// </param>
@@ -150,17 +144,12 @@ namespace Puppy.Logger.RollingFile
             long? fileSizeLimitBytes = DefaultFileSizeLimitBytes,
             int? retainedFileCountLimit = DefaultRetainedFileCountLimit,
             LoggingLevelSwitch levelSwitch = null,
-            bool buffered = false,
-            bool shared = false,
             TimeSpan? flushToDiskInterval = null)
         {
             if (sinkConfiguration == null) throw new ArgumentNullException(nameof(sinkConfiguration));
             if (formatter == null) throw new ArgumentNullException(nameof(formatter));
 
-            if (shared && buffered)
-                throw new ArgumentException("Buffered writes are not available when file sharing is enabled.", nameof(buffered));
-
-            ILogEventSink sink = new RollingFileSink(pathFormat, formatter, fileSizeLimitBytes, retainedFileCountLimit, buffered: buffered, shared: shared);
+            ILogEventSink sink = new RollingFileSink(pathFormat, formatter, fileSizeLimitBytes, retainedFileCountLimit);
 
             if (flushToDiskInterval.HasValue)
             {

@@ -31,18 +31,17 @@ using System.Text;
 
 namespace Puppy.Logger.RollingFile
 {
+    /// <inheritdoc cref="ILogEventSink" />
     /// <summary>
     ///     Write log events to a series of files. Each file will be named according to the date of
     ///     the first log entry written to it. Only simple date-based rolling is currently supported.
     /// </summary>
     public sealed class RollingFileSink : ILogEventSink, IFlushableFileSink, IDisposable
     {
-        private readonly bool _buffered;
         private readonly Encoding _encoding;
         private readonly long? _fileSizeLimitBytes;
         private readonly int? _retainedFileCountLimit;
         private readonly TemplatePathRoller _roller;
-        private readonly bool _shared;
         private readonly object _syncRoot = new object();
         private readonly ITextFormatter _textFormatter;
         private ILogEventSink _currentFile;
@@ -72,21 +71,14 @@ namespace Puppy.Logger.RollingFile
         /// <param name="encoding">              
         ///     Character encoding used to write the text file. The default is UTF-8 without BOM.
         /// </param>
-        /// <param name="buffered">              
-        ///     Indicates if flushing to the output file can be buffered or not. The default is false.
-        /// </param>
-        /// <param name="shared">                
-        ///     Allow the log files to be shared by multiple processes. The default is false.
-        /// </param>
         /// <returns> Configuration object allowing method chaining. </returns>
         /// <remarks> The file will be written using the UTF-8 character set. </remarks>
-        public RollingFileSink(string pathFormat,
+        public RollingFileSink(
+            string pathFormat,
             ITextFormatter textFormatter,
             long? fileSizeLimitBytes,
             int? retainedFileCountLimit,
-            Encoding encoding = null,
-            bool buffered = false,
-            bool shared = false)
+            Encoding encoding = null)
         {
             if (pathFormat == null) throw new ArgumentNullException(nameof(pathFormat));
             if (fileSizeLimitBytes.HasValue && fileSizeLimitBytes < 0)
@@ -100,8 +92,6 @@ namespace Puppy.Logger.RollingFile
             _fileSizeLimitBytes = fileSizeLimitBytes;
             _retainedFileCountLimit = retainedFileCountLimit;
             _encoding = encoding;
-            _buffered = buffered;
-            _shared = shared;
         }
 
         /// <summary>
@@ -127,6 +117,7 @@ namespace Puppy.Logger.RollingFile
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Emit the provided log event to the sink. 
         /// </summary>
@@ -210,20 +201,16 @@ namespace Puppy.Logger.RollingFile
 
                 try
                 {
-                    _currentFile = _shared
-                        ? (ILogEventSink)new SharedFileSink(path, _textFormatter, _fileSizeLimitBytes, _encoding)
-                        : new FileSink(path, _textFormatter, _fileSizeLimitBytes, _encoding, _buffered);
+                    _currentFile = new SharedFileSink(path, _textFormatter, _fileSizeLimitBytes, _encoding);
                 }
                 catch (IOException ex)
                 {
-                    if (IoErrors.IsLockedFile(ex))
-                    {
-                        SelfLog.WriteLine("Rolling file target {0} was locked, attempting to open next in sequence (attempt {1})", path, attempt + 1);
-                        sequence++;
-                        continue;
-                    }
+                    if (!IoErrors.IsLockedFile(ex)) throw;
 
-                    throw;
+                    SelfLog.WriteLine("Rolling file target {0} was locked, attempting to open next in sequence (attempt {1})", path, attempt + 1);
+                    sequence++;
+
+                    continue;
                 }
 
                 ApplyRetentionPolicy(path);

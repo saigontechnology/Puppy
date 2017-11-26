@@ -43,6 +43,6 @@
     <!-- Linq Dynamic -->
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.7.12" />
 
-    <PackageReference Include="Enums.NET" Version="2.2.0" />
+    <PackageReference Include="Enums.NET" Version="2.3.0" />
   </ItemGroup>
 </Project>

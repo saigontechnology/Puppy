@@ -28,7 +28,7 @@
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
 
     <!-- Enum -->
-    <PackageReference Include="Enums.NET" Version="2.2.0" />
+    <PackageReference Include="Enums.NET" Version="2.3.0" />
 
     <!-- Image and Color -->
     <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
@@ -39,7 +39,7 @@
     <PackageReference Include="Flurl.Http" Version="2.0.1" />
 
     <!-- PDF -->
-    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.3.2" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.3.3" />
 
     <!-- Open XML - Office -->
     <PackageReference Include="DocumentFormat.OpenXml">

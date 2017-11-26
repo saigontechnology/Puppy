@@ -32,7 +32,7 @@
     <PackageReference Include="Hangfire" Version="1.6.17" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.5.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Enums.NET" Version="2.2.0" />
+    <PackageReference Include="Enums.NET" Version="2.3.0" />
 
     <!-- Write Log - Serilog -->
     <PackageReference Include="Serilog" Version="2.5.0" />

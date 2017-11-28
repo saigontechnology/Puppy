@@ -94,16 +94,31 @@ namespace Puppy.EF.Repositories
             }
         }
 
+        public void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, params string[] changedProperties)
+        {
+            DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
+            var entities = Get(predicate).Select(x => new TEntity { Id = x.Id }).ToList();
+
+            foreach (var entity in entities)
+            {
+                var oldEntity = entityNewData.Clone();
+                oldEntity.Id = entity.Id;
+                oldEntity.LastUpdatedTime = utcNow;
+                Update(oldEntity, changedProperties);
+            }
+        }
+
         public override void Delete(TEntity entity, bool isPhysicalDelete = false)
         {
             try
             {
                 TryAttach(entity);
 
-                entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
-
                 if (!isPhysicalDelete)
                 {
+                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
+
                     DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
                     DbContext.Entry(entity).Property(x => x.DeletedBy).IsModified = true;
                 }

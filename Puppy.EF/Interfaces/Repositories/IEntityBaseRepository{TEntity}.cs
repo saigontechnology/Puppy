@@ -44,6 +44,8 @@ namespace Puppy.EF.Interfaces.Repositories
 
         void Update(TEntity entity, params string[] changedProperties);
 
+        void Update(TEntity entity);
+
         void Delete(TEntity entity, bool isPhysicalDelete = false);
 
         void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false);

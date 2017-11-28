@@ -129,16 +129,25 @@ namespace Puppy.EF.Repositories
                 DbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public override void Update(TEntity entity)
+        {
+            TryAttach(entity);
+
+            entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, DateTimeOffset.UtcNow);
+
+            DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         public virtual void Delete(TEntity entity, bool isPhysicalDelete = false)
         {
             try
             {
                 TryAttach(entity);
 
-                entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
-
                 if (!isPhysicalDelete)
                 {
+                    entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, DateTimeOffset.UtcNow);
+
                     DbContext.Entry(entity).Property(x => x.DeletedTime).IsModified = true;
                 }
                 else
@@ -156,8 +165,11 @@ namespace Puppy.EF.Repositories
         public virtual void DeleteWhere(Expression<Func<TEntity, bool>> predicate, bool isPhysicalDelete = false)
         {
             var entities = Get(predicate).AsEnumerable();
+
             foreach (var entity in entities)
+            {
                 Delete(entity, isPhysicalDelete);
+            }
         }
 
         public override int SaveChanges()

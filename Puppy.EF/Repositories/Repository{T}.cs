@@ -162,6 +162,13 @@ namespace Puppy.EF.Repositories
                 DbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public virtual void Update(T entity)
+        {
+            TryAttach(entity);
+
+            DbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         public virtual void Delete(T entity)
         {
             try

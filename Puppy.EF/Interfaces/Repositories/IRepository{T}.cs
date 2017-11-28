@@ -42,6 +42,8 @@ namespace Puppy.EF.Interfaces.Repositories
 
         void Update(T entity, params string[] changedProperties);
 
+        void Update(T entity);
+
         void Delete(T entity);
 
         void DeleteWhere(Expression<Func<T, bool>> predicate);

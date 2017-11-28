@@ -27,6 +27,8 @@ namespace Puppy.EF.Interfaces.Repositories
     {
         void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityData, params Expression<Func<TEntity, object>>[] changedProperties);
 
+        void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, params string[] changedProperties);
+
         void DeleteWhere(List<string> listId, bool isPhysicalDelete = false);
     }
 }

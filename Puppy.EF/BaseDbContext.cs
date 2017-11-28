@@ -5,12 +5,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy.EF </Project>
 //     <File>
-//         <Name> BaseDbContext </Name>
+//         <Name> DbContext </Name>
 //         <Created> 06 Apr 17 1:09:03 AM </Created>
 //         <Key> 698007b1-38ad-45b0-b7d0-f22069fe2fab </Key>
 //     </File>
 //     <Summary>
-//         BaseDbContext
+//         DbContext
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------

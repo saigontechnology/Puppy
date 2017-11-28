@@ -20,9 +20,11 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -30,9 +32,9 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF.Repositories
 {
-    public abstract class Repository<T> : IRepository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class, new()
     {
-        protected readonly IBaseDbContext BaseDbContext;
+        protected readonly IBaseDbContext DbContext;
 
         private DbSet<T> _dbSet;
 
@@ -41,15 +43,55 @@ namespace Puppy.EF.Repositories
             get
             {
                 if (_dbSet != null)
+                {
                     return _dbSet;
-                _dbSet = BaseDbContext.Set<T>();
+                }
+
+                _dbSet = DbContext.Set<T>();
+
                 return _dbSet;
             }
         }
 
-        protected Repository(IBaseDbContext baseDbContext)
+        protected Repository(IBaseDbContext dbContext)
         {
-            BaseDbContext = baseDbContext;
+            DbContext = dbContext;
+        }
+
+        protected void SplitEntityEntry(out List<EntityEntry> listEntryAdded, out List<EntityEntry> listEntryModified, out List<EntityEntry> listEntryDeleted)
+        {
+            var listState = new List<EntityState>
+            {
+                EntityState.Added,
+                EntityState.Modified,
+                EntityState.Deleted
+            };
+
+            var listEntry = DbContext.ChangeTracker.Entries()
+                .Where(x => x.Entity is T && listState.Contains(x.State))
+                .ToList();
+
+            listEntryAdded = listEntry.Where(x => x.State == EntityState.Added).ToList();
+            listEntryModified = listEntry.Where(x => x.State == EntityState.Modified).ToList();
+            listEntryDeleted = listEntry.Where(x => x.State == EntityState.Deleted).ToList();
+        }
+
+        protected void SplitEntity(out List<T> listEntityAdded, out List<T> listEntityModified, out List<T> listEntityDeleted)
+        {
+            var listState = new List<EntityState>
+            {
+                EntityState.Added,
+                EntityState.Modified,
+                EntityState.Deleted
+            };
+
+            var listEntry = DbContext.ChangeTracker.Entries()
+                .Where(x => x.Entity is T && listState.Contains(x.State))
+                .ToList();
+
+            listEntityAdded = listEntry.Where(x => x.State == EntityState.Added).Select(x => x.Entity).Cast<T>().ToList();
+            listEntityModified = listEntry.Where(x => x.State == EntityState.Modified).Select(x => x.Entity).Cast<T>().ToList();
+            listEntityDeleted = listEntry.Where(x => x.State == EntityState.Deleted).Select(x => x.Entity).Cast<T>().ToList();
         }
 
         public virtual IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
@@ -96,11 +138,11 @@ namespace Puppy.EF.Repositories
             {
                 foreach (var property in changedProperties)
                 {
-                    BaseDbContext.Entry(entity).Property(property).IsModified = true;
+                    DbContext.Entry(entity).Property(property).IsModified = true;
                 }
             }
             else
-                BaseDbContext.Entry(entity).State = EntityState.Modified;
+                DbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Update(T entity, params string[] changedProperties)
@@ -113,11 +155,11 @@ namespace Puppy.EF.Repositories
             {
                 foreach (var property in changedProperties)
                 {
-                    BaseDbContext.Entry(entity).Property(property).IsModified = true;
+                    DbContext.Entry(entity).Property(property).IsModified = true;
                 }
             }
             else
-                BaseDbContext.Entry(entity).State = EntityState.Modified;
+                DbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Delete(T entity)
@@ -145,14 +187,14 @@ namespace Puppy.EF.Repositories
 
         public virtual void RefreshEntity(T entity)
         {
-            BaseDbContext.Entry(entity).Reload();
+            DbContext.Entry(entity).Reload();
         }
 
         public virtual bool TryAttach(T entity)
         {
             try
             {
-                if (BaseDbContext.Entry(entity).State == EntityState.Detached)
+                if (DbContext.Entry(entity).State == EntityState.Detached)
                     DbSet.Attach(entity);
                 return true;
             }
@@ -164,22 +206,22 @@ namespace Puppy.EF.Repositories
 
         public virtual int SaveChanges()
         {
-            return BaseDbContext.SaveChanges();
+            return DbContext.SaveChanges();
         }
 
         public virtual int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            return BaseDbContext.SaveChanges(acceptAllChangesOnSuccess);
+            return DbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            return BaseDbContext.SaveChangesAsync(cancellationToken);
+            return DbContext.SaveChangesAsync(cancellationToken);
         }
 
         public virtual Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
-            return BaseDbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            return DbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }

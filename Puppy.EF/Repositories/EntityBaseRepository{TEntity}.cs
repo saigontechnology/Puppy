@@ -31,13 +31,10 @@ using System.Threading.Tasks;
 
 namespace Puppy.EF.Repositories
 {
-    public abstract class EntityBaseRepository<TEntity> : Repository<TEntity>, IEntityBaseRepository<TEntity> where TEntity : EntityBase
+    public abstract class EntityBaseRepository<TEntity> : Repository<TEntity>, IEntityBaseRepository<TEntity> where TEntity : EntityBase, new()
     {
-        protected readonly IBaseDbContext DbContext;
-
         protected EntityBaseRepository(IBaseDbContext dbContext) : base(dbContext)
         {
-            DbContext = dbContext;
         }
 
         public virtual TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, bool isIncludeDeleted = false, params Expression<Func<TEntity, object>>[] includeProperties)

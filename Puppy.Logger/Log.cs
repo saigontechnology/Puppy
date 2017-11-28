@@ -87,7 +87,9 @@ namespace Puppy.Logger
 
             // Priority to use Header Id instead of self generate Id
             if (context.HttpContext.Request.Headers.ContainsKey(nameof(logEntity.Id)))
+            {
                 logEntity.Id = context.HttpContext.Request.Headers[nameof(logEntity.Id)];
+            }
 
             // Get Request Time from Header
             if (context.HttpContext.Request.Headers.ContainsKey(nameof(HttpContextInfoModel.RequestTime)))

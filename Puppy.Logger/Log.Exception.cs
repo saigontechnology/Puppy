@@ -28,18 +28,21 @@ namespace Puppy.Logger
 {
     public partial class Log
     {
+        public const string LogTypeException = "Exception";
+
         /// <summary>
         ///     Write Log with Error Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
         /// <param name="ex">              </param>
+        /// <param name="type">            </param>
         /// <param name="callerMemberName"></param>
         /// <param name="callerFilePath">  </param>
         /// <param name="callerLineNumber"></param>
-        /// <returns></returns>
-        public static string Error(Exception ex, [CallerMemberName] string callerMemberName = "",
+        /// <returns> Log Id </returns>
+        public static string Error(Exception ex, string type = LogTypeException, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            var id = JobLogException(LogLevel.Error, ex, callerMemberName, callerFilePath, callerLineNumber);
+            var id = JobLogException(ex, LogLevel.Error, type, callerMemberName, callerFilePath, callerLineNumber);
             return id;
         }
 
@@ -47,15 +50,16 @@ namespace Puppy.Logger
         ///     Write Log with Error Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
         /// <param name="context">         </param>
+        /// <param name="type">            </param>
         /// <param name="callerMemberName"></param>
         /// <param name="callerFilePath">  </param>
         /// <param name="callerLineNumber"></param>
-        /// <returns></returns>
+        /// <returns> Log Id </returns>
         /// <remarks> Priority to use Header Id instead of self generate Id </remarks>
-        public static string Error(ExceptionContext context, [CallerMemberName] string callerMemberName = "",
+        public static string Error(ExceptionContext context, string type = LogTypeException, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            var id = JobLogExceptionContext(LogLevel.Error, context, callerMemberName, callerFilePath, callerLineNumber);
+            var id = JobLogException(context, LogLevel.Error, type, callerMemberName, callerFilePath, callerLineNumber);
             return id;
         }
 
@@ -63,14 +67,15 @@ namespace Puppy.Logger
         ///     Write Log with Fatal Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
         /// <param name="ex">              </param>
+        /// <param name="type">            </param>
         /// <param name="callerMemberName"></param>
         /// <param name="callerFilePath">  </param>
         /// <param name="callerLineNumber"></param>
-        /// <returns></returns>
-        public static string Fatal(Exception ex, [CallerMemberName] string callerMemberName = "",
+        /// <returns> Log Id </returns>
+        public static string Fatal(Exception ex, string type = LogTypeException, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            var id = JobLogException(LogLevel.Fatal, ex, callerMemberName, callerFilePath, callerLineNumber);
+            var id = JobLogException(ex, LogLevel.Fatal, type, callerMemberName, callerFilePath, callerLineNumber);
             return id;
         }
 
@@ -78,29 +83,30 @@ namespace Puppy.Logger
         ///     Write Log with Fatal Level and Return Global ID as Guid String of Log Entry 
         /// </summary>
         /// <param name="context">         </param>
+        /// <param name="type">            </param>
         /// <param name="callerMemberName"></param>
         /// <param name="callerFilePath">  </param>
         /// <param name="callerLineNumber"></param>
-        /// <returns></returns>
+        /// <returns> Log Id </returns>
         /// <remarks> Priority to use Header Id instead of self generate Id </remarks>
-        public static string Fatal(ExceptionContext context, [CallerMemberName] string callerMemberName = "",
+        public static string Fatal(ExceptionContext context, string type = LogTypeException, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            var id = JobLogExceptionContext(LogLevel.Fatal, context, callerMemberName, callerFilePath, callerLineNumber);
+            var id = JobLogException(context, LogLevel.Fatal, type, callerMemberName, callerFilePath, callerLineNumber);
             return id;
         }
 
-        private static string JobLogException(LogLevel logLevel, Exception ex, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static string JobLogException(Exception ex, LogLevel logLevel, string type, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logEntity = new LogEntity(ex, logLevel);
+            var logEntity = new LogEntity(ex, logLevel, type);
             UpdateLogInfo(logEntity, callerMemberName, callerFilePath, callerLineNumber);
             BackgroundJob.Enqueue(() => Write(logLevel, logEntity.ToString()));
             return logEntity.Id;
         }
 
-        private static string JobLogExceptionContext(LogLevel logLevel, ExceptionContext context, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static string JobLogException(ExceptionContext context, LogLevel logLevel, string type, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logEntity = new LogEntity(context, logLevel);
+            var logEntity = new LogEntity(context, logLevel, type);
             UpdateLogInfo(context, logEntity, callerMemberName, callerFilePath, callerLineNumber);
             BackgroundJob.Enqueue(() => Write(logLevel, logEntity.ToString()));
             return logEntity.Id;

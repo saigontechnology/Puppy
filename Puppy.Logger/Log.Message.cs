@@ -26,47 +26,103 @@ namespace Puppy.Logger
 {
     public partial class Log
     {
-        public static string Verbose(string message, [CallerMemberName] string callerMemberName = "",
+        public const string LogTypeMessage = "Message";
+
+        /// <summary>
+        ///     Write Log with Verbose Level and Return Global ID as Guid String of Log Entry 
+        /// </summary>
+        /// <param name="message">         </param>
+        /// <param name="type">            </param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath">  </param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns> Log Id </returns>
+        public static string Verbose(string message, string type = LogTypeMessage, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            return JobLogMessage(LogLevel.Verbose, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(message, LogLevel.Verbose, type, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static string Debug(string message, [CallerMemberName] string callerMemberName = "",
+        /// <summary>
+        ///     Write Log with Debug Level and Return Global ID as Guid String of Log Entry 
+        /// </summary>
+        /// <param name="message">         </param>
+        /// <param name="type">            </param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath">  </param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns> Log Id </returns>
+        public static string Debug(string message, string type = LogTypeMessage, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            return JobLogMessage(LogLevel.Debug, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(message, LogLevel.Debug, type, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static string Information(string message, [CallerMemberName] string callerMemberName = "",
+        /// <summary>
+        ///     Write Log with Information Level and Return Global ID as Guid String of Log Entry 
+        /// </summary>
+        /// <param name="message">         </param>
+        /// <param name="type">            </param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath">  </param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns> Log Id </returns>
+        public static string Information(string message, string type = LogTypeMessage, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            return JobLogMessage(LogLevel.Information, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(message, LogLevel.Information, type, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static string Warning(string message, [CallerMemberName] string callerMemberName = "",
+        /// <summary>
+        ///     Write Log with Warning Level and Return Global ID as Guid String of Log Entry 
+        /// </summary>
+        /// <param name="message">         </param>
+        /// <param name="type">            </param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath">  </param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns> Log Id </returns>
+        public static string Warning(string message, string type = LogTypeMessage, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            return JobLogMessage(LogLevel.Warning, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(message, LogLevel.Warning, type, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static string Error(string message, [CallerMemberName] string callerMemberName = "",
+        /// <summary>
+        ///     Write Log with Error Level and Return Global ID as Guid String of Log Entry 
+        /// </summary>
+        /// <param name="message">         </param>
+        /// <param name="type">            </param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath">  </param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns> Log Id </returns>
+        public static string Error(string message, string type = LogTypeMessage, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            return JobLogMessage(LogLevel.Error, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(message, LogLevel.Error, type, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        public static string Fatal(string message, [CallerMemberName] string callerMemberName = "",
+        /// <summary>
+        ///     Write Log with Fatal Level and Return Global ID as Guid String of Log Entry 
+        /// </summary>
+        /// <param name="message">         </param>
+        /// <param name="type">            </param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath">  </param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns> Log Id </returns>
+        public static string Fatal(string message, string type = LogTypeMessage, [CallerMemberName] string callerMemberName = "",
             [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            return JobLogMessage(LogLevel.Fatal, message, callerMemberName, callerFilePath, callerLineNumber);
+            return JobLogMessage(message, LogLevel.Fatal, type, callerMemberName, callerFilePath, callerLineNumber);
         }
 
-        private static string JobLogMessage(LogLevel logLevel, string message, string callerMemberName, string callerFilePath, int callerLineNumber)
+        private static string JobLogMessage(string message, LogLevel level, string type, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
-            var logEntity = new LogEntity(message, logLevel);
+            var logEntity = new LogEntity(message, level, type);
             UpdateLogInfo(logEntity, callerMemberName, callerFilePath, callerLineNumber);
-            BackgroundJob.Enqueue(() => Write(logLevel, logEntity.ToString()));
+            BackgroundJob.Enqueue(() => Write(level, logEntity.ToString()));
             return logEntity.Id;
         }
     }

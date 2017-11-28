@@ -55,13 +55,17 @@ namespace Puppy.Logger.Core.Models
             }
         }
 
-        [JsonConverter(typeof(IsoDateTimeConverter))]
-        public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
+        /// <summary>
+        ///     Type of the log entry, depend on your define how many type in your system 
+        /// </summary>
+        public string Type { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public LogLevel Level { get; set; } = LogLevel.Error;
 
         public string Message { get; set; }
+
+        public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
 
         #region Exception
 
@@ -150,15 +154,28 @@ namespace Puppy.Logger.Core.Models
         {
         }
 
-        public LogEntity(string message, LogLevel level) : this()
+        public LogEntity(string message, LogLevel level, string type = "Normal") : this()
         {
             Message = message;
+
             Level = level;
+
+            Type = type;
+
+            if (System.Web.HttpContext.Current != null)
+            {
+                HttpContext = new HttpContextInfoModel(System.Web.HttpContext.Current);
+            }
         }
 
-        public LogEntity(Exception ex, LogLevel level, string message = null) : this(message, level)
+        public LogEntity(Exception ex, LogLevel level, string message = null, string type = "Normal") : this(message, level, type)
         {
             Exception = new ExceptionInfo(ex);
+
+            if (System.Web.HttpContext.Current != null)
+            {
+                HttpContext = new HttpContextInfoModel(System.Web.HttpContext.Current);
+            }
 
             if (string.IsNullOrWhiteSpace(Message))
             {
@@ -166,9 +183,10 @@ namespace Puppy.Logger.Core.Models
             }
         }
 
-        public LogEntity(ExceptionContext context, LogLevel level, string message = null) : this(message, level)
+        public LogEntity(ExceptionContext context, LogLevel level, string message = null, string type = "Normal") : this(message, level, type)
         {
             Exception = new ExceptionInfo(context.Exception);
+
             HttpContext = new HttpContextInfoModel(context.HttpContext);
 
             if (string.IsNullOrWhiteSpace(Message))

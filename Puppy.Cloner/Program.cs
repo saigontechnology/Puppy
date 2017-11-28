@@ -18,7 +18,24 @@ namespace Puppy.Cloner
             ".gif",
             ".svg",
             ".bmp",
-            ".tiff"
+            ".tiff",
+            ".mmdb",
+            ".eot",
+            ".ttf",
+            ".woff",
+            ".woff2",
+            ".mp3",
+            ".mp4",
+            ".ogg",
+            ".ogv",
+            ".webm",
+            ".svgz",
+            ".otf",
+            ".crx",
+            ".xpi",
+            ".safariextz",
+            ".flv",
+            ".f4v"
         };
 
         private static void Main(string[] args)

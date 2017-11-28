@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Coordinate", "Puppy.Coordinate\Puppy.Coordinate.csproj", "{F678E428-13D5-4C03-9065-8D067353405D}"
 EndProject
@@ -57,7 +57,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Logger.Core", "Puppy.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Logger", "Puppy.Logger\Puppy.Logger.csproj", "{ED8A761A-C7F9-4FFF-8B2D-7CC21640D230}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.Testing", "Puppy.Testing\Puppy.Testing.csproj", "{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puppy.Testing", "Puppy.Testing\Puppy.Testing.csproj", "{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool", "Tool", "{B174C5B5-EFE9-4F8C-A567-BE33CEAD5354}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puppy.Cloner", "Puppy.Cloner\Puppy.Cloner.csproj", "{79ED2AB5-6B4C-4854-9C3A-49321916C49A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -273,6 +277,18 @@ Global
 		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|x64.Build.0 = Release|Any CPU
 		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|x86.ActiveCfg = Release|Any CPU
 		{FF0D36A4-2058-43A0-B58B-ED9B01E972A5}.Release|x86.Build.0 = Release|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Debug|x64.Build.0 = Debug|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Debug|x86.Build.0 = Debug|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|x64.ActiveCfg = Release|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|x64.Build.0 = Release|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|x86.ActiveCfg = Release|Any CPU
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +309,7 @@ Global
 		{0495E863-010F-432D-B973-28AB9C1AB23A} = {55397F17-ED85-467F-AD04-8AEB8DC81BFE}
 		{A1C43E14-EB6B-41BC-AF99-BA2E9C0A5CCB} = {90AA3992-F312-452D-BB5B-7A95D1DE7043}
 		{ED8A761A-C7F9-4FFF-8B2D-7CC21640D230} = {90AA3992-F312-452D-BB5B-7A95D1DE7043}
+		{79ED2AB5-6B4C-4854-9C3A-49321916C49A} = {B174C5B5-EFE9-4F8C-A567-BE33CEAD5354}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABEA26F1-B80E-4200-BACD-745E28C26C58}

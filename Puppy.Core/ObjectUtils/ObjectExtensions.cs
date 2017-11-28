@@ -154,5 +154,26 @@ namespace Puppy.Core.ObjectUtils
 
             return directory;
         }
+
+        public static T PreventReferenceLoop<T>(this T obj)
+        {
+            // Don't serialize a null object, simply return the default for that object
+            if (ReferenceEquals(obj, null))
+            {
+                return default(T);
+            }
+
+            var json = JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            var result = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+            {
+                ObjectCreationHandling = ObjectCreationHandling.Replace
+            });
+
+            return result;
+        }
     }
 }

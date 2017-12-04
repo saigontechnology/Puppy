@@ -13,9 +13,10 @@ namespace Puppy.Web.Models.Api
         private readonly int _take;
         private readonly string _terms;
         private readonly long _total;
-        private readonly IEnumerable<T> _items;
+        private readonly List<T> _items;
+        private readonly Dictionary<string, object> _additionalData;
 
-        public PagedCollectionFactoryModel(IUrlHelper urlHelper, int skip, int take, string terms, long total, IEnumerable<T> items, string method = "GET")
+        public PagedCollectionFactoryModel(IUrlHelper urlHelper, int skip, int take, string terms, long total, List<T> items, Dictionary<string, object> additionalData, string method = "GET")
         {
             _endpoint = urlHelper.ActionContext.HttpContext.Request.Path.Value;
             _endpoint = urlHelper.AbsoluteContent(_endpoint);
@@ -25,9 +26,10 @@ namespace Puppy.Web.Models.Api
             _terms = terms;
             _total = total;
             _items = items;
+            _additionalData = additionalData;
         }
 
-        public PagedCollectionFactoryModel(string endpoint, int skip, int take, string terms, long total, IEnumerable<T> items, string method = "GET")
+        public PagedCollectionFactoryModel(string endpoint, int skip, int take, string terms, long total, List<T> items, Dictionary<string, object> additionalData, string method = "GET")
         {
             _endpoint = endpoint;
             _meta = PlaceholderLinkModel.ToCollection(_endpoint, method, new { skip, take, terms });
@@ -36,6 +38,7 @@ namespace Puppy.Web.Models.Api
             _terms = terms;
             _total = total;
             _items = items;
+            _additionalData = additionalData;
         }
 
         public PagedCollectionModel<T> Generate()
@@ -53,6 +56,7 @@ namespace Puppy.Web.Models.Api
                 Meta = _meta,
                 Total = _total,
                 Items = _items,
+                AdditionalData = _additionalData,
                 First = GetFirstLink(),
                 Last = GetLastLink(),
                 Next = GetNextLink(),

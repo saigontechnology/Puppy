@@ -83,7 +83,7 @@ namespace Puppy.Web
         {
             var responseData = new PagedCollectionFactoryModel<T>(urlHelper, pagedCollectionResult.Skip,
                     pagedCollectionResult.Take, pagedCollectionResult.Terms, pagedCollectionResult.Total,
-                    pagedCollectionResult.Items, method)
+                    pagedCollectionResult.Items, pagedCollectionResult.AdditionalData, method)
                 .Generate();
 
             return responseData;

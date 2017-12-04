@@ -124,7 +124,7 @@ namespace Puppy.Logger
 
             string endpoint = context.Request.Host.Value + LoggerConfig.ViewLogUrl;
 
-            var collectionModel = new PagedCollectionFactoryModel<LogEntity>(endpoint, skip, take, terms, total, logs, HttpMethod.Get.Method).Generate();
+            var collectionModel = new PagedCollectionFactoryModel<LogEntity>(endpoint, skip, take, terms, total, logs, null, HttpMethod.Get.Method).Generate();
 
             if (context.Request.Headers[HeaderKey.Accept] == ContentType.Xml ||
                 context.Request.Headers[HeaderKey.ContentType] == ContentType.Xml)

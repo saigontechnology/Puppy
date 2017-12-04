@@ -17,11 +17,15 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Puppy.Web.Models.Api
 {
+    [Serializable]
+    [KnownType(typeof(PagedCollectionResultModel<>))]
     public class PagedCollectionResultModel<T>
     {
         public int Skip { get; set; }
@@ -32,7 +36,7 @@ namespace Puppy.Web.Models.Api
 
         public long Total { get; set; }
 
-        public IEnumerable<T> Items { get; set; } = new List<T>();
+        public List<T> Items { get; set; } = new List<T>();
 
         [JsonExtensionData]
         public Dictionary<string, object> AdditionalData { get; set; } = new Dictionary<string, object>();

@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 using Puppy.Web.RouteUtils;
+using System;
+using System.Runtime.Serialization;
 
 namespace Puppy.Web.Models.Api
 {
+    [Serializable]
+    [KnownType(typeof(PlaceholderLinkModel))]
     public class PlaceholderLinkModel : ILinkViewModel
     {
         [JsonProperty(Order = -2)]
@@ -22,10 +26,13 @@ namespace Puppy.Web.Models.Api
         public PlaceholderLinkModel(ILinkViewModel existing)
         {
             Href = existing.Href;
+
             Method = existing.Method;
-            PlaceholderLinkModel asPlaceholder = existing as PlaceholderLinkModel;
-            if (asPlaceholder != null)
+
+            if (existing is PlaceholderLinkModel asPlaceholder)
+            {
                 Values = new RouteValueDictionary(asPlaceholder.Values);
+            }
         }
 
         public static PlaceholderLinkModel ToCollection(string endpoint, string method = "GET", object values = null)

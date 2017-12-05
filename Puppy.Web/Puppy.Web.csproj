@@ -60,7 +60,7 @@
     <PackageReference Include="MaxMind.GeoIP2" Version="2.9.0" />
 
     <!-- Http Client -->
-    <PackageReference Include="Flurl.Http" Version="2.0.1" />
+    <PackageReference Include="Flurl.Http" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

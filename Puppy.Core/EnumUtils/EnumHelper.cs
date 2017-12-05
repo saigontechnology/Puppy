@@ -36,11 +36,6 @@ namespace Puppy.Core.EnumUtils
 
             var enumValue = Enum.GetName(enumType, value);
 
-            if (!string.IsNullOrWhiteSpace(enumValue))
-            {
-                return enumValue;
-            }
-
             MemberInfo member = enumType.GetMember(enumValue).FirstOrDefault();
 
             if (!(member?.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() is DisplayAttribute displayAttribute))

@@ -1,4 +1,3 @@
-using Puppy.Core.EnumUtils;
 using Puppy.Core.StringUtils;
 using Puppy.Core.TypeUtils;
 using Puppy.DataTable.Constants;
@@ -330,10 +329,9 @@ namespace Puppy.DataTable.Processing.Request
             {
                 Enum enumValue = (Enum)enumName.ParseTo(type);
 
-                var label = enumValue.GetLabel();
-                var labelLowerCase = label.ToLowerInvariant();
+                var valueLowerCase = enumName.ToLowerInvariant();
 
-                if (labelLowerCase.Equals(termsLowerCase, StringComparison.OrdinalIgnoreCase) || labelLowerCase.StartsWith(termsLowerCase) || labelLowerCase.Contains(termsLowerCase))
+                if (valueLowerCase.Equals(termsLowerCase, StringComparison.OrdinalIgnoreCase) || valueLowerCase.StartsWith(termsLowerCase) || valueLowerCase.Contains(termsLowerCase))
                 {
                     enumObject = enumValue;
 

@@ -57,9 +57,9 @@ namespace Puppy.EF.Interfaces.Repositories
         int SaveChanges(bool acceptAllChangesOnSuccess);
 
         [DebuggerStepThrough]
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         [DebuggerStepThrough]
-        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
     }
 }

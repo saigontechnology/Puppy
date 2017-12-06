@@ -12,10 +12,7 @@
     <Configurations>Debug;Release</Configurations>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <OutputPath>.\bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>none</DebugType>
-    <DebugSymbols>False</DebugSymbols>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <!-- External Libraries -->

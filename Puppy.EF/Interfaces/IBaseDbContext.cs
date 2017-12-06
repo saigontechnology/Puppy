@@ -43,10 +43,10 @@ namespace Puppy.EF.Interfaces
         [DebuggerStepThrough]
         int SaveChanges(bool acceptAllChangesOnSuccess);
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = default(CancellationToken));
+            CancellationToken cancellationToken = default);
 
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
@@ -55,7 +55,7 @@ namespace Puppy.EF.Interfaces
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
 
         Task<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken)) where TEntity : class;
+            CancellationToken cancellationToken = default) where TEntity : class;
 
         EntityEntry<TEntity> Attach<TEntity>(TEntity entity) where TEntity : class;
 
@@ -65,7 +65,7 @@ namespace Puppy.EF.Interfaces
 
         EntityEntry Add(object entity);
 
-        Task<EntityEntry> AddAsync(object entity, CancellationToken cancellationToken = default(CancellationToken));
+        Task<EntityEntry> AddAsync(object entity, CancellationToken cancellationToken = default);
 
         EntityEntry Attach(object entity);
 

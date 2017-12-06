@@ -12,6 +12,7 @@
     <Configurations>Debug;Release</Configurations>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <OutputPath>.\bin\</OutputPath>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <!-- External Libraries -->

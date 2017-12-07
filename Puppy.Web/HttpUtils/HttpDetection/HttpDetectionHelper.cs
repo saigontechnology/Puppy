@@ -38,6 +38,12 @@ namespace Puppy.Web.HttpUtils.HttpDetection
             if (string.IsNullOrWhiteSpace(agent)) return null;
 
             int iEnd = agent.IndexOf('(');
+
+            if (iEnd < 0)
+            {
+                return null;
+            }
+
             string markerFullInfo = agent.Substring(0, iEnd)?.Trim();
             return markerFullInfo;
         }
@@ -62,6 +68,12 @@ namespace Puppy.Web.HttpUtils.HttpDetection
 
             int iStart = agent.IndexOf('(') + 1;
             int iEnd = agent.IndexOf(')') - iStart;
+
+            if (iEnd < 0)
+            {
+                return null;
+            }
+
             string osFullInfo = agent.Substring(iStart, iEnd)?.Trim();
             return osFullInfo;
         }
@@ -103,6 +115,12 @@ namespace Puppy.Web.HttpUtils.HttpDetection
             if (string.IsNullOrWhiteSpace(engineFullInfo)) return null;
 
             int iEnd = engineFullInfo.IndexOf(' ');
+
+            if (iEnd < 0)
+            {
+                return null;
+            }
+
             engineFullInfo = engineFullInfo.Substring(0, iEnd);
             return engineFullInfo;
         }
@@ -246,43 +264,44 @@ namespace Puppy.Web.HttpUtils.HttpDetection
             {
                 var ipAddress = GetIpAddress(request);
 
-                if (reader.TryCity(ipAddress, out var city))
+                if (!reader.TryCity(ipAddress, out var city))
                 {
-                    if (city != null)
-                    {
-                        device.IpAddress = city.Traits.IPAddress;
-
-                        // City
-                        device.CityName = city.City.Names.TryGetValue("en", out var cityName)
-                            ? cityName
-                            : city.City.Name;
-                        device.CityGeoNameId = city.City.GeoNameId;
-
-                        // Country
-                        device.CountryName = city.Country.Names.TryGetValue("en", out var countryName)
-                            ? countryName
-                            : city.Country.Name;
-                        device.CountryGeoNameId = city.Country.GeoNameId;
-                        device.CountryIsoCode = city.Country.IsoCode;
-
-                        // Continent
-                        device.ContinentName = city.Continent.Names.TryGetValue("en", out var continentName)
-                            ? continentName
-                            : city.Continent.Name;
-                        device.ContinentGeoNameId = city.Continent.GeoNameId;
-                        device.ContinentCode = city.Continent.Code;
-
-                        // Location
-                        device.Latitude = city.Location.Latitude;
-                        device.Longitude = city.Location.Longitude;
-                        device.AccuracyRadius = city.Location.AccuracyRadius;
-
-                        device.PostalCode = city.Postal.Code;
-
-                        // Time Zone
-                        device.TimeZone = city.Location.TimeZone;
-                    }
+                    return device;
                 }
+
+                if (city == null) return device;
+
+                device.IpAddress = city.Traits.IPAddress;
+
+                // City
+                device.CityName = city.City.Names.TryGetValue("en", out var cityName)
+                    ? cityName
+                    : city.City.Name;
+                device.CityGeoNameId = city.City.GeoNameId;
+
+                // Country
+                device.CountryName = city.Country.Names.TryGetValue("en", out var countryName)
+                    ? countryName
+                    : city.Country.Name;
+                device.CountryGeoNameId = city.Country.GeoNameId;
+                device.CountryIsoCode = city.Country.IsoCode;
+
+                // Continent
+                device.ContinentName = city.Continent.Names.TryGetValue("en", out var continentName)
+                    ? continentName
+                    : city.Continent.Name;
+                device.ContinentGeoNameId = city.Continent.GeoNameId;
+                device.ContinentCode = city.Continent.Code;
+
+                // Location
+                device.Latitude = city.Location.Latitude;
+                device.Longitude = city.Location.Longitude;
+                device.AccuracyRadius = city.Location.AccuracyRadius;
+
+                device.PostalCode = city.Postal.Code;
+
+                // Time Zone
+                device.TimeZone = city.Location.TimeZone;
 
                 return device;
             }

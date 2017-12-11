@@ -43,25 +43,25 @@ namespace Puppy.Core.DateTimeUtils
 
         public static DateTime? ReplaceNullOrDefault(DateTime? value, DateTime? replace)
         {
-            value = (value == default(DateTime) || value == null) ? replace : value;
+            value = (value == default) ? replace : value;
             return value;
         }
 
         public static DateTime ReplaceNullOrDefault(DateTime value, DateTime replace)
         {
-            value = value == default(DateTime) ? replace : value;
+            value = value == default ? replace : value;
             return value;
         }
 
         public static DateTimeOffset? ReplaceNullOrDefault(DateTimeOffset? value, DateTimeOffset? replace)
         {
-            value = (value == default(DateTimeOffset) || value == null) ? replace : value;
+            value = (value == default) ? replace : value;
             return value;
         }
 
         public static DateTimeOffset ReplaceNullOrDefault(DateTimeOffset value, DateTimeOffset replace)
         {
-            value = value == default(DateTimeOffset) ? replace : value;
+            value = value == default ? replace : value;
             return value;
         }
 

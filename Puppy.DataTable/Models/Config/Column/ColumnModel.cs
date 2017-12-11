@@ -49,5 +49,11 @@ namespace Puppy.DataTable.Models.Config.Column
         public Attribute[] CustomAttributes { get; set; }
 
         public string Width { get; set; }
+
+        /// <summary>
+        ///     Additional HTML Element attributes for header column 
+        /// </summary>
+        /// <remarks> Ex: "data-toggle='tooltip' data-original-title='Tooltip Title'" </remarks>
+        public string AdditionalAttributeHeader { get; set; }
     }
 }

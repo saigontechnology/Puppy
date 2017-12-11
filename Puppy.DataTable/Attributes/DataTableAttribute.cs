@@ -11,6 +11,8 @@ namespace Puppy.DataTable.Attributes
     {
         public string DisplayName { get; set; }
 
+        public bool IsVisible { get; set; } = true;
+
         public bool IsSearchable { get; set; } = true;
 
         public bool IsSortable { get; set; } = true;
@@ -29,7 +31,11 @@ namespace Puppy.DataTable.Attributes
 
         public string Width { get; set; }
 
-        public bool IsVisible { get; set; } = true;
+        /// <summary>
+        ///     Additional HTML Element attributes for header column 
+        /// </summary>
+        /// <remarks> Ex: {"data-plugin", "tooltip" } </remarks>
+        public string AdditionalAttributeHeader { get; set; }
 
         public override void ApplyTo(ColumnModel columnModel, PropertyInfo propertyInfo)
         {
@@ -43,6 +49,7 @@ namespace Puppy.DataTable.Attributes
             columnModel.CssClassHeader = CssClassHeader;
             columnModel.CustomAttributes = propertyInfo.GetCustomAttributes().ToArray();
             columnModel.Width = Width;
+            columnModel.AdditionalAttributeHeader = AdditionalAttributeHeader;
         }
     }
 }

@@ -3,30 +3,30 @@
 
 <table id="@Model.Id" class="@(Model.TableClass ?? string.Empty)">
     <thead>
-        @if (Model.IsUseColumnFilter)
-        {
-            <tr>
-                @foreach (var column in Model.Columns)
-                {
-                    <th>@column.DisplayName</th>
-                }
-            </tr>
-        }
-        @if (!Model.IsHideHeader)
-        {
-            <tr>
-                @foreach (var column in Model.Columns)
-                {
-                    <th class="@column.CssClassHeader">@column.DisplayName</th>
-                }
-            </tr>
-        }
+    @if (Model.IsUseColumnFilter)
+    {
+        <tr>
+            @foreach (var column in Model.Columns)
+            {
+                <th>@column.DisplayName</th>
+            }
+        </tr>
+    }
+    @if (!Model.IsHideHeader)
+    {
+        <tr>
+            @foreach (var column in Model.Columns)
+            {
+                <th class="@column.CssClassHeader" @Html.Raw(string.IsNullOrWhiteSpace(column.AdditionalAttributeHeader) ? string.Empty : column.AdditionalAttributeHeader)>@column.DisplayName</th>
+            }
+        </tr>
+    }
     </thead>
     <tbody>
-        <tr>
-            <td colspan="@Model.Columns.Count" class="dataTables_empty">
-                Loading...
-            </td>
-        </tr>
+    <tr>
+        <td colspan="@Model.Columns.Count" class="dataTables_empty">
+            Loading...
+        </td>
+    </tr>
     </tbody>
 </table>

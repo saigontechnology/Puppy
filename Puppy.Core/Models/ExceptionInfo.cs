@@ -53,8 +53,13 @@ namespace Puppy.Core.Models
             Message = message;
         }
 
-        public ExceptionInfo(Exception ex) : this(ex.Message)
+        public ExceptionInfo(Exception ex) : this(ex?.Message)
         {
+            if (ex == null)
+            {
+                return;
+            }
+
             HelpLink = ex.HelpLink;
             Source = ex.Source;
             StackTrace = ex.StackTrace;

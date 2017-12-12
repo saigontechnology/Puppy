@@ -35,7 +35,8 @@ namespace Puppy.Cloner
             ".xpi",
             ".safariextz",
             ".flv",
-            ".f4v"
+            ".f4v",
+            ".git"
         };
 
         private static void Main(string[] args)
@@ -92,6 +93,19 @@ namespace Puppy.Cloner
             Console.WriteLine("> New project name is: " + newValue);
             Console.ResetColor();
 
+            // Is Include Hidden Items
+            Console.WriteLine();
+            Console.Write("Is skip hidden item: ");
+
+            string isSkipHiddenItemStr = Console.ReadLine();
+
+            bool isSkipHiddenItem = bool.TryParse(isSkipHiddenItemStr, out bool isSkipHiddenItemBoolean) && isSkipHiddenItemBoolean;
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"> {(isSkipHiddenItem ? "Skip Hidden Items" : "Included Hidden Items")}");
+            Console.WriteLine();
+            Console.ResetColor();
+
             // Ignore Replace Content by File Extensions
 
             // Normalized Ignore Files
@@ -136,7 +150,7 @@ namespace Puppy.Cloner
 
             Stopwatch stopwatch = Stopwatch.StartNew();
             Console.WriteLine();
-            CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue, true);
+            CloneHelper.ReplaceFolderNames(workingFolderPath, oldValue, newValue, isSkipHiddenItem);
             Console.WriteLine();
             stopwatch.Stop();
 
@@ -151,7 +165,7 @@ namespace Puppy.Cloner
 
             stopwatch.Restart();
             Console.WriteLine();
-            CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue, true);
+            CloneHelper.ReplaceFileNames(workingFolderPath, oldValue, newValue, isSkipHiddenItem);
             Console.WriteLine();
             stopwatch.Stop();
 
@@ -166,7 +180,7 @@ namespace Puppy.Cloner
 
             stopwatch.Restart();
             Console.WriteLine();
-            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, true, _ignoreReplaceContentFileEx.ToArray());
+            CloneHelper.ReplaceFileContents(workingFolderPath, oldValue, newValue, isSkipHiddenItem, _ignoreReplaceContentFileEx.ToArray());
             Console.WriteLine();
             stopwatch.Stop();
 

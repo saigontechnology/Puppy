@@ -21,6 +21,7 @@
 
 using Flurl;
 using Flurl.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace Puppy.OneSignal.Devices
@@ -69,6 +70,26 @@ namespace Puppy.OneSignal.Devices
                     .WithHeader("Authorization", $"Basic {ApiKey}")
                     .PutJsonAsync(options)
                     .ConfigureAwait(true);
+        }
+
+        public async Task<DeviceInfo> GetAsync(string playerId, string appId)
+        {
+            try
+            {
+                var result =
+                    await ApiUri
+                        .AppendPathSegment($"players/{playerId}")
+                        .SetQueryParam("app_id", appId)
+                        .WithHeader("Authorization", $"Basic {ApiKey}")
+                        .GetJsonAsync<DeviceInfo>()
+                        .ConfigureAwait(true);
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

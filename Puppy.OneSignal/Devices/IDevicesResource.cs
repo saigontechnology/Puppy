@@ -19,6 +19,7 @@
 
 #endregion License
 
+using System;
 using System.Threading.Tasks;
 
 namespace Puppy.OneSignal.Devices
@@ -42,5 +43,13 @@ namespace Puppy.OneSignal.Devices
         /// <param name="options"> Options used to modify attributes of the device. </param>
         /// <exception cref="Exception"></exception>
         Task EditAsync(string id, DeviceEditOptions options);
+
+        /// <summary>
+        ///     Get device info 
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="appId">   </param>
+        /// <returns></returns>
+        Task<DeviceInfo> GetAsync(string playerId, string appId);
     }
 }

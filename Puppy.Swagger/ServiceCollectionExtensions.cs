@@ -27,7 +27,6 @@ using Puppy.Core.EnvironmentUtils;
 using Puppy.Core.StringUtils;
 using Puppy.Swagger.Filters;
 using Puppy.Web.HttpUtils;
-using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -80,12 +79,6 @@ namespace Puppy.Swagger
                 options.IncludeXmlCommentsIfExists(xmlDocumentFileFullPath);
 
                 options.DocumentFilter<HideInDocsFilter>();
-
-                // Examples and Description [SwaggerRequestExample] & [SwaggerResponseExample]
-                options.OperationFilter<ExamplesOperationFilter>();
-
-                // [Description] on Response properties
-                options.OperationFilter<DescriptionOperationFilter>();
 
                 // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use
                 // custom Attribute inheritance from [SwaggerResponse]
@@ -164,12 +157,6 @@ namespace Puppy.Swagger
                 options.IncludeXmlCommentsIfExists(assembly);
 
                 options.DocumentFilter<HideInDocsFilter>();
-
-                // Examples and Description [SwaggerRequestExample] & [SwaggerResponseExample]
-                options.OperationFilter<ExamplesOperationFilter>();
-
-                // [Description] on Response properties
-                options.OperationFilter<DescriptionOperationFilter>();
 
                 // Enable multiple [SwaggerResponse] with same "StatusCodes" and allow create and use
                 // custom Attribute inheritance from [SwaggerResponse]

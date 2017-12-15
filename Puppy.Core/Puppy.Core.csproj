@@ -25,7 +25,7 @@
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
 
     <!-- Enum -->
-    <PackageReference Include="Enums.NET" Version="2.3.0" />
+    <PackageReference Include="Enums.NET" Version="2.3.1" />
 
     <!-- Image and Color -->
     <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />

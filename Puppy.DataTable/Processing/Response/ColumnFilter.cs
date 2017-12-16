@@ -38,7 +38,16 @@ namespace Puppy.DataTable.Processing.Response
                 FilterType = FilterConst.Select;
                 FilterValues = new object[]
                 {
-                    DataConst.True, DataConst.False
+                    new
+                    {
+                        value = DataConst.True,
+                        label = DataConst.Yes
+                    },
+                    new
+                    {
+                        value = DataConst.False,
+                        label = DataConst.No
+                    }
                 };
             }
             else if (type == typeof(bool?))

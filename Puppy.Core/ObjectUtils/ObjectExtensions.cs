@@ -71,7 +71,7 @@ namespace Puppy.Core.ObjectUtils
             // Don't serialize a null object, simply return the default for that object
             if (ReferenceEquals(source, null))
             {
-                return default(T);
+                return default;
             }
 
             // Initialize inner objects individually for example in default constructor some list
@@ -87,7 +87,7 @@ namespace Puppy.Core.ObjectUtils
             {
                 if (obj == null)
                 {
-                    return default(T);
+                    return default;
                 }
 
                 if (obj is T variable)
@@ -120,9 +120,9 @@ namespace Puppy.Core.ObjectUtils
 
                 return (T)Convert.ChangeType(obj, t);
             }
-            catch (InvalidCastException)
+            catch (Exception)
             {
-                return default(T);
+                return default;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Puppy.Core.ObjectUtils
             // Don't serialize a null object, simply return the default for that object
             if (ReferenceEquals(obj, null))
             {
-                return default(T);
+                return default;
             }
 
             var json = JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings

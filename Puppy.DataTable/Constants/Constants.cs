@@ -126,8 +126,10 @@ namespace Puppy.DataTable.Constants
     {
         public const string EmptyArray = "[]";
         public const string True = "True";
+        public const string Yes = "Yes";
         public const string TrueLower = "true";
         public const string False = "False";
+        public const string No = "No";
         public const string FalseLower = "false";
         public const string Null = "null";
     }

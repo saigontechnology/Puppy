@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.Web
+namespace Puppy.Web.SelectListItemUtils
 {
     public static class SelectListItemHelper
     {

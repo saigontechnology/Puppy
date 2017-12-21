@@ -86,7 +86,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
                         response.StatusCode, response.ReasonPhrase, "ElasticContextAddDeleteUpdate");
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         return resultDetails;
                     }
@@ -94,7 +94,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
                     return resultDetails;
                 }
 
-                var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
 
                 var responseObject = JObject.Parse(responseString);
                 _traceProvider.Trace(TraceEventType.Verbose, "{1}: response: {0}", responseString,
@@ -171,7 +171,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
             {
                 _traceProvider.Trace(TraceEventType.Warning, "{1}: Request HTTP Delete uri: {0}", uri.AbsoluteUri,
                     "ElasticContextAddDeleteUpdate");
-                var response = await _client.DeleteAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(false);
+                var response = await _client.DeleteAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(true);
 
                 resultDetails.Status = response.StatusCode;
                 if (response.StatusCode != HttpStatusCode.OK)
@@ -181,7 +181,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
                         response.ReasonPhrase, "ElasticContextAddDeleteUpdate");
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         return resultDetails;
                     }
@@ -193,7 +193,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
                 }
                 else
                 {
-                    var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                     _traceProvider.Trace(TraceEventType.Verbose, "{1}: Delete Index Request response: {0}",
                         responseString, "ElasticContextAddDeleteUpdate");
                     resultDetails.Description = responseString;

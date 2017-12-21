@@ -269,7 +269,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, uri);
-                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(false);
+                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(true);
 
                 resultDetails.RequestUrl = uri.OriginalString;
 
@@ -278,7 +278,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
                 {
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         throw new ElasticException(
                             "IndexOptimizeAsync: HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");
@@ -315,7 +315,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, uri);
-                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(false);
+                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(true);
 
                 resultDetails.RequestUrl = uri.OriginalString;
 
@@ -325,7 +325,7 @@ namespace Puppy.Elastic.ContextAddDeleteUpdate
                     resultDetails.PayloadResult = false;
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         throw new ElasticException(
                             "CloseOpenIndexAsync: HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");

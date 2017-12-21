@@ -55,7 +55,7 @@ namespace Puppy.Web.SEO.OpenGraph
         {
             if (Enabled)
             {
-                await output.GetChildContentAsync().ConfigureAwait(false);
+                await output.GetChildContentAsync().ConfigureAwait(true);
 
                 // Workaround for context.Items not working across _Layout.cshtml and Index.cshtml
                 // using ViewContext. https://github.com/aspnet/Mvc/issues/3233 and https://github.com/aspnet/Razor/issues/564

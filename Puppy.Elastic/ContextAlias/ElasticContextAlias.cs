@@ -46,7 +46,7 @@ namespace Puppy.Elastic.ContextAlias
                 "ElasticContextAlias");
 
             var content = new StringContent(contentJson);
-            var response = await _client.PostAsync(uri, content, _cancellationTokenSource.Token).ConfigureAwait(false);
+            var response = await _client.PostAsync(uri, content, _cancellationTokenSource.Token).ConfigureAwait(true);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

@@ -66,7 +66,7 @@ namespace Puppy.Elastic.ContextGet
                     elasticUrlForEntityGet + entityId + RoutingDefinition.GetRoutingUrl(routingDefinition));
                 _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP GET uri: {0}", uri.AbsoluteUri,
                     "ElasticSearchContextGet");
-                var response = await _client.GetAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(false);
+                var response = await _client.GetAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(true);
                 resultDetails.RequestUrl = uri.OriginalString;
 
                 resultDetails.Status = response.StatusCode;
@@ -76,7 +76,7 @@ namespace Puppy.Elastic.ContextGet
                         response.StatusCode, response.ReasonPhrase, "ElasticSearchContextGet");
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         if (errorInfo.Contains("RoutingMissingException"))
                             throw new ElasticException(
@@ -86,7 +86,7 @@ namespace Puppy.Elastic.ContextGet
                     }
                 }
 
-                var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                 _traceProvider.Trace(TraceEventType.Verbose, "{1}: Get Request response: {0}", responseString,
                     "ElasticSearchContextGet");
                 var responseObject = JObject.Parse(responseString);

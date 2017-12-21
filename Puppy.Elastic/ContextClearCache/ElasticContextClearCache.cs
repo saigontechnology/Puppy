@@ -55,7 +55,7 @@ namespace Puppy.Elastic.ContextClearCache
                 "ElasticContextClearCache");
 
             var request = new HttpRequestMessage(HttpMethod.Post, uri);
-            var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(false);
+            var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(true);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -82,7 +82,7 @@ namespace Puppy.Elastic.ContextClearCache
                 "ElasticContextClearCache");
 
             var request = new HttpRequestMessage(HttpMethod.Post, uri);
-            var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(false);
+            var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(true);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

@@ -46,7 +46,7 @@ namespace Puppy.Elastic.ContextWarmers
                 "ElasticContextWarmer");
 
             var content = new StringContent(warmer.ToString());
-            var response = await _client.PutAsync(uri, content, _cancellationTokenSource.Token).ConfigureAwait(false);
+            var response = await _client.PutAsync(uri, content, _cancellationTokenSource.Token).ConfigureAwait(true);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -88,7 +88,7 @@ namespace Puppy.Elastic.ContextWarmers
             _traceProvider.Trace(TraceEventType.Verbose, "{1}: Request HTTP DELETE uri: {0}", uri.AbsoluteUri,
                 "ElasticContextWarmer");
 
-            var response = await _client.DeleteAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(false);
+            var response = await _client.DeleteAsync(uri, _cancellationTokenSource.Token).ConfigureAwait(true);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

@@ -59,7 +59,7 @@ namespace Puppy.Elastic.ContextDeleteByQuery
                 {
                     Content = content
                 };
-                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(false);
+                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(true);
 
                 resultDetails.RequestUrl = elasticUrlForEntityGet;
                 resultDetails.Status = response.StatusCode;

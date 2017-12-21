@@ -29,7 +29,7 @@ namespace Puppy.Elastic.ContentExists
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Head, uri);
-                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(false);
+                var response = await _client.SendAsync(request, _cancellationTokenSource.Token).ConfigureAwait(true);
 
                 resultDetails.RequestUrl = uri.OriginalString;
 
@@ -39,7 +39,7 @@ namespace Puppy.Elastic.ContentExists
                     resultDetails.PayloadResult = false;
                     if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var errorInfo = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         resultDetails.Description = errorInfo;
                         throw new ElasticException(
                             "ExistsAsync: HttpStatusCode.BadRequest: RoutingMissingException, adding the parent Id if this is a child item...");

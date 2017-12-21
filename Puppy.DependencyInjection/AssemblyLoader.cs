@@ -57,11 +57,12 @@ namespace Puppy.DependencyInjection
 
             // Check if assembly already added by Dependency (Reference)
             if (ListLoadedAssemblyName.Any(x => x.Name.ToLower() == assemblyName.Name.ToLower()))
+            {
                 return null;
+            }
 
             // Load Assembly not yet load
-            var assemblyFileInfo =
-                new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
+            var assemblyFileInfo = new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
 
             if (File.Exists(assemblyFileInfo.FullName))
             {

@@ -46,7 +46,7 @@ namespace Puppy.DependencyInjection
             // Write out all dependency injection services
             services.WriteOut(systemName);
 
-            ServiceCollection.Services = services;
+            Resolver.Services = services;
 
             return services;
         }
@@ -55,7 +55,7 @@ namespace Puppy.DependencyInjection
         {
             services.AddSingleton<Scanner>();
 
-            ServiceCollection.Services = services;
+            Resolver.Services = services;
 
             return services;
         }
@@ -70,7 +70,7 @@ namespace Puppy.DependencyInjection
             var env = services.BuildServiceProvider().GetService<IHostingEnvironment>();
             services.ScanFromAssembly(new AssemblyName(env.ApplicationName));
 
-            ServiceCollection.Services = services;
+            Resolver.Services = services;
 
             return services;
         }
@@ -85,7 +85,7 @@ namespace Puppy.DependencyInjection
             var scanner = services.GetScanner();
             scanner.RegisterAssembly(services, assemblyName);
 
-            ServiceCollection.Services = services;
+            Resolver.Services = services;
 
             return services;
         }
@@ -101,7 +101,7 @@ namespace Puppy.DependencyInjection
             var scanner = services.GetScanner();
             scanner.RegisterAllAssemblies(services, searchPattern, folderFullPath);
 
-            ServiceCollection.Services = services;
+            Resolver.Services = services;
 
             return services;
         }
@@ -116,7 +116,7 @@ namespace Puppy.DependencyInjection
             var scanner = services.GetScanner();
             scanner.WriteOut(services, serviceTypeNameFilter);
 
-            ServiceCollection.Services = services;
+            Resolver.Services = services;
 
             return services;
         }
@@ -125,8 +125,9 @@ namespace Puppy.DependencyInjection
         {
             var scanner = services.BuildServiceProvider().GetService<Scanner>();
             if (scanner == null)
-                throw new InvalidOperationException(
-                    $"Unable to resolve {nameof(Scanner)}. Did you forget to call {nameof(services)}.{nameof(AddDependencyInjectionScanner)}?");
+            {
+                throw new InvalidOperationException($"Unable to resolve {nameof(Scanner)}. Did you forget to call {nameof(services)}.{nameof(AddDependencyInjectionScanner)}?");
+            }
             return scanner;
         }
     }

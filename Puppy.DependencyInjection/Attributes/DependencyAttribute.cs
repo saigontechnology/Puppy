@@ -38,6 +38,7 @@ namespace Puppy.DependencyInjection.Attributes
         public ServiceDescriptor BuildServiceDescriptor(TypeInfo type)
         {
             var serviceType = ServiceType ?? type.AsType();
+
             return new ServiceDescriptor(serviceType, type.AsType(), DependencyType);
         }
     }

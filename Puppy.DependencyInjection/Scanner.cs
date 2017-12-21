@@ -56,10 +56,14 @@ namespace Puppy.DependencyInjection
                     var isDependencyAttribute = typeof(DependencyAttribute).IsAssignableFrom(customAttributeType);
 
                     if (!isDependencyAttribute)
+                    {
                         continue;
+                    }
+
                     var serviceDescriptor = ((DependencyAttribute)customAttribute).BuildServiceDescriptor(typeInfo);
 
                     // Check is service already register from difference implementation => throw exception
+
                     var isAlreadyDifferenceImplementation = services.Any(
                         x =>
                             x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName &&
@@ -68,24 +72,29 @@ namespace Puppy.DependencyInjection
                     if (isAlreadyDifferenceImplementation)
                     {
                         var implementationRegister =
-                            services.Single(x => x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName)
+                            services
+                                .Single(x => x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName)
                                 .ImplementationType;
 
-                        throw new ConflictRegistrationException(
-                            $"Conflict register, ${serviceDescriptor.ImplementationType} try to register for {serviceDescriptor.ServiceType.FullName}. It already register by {implementationRegister.FullName} before.");
+                        throw new ConflictRegistrationException($"Conflict register, ${serviceDescriptor.ImplementationType} try to register for {serviceDescriptor.ServiceType.FullName}. It already register by {implementationRegister.FullName} before.");
                     }
 
                     // Check is service already register from same implementation => remove existing,
                     // replace by new one life time cycle
+
                     var isAlreadySameImplementation = services.Any(
                         x =>
                             x.ServiceType.FullName == serviceDescriptor.ServiceType.FullName &&
                             x.ImplementationType == serviceDescriptor.ImplementationType);
 
                     if (isAlreadySameImplementation)
+                    {
                         services = services.Replace(serviceDescriptor);
+                    }
                     else
+                    {
                         services.Add(serviceDescriptor);
+                    }
                 }
         }
 
@@ -95,11 +104,12 @@ namespace Puppy.DependencyInjection
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
         /// <param name="folderFullPath"> Default is null = current execute application folder </param>
-        public void RegisterAllAssemblies(IServiceCollection services, string searchPattern = "*.dll",
-            string folderFullPath = null)
+        public void RegisterAllAssemblies(IServiceCollection services, string searchPattern = "*.dll", string folderFullPath = null)
         {
             if (string.IsNullOrWhiteSpace(folderFullPath) || !File.Exists(folderFullPath))
+            {
                 folderFullPath = Path.GetFullPath(PlatformServices.Default.Application.ApplicationBasePath);
+            }
 
             // Update assembly loader with folder path
             AssemblyLoader = new AssemblyLoader(folderFullPath);
@@ -123,16 +133,21 @@ namespace Puppy.DependencyInjection
             var listServiceDescriptors = services.ToList();
 
             if (!string.IsNullOrWhiteSpace(serviceNameFilter))
-                listServiceDescriptors = listServiceDescriptors
-                    .Where(x => x.ServiceType.FullName.Contains(serviceNameFilter))
-                    .ToList();
+            {
+                listServiceDescriptors =
+                    listServiceDescriptors
+                        .Where(x => x.ServiceType.FullName.Contains(serviceNameFilter))
+                        .ToList();
+            }
 
             Console.WriteLine($"{Environment.NewLine}{new string('-', 50)}");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"[Total Dependency Injection {listServiceDescriptors.Count}]");
+
             for (var index = 0; index < listServiceDescriptors.Count; index++)
             {
                 var service = listServiceDescriptors[index];
+
                 var no = index + 1;
 
                 var maximumCharacter =
@@ -147,13 +162,13 @@ namespace Puppy.DependencyInjection
                 Console.WriteLine($"{no}.");
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"    Service         |  ");
+                Console.Write("    Service         |  ");
                 Console.ResetColor();
                 Console.Write($"{service.ServiceType?.Name?.PadRight(maximumCharacter)}");
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"  |  {service.ServiceType?.FullName}");
 
-                Console.Write($"    Implementation  |  ");
+                Console.Write("    Implementation  |  ");
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write($"{service.ImplementationType?.Name?.PadRight(maximumCharacter)}");
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -173,9 +188,10 @@ namespace Puppy.DependencyInjection
         private static string GetLifeTime(ServiceLifetime serviceLifetime)
         {
             if (serviceLifetime == ServiceLifetime.Transient)
+            {
                 return "Per Resolve";
-            return
-                serviceLifetime == ServiceLifetime.Scoped ? "Per Request" : "Singleton";
+            }
+            return serviceLifetime == ServiceLifetime.Scoped ? "Per Request" : "Singleton";
         }
     }
 }

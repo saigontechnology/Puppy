@@ -71,7 +71,8 @@ namespace Puppy.Elastic
         /// <param name="credentials">                   
         ///     Basic auth credentials for logging into the server.
         /// </param>
-        public ElasticContext(string connectionString, ElasticSerializerConfiguration elasticSerializerConfiguration, NetworkCredential credentials = null)
+        /// <param name="isAllowDeleteForIndex">         </param>
+        public ElasticContext(string connectionString, ElasticSerializerConfiguration elasticSerializerConfiguration, NetworkCredential credentials = null, bool isAllowDeleteForIndex = false)
         {
             if (credentials != null)
             {
@@ -88,9 +89,12 @@ namespace Puppy.Elastic
                 TraceProvider.Trace(TraceEventType.Verbose, "{1}: new ElasticContext with connection string: {0}", connectionString, "ElasticContext");
             }
 
+            AllowDeleteForIndex = isAllowDeleteForIndex;
+
             InitialContext();
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Create Elastic Context 
         /// </summary>
@@ -104,14 +108,16 @@ namespace Puppy.Elastic
         /// <param name="credentials">           
         ///     Basic auth credentials for logging into the server.
         /// </param>
-        public ElasticContext(string connectionString, IElasticMappingResolver elasticMappingResolver, NetworkCredential credentials = null) : this(connectionString, new ElasticSerializerConfiguration(elasticMappingResolver), credentials)
+        /// <param name="isAllowDeleteForIndex"> </param>
+        public ElasticContext(string connectionString, IElasticMappingResolver elasticMappingResolver, NetworkCredential credentials = null, bool isAllowDeleteForIndex = false) : this(connectionString, new ElasticSerializerConfiguration(elasticMappingResolver), credentials, isAllowDeleteForIndex)
         {
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Create Elastic Context by ElasticConfig load from appsettings.json 
         /// </summary>
-        public ElasticContext() : this(ElasticConfig.ConnectionString, new ElasticSerializerConfiguration(new ElasticMappingResolver()))
+        public ElasticContext() : this(ElasticConfig.ConnectionString, new ElasticSerializerConfiguration(new ElasticMappingResolver()), null, true)
         {
         }
 

@@ -63,8 +63,7 @@ namespace Puppy.EF.Repositories
         public override TEntity Add(TEntity entity)
         {
             entity.DeletedTime = null;
-            entity.LastUpdatedTime = null;
-            entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
+            entity.LastUpdatedTime = entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, DateTimeOffset.UtcNow);
             entity = DbSet.Add(entity).Entity;
             return entity;
         }
@@ -175,24 +174,28 @@ namespace Puppy.EF.Repositories
         public override int SaveChanges()
         {
             StandardizeEntities();
+
             return DbContext.SaveChanges();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             StandardizeEntities();
+
             return DbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             StandardizeEntities();
+
             return DbContext.SaveChangesAsync(cancellationToken);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
             StandardizeEntities();
+
             return DbContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
@@ -212,23 +215,26 @@ namespace Puppy.EF.Repositories
 
             foreach (var entry in listEntryAddUpdate)
             {
-                var entity = entry.Entity as TEntity;
-
-                if (entity == null)
+                if (!(entry.Entity is TEntity entity))
+                {
                     continue;
+                }
 
                 if (entry.State == EntityState.Added)
                 {
                     entity.DeletedTime = null;
-                    entity.LastUpdatedTime = null;
-                    entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, dateTimeNow);
+                    entity.LastUpdatedTime = entity.CreatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.CreatedTime, dateTimeNow);
                 }
                 else
                 {
                     if (entity.DeletedTime != null)
+                    {
                         entity.DeletedTime = DateTimeHelper.ReplaceNullOrDefault(entity.DeletedTime, dateTimeNow);
+                    }
                     else
+                    {
                         entity.LastUpdatedTime = DateTimeHelper.ReplaceNullOrDefault(entity.LastUpdatedTime, dateTimeNow);
+                    }
                 }
             }
         }

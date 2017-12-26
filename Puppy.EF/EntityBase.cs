@@ -28,7 +28,7 @@ namespace Puppy.EF
 
         public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual DateTimeOffset? LastUpdatedTime { get; set; }
+        public virtual DateTimeOffset LastUpdatedTime { get; set; } = DateTimeOffset.UtcNow;
 
         public virtual DateTimeOffset? DeletedTime { get; set; }
     }

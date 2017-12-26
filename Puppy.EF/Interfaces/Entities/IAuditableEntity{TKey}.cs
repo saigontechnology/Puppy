@@ -25,7 +25,7 @@ namespace Puppy.EF.Interfaces.Entities
     {
         DateTimeOffset CreatedTime { get; set; }
 
-        DateTimeOffset? LastUpdatedTime { get; set; }
+        DateTimeOffset LastUpdatedTime { get; set; }
     }
 
     /// <summary>

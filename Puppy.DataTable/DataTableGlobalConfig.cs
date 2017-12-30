@@ -38,10 +38,9 @@ namespace Puppy.DataTable
         public static string DateTimeFormat { get; set; } = "dd/MM/yyyy hh:mm tt";
 
         /// <summary>
-        ///     Config use datetime with Utc TimeZone or Local. Default is "True" - use UTC TimeZone,
-        ///     "False" for Local TimeZone. This is helpful for case column search
+        ///     Config use datetime with TimeZone. Default is "UTC", See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx 
         /// </summary>
-        public static bool IsUseDateTimeUtc { get; set; } = true;
+        public static string DateTimeTimeZone { get; set; } = "UTC";
 
         /// <summary>
         ///     Control the way to parse string to DateTime every request. If value is

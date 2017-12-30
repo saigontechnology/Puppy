@@ -43,7 +43,7 @@ namespace Puppy.Core.DateTimeUtils
 
         public static DateTime? ReplaceNullOrDefault(DateTime? value, DateTime? replace)
         {
-            value = (value == default) ? replace : value;
+            value = value ?? replace;
             return value;
         }
 
@@ -55,7 +55,7 @@ namespace Puppy.Core.DateTimeUtils
 
         public static DateTimeOffset? ReplaceNullOrDefault(DateTimeOffset? value, DateTimeOffset? replace)
         {
-            value = (value == default) ? replace : value;
+            value = value ?? replace;
             return value;
         }
 

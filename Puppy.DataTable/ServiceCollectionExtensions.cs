@@ -26,6 +26,7 @@ using Puppy.Core.EnvironmentUtils;
 using Puppy.DataTable.Constants;
 using System;
 using System.Linq;
+using Puppy.Core.DateTimeUtils;
 
 namespace Puppy.DataTable
 {
@@ -89,14 +90,23 @@ namespace Puppy.DataTable
                 DataTableGlobalConfig.DateTimeFormat = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.DateTimeFormat)}", DataTableGlobalConfig.DateTimeFormat);
                 try
                 {
-                    string firstParse = DateTimeOffset.UtcNow.ToString(DataTableGlobalConfig.DateTimeFormat);
+                    DateTimeOffset.UtcNow.ToString(DataTableGlobalConfig.DateTimeFormat);
                 }
                 catch (Exception ex)
                 {
                     throw new ArgumentException($"{nameof(DataTableGlobalConfig.DateTimeFormat)} must correct DateTime format. {ex.Message}");
                 }
 
-                DataTableGlobalConfig.IsUseDateTimeUtc = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.IsUseDateTimeUtc)}", DataTableGlobalConfig.IsUseDateTimeUtc);
+                DataTableGlobalConfig.DateTimeTimeZone = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.DateTimeTimeZone)}", DataTableGlobalConfig.DateTimeTimeZone);
+
+                try
+                {
+                    DateTimeOffset.UtcNow.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"{nameof(DataTableGlobalConfig.DateTimeTimeZone)} must correct DateTime TimeZone Id. {ex.Message}");
+                }
 
                 DataTableGlobalConfig.RequestDateTimeFormatMode = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.RequestDateTimeFormatMode)}", DataTableGlobalConfig.RequestDateTimeFormatMode);
             }

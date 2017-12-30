@@ -33,7 +33,39 @@ namespace Puppy.Core.DateTimeUtils
 
         public static DateTime GetDateTimeFromUtc(this DateTime dateTimeUtc, TimeZoneInfo timeZoneInfo)
         {
-            var dateTimeWithTimeZone = TimeZoneInfo.ConvertTime(dateTimeUtc, timeZoneInfo);
+            var dateTimeWithTimeZone = TimeZoneInfo.ConvertTimeFromUtc(dateTimeUtc, timeZoneInfo);
+            return dateTimeWithTimeZone;
+        }
+
+        /// <summary>
+        ///     See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="timeZone"> Time Zone ID, See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx </param>
+        /// <returns></returns>
+        public static DateTime WithTimeZone(this DateTime dateTime, string timeZone)
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+
+            var dateTimeWithTimeZone = new DateTimeOffset(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, timeZoneInfo.BaseUtcOffset);
+
+            return dateTimeWithTimeZone.DateTime;
+        }
+
+        /// <summary>
+        ///     See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx 
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <param name="timeZone">       Time Zone ID, See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx </param>
+        /// <returns></returns>
+        public static DateTimeOffset WithTimeZone(this DateTimeOffset dateTimeOffset, string timeZone)
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+
+            var dateTimeWithTimeZone = new DateTimeOffset(dateTimeOffset.Year, dateTimeOffset.Month, dateTimeOffset.Day, dateTimeOffset.Hour, dateTimeOffset.Minute, dateTimeOffset.Second, dateTimeOffset.Millisecond, timeZoneInfo.BaseUtcOffset);
+
+            var offset = dateTimeWithTimeZone.Offset;
+
             return dateTimeWithTimeZone;
         }
 

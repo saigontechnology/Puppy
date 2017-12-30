@@ -1,3 +1,4 @@
+using Puppy.Core.DateTimeUtils;
 using Puppy.Core.StringUtils;
 using Puppy.Core.TypeUtils;
 using Puppy.DataTable.Constants;
@@ -70,10 +71,7 @@ namespace Puppy.DataTable.Processing.Request
 
                 if (isValidFromDateTime)
                 {
-                    if (DataTableGlobalConfig.IsUseDateTimeUtc)
-                    {
-                        fromDateTime = fromDateTime.ToUniversalTime();
-                    }
+                    fromDateTime = fromDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
 
                     parametersForLinqQuery.Add(fromDateTime);
 
@@ -88,10 +86,7 @@ namespace Puppy.DataTable.Processing.Request
                     return filterString ?? string.Empty;
                 }
 
-                if (DataTableGlobalConfig.IsUseDateTimeUtc)
-                {
-                    toDateTime = toDateTime.ToUniversalTime();
-                }
+                toDateTime = toDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
 
                 parametersForLinqQuery.Add(toDateTime);
 
@@ -108,14 +103,11 @@ namespace Puppy.DataTable.Processing.Request
                 return null;
             }
 
+            dateTime = dateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
+
             // DateTime only have Date value => search value in same Date
             if (dateTime.Date == dateTime)
             {
-                if (DataTableGlobalConfig.IsUseDateTimeUtc)
-                {
-                    dateTime = dateTime.ToUniversalTime();
-                }
-
                 parametersForLinqQuery.Add(dateTime);
 
                 parametersForLinqQuery.Add(dateTime.AddDays(1));
@@ -126,11 +118,6 @@ namespace Puppy.DataTable.Processing.Request
             }
 
             // DateTime have Date and Time value => search value in same Date and Time.
-
-            if (DataTableGlobalConfig.IsUseDateTimeUtc)
-            {
-                dateTime = dateTime.ToUniversalTime();
-            }
 
             parametersForLinqQuery.Add(dateTime);
 
@@ -159,10 +146,7 @@ namespace Puppy.DataTable.Processing.Request
 
                 if (isValidFromDateTime)
                 {
-                    if (DataTableGlobalConfig.IsUseDateTimeUtc)
-                    {
-                        fromDateTime = fromDateTime.ToUniversalTime();
-                    }
+                    fromDateTime = fromDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
 
                     parametersForLinqQuery.Add(fromDateTime);
 
@@ -177,10 +161,7 @@ namespace Puppy.DataTable.Processing.Request
                     return filterString ?? string.Empty;
                 }
 
-                if (DataTableGlobalConfig.IsUseDateTimeUtc)
-                {
-                    toDateTime = toDateTime.ToUniversalTime();
-                }
+                toDateTime = toDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
 
                 parametersForLinqQuery.Add(toDateTime);
 
@@ -197,14 +178,11 @@ namespace Puppy.DataTable.Processing.Request
                 return null;
             }
 
+            dateTime = dateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
+
             // DateTime only have Date value => search value in same Date
             if (dateTime.Date == dateTime)
             {
-                if (DataTableGlobalConfig.IsUseDateTimeUtc)
-                {
-                    dateTime = dateTime.ToUniversalTime();
-                }
-
                 parametersForLinqQuery.Add(dateTime);
 
                 parametersForLinqQuery.Add(dateTime.AddDays(1));
@@ -215,12 +193,6 @@ namespace Puppy.DataTable.Processing.Request
             }
 
             // DateTime have Date and Time value => search value in same Date and Time.
-
-            if (DataTableGlobalConfig.IsUseDateTimeUtc)
-            {
-                dateTime = dateTime.ToUniversalTime();
-            }
-
             parametersForLinqQuery.Add(dateTime);
 
             // If you store DateTime in database include milliseconds => no result match. Ex: in

@@ -38,13 +38,5 @@ namespace Puppy.Web
 
             return null;
         }
-
-        public static void SafeRemove(this ITempDataDictionary tempData, string key)
-        {
-            if (tempData.TryGetValue(key, out var _))
-            {
-                tempData.Remove(key);
-            }
-        }
     }
 }

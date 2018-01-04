@@ -66,22 +66,37 @@ namespace Puppy.Core.XmlUtils
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objectToSerialize"></param>
+        /// <param name="isRemoveNameSpace"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="stream" /> or <paramref name="encoding" /> is null.
-        /// </exception>
-        /// <exception cref="ArgumentException"> <paramref name="stream" /> is not writable. </exception>
-        /// <exception cref="OverflowException">
-        ///     <paramref name="value" /> is greater than <see cref="F:System.Int32.MaxValue" /> or
-        ///     less than <see cref="F:System.Int32.MinValue" />.
-        /// </exception>
-        public static string ToXmlString<T>(T objectToSerialize)
+        public static string ToXmlString<T>(T objectToSerialize, bool isRemoveNameSpace = false)
         {
             using (var stream = new MemoryStream())
             {
-                TextWriter writer = new StreamWriter(stream, new UTF8Encoding());
+                XmlWriter writer;
+
                 var xmlSerializer = new XmlSerializer(typeof(T));
-                xmlSerializer.Serialize(writer, objectToSerialize);
+
+                if (isRemoveNameSpace)
+                {
+                    var settings = new XmlWriterSettings
+                    {
+                        Indent = false,
+                        OmitXmlDeclaration = true
+                    };
+
+                    var emptyNamepsaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+
+                    writer = XmlWriter.Create(stream, settings);
+
+                    xmlSerializer.Serialize(writer, objectToSerialize, emptyNamepsaces);
+                }
+                else
+                {
+                    writer = XmlWriter.Create(stream);
+
+                    xmlSerializer.Serialize(writer, objectToSerialize);
+                }
+
                 return Encoding.UTF8.GetString(stream.ToArray(), 0, Convert.ToInt32(stream.Length));
             }
         }
@@ -93,16 +108,37 @@ namespace Puppy.Core.XmlUtils
         /// <typeparam name="T"></typeparam>
         /// <param name="objectToSerialize"></param>
         /// <param name="rootElementName">   default value is "Root" </param>
+        /// <param name="isRemoveNameSpace"></param>
         /// <returns></returns>
-        public static string ToXmlStringViaJson<T>(T objectToSerialize, string rootElementName = "Root")
+        public static string ToXmlStringViaJson<T>(T objectToSerialize, string rootElementName = "Root", bool isRemoveNameSpace = false)
         {
             var json = JsonConvert.SerializeObject(objectToSerialize);
+
             XmlDocument doc = JsonConvert.DeserializeXmlNode(json, rootElementName);
+
             using (var stringWriter = new StringWriter())
-            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
             {
-                doc.WriteTo(xmlTextWriter);
-                xmlTextWriter.Flush();
+                XmlWriter writer;
+
+                if (isRemoveNameSpace)
+                {
+                    var settings = new XmlWriterSettings
+                    {
+                        Indent = false,
+                        OmitXmlDeclaration = true
+                    };
+
+                    writer = XmlWriter.Create(stringWriter, settings);
+                }
+                else
+                {
+                    writer = XmlWriter.Create(stringWriter);
+                }
+
+                doc.WriteTo(writer);
+
+                writer.Flush();
+
                 return stringWriter.GetStringBuilder().ToString();
             }
         }

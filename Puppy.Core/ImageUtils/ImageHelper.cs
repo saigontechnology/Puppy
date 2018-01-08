@@ -27,7 +27,9 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Text;
+using Image = System.Drawing.Image;
 
 namespace Puppy.Core.ImageUtils
 {
@@ -39,7 +41,7 @@ namespace Puppy.Core.ImageUtils
 
         public static Color GetDominantColor(string imagePath)
         {
-            using (var image = System.Drawing.Image.FromFile(imagePath))
+            using (var image = Image.FromFile(imagePath))
             {
                 using (var bitmap = new Bitmap(image))
                 {
@@ -178,7 +180,7 @@ namespace Puppy.Core.ImageUtils
                 else
                 {
                     // Raster check (jpg, png, etc.)
-                    using (System.Drawing.Image image = System.Drawing.Image.FromStream(imageStream))
+                    using (var image = Image.FromStream(imageStream))
                     {
                         // Get image mime type
                         bool isUnknownMimeType = true;
@@ -265,6 +267,159 @@ namespace Puppy.Core.ImageUtils
                     }
                 }
             }
+        }
+
+        #endregion
+
+        #region Generate Text Image
+
+        /// <summary>
+        ///     Generate image from text (at center of the image) 
+        /// </summary>
+        /// <param name="text">            Will be StringHelper.Normalize(text).First().ToString() </param>
+        /// <param name="height">          Default is 50 px </param>
+        /// <param name="width">           Default is 50 px </param>
+        /// <param name="font">           
+        ///     Default is new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Bold)
+        /// </param>
+        /// <param name="textColor">       Default is Color.White </param>
+        /// <param name="backgroundColor"> Default is Color.Black </param>
+        /// <returns></returns>
+        public static string GenerateTextImageBase64(string text, int height = 50, int width = 50, Font font = null, Color textColor = default, Color backgroundColor = default)
+        {
+            text = StringHelper.Normalize(text).First().ToString();
+
+            if (font == null)
+            {
+                font = new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Bold);
+            }
+
+            if (textColor == default)
+            {
+                textColor = Color.White;
+            }
+
+            if (backgroundColor == default)
+            {
+                backgroundColor = Color.Black;
+            }
+
+            // Generate Image
+
+            var img = GenerateTextImage(text, height, width, font, textColor, backgroundColor);
+
+            // Convert to image array
+
+            var converter = new ImageConverter();
+
+            var imageArray = converter.ConvertTo(img, typeof(byte[])) as byte[];
+
+            var stringBase64 = Convert.ToBase64String(imageArray);
+
+            return stringBase64;
+        }
+
+        /// <summary>
+        ///     Generate image from text (at center of the image) 
+        /// </summary>
+        /// <param name="text">           </param>
+        /// <param name="height">         </param>
+        /// <param name="width">          </param>
+        /// <param name="font">           </param>
+        /// <param name="textColor">      </param>
+        /// <param name="backgroundColor"></param>
+        /// <returns></returns>
+        public static Image GenerateTextImage(string text, int height, int width, Font font, Color textColor, Color backgroundColor)
+        {
+            StringHelper.CheckNullOrWhiteSpace(text);
+
+            // Create a dummy bitmap just to get a graphics object
+
+            Image img = new Bitmap(1, 1);
+
+            Graphics drawing = Graphics.FromImage(img);
+
+            // Measure the string to see how big the image needs to be
+
+            drawing.MeasureString(text, font);
+
+            // Free up the dummy image and old graphics object
+
+            img.Dispose();
+
+            drawing.Dispose();
+
+            // Create a new image of the right size
+
+            img = new Bitmap(height, width);
+
+            drawing = Graphics.FromImage(img);
+
+            // Paint the background
+
+            drawing.Clear(backgroundColor);
+
+            // Create a brush for the text
+
+            Brush brush = new SolidBrush(textColor);
+
+            // String alignment
+
+            StringFormat stringFormat = new StringFormat
+            {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center
+            };
+
+            // Rectangular
+
+            RectangleF rectangleF = new RectangleF(0, 0, img.Width, img.Height);
+
+            // Draw text on image
+
+            drawing.DrawString(text, font, brush, rectangleF, stringFormat);
+
+            // Save drawing
+
+            drawing.Save();
+
+            // Dispose
+
+            brush.Dispose();
+
+            drawing.Dispose();
+
+            // return image
+            return img;
+        }
+
+        #endregion
+
+        #region Base 64
+
+        /// <summary>
+        ///     Get image base 64 (data:image/jpg;base64,{string base 64}) from string base 64 and
+        ///     image extension
+        /// </summary>
+        /// <param name="base64">        </param>
+        /// <param name="imageExtension"></param>
+        /// <returns></returns>
+        public static string GetImageBase64Format(string base64, string imageExtension = ".jpg")
+        {
+            var imageMimeType = MimeTypeHelper.GetMimeType(imageExtension);
+
+            return $@"data:{imageMimeType};base64,{base64}";
+        }
+
+        /// <summary>
+        ///     Get string base 64 format from image base 64 format (data:image/jpg;base64,{string
+        ///     base 64})
+        /// </summary>
+        /// <param name="imageBase64"></param>
+        /// <returns></returns>
+        public static string GetBase64Format(string imageBase64)
+        {
+            return imageBase64.Split(',').LastOrDefault();
         }
 
         #endregion

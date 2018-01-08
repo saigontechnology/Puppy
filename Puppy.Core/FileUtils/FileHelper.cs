@@ -62,7 +62,8 @@ namespace Puppy.Core.FileUtils
         {
             try
             {
-                byte[] bytes = Convert.FromBase64String(value);
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                Convert.FromBase64String(value);
                 return true;
             }
             catch
@@ -193,15 +194,16 @@ namespace Puppy.Core.FileUtils
         ///     Replaces characters in <c> text </c> that are not allowed in file names with the
         ///     specified replacement character.
         /// </summary>
-        /// <param name="text">       
+        /// <param name="text">          
         ///     Text to make into a valid filename. The same string is returned if it is valid already.
         /// </param>
-        /// <param name="replacement">
+        /// <param name="replacement">   
         ///     Replacement character, or null to simply remove bad characters.
         /// </param>
-        /// <param name="fancy">      
+        /// <param name="isFancy">       
         ///     Whether to replace quotes and slashes with the non-ASCII characters ” and ⁄.
         /// </param>
+        /// <param name="isRemoveAccent"> Remove all diacritics (accents) in string </param>
         /// <returns>
         ///     A string that can be used as a filename. If the output string would otherwise be
         ///     empty, returns <see cref="replacement" /> as string.
@@ -210,8 +212,13 @@ namespace Puppy.Core.FileUtils
         ///     Valid file name also follow maximum length is 260 characters rule (split from right
         ///     to left if length &gt; 260)
         /// </remarks>
-        public static string MakeValidFileName(string text, char? replacement = '_', bool fancy = true)
+        public static string MakeValidFileName(string text, char? replacement = '_', bool isFancy = true, bool isRemoveAccent = true)
         {
+            if (isRemoveAccent)
+            {
+                text = StringHelper.RemoveAccents(text);
+            }
+
             StringBuilder sb = new StringBuilder(text.Length);
 
             var invalids = Path.GetInvalidFileNameChars();
@@ -226,7 +233,7 @@ namespace Puppy.Core.FileUtils
 
                     var replace = replacement ?? '\0';
 
-                    if (fancy)
+                    if (isFancy)
                     {
                         if (c == '"') replace = '”'; // U+201D right double quotation mark
                         else if (c == '\'') replace = '’'; // U+2019 right single quotation mark

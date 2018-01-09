@@ -19,7 +19,9 @@ namespace Puppy.DataTable
 
             // Depend on "iColumns" property is have or not, we will known this is legacy model or
             // latest style model. Binding the value to model by the legacy or new style mapping.
+
             int columns = GetValue<int>(valueProvider, PropertyConst.Columns);
+
             DataTableParamModel dataTableParam = columns <= 0 ? BindModel(valueProvider) : BindLegacyModel(valueProvider, columns);
 
             // Keep all data to Data Property
@@ -28,7 +30,7 @@ namespace Puppy.DataTable
             // Bind data to result
             bindingContext.Result = ModelBindingResult.Success(dataTableParam);
 
-            return Task.FromResult(dataTableParam);
+            return Task.CompletedTask;
         }
 
         private static DataTableParamModel BindModel(IValueProvider valueProvider)
@@ -43,6 +45,7 @@ namespace Puppy.DataTable
             };
 
             int colIdx = 0;
+
             while (true)
             {
                 string colPrefix = $"columns[{colIdx}]";
@@ -142,7 +145,9 @@ namespace Puppy.DataTable
         private static T GetValue<T>(IValueProvider valueProvider, string key)
         {
             ValueProviderResult valueResult = valueProvider.GetValue(key);
+
             var result = valueResult.FirstValue.ConvertTo<T>();
+
             return result;
         }
     }
@@ -156,9 +161,7 @@ namespace Puppy.DataTable
                 throw new ArgumentNullException(nameof(context));
             }
 
-            return context.Metadata.ModelType == typeof(DataTableParamModel)
-                ? new DataTableModelBinder()
-                : null;
+            return context.Metadata.ModelType == typeof(DataTableParamModel) ? new DataTableModelBinder() : null;
         }
     }
 }

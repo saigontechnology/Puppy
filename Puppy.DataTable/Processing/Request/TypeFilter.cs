@@ -67,28 +67,24 @@ namespace Puppy.DataTable.Processing.Request
                 var parts = terms.Split('~');
 
                 // FROM DATE TIME
-                bool isValidFromDateTime = TryParse(parts[0], out DateTimeOffset fromDateTime);
+                DateTimeOffset? fromDateTime = ToDateTime(parts[0]);
 
-                if (isValidFromDateTime)
+                if (fromDateTime != null)
                 {
-                    fromDateTime = fromDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
-
-                    parametersForLinqQuery.Add(fromDateTime);
+                    parametersForLinqQuery.Add(fromDateTime.Value);
 
                     filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 1}";
                 }
 
                 // TO DATE TIME
-                bool isValidToDateTime = TryParse(parts[1], out DateTimeOffset toDateTime);
+                DateTimeOffset? toDateTime = ToDateTime(parts[1]);
 
-                if (!isValidToDateTime)
+                if (toDateTime == null)
                 {
                     return filterString ?? string.Empty;
                 }
 
-                toDateTime = toDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
-
-                parametersForLinqQuery.Add(toDateTime);
+                parametersForLinqQuery.Add(toDateTime.Value);
 
                 filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count - 1}";
 
@@ -96,21 +92,19 @@ namespace Puppy.DataTable.Processing.Request
             }
 
             // Single Case
-            bool isValidDateTime = TryParse(terms, out DateTimeOffset dateTime);
+            DateTimeOffset? dateTime = ToDateTime(terms);
 
-            if (!isValidDateTime)
+            if (dateTime == null)
             {
                 return null;
             }
 
-            dateTime = dateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
-
             // DateTime only have Date value => search value in same Date
-            if (dateTime.Date == dateTime)
+            if (dateTime.Value.Date == dateTime.Value)
             {
-                parametersForLinqQuery.Add(dateTime);
+                parametersForLinqQuery.Add(dateTime.Value);
 
-                parametersForLinqQuery.Add(dateTime.AddDays(1));
+                parametersForLinqQuery.Add(dateTime.Value.AddDays(1));
 
                 filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
 
@@ -142,28 +136,24 @@ namespace Puppy.DataTable.Processing.Request
                 var parts = terms.Split('~');
 
                 // FROM DATE TIME
-                bool isValidFromDateTime = TryParse(parts[0], out DateTime fromDateTime);
+                DateTime? fromDateTime = ToDateTime(parts[0])?.DateTime;
 
-                if (isValidFromDateTime)
+                if (fromDateTime != null)
                 {
-                    fromDateTime = fromDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
-
-                    parametersForLinqQuery.Add(fromDateTime);
+                    parametersForLinqQuery.Add(fromDateTime.Value);
 
                     filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 1}";
                 }
 
                 // TO DATE TIME
-                bool isValidToDateTime = TryParse(parts[1], out DateTime toDateTime);
+                DateTime? toDateTime = ToDateTime(parts[1])?.DateTime;
 
-                if (!isValidToDateTime)
+                if (toDateTime == null)
                 {
                     return filterString ?? string.Empty;
                 }
 
-                toDateTime = toDateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
-
-                parametersForLinqQuery.Add(toDateTime);
+                parametersForLinqQuery.Add(toDateTime.Value);
 
                 filterString = (filterString == null ? null : $"{filterString} and ") + $"{columnName} <= @{parametersForLinqQuery.Count - 1}";
 
@@ -171,21 +161,19 @@ namespace Puppy.DataTable.Processing.Request
             }
 
             // Single Case
-            bool isValidDateTime = TryParse(terms, out DateTime dateTime);
+            DateTime? dateTime = ToDateTime(terms)?.DateTime;
 
-            if (!isValidDateTime)
+            if (dateTime == null)
             {
                 return null;
             }
 
-            dateTime = dateTime.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
-
             // DateTime only have Date value => search value in same Date
-            if (dateTime.Date == dateTime)
+            if (dateTime.Value.Date == dateTime.Value)
             {
-                parametersForLinqQuery.Add(dateTime);
+                parametersForLinqQuery.Add(dateTime.Value);
 
-                parametersForLinqQuery.Add(dateTime.AddDays(1));
+                parametersForLinqQuery.Add(dateTime.Value.AddDays(1));
 
                 filterString = $"{columnName} >= @{parametersForLinqQuery.Count - 2} and {columnName} < @{parametersForLinqQuery.Count - 1}";
 
@@ -362,48 +350,33 @@ namespace Puppy.DataTable.Processing.Request
             return Convert.ChangeType(terms, propertyInfo.Type);
         }
 
-        internal static bool TryParse(string value, out DateTimeOffset dateTimeOffset)
+        internal static DateTimeOffset? ToDateTime(string value)
         {
             value = string.IsNullOrWhiteSpace(value) ? string.Empty : value;
 
-            if (DataTableGlobalConfig.RequestDateTimeFormatMode == DateTimeFormatMode.Auto)
+            if (DataTableGlobalConfig.RequestDateTimeFormatMode == DateTimeFormatMode.Auto && DateTimeOffset.TryParse(value, out var result))
             {
-                if (DateTimeOffset.TryParse(value, out dateTimeOffset))
-                {
-                    return true;
-                }
+                result = result.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
+
+                return result;
+            }
+
+            if (DateTime.TryParseExact(value, DataTableGlobalConfig.DateTimeFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateTime))
+            {
+                result = dateTime;
+            }
+            else if (DateTime.TryParseExact(value, DataTableGlobalConfig.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+            {
+                result = date;
             }
             else
             {
-                if (DateTimeOffset.TryParseExact(value, DataTableGlobalConfig.DateTimeFormat, null, DateTimeStyles.None, out dateTimeOffset))
-                {
-                    return true;
-                }
+                return null;
             }
 
-            return false;
-        }
+            result = result.WithTimeZone(DataTableGlobalConfig.DateTimeTimeZone);
 
-        internal static bool TryParse(string value, out DateTime dateTime)
-        {
-            value = string.IsNullOrWhiteSpace(value) ? string.Empty : value;
-
-            if (DataTableGlobalConfig.RequestDateTimeFormatMode == DateTimeFormatMode.Auto)
-            {
-                if (DateTime.TryParse(value, out dateTime))
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (DateTime.TryParseExact(value, DataTableGlobalConfig.DateTimeFormat, null, DateTimeStyles.None, out dateTime))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return result;
         }
 
         #endregion Internal Methods

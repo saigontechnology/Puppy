@@ -798,13 +798,16 @@ pre {
 </ul>
 <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> [Auto Reload]</span>
 <span class="pl-s"><span class="pl-pds">"</span>DataTable<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
-<span class="pl-c"><span class="pl-c">//</span> Response DateTime as string by format, default is "dd/MM/yyyy hh:mm tt".</span>
-<span class="pl-c"><span class="pl-c">//</span> If RequestDateTimeFormatMode is Specific, every request will use the format to parse to DateTime.</span>
-<span class="pl-s"><span class="pl-pds">"</span>DateTimeFormat<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>dd/MM/yyyy hh:mm tt<span class="pl-pds">"</span></span>,
 
 <span class="pl-c"><span class="pl-c">//</span> Config use datetime with TimeZone. Default is "UTC"</span>
 <span class="pl-c"><span class="pl-c">//</span> See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx</span>
-<span class="pl-s"><span class="pl-pds">"</span>DateTimeTimeZone<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Singapore Standard Time<span class="pl-pds">"</span></span>, <span class="pl-c"><span class="pl-c">//</span> "UTC"</span>
+<span class="pl-s"><span class="pl-pds">"</span>DateTimeTimeZone<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>UTC<span class="pl-pds">"</span></span>,
+
+<span class="pl-s"><span class="pl-pds">"</span>DateFormat<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>dd/MM/yyyy<span class="pl-pds">"</span></span>,
+
+<span class="pl-c"><span class="pl-c">//</span> Response DateTime as string by format, default is "dd/MM/yyyy hh:mm tt".</span>
+<span class="pl-c"><span class="pl-c">//</span> If RequestDateTimeFormatMode is Specific, every request will use the format to parse to DateTime.</span>
+<span class="pl-s"><span class="pl-pds">"</span>DateTimeFormat<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>dd/MM/yyyy HH:mm:ss<span class="pl-pds">"</span></span>,
 
 <span class="pl-c"><span class="pl-c">//</span> Control the way to parse string to DateTime every request.</span>
 <span class="pl-c"><span class="pl-c">//</span> Value can be Auto or Specific, default is Auto.</span>

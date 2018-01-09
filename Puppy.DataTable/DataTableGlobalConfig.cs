@@ -29,18 +29,20 @@ namespace Puppy.DataTable
     public static class DataTableGlobalConfig
     {
         /// <summary>
+        ///     Config use datetime with TimeZone. Default is "UTC", See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx 
+        /// </summary>
+        public static string DateTimeTimeZone { get; set; } = "UTC";
+
+        public static string DateFormat { get; set; } = "dd/MM/yyyy";
+
+        /// <summary>
         ///     All response will apply the format by default. If
         ///     <see cref="RequestDateTimeFormatMode" /> is
         ///     <see cref="DateTimeFormatMode.Specific" />, every request will use the format to
         ///     parse string to DateTime. Else will try parse string to DateTime by any format.
         /// </summary>
         /// <remarks> Format "dd/MM/yyyy hh:mm tt" by default </remarks>
-        public static string DateTimeFormat { get; set; } = "dd/MM/yyyy hh:mm tt";
-
-        /// <summary>
-        ///     Config use datetime with TimeZone. Default is "UTC", See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx 
-        /// </summary>
-        public static string DateTimeTimeZone { get; set; } = "UTC";
+        public static string DateTimeFormat { get; set; } = "dd/MM/yyyy HH:mm:ss";
 
         /// <summary>
         ///     Control the way to parse string to DateTime every request. If value is

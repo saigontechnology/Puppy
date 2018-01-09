@@ -54,13 +54,16 @@ app.UseDataTable();
 ```javascript
 // [Auto Reload]
 "DataTable": {
-// Response DateTime as string by format, default is "dd/MM/yyyy hh:mm tt".
-// If RequestDateTimeFormatMode is Specific, every request will use the format to parse to DateTime.
-"DateTimeFormat": "dd/MM/yyyy hh:mm tt",
 
 // Config use datetime with TimeZone. Default is "UTC"
 // See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx
-"DateTimeTimeZone": "Singapore Standard Time", // "UTC"
+"DateTimeTimeZone": "UTC",
+
+"DateFormat": "dd/MM/yyyy",
+
+// Response DateTime as string by format, default is "dd/MM/yyyy hh:mm tt".
+// If RequestDateTimeFormatMode is Specific, every request will use the format to parse to DateTime.
+"DateTimeFormat": "dd/MM/yyyy HH:mm:ss",
 
 // Control the way to parse string to DateTime every request.
 // Value can be Auto or Specific, default is Auto.

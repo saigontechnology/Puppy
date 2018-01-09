@@ -22,11 +22,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
+using Puppy.Core.DateTimeUtils;
 using Puppy.Core.EnvironmentUtils;
 using Puppy.DataTable.Constants;
 using System;
 using System.Linq;
-using Puppy.Core.DateTimeUtils;
 
 namespace Puppy.DataTable
 {
@@ -87,16 +87,6 @@ namespace Puppy.DataTable
 
             if (isHaveConfig)
             {
-                DataTableGlobalConfig.DateTimeFormat = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.DateTimeFormat)}", DataTableGlobalConfig.DateTimeFormat);
-                try
-                {
-                    DateTimeOffset.UtcNow.ToString(DataTableGlobalConfig.DateTimeFormat);
-                }
-                catch (Exception ex)
-                {
-                    throw new ArgumentException($"{nameof(DataTableGlobalConfig.DateTimeFormat)} must correct DateTime format. {ex.Message}");
-                }
-
                 DataTableGlobalConfig.DateTimeTimeZone = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.DateTimeTimeZone)}", DataTableGlobalConfig.DateTimeTimeZone);
 
                 try
@@ -106,6 +96,28 @@ namespace Puppy.DataTable
                 catch (Exception ex)
                 {
                     throw new ArgumentException($"{nameof(DataTableGlobalConfig.DateTimeTimeZone)} must correct DateTime TimeZone Id. {ex.Message}");
+                }
+
+                DataTableGlobalConfig.DateFormat = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.DateFormat)}", DataTableGlobalConfig.DateFormat);
+
+                try
+                {
+                    DateTimeOffset.UtcNow.ToString(DataTableGlobalConfig.DateFormat);
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"{nameof(DataTableGlobalConfig.DateFormat)} must correct Date format. {ex.Message}");
+                }
+
+                DataTableGlobalConfig.DateTimeFormat = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.DateTimeFormat)}", DataTableGlobalConfig.DateTimeFormat);
+
+                try
+                {
+                    DateTimeOffset.UtcNow.ToString(DataTableGlobalConfig.DateTimeFormat);
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"{nameof(DataTableGlobalConfig.DateTimeFormat)} must correct DateTime format. {ex.Message}");
                 }
 
                 DataTableGlobalConfig.RequestDateTimeFormatMode = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.RequestDateTimeFormatMode)}", DataTableGlobalConfig.RequestDateTimeFormatMode);

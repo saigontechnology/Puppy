@@ -42,7 +42,7 @@ namespace Puppy.DataTable
         ///     parse string to DateTime. Else will try parse string to DateTime by any format.
         /// </summary>
         /// <remarks> Format "dd/MM/yyyy hh:mm tt" by default </remarks>
-        public static string DateTimeFormat { get; set; } = "dd/MM/yyyy HH:mm:ss";
+        public static string DateTimeFormat { get; set; } = "dd/MM/yyyy hh:mm:ss tt";
 
         /// <summary>
         ///     Control the way to parse string to DateTime every request. If value is

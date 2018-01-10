@@ -17,7 +17,7 @@ namespace Puppy.DataTable.Attributes
 
         public bool IsSortable { get; set; } = true;
 
-        public int Order { get; set; } = int.MaxValue;
+        public int Order { get; set; } = ConfigConst.DefaultOrder;
 
         public Type DisplayNameResourceType { get; set; }
 

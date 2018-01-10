@@ -21,7 +21,7 @@ namespace Puppy.DataTable.Utils.Reflection
                 var infos = from propertyInfo in t.GetProperties()
                             where propertyInfo.GetCustomAttribute<DataTableIgnoreAttribute>() == null
                             let attributes = propertyInfo.GetCustomAttributes().OfType<DataTableAttributeBase>().ToArray()
-                            orderby attributes.OfType<DataTableAttribute>().Select(a => a.Order as int?).SingleOrDefault() ?? int.MaxValue
+                            orderby attributes.OfType<DataTableAttribute>().Select(a => a.Order as int?).SingleOrDefault() ?? ConfigConst.DefaultOrder
                             select new DataTablePropertyInfo(propertyInfo, attributes);
                 return infos.ToArray();
             });

@@ -2,6 +2,7 @@ using Puppy.DataTable.Models.Config.Column;
 using Puppy.DataTable.Utils.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Puppy.DataTable.Utils.Extensions
 {
@@ -10,6 +11,7 @@ namespace Puppy.DataTable.Utils.Extensions
         public static ColumnModel[] GetColumns(this Type t)
         {
             var propInfos = DataTableTypeInfo.Properties(t);
+
             var columnList = new List<ColumnModel>();
 
             foreach (var dataTablesPropertyInfo in propInfos)

@@ -22,6 +22,7 @@ namespace Puppy.DataTable.Constants
     public static class ConfigConst
     {
         public const string DefaultConfigSection = "DataTable";
+        public const int DefaultOrder = 99;
     }
 
     public static class PropertyConst

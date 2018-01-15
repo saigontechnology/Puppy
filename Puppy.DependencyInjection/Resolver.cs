@@ -46,7 +46,8 @@ namespace Puppy.DependencyInjection
 
         public static T Resolve<T>() where T : class
         {
-            return ServiceProvider.Resolve<T>();
+            //return ServiceProvider.Resolve<T>(); // TODO exception when use multiple IDbContext in background thread
+            return Services.BuildServiceProvider().GetService<T>();
         }
     }
 }

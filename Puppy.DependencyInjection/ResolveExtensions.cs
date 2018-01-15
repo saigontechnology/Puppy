@@ -27,19 +27,42 @@ namespace Puppy.DependencyInjection
 {
     public static class ResolveExtensions
     {
+        /// <summary>
+        ///     Resolve the registered implementation for the service 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static T Resolve<T>(this IServiceCollection services) where T : class
         {
-            return services.BuildServiceProvider().GetService<T>();
+            if (Resolver.ServiceProvider.GetService<T>() == null)
+            {
+                Resolver.Services = services;
+            }
+
+            return Resolver.Resolve<T>();
         }
 
+        /// <summary>
+        ///     Resolve the registered implementation for the service 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="applicationBuilder"></param>
+        /// <returns></returns>
         public static T Resolve<T>(this IApplicationBuilder applicationBuilder) where T : class
         {
             return applicationBuilder.ApplicationServices.Resolve<T>();
         }
 
-        public static T Resolve<T>(this IServiceProvider services) where T : class
+        /// <summary>
+        ///     Resolve the registered implementation for the service provider 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
+        public static T Resolve<T>(this IServiceProvider serviceProvider) where T : class
         {
-            return services.GetService<T>();
+            return serviceProvider.GetService<T>();
         }
     }
 }

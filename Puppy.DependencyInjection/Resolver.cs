@@ -18,19 +18,35 @@
 #endregion License
 
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Puppy.DependencyInjection
 {
     public static class Resolver
     {
+        private static IServiceCollection _services;
+
         /// <summary>
         ///     Static Service Collection of System 
         /// </summary>
-        public static IServiceCollection Services { get; set; }
+        public static IServiceCollection Services
+        {
+            get => _services;
+            set
+            {
+                _services = value;
+                ServiceProvider = _services.BuildServiceProvider();
+            }
+        }
+
+        /// <summary>
+        ///     Static Service Provider of System 
+        /// </summary>
+        public static IServiceProvider ServiceProvider { get; private set; }
 
         public static T Resolve<T>() where T : class
         {
-            return Services.Resolve<T>();
+            return ServiceProvider.Resolve<T>();
         }
     }
 }

@@ -91,6 +91,13 @@ namespace Puppy.DataTable.Models.Config
         public string DrawCallbackFunctionName { get; set; }
 
         /// <summary>
+        ///     Function name of Responsive Resize Call Back. DataTable will pass "e, datatable,
+        ///     columns" to the function. Ex: responsiveResizeCallBackHandle(e, datatable, columns).
+        /// </summary>
+        /// <remarks> see more: https://datatables.net/reference/event/responsive-resize </remarks>
+        public string ResponsiveResizeCallbackFunctionName { get; set; }
+
+        /// <summary>
         ///     Function name of before send handler, you can modified data before submit by this
         ///     way. DataTable will pass "list name-value" submit to server as params to the function.
         ///     Ex: beforeSendHandle(aoData).

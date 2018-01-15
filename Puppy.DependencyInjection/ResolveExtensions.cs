@@ -35,7 +35,7 @@ namespace Puppy.DependencyInjection
         /// <returns></returns>
         public static T Resolve<T>(this IServiceCollection services) where T : class
         {
-            if (Resolver.ServiceProvider.GetService<T>() == null)
+            if (Resolver.Resolve<T>() == null)
             {
                 Resolver.Services = services;
             }

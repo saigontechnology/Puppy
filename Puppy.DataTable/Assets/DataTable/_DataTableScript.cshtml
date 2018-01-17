@@ -101,6 +101,12 @@
             @Html.Raw("$dataTable.columnFilter(" + Model.ColumnFilter + ");")
         }
 
+        // Responsive Resize Callback
+        @if (Model.IsResponsive && !string.IsNullOrWhiteSpace(Model.ResponsiveResizeCallbackFunctionName))
+        {
+            @Html.Raw("$dataTable.api().on('responsive-resize', function (e, datatable, columns) { " + Model.ResponsiveResizeCallbackFunctionName + "(e, datatable, columns) });")
+        }
+
         // Global Variable
         @if (!string.IsNullOrWhiteSpace(Model.GlobalJsVariableName))
         {

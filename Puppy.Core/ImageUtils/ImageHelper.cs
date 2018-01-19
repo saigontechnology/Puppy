@@ -23,6 +23,7 @@ using Puppy.Core.FileUtils;
 using Puppy.Core.StringUtils;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -242,16 +243,16 @@ namespace Puppy.Core.ImageUtils
 
         #region Image Resize
 
-        public static byte[] Resize(string path, int newWidth, int newHeight)
+        public static byte[] Resize(string path, int newWidth, int newHeight, ResizeMode resizeMode = ResizeMode.Max)
         {
             path = path.GetFullPath();
 
             byte[] imageBytes = File.ReadAllBytes(path);
 
-            return Resize(imageBytes, newWidth, newHeight);
+            return Resize(imageBytes, newWidth, newHeight, resizeMode);
         }
 
-        public static byte[] Resize(byte[] imageBytes, int newWidth, int newHeight)
+        public static byte[] Resize(byte[] imageBytes, int newWidth, int newHeight, ResizeMode resizeMode = ResizeMode.Max)
         {
             using (MemoryStream inStream = new MemoryStream(imageBytes))
             {
@@ -259,7 +260,11 @@ namespace Puppy.Core.ImageUtils
                 {
                     using (Image<Rgba32> image = SixLabors.ImageSharp.Image.Load<Rgba32>(inStream, out IImageFormat format))
                     {
-                        image.Mutate(x => x.Resize(newWidth, newHeight));
+                        image.Mutate(x => x.Resize(new ResizeOptions
+                        {
+                            Size = new SixLabors.Primitives.Size(newWidth, newHeight),
+                            Mode = resizeMode
+                        }));
 
                         image.Save(outStream, format);
 

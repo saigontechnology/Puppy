@@ -14,6 +14,11 @@
     <OutputPath>.\bin\</OutputPath>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  
+  <!-- Puppy -->
+  <ItemGroup>
+    <ProjectReference Include="..\Puppy.Web\Puppy.Web.csproj" />
+  </ItemGroup>
 
   <!-- Libraries -->
   <ItemGroup>

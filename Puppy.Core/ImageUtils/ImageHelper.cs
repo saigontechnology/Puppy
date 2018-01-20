@@ -22,8 +22,6 @@
 using Puppy.Core.FileUtils;
 using Puppy.Core.StringUtils;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Processing;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -247,27 +245,28 @@ namespace Puppy.Core.ImageUtils
 
         #region Image Resize
 
-        public static byte[] Resize(string path, int newWidth, int newHeight, ResizeMode resizeMode = ResizeMode.Max)
+        public static byte[] Resize(string path, int newWidthPx, int newHeightPx, ResizeType resizeType = ResizeType.Max)
         {
             path = path.GetFullPath();
 
             byte[] imageBytes = File.ReadAllBytes(path);
 
-            return Resize(imageBytes, newWidth, newHeight, resizeMode);
+            return Resize(imageBytes, newWidthPx, newHeightPx, resizeType);
         }
 
-        public static byte[] Resize(byte[] imageBytes, int newWidth, int newHeight, ResizeMode resizeMode = ResizeMode.Max)
+        public static byte[] Resize(byte[] imageBytes, int newWidthPx, int newHeightPx, ResizeType resizeType = ResizeType.Max)
         {
             using (MemoryStream inStream = new MemoryStream(imageBytes))
             {
                 using (MemoryStream outStream = new MemoryStream())
                 {
-                    using (Image<Rgba32> image = SixLabors.ImageSharp.Image.Load<Rgba32>(inStream, out IImageFormat format))
+                    using (var image = SixLabors.ImageSharp.Image.Load<Rgba32>(inStream, out var format))
                     {
-                        image.Mutate(x => x.Resize(new ResizeOptions
+                        image.Mutate(x => x.Resize(new SixLabors.ImageSharp.Processing.ResizeOptions
                         {
-                            Size = new SixLabors.Primitives.Size(newWidth, newHeight),
-                            Mode = resizeMode
+                            Size = new SixLabors.Primitives.Size(newWidthPx, newHeightPx),
+                            
+                            Mode = (SixLabors.ImageSharp.Processing.ResizeMode)((int)resizeType)
                         }));
 
                         image.Save(outStream, format);
@@ -432,5 +431,45 @@ namespace Puppy.Core.ImageUtils
         }
 
         #endregion
+    }
+
+    /// <summary>
+    ///     Enumerated resize modes to apply to resized images. 
+    /// </summary>
+    public enum ResizeType
+    {
+        /// <summary>
+        ///     Crops the resized image to fit the bounds of its container. 
+        /// </summary>
+        Crop,
+
+        /// <summary>
+        ///     Pads the resized image to fit the bounds of its container. If only one dimension is
+        ///     passed, will maintain the original aspect ratio.
+        /// </summary>
+        Pad,
+
+        /// <summary>
+        ///     Pads the image to fit the bound of the container without resizing the original
+        ///     source. When downscaling, performs the same functionality as <see cref="ResizeType.Pad" />
+        /// </summary>
+        BoxPad,
+
+        /// <summary>
+        ///     Constrains the resized image to fit the bounds of its container maintaining the
+        ///     original aspect ratio.
+        /// </summary>
+        Max,
+
+        /// <summary>
+        ///     Resizes the image until the shortest side reaches the set given dimension. Upscaling
+        ///     is disabled in this mode and the original image will be returned if attempted.
+        /// </summary>
+        Min,
+
+        /// <summary>
+        ///     Stretches the resized image to fit the bounds of its container. 
+        /// </summary>
+        Stretch
     }
 }

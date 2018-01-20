@@ -32,11 +32,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="HttpClientUtils\**" />
-    <EmbeddedResource Remove="HttpClientUtils\**" />
-    <None Remove="HttpClientUtils\**" />
-  </ItemGroup>
+  
   <ItemGroup>
     <Compile Remove="HtmlUtils\HtmlToPdf.cs" />
   </ItemGroup>
@@ -44,7 +40,6 @@
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
-    <ProjectReference Include="..\Puppy.DependencyInjection\Puppy.DependencyInjection.csproj" />
   </ItemGroup>
 
   <!-- External Libraries -->

@@ -51,7 +51,7 @@ namespace Puppy.Elastic
 
             configuration.BuildConfig(configSection);
 
-            services.AddScopedIfNotExist<IElasticContext, ElasticContext>();
+            services.AddTransientIfNotExist<IElasticContext, ElasticContext>();
 
             return services;
         }

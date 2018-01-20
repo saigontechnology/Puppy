@@ -26,6 +26,8 @@ namespace Puppy.DependencyInjection
     {
         private static IServiceCollection _services;
 
+        private static IServiceProvider _serviceProvider;
+
         /// <summary>
         ///     Static Service Collection of System 
         /// </summary>
@@ -35,14 +37,17 @@ namespace Puppy.DependencyInjection
             set
             {
                 _services = value;
-                ServiceProvider = _services.BuildServiceProvider();
+                _serviceProvider = _services.BuildServiceProvider();
             }
         }
 
         /// <summary>
         ///     Static Service Provider of System 
         /// </summary>
-        public static IServiceProvider ServiceProvider { get; private set; }
+        /// <remarks>
+        ///     Priority to use <see cref="System.Web.HttpContext.Current" /> to get RequestServices
+        /// </remarks>
+        public static IServiceProvider ServiceProvider => System.Web.HttpContext.Current?.RequestServices ?? _serviceProvider;
 
         public static T Resolve<T>() where T : class
         {

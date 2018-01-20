@@ -21,7 +21,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.ServiceCollectionUtils;
-using Puppy.DependencyInjection;
 
 namespace System.Web
 {
@@ -54,8 +53,10 @@ namespace Puppy.Web.Middlewares
         /// <param name="app"></param>
         public static IApplicationBuilder UseHttpContextAccessor(this IApplicationBuilder app)
         {
-            var httpContextAccessor = app.Resolve<IHttpContextAccessor>();
+            var httpContextAccessor = app.ApplicationServices.GetService<IHttpContextAccessor>();
+
             System.Web.HttpContext.Configure(httpContextAccessor);
+
             return app;
         }
     }

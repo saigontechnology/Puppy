@@ -1,23 +1,23 @@
-﻿using System;
+﻿using EnumsNET;
+using System;
 using System.IO;
-using System.Text;
 
 namespace Puppy.Core.ImageUtils.ImageCompressor
 {
-    public class CompressResult : EventArgs
+    public class ImageCompressResult : EventArgs
     {
         public MemoryStream ResultFileStream { get; set; } = new MemoryStream();
 
         /// <inheritdoc />
         /// <summary>
         ///     Initializes a new instance of the
-        ///     <see cref="T:Puppy.Core.ImageUtils.ImageCompressor.CompressResult" /> class.
+        ///     <see cref="T:Puppy.Core.ImageUtils.ImageCompressor.ImageCompressResult" /> class.
         /// </summary>
         /// <param name="filePath">               The result file name. </param>
         /// <param name="fileSizeBeforeCompress">
         ///     The original file fileSizeBeforeCompress in bytes.
         /// </param>
-        public CompressResult(string filePath, long fileSizeBeforeCompress)
+        public ImageCompressResult(string filePath, long fileSizeBeforeCompress)
         {
             OriginalFileSize = fileSizeBeforeCompress;
             FileInfo result = new FileInfo(filePath);
@@ -31,9 +31,9 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         /// <summary>
         ///     Gets or sets the original file size in bytes. 
         /// </summary>
-        public ImageType FileType { get; set; }
+        public CompressImageType FileType { get; set; }
 
-        public string FileExtension => FileType.GetEnumDescription();
+        public string FileExtension => FileType.AsString(EnumFormat.Description);
 
         /// <summary>
         ///     Gets or sets the original file size in bytes. 
@@ -60,18 +60,20 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         /// </summary>
         public double PercentSaving => BytesSaving == 0 ? 0 : Math.Round(((double)BytesSaving / OriginalFileSize) * 100, 2);
 
+        public int QualityPercent { get; set; }
+
         /// <summary>
         ///     Returns a string that represents the current object. 
         /// </summary>
         /// <returns> A string that represents the current object. </returns>
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("Before: " + OriginalFileSize + " bytes");
-            stringBuilder.AppendLine("After: " + CompressedFileSize + " bytes");
-            stringBuilder.AppendLine($"BytesSaving: {BytesSaving} bytes / {PercentSaving:0.##}%");
-            stringBuilder.AppendLine($"Total Milliseconds: {TotalMillisecondsTook} ms");
-            return stringBuilder.ToString();
+            var str = $"{OriginalFileSize:N} bytes => {CompressedFileSize:N} bytes. " +
+                      $"Saved {BytesSaving} bytes ({PercentSaving:0.##} %). " +
+                      $"Took: {TotalMillisecondsTook:N} ms. " +
+                      $"Compressed Image is {QualityPercent} % Quality of the Original.";
+
+            return str;
         }
     }
 }

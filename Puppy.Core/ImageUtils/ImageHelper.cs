@@ -228,9 +228,13 @@ namespace Puppy.Core.ImageUtils
             try
             {
                 imageStream.Position = 0;
+
                 byte[] bytes = imageStream.ToArray();
+
                 var text = Encoding.UTF8.GetString(bytes);
+
                 bool isSvgImage = text.StartsWith("<?xml ") || text.StartsWith("<svg ");
+
                 return isSvgImage;
             }
             catch

@@ -1,5 +1,8 @@
-  cjpeg 3.1 - mozjpeg_3.1_x86 => to compress
-  -------------------------------------------------------------------
+## JPEG
+
+cjpeg 3.1 - mozjpeg_3.1_x86 => to compress
+
+```
   -quality N[,...]   Compression quality (0..100; 5-95 is useful range)
   -grayscale     Create monochrome JPEG file
   -rgb           Create RGB JPEG file
@@ -48,9 +51,15 @@ Switches for wizards:
   -sample HxV[,...]  Set component sampling factors
   -scans file    Create multi-scan JPEG per script file
 
-////////////////////////////////////////////////////////////////////
+```
+
+---
+
+## JPEG Optimizer
+
 jpg optimier => to oprimize
-----------------------------------------------------------------------------
+
+```
 NAME
        TN_jpeg_compressor - utility to optimize/compress JPEG/JFIF files.
 
@@ -162,3 +171,4 @@ BUGS
        When  using  --size  option,  resulting  file is not always exactly the
        requested size. Workaround is to re-run  TN_jpeg_compressor  on  the  same  file
        again which often will result file closer to target size.
+```

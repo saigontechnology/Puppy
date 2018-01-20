@@ -14,6 +14,16 @@
     <OutputPath>.\bin\</OutputPath>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="ImageUtils\ImageCompressor\ImageCompressorTools\Puppy_ImageCompressor_GIF.exe" />
+    <EmbeddedResource Include="ImageUtils\ImageCompressor\ImageCompressorTools\libjpeg-62.dll" />
+    <EmbeddedResource Include="ImageUtils\ImageCompressor\ImageCompressorTools\Puppy_ImageCompressor_JPEG.exe" />
+    <EmbeddedResource Include="ImageUtils\ImageCompressor\ImageCompressorTools\Puppy_ImageCompressor_JPEG_Optimize.exe" />
+    <EmbeddedResource Include="ImageUtils\ImageCompressor\ImageCompressorTools\Puppy_ImageCompressor_PNG_Primary.exe" />
+    <EmbeddedResource Include="ImageUtils\ImageCompressor\ImageCompressorTools\Puppy_ImageCompressor_PNG_Secondary.exe" />
+    <EmbeddedResource Include="ImageUtils\ImageCompressor\ImageCompressorTools\Puppy_ImageCompressor_PNG_Optimize.exe" />
+  </ItemGroup>
 
   <!-- External Libraries -->
   <ItemGroup>

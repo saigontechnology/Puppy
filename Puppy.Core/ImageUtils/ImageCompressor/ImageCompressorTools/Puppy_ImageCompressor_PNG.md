@@ -1,9 +1,8 @@
-﻿// To optimize
-pngout
+﻿## PNG
 
-// To first compress
- http://pngnq.sourceforge.net/
+[pngout](http://pngnq.sourceforge.net/)
 
+```
  pngnq [-vfhV][-s sample factor][-e extension][-d dir][-n colours][-Q f|n][input files]
   options:
      -v Verbose mode. Prints status messages.
@@ -18,13 +17,14 @@ pngout
      -Q Dithering method: f = Floyd Steinberg, n = None (default)
      -V Print version number and library versions.
      -h Print this help.
+```
 
 
+## PNG Optimizer
 
-//-------------------------------------------------------------------
- A modified pngnq: convert png images to 256 colours.
- https://sourceforge.net/projects/pngnqs9/
-
+ A modified [pngnq](https://sourceforge.net/projects/pngnqs9/): convert png images to 256 colours.
+ 
+```
 	 pngnq-s9 Man Page
 NAME
        pngnq-s9 - Quantize a PNG image to 256 or fewer colours using the Neuquant pro‐
@@ -278,3 +278,4 @@ NOTES
        pngnq-s9 is used at your  own  risk,  and  carries  no  warranties  whatsoever.
        pngnq-s9 may make arbitrary assumptions in order to recover from errors such as
        quantization parameters being out of range or file names being too long.
+```

@@ -1,13 +1,32 @@
-﻿using System;
+﻿using EnumsNET;
+using Puppy.Core.FileUtils;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
 namespace Puppy.Core.ImageUtils.ImageCompressor
 {
-    public static class Compressor
+    public static class ImageCompressor
     {
-        #region Compress
+        #region Properties
+
+        /// <summary>
+        ///     Setup Window UserName to Run CMD Progress 
+        /// </summary>
+        public static string ProcessRunAsUserName = null;
+
+        /// <summary>
+        ///     Setup Window User Password to Run CMD Progress 
+        /// </summary>
+        public static string ProcessRunAsPassword = null;
+
+        /// <summary>
+        ///     Process run as specific Window User or not 
+        /// </summary>
+        public static bool IsProcessRunAsUser => !string.IsNullOrWhiteSpace(ProcessRunAsUserName) && !string.IsNullOrWhiteSpace(ProcessRunAsPassword);
+
+        #endregion Properties
 
         /// <summary>
         ///     Runs the process to optimize the image. 
@@ -18,25 +37,25 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         /// <param name="timeout">       </param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"> input path is invalid image format </exception>
-        public static CompressResult Compress(string inputPath, string outputPath, int qualityPercent = 0, int timeout = 0)
+        public static ImageCompressResult Compress(string inputPath, string outputPath, int qualityPercent = 0, int timeout = ImageCompressorConstants.TimeoutMillisecond)
         {
             using (MemoryStream stream = new MemoryStream())
             {
                 using (FileStream file = new FileStream(inputPath, FileMode.Open, FileAccess.Read))
                 {
                     // Copy file to stream
+
                     file.Position = 0;
+
                     file.CopyTo(stream);
 
                     // Do compress
-                    CompressResult compressResult = Compress(stream, qualityPercent, timeout);
+                    ImageCompressResult imageCompressResult = Compress(stream, qualityPercent, timeout);
 
                     // Save to file
-                    if (compressResult != null)
-                    {
-                        Helper.WriteToFile(outputPath, compressResult.ResultFileStream);
-                    }
-                    return compressResult;
+                    imageCompressResult?.ResultFileStream.Save(outputPath);
+
+                    return imageCompressResult;
                 }
             }
         }
@@ -51,109 +70,128 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         /// <param name="timeout">        TimeoutMillisecond of process in millisecond </param>
         /// <returns> The Task containing processing information. </returns>
         /// <exception cref="ArgumentException"> stream is invalid image format </exception>
-        public static CompressResult Compress(MemoryStream stream, int qualityPercent = 0, int timeout = 0)
+        public static ImageCompressResult Compress(MemoryStream stream, int qualityPercent = 0, int timeout = ImageCompressorConstants.TimeoutMillisecond)
         {
             // Create new stopwatch.
             Stopwatch stopwatch = new Stopwatch();
 
-            bool isValidImage = Helper.TryGetImageType(stream, out var imageType);
+            bool isValidImage = ImageCompressorHelper.TryGetCompressImageType(stream, out var imageType);
 
-            if (!isValidImage || imageType == ImageType.Invalid)
+            if (!isValidImage || imageType == CompressImageType.Invalid)
             {
                 throw new ArgumentException($"{nameof(stream)} is invalid image format", nameof(stream));
             }
 
             // Handle default value
-            qualityPercent = Helper.GetQualityPercent(qualityPercent, imageType);
-            timeout = Helper.GetTimeOut(timeout);
+            qualityPercent = ImageCompressorHelper.GetQualityPercent(qualityPercent, imageType);
 
-            CompressResult compressResult = null;
+            ImageCompressResult imageCompressResult = null;
 
             // Begin timing.
             stopwatch.Start();
+
             bool isCanOptimize = false;
-            if (imageType == ImageType.Png)
-            {
-                while (qualityPercent > 0 && !isCanOptimize)
-                {
-                    compressResult = Process(stream, CompressAlgorithm.PngPrimary, qualityPercent, timeout);
-                    qualityPercent -= 10;
 
-                    if (compressResult == null || (compressResult.PercentSaving > 0 && compressResult.PercentSaving < 100))
+            switch (imageType)
+            {
+                case CompressImageType.Png:
                     {
-                        isCanOptimize = true;
+                        while (qualityPercent > 0)
+                        {
+                            imageCompressResult = Process(stream, CompressAlgorithm.PngPrimary, qualityPercent, timeout);
+
+                            if (imageCompressResult == null || (imageCompressResult.PercentSaving > 0 && imageCompressResult.PercentSaving < 100))
+                            {
+                                isCanOptimize = true;
+
+                                break;
+                            }
+
+                            qualityPercent -= 10;
+                        }
+
+                        // if quality percent < 0 then try compress by png secondary algorithm (this
+                        // algorithm not related to quality percent)
+                        if (!isCanOptimize)
+                        {
+                            imageCompressResult = Process(stream, CompressAlgorithm.PngSecondary, qualityPercent, timeout);
+                        }
+
+                        break;
                     }
-                }
-
-                // if quality percent < 0 then try compress by png secondary algorithm (this
-                // algorithm not related to quality percent)
-                if (!isCanOptimize)
-                {
-                    compressResult = Process(stream, CompressAlgorithm.PngSecondary, qualityPercent, timeout);
-                }
-            }
-            else if (imageType == ImageType.Jpeg)
-            {
-                while (qualityPercent > 0 && !isCanOptimize)
-                {
-                    compressResult = Process(stream, CompressAlgorithm.Jpeg, qualityPercent, timeout);
-                    qualityPercent -= 10;
-
-                    if (compressResult == null || (compressResult.PercentSaving > 0 && compressResult.PercentSaving < 100))
+                case CompressImageType.Jpeg:
                     {
-                        isCanOptimize = true;
-                    }
-                }
-            }
-            else if (imageType == ImageType.Gif)
-            {
-                while (qualityPercent > 0 && !isCanOptimize)
-                {
-                    compressResult = Process(stream, CompressAlgorithm.Gif, qualityPercent, timeout);
-                    qualityPercent -= 10;
+                        while (qualityPercent > 0)
+                        {
+                            imageCompressResult = Process(stream, CompressAlgorithm.Jpeg, qualityPercent, timeout);
 
-                    if (compressResult == null || (compressResult.PercentSaving > 0 && compressResult.PercentSaving < 100))
-                    {
-                        isCanOptimize = true;
+                            if (imageCompressResult == null || (imageCompressResult.PercentSaving > 0 && imageCompressResult.PercentSaving < 100))
+                            {
+                                isCanOptimize = true;
+
+                                break;
+                            }
+
+                            qualityPercent -= 10;
+                        }
+
+                        break;
                     }
-                }
-            }
-            else
-            {
-                compressResult = Process(stream, CompressAlgorithm.Svg, qualityPercent, timeout);
+                case CompressImageType.Gif:
+                    {
+                        while (qualityPercent > 0)
+                        {
+                            imageCompressResult = Process(stream, CompressAlgorithm.Gif, qualityPercent, timeout);
+
+                            if (imageCompressResult == null || (imageCompressResult.PercentSaving > 0 && imageCompressResult.PercentSaving < 100))
+                            {
+                                isCanOptimize = true;
+
+                                break;
+                            }
+
+                            qualityPercent -= 10;
+                        }
+
+                        break;
+                    }
             }
 
             // Stop timing.
             stopwatch.Stop();
 
             // if cannot at all, return null
-            if (compressResult == null)
+
+            if (imageCompressResult == null)
             {
                 return null;
             }
 
-            if ((compressResult.PercentSaving > 0 && compressResult.PercentSaving < 100))
+            if (imageCompressResult.PercentSaving > 0 && imageCompressResult.PercentSaving < 100)
             {
                 // update total millisecond took only
-                compressResult.TotalMillisecondsTook = stopwatch.ElapsedMilliseconds;
+                imageCompressResult.TotalMillisecondsTook = stopwatch.ElapsedMilliseconds;
             }
             else
             {
                 // update total millisecond took
-                compressResult.TotalMillisecondsTook = stopwatch.ElapsedMilliseconds;
+                imageCompressResult.TotalMillisecondsTook = stopwatch.ElapsedMilliseconds;
 
                 // Cannot optimize Use origin for destination => update file size and stream
-                compressResult.CompressedFileSize = compressResult.OriginalFileSize;
+                imageCompressResult.CompressedFileSize = imageCompressResult.OriginalFileSize;
 
                 // Copy origin steam to result
-                compressResult.ResultFileStream.SetLength(0);
-                stream.Position = 0;
-                stream.CopyTo(compressResult.ResultFileStream);
-            }
-            return compressResult;
-        }
+                imageCompressResult.ResultFileStream.SetLength(0);
 
-        #endregion Compress
+                stream.Position = 0;
+
+                stream.CopyTo(imageCompressResult.ResultFileStream);
+            }
+
+            imageCompressResult.QualityPercent = isCanOptimize ? qualityPercent : 100;
+
+            return imageCompressResult;
+        }
 
         #region Process
 
@@ -170,30 +208,30 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         /// <param name="timeout">        TimeoutMillisecond of process in millisecond </param>
         /// <returns> The Task containing processing information. </returns>
         /// <exception cref="ArgumentException"> stream is invalid image format </exception>
-        private static CompressResult Process(MemoryStream stream, CompressAlgorithm algorithm, int qualityPercent = 0, int timeout = 0)
+        private static ImageCompressResult Process(MemoryStream stream, CompressAlgorithm algorithm, int qualityPercent = 0, int timeout = 0)
         {
-            bool isValidImage = Helper.TryGetImageType(stream, out var imageType);
+            bool isValidImage = ImageCompressorHelper.TryGetCompressImageType(stream, out var imageType);
 
-            if (!isValidImage || imageType == ImageType.Invalid)
+            if (!isValidImage || imageType == CompressImageType.Invalid)
             {
                 throw new ArgumentException($"{nameof(stream)} is invalid image format", nameof(stream));
             }
 
             // Create a source temporary file with the correct extension.
-            var filePath = Helper.CreateTemporaryFile(stream, imageType.GetEnumDescription(), out _);
+            var filePath = FileHelper.CreateTempFile(stream, imageType.AsString(EnumFormat.Description), out _);
 
-            CompressResult compressResult = Process(filePath, algorithm, qualityPercent, timeout);
+            ImageCompressResult imageCompressResult = Process(filePath, algorithm, qualityPercent, timeout);
 
-            if (compressResult != null)
+            if (imageCompressResult != null)
             {
                 // update file type, because in process not update it
-                compressResult.FileType = imageType;
+                imageCompressResult.FileType = imageType;
             }
 
             // Cleanup temp file
-            Helper.DeleteFile(filePath);
+            FileHelper.SafeDelete(filePath);
 
-            return compressResult;
+            return imageCompressResult;
         }
 
         /// <summary>
@@ -214,16 +252,17 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         /// <exception cref="NotSupportedException">
         ///     Some security policies don't allow execution of programs in this way
         /// </exception>
-        private static CompressResult Process(string filePath, CompressAlgorithm algorithm, int qualityPercent = 0, int timeout = 0)
+        private static ImageCompressResult Process(string filePath, CompressAlgorithm algorithm, int qualityPercent = 0, int timeout = 0)
         {
-            Helper.CheckFilePath(filePath);
+            ImageCompressorHelper.CheckFilePath(filePath);
+
             long fileSizeBeforeCompress = new FileInfo(filePath).Length;
 
-            CompressResult compressResult = null;
+            ImageCompressResult imageCompressResult = null;
 
             var processInfo = new ProcessStartInfo("cmd")
             {
-                WorkingDirectory = Bootstrapper.Instance.WorkingPath,
+                WorkingDirectory = ImageCompressorBootstrapper.Instance.WorkingPath,
                 Arguments = GetArguments(filePath, out var fileTempPath, algorithm, qualityPercent),
                 UseShellExecute = false,
                 CreateNoWindow = true,
@@ -232,21 +271,19 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
                 RedirectStandardError = false,
             };
 
-#if !DEBUG
-            // Use user have full permission of tools to run process of cmd Currently, Only case svg
-            // in nodejs need user name and password of window login to execute nodejs svgo package
-            if (Constants.IsProcessRunAsUser)
+            if (IsProcessRunAsUser)
             {
                 System.Security.SecureString runAsPassword = new System.Security.SecureString();
-                foreach (char c in Constants.ProcessRunAsPassword)
+
+                foreach (char c in ProcessRunAsPassword)
                 {
                     runAsPassword.AppendChar(c);
                 }
 
-                processInfo.UserName = Constants.ProcessRunAsUserName;
+                processInfo.UserName = ProcessRunAsUserName;
+
                 processInfo.Password = runAsPassword;
             }
-#endif
 
             if (string.IsNullOrWhiteSpace(processInfo.Arguments))
             {
@@ -254,6 +291,7 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
             }
 
             int elapsedTime = 0;
+
             bool eventHandled = false;
 
             try
@@ -267,12 +305,12 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
                 process.Exited += (sender, args) =>
                 {
                     // Done compress
-                    compressResult = new CompressResult(filePath, fileSizeBeforeCompress);
+                    imageCompressResult = new ImageCompressResult(filePath, fileSizeBeforeCompress);
                     process.Dispose();
                     eventHandled = true;
 
                     // Remove temp file if have
-                    Helper.DeleteFile(fileTempPath);
+                    FileHelper.SafeDelete(fileTempPath);
                 };
 
                 process.Start();
@@ -284,22 +322,25 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
 
             // Wait for Exited event, but not more than config timeout time.
             const int sleepAmount = 100;
+
             while (!eventHandled)
             {
                 elapsedTime += sleepAmount;
+
                 if (elapsedTime > timeout && timeout > 0)
                 {
                     break;
                 }
+
                 Thread.Sleep(sleepAmount);
             }
 
             // update compress result stream
-            if (compressResult != null)
+            if (imageCompressResult != null)
             {
-                Helper.WriteToStream(filePath, compressResult.ResultFileStream);
+                FileHelper.WriteToStream(filePath, imageCompressResult.ResultFileStream);
             }
-            return compressResult;
+            return imageCompressResult;
         }
 
         #endregion Process
@@ -317,43 +358,31 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         /// <param name="qualityPercent"> Quality PercentSaving - Process </param>
         /// <returns> The <see cref="string" /> containing the correct command arguments. </returns>
         /// <exception cref="ArgumentException"> file path is invalid </exception>
-        private static string GetArguments(
-                                            string filePath,
-                                            out string fileTempPath,
-                                            CompressAlgorithm algorithm,
-                                            int qualityPercent = 0)
+        private static string GetArguments(string filePath, out string fileTempPath, CompressAlgorithm algorithm, int qualityPercent = 0)
         {
             fileTempPath = null;
-            Helper.CheckFilePath(filePath);
-            qualityPercent = Helper.GetQualityPercent(qualityPercent, algorithm);
-            if (algorithm == CompressAlgorithm.Svg)
-            {
-                return GetSvgCommand(filePath);
-            }
-            if (algorithm == CompressAlgorithm.Gif)
-            {
-                return GetGifCommand(filePath);
-            }
-            if (algorithm == CompressAlgorithm.Jpeg)
-            {
-                return GetJpegCommand(filePath, out fileTempPath, qualityPercent);
-            }
-            if (algorithm == CompressAlgorithm.PngPrimary)
-            {
-                return GetPngPrimaryCommand(filePath, qualityPercent);
-            }
-            return GetPngSecondaryCommand(filePath);
-        }
 
-        /// <summary>
-        ///     SVG 
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        private static string GetSvgCommand(string filePath)
-        {
-            // need install nodejs and svgo by nodejs to do this https://github.com/svg/svgo
-            return $"/c svgo \"{filePath}\" --quiet";
+            ImageCompressorHelper.CheckFilePath(filePath);
+
+            qualityPercent = ImageCompressorHelper.GetQualityPercent(qualityPercent, algorithm);
+
+            switch (algorithm)
+            {
+                case CompressAlgorithm.Gif:
+                    {
+                        return GetGifCommand(filePath);
+                    }
+                case CompressAlgorithm.Jpeg:
+                    {
+                        return GetJpegCommand(filePath, out fileTempPath, qualityPercent);
+                    }
+                case CompressAlgorithm.PngPrimary:
+                    {
+                        return GetPngPrimaryCommand(filePath, qualityPercent);
+                    }
+            }
+
+            return GetPngSecondaryCommand(filePath);
         }
 
         /// <summary>
@@ -366,17 +395,15 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         {
             if (qualityPercent == 0)
             {
-                qualityPercent = Constants.DefaultGifQualityPercent;
+                qualityPercent = ImageCompressorConstants.DefaultGifQualityPercent;
             }
 
-            // giflossy have lossy % from 30-200 => qualityLossyPersent = (100 - qualityPercent) * 2
-
-            int qualityLossyPersent = (100 - qualityPercent) * 2;
+            int qualityLossyPercent = (100 - qualityPercent) * 2;
 
             // https://www.lcdf.org/gifsicle/man.html https://linux.die.net/man/1/gifsicle + lossy (https://github.com/pornel/giflossy/releases)
             // --use-col=web Adjust --lossy argument to suit quality (30 is very light compression,
             // 200 is heavy).
-            var cmd = $"/c TN_ImageCompressor_GIF --no-warnings --no-app-extensions --no-comments --no-extensions --no-names -optimize=03 --lossy={qualityLossyPersent} \"{filePath}\" --output=\"{filePath}\"";
+            var cmd = $"/c {ImageCompressorConstants.GifWorkerFileName} --no-warnings --no-app-extensions --no-comments --no-extensions --no-names -optimize=03 --lossy={qualityLossyPercent} \"{filePath}\" --output=\"{filePath}\"";
 
             return cmd;
         }
@@ -386,7 +413,7 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         {
             if (qualityPercent == 0)
             {
-                qualityPercent = Constants.DefaultJpegQualityPercent;
+                qualityPercent = ImageCompressorConstants.DefaultJpegQualityPercent;
             }
 
             // Idea: create temp file from source file then optimize temp file and copy to source
@@ -395,12 +422,12 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
 
             MemoryStream streamTemp = new MemoryStream();
 
-            Helper.WriteToStream(filePath, streamTemp);
+            FileHelper.WriteToStream(filePath, streamTemp);
 
-            fileTempPath = Helper.CreateTemporaryFile(streamTemp, ImageType.Jpeg.GetEnumDescription(), out _);
+            fileTempPath = FileHelper.CreateTempFile(streamTemp, CompressImageType.Jpeg.AsString(EnumFormat.Description), out _);
 
             // cjpeg after optimize => copy temp file to source file
-            string jpegCommand = $"TN_ImageCompressor_JPEG -optimize -quality {qualityPercent} \"{fileTempPath}\" > \"{filePath}\"";
+            string jpegCommand = $"{ImageCompressorConstants.JpegWorkerFileName} -optimize -quality {qualityPercent} \"{fileTempPath}\" > \"{filePath}\"";
 
             // jpegoptim lossless not lossy
             string jpegOptimizeCommand = GetJpegOptimizeCommand(filePath);
@@ -411,7 +438,7 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         private static string GetJpegOptimizeCommand(string filePath)
         {
             // jpegoptim lossless not lossy
-            string jpegOptimizeCommand = $"TN_ImageCompressor_JPEG_Optimize -o -q -p --force --strip-all --strip-iptc --strip-icc --all-progressive \"{filePath}\"";
+            string jpegOptimizeCommand = $"{ImageCompressorConstants.JpegOptimizeWorkerFileName} -o -q -p --force --strip-all --strip-iptc --strip-icc --all-progressive \"{filePath}\"";
             return jpegOptimizeCommand;
         }
 
@@ -420,7 +447,7 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         {
             if (qualityPercent == 0)
             {
-                qualityPercent = Constants.DefaultPngQualityPercent;
+                qualityPercent = ImageCompressorConstants.DefaultPngQualityPercent;
             }
 
             // First, use pnguqnat to compress
@@ -428,7 +455,7 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
 
             // max is 99
             maxQuality = maxQuality > 99 ? 99 : maxQuality;
-            string pngPrimaryCommand = $"TN_ImageCompressor_PNG_Primary --speed 1 --quality={qualityPercent}-{maxQuality} --skip-if-larger --strip --output \"{filePath}\" --force \"{filePath}\"";
+            string pngPrimaryCommand = $"{ImageCompressorConstants.PngPrimaryWorkerFileName} --speed 1 --quality={qualityPercent}-{maxQuality} --skip-if-larger --strip --output \"{filePath}\" --force \"{filePath}\"";
 
             // Then use pngout to optimize Recompress by pngout to make maximum recompress
             var pngOptimizeCommand = GetPngOptimizeCommand(filePath);
@@ -438,7 +465,7 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         private static string GetPngSecondaryCommand(string filePath)
         {
             // First, use pngqn to compress view more detail http://pngnq.sourceforge.net/
-            string pngSecondaryCommand = $"TN_ImageCompressor_PNG_Secondary -f -s1 -e.png -n 256 \"{filePath}\"";
+            string pngSecondaryCommand = $"{ImageCompressorConstants.PngSecondaryWorkerFileName} -f -s1 -e.png -n 256 \"{filePath}\"";
 
             // Then use pngout to optimize Recompress by pngout to make maximum recompress
             var pngOptimizeCommand = GetPngOptimizeCommand(filePath);
@@ -449,7 +476,7 @@ namespace Puppy.Core.ImageUtils.ImageCompressor
         {
             // view more detail http://www.advsys.net/ken/util/pngout.htm use s2 f5 to make fastest
             // with quality (s0 and f0 take minutes)
-            string pngOptimize = $"TN_ImageCompressor_PNG_Optimize \"{filePath}\" \"{filePath}\" /s2 /f5 /y /q";
+            string pngOptimize = $"{ImageCompressorConstants.PngOptimizeWorkerFileName} \"{filePath}\" \"{filePath}\" /s2 /f5 /y /q";
             return pngOptimize;
         }
 

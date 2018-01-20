@@ -17,6 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Puppy.Core.ImageUtils;
 using Puppy.Core.StringUtils;
 using System;
 using System.IO;
@@ -42,6 +43,11 @@ namespace Puppy.Core.FileUtils
             }
         }
 
+        /// <summary>
+        ///     Create an empty temp file with extension 
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         public static string CreateTempFile(string extension)
         {
             string temp = Path.GetTempFileName();
@@ -49,6 +55,33 @@ namespace Puppy.Core.FileUtils
             var path = Path.ChangeExtension(temp, extension);
             File.Move(temp, path);
             return path;
+        }
+
+        /// <summary>
+        ///     Create an temp file from stream with extension 
+        /// </summary>
+        /// <param name="stream">   </param>
+        /// <param name="extension"></param>
+        /// <param name="fileSize"> </param>
+        /// <returns></returns>
+        internal static string CreateTempFile(Stream stream, string extension, out long fileSize)
+        {
+            string tempFile = Path.GetTempFileName();
+
+            string filePath = Path.ChangeExtension(tempFile, extension);
+
+            File.Move(tempFile, filePath);
+
+            // Save the input stream to a temp file for processing.
+            using (FileStream fileStream = File.Create(filePath))
+            {
+                stream.Position = 0;
+                stream.CopyTo(fileStream);
+            }
+
+            fileSize = stream.Length;
+
+            return filePath;
         }
 
         public static bool IsLocked(string path)
@@ -82,6 +115,11 @@ namespace Puppy.Core.FileUtils
             try
             {
                 path = path.GetFullPath();
+
+                if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+                {
+                    return true;
+                }
 
                 if (File.Exists(path))
                 {
@@ -121,7 +159,7 @@ namespace Puppy.Core.FileUtils
             };
 
             // Check base 64 is image or not
-            var imageInfo = ImageUtils.ImageHelper.GetImageInfo(base64);
+            var imageInfo = ImageHelper.GetImageInfo(base64);
 
             if (imageInfo != null)
             {
@@ -143,7 +181,7 @@ namespace Puppy.Core.FileUtils
                 fileModel.MimeType = fileModel.Extension != null ? MimeTypeHelper.GetMimeType(fileModel.Extension) : null;
             }
 
-            fileModel.Location = string.IsNullOrWhiteSpace(Path.GetExtension(fileModel.Location)) ? (fileModel.Location + fileModel.Extension) : fileModel.Location;
+            fileModel.Location = String.IsNullOrWhiteSpace(Path.GetExtension(fileModel.Location)) ? (fileModel.Location + fileModel.Extension) : fileModel.Location;
 
             var physicalPath = fileModel.Location.GetFullPath();
 
@@ -264,6 +302,28 @@ namespace Puppy.Core.FileUtils
             }
 
             return fileName;
+        }
+
+        public static void WriteToStream(string filePath, MemoryStream stream)
+        {
+            if (!Uri.IsWellFormedUriString(filePath, UriKind.RelativeOrAbsolute) && !File.Exists(filePath))
+            {
+                return;
+            }
+
+            using (FileStream fileStream = File.OpenRead(filePath))
+            {
+                // Replace contents.
+                stream.SetLength(0);
+
+                // Copy file to stream
+                fileStream.Position = 0;
+
+                fileStream.CopyTo(stream);
+
+                // Reset position after copy
+                stream.Position = 0;
+            }
         }
     }
 }

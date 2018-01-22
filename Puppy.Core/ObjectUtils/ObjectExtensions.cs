@@ -177,12 +177,12 @@ namespace Puppy.Core.ObjectUtils
         }
 
         /// <summary>
-        ///     Get the object without virtual child / relate object 
+        ///     Get the object without virtual properties / relate object 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static T WithoutVirtualChild<T>(this T obj)
+        public static T WithoutVirtualProperties<T>(this T obj)
         {
             // Don't serialize a null object, simply return the default for that object
             if (ReferenceEquals(obj, null))

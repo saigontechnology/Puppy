@@ -17,13 +17,14 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Puppy.Coordinate.DistanceUtils;
 using Puppy.Coordinate.Models;
 using Puppy.Core.ObjectUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.Clustering
 {
     public class GeoClustering
     {

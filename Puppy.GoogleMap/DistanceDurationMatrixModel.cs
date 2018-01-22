@@ -23,7 +23,7 @@ using Newtonsoft.Json;
 
 namespace Puppy.GoogleMap
 {
-    public class DistanceMatrixModel
+    public class DistanceDurationMatrixModel
     {
         private int[,] _distanceMatrix;
 
@@ -56,8 +56,12 @@ namespace Puppy.GoogleMap
             var matrix = new int[OriginAddresses.Length, DestinationAddresses.Length];
 
             for (var i = 0; i < Rows.Length; i++)
+            {
                 for (var j = 0; j < Rows[i].Elements.Length; j++)
+                {
                     matrix[i, j] = Rows[i].Elements[j].Distance.Value;
+                }
+            }
 
             return matrix;
         }
@@ -67,8 +71,12 @@ namespace Puppy.GoogleMap
             var matrix = new int[OriginAddresses.Length, DestinationAddresses.Length];
 
             for (var i = 0; i < Rows.Length; i++)
+            {
                 for (var j = 0; j < Rows[i].Elements.Length; j++)
+                {
                     matrix[i, j] = Rows[i].Elements[j].Duration.Value;
+                }
+            }
 
             return matrix;
         }

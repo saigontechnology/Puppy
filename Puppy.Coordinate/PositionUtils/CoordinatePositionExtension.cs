@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.PositionUtils
 {
     public static class CoordinatePositionExtension
     {

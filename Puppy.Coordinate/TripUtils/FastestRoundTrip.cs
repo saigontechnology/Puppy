@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.TripUtils
 {
     public class FastestRoundTrip
     {
@@ -62,6 +62,11 @@ namespace Puppy.Coordinate
 
         #endregion Property
 
+        /// <summary>
+        ///     Concorde TSP Solver algorithm combine with Ant colony optimization algorithms to find
+        ///     waypoint and best path
+        /// </summary>
+        /// <param name="coordinates"></param>
         public FastestRoundTrip(List<Models.Coordinate> coordinates)
         {
             if (coordinates.Count < 3) throw new NotSupportedException();

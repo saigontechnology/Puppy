@@ -22,7 +22,7 @@
 using Puppy.Coordinate.Models;
 using System;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.DistanceUtils
 {
     public static class CoordinateDistanceExtension
     {

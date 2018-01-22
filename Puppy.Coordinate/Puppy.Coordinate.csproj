@@ -18,5 +18,6 @@
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
+    <ProjectReference Include="..\Puppy.GoogleMap\Puppy.GoogleMap.csproj" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.TripUtils
 {
     public class FastestAzTrip
     {

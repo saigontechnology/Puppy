@@ -23,13 +23,14 @@ namespace Puppy.GoogleMap
 {
     public class CoordinateModel
     {
-        public CoordinateModel(double lat, double lng)
+        public CoordinateModel(double longitude, double latitude)
         {
-            Latitude = lat;
-            Longitude = lng;
+            Longitude = longitude;
+            Latitude = latitude;
         }
 
         public double Latitude { get; set; }
+
         public double Longitude { get; set; }
     }
 }

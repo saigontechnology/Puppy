@@ -19,7 +19,7 @@
 
 using Puppy.Coordinate.Models;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.DistanceUtils
 {
     public static class DistanceHelper
     {

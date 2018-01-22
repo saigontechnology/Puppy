@@ -26,7 +26,7 @@ using System.Text;
 using System.Threading;
 using System.Xml;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.TripUtils
 {
     public class GMapHelper
     {

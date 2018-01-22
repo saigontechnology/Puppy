@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Puppy.Coordinate;
+using Puppy.Coordinate.Clustering;
+using Puppy.Coordinate.TripUtils;
 using System.Collections.Generic;
 
 namespace Puppy.Testing
@@ -71,17 +72,25 @@ namespace Puppy.Testing
             // 30 âu cơ hồ chí minh, 10.7877314, 106.64095250000003
 
             // (10.7756192, 106.6237788)
+
             // (10.7975076, 106.6558153)
+
             // (10.8011653, 106.657283)
+
             // (10.7922362, 106.605514)
+
             // (10.7877314, 106.64095250000003)
 
             // Own Data
 
             // (106.6237788,10.7756192)
+
             // (106.6558153,10.7975076)
-            // (106.657283,10.8011653) 
+
+            // (106.657283,10.8011653)
+
             // (106.605514,10.7922362)
+
             // (106.64095250000003,10.7877314)
 
             var coordinates = new List<Coordinate.Models.Coordinate>
@@ -104,6 +113,73 @@ namespace Puppy.Testing
             FastestRoundTrip fastestRoundTrip = new FastestRoundTrip(coordinates);
 
             List<Coordinate.Models.Coordinate> roundTripCoordinates = fastestRoundTrip.GetTrip();
+        }
+
+        [TestMethod]
+        public static void FastestOptimizeTest()
+        {
+            // Use Gebweb to test https://gebweb.net/optimap/
+
+            // 31 Trương phước phan, 10.7756192, 106.6237788
+
+            // 435 hoàng văn thụ hồ chí minh, 10.7975076, 106.6558153
+
+            // 60 cộng hoà, 10.8011653, 106.657283
+
+            // 10 Tân kỳ tân quý hồ chí minh, 10.7922362, 106.605514
+
+            // 30 âu cơ hồ chí minh, 10.7877314, 106.64095250000003
+
+            // (10.7756192, 106.6237788)
+
+            // (10.7975076, 106.6558153)
+
+            // (10.8011653, 106.657283)
+
+            // (10.7922362, 106.605514)
+
+            // (10.7877314, 106.64095250000003)
+
+            // Own Data
+
+            // (106.6237788,10.7756192)
+
+            // (106.6558153,10.7975076)
+
+            // (106.657283,10.8011653)
+
+            // (106.605514,10.7922362)
+
+            // (106.64095250000003,10.7877314)
+
+            var coordinates = new List<Coordinate.Models.Coordinate>
+            {
+                new Coordinate.Models.Coordinate(106.6237788,10.7756192),
+                new Coordinate.Models.Coordinate(106.6558153,10.7975076),
+                new Coordinate.Models.Coordinate(106.657283,10.8011653) ,
+                new Coordinate.Models.Coordinate(106.605514,10.7922362),
+                new Coordinate.Models.Coordinate(106.64095250000003,10.7877314)
+            };
+
+            // ROUND TRIP
+
+            FastestTrip fastestRoundTrip = new FastestTrip(coordinates, FastestTrip.FastestTripMode.RoundTrip);
+
+            List<Coordinate.Models.Coordinate> roundTrip = fastestRoundTrip.GetTrip();
+
+            double totalRoundTripDistance = fastestRoundTrip.GetTotalDistance();
+
+            double totalRoundTripDuration = fastestRoundTrip.GetTotalDuration();
+
+            // A -> Z TRIP
+
+            FastestTrip fastestAzTrip = new FastestTrip(coordinates, FastestTrip.FastestTripMode.AtoZ);
+
+            List<Coordinate.Models.Coordinate> azTrip = fastestAzTrip.GetTrip();
+
+            double totalAzTripDistance = fastestAzTrip.GetTotalDistance();
+
+            double totalAzTripDuration = fastestAzTrip.GetTotalDuration();
         }
     }
 }

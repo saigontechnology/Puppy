@@ -28,13 +28,13 @@ namespace Puppy.EF
     /// <typeparam name="TKey">Id type of this entity</typeparam>
     public abstract class Entity<TKey> : EntityBase, ISoftDeletableEntity<TKey>, IAuditableEntity<TKey> where TKey : struct
     {
-        public virtual TKey Id { get; set; }
+        public TKey Id { get; set; }
 
-        public virtual TKey? CreatedBy { get; set; }
+        public TKey? CreatedBy { get; set; }
 
-        public virtual TKey? LastUpdatedBy { get; set; }
+        public TKey? LastUpdatedBy { get; set; }
 
-        public virtual TKey? DeletedBy { get; set; }
+        public TKey? DeletedBy { get; set; }
     }
 
     public abstract class Entity : Entity<int>

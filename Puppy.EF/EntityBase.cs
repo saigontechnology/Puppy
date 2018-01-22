@@ -24,12 +24,12 @@ namespace Puppy.EF
 {
     public abstract class EntityBase : IGlobalIdentityEntity, ISoftDeletableEntity, IAuditableEntity
     {
-        public virtual string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
+        public string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
 
-        public virtual DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual DateTimeOffset LastUpdatedTime { get; set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset LastUpdatedTime { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual DateTimeOffset? DeletedTime { get; set; }
+        public DateTimeOffset? DeletedTime { get; set; }
     }
 }

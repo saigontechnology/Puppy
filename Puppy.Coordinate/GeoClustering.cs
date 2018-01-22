@@ -17,6 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Puppy.Coordinate.Models;
 using Puppy.Core.ObjectUtils;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Puppy.Coordinate
 {
     public class GeoClustering
     {
-        public List<Cluster> Cluster(List<Coordinate> coordinates, int totalGroup)
+        public List<Cluster> Cluster(List<Models.Coordinate> coordinates, int totalGroup)
         {
             if (totalGroup <= 1 || totalGroup >= coordinates.Count)
             {
@@ -82,7 +83,7 @@ namespace Puppy.Coordinate
             return clusters;
         }
 
-        private List<Coordinate> InitialCenterCoordinates(IList<Coordinate> coordinates, int totalGroup)
+        private List<Models.Coordinate> InitialCenterCoordinates(IList<Models.Coordinate> coordinates, int totalGroup)
         {
             if (totalGroup <= 1 || totalGroup >= coordinates.Count)
             {
@@ -98,7 +99,7 @@ namespace Puppy.Coordinate
                 Swap(coordinates, i, j);
             }
 
-            List<Coordinate> centerCoordinates = new List<Coordinate>();
+            List<Models.Coordinate> centerCoordinates = new List<Models.Coordinate>();
 
             var selectedCoordinates = coordinates.Take(totalGroup).ToList();
 
@@ -112,7 +113,7 @@ namespace Puppy.Coordinate
             return centerCoordinates;
         }
 
-        private static void RecalculateCenterCoordinates(IReadOnlyList<Coordinate> centerCoordinates, IEnumerable<Coordinate> coordinates)
+        private static void RecalculateCenterCoordinates(IReadOnlyList<Models.Coordinate> centerCoordinates, IEnumerable<Models.Coordinate> coordinates)
         {
             var totalGroup = centerCoordinates.Count;
 
@@ -138,7 +139,7 @@ namespace Puppy.Coordinate
             }
         }
 
-        private static int GetClosestCoordinateIndex(IReadOnlyList<Coordinate> coordinates, Coordinate coordinate)
+        private static int GetClosestCoordinateIndex(IReadOnlyList<Models.Coordinate> coordinates, Models.Coordinate coordinate)
         {
             var result = 0;
 

@@ -1,19 +1,14 @@
-﻿using Puppy.Coordinate;
-using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Puppy.Coordinate;
 using System.Collections.Generic;
 
-namespace Puppy.ConsoleTesting
+namespace Puppy.Testing
 {
-    internal class Program
+    [TestClass]
+    public class CoordinateUnitTest
     {
-        private static void Main()
-        {
-            //ClusterTest();
-            FastestTest();
-            Console.ReadKey();
-        }
-
-        public static void ClusterTest()
+        [TestMethod]
+        public void ClusterTest()
         {
             // Use Gebweb to test https://gebweb.net/optimap/
 
@@ -55,25 +50,16 @@ namespace Puppy.ConsoleTesting
                 new Coordinate.Models.Coordinate(106.66693399999997, 10.7990973)
             };
 
-            var gc = new GeoClustering();
+            GeoClustering gc = new GeoClustering();
 
             var cluster = gc.Cluster(coordinates, 3);
-
-            Console.WriteLine();
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine();
-
-            foreach (var clusterPoint in cluster)
-            {
-                foreach (var coordinate in clusterPoint.Coordinates)
-                {
-                    Console.WriteLine($"{coordinates.FindIndex(x => Math.Abs(x.Longitude - coordinate.Longitude) <= 0) + 1} | {coordinate}");
-                }
-            }
         }
 
-        public static void FastestTest()
+        [TestMethod]
+        public void FastestTripTest()
         {
+            // Use Gebweb to test https://gebweb.net/optimap/
+
             // 31 Trương phước phan, 10.7756192, 106.6237788
 
             // 435 hoàng văn thụ hồ chí minh, 10.7975076, 106.6558153
@@ -84,6 +70,20 @@ namespace Puppy.ConsoleTesting
 
             // 30 âu cơ hồ chí minh, 10.7877314, 106.64095250000003
 
+            // (10.7756192, 106.6237788)
+            // (10.7975076, 106.6558153)
+            // (10.8011653, 106.657283)
+            // (10.7922362, 106.605514)
+            // (10.7877314, 106.64095250000003)
+
+            // Own Data
+
+            // (106.6237788,10.7756192)
+            // (106.6558153,10.7975076)
+            // (106.657283,10.8011653) 
+            // (106.605514,10.7922362)
+            // (106.64095250000003,10.7877314)
+
             var coordinates = new List<Coordinate.Models.Coordinate>
             {
                 new Coordinate.Models.Coordinate(106.6237788,10.7756192),
@@ -93,35 +93,17 @@ namespace Puppy.ConsoleTesting
                 new Coordinate.Models.Coordinate(106.64095250000003,10.7877314)
             };
 
-            Console.WriteLine();
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("AZ TRIP");
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine();
+            // A to Z TRIP
 
             FastestAzTrip fastestAzTrip = new FastestAzTrip(coordinates);
 
             List<Coordinate.Models.Coordinate> azTripCoordinates = fastestAzTrip.GetTrip();
 
-            foreach (var coordinate in azTripCoordinates)
-            {
-                Console.WriteLine($"{coordinates.FindIndex(x => Math.Abs(x.Longitude - coordinate.Longitude) <= 0) + 1} | {coordinate}");
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("ROUND TRIP");
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine();
+            // ROUND TRIP
 
             FastestRoundTrip fastestRoundTrip = new FastestRoundTrip(coordinates);
 
             List<Coordinate.Models.Coordinate> roundTripCoordinates = fastestRoundTrip.GetTrip();
-
-            foreach (var coordinate in roundTripCoordinates)
-            {
-                Console.WriteLine($"{coordinates.FindIndex(x => Math.Abs(x.Longitude - coordinate.Longitude) <= 0) + 1} | {coordinate}");
-            }
         }
     }
 }

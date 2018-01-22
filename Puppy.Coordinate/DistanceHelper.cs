@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
+using Puppy.Coordinate.Models;
+
 namespace Puppy.Coordinate
 {
     public static class DistanceHelper
@@ -27,8 +29,8 @@ namespace Puppy.Coordinate
         /// <returns></returns>
         public static double GetDistance(double srcLng, double srcLat, double destLng, double destLat)
         {
-            var src = new Coordinate(srcLng, srcLat);
-            var dest = new Coordinate(destLng, destLat);
+            var src = new Models.Coordinate(srcLng, srcLat);
+            var dest = new Models.Coordinate(destLng, destLat);
             return src.DistanceToByHaversine(dest, UnitOfLength.Kilometer);
         }
 
@@ -38,8 +40,8 @@ namespace Puppy.Coordinate
         /// <returns></returns>
         public static double GetDistance(double srcLng, double srcLat, double destLng, double destLat, UnitOfLength unitOfLength)
         {
-            var src = new Coordinate(srcLng, srcLat);
-            var dest = new Coordinate(destLng, destLat);
+            var src = new Models.Coordinate(srcLng, srcLat);
+            var dest = new Models.Coordinate(destLng, destLat);
             return src.DistanceToByHaversine(dest, unitOfLength);
         }
     }

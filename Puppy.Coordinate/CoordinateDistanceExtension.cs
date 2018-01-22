@@ -19,6 +19,7 @@
 
 #endregion License
 
+using Puppy.Coordinate.Models;
 using System;
 
 namespace Puppy.Coordinate
@@ -31,7 +32,7 @@ namespace Puppy.Coordinate
         /// <param name="src"> </param>
         /// <param name="dest"></param>
         /// <returns> Miles </returns>
-        public static double FlatDistanceTo(this Coordinate src, Coordinate dest)
+        public static double FlatDistanceTo(this Models.Coordinate src, Models.Coordinate dest)
         {
             return Math.Abs(src.Latitude - dest.Latitude) + Math.Abs(src.Longitude - dest.Longitude);
         }
@@ -42,7 +43,7 @@ namespace Puppy.Coordinate
         /// <param name="src"> </param>
         /// <param name="dest"></param>
         /// <returns> UnitOfLength.Kilometer </returns>
-        public static double DistanceTo(this Coordinate src, Coordinate dest)
+        public static double DistanceTo(this Models.Coordinate src, Models.Coordinate dest)
         {
             return DistanceTo(src, dest, UnitOfLength.Kilometer);
         }
@@ -50,7 +51,7 @@ namespace Puppy.Coordinate
         /// <summary>
         ///     By Spherical law of cosines http://en.wikipedia.org/wiki/Spherical_law_of_cosines 
         /// </summary>
-        public static double DistanceTo(this Coordinate src, Coordinate dest, UnitOfLength unitOfLength)
+        public static double DistanceTo(this Models.Coordinate src, Models.Coordinate dest, UnitOfLength unitOfLength)
         {
             var theta = src.Longitude - dest.Longitude;
             var thetaRad = theta * CoordinateConst.DegreesToRadians;
@@ -74,7 +75,7 @@ namespace Puppy.Coordinate
         ///     By Haversine https://en.wikipedia.org/wiki/Haversine_formula 
         /// </summary>
         /// <returns></returns>
-        public static double DistanceToByHaversine(this Coordinate src, Coordinate dest, UnitOfLength unitOfLength)
+        public static double DistanceToByHaversine(this Models.Coordinate src, Models.Coordinate dest, UnitOfLength unitOfLength)
         {
             var dLat = (dest.Latitude - src.Latitude) * CoordinateConst.DegreesToRadians;
             var dLon = (dest.Longitude - src.Longitude) * CoordinateConst.DegreesToRadians;
@@ -94,7 +95,7 @@ namespace Puppy.Coordinate
         /// <summary>
         ///     By Geographical distance http://en.wikipedia.org/wiki/Geographical_distance 
         /// </summary>
-        public static double DistanceToByGeo(this Coordinate src, Coordinate dest, UnitOfLength unitOfLength)
+        public static double DistanceToByGeo(this Models.Coordinate src, Models.Coordinate dest, UnitOfLength unitOfLength)
         {
             var radLatSrc = src.Latitude * CoordinateConst.DegreesToRadians;
             var radLatDest = dest.Latitude * CoordinateConst.DegreesToRadians;

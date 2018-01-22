@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.Models
 {
     public class UnitOfLength
     {

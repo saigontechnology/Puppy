@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.Models
 {
     public class Cluster
     {

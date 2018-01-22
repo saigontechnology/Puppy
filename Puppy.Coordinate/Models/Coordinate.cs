@@ -19,13 +19,16 @@
 
 #endregion License
 
-using System;
 using Puppy.Core.ObjectUtils;
 
-namespace Puppy.Coordinate
+namespace Puppy.Coordinate.Models
 {
     public class Coordinate
     {
+        public Coordinate()
+        {
+        }
+
         public Coordinate(double longitude, double latitude)
         {
             Longitude = longitude;
@@ -40,7 +43,12 @@ namespace Puppy.Coordinate
         /// <summary>
         ///     Cluster Purpose 
         /// </summary>
-        public int GroupNo { get; set; }
+        public int GroupNo { get; set; } = -1;
+
+        /// <summary>
+        ///     Route Sequence Purpose 
+        /// </summary>
+        public int SequenceNo { get; set; } = -1;
 
         public override string ToString()
         {

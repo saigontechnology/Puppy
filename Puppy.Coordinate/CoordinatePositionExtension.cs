@@ -33,7 +33,7 @@ namespace Puppy.Coordinate
         /// <param name="radiusKm"> Radius/Range in Kilometers </param>
         /// <param name="bearing">  Bearing in degrees from 0 to 360 </param>
         /// <returns> End-point from the source given the desired range and bearing. </returns>
-        public static Coordinate GetDerivedPosition(this Coordinate src, double radiusKm, double bearing)
+        public static Models.Coordinate GetDerivedPosition(this Models.Coordinate src, double radiusKm, double bearing)
         {
             var latSrc = src.Latitude * CoordinateConst.DegreesToRadians;
             var lngSrc = src.Longitude * CoordinateConst.DegreesToRadians;
@@ -50,7 +50,7 @@ namespace Puppy.Coordinate
 
             var lon = (lngSrc + dlon + Math.PI) % (Math.PI * 2) - Math.PI;
 
-            var result = new Coordinate(lon * CoordinateConst.RadiansToDegrees, lat * CoordinateConst.RadiansToDegrees);
+            var result = new Models.Coordinate(lon * CoordinateConst.RadiansToDegrees, lat * CoordinateConst.RadiansToDegrees);
             return result;
         }
 
@@ -60,7 +60,7 @@ namespace Puppy.Coordinate
         /// <param name="src">            </param>
         /// <param name="radiusKilometer"></param>
         /// <returns></returns>
-        public static Coordinate GetTopLeftOfSquare(this Coordinate src, double radiusKilometer)
+        public static Models.Coordinate GetTopLeftOfSquare(this Models.Coordinate src, double radiusKilometer)
         {
             var hypotenuseLength = GetHypotenuseLength(radiusKilometer);
             var topLeft = GetDerivedPosition(src, hypotenuseLength, 315);
@@ -73,7 +73,7 @@ namespace Puppy.Coordinate
         /// <param name="src">            </param>
         /// <param name="radiusKilometer"></param>
         /// <returns></returns>
-        public static Coordinate GetBotRightOfSquare(this Coordinate src, double radiusKilometer)
+        public static Models.Coordinate GetBotRightOfSquare(this Models.Coordinate src, double radiusKilometer)
         {
             var hypotenuseLength = GetHypotenuseLength(radiusKilometer);
             var botRight = GetDerivedPosition(src, hypotenuseLength, 135);

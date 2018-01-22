@@ -26,16 +26,16 @@ namespace Puppy.Coordinate
 {
     public class GeoClustering
     {
-        public List<Cluster> Cluster(List<Coordinate> coordinates, int maximumGroup)
+        public List<Cluster> Cluster(List<Coordinate> coordinates, int totalGroup)
         {
-            if (maximumGroup <= 1 || maximumGroup >= coordinates.Count)
+            if (totalGroup <= 1 || totalGroup >= coordinates.Count)
             {
-                throw new NotSupportedException($"{nameof(maximumGroup)} <= 1 || {nameof(maximumGroup)} >= total {nameof(coordinates)}");
+                throw new NotSupportedException($"{nameof(totalGroup)} <= 1 || {nameof(totalGroup)} >= total {nameof(coordinates)}");
             }
 
             // Step 1: random first center Coordinate
 
-            var centerCoordinates = InitialCenterCoordinates(coordinates, maximumGroup);
+            var centerCoordinates = InitialCenterCoordinates(coordinates, totalGroup);
 
             bool modified;
 
@@ -47,7 +47,7 @@ namespace Puppy.Coordinate
 
                 foreach (var coordinate in coordinates)
                 {
-                    var newGroup = GetCloseCoordinateIndex(centerCoordinates, coordinate);
+                    var newGroup = GetClosestCoordinateIndex(centerCoordinates, coordinate);
 
                     if (newGroup == coordinate.GroupNo)
                     {
@@ -67,9 +67,9 @@ namespace Puppy.Coordinate
                 }
             } while (modified);
 
-            var clusters = new List<Cluster>(maximumGroup);
+            var clusters = new List<Cluster>(totalGroup);
 
-            for (int i = 0; i < maximumGroup; i++)
+            for (int i = 0; i < totalGroup; i++)
             {
                 clusters.Add(new Cluster
                 {
@@ -82,16 +82,16 @@ namespace Puppy.Coordinate
             return clusters;
         }
 
-        private List<Coordinate> InitialCenterCoordinates(IList<Coordinate> coordinates, int maximumGroup)
+        private List<Coordinate> InitialCenterCoordinates(IList<Coordinate> coordinates, int totalGroup)
         {
-            if (maximumGroup <= 1 || maximumGroup >= coordinates.Count)
+            if (totalGroup <= 1 || totalGroup >= coordinates.Count)
             {
-                throw new NotSupportedException($"{nameof(maximumGroup)} <= 1 || {nameof(maximumGroup)} >= total Coordinate");
+                throw new NotSupportedException($"{nameof(totalGroup)} <= 1 || {nameof(totalGroup)} >= total ${nameof(coordinates)}");
             }
 
             Random random = new Random();
 
-            for (var i = 0; i < maximumGroup; i++)
+            for (var i = 0; i < totalGroup; i++)
             {
                 var j = random.Next(coordinates.Count);
 
@@ -100,7 +100,7 @@ namespace Puppy.Coordinate
 
             List<Coordinate> centerCoordinates = new List<Coordinate>();
 
-            var selectedCoordinates = coordinates.Take(maximumGroup).ToList();
+            var selectedCoordinates = coordinates.Take(totalGroup).ToList();
 
             foreach (var selectedCoordinate in selectedCoordinates)
             {
@@ -138,7 +138,7 @@ namespace Puppy.Coordinate
             }
         }
 
-        private static int GetCloseCoordinateIndex(IReadOnlyList<Coordinate> coordinates, Coordinate coordinate)
+        private static int GetClosestCoordinateIndex(IReadOnlyList<Coordinate> coordinates, Coordinate coordinate)
         {
             var result = 0;
 

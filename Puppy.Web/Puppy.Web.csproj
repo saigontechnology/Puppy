@@ -33,10 +33,6 @@
     </Content>
   </ItemGroup>
   
-  <ItemGroup>
-    <Compile Remove="HtmlUtils\HtmlToPdf.cs" />
-  </ItemGroup>
-  
   <!-- Puppy -->
   <ItemGroup>
     <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />

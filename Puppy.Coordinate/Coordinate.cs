@@ -19,6 +19,9 @@
 
 #endregion License
 
+using System;
+using Puppy.Core.ObjectUtils;
+
 namespace Puppy.Coordinate
 {
     public class Coordinate
@@ -26,10 +29,22 @@ namespace Puppy.Coordinate
         public Coordinate(double longitude, double latitude)
         {
             Longitude = longitude;
+
             Latitude = latitude;
         }
 
-        public double Longitude { get; }
-        public double Latitude { get; }
+        public double Longitude { get; set; }
+
+        public double Latitude { get; set; }
+
+        /// <summary>
+        ///     Cluster Purpose 
+        /// </summary>
+        public int GroupNo { get; set; }
+
+        public override string ToString()
+        {
+            return this.ToJsonString();
+        }
     }
 }

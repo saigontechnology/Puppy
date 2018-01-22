@@ -26,7 +26,18 @@ namespace Puppy.Coordinate
     public static class CoordinateDistanceExtension
     {
         /// <summary>
-        ///     Distance to targetCoordinate 
+        ///     Distance to Destination Coordinate in Flat (2D) Map 
+        /// </summary>
+        /// <param name="src"> </param>
+        /// <param name="dest"></param>
+        /// <returns> Miles </returns>
+        public static double FlatDistanceTo(this Coordinate src, Coordinate dest)
+        {
+            return Math.Abs(src.Latitude - dest.Latitude) + Math.Abs(src.Longitude - dest.Longitude);
+        }
+
+        /// <summary>
+        ///     Distance to Destination Coordinate By Spherical law of cosines 
         /// </summary>
         /// <param name="src"> </param>
         /// <param name="dest"></param>

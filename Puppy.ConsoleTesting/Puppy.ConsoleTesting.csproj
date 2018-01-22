@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Puppy.Coordinate\Puppy.Coordinate.csproj" />
+    <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
+    <ProjectReference Include="..\Puppy.OneSignal\Puppy.OneSignal.csproj" />
+  </ItemGroup>
+
+</Project>

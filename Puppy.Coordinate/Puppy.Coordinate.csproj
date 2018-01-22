@@ -15,4 +15,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <!-- Puppy -->
+  <ItemGroup>
+    <ProjectReference Include="..\Puppy.Core\Puppy.Core.csproj" />
+  </ItemGroup>
 </Project>

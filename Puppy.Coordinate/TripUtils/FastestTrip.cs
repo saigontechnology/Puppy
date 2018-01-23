@@ -79,7 +79,10 @@ namespace Puppy.Coordinate.TripUtils
         /// </summary>
         /// <param name="coordinates"> </param>
         /// <param name="mode">        </param>
-        /// <param name="googleApiKey"></param>
+        /// <param name="googleApiKey">
+        ///     Use for FastestTripMode.RoundTrip - Optional, method still work without key but have
+        ///     limitation by Google Policy.
+        /// </param>
         /// <remarks>
         ///     Concorde TSP Solver algorithm combine with Ant colony optimization algorithms to find
         ///     wayCoordinate and best path

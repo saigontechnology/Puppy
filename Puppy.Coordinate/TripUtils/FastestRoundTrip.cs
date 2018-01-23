@@ -69,7 +69,9 @@ namespace Puppy.Coordinate.TripUtils
         ///     waypoint and best path
         /// </summary>
         /// <param name="coordinates"> </param>
-        /// <param name="googleApiKey"></param>
+        /// <param name="googleApiKey">
+        ///     Optional, method still work without key but have limitation by Google Policy
+        /// </param>
         public FastestRoundTrip(List<Models.Coordinate> coordinates, string googleApiKey = "")
         {
             if (coordinates.Count < 3) throw new NotSupportedException();

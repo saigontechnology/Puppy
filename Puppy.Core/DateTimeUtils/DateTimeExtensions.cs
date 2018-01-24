@@ -72,30 +72,30 @@ namespace Puppy.Core.DateTimeUtils
         /// <summary>
         ///     Truncate date time 
         /// </summary>
-        /// <param name="dt">         </param>
-        /// <param name="withoutType"></param>
+        /// <param name="dt">        </param>
+        /// <param name="truncateTo"></param>
         /// <returns></returns>
-        public static DateTime Without(this DateTime dt, Enums.DateTimeWithoutType withoutType)
+        public static DateTime TruncateTo(this DateTime dt, Enums.TruncateType truncateTo)
         {
-            switch (withoutType)
+            switch (truncateTo)
             {
-                case Enums.DateTimeWithoutType.Month:
+                case Enums.TruncateType.Year:
                     {
                         return new DateTime(dt.Year, 0, 0);
                     }
-                case Enums.DateTimeWithoutType.Day:
+                case Enums.TruncateType.Month:
                     {
                         return new DateTime(dt.Year, dt.Month, 0);
                     }
-                case Enums.DateTimeWithoutType.Hour:
+                case Enums.TruncateType.Day:
                     {
                         return new DateTime(dt.Year, dt.Month, dt.Day);
                     }
-                case Enums.DateTimeWithoutType.Minute:
+                case Enums.TruncateType.Hour:
                     {
                         return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, 0, 0);
                     }
-                case Enums.DateTimeWithoutType.Second:
+                case Enums.TruncateType.Minute:
                     {
                         return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
                     }
@@ -109,26 +109,26 @@ namespace Puppy.Core.DateTimeUtils
         /// <summary>
         ///     Truncate date time 
         /// </summary>
-        /// <param name="dt">         </param>
-        /// <param name="withoutType"></param>
+        /// <param name="dt">        </param>
+        /// <param name="truncateTo"></param>
         /// <returns></returns>
-        public static DateTimeOffset Without(this DateTimeOffset dt, Enums.DateTimeWithoutType withoutType)
+        public static DateTimeOffset TruncateTo(this DateTimeOffset dt, Enums.TruncateType truncateTo)
         {
-            switch (withoutType)
+            switch (truncateTo)
             {
-                case Enums.DateTimeWithoutType.Month:
+                case Enums.TruncateType.Year:
                     return new DateTimeOffset(dt.Year, 0, 0, 0, 0, 0, dt.Offset);
 
-                case Enums.DateTimeWithoutType.Day:
+                case Enums.TruncateType.Month:
                     return new DateTimeOffset(dt.Year, dt.Month, 0, 0, 0, 0, dt.Offset);
 
-                case Enums.DateTimeWithoutType.Hour:
+                case Enums.TruncateType.Day:
                     return new DateTimeOffset(dt.Year, dt.Month, dt.Day, 0, 0, 0, dt.Offset);
 
-                case Enums.DateTimeWithoutType.Minute:
+                case Enums.TruncateType.Hour:
                     return new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, 0, 0, dt.Offset);
 
-                case Enums.DateTimeWithoutType.Second:
+                case Enums.TruncateType.Minute:
                     return new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0, dt.Offset);
 
                 default:
@@ -161,14 +161,14 @@ namespace Puppy.Core.DateTimeUtils
 
     public class Enums
     {
-        public enum DateTimeWithoutType
+        public enum TruncateType
         {
+            Year,
             Month,
             Day,
             Hour,
             Minute,
-            Second,
-            Milliseconds
+            Second
         }
     }
 }

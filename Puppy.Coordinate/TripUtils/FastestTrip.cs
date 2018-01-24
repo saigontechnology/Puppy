@@ -63,6 +63,7 @@ namespace Puppy.Coordinate.TripUtils
         private double _bestCost;
 
         private readonly FastestTripMode _tripMode;
+        private readonly string _googleApiKey;
 
         private double[] _costForward;
 
@@ -76,13 +77,17 @@ namespace Puppy.Coordinate.TripUtils
         ///     Combine both A -&gt; Z and Round Trip with optimize by many algorithm and distance,
         ///     duration by Google Matrix
         /// </summary>
-        /// <param name="coordinates"></param>
-        /// <param name="mode">       </param>
+        /// <param name="coordinates"> </param>
+        /// <param name="mode">        </param>
+        /// <param name="googleApiKey">
+        ///     Use for FastestTripMode.RoundTrip - Optional, method still work without key but have
+        ///     limitation by Google Policy.
+        /// </param>
         /// <remarks>
         ///     Concorde TSP Solver algorithm combine with Ant colony optimization algorithms to find
         ///     wayCoordinate and best path
         /// </remarks>
-        public FastestTrip(IReadOnlyCollection<Models.Coordinate> coordinates, FastestTripMode mode = FastestTripMode.AtoZ)
+        public FastestTrip(IReadOnlyCollection<Models.Coordinate> coordinates, FastestTripMode mode = FastestTripMode.AtoZ, string googleApiKey = "")
         {
             if (coordinates.Count < 1)
             {
@@ -90,6 +95,8 @@ namespace Puppy.Coordinate.TripUtils
             }
 
             _tripMode = mode;
+
+            _googleApiKey = googleApiKey;
 
             Coordinates = new List<Models.Coordinate>();
 
@@ -99,7 +106,7 @@ namespace Puppy.Coordinate.TripUtils
 
             var coordinateModels = Coordinates.Select(x => new CoordinateModel(x.Longitude, x.Latitude)).ToArray();
 
-            var getDistanceDurationMatrixTask = GoogleMapHelper.GetDistanceDurationMatrixAsync(coordinateModels, coordinateModels);
+            var getDistanceDurationMatrixTask = GoogleMapHelper.GetDistanceDurationMatrixAsync(coordinateModels, coordinateModels, googleApiKey: _googleApiKey);
 
             getDistanceDurationMatrixTask.Wait();
 

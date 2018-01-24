@@ -28,6 +28,8 @@ namespace Puppy.Coordinate.TripUtils
 {
     public class FastestRoundTrip
     {
+        private readonly string _googleApiKey;
+
         #region Property
 
         private List<Models.Coordinate> Ways { get; }
@@ -66,10 +68,15 @@ namespace Puppy.Coordinate.TripUtils
         ///     Concorde TSP Solver algorithm combine with Ant colony optimization algorithms to find
         ///     waypoint and best path
         /// </summary>
-        /// <param name="coordinates"></param>
-        public FastestRoundTrip(List<Models.Coordinate> coordinates)
+        /// <param name="coordinates"> </param>
+        /// <param name="googleApiKey">
+        ///     Optional, method still work without key but have limitation by Google Policy
+        /// </param>
+        public FastestRoundTrip(List<Models.Coordinate> coordinates, string googleApiKey = "")
         {
             if (coordinates.Count < 3) throw new NotSupportedException();
+
+            _googleApiKey = googleApiKey;
 
             DistIndex = 0;
 
@@ -169,7 +176,7 @@ namespace Puppy.Coordinate.TripUtils
                     ChunkNode--;
                 }
 
-                var directionSteps = GMapHelper.GetDirections(origin, destination, wayArrChunk2);
+                var directionSteps = GMapHelper.GetDirections(origin, destination, wayArrChunk2, googleApiKey: _googleApiKey);
 
                 LegsTemp.AddRange(directionSteps);
 

@@ -30,7 +30,15 @@ namespace Puppy.Coordinate.TripUtils
 {
     public class GMapHelper
     {
-        public static List<DirectionSteps> GetDirections(Models.Coordinate origin, Models.Coordinate destination, List<Models.Coordinate> waypoints, bool avoidHighways = false, bool avoidTolls = false, int unitSystem = 1, string travelMode = "DRIVING")
+        public static List<DirectionSteps> GetDirections(
+            Models.Coordinate origin,
+            Models.Coordinate destination,
+            List<Models.Coordinate> waypoints,
+            bool avoidHighways = false,
+            bool avoidTolls = false,
+            int unitSystem = 1,
+            string travelMode = "DRIVING",
+            string googleApiKey = "")
         {
             string originFormat = $"{origin.Latitude},{origin.Longitude}";
 
@@ -38,7 +46,7 @@ namespace Puppy.Coordinate.TripUtils
 
             string waypointsFormat = string.Join("|", waypoints.Select(x => $"{x.Latitude},{x.Longitude}"));
 
-            var requestUrl = $"https://maps.googleapis.com/maps/api/directions/xml?avoidHighways={avoidHighways}&avoidTolls={avoidTolls}&unitSystem={unitSystem}&travelMode={travelMode}&origin={originFormat}&destination={destinationFormat}&waypoints={waypointsFormat}";
+            var requestUrl = $"https://maps.googleapis.com/maps/api/directions/xml?avoidHighways={avoidHighways}&avoidTolls={avoidTolls}&unitSystem={unitSystem}&travelMode={travelMode}&origin={originFormat}&destination={destinationFormat}&waypoints={waypointsFormat}&key={googleApiKey}";
 
             try
             {

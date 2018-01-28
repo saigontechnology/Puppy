@@ -71,13 +71,7 @@ namespace Puppy.Core.ConfigUtils
             }
             else
             {
-                value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.MachineName}");
-
-                // If get by machine name is null, then try get by environment name
-                if (value == null || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
-                {
-                    value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
-                }
+                value = configuration.GetValue($"{section}:{EnvironmentHelper.MachineName}", configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}"));
             }
 
             return value;

@@ -20,6 +20,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -35,11 +36,46 @@ namespace Puppy.EF.Maps
         public static void AddConfigFromAssembly(this ModelBuilder builder, Assembly assembly)
         {
             // Types that do entity mapping
+            var mappingTypes = GetMappingTypes(assembly);
+
+            builder.AddConfigFromMappingTypes(mappingTypes);
+        }
+
+        /// <summary>
+        ///     Scan and apply Config/Mapping for Tables/Entities (into <see cref="TDbContext" />) 
+        /// </summary>
+        /// <param name="builder"> </param>
+        /// <param name="assembly"></param>
+        public static void AddConfigFromAssembly<TDbContext>(this ModelBuilder builder, Assembly assembly) where TDbContext : class
+        {
+            // Types that do entity mapping
+            var mappingTypes = GetMappingTypes(assembly);
+
+            var dbSetTypes =
+                typeof(TDbContext)
+                    .GetProperties()
+                    .Where(x => x.PropertyType.Name == "DbSet`1")
+                    .Select(x => x.PropertyType.GetGenericArguments().First())
+                    .ToList();
+
+            // Filter mapping types by TDbContext dbSetTypes
+            mappingTypes = mappingTypes.Where(x => dbSetTypes.Any(y => y.FullName == x.BaseType.GetGenericArguments().First().FullName)).ToList();
+
+            builder.AddConfigFromMappingTypes(mappingTypes);
+        }
+
+        private static IEnumerable<Type> GetMappingTypes(Assembly assembly)
+        {
             var mappingTypes = assembly.GetTypes()
                 .Where(x => x.GetInterfaces()
                     .Any(y => y.GetTypeInfo().IsGenericType
                               && y.GetGenericTypeDefinition() == typeof(ITypeConfiguration<>)));
 
+            return mappingTypes;
+        }
+
+        private static void AddConfigFromMappingTypes(this ModelBuilder builder, IEnumerable<Type> mappingTypes)
+        {
             // Get the generic Entity method of the ModelBuilder type
             var entityMethod = typeof(ModelBuilder).GetMethods()
                 .Single(x => x.Name == nameof(Entity) &&
@@ -61,11 +97,6 @@ namespace Puppy.EF.Maps
                 var mapper = Activator.CreateInstance(mappingType);
                 mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
             }
-        }
-
-        public static void AddConfiguration<TEntity>(this ModelBuilder modelBuilder, TypeConfiguration<TEntity> configuration) where TEntity : class
-        {
-            configuration.Map(modelBuilder.Entity<TEntity>());
         }
 
         /// <summary>

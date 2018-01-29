@@ -19,6 +19,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Puppy.EF;
+using Puppy.EF.Extensions;
 using Puppy.EF.Maps;
 using Puppy.Logger.Core.Models;
 using Puppy.Logger.SQLite.Factory;

@@ -6,12 +6,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> EntityVersion.cs </Name>
-//         <Created> 09/09/17 6:10:35 PM </Created>
-//         <Key> 17e36f96-7304-41e4-8fac-fbeb811f3747 </Key>
+//         <Name> EntityStringVersion.cs </Name>
+//         <Created> 09/09/17 6:11:20 PM </Created>
+//         <Key> 9e92fb48-c9b1-4820-bea1-5fac1d2aa7de </Key>
 //     </File>
 //     <Summary>
-//         EntityVersion.cs
+//         EntityStringVersion.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -19,19 +19,14 @@
 
 using Puppy.EF.Interfaces.Entities;
 
-namespace Puppy.EF
+namespace Puppy.EF.Entities
 {
-    /// <inheritdoc cref="Entity{TKey}" />
+    /// <inheritdoc cref="EntityString" />
     /// <summary>
-    ///     Entity for Entity Framework 
+    ///     Entity Version String 
     /// </summary>
-    /// <typeparam name="TKey"> Id type of this entity </typeparam>
-    public abstract class EntityVersion<TKey> : Entity<TKey>, IVersionEntity where TKey : struct
+    public class EntityVersionString : EntityString, IVersionEntity
     {
         public byte[] Version { get; set; }
-    }
-
-    public abstract class EntityVersion : EntityVersion<int>
-    {
     }
 }

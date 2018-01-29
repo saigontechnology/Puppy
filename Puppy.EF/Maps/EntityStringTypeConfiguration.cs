@@ -18,6 +18,7 @@
 #endregion License
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Puppy.EF.Entities;
 using Puppy.EF.Interfaces.Entities;
 
 namespace Puppy.EF.Maps

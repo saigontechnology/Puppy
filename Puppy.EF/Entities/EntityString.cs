@@ -19,7 +19,7 @@
 
 using Puppy.EF.Interfaces.Entities;
 
-namespace Puppy.EF
+namespace Puppy.EF.Entities
 {
     public class EntityString : EntityBase, ISoftDeletableEntityString, IAuditableEntityString
     {

@@ -20,7 +20,7 @@
 using Puppy.EF.Interfaces.Entities;
 using System;
 
-namespace Puppy.EF
+namespace Puppy.EF.Entities
 {
     public abstract class EntityBase : IGlobalIdentityEntity, ISoftDeletableEntity, IAuditableEntity
     {

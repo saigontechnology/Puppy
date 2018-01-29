@@ -19,12 +19,14 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Puppy.EF.Entities;
+using Puppy.EF.Maps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.EF.Maps
+namespace Puppy.EF.Extensions
 {
     public static class ModelBuilderExtensions
     {
@@ -64,12 +66,14 @@ namespace Puppy.EF.Maps
             builder.AddConfigFromMappingTypes(mappingTypes);
         }
 
-        private static IEnumerable<Type> GetMappingTypes(Assembly assembly)
+        private static List<Type> GetMappingTypes(Assembly assembly)
         {
             var mappingTypes = assembly.GetTypes()
-                .Where(x => x.GetInterfaces()
-                    .Any(y => y.GetTypeInfo().IsGenericType
-                              && y.GetGenericTypeDefinition() == typeof(ITypeConfiguration<>)));
+                .Where(
+                    x => x.GetInterfaces()
+                        .Any(y => y.GetTypeInfo().IsGenericType &&
+                                  y.GetGenericTypeDefinition() == typeof(ITypeConfiguration<>))
+                ).ToList();
 
             return mappingTypes;
         }

@@ -19,6 +19,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Puppy.Core.DateTimeUtils;
+using Puppy.EF.Entities;
 using Puppy.EF.Extensions;
 using Puppy.EF.Interfaces;
 using Puppy.EF.Interfaces.Repositories;

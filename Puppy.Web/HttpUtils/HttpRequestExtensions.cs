@@ -20,10 +20,12 @@
 #endregion License
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Newtonsoft.Json;
 using Puppy.Web.Constants;
 using Puppy.Web.HttpUtils.HttpDetection.Device;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -174,6 +176,11 @@ namespace Puppy.Web.HttpUtils
         public static string GetDomain(this HttpRequest request)
         {
             return $"{request.Scheme}://{request.Host.Value}";
+        }
+
+        public static CultureInfo GetCultureInfo(this HttpRequest request)
+        {
+            return request.HttpContext.Features.Get<IRequestCultureFeature>().RequestCulture.Culture;
         }
     }
 }

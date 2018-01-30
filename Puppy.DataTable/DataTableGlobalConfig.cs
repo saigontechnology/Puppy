@@ -20,6 +20,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Puppy.DataTable.Constants;
+using System;
 
 namespace Puppy.DataTable
 {
@@ -53,5 +54,14 @@ namespace Puppy.DataTable
         /// <remarks> Value is "Auto" by default </remarks>
         [JsonConverter(typeof(StringEnumConverter))]
         public static DateTimeFormatMode RequestDateTimeFormatMode { get; set; } = DateTimeFormatMode.Auto;
+
+        /// <summary>
+        ///     Shared resource type to localize all
+        ///     <see cref="Puppy.DataTable.Attributes.DataTableAttribute.DisplayName" /> and will be
+        ///     override by
+        ///     <see cref="Puppy.DataTable.Attributes.DataTableAttribute.DisplayNameResourceType" />
+        ///     if set
+        /// </summary>
+        public static Type SharedResourceType { get; set; }
     }
 }

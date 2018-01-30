@@ -38,17 +38,24 @@ namespace Puppy.DataTable
         /// <summary>
         ///     [DataTable] Add DataTable, add "DataTable" section in your appsettings.json to config DataTable.
         /// </summary>
-        /// <param name="services">     </param>
-        /// <param name="configuration"></param>
-        /// <param name="configSection"></param>
+        /// <param name="services">          </param>
+        /// <param name="configuration">     </param>
+        /// <param name="sharedResourceType">
+        ///     Shared Resource Type for
+        ///     <see cref="Puppy.DataTable.Attributes.DataTableAttribute.DisplayName" /> and will be
+        ///     override by <see cref="Puppy.DataTable.Attributes.DataTableAttribute.DisplayNameResourceType" />
+        /// </param>
+        /// <param name="configSection">     </param>
         /// <returns></returns>
-        public static IServiceCollection AddDataTable(this IServiceCollection services, IConfiguration configuration, string configSection = ConfigConst.DefaultConfigSection)
+        public static IServiceCollection AddDataTable(this IServiceCollection services, IConfiguration configuration, Type sharedResourceType = null, string configSection = ConfigConst.DefaultConfigSection)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
             _configSection = configSection;
 
             configuration.BuildConfig(configSection);
+
+            DataTableGlobalConfig.SharedResourceType = sharedResourceType;
 
             services.Configure<MvcOptions>(options =>
             {
@@ -63,6 +70,7 @@ namespace Puppy.DataTable
         ///     [DataTable] Use DataTable 
         /// </summary>
         /// <param name="app"></param>
+
         /// <returns></returns>
         /// <remarks>
         ///     The global config for DataTable from appsettings.json will auto reload when you

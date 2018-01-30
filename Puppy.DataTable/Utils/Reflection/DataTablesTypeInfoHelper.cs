@@ -6,8 +6,10 @@ namespace Puppy.DataTable.Utils.Reflection
     {
         public static string ToDisplayName(this DataTableAttribute attribute)
         {
-            if (string.IsNullOrWhiteSpace(attribute.DisplayName) || attribute.DisplayNameResourceType == null)
+            if (string.IsNullOrWhiteSpace(attribute.DisplayName) || (attribute.DisplayNameResourceType == null && DataTableGlobalConfig.SharedResourceType == null))
+            {
                 return attribute.DisplayName;
+            }
 
             var value = ResourceHelper.GetResourceLookup<string>(attribute.DisplayNameResourceType, attribute.DisplayName);
 

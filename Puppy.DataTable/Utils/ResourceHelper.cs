@@ -7,18 +7,21 @@ namespace Puppy.DataTable.Utils
     {
         public static T GetResourceLookup<T>(Type resourceType, string resourceName)
         {
-            if ((resourceType != null) && (resourceName != null))
+            resourceType = resourceType ?? DataTableGlobalConfig.SharedResourceType;
+
+            if (resourceType == null || resourceName == null)
             {
-                PropertyInfo property = resourceType.GetProperty(resourceName, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
-
-                if (property == null)
-                {
-                    return default(T);
-                }
-
-                return (T)property.GetValue(null, null);
+                return default(T);
             }
-            return default(T);
+
+            var property = resourceType.GetProperty(resourceName, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
+
+            if (property == null)
+            {
+                return default(T);
+            }
+
+            return (T)property.GetValue(null, null);
         }
     }
 }

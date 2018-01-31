@@ -13,6 +13,11 @@ namespace Puppy.DataTable.Utils.Reflection
 
             var value = ResourceHelper.GetResourceLookup<string>(attribute.DisplayNameResourceType, attribute.DisplayName);
 
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return attribute.DisplayName;
+            }
+
             return value;
         }
     }

@@ -19,7 +19,7 @@
 
 namespace Puppy.Web.SEO
 {
-    public interface ISitemapItem
+    public interface ISiteMapItem
     {
     }
 }

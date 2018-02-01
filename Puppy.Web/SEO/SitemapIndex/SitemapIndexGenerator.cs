@@ -28,18 +28,18 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Puppy.Web.SEO.SitemapIndex
+namespace Puppy.Web.SEO.SiteMapIndex
 {
     /// <summary>
     ///     Generate Sitemap index (see more http://www.sitemaps.org/protocol.html) 
     /// </summary>
-    public class SitemapIndexGenerator : ISitemapGenerator<SitemapIndexItem>
+    public class SiteMapIndexGenerator : ISiteMapGenerator<SiteMapIndexItem>
     {
         private static readonly XNamespace Xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
 
         private static readonly XNamespace Xsi = @"http://www.w3.org/2001/XMLSchema-instance";
 
-        public virtual ContentResult GenerateContentResult(IEnumerable<SitemapIndexItem> items)
+        public virtual ContentResult GenerateContentResult(IEnumerable<SiteMapIndexItem> items)
         {
             string sitemapContent = GenerateXmlString(items);
 
@@ -52,7 +52,7 @@ namespace Puppy.Web.SEO.SitemapIndex
             return contentResult;
         }
 
-        public virtual string GenerateXmlString(IEnumerable<SitemapIndexItem> items)
+        public virtual string GenerateXmlString(IEnumerable<SiteMapIndexItem> items)
         {
             if (items?.Any() != true)
             {
@@ -72,11 +72,11 @@ namespace Puppy.Web.SEO.SitemapIndex
             );
 
             var xml = sitemap.ToString(Encoding.UTF8);
-            SitemapHelper.CheckDocumentSize(xml);
+            SiteMapHelper.CheckDocumentSize(xml);
             return xml;
         }
 
-        private XElement CreateItemElement(SitemapIndexItem item)
+        private XElement CreateItemElement(SiteMapIndexItem item)
         {
             var itemElement = new XElement(Xmlns + "sitemap", new XElement(Xmlns + "loc", item.Url.ToLowerInvariant()));
 

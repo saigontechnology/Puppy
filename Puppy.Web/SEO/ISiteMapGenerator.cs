@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace Puppy.Web.SEO
 {
-    public interface ISitemapGenerator<T> where T : class, ISitemapItem
+    public interface ISiteMapGenerator<T> where T : class, ISiteMapItem
     {
         string GenerateXmlString(IEnumerable<T> items);
 

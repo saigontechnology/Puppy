@@ -21,18 +21,18 @@
 
 using System;
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SiteMap
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class SitemapAttribute : Attribute
+    public class SiteMapAttribute : Attribute
     {
-        public SitemapAttribute(SitemapFrequency sitemapFrequency, double priority)
+        public SiteMapAttribute(SiteMapFrequency sitemapFrequency, double priority)
         {
             SitemapFrequency = sitemapFrequency;
             Priority = priority;
         }
 
         public double Priority { get; set; }
-        public SitemapFrequency SitemapFrequency { get; set; }
+        public SiteMapFrequency SitemapFrequency { get; set; }
     }
 }

@@ -7,19 +7,19 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> SitemapFrequency.cs </Name>
+//         <Name> SiteMapFrequency.cs </Name>
 //         <Created> 07/06/2017 9:57:52 PM </Created>
 //         <Key> 9a79e7e8-fd99-4741-a2d4-f9bccf658b27 </Key>
 //     </File>
 //     <Summary>
-//         SitemapFrequency.cs
+//         SiteMapFrequency.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SiteMap
 {
     /// <summary>
     ///     How frequently the page is likely to change. This value provides general information to
@@ -29,7 +29,7 @@ namespace Puppy.Web.SEO.Sitemap
     ///     The value "always" should be used to describe documents that change each time they are
     ///     accessed. The value "never" should be used to describe archived URLs.
     /// </remarks>
-    public enum SitemapFrequency
+    public enum SiteMapFrequency
     {
         /// <summary>
         ///     Describes archived URLs that never change. 

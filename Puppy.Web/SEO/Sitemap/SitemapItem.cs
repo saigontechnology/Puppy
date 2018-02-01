@@ -21,17 +21,17 @@
 
 using System;
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SiteMap
 {
     /// <summary>
     ///     Represents a page or URL in your sitemap. 
     /// </summary>
-    public sealed class SitemapItem : ISitemapItem
+    public sealed class SiteMapItem : ISiteMapItem
     {
         private double? _priority;
 
         /// <summary>
-        ///     Creates a new instance of <see cref="SitemapItem" /> 
+        ///     Creates a new instance of <see cref="SiteMapItem" /> 
         /// </summary>
         /// <param name="url">             URL of the page. </param>
         /// <param name="lastModified">   
@@ -45,10 +45,15 @@ namespace Puppy.Web.SEO.Sitemap
         /// <exception cref="System.ArgumentNullException">
         ///     If the <paramref name="url" /> is null or empty.
         /// </exception>
-        public SitemapItem(string url, DateTime? lastModified = null, SitemapFrequency? changeFrequency = null,
-            double? priority = null)
+        public SiteMapItem(string url, DateTime? lastModified = null, SiteMapFrequency? changeFrequency = null, double? priority = null)
         {
             Url = url ?? throw new ArgumentNullException(nameof(url));
+
+            ChangeFrequency = changeFrequency;
+
+            Priority = priority;
+
+            LastModified = lastModified;
         }
 
         /// <summary>
@@ -61,7 +66,7 @@ namespace Puppy.Web.SEO.Sitemap
         ///     pages marked "never" so that they can handle unexpected changes to those pages.
         /// </summary>
         /// <value> The frequency the page is likely to change. </value>
-        public SitemapFrequency? ChangeFrequency { get; set; }
+        public SiteMapFrequency? ChangeFrequency { get; set; }
 
         /// <summary>
         ///     Gets or sets the date of last modification of the file. This is an optional field.

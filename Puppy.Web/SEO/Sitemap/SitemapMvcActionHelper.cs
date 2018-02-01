@@ -25,24 +25,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SiteMap
 {
-    public static class SitemapMvcActionHelper
+    public static class SiteMapMvcActionHelper
     {
-        public static List<SitemapActionInfo> GetListActionInfo(Assembly asm)
+        public static List<SiteMapActionInfo> GetListActionInfo(Assembly asm)
         {
             var listAction = asm.GetTypes()
                 .Where(type => typeof(Controller).IsAssignableFrom(type))
                 .SelectMany(
                     type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
                 )
-                .Where(m => m.GetCustomAttributes(typeof(SitemapAttribute), true).Any())
-                .Select(x => new SitemapActionInfo
+                .Where(m => m.GetCustomAttributes(typeof(SiteMapAttribute), true).Any())
+                .Select(x => new SiteMapActionInfo
                 {
                     Controller = x.DeclaringType,
                     Action = x,
-                    SitemapFrequency = (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute)?.SitemapFrequency ?? SitemapFrequency.Never,
-                    Priority = (x.GetCustomAttributes(typeof(SitemapAttribute), false).LastOrDefault() as SitemapAttribute)?.Priority ?? 0
+                    SiteMapFrequency = (x.GetCustomAttributes(typeof(SiteMapAttribute), false).LastOrDefault() as SiteMapAttribute)?.SitemapFrequency ?? SiteMapFrequency.Never,
+                    Priority = (x.GetCustomAttributes(typeof(SiteMapAttribute), false).LastOrDefault() as SiteMapAttribute)?.Priority ?? 0
                 })
                 .ToList();
             return listAction;
@@ -51,16 +51,17 @@ namespace Puppy.Web.SEO.Sitemap
         public static ContentResult GetContentResult(Type startup, IUrlHelper iUrlHelper)
         {
             var asm = startup.GetTypeInfo().Assembly;
-            var actionList = SitemapMvcActionHelper.GetListActionInfo(asm);
-            var sitemapItems = actionList.Select(
-                    x =>
-                        new SitemapItem(
+            var actionList = GetListActionInfo(asm);
+            var sitemapItems =
+                actionList.Select(x =>
+                        new SiteMapItem(
                             iUrlHelper.AbsoluteAction(x.Action.Name, x.Controller.Name.Replace("Controller", string.Empty)),
-                            changeFrequency: x.SitemapFrequency,
+                            changeFrequency: x.SiteMapFrequency,
                             priority: x.Priority))
                 .ToList();
 
-            var sitemapContentResult = new SitemapGenerator().GenerateContentResult(sitemapItems);
+            var sitemapContentResult = new SiteMapGenerator().GenerateContentResult(sitemapItems);
+
             return sitemapContentResult;
         }
     }

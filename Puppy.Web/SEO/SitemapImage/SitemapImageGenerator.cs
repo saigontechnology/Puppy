@@ -7,12 +7,12 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> SitemapImageGenerator.cs </Name>
+//         <Name> SiteMapImageGenerator.cs </Name>
 //         <Created> 04/07/2017 4:40:58 PM </Created>
 //         <Key> 74f52908-8429-469d-9a87-7f3d43cbe552 </Key>
 //     </File>
 //     <Summary>
-//         SitemapImageGenerator.cs
+//         SiteMapImageGenerator.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
@@ -28,20 +28,20 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Puppy.Web.SEO.SitemapImage
+namespace Puppy.Web.SEO.SiteMapImage
 {
     /// <summary>
     ///     Generate Image Sitemap (see more
     ///     https://support.google.com/webmasters/answer/178636?hl=en) List up to 1,000 images for
     ///     each page
     /// </summary>
-    public class SitemapImageGenerator : ISitemapGenerator<SitemapImageItem>
+    public class SiteMapImageGenerator : ISiteMapGenerator<SiteMapImageItem>
     {
         public static readonly XNamespace Image = @"http://www.google.com/schemas/sitemap-image/1.1";
 
         public static readonly XNamespace Xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
 
-        public virtual ContentResult GenerateContentResult(IEnumerable<SitemapImageItem> items)
+        public virtual ContentResult GenerateContentResult(IEnumerable<SiteMapImageItem> items)
         {
             string sitemapContent = GenerateXmlString(items);
 
@@ -54,7 +54,7 @@ namespace Puppy.Web.SEO.SitemapImage
             return contentResult;
         }
 
-        public virtual string GenerateXmlString(IEnumerable<SitemapImageItem> items)
+        public virtual string GenerateXmlString(IEnumerable<SiteMapImageItem> items)
         {
             if (items == null || !items.Any())
                 throw new ArgumentNullException($"{nameof(items)} is null");
@@ -70,32 +70,32 @@ namespace Puppy.Web.SEO.SitemapImage
             );
 
             var xml = sitemap.ToString(Encoding.UTF8);
-            SitemapHelper.CheckDocumentSize(xml);
+            SiteMapHelper.CheckDocumentSize(xml);
             return xml;
         }
 
-        private string CreateItemElement(SitemapImageItem item)
+        private string CreateItemElement(SiteMapImageItem item)
         {
             var itemElement = new XElement(Xmlns + "url", new XElement(Xmlns + "loc", item.Url.ToLowerInvariant()));
 
-            foreach (var sitemapImageDetail in item.ListImage)
+            foreach (var SiteMapImageDetail in item.ListImage)
             {
                 var imageElement = new XElement(Image + "image");
 
                 // all other elements are optional
-                imageElement.Add(new XElement(Image + "loc", sitemapImageDetail.ImagePath.ToLowerInvariant()));
+                imageElement.Add(new XElement(Image + "loc", SiteMapImageDetail.ImagePath.ToLowerInvariant()));
 
-                if (!string.IsNullOrWhiteSpace(sitemapImageDetail.Caption))
-                    imageElement.Add(new XElement(Image + "caption", sitemapImageDetail.Caption));
+                if (!string.IsNullOrWhiteSpace(SiteMapImageDetail.Caption))
+                    imageElement.Add(new XElement(Image + "caption", SiteMapImageDetail.Caption));
 
-                if (!string.IsNullOrWhiteSpace(sitemapImageDetail.GeoLocation))
-                    imageElement.Add(new XElement(Image + "geo_location", sitemapImageDetail.GeoLocation));
+                if (!string.IsNullOrWhiteSpace(SiteMapImageDetail.GeoLocation))
+                    imageElement.Add(new XElement(Image + "geo_location", SiteMapImageDetail.GeoLocation));
 
-                if (!string.IsNullOrWhiteSpace(sitemapImageDetail.Title))
-                    imageElement.Add(new XElement(Image + "title", sitemapImageDetail.Title));
+                if (!string.IsNullOrWhiteSpace(SiteMapImageDetail.Title))
+                    imageElement.Add(new XElement(Image + "title", SiteMapImageDetail.Title));
 
-                if (!string.IsNullOrWhiteSpace(sitemapImageDetail.License))
-                    imageElement.Add(new XElement(Image + "license", sitemapImageDetail.License));
+                if (!string.IsNullOrWhiteSpace(SiteMapImageDetail.License))
+                    imageElement.Add(new XElement(Image + "license", SiteMapImageDetail.License));
 
                 itemElement.Add(imageElement);
             }

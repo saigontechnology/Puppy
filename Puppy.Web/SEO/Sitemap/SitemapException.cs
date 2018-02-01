@@ -21,29 +21,32 @@
 
 using System;
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SiteMap
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Represents errors that occur during sitemap creation. 
     /// </summary>
-    public class SitemapException : Exception
+    public class SiteMapException : Exception
     {
+        /// <inheritdoc />
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SitemapException" /> class. 
+        ///     Initializes a new instance of the
+        ///     <see cref="T:Puppy.Web.SEO.SiteMap.SiteMapException" /> class.
         /// </summary>
         /// <param name="message"> The message that describes the error. </param>
-        public SitemapException(string message)
-            : base(message)
+        public SiteMapException(string message) : base(message)
         {
         }
 
+        /// <inheritdoc />
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SitemapException" /> class. 
+        ///     Initializes a new instance of the
+        ///     <see cref="T:Puppy.Web.SEO.SiteMap.SiteMapException" /> class.
         /// </summary>
         /// <param name="message"> The message. </param>
         /// <param name="inner">   The inner. </param>
-        public SitemapException(string message, Exception inner)
-            : base(message, inner)
+        public SiteMapException(string message, Exception inner) : base(message, inner)
         {
         }
     }

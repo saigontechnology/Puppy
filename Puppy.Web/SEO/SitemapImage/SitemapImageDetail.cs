@@ -7,21 +7,21 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> SitemapImageDetail.cs </Name>
+//         <Name> SiteMapImageDetail.cs </Name>
 //         <Created> 04/07/2017 4:40:32 PM </Created>
 //         <Key> 13735022-0d82-4515-a091-d481a91e80ca </Key>
 //     </File>
 //     <Summary>
-//         SitemapImageDetail.cs
+//         SiteMapImageDetail.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 
 #endregion License
 
-namespace Puppy.Web.SEO.SitemapImage
+namespace Puppy.Web.SEO.SiteMapImage
 {
-    public class SitemapImageDetail
+    public class SiteMapImageDetail
     {
         /// <summary>
         ///     Caption/description of image. 

@@ -29,18 +29,18 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SiteMap
 {
     /// <summary>
     ///     Generates sitemap XML. 
     /// </summary>
-    public class SitemapGenerator : ISitemapGenerator<SitemapItem>
+    public class SiteMapGenerator : ISiteMapGenerator<SiteMapItem>
     {
         private static readonly XNamespace Xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
 
         private static readonly XNamespace Xsi = @"http://www.w3.org/2001/XMLSchema-instance";
 
-        public virtual ContentResult GenerateContentResult(IEnumerable<SitemapItem> items)
+        public virtual ContentResult GenerateContentResult(IEnumerable<SiteMapItem> items)
         {
             string sitemapContent = GenerateXmlString(items);
 
@@ -53,10 +53,10 @@ namespace Puppy.Web.SEO.Sitemap
             return contentResult;
         }
 
-        public virtual string GenerateXmlString(IEnumerable<SitemapItem> items)
+        public virtual string GenerateXmlString(IEnumerable<SiteMapItem> items)
         {
-            var sitemapCount = (int)Math.Ceiling(items.Count() / (double)SitemapHelper.MaximumSitemapIndexCount);
-            SitemapHelper.CheckSitemapCount(sitemapCount);
+            var sitemapCount = (int)Math.Ceiling(items.Count() / (double)SiteMapHelper.MaximumSitemapIndexCount);
+            SiteMapHelper.CheckSitemapCount(sitemapCount);
 
             if (items == null || !items.Any())
             {
@@ -76,12 +76,12 @@ namespace Puppy.Web.SEO.Sitemap
             );
 
             var xml = sitemap.ToString(Encoding.UTF8);
-            SitemapHelper.CheckDocumentSize(xml);
+            SiteMapHelper.CheckDocumentSize(xml);
 
             return xml;
         }
 
-        private XElement CreateItemElement(SitemapItem item)
+        private XElement CreateItemElement(SiteMapItem item)
         {
             var itemElement = new XElement(Xmlns + "url", new XElement(Xmlns + "loc", item.Url.ToLowerInvariant()));
 

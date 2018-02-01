@@ -22,13 +22,13 @@
 using System;
 using System.Reflection;
 
-namespace Puppy.Web.SEO.Sitemap
+namespace Puppy.Web.SEO.SiteMap
 {
-    public class SitemapActionInfo
+    public class SiteMapActionInfo
     {
         public MethodInfo Action { get; set; }
         public Type Controller { get; set; }
         public double Priority { get; set; }
-        public SitemapFrequency SitemapFrequency { get; set; }
+        public SiteMapFrequency SiteMapFrequency { get; set; }
     }
 }

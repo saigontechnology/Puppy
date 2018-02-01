@@ -6,23 +6,23 @@
 //     <Author> Top </Author>
 //     <Project> Puppy </Project>
 //     <File>
-//         <Name> SitemapHelper.cs </Name>
+//         <Name> SiteMapHelper.cs </Name>
 //         <Created> 04/07/2017 5:11:46 PM </Created>
 //         <Key> b0de6cdb-b9fe-4b3d-ae4e-8d91c3a6477f </Key>
 //     </File>
 //     <Summary>
-//         SitemapHelper.cs
+//         SiteMapHelper.cs
 //     </Summary>
 // <License>
 //------------------------------------------------------------------------------------------------
 #endregion License
 
-using Puppy.Web.SEO.Sitemap;
+using Puppy.Web.SEO.SiteMap;
 using System.Globalization;
 
 namespace Puppy.Web.SEO
 {
-    public static class SitemapHelper
+    public static class SiteMapHelper
     {
         /// <summary>
         ///     The maximum number of sitemaps a sitemap index file can contain. 
@@ -49,7 +49,7 @@ namespace Puppy.Web.SEO
         public static void CheckDocumentSize(string sitemapXml)
         {
             if (sitemapXml.Length >= MaximumSitemapSizeInBytes)
-                throw new SitemapException(string.Format(CultureInfo.CurrentCulture, "Sitemap exceeds the maximum size of 10MB. This is because you have unusually long URL's. Consider reducing the MaximumSitemapNodeCount. Size:<{0}>.", sitemapXml.Length));
+                throw new SiteMapException(string.Format(CultureInfo.CurrentCulture, "Sitemap exceeds the maximum size of 10MB. This is because you have unusually long URL's. Consider reducing the MaximumSitemapNodeCount. Size:<{0}>.", sitemapXml.Length));
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Puppy.Web.SEO
         public static void CheckSitemapCount(int sitemapCount)
         {
             if (sitemapCount > MaximumSitemapCount)
-                new SitemapException(string.Format(CultureInfo.CurrentCulture, "Sitemap index file exceeds the maximum number of allowed sitemaps of 50,000. Count:<{1}>", sitemapCount));
+                new SiteMapException(string.Format(CultureInfo.CurrentCulture, "Sitemap index file exceeds the maximum number of allowed sitemaps of 50,000. Count:<{1}>", sitemapCount));
         }
     }
 }

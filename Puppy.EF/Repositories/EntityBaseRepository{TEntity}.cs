@@ -48,17 +48,28 @@ namespace Puppy.EF.Repositories
             var query = DbSet.AsNoTracking();
 
             if (predicate != null)
+            {
                 query = query.Where(predicate);
+            }
 
             includeProperties = includeProperties?.Distinct().ToArray();
 
             if (includeProperties?.Any() == true)
             {
                 foreach (var includeProperty in includeProperties)
+                {
                     query = query.Include(includeProperty);
+                }
             }
 
-            return isIncludeDeleted ? query : query.WhereNotDeleted();
+            query = isIncludeDeleted
+                ?
+                // Ignore query filters in type configuration. Currently not flexible, please check https://github.com/aspnet/EntityFrameworkCore/issues/8576
+                query.IgnoreQueryFilters()
+                :
+                query.WhereNotDeleted();
+
+            return query;
         }
 
         public override TEntity Add(TEntity entity)
@@ -105,7 +116,9 @@ namespace Puppy.EF.Repositories
                 }
             }
             else
+            {
                 DbContext.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public override void Update(TEntity entity, params string[] changedProperties)
@@ -126,7 +139,9 @@ namespace Puppy.EF.Repositories
                 }
             }
             else
+            {
                 DbContext.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public override void Update(TEntity entity)

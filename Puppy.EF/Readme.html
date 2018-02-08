@@ -1,858 +1,144 @@
-﻿<!DOCTYPE html><html><head><meta charset="utf-8"><style>@font-face {
-  font-family: octicons-anchor;
-  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    width: 980px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-body .markdown-body {
-    padding: 45px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    word-wrap: break-word;
-}
-
-pre {
-    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-}
-
-.markdown-body {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  color: #333;
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 16px;
-  line-height: 1.6;
-  word-wrap: break-word;
-}
-
-.markdown-body a {
-  background-color: transparent;
-}
-
-.markdown-body a:active,
-.markdown-body a:hover {
-  outline: 0;
-}
-
-.markdown-body strong {
-  font-weight: bold;
-}
-
-.markdown-body h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
-.markdown-body img {
-  border: 0;
-}
-
-.markdown-body hr {
-  box-sizing: content-box;
-  height: 0;
-}
-
-.markdown-body pre {
-  overflow: auto;
-}
-
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre {
-  font-family: monospace, monospace;
-  font-size: 1em;
-}
-
-.markdown-body input {
-  color: inherit;
-  font: inherit;
-  margin: 0;
-}
-
-.markdown-body html input[disabled] {
-  cursor: default;
-}
-
-.markdown-body input {
-  line-height: normal;
-}
-
-.markdown-body input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.markdown-body table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.markdown-body td,
-.markdown-body th {
-  padding: 0;
-}
-
-.markdown-body input {
-  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
-.markdown-body a {
-  color: #4078c0;
-  text-decoration: none;
-}
-
-.markdown-body a:hover,
-.markdown-body a:active {
-  text-decoration: underline;
-}
-
-.markdown-body hr {
-  height: 0;
-  margin: 15px 0;
-  overflow: hidden;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.markdown-body hr:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body hr:after {
-  display: table;
-  clear: both;
-  content: "";
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  line-height: 1.1;
-}
-
-.markdown-body h1 {
-  font-size: 30px;
-}
-
-.markdown-body h2 {
-  font-size: 21px;
-}
-
-.markdown-body h3 {
-  font-size: 16px;
-}
-
-.markdown-body h4 {
-  font-size: 14px;
-}
-
-.markdown-body h5 {
-  font-size: 12px;
-}
-
-.markdown-body h6 {
-  font-size: 11px;
-}
-
-.markdown-body blockquote {
-  margin: 0;
-}
-
-.markdown-body ul,
-.markdown-body ol {
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
-}
-
-.markdown-body ul ul ol,
-.markdown-body ul ol ol,
-.markdown-body ol ul ol,
-.markdown-body ol ol ol {
-  list-style-type: lower-alpha;
-}
-
-.markdown-body dd {
-  margin-left: 0;
-}
-
-.markdown-body code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 12px;
-}
-
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-}
-
-.markdown-body .select::-ms-expand {
-  opacity: 0;
-}
-
-.markdown-body .octicon {
-  font: normal normal normal 16px/1 octicons-anchor;
-  display: inline-block;
-  text-decoration: none;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.markdown-body .octicon-link:before {
-  content: '\f05c';
-}
-
-.markdown-body:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body:after {
-  display: table;
-  clear: both;
-  content: "";
-}
-
-.markdown-body>*:first-child {
-  margin-top: 0 !important;
-}
-
-.markdown-body>*:last-child {
-  margin-bottom: 0 !important;
-}
-
-.markdown-body a:not([href]) {
-  color: inherit;
-  text-decoration: none;
-}
-
-.markdown-body .anchor {
-  display: inline-block;
-  padding-right: 2px;
-  margin-left: -18px;
-}
-
-.markdown-body .anchor:focus {
-  outline: none;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 1em;
-  margin-bottom: 16px;
-  font-weight: bold;
-  line-height: 1.4;
-}
-
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #000;
-  vertical-align: middle;
-  visibility: hidden;
-}
-
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
-  text-decoration: none;
-}
-
-.markdown-body h1:hover .anchor .octicon-link,
-.markdown-body h2:hover .anchor .octicon-link,
-.markdown-body h3:hover .anchor .octicon-link,
-.markdown-body h4:hover .anchor .octicon-link,
-.markdown-body h5:hover .anchor .octicon-link,
-.markdown-body h6:hover .anchor .octicon-link {
-  visibility: visible;
-}
-
-.markdown-body h1 {
-  padding-bottom: 0.3em;
-  font-size: 2.25em;
-  line-height: 1.2;
-  border-bottom: 1px solid #eee;
-}
-
-.markdown-body h1 .anchor {
-  line-height: 1;
-}
-
-.markdown-body h2 {
-  padding-bottom: 0.3em;
-  font-size: 1.75em;
-  line-height: 1.225;
-  border-bottom: 1px solid #eee;
-}
-
-.markdown-body h2 .anchor {
-  line-height: 1;
-}
-
-.markdown-body h3 {
-  font-size: 1.5em;
-  line-height: 1.43;
-}
-
-.markdown-body h3 .anchor {
-  line-height: 1.2;
-}
-
-.markdown-body h4 {
-  font-size: 1.25em;
-}
-
-.markdown-body h4 .anchor {
-  line-height: 1.2;
-}
-
-.markdown-body h5 {
-  font-size: 1em;
-}
-
-.markdown-body h5 .anchor {
-  line-height: 1.1;
-}
-
-.markdown-body h6 {
-  font-size: 1em;
-  color: #777;
-}
-
-.markdown-body h6 .anchor {
-  line-height: 1.1;
-}
-
-.markdown-body p,
-.markdown-body blockquote,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body dl,
-.markdown-body table,
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 16px;
-}
-
-.markdown-body hr {
-  height: 4px;
-  padding: 0;
-  margin: 16px 0;
-  background-color: #e7e7e7;
-  border: 0 none;
-}
-
-.markdown-body ul,
-.markdown-body ol {
-  padding-left: 2em;
-}
-
-.markdown-body ul ul,
-.markdown-body ul ol,
-.markdown-body ol ol,
-.markdown-body ol ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body li>p {
-  margin-top: 16px;
-}
-
-.markdown-body dl {
-  padding: 0;
-}
-
-.markdown-body dl dt {
-  padding: 0;
-  margin-top: 16px;
-  font-size: 1em;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.markdown-body dl dd {
-  padding: 0 16px;
-  margin-bottom: 16px;
-}
-
-.markdown-body blockquote {
-  padding: 0 15px;
-  color: #777;
-  border-left: 4px solid #ddd;
-}
-
-.markdown-body blockquote>:first-child {
-  margin-top: 0;
-}
-
-.markdown-body blockquote>:last-child {
-  margin-bottom: 0;
-}
-
-.markdown-body table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-  word-break: normal;
-  word-break: keep-all;
-}
-
-.markdown-body table th {
-  font-weight: bold;
-}
-
-.markdown-body table th,
-.markdown-body table td {
-  padding: 6px 13px;
-  border: 1px solid #ddd;
-}
-
-.markdown-body table tr {
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
-
-.markdown-body img {
-  max-width: 100%;
-  box-sizing: content-box;
-  background-color: #fff;
-}
-
-.markdown-body code {
-  padding: 0;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  margin: 0;
-  font-size: 85%;
-  background-color: rgba(0,0,0,0.04);
-  border-radius: 3px;
-}
-
-.markdown-body code:before,
-.markdown-body code:after {
-  letter-spacing: -0.2em;
-  content: "\00a0";
-}
-
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-  font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-body .highlight {
-  margin-bottom: 16px;
-}
-
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f7f7;
-  border-radius: 3px;
-}
-
-.markdown-body .highlight pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body pre {
-  word-wrap: normal;
-}
-
-.markdown-body pre code {
-  display: inline;
-  max-width: initial;
-  padding: 0;
-  margin: 0;
-  overflow: initial;
-  line-height: inherit;
-  word-wrap: normal;
-  background-color: transparent;
-  border: 0;
-}
-
-.markdown-body pre code:before,
-.markdown-body pre code:after {
-  content: normal;
-}
-
-.markdown-body kbd {
-  display: inline-block;
-  padding: 3px 5px;
-  font-size: 11px;
-  line-height: 10px;
-  color: #555;
-  vertical-align: middle;
-  background-color: #fcfcfc;
-  border: solid 1px #ccc;
-  border-bottom-color: #bbb;
-  border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #bbb;
-}
-
-.markdown-body .pl-c {
-  color: #969896;
-}
-
-.markdown-body .pl-c1,
-.markdown-body .pl-s .pl-v {
-  color: #0086b3;
-}
-
-.markdown-body .pl-e,
-.markdown-body .pl-en {
-  color: #795da3;
-}
-
-.markdown-body .pl-s .pl-s1,
-.markdown-body .pl-smi {
-  color: #333;
-}
-
-.markdown-body .pl-ent {
-  color: #63a35c;
-}
-
-.markdown-body .pl-k {
-  color: #a71d5d;
-}
-
-.markdown-body .pl-pds,
-.markdown-body .pl-s,
-.markdown-body .pl-s .pl-pse .pl-s1,
-.markdown-body .pl-sr,
-.markdown-body .pl-sr .pl-cce,
-.markdown-body .pl-sr .pl-sra,
-.markdown-body .pl-sr .pl-sre {
-  color: #183691;
-}
-
-.markdown-body .pl-v {
-  color: #ed6a43;
-}
-
-.markdown-body .pl-id {
-  color: #b52a1d;
-}
-
-.markdown-body .pl-ii {
-  background-color: #b52a1d;
-  color: #f8f8f8;
-}
-
-.markdown-body .pl-sr .pl-cce {
-  color: #63a35c;
-  font-weight: bold;
-}
-
-.markdown-body .pl-ml {
-  color: #693a17;
-}
-
-.markdown-body .pl-mh,
-.markdown-body .pl-mh .pl-en,
-.markdown-body .pl-ms {
-  color: #1d3e81;
-  font-weight: bold;
-}
-
-.markdown-body .pl-mq {
-  color: #008080;
-}
-
-.markdown-body .pl-mi {
-  color: #333;
-  font-style: italic;
-}
-
-.markdown-body .pl-mb {
-  color: #333;
-  font-weight: bold;
-}
-
-.markdown-body .pl-md {
-  background-color: #ffecec;
-  color: #bd2c00;
-}
-
-.markdown-body .pl-mi1 {
-  background-color: #eaffea;
-  color: #55a532;
-}
-
-.markdown-body .pl-mdr {
-  color: #795da3;
-  font-weight: bold;
-}
-
-.markdown-body .pl-mo {
-  color: #1d3e81;
-}
-
-.markdown-body kbd {
-  display: inline-block;
-  padding: 3px 5px;
-  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  line-height: 10px;
-  color: #555;
-  vertical-align: middle;
-  background-color: #fcfcfc;
-  border: solid 1px #ccc;
-  border-bottom-color: #bbb;
-  border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #bbb;
-}
-
-.markdown-body .plan-price-unit {
-  color: #767676;
-  font-weight: normal;
-}
-
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 3px;
-}
-
-.markdown-body .task-list-item input {
-  margin: 0 0.35em 0.25em -1.6em;
-  vertical-align: middle;
-}
-
-.markdown-body .plan-choice {
-  padding: 15px;
-  padding-left: 40px;
-  display: block;
-  border: 1px solid #e0e0e0;
-  position: relative;
-  font-weight: normal;
-  background-color: #fafafa;
-}
-
-.markdown-body .plan-choice.open {
-  background-color: #fff;
-}
-
-.markdown-body .plan-choice.open .plan-choice-seat-breakdown {
-  display: block;
-}
-
-.markdown-body .plan-choice-free {
-  border-radius: 3px 3px 0 0;
-}
-
-.markdown-body .plan-choice-paid {
-  border-radius: 0 0 3px 3px;
-  border-top: 0;
-  margin-bottom: 20px;
-}
-
-.markdown-body .plan-choice-radio {
-  position: absolute;
-  left: 15px;
-  top: 18px;
-}
-
-.markdown-body .plan-choice-exp {
-  color: #999;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.markdown-body .plan-choice-seat-breakdown {
-  margin-top: 10px;
-  display: none;
-}
-
-.markdown-body :checked+.radio-label {
-  z-index: 1;
-  position: relative;
-  border-color: #4078c0;
-}
-</style><title>Readme</title></head><body><article class="markdown-body"><p><a href="///C://Dropbox/Github/Monkey/Puppy/Puppy.EF/favicon.ico" target="_blank"><img src="///C://Dropbox/Github/Monkey/Puppy/Puppy.EF/favicon.ico" alt="Logo" style="max-width:100%;"></a></p>
-<h1>
-<a id="user-content-puppyef" class="anchor" href="#puppyef" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Puppy.EF</h1>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Puppy.EF</title>
+</head>
+<body>
+
+    <p><img src="favicon.ico" alt="Logo" /></p>
+<h1 id="puppy.ef">Puppy.EF</h1>
 <blockquote>
 <p>Project Created by <a href="http://topnguyen.net"><strong>Top Nguyen</strong></a></p>
 </blockquote>
 <ul>
-<li>
-<p>Don't query or save change async because EF have issue <a href="https://github.com/aspnet/EntityFrameworkCore/issues/5816">5816</a></p>
+<li><p>Don't query or save change async because EF have issue <a href="https://github.com/aspnet/EntityFrameworkCore/issues/5816">5816</a></p>
 </li>
-<li>
-<p>AspNetCore 2 already support for <code>TransactionScope</code> but EF Core not yet. Please view more detail at <a href="https://stackoverflow.com/questions/46577551/ef-core-2-0-transactionscope-error">Stack OverFlow</a></p>
+<li><p>Use Query Filter to exclude soft &quot;Deleted&quot; row, when use Repository with <code>isIncludeDeleted</code> = <code>true</code> I add <code>IgnoreQueryFilters()</code> =&gt; will ignore all query filters not only soft Deleted filter.</p>
+<blockquote>
+<p>Due to issue of EF Core, please check <a href="https://github.com/aspnet/EntityFrameworkCore/issues/8576">8576</a></p>
+</blockquote>
 </li>
-<li>
-<p>Please view more detail at <a href="https://blogs.msdn.microsoft.com/dotnet/2017/05/12/announcing-ef-core-2-0-preview-1/">Annoucing for AspNetCore 2</a></p>
+<li><p>AspNetCore 2 already support for <code>TransactionScope</code> but EF Core not yet. Please view more detail at <a href="https://stackoverflow.com/questions/46577551/ef-core-2-0-transactionscope-error">Stack OverFlow</a></p>
+</li>
+<li><p>Please view more detail at <a href="https://blogs.msdn.microsoft.com/dotnet/2017/05/12/announcing-ef-core-2-0-preview-1/">Annoucing for AspNetCore 2</a></p>
 </li>
 </ul>
-<h2>
-<a id="user-content-initial-database" class="anchor" href="#initial-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initial Database</h2>
+<h2 id="initial-database">Initial Database</h2>
 <p>Setup by Command Windows of current project</p>
-<pre lang="markup"><code>dotnet ef migrations add Initial
+<pre><code class="language-markup">dotnet ef migrations add Initial
 dotnet ef database update  -v
 </code></pre>
 <p><strong>Don't use/run Package Manager Console to do the above action</strong>
 <strong>It will hang the Console and never stop without any result.</strong></p>
-<h1>
-<a id="user-content-important-thing-about-csproj" class="anchor" href="#important-thing-about-csproj" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Important Thing about csproj</h1>
-<pre lang="markup"><code>  &lt;PropertyGroup&gt;
+<h1 id="important-thing-about-csproj">Important Thing about csproj</h1>
+<pre><code class="language-markup">  &lt;PropertyGroup&gt;
     &lt;TargetFramework&gt;netcoreapp1.1&lt;/TargetFramework&gt;
     &lt;ApplicationIcon&gt;favicon.ico&lt;/ApplicationIcon&gt;
     &lt;Copyright&gt;http://topnguyen.net&lt;/Copyright&gt;
-
+    
     &lt;!-- Enable runtime config and runtime version, Need for entity framework DonetClioTool --&gt;
     &lt;GenerateRuntimeConfigurationFiles&gt;true&lt;/GenerateRuntimeConfigurationFiles&gt;
   &lt;/PropertyGroup&gt;
 
   &lt;!-- Entity Framework --&gt;
   &lt;ItemGroup&gt;
-    &lt;PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" /&gt;
-    &lt;PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.1" /&gt;
-    &lt;PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.EntityFrameworkCore&quot; Version=&quot;1.1.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.EntityFrameworkCore.SqlServer&quot; Version=&quot;1.1.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.EntityFrameworkCore.Design&quot; Version=&quot;1.1.1&quot; /&gt;
     &lt;!-- START Keep Runtime version is 1.0.0-* --&gt;
-    &lt;PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" /&gt;
-    &lt;DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-*" /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.EntityFrameworkCore.Tools&quot; Version=&quot;1.1.0&quot; /&gt;
+    &lt;DotNetCliToolReference Include=&quot;Microsoft.EntityFrameworkCore.Tools.DotNet&quot; Version=&quot;1.0.0-*&quot; /&gt;
     &lt;!-- END --&gt;
   &lt;/ItemGroup&gt;
 </code></pre>
-<h1>
-<a id="user-content-dbcontext" class="anchor" href="#dbcontext" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DbContext</h1>
-<div class="highlight highlight-source-cs"><pre>[PerRequestDependency(ServiceType = typeof(IDbContext))]
-<span class="pl-k">public</span> <span class="pl-k">partial</span> <span class="pl-k">class</span> <span class="pl-en">DbContext</span> : <span class="pl-en">BaseDbContext</span>, <span class="pl-en">IDbContext</span>
+<h1 id="dbcontext">DbContext</h1>
+<pre><code class="language-csharp">[PerRequestDependency(ServiceType = typeof(IDbContext))]
+public partial class DbContext : BaseDbContext, IDbContext
 {
-    <span class="pl-k">public</span> <span class="pl-en">DbContext</span>()
+    public DbContext()
     {
     }
 
-    <span class="pl-k">public</span> <span class="pl-en">DbContext</span>(DbContextOptions&lt;DbContext&gt; options) : <span class="pl-c1">base</span>(options)
+    public DbContext(DbContextOptions&lt;DbContext&gt; options) : base(options)
     {
     }
 
-    <span class="pl-k">protected</span> <span class="pl-k">override</span> <span class="pl-k">void</span> <span class="pl-en">OnConfiguring</span>(<span class="pl-en">DbContextOptionsBuilder</span> <span class="pl-smi">optionsBuilder</span>)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        <span class="pl-k">if</span> (!optionsBuilder.IsConfigured)
+        if (!optionsBuilder.IsConfigured)
         {
-            <span class="pl-k">string</span> <span class="pl-en">environmentName</span> = Environment.GetEnvironmentVariable(<span class="pl-s"><span class="pl-pds">"</span>ASPNETCORE_ENVIRONMENT<span class="pl-pds">"</span></span>);
-            <span class="pl-k">string</span> <span class="pl-en">connectionString</span> = ConfigHelper.GetValue(<span class="pl-s"><span class="pl-pds">"</span>appsettings.json<span class="pl-pds">"</span></span>, <span class="pl-pds">$"</span><span class="pl-s">ConnectionStrings:</span>{environmentName}<span class="pl-pds">"</span>);
-            optionsBuilder.UseSqlServer(<span class="pl-en">connectionString</span>, <span class="pl-en">o</span> =&gt; o.MigrationsAssembly(<span class="pl-k">typeof</span>(<span class="pl-en">IDataModule</span>).GetTypeInfo().Assembly.GetName().Name));
+            string environmentName = Environment.GetEnvironmentVariable(&quot;ASPNETCORE_ENVIRONMENT&quot;);
+            string connectionString = ConfigHelper.GetValue(&quot;appsettings.json&quot;, $&quot;ConnectionStrings:{environmentName}&quot;);
+            optionsBuilder.UseSqlServer(connectionString, o =&gt; o.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
         }
     }
 
-    <span class="pl-k">protected</span> <span class="pl-k">override</span> <span class="pl-k">void</span> <span class="pl-en">OnModelCreating</span>(<span class="pl-en">ModelBuilder</span> <span class="pl-smi">builder</span>)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        <span class="pl-c1">base</span>.OnModelCreating(builder);
+        base.OnModelCreating(builder);
 
-        <span class="pl-c">// [Important] Keep Under Base For Override And Make End Result</span>
+        // [Important] Keep Under Base For Override And Make End Result
 
-        <span class="pl-c">// Scan and apply Config/Mapping for Tables/Entities (from folder "Map")</span>
+        // Scan and apply Config/Mapping for Tables/Entities (from folder &quot;Map&quot;)
         builder.AddConfigFromAssembly(DbContextFactory.GetMigrationAssembly());
 
-        <span class="pl-c">// Set Delete Behavior as Restrict in Relationship</span>
+        // Set Delete Behavior as Restrict in Relationship
         builder.DisableCascadingDelete();
 
-        <span class="pl-c">// Convention for Table name</span>
+        // Convention for Table name
         builder.RemovePluralizingTableNameConvention();
 
-        builder.ReplaceTableNameConvention(<span class="pl-s"><span class="pl-pds">"</span>Entity<span class="pl-pds">"</span></span>, <span class="pl-k">string</span>.Empty);
+        builder.ReplaceTableNameConvention(&quot;Entity&quot;, string.Empty);
     }
-}</pre></div>
-<h1>
-<a id="user-content-dbfactory" class="anchor" href="#dbfactory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DbFactory</h1>
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">DbContextFactory</span> : <span class="pl-en">IDbContextFactory</span>&lt;<span class="pl-en">DbContext</span>&gt;
+}
+</code></pre>
+<h1 id="dbfactory">DbFactory</h1>
+<pre><code class="language-csharp">public class DbContextFactory : IDbContextFactory&lt;DbContext&gt;
 {
-    <span class="pl-k">public</span> <span class="pl-en">DbContext</span> <span class="pl-en">Create</span>(<span class="pl-en">DbContextFactoryOptions</span> <span class="pl-smi">options</span>)
+    public DbContext Create(DbContextFactoryOptions options)
     {
-        <span class="pl-k">var</span> <span class="pl-en">connectionString </span>= GetConnectionString(options);
-        <span class="pl-k">return</span> CreateCoreContext(connectionString);
+        var connectionString = GetConnectionString(options);
+        return CreateCoreContext(connectionString);
     }
 
-    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;</span>
-    <span class="pl-c"><span class="pl-c">///</span> Get connection from DbContextFactoryOptions Environment</span>
-    <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;</span>
-    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>options<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">param</span>&gt;</span>
-    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">returns</span>&gt;&lt;/<span class="pl-ent">returns</span>&gt;</span>
-    <span class="pl-k">private</span> <span class="pl-k">string</span> <span class="pl-en">GetConnectionString</span>(<span class="pl-en">DbContextFactoryOptions</span> <span class="pl-smi">options</span>)
+    /// &lt;summary&gt;
+    /// Get connection from DbContextFactoryOptions Environment
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;options&quot;&gt;&lt;/param&gt;
+    /// &lt;returns&gt;&lt;/returns&gt;
+    private string GetConnectionString(DbContextFactoryOptions options)
     {
-        <span class="pl-k">var</span> <span class="pl-en">connectionString </span>= ConfigHelper.GetValue(<span class="pl-s"><span class="pl-pds">"</span>appsettings.json<span class="pl-pds">"</span></span>, <span class="pl-pds">$"</span><span class="pl-s">ConnectionStrings:</span>{options.EnvironmentName}<span class="pl-pds">"</span>);
-        <span class="pl-k">return</span> connectionString;
+        var connectionString = ConfigHelper.GetValue(&quot;appsettings.json&quot;, $&quot;ConnectionStrings:{options.EnvironmentName}&quot;);
+        return connectionString;
     }
 
-    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-en">DbContext</span> <span class="pl-en">CreateCoreContext</span>(<span class="pl-k">string</span> <span class="pl-smi">connectionString</span>)
+    private static DbContext CreateCoreContext(string connectionString)
     {
-        <span class="pl-k">var</span> <span class="pl-en">builder </span>= <span class="pl-k">new</span> <span class="pl-en">DbContextOptionsBuilder</span>&lt;DbContext&gt;();
-        builder.UseSqlServer(<span class="pl-en">connectionString</span>, <span class="pl-en">optionsBuilder</span> =&gt; optionsBuilder.MigrationsAssembly(<span class="pl-k">typeof</span>(<span class="pl-en">IDataModule</span>).GetTypeInfo().Assembly.GetName().Name));
-        <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">DbContext</span>(builder.Options);
+        var builder = new DbContextOptionsBuilder&lt;DbContext&gt;();
+        builder.UseSqlServer(connectionString, optionsBuilder =&gt; optionsBuilder.MigrationsAssembly(typeof(IDataModule).GetTypeInfo().Assembly.GetName().Name));
+        return new DbContext(builder.Options);
     }
-}</pre></div>
-<h1>
-<a id="user-content-idbmodule" class="anchor" href="#idbmodule" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>IDbModule</h1>
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">interface</span> <span class="pl-en">IDataModule</span>
+}
+</code></pre>
+<h1 id="idbmodule">IDbModule</h1>
+<pre><code class="language-csharp">public interface IDataModule
 {
-}</pre></div>
-<h1>
-<a id="user-content-mapping" class="anchor" href="#mapping" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mapping</h1>
+}
+</code></pre>
+<h1 id="mapping">Mapping</h1>
 <ul>
 <li>Sample Entity Map</li>
 </ul>
-<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">UserMap</span> : <span class="pl-en">EntityTypeConfiguration</span>&lt;<span class="pl-en">UserEntity</span>&gt;
+<pre><code class="language-csharp">public class UserMap : EntityTypeConfiguration&lt;UserEntity&gt;
 {
-    <span class="pl-k">public</span> <span class="pl-k">override</span> <span class="pl-k">void</span> <span class="pl-en">Map</span>(<span class="pl-en">EntityTypeBuilder</span>&lt;<span class="pl-en">UserEntity</span>&gt; <span class="pl-smi">builder</span>)
+    public override void Map(EntityTypeBuilder&lt;UserEntity&gt; builder)
     {
-        <span class="pl-c1">base</span>.Map(builder);
-        builder.ToTable(<span class="pl-k">nameof</span>(<span class="pl-en">UserEntity</span>));
+        base.Map(builder);
+        builder.ToTable(nameof(UserEntity));
     }
-}</pre></div>
-</article></body></html>
+}
+</code></pre>
+
+
+</body>
+</html>

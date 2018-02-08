@@ -35,6 +35,10 @@ namespace Puppy.EF.Maps
             builder.HasIndex(x => x.GlobalId);
             builder.HasIndex(x => x.DeletedTime);
 
+            // Filter
+            builder.HasQueryFilter(x => x.DeletedTime == null);
+
+            // Length
             builder.Property(x => x.GlobalId).HasMaxLength(Constants.Maxlength.GlobalId).IsRequired();
         }
     }
@@ -51,9 +55,13 @@ namespace Puppy.EF.Maps
             builder.HasIndex(x => x.GlobalId);
             builder.HasIndex(x => x.DeletedTime);
 
+            // Filter
+            builder.HasQueryFilter(x => x.DeletedTime == null);
+
             // Version
             builder.Property(x => x.Version).IsRowVersion();
 
+            // Length
             builder.Property(x => x.GlobalId).HasMaxLength(Constants.Maxlength.GlobalId).IsRequired();
         }
     }

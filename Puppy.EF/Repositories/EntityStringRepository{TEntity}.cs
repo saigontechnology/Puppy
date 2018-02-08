@@ -55,7 +55,9 @@ namespace Puppy.EF.Repositories
                 }
             }
             else
+            {
                 DbContext.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public override void Update(TEntity entity, params string[] changedProperties)
@@ -77,7 +79,9 @@ namespace Puppy.EF.Repositories
                 }
             }
             else
+            {
                 DbContext.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public void UpdateWhere(Expression<Func<TEntity, bool>> predicate, TEntity entityNewData, params Expression<Func<TEntity, object>>[] changedProperties)

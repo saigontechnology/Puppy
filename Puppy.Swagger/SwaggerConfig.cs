@@ -120,10 +120,10 @@ namespace Puppy.Swagger
         [JsonIgnore]
         public static bool IsApiDocumentUiUpdated { get; set; }
 
-        [JsonIgnore]
         /// <summary>
         ///     Flag to mark Json Viewer (viewer.html) is already updated by first http request 
         /// </summary>
+        [JsonIgnore]
         public static bool IsJsonViewerUrlUpdated { get; set; }
     }
 }

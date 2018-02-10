@@ -1,7 +1,9 @@
-﻿@using Newtonsoft.Json.Linq
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
 @using Puppy.DataTable.Constants
 @using Puppy.DataTable.Models.Config
 @using Puppy.DataTable.Utils.Extensions
+@using Puppy.Web
 @model DataTableModel
 
 <script type="text/javascript">
@@ -72,7 +74,8 @@
                 options[PropertyConst.TableTools] = new JRaw("{ 'sSwfPath': '" + Url.AbsoluteContent("~/portal/vendor/datatables-tabletools/swf/copy_csv_xls_pdf.swf") + "' }");
 
                 var tools = Model.IsEnableColVis ? "{extend: 'colvis', text: 'Columns'}," : string.Empty;
-                tools += "'copy', 'excel', 'csv', 'pdf', 'print'";
+                //tools += "'copy', 'excel', 'csv', 'pdf', 'print'";
+
                 options[PropertyConst.Buttons] = new JRaw($"[{tools}]");
             }
 
@@ -90,7 +93,9 @@
 
         @if (Model.IsDevelopMode)
         {
-            @Html.Raw("console.log('[DataTable] Config', dataTableOptions);")
+            <text>
+                console.log('[DataTable] Config', dataTableOptions);
+            </text>
         }
 
         var $dataTable = $table.dataTable(dataTableOptions);
@@ -98,19 +103,28 @@
         // Col filters
         @if (Model.IsUseColumnFilter)
         {
-            @Html.Raw("$dataTable.columnFilter(" + Model.ColumnFilter + ");")
+            <text>
+                $dataTable.columnFilter(@Html.Raw(Model.ColumnFilter));
+            </text>
         }
 
         // Responsive Resize Callback
         @if (Model.IsResponsive && !string.IsNullOrWhiteSpace(Model.ResponsiveResizeCallbackFunctionName))
         {
-            @Html.Raw("$dataTable.api().on('responsive-resize', function (e, datatable, columns) { " + Model.ResponsiveResizeCallbackFunctionName + "(e, datatable, columns) });")
+            <text>
+                $dataTable.api().on('responsive-resize',
+                    function(e, datatable, columns) {
+                        @Html.Raw($"{Model.ResponsiveResizeCallbackFunctionName}(e, datatable, columns);")
+                    });
+            </text>
         }
 
         // Global Variable
         @if (!string.IsNullOrWhiteSpace(Model.GlobalJsVariableName))
         {
-            @Html.Raw("window['" + Model.GlobalJsVariableName + "'] = $dataTable;")
+            <text>
+                window['@Model.GlobalJsVariableName'] = $dataTable;
+            </text>
         }
     });
 </script>

@@ -35,8 +35,9 @@ namespace Puppy.EF.Maps
             builder.HasIndex(x => x.GlobalId);
             builder.HasIndex(x => x.DeletedTime);
 
+            // NOTE: Don't use Query Filter, it affect to load data business logic
             // Filter
-            builder.HasQueryFilter(x => x.DeletedTime == null);
+            //builder.HasQueryFilter(x => x.DeletedTime == null);
 
             // Length
             builder.Property(x => x.GlobalId).HasMaxLength(Constants.Maxlength.GlobalId).IsRequired();

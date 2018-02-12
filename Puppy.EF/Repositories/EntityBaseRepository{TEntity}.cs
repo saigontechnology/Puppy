@@ -64,8 +64,10 @@ namespace Puppy.EF.Repositories
 
             query = isIncludeDeleted
                 ?
+                // NOTE: Don't use Query Filter, it affect to load data business logic
                 // Ignore query filters in type configuration. Currently not flexible, please check https://github.com/aspnet/EntityFrameworkCore/issues/8576
-                query.IgnoreQueryFilters()
+                //query.IgnoreQueryFilters()
+                query
                 :
                 query.WhereNotDeleted();
 

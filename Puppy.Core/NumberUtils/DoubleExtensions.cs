@@ -25,20 +25,36 @@ namespace Puppy.Core.NumberUtils
 {
     public static class DoubleExtensions
     {
-        public static double Ceiling(this double value, double significance)
+        public static double CeilingSignificance(this double value, double significance)
         {
             if (Math.Abs(value % significance) > 0)
-                return (int)(value / significance) * significance + significance;
+            {
+                value = (int)(value / significance);
+                value *= significance;
+                value += significance;
+            }
 
-            return Convert.ToDouble(value);
+            return value;
         }
 
-        public static double Floor(this double value, double significance)
+        public static double CeilingPlaces(this double value, int places)
+        {
+            double multiplier = Math.Pow(10, Convert.ToDouble(places));
+
+            value = Math.Ceiling(value * multiplier) / multiplier;
+
+            return value;
+        }
+
+        public static double FloorSignificance(this double value, double significance)
         {
             if (Math.Abs(value % significance) > 0)
-                return (int)(value / significance) * significance;
+            {
+                value = (int)(value / significance);
+                value *= significance;
+            }
 
-            return Convert.ToDouble(value);
+            return value;
         }
     }
 }

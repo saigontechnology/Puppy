@@ -45,6 +45,6 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
 
     <!-- Swagger -->
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.0.0" />
   </ItemGroup>
 </Project>

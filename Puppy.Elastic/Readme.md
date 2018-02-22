@@ -20,7 +20,7 @@
 - [Download Java Machine](https://java.com/en/download/manual.jsp)
 - [Setting JAVA_HOME variable](https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html)
 - After setup JAVA_HOME, you can restart to update environment variables or use cmd with administrator permission `taskkill /f /im explorer.exe`.
-- Then open `explorere` again by `Task Manager` (access via alt + ctrl + delete then File > Run New Task > explorer)
+- Then open `explorer` again by `Task Manager` (access via alt + ctrl + delete then File > Run New Task > explorer)
 - Go to `bin` and open cmd at the directory
 - Use cmd `service install`
 - Then cmd `service manager` then setting `start` service and `start mode` is `automatic`

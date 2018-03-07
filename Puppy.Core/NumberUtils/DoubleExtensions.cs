@@ -56,5 +56,48 @@ namespace Puppy.Core.NumberUtils
 
             return value;
         }
+
+        /// <summary>
+        ///     Get Display string of the double 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="k">     1,000 Display by K char </param>
+        /// <param name="m">     1,000,000 Display by M char </param>
+        /// <param name="b">     1,000,000,000 Display by B char </param>
+        /// <returns></returns>
+        public static string ToShortDisplay(this double value, string k = "K", string m = "M", string b = "B")
+        {
+            if (value >= 100000000000)
+            {
+                return (value / 1000000000).ToString("0.##") + $" {b}";
+            }
+
+            if (value >= 10000000000)
+            {
+                return (value / 1000000000D).ToString("0.#") + $" {b}";
+            }
+
+            if (value >= 100000000)
+            {
+                return (value / 1000000).ToString("0.##") + $" {m}";
+            }
+
+            if (value >= 10000000)
+            {
+                return (value / 1000000D).ToString("0.#") + $" {m}";
+            }
+
+            if (value >= 100000)
+            {
+                return (value / 1000).ToString("0.##") + $" {k}";
+            }
+
+            if (value >= 1000)
+            {
+                return (value / 1000D).ToString("0.#") + $" {k}";
+            }
+
+            return value.ToString("#,0");
+        }
     }
 }

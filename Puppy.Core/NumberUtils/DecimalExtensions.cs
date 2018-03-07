@@ -36,7 +36,7 @@ namespace Puppy.Core.NumberUtils
         {
             if (value >= 10000000000)
             {
-                return (value / (decimal)10000000000D).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {b}";
+                return (value / (decimal)1000000000D).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {b}";
             }
 
             if (value >= 1000000000)
@@ -44,9 +44,9 @@ namespace Puppy.Core.NumberUtils
                 return (value / (decimal)1000000000D).ToString("0.#", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {b}";
             }
 
-            if (value >= 100000000)
+            if (value >= 10000000)
             {
-                return (value / (decimal)10000000D).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {m}";
+                return (value / (decimal)1000000D).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {m}";
             }
 
             if (value >= 1000000)
@@ -54,7 +54,7 @@ namespace Puppy.Core.NumberUtils
                 return (value / (decimal)1000000D).ToString("0.#", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {m}";
             }
 
-            if (value >= 100000)
+            if (value >= 10000)
             {
                 return (value / (decimal)1000D).ToString("0.##", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {k}";
             }

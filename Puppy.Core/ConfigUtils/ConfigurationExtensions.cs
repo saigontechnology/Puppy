@@ -61,17 +61,21 @@ namespace Puppy.Core.ConfigUtils
         public static T GetValueByMachineAndEnv<T>(this IConfiguration configuration, string section)
         {
             if (string.IsNullOrWhiteSpace(section))
+            {
                 throw new ArgumentException($"{nameof(section)} cannot be null or empty", nameof(section));
+            }
 
             T value;
 
-            if ((EnvironmentHelper.IsProduction() || EnvironmentHelper.IsStaging()))
+            if (EnvironmentHelper.IsProduction() || EnvironmentHelper.IsStaging())
             {
                 value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
             }
             else
             {
-                value = configuration.GetValue($"{section}:{EnvironmentHelper.MachineName}", configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}"));
+                var defaultValue = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
+
+                value = configuration.GetValue($"{section}:{EnvironmentHelper.MachineName}", defaultValue);
             }
 
             return value;

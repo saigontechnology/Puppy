@@ -22,6 +22,8 @@
 using Puppy.Core.FileUtils;
 using Puppy.Core.StringUtils;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Transforms;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -260,13 +262,13 @@ namespace Puppy.Core.ImageUtils
             {
                 using (MemoryStream outStream = new MemoryStream())
                 {
-                    using (var image = SixLabors.ImageSharp.Image.Load<Rgba32>(inStream, out var format))
+                    using (var image = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(inStream, out var format))
                     {
-                        image.Mutate(x => x.Resize(new SixLabors.ImageSharp.Processing.ResizeOptions
+                        image.Mutate(x => x.Resize(new ResizeOptions
                         {
                             Size = new SixLabors.Primitives.Size(newWidthPx, newHeightPx),
-                            
-                            Mode = (SixLabors.ImageSharp.Processing.ResizeMode)((int)resizeType)
+
+                            Mode = (ResizeMode)((int)resizeType)
                         }));
 
                         image.Save(outStream, format);

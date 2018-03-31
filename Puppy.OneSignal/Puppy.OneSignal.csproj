@@ -21,6 +21,6 @@
     <PackageReference Include="Flurl.Http" Version="2.2.1" />
 
     <!-- Json -->
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 </Project>

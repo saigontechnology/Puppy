@@ -271,6 +271,26 @@ namespace Puppy.Swagger
                     return;
                 }
 
+                // Set cookie if need
+                string requestAccessKey = context.Request.Query[SwaggerConfig.AccessKeyQueryParam];
+
+                if (!string.IsNullOrWhiteSpace(requestAccessKey) && context.Request.Cookies[SwaggerConfig.AccessKeyQueryParam] != requestAccessKey)
+                {
+                    SetCookie(context, Helper.CookieAccessKeyName, requestAccessKey);
+                }
+
+                // Check Permission
+                bool isCanAccess = Helper.IsCanAccessSwagger(context);
+
+                if (!isCanAccess)
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+
+                    await context.Response.WriteAsync(SwaggerConfig.UnAuthorizeMessage).ConfigureAwait(true);
+
+                    return;
+                }
+
                 if (!Helper.IsCanAccessSwagger(context))
                 {
                     context.Response.StatusCode = StatusCodes.Status403Forbidden;
@@ -301,6 +321,15 @@ namespace Puppy.Swagger
 
                 // Return next middleware for swagger generate document
                 await _next.Invoke(context).ConfigureAwait(true);
+            }
+
+            private static void SetCookie(HttpContext context, string key, string value)
+            {
+                context.Response.Cookies.Append(key, value, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = false // allow transmit via http and https
+                });
             }
         }
 

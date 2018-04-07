@@ -23,6 +23,8 @@ namespace Puppy.Hangfire
 {
     public static class Helper
     {
+        internal const string CookieAccessKeyName = "Hangfire_AccessKey";
+
         public static bool IsCanAccessHangfireDashboard(HttpContext httpContext)
         {
             if (string.IsNullOrWhiteSpace(HangfireConfig.AccessKeyQueryParam))
@@ -31,7 +33,11 @@ namespace Puppy.Hangfire
             }
 
             string requestKey = httpContext.Request.Query[HangfireConfig.AccessKeyQueryParam];
-            var isCanAccess = string.IsNullOrWhiteSpace(HangfireConfig.AccessKey) || HangfireConfig.AccessKey == requestKey;
+
+            requestKey = string.IsNullOrWhiteSpace(requestKey) ? httpContext.Request.Cookies[CookieAccessKeyName] : requestKey;
+
+            var isCanAccess = HangfireConfig.AccessKey == requestKey;
+
             return isCanAccess;
         }
     }

@@ -30,6 +30,8 @@ namespace Puppy.Swagger
 {
     internal static class Helper
     {
+        internal const string CookieAccessKeyName = "Swagger_AccessKey";
+
         /// <summary>
         ///     Get API DOC Html 
         /// </summary>
@@ -96,25 +98,25 @@ namespace Puppy.Swagger
         /// <returns></returns>
         internal static bool IsCanAccessSwagger(HttpContext httpContext)
         {
-            if (String.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
+            // Null access key is allow anonymous
+            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
             {
                 return true;
             }
 
-            string paramKeyValue = httpContext.Request.Query[SwaggerConfig.AccessKeyQueryParam];
+            string requestKey = httpContext.Request.Query[SwaggerConfig.AccessKeyQueryParam];
 
-            if (String.IsNullOrWhiteSpace(SwaggerConfig.AccessKey))
+            if (string.IsNullOrWhiteSpace(requestKey))
             {
-                return true;
-            }
-
-            if (String.IsNullOrWhiteSpace(SwaggerConfig.AccessKey) && String.IsNullOrWhiteSpace(paramKeyValue))
-            {
-                return true;
+                if (httpContext.Request.Cookies.TryGetValue(CookieAccessKeyName, out var cookieRequestKey))
+                {
+                    requestKey = cookieRequestKey;
+                }
             }
 
             // Case sensitive compare
-            var isCanAccess = SwaggerConfig.AccessKey == paramKeyValue;
+            var isCanAccess = SwaggerConfig.AccessKey == requestKey;
+
             return isCanAccess;
         }
 

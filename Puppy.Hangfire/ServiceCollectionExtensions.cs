@@ -117,23 +117,60 @@ namespace Puppy.Hangfire
         public class HangfireDashboardAccessMiddleware
         {
             private readonly RequestDelegate _next;
+            private readonly RouteCollection _routeCollection;
 
-            public HangfireDashboardAccessMiddleware(RequestDelegate next)
+            public HangfireDashboardAccessMiddleware(RequestDelegate next, RouteCollection routeCollection)
             {
                 _next = next;
+                _routeCollection = routeCollection;
             }
 
             public async Task Invoke(HttpContext context)
             {
-                if (context.Request.IsRequestFor(HangfireConfig.DashboardUrl) && !Helper.IsCanAccessHangfireDashboard(context))
+                // Check is request to Job Dashboard
+                var route = _routeCollection.FindDispatcher(context.Request.Path.Value.Replace(HangfireConfig.DashboardUrl, string.Empty));
+
+                var dashboardRequestUrl = route == null ? HangfireConfig.DashboardUrl : $@"{HangfireConfig.DashboardUrl}/{route.Item2.Value.Trim('/')}";
+
+                var isRequestToHangfireDashboard = context.Request.IsRequestFor(dashboardRequestUrl);
+
+                if (route == null || !isRequestToHangfireDashboard)
                 {
-                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                    context.Response.Headers.Clear();
+                    await _next.Invoke(context).ConfigureAwait(true);
+
+                    return;
+                }
+
+                // Set cookie if need
+                string requestAccessKey = context.Request.Query[HangfireConfig.AccessKeyQueryParam];
+
+                if (!string.IsNullOrWhiteSpace(requestAccessKey) && context.Request.Cookies[HangfireConfig.AccessKeyQueryParam] != requestAccessKey)
+                {
+                    SetCookie(context, Helper.CookieAccessKeyName, requestAccessKey);
+                }
+
+                // Check Permission
+                bool isCanAccess = Helper.IsCanAccessHangfireDashboard(context);
+
+                if (!isCanAccess)
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
                     await context.Response.WriteAsync(HangfireConfig.UnAuthorizeMessage).ConfigureAwait(true);
+
                     return;
                 }
 
                 await _next.Invoke(context).ConfigureAwait(true);
+            }
+
+            private static void SetCookie(HttpContext context, string key, string value)
+            {
+                context.Response.Cookies.Append(key, value, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = false // allow transmit via http and https
+                });
             }
         }
 

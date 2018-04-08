@@ -73,7 +73,9 @@ namespace Puppy.Core.ConfigUtils
             }
             else
             {
-                var defaultValue = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
+                var environmentName = !string.IsNullOrWhiteSpace(EnvironmentHelper.Name) ? EnvironmentHelper.Name : EnvironmentHelper.Development;
+
+                var defaultValue = configuration.GetValue<T>($"{section}:{environmentName}");
 
                 value = configuration.GetValue($"{section}:{EnvironmentHelper.MachineName}", defaultValue);
             }

@@ -17,6 +17,7 @@
 
 #endregion License
 
+using System;
 using Microsoft.DotNet.PlatformAbstractions;
 using Microsoft.Extensions.DependencyModel;
 using System.Collections.Generic;
@@ -53,10 +54,8 @@ namespace Puppy.DependencyInjection
         /// <returns></returns>
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            Assembly assembly;
-
             // Check if assembly already added by Dependency (Reference)
-            if (ListLoadedAssemblyName.Any(x => x.Name.ToLower() == assemblyName.Name.ToLower()))
+            if (ListLoadedAssemblyName.Any(x => string.Equals(x.Name, assemblyName.Name, StringComparison.OrdinalIgnoreCase)))
             {
                 return null;
             }
@@ -64,15 +63,7 @@ namespace Puppy.DependencyInjection
             // Load Assembly not yet load
             var assemblyFileInfo = new FileInfo($"{FolderFullPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
 
-            if (File.Exists(assemblyFileInfo.FullName))
-            {
-                var assemblyLoader = new AssemblyLoader(assemblyFileInfo.DirectoryName);
-                assembly = assemblyLoader.LoadFromAssemblyPath(assemblyFileInfo.FullName);
-            }
-            else
-            {
-                assembly = Assembly.Load(assemblyName);
-            }
+            var assembly = File.Exists(assemblyFileInfo.FullName) ? LoadFromAssemblyPath(assemblyFileInfo.FullName) : Assembly.Load(assemblyName);
 
             // Add to loaded
             ListLoadedAssemblyName.Add(assembly.GetName());

@@ -23,7 +23,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Puppy.Core.DateTimeUtils;
-using Puppy.Core.EnvironmentUtils;
 using Puppy.DataTable.Constants;
 using System;
 using System.Linq;
@@ -67,7 +66,7 @@ namespace Puppy.DataTable
         }
 
         /// <summary>
-        ///     [DataTable] Use DataTable 
+        ///     [DataTable] Use DataTable
         /// </summary>
         /// <param name="app"></param>
 
@@ -130,14 +129,6 @@ namespace Puppy.DataTable
 
                 DataTableGlobalConfig.RequestDateTimeFormatMode = configuration.GetValue($"{configSection}:{nameof(DataTableGlobalConfig.RequestDateTimeFormatMode)}", DataTableGlobalConfig.RequestDateTimeFormatMode);
             }
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"DataTable Global DateTime Format: {DataTableGlobalConfig.DateTimeFormat}");
-            Console.WriteLine($"DataTable Global Request DateTime Format Mode: {DataTableGlobalConfig.RequestDateTimeFormatMode.ToString()}");
-            Console.ResetColor();
         }
     }
 }

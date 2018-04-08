@@ -21,7 +21,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Puppy.Core.EnvironmentUtils;
 using Puppy.Core.ServiceCollectionUtils;
 using Puppy.DependencyInjection;
 using System;
@@ -121,16 +120,6 @@ namespace Puppy.Redis
                 RedisCacheConfig.ConnectionString = configuration.GetValue($"{configSection}:{nameof(RedisCacheConfig.ConnectionString)}", RedisCacheConfig.ConnectionString);
                 RedisCacheConfig.InstanceName = configuration.GetValue($"{configSection}:{nameof(RedisCacheConfig.InstanceName)}", RedisCacheConfig.InstanceName);
             }
-
-            if (!EnvironmentHelper.IsDevelopment())
-            {
-                return;
-            }
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Redis Cache Connection: {RedisCacheConfig.ConnectionString}, Instance Name: {RedisCacheConfig.InstanceName}");
-            Console.ResetColor();
         }
     }
 }

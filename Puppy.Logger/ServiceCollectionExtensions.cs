@@ -45,7 +45,7 @@ namespace Puppy.Logger
         private static string _configSection;
 
         /// <summary>
-        ///     Add Logger Service with Hangfire on Memory if it not added by another service before. 
+        ///     Add Logger Service with Hangfire on Memory if it not added by another service before.
         /// </summary>
         /// <param name="services">     </param>
         /// <param name="configuration"></param>
@@ -185,7 +185,7 @@ namespace Puppy.Logger
         }
 
         /// <summary>
-        ///     Update LoggerConfig by <see cref="configuration" /> 
+        ///     Update LoggerConfig by <see cref="configuration" />
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="configSection"></param>
@@ -227,26 +227,6 @@ namespace Puppy.Logger
                     throw new ArgumentException($"{nameof(LoggerConfig.ViewLogUrl)} must start by /", nameof(LoggerConfig.ViewLogUrl));
                 }
             }
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-
-            Console.WriteLine("[Puppy.Logger] Rolling File Path" +
-                              $": {LoggerConfig.PathFormat}" +
-                              $", Max File Size: {LoggerConfig.FileSizeLimitBytes} (bytes)" +
-                              $", Maximum: {LoggerConfig.RetainedFileCountLimit} (files)" +
-                              $", File Log Minimum Level: {LoggerConfig.FileLogMinimumLevel}" +
-                              $", Console Log Minimum Level: {LoggerConfig.ConsoleLogMinimumLevel}" +
-                              $"| Full Path: {LoggerConfig.FullPath}, Folder Full Path: {LoggerConfig.FolderFullPath}");
-
-            Console.WriteLine("[Puppy.Logger] SQLite File Path" +
-                              $": {LoggerConfig.SQLiteFilePath}" +
-                              $", SQLite Minimum Level: {LoggerConfig.SQLiteLogMinimumLevel}");
-
-            Console.ResetColor();
         }
     }
 }

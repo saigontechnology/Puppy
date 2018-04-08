@@ -111,17 +111,6 @@ namespace Puppy.Web.Middlewares.ServerInfo
                     ServerInfoConfig.AuthorEmail = authorEmail;
                 }
             }
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"System Info Response: {HeaderKey.Server}: {ServerInfoConfig.Name}," +
-                              $" {HeaderKey.XPoweredBy}: {ServerInfoConfig.PoweredBy}," +
-                              $" {HeaderKey.XAuthorName}: {ServerInfoConfig.AuthorName}," +
-                              $" {HeaderKey.XAuthorWebsite}: {ServerInfoConfig.AuthorWebsite}," +
-                              $" {HeaderKey.XAuthorEmail}: {ServerInfoConfig.AuthorEmail}");
-            Console.ResetColor();
         }
     }
 }

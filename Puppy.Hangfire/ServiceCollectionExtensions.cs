@@ -29,7 +29,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Puppy.Core.EnvironmentUtils;
 using Puppy.Core.ServiceCollectionUtils;
 using Puppy.Web.HttpUtils;
 using System;
@@ -40,7 +39,7 @@ namespace Puppy.Hangfire
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        ///     [Background Job] Hangfire, auto override existing added hangfire service. 
+        ///     [Background Job] Hangfire, auto override existing added hangfire service.
         /// </summary>
         /// <param name="services">                </param>
         /// <param name="databaseConnectionString"></param>
@@ -187,15 +186,6 @@ namespace Puppy.Hangfire
             HangfireConfig.UnAuthorizeMessage = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.UnAuthorizeMessage)}", HangfireConfig.UnAuthorizeMessage);
             HangfireConfig.BackToSiteUrl = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.BackToSiteUrl)}", HangfireConfig.BackToSiteUrl);
             HangfireConfig.StatsPollingInterval = configuration.GetValue($"{configSection}:{nameof(HangfireConfig.StatsPollingInterval)}", HangfireConfig.StatsPollingInterval);
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(!string.IsNullOrWhiteSpace(HangfireConfig.DashboardUrl)
-                ? $"Hangfire Access Dashboard via Url: {HangfireConfig.DashboardUrl}?{HangfireConfig.AccessKeyQueryParam}={HangfireConfig.AccessKey}"
-                : "Hangfire Setup without Dashboard");
-            Console.ResetColor();
         }
     }
 }

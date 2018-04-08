@@ -41,19 +41,19 @@ namespace Puppy.AutoMapper
             };
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="mapperResolveType">           </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
         /// </param>
-        /// <param name="assembliesToScan">            
+        /// <param name="assembliesToScan">
         ///     List of assembliesToScan contain AutoMapper Profile, <c> null </c> for scan current
         ///     loaded/reference in main project
         /// </param>
@@ -66,13 +66,13 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -85,14 +85,14 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -106,7 +106,7 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
@@ -114,7 +114,7 @@ namespace Puppy.AutoMapper
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -128,7 +128,7 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
@@ -136,7 +136,7 @@ namespace Puppy.AutoMapper
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -153,7 +153,7 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
@@ -162,7 +162,7 @@ namespace Puppy.AutoMapper
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -178,14 +178,14 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="mapperResolveType">           </param>
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -202,7 +202,7 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
@@ -210,7 +210,7 @@ namespace Puppy.AutoMapper
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -228,7 +228,7 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Add AutoMapper with Profiles scan and Dependency Injection 
+        ///     Add AutoMapper with Profiles scan and Dependency Injection
         /// </summary>
         /// <param name="services">                    </param>
         /// <param name="additionalInitAction">        </param>
@@ -237,7 +237,7 @@ namespace Puppy.AutoMapper
         /// <param name="isAssertConfigurationIsValid">
         ///     Check all auto mapper profile is valid by <c> Mapper.AssertConfigurationIsValid(); </c>
         /// </param>
-        /// <param name="isCompileMappings">           
+        /// <param name="isCompileMappings">
         ///     AutoMapper lazily compiles the type map plans on first map. However, this behavior is
         ///     not always desirable, so you can tell AutoMapper to compile its mappings directly by
         ///     <c> Mapper.Configuration.CompileMappings(); </c>
@@ -355,7 +355,7 @@ namespace Puppy.AutoMapper
         }
 
         /// <summary>
-        ///     Candidate Resolver 
+        ///     Candidate Resolver
         /// </summary>
         private class CandidateResolver
         {

@@ -21,7 +21,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
-using Puppy.Core.EnvironmentUtils;
 using Puppy.Core.ServiceCollectionUtils;
 using System;
 using System.Linq;
@@ -57,7 +56,7 @@ namespace Puppy.Elastic
         }
 
         /// <summary>
-        ///     [Elastic Search] Use Elastic 
+        ///     [Elastic Search] Use Elastic
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
@@ -97,13 +96,6 @@ namespace Puppy.Elastic
             {
                 throw new ElasticException("Cannot connect to elastic, please install elastic");
             }
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Elastic Connect: {ElasticConfig.ConnectionString}");
-            Console.ResetColor();
         }
     }
 }

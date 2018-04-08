@@ -23,10 +23,10 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Puppy.DependencyInjection.Attributes;
 using Puppy.DependencyInjection.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Puppy.DependencyInjection
 {
@@ -40,7 +40,7 @@ namespace Puppy.DependencyInjection
         }
 
         /// <summary>
-        ///     Register Assembly by Name 
+        ///     Register Assembly by Name
         /// </summary>
         /// <param name="services">    </param>
         /// <param name="assemblyName"></param>
@@ -99,7 +99,7 @@ namespace Puppy.DependencyInjection
         }
 
         /// <summary>
-        ///     Register all assemblies 
+        ///     Register all assemblies
         /// </summary>
         /// <param name="services">      </param>
         /// <param name="searchPattern">  Search Pattern by Directory.GetFiles </param>
@@ -124,7 +124,7 @@ namespace Puppy.DependencyInjection
         }
 
         /// <summary>
-        ///     Write registered service information to Console 
+        ///     Write registered service information to Console
         /// </summary>
         /// <param name="services">         </param>
         /// <param name="serviceNameFilter"> null to get all </param>
@@ -140,9 +140,56 @@ namespace Puppy.DependencyInjection
                         .ToList();
             }
 
-            Console.WriteLine($"{Environment.NewLine}{new string('-', 50)}");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"[Total Dependency Injection {listServiceDescriptors.Count}]");
+            var consoleTextColor = ConsoleColor.Yellow;
+            var consoleDimColor = ConsoleColor.DarkGray;
+
+            Console.WriteLine();
+            Console.WriteLine($"{new string('-', 110)}");
+            Console.WriteLine();
+
+            Console.ForegroundColor = consoleTextColor;
+            Console.WriteLine($"Puppy DI > Registered {listServiceDescriptors.Count} Services.");
+            Console.WriteLine();
+
+            var noMaxLength = listServiceDescriptors.Count.ToString().Length;
+
+            if (noMaxLength < "No.".Length)
+            {
+                noMaxLength = "No.".Length;
+            }
+
+            var serviceNameMaxLength = listServiceDescriptors.Select(x => GetNormForServiceAdded(x.ServiceType.Name).Length).Max();
+            if (serviceNameMaxLength < "Service".Length)
+            {
+                serviceNameMaxLength = "Service".Length;
+            }
+
+            var implementationNameMaxLength = listServiceDescriptors.Select(x => GetNormForServiceAdded(x.ImplementationType?.Name).Length).Max();
+            if (implementationNameMaxLength < "Implementation".Length)
+            {
+                implementationNameMaxLength = "Implementation".Length;
+            }
+
+            var lifeTimeMaxLength = listServiceDescriptors.Select(x => x.Lifetime.ToString().Length).Max();
+            if (lifeTimeMaxLength < "Lifetime".Length)
+            {
+                lifeTimeMaxLength = "Lifetime".Length;
+            }
+
+            // Header
+
+            Console.ResetColor();
+            Console.Write("    ");
+            Console.Write("No.".PadRight(noMaxLength));
+            Console.Write("    |    ");
+            Console.Write("Service".PadRight(serviceNameMaxLength));
+            Console.Write("    |    ");
+            Console.Write("Implementation".PadRight(implementationNameMaxLength));
+            Console.Write("    |    ");
+            Console.Write("Lifetime");
+            Console.WriteLine();
+
+            Console.WriteLine($"{new string('-', 4 + noMaxLength + serviceNameMaxLength + implementationNameMaxLength + lifeTimeMaxLength + "    |    ".Length * 3)}");
 
             for (var index = 0; index < listServiceDescriptors.Count; index++)
             {
@@ -150,48 +197,51 @@ namespace Puppy.DependencyInjection
 
                 var no = index + 1;
 
-                var maximumCharacter =
-                    new List<int>
-                    {
-                        service.ServiceType?.Name?.Length ?? 0,
-                        service.ImplementationType?.Name?.Length ?? 0,
-                        GetLifeTime(service.Lifetime).Length
-                    }.Max();
+                // No
 
                 Console.ResetColor();
-                Console.WriteLine($"{no}.");
+                Console.Write("    ");
+                Console.Write($"{no}".PadRight(noMaxLength));
 
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write("    Service         |  ");
                 Console.ResetColor();
-                Console.Write($"{service.ServiceType?.Name?.PadRight(maximumCharacter)}");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine($"  |  {service.ServiceType?.FullName}");
+                Console.Write("    |    ");
 
-                Console.Write("    Implementation  |  ");
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write($"{service.ImplementationType?.Name?.PadRight(maximumCharacter)}");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine($"  |  {service.ImplementationType?.FullName}");
+                // Service
 
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"    Lifetime        |  ");
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"[{GetLifeTime(service.Lifetime)}]");
-                Console.WriteLine();
+                Console.ForegroundColor = consoleTextColor;
+                Console.Write(GetNormForServiceAdded(service.ServiceType?.Name).PadRight(serviceNameMaxLength));
+
+                Console.ResetColor();
+                Console.Write("    |    ");
+
+                // Implementation
+
+                Console.ForegroundColor = consoleDimColor;
+                Console.Write(GetNormForServiceAdded(service.ImplementationType?.Name).PadRight(implementationNameMaxLength));
+
+                Console.ResetColor();
+                Console.Write("    |    ");
+
+                // Lifetime
+
+                Console.ForegroundColor = consoleTextColor;
+                Console.WriteLine(service.Lifetime.ToString().PadRight(lifeTimeMaxLength));
             }
-            Console.ResetColor();
 
-            Console.WriteLine($"{new string('-', 50)}{Environment.NewLine}");
+            Console.WriteLine();
+            Console.ResetColor();
+            Console.WriteLine($"{new string('-', 110)}");
         }
 
-        private static string GetLifeTime(ServiceLifetime serviceLifetime)
+        private static string GetNormForServiceAdded(string value)
         {
-            if (serviceLifetime == ServiceLifetime.Transient)
+            if (string.IsNullOrWhiteSpace(value))
             {
-                return "Per Resolve";
+                return "-";
             }
-            return serviceLifetime == ServiceLifetime.Scoped ? "Per Request" : "Singleton";
+
+            // Replace To Readable Generic if can
+            return Regex.Replace(value, @"`\d", "<T>");
         }
     }
 }

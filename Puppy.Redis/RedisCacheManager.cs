@@ -21,7 +21,6 @@
 
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using Puppy.Core.EnvironmentUtils;
 using System;
 using System.Text;
 
@@ -37,7 +36,7 @@ namespace Puppy.Redis
         }
 
         /// <summary>
-        ///     Absolute Expiration by duration 
+        ///     Absolute Expiration by duration
         /// </summary>
         /// <param name="key">     </param>
         /// <param name="data">    </param>
@@ -63,13 +62,6 @@ namespace Puppy.Redis
             var dataStr = data as string;
             var dataStore = dataStr ?? JsonConvert.SerializeObject(data);
             Cache.Set(key, Encoding.UTF8.GetBytes(dataStore), options);
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Redis Cache Set Key '{key}' with Data '{dataStore}' and Options is '{JsonConvert.SerializeObject(options)}'");
-            Console.ResetColor();
         }
 
         public void Remove(string key)
@@ -77,13 +69,6 @@ namespace Puppy.Redis
             if (IsExist(key))
             {
                 Cache.Remove(key);
-
-                if (!EnvironmentHelper.IsDevelopment()) return;
-
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($"Redis Cache Remove Key '{key}'");
-                Console.ResetColor();
             }
         }
 

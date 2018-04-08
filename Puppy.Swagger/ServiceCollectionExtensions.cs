@@ -23,7 +23,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
-using Puppy.Core.EnvironmentUtils;
 using Puppy.Core.StringUtils;
 using Puppy.Swagger.Filters;
 using Puppy.Web.HttpUtils;
@@ -40,7 +39,7 @@ namespace Puppy.Swagger
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        ///     Add Swagger API Document 
+        ///     Add Swagger API Document
         ///     <para> Xml documentation file full path generate by build main project </para>
         ///     <para>
         ///         File Path follow config from <c> .csproj </c>, not from <c> appsettings.json </c>
@@ -119,7 +118,7 @@ namespace Puppy.Swagger
         }
 
         /// <summary>
-        ///     Add Swagger API Document 
+        ///     Add Swagger API Document
         ///     <para> Xml documentation file full path generate by build main project </para>
         ///     <para>
         ///         File Path follow config from <c> .csproj </c>, not from <c> appsettings.json </c>
@@ -249,7 +248,7 @@ namespace Puppy.Swagger
         }
 
         /// <summary>
-        ///     Keep swagger access middleware before UseSwagger and UseSwaggerUI to wrap a request 
+        ///     Keep swagger access middleware before UseSwagger and UseSwaggerUI to wrap a request
         /// </summary>
         public class SwaggerAccessMiddleware
         {
@@ -363,13 +362,6 @@ namespace Puppy.Swagger
                     throw new ArgumentException($"{nameof(SwaggerConfig.JsonViewerUiUrl)} must start by /", nameof(SwaggerConfig.JsonViewerUiUrl));
                 }
             }
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"API Document Json File Endpoint: {SwaggerConfig.SwaggerEndpoint}");
-            Console.ResetColor();
         }
     }
 }

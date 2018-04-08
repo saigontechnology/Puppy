@@ -25,9 +25,7 @@ using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Puppy.Core.DictionaryUtils;
-using Puppy.Core.EnvironmentUtils;
 using Puppy.Web.Constants;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -69,7 +67,7 @@ namespace Puppy.Web.Middlewares.Cros
         }
 
         /// <summary>
-        ///     This middleware for hot fix current issue of AspNetCore Cors 
+        ///     This middleware for hot fix current issue of AspNetCore Cors
         /// </summary>
         public class CorsMiddlewareMonkey
         {
@@ -113,17 +111,6 @@ namespace Puppy.Web.Middlewares.Cros
 
                 CrosConfig.AccessControlAllowMethods = configuration.GetValue($"{configSection}:{nameof(CrosConfig.AccessControlAllowMethods)}", CrosConfig.AccessControlAllowMethods);
             }
-
-            if (!EnvironmentHelper.IsDevelopment()) return;
-
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(
-                $"API Cros Config: {nameof(CrosConfig.PolicyAllowAllName)}: {CrosConfig.PolicyAllowAllName} |" +
-                $" {nameof(CrosConfig.AccessControlAllowOrigin)}: {CrosConfig.AccessControlAllowOrigin} |" +
-                $" {nameof(CrosConfig.AccessControlAllowHeaders)}: {CrosConfig.AccessControlAllowHeaders} |" +
-                $" {nameof(CrosConfig.AccessControlAllowMethods)}: {CrosConfig.AccessControlAllowMethods}");
-            Console.ResetColor();
         }
     }
 }

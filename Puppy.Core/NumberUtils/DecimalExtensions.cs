@@ -64,7 +64,7 @@ namespace Puppy.Core.NumberUtils
                 return (value / (decimal)1000D).ToString("0.#", CultureInfo.InvariantCulture).Replace(".", pointChar) + $" {k}";
             }
 
-            return value.ToString("#,0");
+            return value.ToString("N");
         }
     }
 }

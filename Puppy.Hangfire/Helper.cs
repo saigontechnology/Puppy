@@ -27,7 +27,7 @@ namespace Puppy.Hangfire
 
         public static bool IsCanAccessHangfireDashboard(HttpContext httpContext)
         {
-            if (string.IsNullOrWhiteSpace(HangfireConfig.AccessKeyQueryParam))
+            if (string.IsNullOrWhiteSpace(HangfireConfig.AccessKey))
             {
                 return true;
             }

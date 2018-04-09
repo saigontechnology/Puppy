@@ -99,7 +99,7 @@ namespace Puppy.Swagger
         internal static bool IsCanAccessSwagger(HttpContext httpContext)
         {
             // Null access key is allow anonymous
-            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKeyQueryParam))
+            if (string.IsNullOrWhiteSpace(SwaggerConfig.AccessKey))
             {
                 return true;
             }

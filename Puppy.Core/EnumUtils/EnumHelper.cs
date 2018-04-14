@@ -152,6 +152,22 @@ namespace Puppy.Core.EnumUtils
         {
             return (T)Enum.Parse(typeof(T), value, true);
         }
+
+        public static bool TryToEnum<T>(this string value, out T enumValue)
+        {
+            try
+            {
+                enumValue = (T)Enum.Parse(typeof(T), value, true);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                enumValue = default;
+
+                return false;
+            }
+        }
     }
 
     // ReSharper disable InconsistentNaming

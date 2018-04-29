@@ -6,15 +6,8 @@
     <Copyright>http://topnguyen.net</Copyright>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <OutputType>Library</OutputType>
-    <PreserveCompilationContext>false</PreserveCompilationContext>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
-    <Configurations>Debug;Release</Configurations>
-    <Platforms>AnyCPU;x86;x64</Platforms>
-    <OutputPath>.\bin\</OutputPath>
+    <RuntimeFrameworkVersion>2.0.7</RuntimeFrameworkVersion>
     <LangVersion>7.1</LangVersion>
-    <!-- Enable runtime config and runtime version, Need for entity framework DonetClioTool -->
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
 
   <!-- Puppy -->
@@ -28,7 +21,6 @@
   <!-- External Libraries -->
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
 
     <PackageReference Include="Hangfire" Version="1.6.19" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.5.2" />

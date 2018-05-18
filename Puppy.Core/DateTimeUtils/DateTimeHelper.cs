@@ -21,6 +21,7 @@
 
 using System;
 using System.Globalization;
+using TimeZoneConverter;
 
 namespace Puppy.Core.DateTimeUtils
 {
@@ -73,6 +74,29 @@ namespace Puppy.Core.DateTimeUtils
         public static DateTimeOffset GetDateTimeFromEpoch(double value)
         {
             return EpochTime.AddSeconds(value);
+        }
+
+        /// <summary>
+        ///     Support find time zone id by difference platform: Windows, Mac, Linux. 
+        /// </summary>
+        /// <param name="timeZoneId"></param>
+        /// <returns></returns>
+        public static TimeZoneInfo GetTimeZoneInfo(string timeZoneId)
+        {
+            var timeZoneInfo = TZConvert.GetTimeZoneInfo(timeZoneId);
+
+            return timeZoneInfo;
+        }
+
+        /// <summary>
+        ///     Support find time zone id by difference platform: Windows, Mac, Linux. 
+        /// </summary>
+        /// <param name="timeZoneId">  </param>
+        /// <param name="timeZoneInfo"></param>
+        /// <returns></returns>
+        public static bool TryGetTimeZoneInfo(string timeZoneId, out TimeZoneInfo timeZoneInfo)
+        {
+            return TZConvert.TryGetTimeZoneInfo(timeZoneId, out timeZoneInfo);
         }
     }
 }

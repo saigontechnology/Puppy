@@ -21,6 +21,7 @@
 
 using System;
 using System.Globalization;
+using TimeZoneConverter;
 
 namespace Puppy.Core.DateTimeUtils
 {
@@ -43,25 +44,25 @@ namespace Puppy.Core.DateTimeUtils
 
         public static DateTime? ReplaceNullOrDefault(DateTime? value, DateTime? replace)
         {
-            value = (value == default(DateTime) || value == null) ? replace : value;
+            value = value ?? replace;
             return value;
         }
 
         public static DateTime ReplaceNullOrDefault(DateTime value, DateTime replace)
         {
-            value = value == default(DateTime) ? replace : value;
+            value = value == default ? replace : value;
             return value;
         }
 
         public static DateTimeOffset? ReplaceNullOrDefault(DateTimeOffset? value, DateTimeOffset? replace)
         {
-            value = (value == default(DateTimeOffset) || value == null) ? replace : value;
+            value = value ?? replace;
             return value;
         }
 
         public static DateTimeOffset ReplaceNullOrDefault(DateTimeOffset value, DateTimeOffset replace)
         {
-            value = value == default(DateTimeOffset) ? replace : value;
+            value = value == default ? replace : value;
             return value;
         }
 
@@ -73,6 +74,29 @@ namespace Puppy.Core.DateTimeUtils
         public static DateTimeOffset GetDateTimeFromEpoch(double value)
         {
             return EpochTime.AddSeconds(value);
+        }
+
+        /// <summary>
+        ///     Support find time zone id by difference platform: Windows, Mac, Linux. 
+        /// </summary>
+        /// <param name="timeZoneId"></param>
+        /// <returns></returns>
+        public static TimeZoneInfo GetTimeZoneInfo(string timeZoneId)
+        {
+            var timeZoneInfo = TZConvert.GetTimeZoneInfo(timeZoneId);
+
+            return timeZoneInfo;
+        }
+
+        /// <summary>
+        ///     Support find time zone id by difference platform: Windows, Mac, Linux. 
+        /// </summary>
+        /// <param name="timeZoneId">  </param>
+        /// <param name="timeZoneInfo"></param>
+        /// <returns></returns>
+        public static bool TryGetTimeZoneInfo(string timeZoneId, out TimeZoneInfo timeZoneInfo)
+        {
+            return TZConvert.TryGetTimeZoneInfo(timeZoneId, out timeZoneInfo);
         }
     }
 }

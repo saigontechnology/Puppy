@@ -27,7 +27,7 @@ namespace Puppy.Core.DateTimeUtils
     {
         public static DateTime GetVietNamFromUtc(this DateTime dateTimeUtc)
         {
-            var vietNamZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var vietNamZone = DateTimeHelper.GetTimeZoneInfo("SE Asia Standard Time");
             return GetDateTimeFromUtc(dateTimeUtc, vietNamZone);
         }
 
@@ -38,38 +38,95 @@ namespace Puppy.Core.DateTimeUtils
         }
 
         /// <summary>
+        ///     See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="timeZone"> Time Zone ID, See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx </param>
+        /// <returns></returns>
+        public static DateTime WithTimeZone(this DateTime dateTime, string timeZone)
+        {
+            var timeZoneInfo = DateTimeHelper.GetTimeZoneInfo(timeZone);
+
+            var dateTimeWithTimeZone = new DateTimeOffset(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, timeZoneInfo.BaseUtcOffset);
+
+            return dateTimeWithTimeZone.DateTime;
+        }
+
+        /// <summary>
+        ///     See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx 
+        /// </summary>
+        /// <param name="dateTimeOffset"></param>
+        /// <param name="timeZone">       Time Zone ID, See more: https://msdn.microsoft.com/en-us/library/gg154758.aspx </param>
+        /// <returns></returns>
+        public static DateTimeOffset WithTimeZone(this DateTimeOffset dateTimeOffset, string timeZone)
+        {
+            var timeZoneInfo = DateTimeHelper.GetTimeZoneInfo(timeZone);
+
+            var dateTimeWithTimeZone = new DateTimeOffset(dateTimeOffset.Year, dateTimeOffset.Month, dateTimeOffset.Day, dateTimeOffset.Hour, dateTimeOffset.Minute, dateTimeOffset.Second, dateTimeOffset.Millisecond, timeZoneInfo.BaseUtcOffset);
+
+            var offset = dateTimeWithTimeZone.Offset;
+
+            return dateTimeWithTimeZone;
+        }
+
+        /// <summary>
         ///     Truncate date time 
         /// </summary>
         /// <param name="dt">        </param>
         /// <param name="truncateTo"></param>
         /// <returns></returns>
-        public static DateTime TruncateTo(this DateTime dt, Enums.DateTruncate truncateTo)
+        public static DateTime TruncateTo(this DateTime dt, Enums.TruncateType truncateTo)
         {
-            if (truncateTo == Enums.DateTruncate.Year)
-                return new DateTime(dt.Year, 0, 0);
+            switch (truncateTo)
+            {
+                case Enums.TruncateType.Year:
+                    return new DateTime(dt.Year);
 
-            if (truncateTo == Enums.DateTruncate.Month)
-                return new DateTime(dt.Year, dt.Month, 0);
+                case Enums.TruncateType.Month:
+                    return new DateTime(dt.Year, dt.Month, 1);
 
-            if (truncateTo == Enums.DateTruncate.Day)
-                return new DateTime(dt.Year, dt.Month, dt.Day);
+                case Enums.TruncateType.Day:
+                    return new DateTime(dt.Year, dt.Month, dt.Day);
 
-            if (truncateTo == Enums.DateTruncate.Hour)
-                return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, 0, 0);
+                case Enums.TruncateType.Hour:
+                    return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, 0, 0);
 
-            if (truncateTo == Enums.DateTruncate.Minute)
-                return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
+                case Enums.TruncateType.Minute:
+                    return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
 
-            return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0);
+                default:
+                    return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0);
+            }
         }
 
         /// <summary>
-        ///     Get Date Time without milliseconds 
+        ///     Truncate date time 
         /// </summary>
+        /// <param name="dt">        </param>
+        /// <param name="truncateTo"></param>
         /// <returns></returns>
-        public static DateTime WithoutMillisecond(DateTime dateTime)
+        public static DateTimeOffset TruncateTo(this DateTimeOffset dt, Enums.TruncateType truncateTo)
         {
-            return TruncateTo(dateTime, Enums.DateTruncate.Second);
+            switch (truncateTo)
+            {
+                case Enums.TruncateType.Year:
+                    return new DateTimeOffset(dt.Year, 1, 1, 0, 0, 0, dt.Offset);
+
+                case Enums.TruncateType.Month:
+                    return new DateTimeOffset(dt.Year, dt.Month, 1, 0, 0, 0, dt.Offset);
+
+                case Enums.TruncateType.Day:
+                    return new DateTimeOffset(dt.Year, dt.Month, dt.Day, 0, 0, 0, dt.Offset);
+
+                case Enums.TruncateType.Hour:
+                    return new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, 0, 0, dt.Offset);
+
+                case Enums.TruncateType.Minute:
+                    return new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0, dt.Offset);
+
+                default:
+                    return new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0, dt.Offset);
+            }
         }
 
         /// <summary>
@@ -95,7 +152,7 @@ namespace Puppy.Core.DateTimeUtils
 
     public class Enums
     {
-        public enum DateTruncate
+        public enum TruncateType
         {
             Year,
             Month,

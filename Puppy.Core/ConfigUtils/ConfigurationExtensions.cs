@@ -56,30 +56,28 @@ namespace Puppy.Core.ConfigUtils
         /// </summary>
         /// <typeparam name="T"> The type to convert the value to. </typeparam>
         /// <param name="configuration"></param>
-        /// <param name="section">      
-        ///     The configuration section for the value to convert.
-        /// </param>
+        /// <param name="section">       The configuration section for the value to convert. </param>
         /// <returns></returns>
         public static T GetValueByMachineAndEnv<T>(this IConfiguration configuration, string section)
         {
             if (string.IsNullOrWhiteSpace(section))
+            {
                 throw new ArgumentException($"{nameof(section)} cannot be null or empty", nameof(section));
+            }
 
             T value;
 
-            if ((EnvironmentHelper.IsProduction() || EnvironmentHelper.IsStaging()))
+            if (EnvironmentHelper.IsProduction() || EnvironmentHelper.IsStaging())
             {
                 value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
             }
             else
             {
-                value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.MachineName}");
+                var environmentName = !string.IsNullOrWhiteSpace(EnvironmentHelper.Name) ? EnvironmentHelper.Name : EnvironmentHelper.Development;
 
-                // If get by machine name is null, then try get by environment name
-                if (value == null || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
-                {
-                    value = configuration.GetValue<T>($"{section}:{EnvironmentHelper.Name}");
-                }
+                var defaultValue = configuration.GetValue<T>($"{section}:{environmentName}");
+
+                value = configuration.GetValue($"{section}:{EnvironmentHelper.MachineName}", defaultValue);
             }
 
             return value;

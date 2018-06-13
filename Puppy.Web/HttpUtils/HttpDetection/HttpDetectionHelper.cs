@@ -26,11 +26,14 @@ using Puppy.Web.HttpUtils.HttpDetection.Device;
 using System;
 using System.IO;
 using System.Linq;
+using MaxMind.Db;
 
 namespace Puppy.Web.HttpUtils.HttpDetection
 {
     public static class HttpDetectionHelper
     {
+        private static Object lockGetLocation = new Object();
+
         // Marker
         public static string GetMarkerFullInfo(HttpRequest request)
         {
@@ -242,49 +245,52 @@ namespace Puppy.Web.HttpUtils.HttpDetection
 
             if (!File.Exists(geoDbAbsolutePath)) return null;
 
-            using (var reader = new DatabaseReader(geoDbAbsolutePath))
+            lock (lockGetLocation)
             {
-                var ipAddress = GetIpAddress(request);
-
-                if (reader.TryCity(ipAddress, out var city))
+                using (var reader = new DatabaseReader(geoDbAbsolutePath))
                 {
-                    if (city != null)
+                    var ipAddress = GetIpAddress(request);
+
+                    if (reader.TryCity(ipAddress, out var city))
                     {
-                        device.IpAddress = city.Traits.IPAddress;
+                        if (city != null)
+                        {
+                            device.IpAddress = city.Traits.IPAddress;
 
-                        // City
-                        device.CityName = city.City.Names.TryGetValue("en", out var cityName)
-                            ? cityName
-                            : city.City.Name;
-                        device.CityGeoNameId = city.City.GeoNameId;
+                            // City
+                            device.CityName = city.City.Names.TryGetValue("en", out var cityName)
+                                ? cityName
+                                : city.City.Name;
+                            device.CityGeoNameId = city.City.GeoNameId;
 
-                        // Country
-                        device.CountryName = city.Country.Names.TryGetValue("en", out var countryName)
-                            ? countryName
-                            : city.Country.Name;
-                        device.CountryGeoNameId = city.Country.GeoNameId;
-                        device.CountryIsoCode = city.Country.IsoCode;
+                            // Country
+                            device.CountryName = city.Country.Names.TryGetValue("en", out var countryName)
+                                ? countryName
+                                : city.Country.Name;
+                            device.CountryGeoNameId = city.Country.GeoNameId;
+                            device.CountryIsoCode = city.Country.IsoCode;
 
-                        // Continent
-                        device.ContinentName = city.Continent.Names.TryGetValue("en", out var continentName)
-                            ? continentName
-                            : city.Continent.Name;
-                        device.ContinentGeoNameId = city.Continent.GeoNameId;
-                        device.ContinentCode = city.Continent.Code;
+                            // Continent
+                            device.ContinentName = city.Continent.Names.TryGetValue("en", out var continentName)
+                                ? continentName
+                                : city.Continent.Name;
+                            device.ContinentGeoNameId = city.Continent.GeoNameId;
+                            device.ContinentCode = city.Continent.Code;
 
-                        // Location
-                        device.Latitude = city.Location.Latitude;
-                        device.Longitude = city.Location.Longitude;
-                        device.AccuracyRadius = city.Location.AccuracyRadius;
+                            // Location
+                            device.Latitude = city.Location.Latitude;
+                            device.Longitude = city.Location.Longitude;
+                            device.AccuracyRadius = city.Location.AccuracyRadius;
 
-                        device.PostalCode = city.Postal.Code;
+                            device.PostalCode = city.Postal.Code;
 
-                        // Time Zone
-                        device.TimeZone = city.Location.TimeZone;
+                            // Time Zone
+                            device.TimeZone = city.Location.TimeZone;
+                        }
                     }
-                }
 
-                return device;
+                    return device;
+                }
             }
         }
 

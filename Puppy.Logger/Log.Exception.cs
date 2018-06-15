@@ -90,6 +90,24 @@ namespace Puppy.Logger
             return id;
         }
 
+        /// <summary>
+        ///     Get log detail
+        /// </summary>
+        /// <param name="logLevel"></param>
+        /// <param name="context"></param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath"></param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns></returns>
+        public static string GetJobLogExceptionContext(LogLevel logLevel, ExceptionContext context, [CallerMemberName] string callerMemberName = "",
+            [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = -1)
+        {
+            var logEntity = new LogEntity(context, logLevel);
+            UpdateLogInfo(context, logEntity, callerMemberName, callerFilePath, callerLineNumber);
+
+            return logEntity.ToString();
+        }
+
         private static string JobLogException(LogLevel logLevel, Exception ex, string callerMemberName, string callerFilePath, int callerLineNumber)
         {
             var logEntity = new LogEntity(ex, logLevel);

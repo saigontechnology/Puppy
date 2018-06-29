@@ -20,6 +20,7 @@
 #endregion License
 
 using System.Text;
+using Puppy.Core.StringUtils;
 
 namespace Puppy.Web
 {
@@ -83,7 +84,14 @@ namespace Puppy.Web
         public static string GetFriendlyTitle(string title, bool remapToAscii = false, int maxLength = 80)
         {
             if (title == null)
+            {
                 return string.Empty;
+            }
+
+            title = StringHelper.Normalize(title);
+
+            title = title.ToLowerInvariant();
+
 
             var length = title.Length;
             var prevDash = false;

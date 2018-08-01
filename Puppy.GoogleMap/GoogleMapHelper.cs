@@ -22,6 +22,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -50,9 +51,9 @@ namespace Puppy.GoogleMap
             KeyValuePair<string, string>[] extraValues = null,
             string googleMatrixBaseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json")
         {
-            var origins = string.Join("|", originalCoordinates.Select(x => $"{x.Latitude},{x.Longitude}"));
+            var origins = string.Join("|", originalCoordinates.Select(x => $"{x.Latitude.ToString(CultureInfo.InvariantCulture)},{x.Longitude.ToString(CultureInfo.InvariantCulture)}"));
 
-            var destinations = string.Join("|", destinationCoordinates.Select(x => $"{x.Latitude},{x.Longitude}"));
+            var destinations = string.Join("|", destinationCoordinates.Select(x => $"{x.Latitude.ToString(CultureInfo.InvariantCulture)},{x.Longitude.ToString(CultureInfo.InvariantCulture)}"));
 
             var extraValueQuery = string.Empty;
             if (extraValues?.Any() == true)

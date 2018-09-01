@@ -41,23 +41,20 @@ namespace Puppy.Web.Middlewares
                 .AddWebMarkupMin(options =>
                 {
                     options.MaxResponseSize = -1; // Allow min all size
-
                     options.AllowMinificationInDevelopmentEnvironment = true;
                     options.AllowCompressionInDevelopmentEnvironment = true;
-
                     options.DisablePoweredByHttpHeaders = true;
-                    options.DisableCompression = false;
+                    options.DisableCompression = true;
                     options.DisableMinification = false;
                 })
                 // HTML, CSS, JS Mini
                 .AddHtmlMinification(options =>
                 {
                     options.MinificationSettings.MinifyEmbeddedCssCode = true;
-                    options.MinificationSettings.RemoveRedundantAttributes = true;
-                    options.MinificationSettings.RemoveHttpProtocolFromAttributes = true;
-                    options.MinificationSettings.RemoveHttpsProtocolFromAttributes = true;
-                    options.MinificationSettings.RemoveOptionalEndTags = false; // [Important] Don't enable/true this
-
+                    options.MinificationSettings.RemoveRedundantAttributes = false;
+                    options.MinificationSettings.RemoveHttpProtocolFromAttributes = false;
+                    options.MinificationSettings.RemoveHttpsProtocolFromAttributes = false;
+                    options.MinificationSettings.RemoveOptionalEndTags = false; // Important, Don't enable/true this
                     options.CssMinifierFactory = new NUglifyCssMinifierFactory();
                     options.JsMinifierFactory = new NUglifyJsMinifierFactory();
                 })

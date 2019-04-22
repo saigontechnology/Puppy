@@ -325,5 +325,17 @@ namespace Puppy.Core.FileUtils
                 stream.Position = 0;
             }
         }
+
+        /// <summary>
+        ///     Get all file from path
+        /// </summary>
+        /// <returns></returns>
+        public static FileInfo[] GetAllFile(string folderPath, string searchPattern = "*", SearchOption searchOption = SearchOption.AllDirectories)
+        {
+            var dirInfo = new DirectoryInfo(folderPath);
+            var allFiles = dirInfo.GetFiles(searchPattern, searchOption);
+
+            return allFiles;
+        }
     }
 }

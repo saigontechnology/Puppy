@@ -59,5 +59,17 @@ namespace Puppy.Core.FileUtils
         {
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
+
+        /// <summary>
+        ///     Delete directory and all files inside
+        /// </summary>
+        /// <param name="paths"></param>
+        public static void Delete(params string[] paths)
+        {
+            foreach (var path in paths)
+            {
+                Directory.Delete(path, true);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Puppy.Core.StringUtils;
 using Renci.SshNet;
 
 namespace Puppy.Core.SFTPUltils
@@ -24,7 +25,7 @@ namespace Puppy.Core.SFTPUltils
             // Add private key
             if (!string.IsNullOrEmpty(privateKeyPath))
             {
-                var keyFile = new PrivateKeyFile(privateKeyPath);
+                var keyFile = new PrivateKeyFile(privateKeyPath.GetFullPath());
                 var keyFiles = new[] { keyFile };
 
                 methods.Add(new PrivateKeyAuthenticationMethod(username, keyFiles));

@@ -71,7 +71,7 @@ namespace Puppy.Core.FileUtils
         /// </summary>
         /// <param name="sourceFiles">PDF files being merged.</param>
         /// <returns></returns>
-        public static byte[] MergeFiles(List<byte[]> sourceFiles)
+        public static byte[] MergeFiles(List<byte[]> sourceFiles, bool setPageNumber = false)
         {
             Document document = new Document();
             using (MemoryStream ms = new MemoryStream())
@@ -99,11 +99,14 @@ namespace Puppy.Core.FileUtils
                         //    new Phrase("PDF Merger "), importedPage.Width / 2, importedPage.Height - 30,
                         //    importedPage.Width < importedPage.Height ? 0 : 1);
 
-                        // Write footer
-                        ColumnText.ShowTextAligned(pageStamp.GetOverContent(), Element.ALIGN_CENTER,
-                            new Phrase(String.Format("Page {0}", documentPageCounter)), importedPage.Width / 2, 30,
-                            importedPage.Width < importedPage.Height ? 0 : 1);
-
+                        if (setPageNumber)
+                        {
+                            // Write footer
+                            ColumnText.ShowTextAligned(pageStamp.GetOverContent(), Element.ALIGN_CENTER,
+                                new Phrase(String.Format("Page {0}", documentPageCounter)), importedPage.Width / 2, 30,
+                                importedPage.Width < importedPage.Height ? 0 : 1);
+                        }
+                        
                         pageStamp.AlterContents();
 
                         copy.AddPage(importedPage);

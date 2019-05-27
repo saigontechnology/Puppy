@@ -41,6 +41,8 @@ namespace Puppy.EF.Maps
 
             // Length
             builder.Property(x => x.GlobalId).HasMaxLength(Constants.Maxlength.GlobalId).IsRequired();
+
+            builder.HasQueryFilter(x => x.DeletedTime == null);
         }
     }
 

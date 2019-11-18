@@ -23,7 +23,7 @@
   <!-- External Libraries -->
   <ItemGroup>
     <!-- AspNetCore -->
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
 
     <!-- Xml and Json -->
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />

@@ -1,4 +1,4 @@
-﻿#region	License
+#region	License
 
 //------------------------------------------------------------------------------------------------
 // <License>
@@ -29,6 +29,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Color = System.Drawing.Color;
 using Image = System.Drawing.Image;
 
 namespace Puppy.Core.ImageUtils
@@ -370,7 +371,7 @@ namespace Puppy.Core.ImageUtils
 
             // Create a brush for the text
 
-            Brush brush = new SolidBrush(textColor);
+            Brush brush = new System.Drawing.SolidBrush(textColor);
 
             // String alignment
 

@@ -35,7 +35,7 @@
 
     <!-- Image and Color -->
     <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-*" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.2" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-*" />
 
     <!-- Http Client -->

@@ -31,6 +31,8 @@ using System.Linq;
 using System.Text;
 using Color = System.Drawing.Color;
 using Image = System.Drawing.Image;
+using RectangleF = System.Drawing.RectangleF;
+using Size = System.Drawing.Size;
 
 namespace Puppy.Core.ImageUtils
 {
@@ -262,11 +264,11 @@ namespace Puppy.Core.ImageUtils
             {
                 using (MemoryStream outStream = new MemoryStream())
                 {
-                    using (var image = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(inStream, out var format))
+                    using (var image = SixLabors.ImageSharp.Image.Load(inStream, out var format))
                     {
                         image.Mutate(x => x.Resize(new ResizeOptions
                         {
-                            Size = new SixLabors.Primitives.Size(newWidthPx, newHeightPx),
+                            Size = new SixLabors.ImageSharp.Size(newWidthPx, newHeightPx),
 
                             Mode = (ResizeMode)((int)resizeType)
                         }));

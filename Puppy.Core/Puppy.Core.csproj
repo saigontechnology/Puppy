@@ -26,7 +26,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
 
     <!-- Xml and Json -->
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SSH.NET" Version="2016.1.0" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
 

@@ -24,6 +24,6 @@
     <PackageReference Include="Hangfire" Version="1.6.19" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.5.2" />
 
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 </Project>
